@@ -74,4 +74,22 @@ ard_ttest(data = mtcars, by = "am", variable = "hp") |>
 #>  8 am      hp       ttest   conf.high   88.7125882988128        <NA>         
 #>  9 am      hp       ttest   method      Welch Two Sample t-test <NA>         
 #> 10 am      hp       ttest   alternative two.sided               <NA>
+
+glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
+  ard_regression(add_estimate_to_reference_rows = TRUE) |> 
+  flatten_ard()
+#> # A tibble: 68 × 4
+#>    variable variable_level stat_name      statistic 
+#>    <chr>    <chr>          <chr>          <chr>     
+#>  1 mpg      <NA>           term           mpg       
+#>  2 mpg      <NA>           var_label      mpg       
+#>  3 mpg      <NA>           var_class      numeric   
+#>  4 mpg      <NA>           var_type       continuous
+#>  5 mpg      <NA>           var_nlevels    <NA>      
+#>  6 mpg      <NA>           contrasts      <NA>      
+#>  7 mpg      <NA>           contrasts_type <NA>      
+#>  8 mpg      <NA>           reference_row  <NA>      
+#>  9 mpg      <NA>           label          mpg       
+#> 10 mpg      <NA>           n_obs          32        
+#> # ℹ 58 more rows
 ```

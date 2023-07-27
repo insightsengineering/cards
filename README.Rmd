@@ -44,5 +44,9 @@ ard_categorical(mtcars, by = cyl, include = c(am, gear)) |>
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
   flatten_ard()
+
+glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
+  ard_regression(add_estimate_to_reference_rows = TRUE) |> 
+  flatten_ard()
 ```
 
