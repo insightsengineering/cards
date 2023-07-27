@@ -1,0 +1,51 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# cardinal
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of cardinal is to ...
+
+## Installation
+
+You can install the development version of cardinal from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("insightsengineering/cardinal")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(cardinal)
+
+ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |> 
+  # convert list columns to character for a nicer print
+  dplyr::mutate(across(where(is.list), unlist))
+
+ard_categorical(mtcars, by = cyl, include = c(am, gear)) |> 
+  # convert list columns to character for a nicer print
+  dplyr::mutate(across(where(is.list), ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist()))
+
+ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
+  # convert list columns to character for a nicer print
+  dplyr::mutate(across(where(is.list), ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist()))
+```
+
