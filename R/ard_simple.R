@@ -124,7 +124,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), include = everyt
               }
           ) |>
             list() |>
-            setNames(nm = x)
+            stats::setNames(nm = x)
         ) |>
           dplyr::select(-"stat_name") |>
           tidyr::unnest(cols = "statistic") |>
@@ -155,7 +155,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), include = everyt
     N_miss = function(x) sum(is.na(x)),
     N_tot = function(x) length(x),
     mean = function(x) mean(x, na.rm = TRUE),
-    sd = function(x) sd(x, na.rm = TRUE),
+    sd = function(x) stats::sd(x, na.rm = TRUE),
     min = function(x) min(x, na.rm = TRUE),
     max = function(x) max(x, na.rm = TRUE)
   )

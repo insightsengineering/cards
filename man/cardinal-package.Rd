@@ -8,6 +8,14 @@
 \description{
 What the package does (one paragraph).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://refactored-bassoon-49o3774.pages.github.io/}
+  \item Report bugs at \url{https://github.com/insightsengineering/cardinal/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Daniel D. Sjoberg \email{danield.sjoberg@gmail.com} (\href{https://orcid.org/0000-0003-0862-2018}{ORCID})
 
