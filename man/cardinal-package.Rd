@@ -11,6 +11,7 @@ What the package does (one paragraph).
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/insightsengineering/cardinal}
   \item \url{https://refactored-bassoon-49o3774.pages.github.io/}
   \item Report bugs at \url{https://github.com/insightsengineering/cardinal/issues}
 }
