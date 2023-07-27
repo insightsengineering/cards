@@ -3,9 +3,12 @@
 \name{ard_comparison}
 \alias{ard_comparison}
 \alias{ard_ttest}
+\alias{ard_wilcoxtest}
 \title{Comparison ARD Statistics}
 \usage{
-ard_ttest(data, by, variable, conf.level = 0.95, ...)
+ard_ttest(data, by, variable, ...)
+
+ard_wilcoxtest(data, by, variable, ...)
 }
 \arguments{
 \item{data}{a data frame}
@@ -23,5 +26,5 @@ data frame
 Comparison ARD Statistics
 }
 \examples{
-ard_ttest(data = mtcars, by = am, variable = hp)
+ard_ttest(data = mtcars, by = "am", variable = "hp")
 }
