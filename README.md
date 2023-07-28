@@ -28,35 +28,35 @@ library(cardinal)
 ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |> 
   flatten_ard()
 #> # A tibble: 42 × 6
-#>    strata1 strata1_levels variable stat_name statistic        context   
-#>    <chr>            <dbl> <chr>    <chr>     <chr>            <chr>     
-#>  1 cyl                  6 mpg      N         7                continuous
-#>  2 cyl                  6 mpg      N_miss    0                continuous
-#>  3 cyl                  6 mpg      N_tot     7                continuous
-#>  4 cyl                  6 mpg      mean      19.7428571428571 continuous
-#>  5 cyl                  6 mpg      sd        1.45356704106042 continuous
-#>  6 cyl                  6 mpg      min       17.8             continuous
-#>  7 cyl                  6 mpg      max       21.4             continuous
-#>  8 cyl                  6 hp       N         7                continuous
-#>  9 cyl                  6 hp       N_miss    0                continuous
-#> 10 cyl                  6 hp       N_tot     7                continuous
+#>    strata1 strata1_level variable stat_name statistic        context   
+#>    <chr>           <dbl> <chr>    <chr>     <chr>            <chr>     
+#>  1 cyl                 6 mpg      N         7                continuous
+#>  2 cyl                 6 mpg      N_miss    0                continuous
+#>  3 cyl                 6 mpg      N_tot     7                continuous
+#>  4 cyl                 6 mpg      mean      19.7428571428571 continuous
+#>  5 cyl                 6 mpg      sd        1.45356704106042 continuous
+#>  6 cyl                 6 mpg      min       17.8             continuous
+#>  7 cyl                 6 mpg      max       21.4             continuous
+#>  8 cyl                 6 hp       N         7                continuous
+#>  9 cyl                 6 hp       N_miss    0                continuous
+#> 10 cyl                 6 hp       N_tot     7                continuous
 #> # ℹ 32 more rows
 
 ard_categorical(mtcars, by = cyl, include = c(am, gear)) |> 
   flatten_ard()
 #> # A tibble: 46 × 7
-#>    strata1 strata1_levels variable variable_level context    stat_name statistic
-#>    <chr>            <dbl> <chr>    <chr>          <chr>      <chr>     <chr>    
-#>  1 cyl                  6 am       0              categoric… n         4        
-#>  2 cyl                  6 am       0              categoric… p         0.571428…
-#>  3 cyl                  6 am       1              categoric… n         3        
-#>  4 cyl                  6 am       1              categoric… p         0.428571…
-#>  5 cyl                  4 am       0              categoric… n         3        
-#>  6 cyl                  4 am       0              categoric… p         0.272727…
-#>  7 cyl                  4 am       1              categoric… n         8        
-#>  8 cyl                  4 am       1              categoric… p         0.727272…
-#>  9 cyl                  8 am       0              categoric… n         12       
-#> 10 cyl                  8 am       0              categoric… p         0.857142…
+#>    strata1 strata1_level variable variable_level context     stat_name statistic
+#>    <chr>           <dbl> <chr>    <chr>          <chr>       <chr>     <chr>    
+#>  1 cyl                 6 am       0              categorical n         4        
+#>  2 cyl                 6 am       0              categorical p         0.571428…
+#>  3 cyl                 6 am       1              categorical n         3        
+#>  4 cyl                 6 am       1              categorical p         0.428571…
+#>  5 cyl                 4 am       0              categorical n         3        
+#>  6 cyl                 4 am       0              categorical p         0.272727…
+#>  7 cyl                 4 am       1              categorical n         8        
+#>  8 cyl                 4 am       1              categorical p         0.727272…
+#>  9 cyl                 8 am       0              categorical n         12       
+#> 10 cyl                 8 am       0              categorical p         0.857142…
 #> # ℹ 36 more rows
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
@@ -78,18 +78,18 @@ ard_ttest(data = mtcars, by = "am", variable = "hp") |>
 glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   flatten_ard()
-#> # A tibble: 68 × 4
-#>    variable variable_level stat_name      statistic 
-#>    <chr>    <chr>          <chr>          <chr>     
-#>  1 mpg      <NA>           term           mpg       
-#>  2 mpg      <NA>           var_label      mpg       
-#>  3 mpg      <NA>           var_class      numeric   
-#>  4 mpg      <NA>           var_type       continuous
-#>  5 mpg      <NA>           var_nlevels    <NA>      
-#>  6 mpg      <NA>           contrasts      <NA>      
-#>  7 mpg      <NA>           contrasts_type <NA>      
-#>  8 mpg      <NA>           reference_row  <NA>      
-#>  9 mpg      <NA>           label          mpg       
-#> 10 mpg      <NA>           n_obs          32        
+#> # A tibble: 68 × 5
+#>    variable variable_level stat_name      statistic  context   
+#>    <chr>    <chr>          <chr>          <chr>      <chr>     
+#>  1 mpg      <NA>           term           mpg        regression
+#>  2 mpg      <NA>           var_label      mpg        regression
+#>  3 mpg      <NA>           var_class      numeric    regression
+#>  4 mpg      <NA>           var_type       continuous regression
+#>  5 mpg      <NA>           var_nlevels    <NA>       regression
+#>  6 mpg      <NA>           contrasts      <NA>       regression
+#>  7 mpg      <NA>           contrasts_type <NA>       regression
+#>  8 mpg      <NA>           reference_row  <NA>       regression
+#>  9 mpg      <NA>           label          mpg        regression
+#> 10 mpg      <NA>           n_obs          32         regression
 #> # ℹ 58 more rows
 ```
