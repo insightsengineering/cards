@@ -30,34 +30,34 @@ ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |>
 #> # A tibble: 42 × 6
 #>    strata1 strata1_level variable stat_name statistic        context   
 #>    <chr>           <dbl> <chr>    <chr>     <chr>            <chr>     
-#>  1 cyl                 6 mpg      N         7                continuous
-#>  2 cyl                 6 mpg      N_miss    0                continuous
-#>  3 cyl                 6 mpg      N_tot     7                continuous
-#>  4 cyl                 6 mpg      mean      19.7428571428571 continuous
-#>  5 cyl                 6 mpg      sd        1.45356704106042 continuous
-#>  6 cyl                 6 mpg      min       17.8             continuous
-#>  7 cyl                 6 mpg      max       21.4             continuous
-#>  8 cyl                 6 hp       N         7                continuous
-#>  9 cyl                 6 hp       N_miss    0                continuous
-#> 10 cyl                 6 hp       N_tot     7                continuous
+#>  1 cyl                 4 mpg      N         11               continuous
+#>  2 cyl                 4 mpg      N_miss    0                continuous
+#>  3 cyl                 4 mpg      N_tot     11               continuous
+#>  4 cyl                 4 mpg      mean      26.6636363636364 continuous
+#>  5 cyl                 4 mpg      sd        4.50982765242148 continuous
+#>  6 cyl                 4 mpg      min       21.4             continuous
+#>  7 cyl                 4 mpg      max       33.9             continuous
+#>  8 cyl                 4 hp       N         11               continuous
+#>  9 cyl                 4 hp       N_miss    0                continuous
+#> 10 cyl                 4 hp       N_tot     11               continuous
 #> # ℹ 32 more rows
 
 ard_categorical(mtcars, by = cyl, include = c(am, gear)) |> 
   flatten_ard()
-#> # A tibble: 46 × 7
+#> # A tibble: 48 × 7
 #>    strata1 strata1_level variable variable_level context     stat_name statistic
 #>    <chr>           <dbl> <chr>    <chr>          <chr>       <chr>     <chr>    
-#>  1 cyl                 6 am       0              categorical n         4        
-#>  2 cyl                 6 am       0              categorical p         0.571428…
-#>  3 cyl                 6 am       1              categorical n         3        
-#>  4 cyl                 6 am       1              categorical p         0.428571…
-#>  5 cyl                 4 am       0              categorical n         3        
-#>  6 cyl                 4 am       0              categorical p         0.272727…
-#>  7 cyl                 4 am       1              categorical n         8        
-#>  8 cyl                 4 am       1              categorical p         0.727272…
+#>  1 cyl                 4 am       0              categorical n         3        
+#>  2 cyl                 4 am       0              categorical p         0.272727…
+#>  3 cyl                 4 am       1              categorical n         8        
+#>  4 cyl                 4 am       1              categorical p         0.727272…
+#>  5 cyl                 6 am       0              categorical n         4        
+#>  6 cyl                 6 am       0              categorical p         0.571428…
+#>  7 cyl                 6 am       1              categorical n         3        
+#>  8 cyl                 6 am       1              categorical p         0.428571…
 #>  9 cyl                 8 am       0              categorical n         12       
 #> 10 cyl                 8 am       0              categorical p         0.857142…
-#> # ℹ 36 more rows
+#> # ℹ 38 more rows
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
   flatten_ard()
@@ -102,12 +102,7 @@ table_ard <-
   dplyr::bind_rows(
     ard_continuous(mtcars, by = cyl, include = mpg),
     ard_categorical(mtcars, by = cyl, include = am),
-    # TODO: The ARD creation code can by simplified after the categorical
-    #       ARD accepts no-by variable specifications
-    mtcars |>
-      dplyr::mutate(..one.. = 1L) |>
-      ard_categorical(by = ..one..,  include = cyl) |>
-      dplyr::select(-starts_with("strata"))
+    ard_categorical(mtcars, include = cyl)
   )
 
 # convert ARD to a cardinal table
@@ -121,10 +116,11 @@ table <-
     plan_header =
       table_ard |>
       dplyr::filter(variable %in% "cyl") |>
-      plan_header_simple(header = "**{strata} Cylinders  \nN={n}  ({p}%)**") |>
+      plan_header_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
       modifyList(val = list(label = gt::md("**Characteristic**")))
   ) |>
   convert_cardinal(engine = "gt") |> 
+  # add indentation
   gt::text_transform(
     locations = gt::cells_body(
       columns = label,
@@ -132,6 +128,7 @@ table <-
     ),
     fn = function(x) paste0("\U00A0\U00A0\U00A0\U00A0", x)
   ) |> 
+  # bold variable header rows
   gt::tab_style(
     style = gt::cell_text(weight = "bold"),
     locations = gt::cells_body(

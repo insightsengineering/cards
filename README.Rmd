@@ -58,12 +58,7 @@ table_ard <-
   dplyr::bind_rows(
     ard_continuous(mtcars, by = cyl, include = mpg),
     ard_categorical(mtcars, by = cyl, include = am),
-    # TODO: The ARD creation code can by simplified after the categorical
-    #       ARD accepts no-by variable specifications
-    mtcars |>
-      dplyr::mutate(..one.. = 1L) |>
-      ard_categorical(by = ..one..,  include = cyl) |>
-      dplyr::select(-starts_with("strata"))
+    ard_categorical(mtcars, include = cyl)
   )
 
 # convert ARD to a cardinal table
@@ -77,10 +72,11 @@ table <-
     plan_header =
       table_ard |>
       dplyr::filter(variable %in% "cyl") |>
-      plan_header_simple(header = "**{strata} Cylinders  \nN={n}  ({p}%)**") |>
+      plan_header_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
       modifyList(val = list(label = gt::md("**Characteristic**")))
   ) |>
   convert_cardinal(engine = "gt") |> 
+  # add indentation
   gt::text_transform(
     locations = gt::cells_body(
       columns = label,
@@ -88,6 +84,7 @@ table <-
     ),
     fn = function(x) paste0("\U00A0\U00A0\U00A0\U00A0", x)
   ) |> 
+  # bold variable header rows
   gt::tab_style(
     style = gt::cell_text(weight = "bold"),
     locations = gt::cells_body(

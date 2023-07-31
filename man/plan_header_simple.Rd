@@ -19,14 +19,6 @@ named list
 Create a named list column header definitions for statistic columns
 }
 \examples{
-# TODO: The ARD creation code can by simplified after the categorical
-#       ARD accepts no-by variable specifications
-ard_header <-
-  mtcars |>
-  dplyr::mutate(..one.. = 1L) |>
-  ard_categorical(by = ..one..,  include = cyl) |>
-  dplyr::select(-starts_with("strata"))
-
-ard_header |>
-  plan_header_simple(header = "**{strata}** Cylinders  \nN = {n}  ({p}\%)")
+ard_categorical(mtcars, include = cyl) |>
+  plan_header_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}\%)")
 }

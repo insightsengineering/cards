@@ -50,14 +50,22 @@ ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL
     dplyr::bind_rows()
 
   # calculate statistics -------------------------------------------------------
-  data |>
-    tidyr::nest(
-      .by = all_of(by),
-      .key = "...ard_nested_data..."
-    ) |>
-    # setting column names for stratum levels
-    dplyr::mutate(!!!(list(by) |> stats::setNames(paste0("strata", seq_along(by)))), .before = 0L) |>
-    dplyr::rename(!!!(list(by) |> stats::setNames(paste0("strata", seq_along(by), "_level")))) |>
+  df_return <-
+    data |>
+    .ard_nest(
+      by = all_of(by),
+      key = "...ard_nested_data..."
+    )
+
+  if (!rlang::is_empty(by)) {
+    df_return <-
+      df_return |>
+      # setting column names for stratum levels
+      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("strata", seq_along(by)))), .before = 0L) |>
+      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("strata", seq_along(by), "_level"))))
+  }
+
+  df_return |>
     dplyr::mutate(
       ..ard_all_stats.. =
         lapply(
@@ -112,22 +120,25 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), include = everyt
   df_ard_tablulation <-
     lapply(
       X = all_summary_variables,
-      FUN = function(x) {
+      FUN = function(v) {
         ard_continuous(
-          data = data |> dplyr::select(all_of(c(by, x))) |> tidyr::drop_na(),
+          data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
           by = !!all_of(by),
           statistics =
             list(
               table = function(x) {
                 dplyr::tibble(
-                  variable_level = unique(x) |> sort(),
-                  n = table(x) |> as.integer(),
-                  p = .data$n / sum(.data$n)
+                  variable_level = # referencing `data` to get all observed levels in the full data set
+                    rlang::inject(!!.unique_and_sorted(data[[v]])),
+                  n = # creating a factor, so unobserved levels appear in tabulation
+                    factor(x, levels = rlang::inject(!!.unique_and_sorted(data[[v]]))) |>  table() |> as.integer(),
+                  p =
+                    .data$n / sum(.data$n)
                 )
               }
           ) |>
             list() |>
-            stats::setNames(nm = x)
+            stats::setNames(nm = v)
         ) |>
           dplyr::select(-"stat_name") |>
           tidyr::unnest(cols = "statistic") |>
