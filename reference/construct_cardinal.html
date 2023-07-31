@@ -51,16 +51,16 @@ other table compnents</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">construct_cardinal</span><span class="op">(</span><span class="va">plan_table</span>, <span class="va">plan_header</span>, hide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"variable"</span>, <span class="st">"header_row"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">construct_cardinal</span><span class="op">(</span><span class="va">table_plan</span>, <span class="va">header_plan</span>, hide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"variable"</span>, <span class="st">"header_row"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>plan_table</dt>
+    <dl><dt>table_plan</dt>
 <dd><p>a table plan data frame</p></dd>
 
 
-<dt>plan_header</dt>
+<dt>header_plan</dt>
 <dd><p>a header plan named list</p></dd>
 
 
@@ -93,15 +93,15 @@ other table compnents</p>
 <span class="r-in"><span><span class="co"># convert ARD to a cardinal table</span></span></span>
 <span class="r-in"><span><span class="va">table</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">construct_cardinal</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    plan_table <span class="op">=</span></span></span>
+<span class="r-in"><span>    table_plan <span class="op">=</span></span></span>
 <span class="r-in"><span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="plan_simple.html">plan_table_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="plan_simple.html">plan_table_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="plan_simple.html">table_plan_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="plan_simple.html">table_plan_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span>,</span></span>
-<span class="r-in"><span>    plan_header <span class="op">=</span></span></span>
+<span class="r-in"><span>    header_plan <span class="op">=</span></span></span>
 <span class="r-in"><span>      <span class="va">table_ard</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"cyl"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>      <span class="fu"><a href="plan_header_simple.html">plan_header_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders  \nN = {n} ({p}%)**"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="header_plan_simple.html">header_plan_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders  \nN = {n} ({p}%)**"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>      <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html" class="external-link">modifyList</a></span><span class="op">(</span>val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"**Characteristic**"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 </code></pre></div>

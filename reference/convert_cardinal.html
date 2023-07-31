@@ -91,35 +91,35 @@ kable, and formatted tibbles</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># convert ARD to a cardinal table</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="construct_cardinal.html">construct_cardinal</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  plan_table <span class="op">=</span></span></span>
+<span class="r-in"><span>  table_plan <span class="op">=</span></span></span>
 <span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="plan_simple.html">plan_table_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>      <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="plan_simple.html">plan_table_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="plan_simple.html">table_plan_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="plan_simple.html">table_plan_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  plan_header <span class="op">=</span></span></span>
+<span class="r-in"><span>  header_plan <span class="op">=</span></span></span>
 <span class="r-in"><span>    <span class="va">table_ard</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"cyl"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="plan_header_simple.html">plan_header_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders  \nN = {n}  ({p}%)**"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="header_plan_simple.html">header_plan_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders  \nN = {n}  ({p}%)**"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html" class="external-link">modifyList</a></span><span class="op">(</span>val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"**Characteristic**"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">convert_cardinal</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;div id="buasjueqes" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;style&gt;#buasjueqes table {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;div id="qmzhnjttcp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;"&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;style&gt;#qmzhnjttcp table {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -webkit-font-smoothing: antialiased;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -moz-osx-font-smoothing: grayscale;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes thead, #buasjueqes tbody, #buasjueqes tfoot, #buasjueqes tr, #buasjueqes td, #buasjueqes th {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp thead, #qmzhnjttcp tbody, #qmzhnjttcp tfoot, #qmzhnjttcp tr, #qmzhnjttcp td, #qmzhnjttcp th {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-style: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes p {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp p {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   margin: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_table {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_table {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   display: table;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-collapse: collapse;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   line-height: normal;</span>
@@ -145,12 +145,12 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-left-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_caption {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_caption {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_title {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_title {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 125%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-weight: initial;</span>
@@ -162,7 +162,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-width: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_subtitle {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_subtitle {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 85%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-weight: initial;</span>
@@ -174,7 +174,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_heading {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_heading {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-align: center;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #FFFFFF;</span>
@@ -186,13 +186,13 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-right-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_bottom_border {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_bottom_border {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-style: solid;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_col_headings {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_col_headings {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-style: solid;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-color: #D3D3D3;</span>
@@ -207,7 +207,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-right-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_col_heading {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_col_heading {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 100%;</span>
@@ -227,7 +227,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   overflow-x: hidden;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_column_spanner_outer {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_column_spanner_outer {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 100%;</span>
@@ -239,15 +239,15 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_column_spanner_outer:first-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_column_spanner_outer:first-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_column_spanner_outer:last-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_column_spanner_outer:last-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_column_spanner {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_column_spanner {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-style: solid;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #D3D3D3;</span>
@@ -259,11 +259,11 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   width: 100%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_spanner_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_spanner_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-style: hidden;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_group_heading {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_group_heading {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 5px;</span>
@@ -289,7 +289,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_empty_group_heading {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_empty_group_heading {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding: 0.5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
@@ -304,15 +304,15 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vertical-align: middle;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_from_md &gt; :first-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_from_md &gt; :first-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   margin-top: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_from_md &gt; :last-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_from_md &gt; :last-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   margin-bottom: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 5px;</span>
@@ -331,7 +331,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   overflow-x: hidden;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_stub {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_stub {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 100%;</span>
@@ -344,7 +344,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_stub_row_group {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_stub_row_group {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 100%;</span>
@@ -358,15 +358,15 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vertical-align: top;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_row_group_first td {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_row_group_first td {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_row_group_first th {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_row_group_first th {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_summary_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_summary_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-transform: inherit;</span>
@@ -376,16 +376,16 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_first_summary_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_first_summary_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-style: solid;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_first_summary_row.thick {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_first_summary_row.thick {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_last_summary_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_last_summary_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 5px;</span>
@@ -395,7 +395,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_grand_summary_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_grand_summary_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-transform: inherit;</span>
@@ -405,7 +405,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_first_grand_summary_row {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_first_grand_summary_row {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 5px;</span>
@@ -415,7 +415,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_last_grand_summary_row_top {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_last_grand_summary_row_top {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-left: 5px;</span>
@@ -425,11 +425,11 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_striped {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_striped {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: rgba(128, 128, 128, 0.05);</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_table_body {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_table_body {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-style: solid;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-width: 2px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-top-color: #D3D3D3;</span>
@@ -438,7 +438,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_footnotes {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_footnotes {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-style: none;</span>
@@ -452,7 +452,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-right-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_footnote {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_footnote {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   margin: 0px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 90%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 4px;</span>
@@ -461,7 +461,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_sourcenotes {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_sourcenotes {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color: #333333;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   background-color: #FFFFFF;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-bottom-style: none;</span>
@@ -475,7 +475,7 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   border-right-color: #D3D3D3;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_sourcenote {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_sourcenote {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 90%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-top: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-bottom: 4px;</span>
@@ -483,63 +483,63 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   padding-right: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_left {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_left {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_center {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_center {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-align: center;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_right {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_right {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-align: right;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-variant-numeric: tabular-nums;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_font_normal {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_font_normal {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-weight: normal;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_font_bold {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_font_bold {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-weight: bold;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_font_italic {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_font_italic {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-style: italic;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_super {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_super {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 65%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_footnote_marks {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_footnote_marks {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 75%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vertical-align: 0.4em;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   position: initial;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_asterisk {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_asterisk {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   font-size: 100%;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vertical-align: 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_indent_1 {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_indent_1 {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-indent: 5px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_indent_2 {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_indent_2 {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-indent: 10px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_indent_3 {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_indent_3 {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-indent: 15px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_indent_4 {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_indent_4 {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-indent: 20px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> #buasjueqes .gt_indent_5 {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> #qmzhnjttcp .gt_indent_5 {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   text-indent: 25px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/style&gt;</span>
@@ -557,31 +557,31 @@ kable, and formatted tibbles</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;/tr&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/thead&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;tbody class="gt_table_body"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;mpg&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left" style="font-weight: bold;"&gt;mpg&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;{N}&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;    {N}&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;11&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;7&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;14&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;{mean} ({sd})&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;    {mean} ({sd})&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;27 (5)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;20 (1)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;15 (3)&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;{min}, {max}&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;    {min}, {max}&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;21, 34&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;18, 21&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;10, 19&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;am&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left" style="font-weight: bold;"&gt;am&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;0&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;    0&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;3 (27.3%)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;4 (57.1%)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;12 (85.7%)&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;1&lt;/td&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;tr&gt;&lt;td headers="label" class="gt_row gt_left"&gt;    1&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_1" class="gt_row gt_right"&gt;8 (72.7%)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_2" class="gt_row gt_right"&gt;3 (42.9%)&lt;/td&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;td headers="stat_3" class="gt_row gt_right"&gt;2 (14.3%)&lt;/td&gt;&lt;/tr&gt;</span>

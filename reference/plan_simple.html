@@ -51,12 +51,12 @@ These data frames will eventually be stacked into a final table.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plan_table_simple_continuous</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">table_plan_simple_continuous</span><span class="op">(</span></span>
 <span>  <span class="va">ard</span>,</span>
 <span>  statistics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"{N}"</span>, <span class="st">"{mean} ({sd})"</span>, <span class="st">"{min}, {max}"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">plan_table_simple_categorical</span><span class="op">(</span><span class="va">ard</span>, statistics <span class="op">=</span> <span class="st">"{n} ({p}%)"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">table_plan_simple_categorical</span><span class="op">(</span><span class="va">ard</span>, statistics <span class="op">=</span> <span class="st">"{n} ({p}%)"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,7 +80,7 @@ resulting table. Default is <code>c("{N}", "{mean} ({sd})",  "{min}, {max}")</co
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, include <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">plan_table_simple_continuous</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">table_plan_simple_continuous</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   variable header_row label         stat_1 stat_2 stat_3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
@@ -90,7 +90,7 @@ resulting table. Default is <code>c("{N}", "{mean} ({sd})",  "{min}, {max}")</co
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> mpg      FALSE      {min}, {max}  21, 34 18, 21 10, 19</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, include <span class="op">=</span> <span class="va">am</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">plan_table_simple_categorical</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">table_plan_simple_categorical</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   variable header_row label stat_1    stat_2    stat_3    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
