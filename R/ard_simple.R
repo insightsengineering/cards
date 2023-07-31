@@ -18,6 +18,9 @@
 #' ard_categorical(mtcars, by = cyl, include = c(am, gear))
 NULL
 
+# TODO: unobserved combinations of levels are currently not accounted for
+# TODO: unobserved factor levels are not currently accounted for
+
 #' @rdname ard_simple
 #' @export
 ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL, include = everything()) {

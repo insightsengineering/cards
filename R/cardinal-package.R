@@ -6,4 +6,4 @@
 ## usethis namespace: end
 NULL
 
-utils::globalVariables("where")
+utils::globalVariables(c(".", "where"))

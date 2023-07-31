@@ -1,0 +1,83 @@
+#' Column Header Plan
+#'
+#' Create a named list column header definitions for statistic columns
+#'
+#' @param ard a ARD object
+#' @param header a string specifying the form of a column header.
+#' Default is `"{strata}  \nN = {n}"`
+#'
+#' @return named list
+#' @export
+#'
+#' @examples
+#' # TODO: The ARD creation code can by simplified after the categorical
+#' #       ARD accepts no-by variable specifications
+#' ard_header <-
+#'   mtcars |>
+#'   dplyr::mutate(..one.. = 1L) |>
+#'   ard_categorical(by = ..one..,  include = cyl) |>
+#'   dplyr::select(-starts_with("strata"))
+#'
+#' ard_header |>
+#'   plan_header_simple(header = "**{strata}** Cylinders  \nN = {n}  ({p}%)")
+
+# TODO: Update function to handle OVERALL-only tables
+plan_header_simple <- function(ard, header = "{strata}  \nN = {n}") {
+  nested_ard <-
+    ard |>
+    # TODO: DELETE THIS mutate() LATER. NEED BETTER SOLUTION TO INCLUDE VARIABLE-LEVEL SUMMARY STATS
+    dplyr::select("variable", "stat_name", "statistic", "context", "variable_level") |>
+    dplyr::mutate(dplyr::across("variable_level", ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character())) |>
+    tidyr::drop_na() |> # this drops the label stat row that doesn't have a strata value
+    dplyr::select(-any_of("context")) |>
+    dplyr::mutate(
+      variable_level = unlist(.data$variable_level),
+      statistic =
+        lapply(
+          .data$statistic,
+          function(x) {
+            # TODO: This needs to be updated with proper formatting functions that can be changed.
+            ifelse(rlang::is_integerish(x), round(x), round(x * 100, digits = 1) %||% NA_character_)
+          }
+        ) |>
+        unlist() |>
+        as.character()
+    ) |>
+    tidyr::nest(
+      .by = c("variable", "variable_level")
+    ) |>
+    dplyr::mutate(
+      col_name = paste0("stat_", dplyr::row_number())
+    )
+
+  nested_ard |>
+    dplyr::mutate(
+      data =
+        .mapply(
+          dots = list(.data$data, .data$variable_level),
+          FUN = function(data, level) {
+            dplyr::bind_rows(
+              data,
+              dplyr::tibble(stat_name = "strata", statistic = level)
+            )
+          },
+          MoreArgs = list()
+        ),
+      fmt_statistics =
+        lapply(
+          .data$data,
+          FUN = function(x) {
+            lapply(
+              header,
+              function(one_stat) {
+                glue::glue(one_stat, .envir = rlang::as_environment(.data_frame_to_named_list(x)))
+              }
+            ) |>
+              unlist()
+          }
+        )
+    )|>
+    dplyr::select(-"data") %>%
+    {.data_frame_to_named_list(.[c("col_name", "fmt_statistics")])} |>
+    lapply(FUN = function(x) gt::md(x))
+}
