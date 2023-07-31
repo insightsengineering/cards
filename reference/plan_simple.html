@@ -85,9 +85,9 @@ resulting table. Default is <code>c("{N}", "{mean} ({sd})",  "{min}, {max}")</co
 <span class="r-out co"><span class="r-pr">#&gt;</span>   variable header_row label         stat_1 stat_2 stat_3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> mpg      TRUE       mpg           <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> mpg      FALSE      {N}           7      11     14    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> mpg      FALSE      {mean} ({sd}) 20 (1) 27 (5) 15 (3)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> mpg      FALSE      {min}, {max}  18, 21 21, 34 10, 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> mpg      FALSE      {N}           11     7      14    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> mpg      FALSE      {mean} ({sd}) 27 (5) 20 (1) 15 (3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> mpg      FALSE      {min}, {max}  21, 34 18, 21 10, 19</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, include <span class="op">=</span> <span class="va">am</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">plan_table_simple_categorical</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -95,8 +95,8 @@ resulting table. Default is <code>c("{N}", "{mean} ({sd})",  "{min}, {max}")</co
 <span class="r-out co"><span class="r-pr">#&gt;</span>   variable header_row label stat_1    stat_2    stat_3    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> am       TRUE       am    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       FALSE      0     4 (57.1%) 3 (27.3%) 12 (85.7%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       FALSE      1     3 (42.9%) 8 (72.7%) 2 (14.3%) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       FALSE      0     3 (27.3%) 4 (57.1%) 12 (85.7%)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       FALSE      1     8 (72.7%) 3 (42.9%) 2 (14.3%) </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
