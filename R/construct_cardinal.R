@@ -25,18 +25,19 @@
 #'   )
 #'
 #' # convert ARD to a cardinal table
-#' construct_cardinal(
-#'   plan_table =
-#'     dplyr::bind_rows(
-#'       table_ard |> dplyr::filter(variable %in% "mpg") |>  plan_table_simple_continuous(),
-#'       table_ard |> dplyr::filter(variable %in% "am") |> plan_table_simple_categorical()
-#'     ),
-#'   plan_header =
-#'     table_ard |>
-#'     dplyr::filter(variable %in% "cyl") |>
-#'     plan_header_simple(header = "**{strata} Cylinders  \nN = {n}  ({p}%)**") |>
-#'     modifyList(val = list(label = "**Characteristic**"))
-#' )
+#' table <-
+#'   construct_cardinal(
+#'     plan_table =
+#'       dplyr::bind_rows(
+#'         table_ard |> dplyr::filter(variable %in% "mpg") |>  plan_table_simple_continuous(),
+#'         table_ard |> dplyr::filter(variable %in% "am") |> plan_table_simple_categorical()
+#'       ),
+#'     plan_header =
+#'       table_ard |>
+#'       dplyr::filter(variable %in% "cyl") |>
+#'       plan_header_simple(header = "**{strata} Cylinders  \nN = {n} ({p}%)**") |>
+#'       utils::modifyList(val = list(label = "**Characteristic**"))
+#'   )
 construct_cardinal <- function(plan_table,
                                plan_header,
                                hide = c("variable", "header_row")) {
