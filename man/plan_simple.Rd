@@ -2,16 +2,16 @@
 % Please edit documentation in R/plan_table_simple.R
 \name{plan_simple}
 \alias{plan_simple}
-\alias{plan_table_simple_continuous}
-\alias{plan_table_simple_categorical}
+\alias{table_plan_simple_continuous}
+\alias{table_plan_simple_categorical}
 \title{Simple ARD Table Plans}
 \usage{
-plan_table_simple_continuous(
+table_plan_simple_continuous(
   ard,
   statistics = c("{N}", "{mean} ({sd})", "{min}, {max}")
 )
 
-plan_table_simple_categorical(ard, statistics = "{n} ({p}\%)")
+table_plan_simple_categorical(ard, statistics = "{n} ({p}\%)")
 }
 \arguments{
 \item{ard}{a single ARD object for one variable}
@@ -28,8 +28,8 @@ These data frames will eventually be stacked into a final table.
 }
 \examples{
 ard_continuous(mtcars, by = cyl, include = mpg) |>
-  plan_table_simple_continuous()
+  table_plan_simple_continuous()
 
 ard_categorical(mtcars, by = cyl, include = am) |>
-  plan_table_simple_categorical()
+  table_plan_simple_categorical()
 }

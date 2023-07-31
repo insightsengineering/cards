@@ -26,15 +26,15 @@
 #'
 #' # convert ARD to a cardinal table
 #' construct_cardinal(
-#'   plan_table =
+#'   table_plan =
 #'     dplyr::bind_rows(
-#'       table_ard |> dplyr::filter(variable %in% "mpg") |>  plan_table_simple_continuous(),
-#'       table_ard |> dplyr::filter(variable %in% "am") |> plan_table_simple_categorical()
+#'       table_ard |> dplyr::filter(variable %in% "mpg") |>  table_plan_simple_continuous(),
+#'       table_ard |> dplyr::filter(variable %in% "am") |> table_plan_simple_categorical()
 #'     ),
-#'   plan_header =
+#'   header_plan =
 #'     table_ard |>
 #'     dplyr::filter(variable %in% "cyl") |>
-#'     plan_header_simple(header = "**{strata} Cylinders  \nN = {n}  ({p}%)**") |>
+#'     header_plan_simple(header = "**{strata} Cylinders  \nN = {n}  ({p}%)**") |>
 #'     modifyList(val = list(label = gt::md("**Characteristic**")))
 #' ) |>
 #'   convert_cardinal()
@@ -50,5 +50,22 @@ convert_cardinal <- function(x, engine = "gt") {
   gt::gt(x$table_body) |>
     gt::sub_missing(missing_text = "") |>
     gt::cols_label(.list = x$table_styling$header) |>
-    gt::cols_hide(columns = all_of(x$table_styling$hide))
+    gt::cols_hide(columns = all_of(x$table_styling$hide)) |>
+    # TODO: the styling below should belong in the cardinal object
+    # add indentation
+    gt::text_transform(
+      locations = gt::cells_body(
+        columns = "label",
+        rows = !.data$header_row
+      ),
+      fn = function(x) paste0("\U00A0\U00A0\U00A0\U00A0", x)
+    ) |>
+    # bold variable header rows
+    gt::tab_style(
+      style = gt::cell_text(weight = "bold"),
+      locations = gt::cells_body(
+        columns = "label",
+        rows = .data$header_row
+      )
+    )
 }

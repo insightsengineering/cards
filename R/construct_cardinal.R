@@ -3,8 +3,8 @@
 #' Construct a table of class 'cardinal' from the table plan, header plan, and
 #' other table compnents
 #'
-#' @param plan_table a table plan data frame
-#' @param plan_header a header plan named list
+#' @param table_plan a table plan data frame
+#' @param header_plan a header plan named list
 #' @param hide character vector of columns to hide from output
 #'
 #' @return a cardinal table
@@ -27,25 +27,25 @@
 #' # convert ARD to a cardinal table
 #' table <-
 #'   construct_cardinal(
-#'     plan_table =
+#'     table_plan =
 #'       dplyr::bind_rows(
-#'         table_ard |> dplyr::filter(variable %in% "mpg") |>  plan_table_simple_continuous(),
-#'         table_ard |> dplyr::filter(variable %in% "am") |> plan_table_simple_categorical()
+#'         table_ard |> dplyr::filter(variable %in% "mpg") |>  table_plan_simple_continuous(),
+#'         table_ard |> dplyr::filter(variable %in% "am") |> table_plan_simple_categorical()
 #'       ),
-#'     plan_header =
+#'     header_plan =
 #'       table_ard |>
 #'       dplyr::filter(variable %in% "cyl") |>
-#'       plan_header_simple(header = "**{strata} Cylinders  \nN = {n} ({p}%)**") |>
+#'       header_plan_simple(header = "**{strata} Cylinders  \nN = {n} ({p}%)**") |>
 #'       utils::modifyList(val = list(label = "**Characteristic**"))
 #'   )
-construct_cardinal <- function(plan_table,
-                               plan_header,
+construct_cardinal <- function(table_plan,
+                               header_plan,
                                hide = c("variable", "header_row")) {
   list(
-    table_body = plan_table,
+    table_body = table_plan,
     table_styling =
       list(
-        header = plan_header,
+        header = header_plan,
         hide = hide
       )
   ) |>

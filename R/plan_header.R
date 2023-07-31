@@ -11,11 +11,11 @@
 #'
 #' @examples
 #' ard_categorical(mtcars, include = cyl) |>
-#'   plan_header_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}%)")
+#'   header_plan_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}%)")
 
 # TODO: Update function to handle OVERALL-only tables
 # TODO: the returned text string is formatted with `gt::md()`. Should this be optional?
-plan_header_simple <- function(ard, header = "{strata}  \nN = {n}") {
+header_plan_simple <- function(ard, header = "{strata}  \nN = {n}") {
   nested_ard <-
     ard |>
     # TODO: DELETE THIS mutate() LATER. NEED BETTER SOLUTION TO INCLUDE VARIABLE-LEVEL SUMMARY STATS

@@ -4,12 +4,12 @@
 \alias{construct_cardinal}
 \title{Construct Cardinal Table}
 \usage{
-construct_cardinal(plan_table, plan_header, hide = c("variable", "header_row"))
+construct_cardinal(table_plan, header_plan, hide = c("variable", "header_row"))
 }
 \arguments{
-\item{plan_table}{a table plan data frame}
+\item{table_plan}{a table plan data frame}
 
-\item{plan_header}{a header plan named list}
+\item{header_plan}{a header plan named list}
 
 \item{hide}{character vector of columns to hide from output}
 }
@@ -37,15 +37,15 @@ table_ard <-
 # convert ARD to a cardinal table
 table <-
   construct_cardinal(
-    plan_table =
+    table_plan =
       dplyr::bind_rows(
-        table_ard |> dplyr::filter(variable \%in\% "mpg") |>  plan_table_simple_continuous(),
-        table_ard |> dplyr::filter(variable \%in\% "am") |> plan_table_simple_categorical()
+        table_ard |> dplyr::filter(variable \%in\% "mpg") |>  table_plan_simple_continuous(),
+        table_ard |> dplyr::filter(variable \%in\% "am") |> table_plan_simple_categorical()
       ),
-    plan_header =
+    header_plan =
       table_ard |>
       dplyr::filter(variable \%in\% "cyl") |>
-      plan_header_simple(header = "**{strata} Cylinders  \nN = {n} ({p}\%)**") |>
+      header_plan_simple(header = "**{strata} Cylinders  \nN = {n} ({p}\%)**") |>
       utils::modifyList(val = list(label = "**Characteristic**"))
   )
 }

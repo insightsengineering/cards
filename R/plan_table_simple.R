@@ -13,10 +13,10 @@
 #'
 #' @examples
 #' ard_continuous(mtcars, by = cyl, include = mpg) |>
-#'   plan_table_simple_continuous()
+#'   table_plan_simple_continuous()
 #'
 #' ard_categorical(mtcars, by = cyl, include = am) |>
-#'   plan_table_simple_categorical()
+#'   table_plan_simple_categorical()
 NULL
 
 # TODO: These plans assume there is a stratifying variable, which is not always the case
@@ -25,7 +25,7 @@ NULL
 
 #' @rdname plan_simple
 #' @export
-plan_table_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd})",  "{min}, {max}")) {
+table_plan_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd})",  "{min}, {max}")) {
   # check the function inputs match availability in the ARD --------------------
 
   # construct table body -------------------------------------------------------
@@ -95,7 +95,7 @@ plan_table_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd
 
 #' @rdname plan_simple
 #' @export
-plan_table_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
+table_plan_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
   # check the function inputs match availability in the ARD --------------------
   # construct table body -------------------------------------------------------
   # the nested ARD object is one line per level of the by variable

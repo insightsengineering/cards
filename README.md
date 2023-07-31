@@ -24,6 +24,15 @@ ARD Examples
 
 ``` r
 library(cardinal)
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 
 ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |> 
   flatten_ard()
@@ -99,7 +108,7 @@ ARD -\> Table Example
 ``` r
 # Construct the ARD
 table_ard <-
-  dplyr::bind_rows(
+  bind_rows(
     ard_continuous(mtcars, by = cyl, include = mpg),
     ard_categorical(mtcars, by = cyl, include = am),
     ard_categorical(mtcars, include = cyl)
@@ -108,34 +117,18 @@ table_ard <-
 # convert ARD to a cardinal table
 table <-
   construct_cardinal(
-    plan_table =
-      dplyr::bind_rows(
-        table_ard |> dplyr::filter(variable %in% "mpg") |>  plan_table_simple_continuous(),
-        table_ard |> dplyr::filter(variable %in% "am") |> plan_table_simple_categorical()
+    table_plan =
+      bind_rows(
+        table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(),
+        table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical()
       ),
-    plan_header =
+    header_plan =
       table_ard |>
-      dplyr::filter(variable %in% "cyl") |>
-      plan_header_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
+      filter(variable %in% "cyl") |>
+      header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
       modifyList(val = list(label = gt::md("**Characteristic**")))
   ) |>
-  convert_cardinal(engine = "gt") |> 
-  # add indentation
-  gt::text_transform(
-    locations = gt::cells_body(
-      columns = label,
-      rows = !header_row
-    ),
-    fn = function(x) paste0("\U00A0\U00A0\U00A0\U00A0", x)
-  ) |> 
-  # bold variable header rows
-  gt::tab_style(
-    style = gt::cell_text(weight = "bold"),
-    locations = gt::cells_body(
-      columns = label,
-      rows = header_row
-    )
-  )
+  convert_cardinal(engine = "gt")
 ```
 
-<img src="man/figures/README-table_example.png" width="100%" />
+<img src="man/figures/README-table_example.png" style="width: 50%">
