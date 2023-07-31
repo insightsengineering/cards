@@ -78,7 +78,7 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>ARD Examples</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cardinal" class="external-link">cardinal</a></span><span class="op">)</span></span>
 <span></span>
@@ -149,6 +149,51 @@
 <span><span class="co">#&gt;  9 mpg      &lt;NA&gt;           label          mpg        regression</span></span>
 <span><span class="co">#&gt; 10 mpg      &lt;NA&gt;           n_obs          32         regression</span></span>
 <span><span class="co">#&gt; # ℹ 58 more rows</span></span></code></pre></div>
+<p>ARD -&gt; Table Example</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Construct the ARD</span></span>
+<span><span class="va">table_ard</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, include <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, include <span class="op">=</span> <span class="va">am</span><span class="op">)</span>,</span>
+<span>    <span class="co"># TODO: The ARD creation code can by simplified after the categorical</span></span>
+<span>    <span class="co">#       ARD accepts no-by variable specifications</span></span>
+<span>    <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>..one.. <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span>by <span class="op">=</span> <span class="va">..one..</span>,  include <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"strata"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># convert ARD to a cardinal table</span></span>
+<span><span class="va">table</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/construct_cardinal.html">construct_cardinal</a></span><span class="op">(</span></span>
+<span>    plan_table <span class="op">=</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
+<span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="reference/plan_simple.html">plan_table_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/plan_simple.html">plan_table_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>    plan_header <span class="op">=</span></span>
+<span>      <span class="va">table_ard</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"cyl"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="reference/plan_header_simple.html">plan_header_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders  \nN={n}  ({p}%)**"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html" class="external-link">modifyList</a></span><span class="op">(</span>val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"**Characteristic**"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/convert_cardinal.html">convert_cardinal</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/text_transform.html" class="external-link">text_transform</a></span><span class="op">(</span></span>
+<span>    locations <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html" class="external-link">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">label</span>,</span>
+<span>      rows <span class="op">=</span> <span class="op">!</span><span class="va">header_row</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"\U00A0\U00A0\U00A0\U00A0"</span>, <span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html" class="external-link">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html" class="external-link">cell_text</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html" class="external-link">cells_body</a></span><span class="op">(</span></span>
+<span>      columns <span class="op">=</span> <span class="va">label</span>,</span>
+<span>      rows <span class="op">=</span> <span class="va">header_row</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-table_example.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
