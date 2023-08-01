@@ -3,3 +3,6 @@ name: ✨ Feature Request
 description: Request or propose a new feature
 title: "<DESCRIPTION>"
 body:
+  - type: textarea
+    attributes:
+      label: Feature description
