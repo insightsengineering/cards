@@ -101,6 +101,7 @@ table_plan_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
   # the nested ARD object is one line per level of the by variable
   nested_ard <-
     ard |>
+    dplyr::select(-any_of(c("error", "warning"))) |>
     # TODO: DELETE THIS mutate() LATER. NEED BETTER SOLUTION TO INCLUDE VARIABLE-LEVEL SUMMARY STATS
     dplyr::mutate(dplyr::across("variable_level", ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character())) |>
     tidyr::drop_na() |> # this drops the label stat row that doesn't have a strata value

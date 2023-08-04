@@ -12,6 +12,8 @@
 #' ard_ttest(data = mtcars, by = "am", variable = "hp")
 NULL
 
+# TODO: wrap the evaluations in `eval_capture_condition()`
+# TODO: what to return if this function errors?
 #' @rdname ard_comparison
 #' @export
 ard_ttest <- function(data, by, variable, ...) {
@@ -44,6 +46,8 @@ ard_ttest <- function(data, by, variable, ...) {
     )
 }
 
+# TODO: wrap the evaluations in `eval_capture_condition()`
+# TODO: what to return if this function errors?
 #' @rdname ard_comparison
 #' @export
 ard_wilcoxtest <- function(data, by, variable, ...) {

@@ -18,9 +18,6 @@
 #' ard_categorical(mtcars, by = cyl, include = c(am, gear))
 NULL
 
-# TODO: unobserved combinations of levels are currently not accounted for
-# TODO: unobserved factor levels are not currently accounted for
-
 #' @rdname ard_simple
 #' @export
 ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL, include = everything()) {
@@ -65,30 +62,35 @@ ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL
       dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("strata", seq_along(by), "_level"))))
   }
 
-  df_return |>
-    dplyr::mutate(
-      ..ard_all_stats.. =
-        lapply(
-          .data[["...ard_nested_data..."]],
-          FUN = function(nested_data) {
-            df_statsistics |>
-              dplyr::mutate(
-                statistic =
-                  .mapply(
-                    FUN = function(variable, stat_name) {
-                      do.call(statistics[[variable]][[stat_name]], args = list(nested_data[[variable]]))
-                    },
-                    dots =
-                      list(
-                        df_statsistics$variable,
-                        df_statsistics$stat_name
-                      ),
-                    MoreArgs = NULL
-                  )
+  df_return$..ard_all_stats.. <-
+    lapply(
+      df_return[["...ard_nested_data..."]],
+      FUN = function(nested_data) {
+        df_statsistics |>
+          dplyr::mutate(
+            result =
+              .mapply(
+                FUN = function(variable, stat_name) {
+                  eval_capture_conditions(
+                    do.call(statistics[[variable]][[stat_name]], args = list(nested_data[[variable]]))
+                  ) |>
+                    lapply(FUN = list) |>
+                    dplyr::as_tibble() |>
+                    dplyr::rename(statistic = .data$result)
+                },
+                dots =
+                  list(
+                    df_statsistics$variable,
+                    df_statsistics$stat_name
+                  ),
+                MoreArgs = NULL
               )
-          }
-        )
-    ) |>
+          ) |>
+          tidyr::unnest(cols = "result")
+      }
+    )
+
+  df_return |>
     dplyr::select(-"...ard_nested_data...") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
     dplyr::mutate(context = "continuous")

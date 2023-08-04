@@ -28,7 +28,7 @@ Function always returns a named list \code{list(result=, warning=, error=)}.
 If there are no errors or warnings, those elements will be \code{NULL}.
 If there is an error, the result element will be \code{NULL}.
 
-Messages are nether saved nor printed the console.
+Messages are nether saved nor printed to the console.
 
 Evaluation is done via \code{rlang::eval_tidy()}.
 }
@@ -42,6 +42,6 @@ eval_capture_conditions(stop("Example Error!"))
 # if more than one warning is returned, all are saved
 eval_capture_conditions({warning("Warning 1"); warning("Warning 2"); letters[1:2]})
 
-# messages are not printed the console
+# messages are not printed to the console
 eval_capture_conditions({message("A message!"); letters[1:2]})
 }

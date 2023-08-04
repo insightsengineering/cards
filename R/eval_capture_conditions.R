@@ -6,7 +6,7 @@
 #' If there are no errors or warnings, those elements will be `NULL`.
 #' If there is an error, the result element will be `NULL`.
 #'
-#' Messages are nether saved nor printed the console.
+#' Messages are nether saved nor printed to the console.
 #'
 #' Evaluation is done via `rlang::eval_tidy()`.
 #'
@@ -24,9 +24,12 @@
 #' # if more than one warning is returned, all are saved
 #' eval_capture_conditions({warning("Warning 1"); warning("Warning 2"); letters[1:2]})
 #'
-#' # messages are not printed the console
+#' # messages are not printed to the console
 #' eval_capture_conditions({message("A message!"); letters[1:2]})
 eval_capture_conditions <- function(expr, data = NULL, env = rlang::caller_env()) {
+  # IF WE EVER NEED TO REWORK/DEBUG REVIEW THE ADVANCED R CONDITIONS CHAPTER
+  # https://adv-r.hadley.nz/conditions.html#conditions
+
   # initialize empty list to return
   lst_result <- list(result = NULL, warning = NULL, error = NULL)
 
