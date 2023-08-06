@@ -19,6 +19,8 @@
 #'   table_plan_simple_categorical()
 NULL
 
+# TODO: The continuous plan broke at some point. But not fixing now because this pkg doesn't that pkg
+
 # TODO: These plans assume there is a stratifying variable, which is not always the case
 # TODO: The plans only allow the calculation of one variable at a time. Would it be computationally faster to allow more than one, but then the results would need to be sorted on the final table construction side.
 # TODO: These plans assume a single stratifying variable, when it would be great to support more.
