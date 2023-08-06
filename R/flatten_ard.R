@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical(mtcars, by = cyl, include = c(am, gear)) |>
+#' ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |>
 #'   flatten_ard()
 flatten_ard <- function(x) {
   # convert list columns to character for a nicer print

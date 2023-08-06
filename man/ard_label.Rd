@@ -4,7 +4,7 @@
 \alias{ard_label}
 \title{ARD Labels}
 \usage{
-ard_label(data, label = NULL, include = everything())
+ard_label(data, label = NULL, variables = everything())
 }
 \arguments{
 \item{data}{a data frame}
@@ -12,7 +12,7 @@ ard_label(data, label = NULL, include = everything())
 \item{label}{named list of variable labels, e.g. \code{list(mpg = "MPG")}.
 Default is \code{NULL}}
 
-\item{include}{variable to include}
+\item{variables}{variable to include}
 }
 \value{
 a data frame

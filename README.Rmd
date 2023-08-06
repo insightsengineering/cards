@@ -37,10 +37,10 @@ ARD Examples
 library(cardinal)
 library(dplyr)
 
-ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |> 
+ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")) |> 
   flatten_ard()
 
-ard_categorical(mtcars, by = cyl, include = c(am, gear)) |> 
+ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |> 
   flatten_ard()
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
@@ -57,9 +57,9 @@ ARD  -> Table Example
 # Construct the ARD
 table_ard <-
   bind_rows(
-    ard_continuous(mtcars, by = cyl, include = mpg),
-    ard_categorical(mtcars, by = cyl, include = am),
-    ard_categorical(mtcars, include = cyl)
+    ard_continuous(mtcars, by = cyl, variables = "mpg"),
+    ard_categorical(mtcars, by = cyl, variables = "am"),
+    ard_categorical(mtcars, variables = "cyl")
   )
 
 # convert ARD to a cardinal table
@@ -81,7 +81,6 @@ table <-
 
 ```{r echo=FALSE, fig.width=4}
 gt::gtsave(table, filename = "man/figures/README-table_example.png")
-# knitr::include_graphics(path = "man/figures/README-table_example.png")
 ```
 
 <img src="man/figures/README-table_example.png" style="width: 50%">

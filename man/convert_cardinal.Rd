@@ -23,9 +23,9 @@ kable, and formatted tibbles
 # Construct the ARD
 table_ard <-
   dplyr::bind_rows(
-    ard_continuous(mtcars, by = cyl, include = mpg),
-    ard_categorical(mtcars, by = cyl, include = am),
-    ard_categorical(mtcars,  nclude = cyl)
+    ard_continuous(mtcars, by = cyl, variables = "mpg"),
+    ard_categorical(mtcars, by = cyl, variables = "am"),
+    ard_categorical(mtcars,  variables = "cyl")
   )
 
 # convert ARD to a cardinal table

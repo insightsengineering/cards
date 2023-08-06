@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical(mtcars, include = cyl) |>
+#' ard_categorical(mtcars, variables = "cyl") |>
 #'   header_plan_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}%)")
 
 # TODO: Update function to handle OVERALL-only tables

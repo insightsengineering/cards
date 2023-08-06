@@ -19,6 +19,6 @@ named list
 Create a named list column header definitions for statistic columns
 }
 \examples{
-ard_categorical(mtcars, include = cyl) |>
+ard_categorical(mtcars, variables = "cyl") |>
   header_plan_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}\%)")
 }

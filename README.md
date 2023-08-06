@@ -34,55 +34,56 @@ library(dplyr)
 #> 
 #>     intersect, setdiff, setequal, union
 
-ard_continuous(mtcars, by = cyl, include = c(mpg, hp)) |> 
+ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")) |> 
   flatten_ard()
-#> # A tibble: 42 × 6
-#>    strata1 strata1_level variable stat_name statistic        context   
-#>    <chr>           <dbl> <chr>    <chr>     <chr>            <chr>     
-#>  1 cyl                 4 mpg      N         11               continuous
-#>  2 cyl                 4 mpg      N_miss    0                continuous
-#>  3 cyl                 4 mpg      N_tot     11               continuous
-#>  4 cyl                 4 mpg      mean      26.6636363636364 continuous
-#>  5 cyl                 4 mpg      sd        4.50982765242148 continuous
-#>  6 cyl                 4 mpg      min       21.4             continuous
-#>  7 cyl                 4 mpg      max       33.9             continuous
-#>  8 cyl                 4 hp       N         11               continuous
-#>  9 cyl                 4 hp       N_miss    0                continuous
-#> 10 cyl                 4 hp       N_tot     11               continuous
+#> # A tibble: 42 × 8
+#>    strata1 strata1_level variable stat_name statistic      warning error context
+#>    <chr>           <dbl> <chr>    <chr>     <chr>          <chr>   <chr> <chr>  
+#>  1 cyl                 4 mpg      N         11             <NA>    <NA>  contin…
+#>  2 cyl                 4 mpg      N_miss    0              <NA>    <NA>  contin…
+#>  3 cyl                 4 mpg      N_tot     11             <NA>    <NA>  contin…
+#>  4 cyl                 4 mpg      mean      26.6636363636… <NA>    <NA>  contin…
+#>  5 cyl                 4 mpg      sd        4.50982765242… <NA>    <NA>  contin…
+#>  6 cyl                 4 mpg      min       21.4           <NA>    <NA>  contin…
+#>  7 cyl                 4 mpg      max       33.9           <NA>    <NA>  contin…
+#>  8 cyl                 4 hp       N         11             <NA>    <NA>  contin…
+#>  9 cyl                 4 hp       N_miss    0              <NA>    <NA>  contin…
+#> 10 cyl                 4 hp       N_tot     11             <NA>    <NA>  contin…
 #> # ℹ 32 more rows
 
-ard_categorical(mtcars, by = cyl, include = c(am, gear)) |> 
+ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |> 
   flatten_ard()
-#> # A tibble: 48 × 7
-#>    strata1 strata1_level variable variable_level context     stat_name statistic
-#>    <chr>           <dbl> <chr>    <chr>          <chr>       <chr>     <chr>    
-#>  1 cyl                 4 am       0              categorical n         3        
-#>  2 cyl                 4 am       0              categorical p         0.272727…
-#>  3 cyl                 4 am       1              categorical n         8        
-#>  4 cyl                 4 am       1              categorical p         0.727272…
-#>  5 cyl                 6 am       0              categorical n         4        
-#>  6 cyl                 6 am       0              categorical p         0.571428…
-#>  7 cyl                 6 am       1              categorical n         3        
-#>  8 cyl                 6 am       1              categorical p         0.428571…
-#>  9 cyl                 8 am       0              categorical n         12       
-#> 10 cyl                 8 am       0              categorical p         0.857142…
+#> # A tibble: 48 × 9
+#>    strata1 strata1_level variable variable_level warning error context stat_name
+#>    <chr>           <dbl> <chr>    <chr>          <chr>   <chr> <chr>   <chr>    
+#>  1 cyl                 4 am       0              <NA>    <NA>  catego… n        
+#>  2 cyl                 4 am       0              <NA>    <NA>  catego… p        
+#>  3 cyl                 4 am       1              <NA>    <NA>  catego… n        
+#>  4 cyl                 4 am       1              <NA>    <NA>  catego… p        
+#>  5 cyl                 6 am       0              <NA>    <NA>  catego… n        
+#>  6 cyl                 6 am       0              <NA>    <NA>  catego… p        
+#>  7 cyl                 6 am       1              <NA>    <NA>  catego… n        
+#>  8 cyl                 6 am       1              <NA>    <NA>  catego… p        
+#>  9 cyl                 8 am       0              <NA>    <NA>  catego… n        
+#> 10 cyl                 8 am       0              <NA>    <NA>  catego… p        
 #> # ℹ 38 more rows
+#> # ℹ 1 more variable: statistic <chr>
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
   flatten_ard()
-#> # A tibble: 10 × 6
-#>    strata1 variable context stat_name   statistic               strata1_level
-#>    <chr>   <chr>    <chr>   <chr>       <chr>                   <chr>        
-#>  1 am      hp       ttest   estimate    33.417004048583         <NA>         
-#>  2 am      hp       ttest   estimate1   160.263157894737        0            
-#>  3 am      hp       ttest   estimate2   126.846153846154        1            
-#>  4 am      hp       ttest   statistic   1.26618876980934        <NA>         
-#>  5 am      hp       ttest   p.value     0.220979581335913       <NA>         
-#>  6 am      hp       ttest   parameter   18.7154096625045        <NA>         
-#>  7 am      hp       ttest   conf.low    -21.8785802016468       <NA>         
-#>  8 am      hp       ttest   conf.high   88.7125882988128        <NA>         
-#>  9 am      hp       ttest   method      Welch Two Sample t-test <NA>         
-#> 10 am      hp       ttest   alternative two.sided               <NA>
+#> # A tibble: 10 × 8
+#>    strata1 variable stat_name   statistic    strata1_level context warning error
+#>    <chr>   <chr>    <chr>       <chr>        <chr>         <chr>   <chr>   <chr>
+#>  1 am      hp       estimate    33.41700404… <NA>          t.test  <NA>    <NA> 
+#>  2 am      hp       estimate1   160.2631578… 0             t.test  <NA>    <NA> 
+#>  3 am      hp       estimate2   126.8461538… 1             t.test  <NA>    <NA> 
+#>  4 am      hp       statistic   1.266188769… <NA>          t.test  <NA>    <NA> 
+#>  5 am      hp       p.value     0.220979581… <NA>          t.test  <NA>    <NA> 
+#>  6 am      hp       parameter   18.71540966… <NA>          t.test  <NA>    <NA> 
+#>  7 am      hp       conf.low    -21.8785802… <NA>          t.test  <NA>    <NA> 
+#>  8 am      hp       conf.high   88.71258829… <NA>          t.test  <NA>    <NA> 
+#>  9 am      hp       method      Welch Two S… <NA>          t.test  <NA>    <NA> 
+#> 10 am      hp       alternative two.sided    <NA>          t.test  <NA>    <NA>
 
 glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
@@ -109,9 +110,9 @@ ARD -\> Table Example
 # Construct the ARD
 table_ard <-
   bind_rows(
-    ard_continuous(mtcars, by = cyl, include = mpg),
-    ard_categorical(mtcars, by = cyl, include = am),
-    ard_categorical(mtcars, include = cyl)
+    ard_continuous(mtcars, by = cyl, variables = "mpg"),
+    ard_categorical(mtcars, by = cyl, variables = "am"),
+    ard_categorical(mtcars, variables = "cyl")
   )
 
 # convert ARD to a cardinal table

@@ -8,22 +8,22 @@
 #' returned by `dplyr::group_vars(data)`.
 #' @param statistics a named list of functions that return a summary statistic,
 #' e.g. `list(mpg = list(mean = \(x) mean(x, na.rm = TRUE)))`
-#' @param include columns to include in summaries. Default is `everything()`.
+#' @param variables columns to include in summaries. Default is `everything()`.
 #'
 #' @return a data frame
 #' @name ard_simple
 #'
 #' @examples
-#' ard_continuous(mtcars, by = cyl, include = c(mpg, hp))
-#' ard_categorical(mtcars, by = cyl, include = c(am, gear))
+#' ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
+#' ard_categorical(mtcars, by = cyl, variables = c("am", "gear"))
 NULL
 
 #' @rdname ard_simple
 #' @export
-ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL, include = everything()) {
+ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL, variables = everything()) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
-  all_summary_variables <- dplyr::select(data, {{ include }}) |> colnames() |> setdiff(by)
+  all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
   data <- dplyr::ungroup(data)
 
   # check inputs (will make this more robust later) ----------------------------
@@ -98,10 +98,10 @@ ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL
 
 #' @rdname ard_simple
 #' @export
-ard_categorical <- function(data, by = dplyr::group_vars(data), include = everything()) {
+ard_categorical <- function(data, by = dplyr::group_vars(data), variables = everything()) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
-  all_summary_variables <- dplyr::select(data, {{ include }}) |> colnames() |> setdiff(by)
+  all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
   data <- dplyr::ungroup(data)
 
   # check inputs (will make this more robust later) ----------------------------
@@ -116,7 +116,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), include = everyt
     stats::setNames(nm = all_summary_variables)
 
   df_ard <-
-    ard_continuous(data = data, by = !!all_of(by), statistics = statistics, include = !!all_of(all_summary_variables))
+    ard_continuous(data = data, by = !!all_of(by), statistics = statistics, variables = !!all_of(all_summary_variables))
 
   # second, tabulate variable
   df_ard_tablulation <-

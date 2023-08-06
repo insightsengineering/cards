@@ -10,10 +10,10 @@ ard_continuous(
   data,
   by = dplyr::group_vars(data),
   statistics = NULL,
-  include = everything()
+  variables = everything()
 )
 
-ard_categorical(data, by = dplyr::group_vars(data), include = everything())
+ard_categorical(data, by = dplyr::group_vars(data), variables = everything())
 }
 \arguments{
 \item{data}{a data frame}
@@ -24,7 +24,7 @@ returned by \code{dplyr::group_vars(data)}.}
 \item{statistics}{a named list of functions that return a summary statistic,
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
 
-\item{include}{columns to include in summaries. Default is \code{everything()}.}
+\item{variables}{columns to include in summaries. Default is \code{everything()}.}
 }
 \value{
 a data frame
@@ -34,6 +34,6 @@ Compute Analysis Results Data (ARD) for simple summary statistics from
 continuous and categorical data.
 }
 \examples{
-ard_continuous(mtcars, by = cyl, include = c(mpg, hp))
-ard_categorical(mtcars, by = cyl, include = c(am, gear))
+ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
+ard_categorical(mtcars, by = cyl, variables = c("am", "gear"))
 }

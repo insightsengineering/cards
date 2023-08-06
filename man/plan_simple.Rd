@@ -27,9 +27,9 @@ Plans to convert simple ARDs to formatted data frames.
 These data frames will eventually be stacked into a final table.
 }
 \examples{
-ard_continuous(mtcars, by = cyl, include = mpg) |>
+ard_continuous(mtcars, by = cyl, variables = "mpg") |>
   table_plan_simple_continuous()
 
-ard_categorical(mtcars, by = cyl, include = am) |>
+ard_categorical(mtcars, by = cyl, variables = "am") |>
   table_plan_simple_categorical()
 }

@@ -8,7 +8,7 @@
 #' @param data a data frame
 #' @param label named list of variable labels, e.g. `list(mpg = "MPG")`.
 #' Default is `NULL`
-#' @param include variable to include
+#' @param variables variable to include
 #'
 #' @return a data frame
 #' @export
@@ -18,10 +18,10 @@
 #' attr(df$var1, 'label') <- "Lowercase Letters"
 #'
 #' ard_label(df)
-ard_label <- function(data, label = NULL, include = everything()) {
-  include <- dplyr::select(data, {{ include }}) |> colnames()
+ard_label <- function(data, label = NULL, variables = everything()) {
+  variables <- dplyr::select(data, {{ variables }}) |> colnames()
 
-  dplyr::tibble(variable = include) |>
+  dplyr::tibble(variable = variables) |>
     dplyr::mutate(
       stat_name = "label",
       statistic =
