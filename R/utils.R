@@ -43,6 +43,9 @@
 #' rows for unobserved factor levels, and unobserved combinations of
 #' stratifying variables.
 #'
+#' The levels are wrapped in lists so they can be stacked with other types
+#' of different clases
+#'
 #' @param data a data frame
 #' @param by a character string of stratifying variable names
 #' @param key the name of the new column with the nested data frame.
@@ -90,7 +93,8 @@
     )
 
   # returning final nested tibble
-  df_return
+  df_return |>
+    dplyr::mutate(dplyr::across(.cols = -dplyr::all_of(key), .fns = as.list))
 }
 
 #' ARD-flavor of unique()

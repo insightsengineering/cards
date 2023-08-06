@@ -51,36 +51,36 @@ glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
   flatten_ard()
 ```
 
-ARD  -> Table Example
+<!-- ARD  -> Table Example -->
 
-```{r}
-# Construct the ARD
-table_ard <-
-  bind_rows(
-    ard_continuous(mtcars, by = cyl, variables = "mpg"),
-    ard_categorical(mtcars, by = cyl, variables = "am"),
-    ard_categorical(mtcars, variables = "cyl")
-  )
+<!-- ```{r} -->
+<!-- # Construct the ARD -->
+<!-- table_ard <- -->
+<!--   bind_rows( -->
+<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
+<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
+<!--     ard_categorical(mtcars, variables = "cyl") -->
+<!--   ) -->
 
-# convert ARD to a cardinal table
-table <-
-  construct_cardinal(
-    table_plan =
-      bind_rows(
-        table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(),
-        table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical()
-      ),
-    header_plan =
-      table_ard |>
-      filter(variable %in% "cyl") |>
-      header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
-      modifyList(val = list(label = gt::md("**Characteristic**")))
-  ) |>
-  convert_cardinal(engine = "gt")
-```
+<!-- # convert ARD to a cardinal table -->
+<!-- table <- -->
+<!--   construct_cardinal( -->
+<!--     table_plan = -->
+<!--       bind_rows( -->
+<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
+<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
+<!--       ), -->
+<!--     header_plan = -->
+<!--       table_ard |> -->
+<!--       filter(variable %in% "cyl") |> -->
+<!--       header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |> -->
+<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
+<!--   ) |> -->
+<!--   convert_cardinal(engine = "gt") -->
+<!-- ``` -->
 
-```{r echo=FALSE, fig.width=4}
-gt::gtsave(table, filename = "man/figures/README-table_example.png")
-```
+<!-- ```{r echo=FALSE, fig.width=4} -->
+<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
+<!-- ``` -->
 
-<img src="man/figures/README-table_example.png" style="width: 50%">
+<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
