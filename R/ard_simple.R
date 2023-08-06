@@ -93,7 +93,8 @@ ard_continuous <- function(data, by = dplyr::group_vars(data), variables = every
   df_return |>
     dplyr::select(-"...ard_nested_data...") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
-    dplyr::mutate(context = "continuous")
+    dplyr::mutate(context = "continuous") %>%
+    structure(., class = c("card", class(.)))
 }
 
 #' @rdname ard_simple
@@ -162,7 +163,8 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
 
   # bind data frames with stats, and return to user ----------------------------
   dplyr::bind_rows(df_ard_tablulation, df_ard) |>
-    dplyr::mutate(context = "categorical")
+    dplyr::mutate(context = "categorical") %>%
+    structure(., class = c("card", class(.)))
 }
 
 

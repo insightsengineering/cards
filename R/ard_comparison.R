@@ -64,7 +64,8 @@ ard_ttest <- function(data, by, variable, ...) {
       context = "t.test",
       warning = lst_ttest["warning"],
       error = lst_ttest["error"]
-    )
+    ) %>%
+    structure(., class = c("card", class(.)))
 }
 
 #' @rdname ard_comparison
@@ -116,5 +117,6 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
       context = "wilcox.test",
       warning = lst_wilcox["warning"],
       error = lst_wilcox["error"]
-    )
+    ) %>%
+    structure(., class = c("card", class(.)))
 }

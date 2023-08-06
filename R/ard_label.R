@@ -29,5 +29,6 @@ ard_label <- function(data, label = NULL, variables = everything()) {
           .data$variable,
           function(x) label[[x]] %||% attr(x, "label") %||% x
         )
-    )
+    ) %>%
+    structure(., class = c("card", class(.)))
 }
