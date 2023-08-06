@@ -9,8 +9,8 @@
 ard_continuous(
   data,
   by = dplyr::group_vars(data),
-  statistics = NULL,
-  variables = everything()
+  variables = everything(),
+  statistics = NULL
 )
 
 ard_categorical(data, by = dplyr::group_vars(data), variables = everything())
@@ -21,10 +21,10 @@ ard_categorical(data, by = dplyr::group_vars(data), variables = everything())
 \item{by}{columns to compute statistics by. Default are the columns
 returned by \code{dplyr::group_vars(data)}.}
 
+\item{variables}{columns to include in summaries. Default is \code{everything()}.}
+
 \item{statistics}{a named list of functions that return a summary statistic,
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
-
-\item{variables}{columns to include in summaries. Default is \code{everything()}.}
 }
 \value{
 a data frame

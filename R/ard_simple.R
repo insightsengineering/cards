@@ -20,7 +20,7 @@ NULL
 
 #' @rdname ard_simple
 #' @export
-ard_continuous <- function(data, by = dplyr::group_vars(data), statistics = NULL, variables = everything()) {
+ard_continuous <- function(data, by = dplyr::group_vars(data), variables = everything(), statistics = NULL) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
   all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
@@ -116,7 +116,12 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
     stats::setNames(nm = all_summary_variables)
 
   df_ard <-
-    ard_continuous(data = data, by = !!all_of(by), statistics = statistics, variables = !!all_of(all_summary_variables))
+    ard_continuous(
+      data = data,
+      by = !!all_of(by),
+      statistics = statistics,
+      variables = !!all_of(all_summary_variables)
+    )
 
   # second, tabulate variable
   df_ard_tablulation <-
