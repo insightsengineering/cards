@@ -13,9 +13,9 @@ ard_wilcoxtest(data, by, variable, ...)
 \arguments{
 \item{data}{a data frame}
 
-\item{by}{charcter column name to compare by}
+\item{by}{character column name to compare by}
 
-\item{variable}{charadter column name to be compared}
+\item{variable}{character column name to be compared}
 
 \item{...}{arguments passed to method.}
 }

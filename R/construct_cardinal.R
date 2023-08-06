@@ -1,7 +1,7 @@
 #' Construct Cardinal Table
 #'
 #' Construct a table of class 'cardinal' from the table plan, header plan, and
-#' other table compnents
+#' other table components
 #'
 #' @param table_plan a table plan data frame
 #' @param header_plan a header plan named list

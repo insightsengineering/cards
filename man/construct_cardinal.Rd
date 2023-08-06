@@ -18,7 +18,7 @@ a cardinal table
 }
 \description{
 Construct a table of class 'cardinal' from the table plan, header plan, and
-other table compnents
+other table components
 }
 \examples{
 # Construct the ARD

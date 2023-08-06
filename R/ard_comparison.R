@@ -1,8 +1,8 @@
 #' Comparison ARD Statistics
 #'
 #' @param data a data frame
-#' @param by charcter column name to compare by
-#' @param variable charadter column name to be compared
+#' @param by character column name to compare by
+#' @param variable character column name to be compared
 #' @param ... arguments passed to method.
 #'
 #' @return data frame
