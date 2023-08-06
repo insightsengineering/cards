@@ -10,10 +10,9 @@
 #'
 #' @examples
 #' ard_ttest(data = mtcars, by = "am", variable = "hp")
+#' ard_wilcoxtest(data = mtcars, by = "am", variable = "hp")
 NULL
 
-# TODO: wrap the evaluations in `eval_capture_condition()`
-# TODO: what to return if this function errors?
 #' @rdname ard_comparison
 #' @export
 ard_ttest <- function(data, by, variable, ...) {
@@ -21,68 +20,101 @@ ard_ttest <- function(data, by, variable, ...) {
   rlang::check_installed("broom")
 
   # perform t-test and format results ------------------------------------------
-  ttest <- stats::t.test(data[[variable]] ~ data[[by]], ...)
+  lst_ttest <- eval_capture_conditions(stats::t.test(data[[variable]] ~ data[[by]], ...))
 
-  ttest |>
-    broom::tidy() |>
+  # if there are results, put them in the ARD format ---------------------------
+  if (!is.null(lst_ttest[["result"]])) {
+    ret <-
+      lst_ttest[["result"]] |>
+      broom::tidy() |>
+      dplyr::mutate(
+        conf.level = attr(lst_ttest[["result"]], "conf.level"),
+        dplyr::across(everything(), .fns = list),
+        strata1 = .env$by,
+        variable = .env$variable
+      ) |>
+      tidyr::pivot_longer(
+        cols = -c("strata1", "variable"),
+        names_to = "stat_name",
+        values_to = "statistic"
+      ) |>
+      dplyr::mutate(
+        strata1_level =
+          dplyr::case_when(
+            .data$stat_name %in% "estimate1" ~ unique(data[[by]]) |> stats::na.omit() |>  sort() |> dplyr::first() |> list(),
+            .data$stat_name %in% "estimate2" ~ unique(data[[by]]) |> stats::na.omit() |>sort() |> dplyr::last() |> list(),
+          )
+      )
+  }
+
+  # if there was an error, return empty data frame in ARD format ---------------
+  else {
+    ret <-
+      dplyr::tibble(
+        strata1 = .env$by,
+        variable = .env$variable,
+        stat_name = NA_character_,
+        statistic = list(NULL)
+      )
+  }
+
+  # return and add warning/errors ----------------------------------------------
+  ret |>
     dplyr::mutate(
-      conf.level = attr(ttest, "conf.level"),
-      dplyr::across(everything(), .fns = list),
-      strata1 = by,
-      variable = variable,
-      context = "ttest"
-    ) |>
-    tidyr::pivot_longer(
-      cols = -c("strata1", "variable", "context"),
-      names_to = "stat_name",
-      values_to = "statistic"
-    ) |>
-    dplyr::mutate(
-      strata1_level =
-        dplyr::case_when(
-          .data$stat_name %in% "estimate1" ~ unique(data[[by]]) |> stats::na.omit() |>  sort() |> dplyr::first() |> list(),
-          .data$stat_name %in% "estimate2" ~ unique(data[[by]]) |> stats::na.omit() |>sort() |> dplyr::last() |> list(),
-        )
+      context = "t.test",
+      warning = lst_ttest["warning"],
+      error = lst_ttest["error"]
     )
 }
 
-# TODO: wrap the evaluations in `eval_capture_condition()`
-# TODO: what to return if this function errors?
 #' @rdname ard_comparison
 #' @export
 ard_wilcoxtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
-  browser()
-  # perform t-test and format results ------------------------------------------
-  wilcoxtest <- stats::wilcox.test(data[[variable]] ~ data[[by]], ...)
+  # perform Wilcoxon test and format results -----------------------------------
+  lst_wilcox <- eval_capture_conditions(stats::wilcox.test(data[[variable]] ~ data[[by]], ...))
 
-  tidy_wilcoxtest <- broom::tidy(wilcoxtest)
+  # if there are results, put them in the ARD format ---------------------------
+  if (!is.null(lst_wilcox[["result"]])) {
+    tidy_wilcoxtest <- broom::tidy(lst_wilcox[["result"]])
 
-  # add the confidence level if it's reported
-  if (!is.null(attr(wilcoxtest, "conf.level"))) {
-    tidy_wilcoxtest$conf.level <- attr(wilcoxtest, "conf.level")
+    # add the confidence level if it's reported
+    if (!is.null(attr(lst_wilcox[["result"]], "conf.level"))) {
+      tidy_wilcoxtest$conf.level <- attr(lst_wilcox[["result"]], "conf.level")
+    }
+
+    ret <-
+      tidy_wilcoxtest |>
+      dplyr::mutate(
+        dplyr::across(everything(), .fns = list),
+        strata1 = by,
+        variable = variable
+      ) |>
+      tidyr::pivot_longer(
+        cols = -c("strata1", "variable"),
+        names_to = "stat_name",
+        values_to = "statistic"
+      )
   }
 
-  tidy_wilcoxtest |>
+  # if there was an error, return empty data frame in ARD format ---------------
+  else {
+    ret <-
+      dplyr::tibble(
+        strata1 = .env$by,
+        variable = .env$variable,
+        stat_name = NA_character_,
+        statistic = list(NULL)
+      )
+  }
+
+  # return and add warning/errors ----------------------------------------------
+  ret |>
     dplyr::mutate(
-      conf.level = attr(wilcoxtest, "conf.level"),
-      dplyr::across(everything(), .fns = list),
-      strata1 = by,
-      variable = variable,
-      context = "wilcoxtest"
-    ) |>
-    tidyr::pivot_longer(
-      cols = -c("strata1", "variable", "context"),
-      names_to = "stat_name",
-      values_to = "statistic"
-    ) |>
-    dplyr::mutate(
-      strata1_level =
-        dplyr::case_when(
-          .data$stat_name %in% "estimate1" ~ unique(data[[by]]) |> stats::na.omit() |> sort() |> dplyr::first() |> list(),
-          .data$stat_name %in% "estimate2" ~ unique(data[[by]]) |> stats::na.omit() |> sort() |> dplyr::last() |> list(),
-        )
+      context = "wilcox.test",
+      warning = lst_wilcox["warning"],
+      error = lst_wilcox["error"]
     )
 }

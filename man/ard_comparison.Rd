@@ -27,4 +27,5 @@ Comparison ARD Statistics
 }
 \examples{
 ard_ttest(data = mtcars, by = "am", variable = "hp")
+ard_wilcoxtest(data = mtcars, by = "am", variable = "hp")
 }

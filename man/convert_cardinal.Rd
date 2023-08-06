@@ -25,12 +25,7 @@ table_ard <-
   dplyr::bind_rows(
     ard_continuous(mtcars, by = cyl, include = mpg),
     ard_categorical(mtcars, by = cyl, include = am),
-    # TODO: The ARD creation code can by simplified after the categorical
-    #       ARD accepts no-by variable specifications
-    mtcars |>
-      dplyr::mutate(..one.. = 1L) |>
-      ard_categorical(by = ..one..,  include = cyl) |>
-      dplyr::select(-starts_with("strata"))
+    ard_categorical(mtcars,  nclude = cyl)
   )
 
 # convert ARD to a cardinal table

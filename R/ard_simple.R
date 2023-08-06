@@ -134,8 +134,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), include = everyt
                     rlang::inject(!!.unique_and_sorted(data[[v]])),
                   n = # creating a factor, so unobserved levels appear in tabulation
                     factor(x, levels = rlang::inject(!!.unique_and_sorted(data[[v]]))) |>  table() |> as.integer(),
-                  p =
-                    .data$n / sum(.data$n)
+                  p = .data$n / sum(.data$n)
                 )
               }
           ) |>
