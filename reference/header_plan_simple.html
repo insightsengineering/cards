@@ -71,7 +71,7 @@ Default is <code>"{strata}  \nN = {n}"</code></p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, include <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, variables <span class="op">=</span> <span class="st">"cyl"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">header_plan_simple</span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders**  \nN = {n} ({p}%)"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $stat_1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "**4 Cylinders**  \nN = 11 (34.4%)"</span>
