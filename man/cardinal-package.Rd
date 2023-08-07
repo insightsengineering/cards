@@ -6,7 +6,7 @@
 \alias{cardinal-package}
 \title{cardinal: CDISC Analysis Results Data}
 \description{
-The package constructs CDISC-compliant Analysis Results Data objects. These objects are used to construct summary tables and visualizations.
+The package constructs CDISC-compliant Analysis Results Data objects. These objects are used (and re-used) to construct summary tables, visualizations, and written reports.
 }
 \seealso{
 Useful links:

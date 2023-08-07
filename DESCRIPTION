@@ -5,8 +5,8 @@ Authors@R:
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018"))
 Description: The package constructs CDISC-compliant Analysis Results Data
-    objects. These objects are used to construct summary tables and
-    visualizations.
+    objects. These objects are used (and re-used) to construct summary tables,
+    visualizations, and written reports.
 License: MIT + file LICENSE
 URL: https://github.com/insightsengineering/cardinal,
     https://refactored-bassoon-49o3774.pages.github.io/
@@ -21,6 +21,7 @@ Imports:
 Suggests: 
     broom (>= 1.0.5),
     broom.helpers (>= 1.13.0),
+    jsonlite,
     spelling,
     testthat (>= 3.0.0)
 Encoding: UTF-8
