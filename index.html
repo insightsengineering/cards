@@ -8,7 +8,7 @@
 <meta name="description" content="The package constructs CDISC-compliant Analysis Results Data
     objects. These objects are used (and re-used) to construct summary tables,
     visualizations, and written reports.">
-<title>CDISC Analysis Results Data • cardinal</title>
+<title>CDISC Analysis Results Data • cards</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -28,7 +28,7 @@
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
-    <a class="navbar-brand me-2" href="index.html">cardinal</a>
+    <a class="navbar-brand me-2" href="index.html">cards</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
 
@@ -49,7 +49,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/insightsengineering/cardinal/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -62,74 +62,71 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="cardinal">cardinal<a class="anchor" aria-label="anchor" href="#cardinal"></a>
+<div class="page-header"><h1 id="cards">cards<a class="anchor" aria-label="anchor" href="#cards"></a>
 </h1></div>
 <!-- badges: start -->
+<!-- [![R-CMD-check](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cards?branch=main) -->
 <!-- badges: end -->
-<p>The goal of cardinal is to …</p>
+<p>The {cards} package creates CDISC Analysis Result Data (ARD).</p>
+<p><strong>This package is in a preliminary state, and breaking change will be made without notice or deprecation.</strong></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of cardinal from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of cards from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"insightsengineering/cardinal"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"insightsengineering/cards"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>ARD Examples</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cardinal" class="external-link">cardinal</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cards" class="external-link">cards</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 42 × 8</span></span>
-<span><span class="co">#&gt;    strata1 strata1_level variable stat_name statistic      warning error context</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1 cyl     4             mpg      N         11             &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  2 cyl     4             mpg      N_miss    0              &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  3 cyl     4             mpg      N_tot     11             &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  4 cyl     4             mpg      mean      26.6636363636… &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  5 cyl     4             mpg      sd        4.50982765242… &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  6 cyl     4             mpg      min       21.4           &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  7 cyl     4             mpg      max       33.9           &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  8 cyl     4             hp       N         11             &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt;  9 cyl     4             hp       N_miss    0              &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
-<span><span class="co">#&gt; 10 cyl     4             hp       N_tot     11             &lt;NA&gt;    &lt;NA&gt;  contin…</span></span>
+<span><span class="co">#&gt; # A tibble: 42 × 10</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label stat_format_fn  statistic</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt;  1 cyl     4             mpg      N         N          "function (x) … 11       </span></span>
+<span><span class="co">#&gt;  2 cyl     4             mpg      N_miss    N Missing  "function (x) … 0        </span></span>
+<span><span class="co">#&gt;  3 cyl     4             mpg      N_tot     Total N    "function (x) … 11       </span></span>
+<span><span class="co">#&gt;  4 cyl     4             mpg      mean      Mean       "function (x) … 26.66363…</span></span>
+<span><span class="co">#&gt;  5 cyl     4             mpg      sd        SD         "function (x) … 4.509827…</span></span>
+<span><span class="co">#&gt;  6 cyl     4             mpg      min       Min        "function (x) … 21.4     </span></span>
+<span><span class="co">#&gt;  7 cyl     4             mpg      max       Max        "function (x) … 33.9     </span></span>
+<span><span class="co">#&gt;  8 cyl     4             hp       N         N          "function (x) … 11       </span></span>
+<span><span class="co">#&gt;  9 cyl     4             hp       N_miss    N Missing  "function (x) … 0        </span></span>
+<span><span class="co">#&gt; 10 cyl     4             hp       N_tot     Total N    "function (x) … 11       </span></span>
 <span><span class="co">#&gt; # ℹ 32 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"gear"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"gear"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 48 × 9</span></span>
-<span><span class="co">#&gt;    strata1 strata1_level variable variable_level warning error context stat_name</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    </span></span>
-<span><span class="co">#&gt;  1 cyl     4             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… n        </span></span>
-<span><span class="co">#&gt;  2 cyl     4             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… p        </span></span>
-<span><span class="co">#&gt;  3 cyl     4             am       1              &lt;NA&gt;    &lt;NA&gt;  catego… n        </span></span>
-<span><span class="co">#&gt;  4 cyl     4             am       1              &lt;NA&gt;    &lt;NA&gt;  catego… p        </span></span>
-<span><span class="co">#&gt;  5 cyl     6             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… n        </span></span>
-<span><span class="co">#&gt;  6 cyl     6             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… p        </span></span>
-<span><span class="co">#&gt;  7 cyl     6             am       1              &lt;NA&gt;    &lt;NA&gt;  catego… n        </span></span>
-<span><span class="co">#&gt;  8 cyl     6             am       1              &lt;NA&gt;    &lt;NA&gt;  catego… p        </span></span>
-<span><span class="co">#&gt;  9 cyl     8             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… n        </span></span>
-<span><span class="co">#&gt; 10 cyl     8             am       0              &lt;NA&gt;    &lt;NA&gt;  catego… p        </span></span>
+<span><span class="co">#&gt; # A tibble: 48 × 11</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable stat_label stat_format_fn       variable_level</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt;  1 cyl     4             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt;  2 cyl     4             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt;  3 cyl     4             am       table      "function (x) \nfor… 1             </span></span>
+<span><span class="co">#&gt;  4 cyl     4             am       table      "function (x) \nfor… 1             </span></span>
+<span><span class="co">#&gt;  5 cyl     6             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt;  6 cyl     6             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt;  7 cyl     6             am       table      "function (x) \nfor… 1             </span></span>
+<span><span class="co">#&gt;  8 cyl     6             am       table      "function (x) \nfor… 1             </span></span>
+<span><span class="co">#&gt;  9 cyl     8             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt; 10 cyl     8             am       table      "function (x) \nfor… 0             </span></span>
 <span><span class="co">#&gt; # ℹ 38 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: statistic &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   stat_name &lt;chr&gt;, statistic &lt;chr&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"am"</span>, variable <span class="op">=</span> <span class="st">"hp"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 8</span></span>
-<span><span class="co">#&gt;    strata1 variable stat_name   statistic    strata1_level context warning error</span></span>
+<span><span class="co">#&gt;    group1 variable stat_name   statistic    group1_level context warning error</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
 <span><span class="co">#&gt;  1 am      hp       estimate    33.41700404… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
 <span><span class="co">#&gt;  2 am      hp       estimate1   160.2631578… 0             t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
@@ -159,39 +156,42 @@
 <span><span class="co">#&gt;  9 mpg      &lt;NA&gt;           label          mpg        regression</span></span>
 <span><span class="co">#&gt; 10 mpg      &lt;NA&gt;           n_obs          32         regression</span></span>
 <span><span class="co">#&gt; # ℹ 58 more rows</span></span></code></pre></div>
-<p>ARD -&gt; Table Example</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Construct the ARD</span></span>
-<span><span class="va">table_ard</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, variables <span class="op">=</span> <span class="st">"mpg"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, variables <span class="op">=</span> <span class="st">"am"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, variables <span class="op">=</span> <span class="st">"cyl"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># convert ARD to a cardinal table</span></span>
-<span><span class="va">table</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="reference/construct_cardinal.html">construct_cardinal</a></span><span class="op">(</span></span>
-<span>    table_plan <span class="op">=</span></span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
-<span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"mpg"</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="fu"><a href="reference/plan_simple.html">table_plan_simple_continuous</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        <span class="va">table_ard</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/plan_simple.html">table_plan_simple_categorical</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>      <span class="op">)</span>,</span>
-<span>    header_plan <span class="op">=</span></span>
-<span>      <span class="va">table_ard</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"cyl"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu"><a href="reference/header_plan_simple.html">header_plan_simple</a></span><span class="op">(</span>header <span class="op">=</span> <span class="st">"**{strata} Cylinders**  \nN={n}  ({p}%)"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/utils/modifyList.html" class="external-link">modifyList</a></span><span class="op">(</span>val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"**Characteristic**"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/convert_cardinal.html">convert_cardinal</a></span><span class="op">(</span>engine <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-table_example.png" style="width: 50%"></p>
+<!-- ARD  -> Table Example -->
+<!-- ```{r} -->
+<!-- # Construct the ARD -->
+<!-- table_ard <- -->
+<!--   bind_rows( -->
+<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
+<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
+<!--     ard_categorical(mtcars, variables = "cyl") -->
+<!--   ) -->
+<!-- # convert ARD to a cards table -->
+<!-- table <- -->
+<!--   construct_cards( -->
+<!--     table_plan = -->
+<!--       bind_rows( -->
+<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
+<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
+<!--       ), -->
+<!--     header_plan = -->
+<!--       table_ard |> -->
+<!--       filter(variable %in% "cyl") |> -->
+<!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> -->
+<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
+<!--   ) |> -->
+<!--   convert_cards(engine = "gt") -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, fig.width=4} -->
+<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
+<!-- ``` -->
+<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/insightsengineering/cardinal/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/insightsengineering/cardinal/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/insightsengineering/cards/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/insightsengineering/cards/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -207,7 +207,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing cardinal</a></li>
+<li><a href="authors.html#citation">Citing cards</a></li>
 </ul>
 </div>
 
