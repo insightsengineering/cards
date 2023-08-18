@@ -4,24 +4,24 @@
 #'
 #' @param ard a ARD object
 #' @param header a string specifying the form of a column header.
-#' Default is `"{strata}  \nN = {n}"`
+#' Default is `"{group}  \nN = {n}"`
 #'
 #' @return named list
 #' @export
 #'
 #' @examples
 #' ard_categorical(mtcars, variables = "cyl") |>
-#'   header_plan_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}%)")
+#'   header_plan_simple(header = "**{group} Cylinders**  \nN = {n} ({p}%)")
 
 # TODO: Update function to handle OVERALL-only tables
 # TODO: the returned text string is formatted with `gt::md()`. Should this be optional?
-header_plan_simple <- function(ard, header = "{strata}  \nN = {n}") {
+header_plan_simple <- function(ard, header = "{group}  \nN = {n}") {
   nested_ard <-
     ard |>
     # TODO: DELETE THIS mutate() LATER. NEED BETTER SOLUTION TO INCLUDE VARIABLE-LEVEL SUMMARY STATS
     dplyr::select("variable", "stat_name", "statistic", "context", "variable_level") |>
     dplyr::mutate(dplyr::across("variable_level", ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character())) |>
-    tidyr::drop_na() |> # this drops the label stat row that doesn't have a strata value
+    tidyr::drop_na() |> # this drops the label stat row that doesn't have a group value
     dplyr::select(-any_of("context")) |>
     dplyr::mutate(
       variable_level = unlist(.data$variable_level),
@@ -51,7 +51,7 @@ header_plan_simple <- function(ard, header = "{strata}  \nN = {n}") {
           FUN = function(data, level) {
             dplyr::bind_rows(
               data,
-              dplyr::tibble(stat_name = "strata", statistic = level)
+              dplyr::tibble(stat_name = "group", statistic = level)
             )
           },
           MoreArgs = list()

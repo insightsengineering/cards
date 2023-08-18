@@ -35,7 +35,7 @@ table_plan_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd
   nested_ard <-
     ard |>
     dplyr::select(-any_of("variable_level")) |>
-    tidyr::drop_na() |> # this drops the label stat row that doesn't have a strata value
+    tidyr::drop_na() |> # this drops the label stat row that doesn't have a group value
     dplyr::select(-any_of("context")) |>
     dplyr::mutate(
       statistic =
@@ -47,7 +47,7 @@ table_plan_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd
         as.character()
     ) |>
     tidyr::nest(
-      .by = c("strata1", "strata1_level", "variable")
+      .by = c("group1", "group1_level", "variable")
     ) |>
     dplyr::mutate(
       col_name = paste0("stat_", dplyr::row_number())
@@ -106,7 +106,7 @@ table_plan_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
     dplyr::select(-any_of(c("error", "warning"))) |>
     # TODO: DELETE THIS mutate() LATER. NEED BETTER SOLUTION TO INCLUDE VARIABLE-LEVEL SUMMARY STATS
     dplyr::mutate(dplyr::across("variable_level", ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character())) |>
-    tidyr::drop_na() |> # this drops the label stat row that doesn't have a strata value
+    tidyr::drop_na() |> # this drops the label stat row that doesn't have a group value
     dplyr::select(-any_of("context")) |>
     dplyr::mutate(
       variable_level = unlist(.data$variable_level),
@@ -122,7 +122,7 @@ table_plan_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
         as.character()
     ) |>
     tidyr::nest(
-      .by = c("strata1", "strata1_level", "variable")
+      .by = c("group1", "group1_level", "variable")
     ) |>
     dplyr::mutate(
       col_name = paste0("stat_", dplyr::row_number())

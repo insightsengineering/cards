@@ -4,13 +4,13 @@
 \alias{header_plan_simple}
 \title{Column Header Plan}
 \usage{
-header_plan_simple(ard, header = "{strata}  \\nN = {n}")
+header_plan_simple(ard, header = "{group}  \\nN = {n}")
 }
 \arguments{
 \item{ard}{a ARD object}
 
 \item{header}{a string specifying the form of a column header.
-Default is \code{"{strata}  \\nN = {n}"}}
+Default is \code{"{group}  \\nN = {n}"}}
 }
 \value{
 named list
@@ -20,5 +20,5 @@ Create a named list column header definitions for statistic columns
 }
 \examples{
 ard_categorical(mtcars, variables = "cyl") |>
-  header_plan_simple(header = "**{strata} Cylinders**  \nN = {n} ({p}\%)")
+  header_plan_simple(header = "**{group} Cylinders**  \nN = {n} ({p}\%)")
 }

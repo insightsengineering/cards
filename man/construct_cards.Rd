@@ -40,7 +40,7 @@ table <-
     header_plan =
       table_ard |>
       dplyr::filter(variable \%in\% "cyl") |>
-      header_plan_simple(header = "**{strata} Cylinders  \nN = {n} ({p}\%)**") |>
+      header_plan_simple(header = "**{group} Cylinders  \nN = {n} ({p}\%)**") |>
       utils::modifyList(val = list(label = "**Characteristic**"))
   )
 }

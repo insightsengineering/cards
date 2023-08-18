@@ -34,7 +34,7 @@ library(dplyr) |> suppressPackageStartupMessages()
 ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
   flatten_ard()
 #> # A tibble: 42 × 10
-#>    strata1 strata1_level variable stat_name stat_label stat_format_fn  statistic
+#>    group1 group1_level variable stat_name stat_label stat_format_fn  statistic
 #>    <chr>   <chr>         <chr>    <chr>     <chr>      <chr>           <chr>    
 #>  1 cyl     4             mpg      N         N          "function (x) … 11       
 #>  2 cyl     4             mpg      N_miss    N Missing  "function (x) … 0        
@@ -52,7 +52,7 @@ ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
 ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
   flatten_ard()
 #> # A tibble: 48 × 11
-#>    strata1 strata1_level variable stat_label stat_format_fn       variable_level
+#>    group1 group1_level variable stat_label stat_format_fn       variable_level
 #>    <chr>   <chr>         <chr>    <chr>      <chr>                <chr>         
 #>  1 cyl     4             am       table      "function (x) \nfor… 0             
 #>  2 cyl     4             am       table      "function (x) \nfor… 0             
@@ -71,7 +71,7 @@ ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |>
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
   flatten_ard()
 #> # A tibble: 10 × 8
-#>    strata1 variable stat_name   statistic    strata1_level context warning error
+#>    group1 variable stat_name   statistic    group1_level context warning error
 #>    <chr>   <chr>    <chr>       <chr>        <chr>         <chr>   <chr>   <chr>
 #>  1 am      hp       estimate    33.41700404… <NA>          t.test  <NA>    <NA> 
 #>  2 am      hp       estimate1   160.2631578… 0             t.test  <NA>    <NA> 
@@ -123,7 +123,7 @@ glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
 <!--     header_plan = -->
 <!--       table_ard |> -->
 <!--       filter(variable %in% "cyl") |> -->
-<!--       header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |> -->
+<!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> -->
 <!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
 <!--   ) |> -->
 <!--   convert_cards(engine = "gt") -->

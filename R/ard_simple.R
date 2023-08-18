@@ -75,8 +75,8 @@ ard_continuous <- function(data,
     df_return <-
       df_return |>
       # setting column names for stratum levels
-      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("strata", seq_along(by)))), .before = 0L) |>
-      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("strata", seq_along(by), "_level"))))
+      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by)))), .before = 0L) |>
+      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by), "_level"))))
   }
 
   df_return$..ard_all_stats.. <-

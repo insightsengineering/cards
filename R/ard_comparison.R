@@ -30,16 +30,16 @@ ard_ttest <- function(data, by, variable, ...) {
       dplyr::mutate(
         conf.level = attr(lst_ttest[["result"]], "conf.level"),
         dplyr::across(everything(), .fns = list),
-        strata1 = .env$by,
+        group1 = .env$by,
         variable = .env$variable
       ) |>
       tidyr::pivot_longer(
-        cols = -c("strata1", "variable"),
+        cols = -c("group1", "variable"),
         names_to = "stat_name",
         values_to = "statistic"
       ) |>
       dplyr::mutate(
-        strata1_level =
+        group1_level =
           dplyr::case_when(
             .data$stat_name %in% "estimate1" ~ unique(data[[by]]) |> stats::na.omit() |>  sort() |> dplyr::first() |> list(),
             .data$stat_name %in% "estimate2" ~ unique(data[[by]]) |> stats::na.omit() |>sort() |> dplyr::last() |> list(),
@@ -51,7 +51,7 @@ ard_ttest <- function(data, by, variable, ...) {
   else {
     ret <-
       dplyr::tibble(
-        strata1 = .env$by,
+        group1 = .env$by,
         variable = .env$variable,
         stat_name = NA_character_,
         statistic = list(NULL)
@@ -90,11 +90,11 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
       tidy_wilcoxtest |>
       dplyr::mutate(
         dplyr::across(everything(), .fns = list),
-        strata1 = by,
+        group1 = by,
         variable = variable
       ) |>
       tidyr::pivot_longer(
-        cols = -c("strata1", "variable"),
+        cols = -c("group1", "variable"),
         names_to = "stat_name",
         values_to = "statistic"
       )
@@ -104,7 +104,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   else {
     ret <-
       dplyr::tibble(
-        strata1 = .env$by,
+        group1 = .env$by,
         variable = .env$variable,
         stat_name = NA_character_,
         statistic = list(NULL)
