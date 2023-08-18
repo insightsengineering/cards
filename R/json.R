@@ -59,20 +59,26 @@ as_nested_list <- function(x) {
 
 .one_row_ard_to_nested_list <- function(x) {
   df_preparation <-
-    x %>%
-    # reorder with primary variable first, followed by stratum
-    dplyr::select(., all_of(colnames(.) |> sort())) %>%
-    dplyr::select(
-      any_of(c("variable", "variable_level")), starts_with("group"),
-                  "stat_name", "statistic", "warning", "error" # TODO: we could apply a formatting function and add that here
-      ) |>
+    x |>
     # variable levels are originally stored in lists. unlisting here and saving in tibble as a scalar
     dplyr::mutate(
       dplyr::across(
         # TODO: Does the statistic column need to remain in a list for more complex returns?
-        .col = where(is.list) & (dplyr::matches("^group[0-9]+_level$") | any_of(c("variable_level", "statistic"))),
+        .col = where(is.list) & (dplyr::matches("^group[0-9]+_level$") | any_of("variable_level")),
         .fns = function(x) x[[1]]
-      )
+      ),
+      statistic_fmt =
+        .mapply(
+          FUN = function(x, fn) if (!is.null(fn)) fn(x) else NULL,
+          dots = list(.data$statistic, .data$stat_format_fn),
+          MoreArgs = NULL
+        )
+    ) %>%
+    # reorder with primary variable first, followed by stratum
+    dplyr::select(., all_of(colnames(.) |> sort())) %>%
+    dplyr::select(
+      any_of(c("variable", "variable_level")), starts_with("group"),
+      "stat_name", "statistic", "statistic_fmt", "warning", "error", "context" # TODO: we could apply a formatting function and add that here
     ) |>
     # drop columns that are NA
     dplyr::select(-(where(function(x) all(is.na(x))) & (starts_with("group") | any_of("variable_level"))))
@@ -90,7 +96,15 @@ as_nested_list <- function(x) {
     {paste0("lst_return", .)}
 
   # creating final expression defining the results within the nested list
-  rlang::expr(!!rlang::parse_expr(chr_nested_list_specification) <- !!df_preparation[c("statistic", "warning", "error")] |> as.list())
+  rlang::expr(
+    !!rlang::parse_expr(chr_nested_list_specification) <-
+      !!dplyr::select(
+        df_preparation,
+        any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
+      ) |>
+      unlist() |> # this removes the NULL elements, e.g. the error col when there is no error. TODO: is this what we want? it will probably break if there is anything other than a simple scalar statistic
+      as.list()
+  )
 }
 
 
