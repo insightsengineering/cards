@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 <!-- [![Codecov test coverage](https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cards?branch=main) -->
 <!-- badges: end -->
 
-The {cards} package creates CDISC Analysis Result Data (ARD).
-
 **This package is in a preliminary state, and breaking change will be made without notice or deprecation.**
+
+The {cards} package creates **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
 ## Installation
 
