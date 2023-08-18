@@ -1,21 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cardinal
+# cards
 
 <!-- badges: start -->
+<!-- [![R-CMD-check](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cards?branch=main) -->
 <!-- badges: end -->
 
-The goal of cardinal is to …
+The {cards} package creates CDISC Analysis Result Data (ARD).
+
+**This package is in a preliminary state, and breaking change will be
+made without notice or deprecation.**
 
 ## Installation
 
-You can install the development version of cardinal from
+You can install the development version of cards from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("insightsengineering/cardinal")
+devtools::install_github("insightsengineering/cards")
 ```
 
 ## Example
@@ -23,51 +28,45 @@ devtools::install_github("insightsengineering/cardinal")
 ARD Examples
 
 ``` r
-library(cardinal)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
+library(cards)
+library(dplyr) |> suppressPackageStartupMessages()
 
-ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")) |> 
+ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
   flatten_ard()
-#> # A tibble: 42 × 8
-#>    strata1 strata1_level variable stat_name statistic      warning error context
-#>    <chr>   <chr>         <chr>    <chr>     <chr>          <chr>   <chr> <chr>  
-#>  1 cyl     4             mpg      N         11             <NA>    <NA>  contin…
-#>  2 cyl     4             mpg      N_miss    0              <NA>    <NA>  contin…
-#>  3 cyl     4             mpg      N_tot     11             <NA>    <NA>  contin…
-#>  4 cyl     4             mpg      mean      26.6636363636… <NA>    <NA>  contin…
-#>  5 cyl     4             mpg      sd        4.50982765242… <NA>    <NA>  contin…
-#>  6 cyl     4             mpg      min       21.4           <NA>    <NA>  contin…
-#>  7 cyl     4             mpg      max       33.9           <NA>    <NA>  contin…
-#>  8 cyl     4             hp       N         11             <NA>    <NA>  contin…
-#>  9 cyl     4             hp       N_miss    0              <NA>    <NA>  contin…
-#> 10 cyl     4             hp       N_tot     11             <NA>    <NA>  contin…
+#> # A tibble: 42 × 10
+#>    strata1 strata1_level variable stat_name stat_label stat_format_fn  statistic
+#>    <chr>   <chr>         <chr>    <chr>     <chr>      <chr>           <chr>    
+#>  1 cyl     4             mpg      N         N          "function (x) … 11       
+#>  2 cyl     4             mpg      N_miss    N Missing  "function (x) … 0        
+#>  3 cyl     4             mpg      N_tot     Total N    "function (x) … 11       
+#>  4 cyl     4             mpg      mean      Mean       "function (x) … 26.66363…
+#>  5 cyl     4             mpg      sd        SD         "function (x) … 4.509827…
+#>  6 cyl     4             mpg      min       Min        "function (x) … 21.4     
+#>  7 cyl     4             mpg      max       Max        "function (x) … 33.9     
+#>  8 cyl     4             hp       N         N          "function (x) … 11       
+#>  9 cyl     4             hp       N_miss    N Missing  "function (x) … 0        
+#> 10 cyl     4             hp       N_tot     Total N    "function (x) … 11       
 #> # ℹ 32 more rows
+#> # ℹ 3 more variables: warning <chr>, error <chr>, context <chr>
 
-ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |> 
+ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
   flatten_ard()
-#> # A tibble: 48 × 9
-#>    strata1 strata1_level variable variable_level warning error context stat_name
-#>    <chr>   <chr>         <chr>    <chr>          <chr>   <chr> <chr>   <chr>    
-#>  1 cyl     4             am       0              <NA>    <NA>  catego… n        
-#>  2 cyl     4             am       0              <NA>    <NA>  catego… p        
-#>  3 cyl     4             am       1              <NA>    <NA>  catego… n        
-#>  4 cyl     4             am       1              <NA>    <NA>  catego… p        
-#>  5 cyl     6             am       0              <NA>    <NA>  catego… n        
-#>  6 cyl     6             am       0              <NA>    <NA>  catego… p        
-#>  7 cyl     6             am       1              <NA>    <NA>  catego… n        
-#>  8 cyl     6             am       1              <NA>    <NA>  catego… p        
-#>  9 cyl     8             am       0              <NA>    <NA>  catego… n        
-#> 10 cyl     8             am       0              <NA>    <NA>  catego… p        
+#> # A tibble: 48 × 11
+#>    strata1 strata1_level variable stat_label stat_format_fn       variable_level
+#>    <chr>   <chr>         <chr>    <chr>      <chr>                <chr>         
+#>  1 cyl     4             am       table      "function (x) \nfor… 0             
+#>  2 cyl     4             am       table      "function (x) \nfor… 0             
+#>  3 cyl     4             am       table      "function (x) \nfor… 1             
+#>  4 cyl     4             am       table      "function (x) \nfor… 1             
+#>  5 cyl     6             am       table      "function (x) \nfor… 0             
+#>  6 cyl     6             am       table      "function (x) \nfor… 0             
+#>  7 cyl     6             am       table      "function (x) \nfor… 1             
+#>  8 cyl     6             am       table      "function (x) \nfor… 1             
+#>  9 cyl     8             am       table      "function (x) \nfor… 0             
+#> 10 cyl     8             am       table      "function (x) \nfor… 0             
 #> # ℹ 38 more rows
-#> # ℹ 1 more variable: statistic <chr>
+#> # ℹ 5 more variables: warning <chr>, error <chr>, context <chr>,
+#> #   stat_name <chr>, statistic <chr>
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
   flatten_ard()
@@ -104,32 +103,32 @@ glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
 #> # ℹ 58 more rows
 ```
 
-ARD -\> Table Example
-
-``` r
-# Construct the ARD
-table_ard <-
-  bind_rows(
-    ard_continuous(mtcars, by = cyl, variables = "mpg"),
-    ard_categorical(mtcars, by = cyl, variables = "am"),
-    ard_categorical(mtcars, variables = "cyl")
-  )
-
-# convert ARD to a cardinal table
-table <-
-  construct_cardinal(
-    table_plan =
-      bind_rows(
-        table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(),
-        table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical()
-      ),
-    header_plan =
-      table_ard |>
-      filter(variable %in% "cyl") |>
-      header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |>
-      modifyList(val = list(label = gt::md("**Characteristic**")))
-  ) |>
-  convert_cardinal(engine = "gt")
-```
-
-<img src="man/figures/README-table_example.png" style="width: 50%">
+<!-- ARD  -> Table Example -->
+<!-- ```{r} -->
+<!-- # Construct the ARD -->
+<!-- table_ard <- -->
+<!--   bind_rows( -->
+<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
+<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
+<!--     ard_categorical(mtcars, variables = "cyl") -->
+<!--   ) -->
+<!-- # convert ARD to a cards table -->
+<!-- table <- -->
+<!--   construct_cards( -->
+<!--     table_plan = -->
+<!--       bind_rows( -->
+<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
+<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
+<!--       ), -->
+<!--     header_plan = -->
+<!--       table_ard |> -->
+<!--       filter(variable %in% "cyl") |> -->
+<!--       header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |> -->
+<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
+<!--   ) |> -->
+<!--   convert_cards(engine = "gt") -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, fig.width=4} -->
+<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
+<!-- ``` -->
+<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->

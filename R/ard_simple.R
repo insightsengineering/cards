@@ -14,13 +14,16 @@
 #' @name ard_simple
 #'
 #' @examples
-#' ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
-#' ard_categorical(mtcars, by = cyl, variables = c("am", "gear"))
+#' ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
+#' ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))
 NULL
 
 #' @rdname ard_simple
 #' @export
-ard_continuous <- function(data, by = dplyr::group_vars(data), variables = everything(), statistics = NULL) {
+ard_continuous <- function(data,
+                           by = dplyr::group_vars(data),
+                           variables = everything(),
+                           statistics = NULL) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
   all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
@@ -44,7 +47,21 @@ ard_continuous <- function(data, by = dplyr::group_vars(data), variables = every
         )
       }
     ) |>
-    dplyr::bind_rows()
+    dplyr::bind_rows() |>
+    dplyr::left_join(
+      .default_statistic_labels(),
+      by = "stat_name"
+    ) |>
+    dplyr::left_join(
+      .default_statistic_formatters(),
+      by = "stat_name"
+    ) |>
+    dplyr::mutate(
+      stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
+      stat_format_fn =
+        .data$stat_format_fn |>
+        lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
+    )
 
   # calculate statistics -------------------------------------------------------
   df_return <-
@@ -143,7 +160,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
                   p = .data$n / sum(.data$n)
                 )
               }
-          ) |>
+            ) |>
             list() |>
             stats::setNames(nm = v)
         ) |>
@@ -181,4 +198,39 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
     min = function(x) min(x, na.rm = TRUE),
     max = function(x) max(x, na.rm = TRUE)
   )
+}
+
+.default_statistic_labels <- function() {
+  list(
+    mean = "Mean",
+    sd = "SD",
+    var = "Variance",
+    min = "Min",
+    max = "Max",
+    n = "n",
+    N_miss = "N Missing",
+    N_tot = "Total N",
+    p = "%",
+    p_cell = "%"
+  ) %>%
+    {dplyr::tibble(
+      stat_name = names(.),
+      stat_label = unlist(.) |> unname()
+    )}
+}
+
+# the global default is to round the statistic to one decimal place.
+# for all other rounding, the default function must be listed below
+.default_statistic_formatters <- function() {
+  list(
+    n = function(x) format(round(x, digits = 0), nsmall = 0),
+    N_miss = function(x) format(round(x, digits = 0), nsmall = 0),
+    N_tot = function(x) format(round(x, digits = 0), nsmall = 0),
+    p = function(x) format(round(x * 100, digits = 1), nsmall = 1),
+    p_cell = function(x) format(round(x * 100, digits = 1), nsmall = 1)
+  ) %>%
+    {dplyr::tibble(
+      stat_name = names(.),
+      stat_format_fn = unname(.)
+    )}
 }

@@ -42,6 +42,7 @@ as_nested_list <- function(x) {
   }
 
   # construct the nested lists to convert to JSON ------------------------------
+  browser()
   lst_pre_json <-
     seq_len(nrow(x)) |>
     lapply(FUN = function(i) .one_row_ard_to_nested_list(x[i,]))
@@ -53,7 +54,8 @@ as_nested_list <- function(x) {
   }
 
   # return nested list result --------------------------------------------------
-  lst_return
+  list(variable = lst_return)
+
 }
 
 .one_row_ard_to_nested_list <- function(x) {
@@ -89,7 +91,7 @@ as_nested_list <- function(x) {
     {paste0("lst_return", .)}
 
   # creating final expression defining the results within the nested list
-  rlang::expr(!!rlang::parse_expr(chr_nested_list_specification) <- !!df_preparation[c("statistic", "warning", "error")] |> as.list())
+  rlang::expr(!!rlang::parse_expr(chr_nested_list_specification) <- !!df_preparation[c("statistic", "warning", "error", "context")] |> as.list())
 }
 
 

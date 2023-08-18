@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(cardinal)
+library(cards)
 
-test_check("cardinal")
+test_check("cards")

@@ -34,6 +34,6 @@ Compute Analysis Results Data (ARD) for simple summary statistics from
 continuous and categorical data.
 }
 \examples{
-ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
-ard_categorical(mtcars, by = cyl, variables = c("am", "gear"))
+ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
+ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))
 }

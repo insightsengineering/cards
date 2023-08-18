@@ -13,22 +13,24 @@ knitr::opts_chunk$set(
 )
 ```
 
-# cardinal
+# cards
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/insightsengineering/cardinal/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/insightsengineering/cardinal/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/insightsengineering/cardinal/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cardinal?branch=main)
+<!-- [![R-CMD-check](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cards?branch=main) -->
 <!-- badges: end -->
 
-The goal of cardinal is to ...
+The {cards} package creates CDISC Analysis Result Data (ARD).
+
+**This package is in a preliminary state, and breaking change will be made without notice or deprecation.**
 
 ## Installation
 
-You can install the development version of cardinal from [GitHub](https://github.com/) with:
+You can install the development version of cards from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("insightsengineering/cardinal")
+devtools::install_github("insightsengineering/cards")
 ```
 
 ## Example
@@ -36,13 +38,13 @@ devtools::install_github("insightsengineering/cardinal")
 ARD Examples
 
 ```{r example}
-library(cardinal)
-library(dplyr)
+library(cards)
+library(dplyr) |> suppressPackageStartupMessages()
 
-ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")) |> 
+ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
   flatten_ard()
 
-ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |> 
+ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
   flatten_ard()
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
@@ -64,9 +66,9 @@ glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
 <!--     ard_categorical(mtcars, variables = "cyl") -->
 <!--   ) -->
 
-<!-- # convert ARD to a cardinal table -->
+<!-- # convert ARD to a cards table -->
 <!-- table <- -->
-<!--   construct_cardinal( -->
+<!--   construct_cards( -->
 <!--     table_plan = -->
 <!--       bind_rows( -->
 <!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
@@ -78,7 +80,7 @@ glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
 <!--       header_plan_simple(header = "**{strata} Cylinders**  \nN={n}  ({p}%)") |> -->
 <!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
 <!--   ) |> -->
-<!--   convert_cardinal(engine = "gt") -->
+<!--   convert_cards(engine = "gt") -->
 <!-- ``` -->
 
 <!-- ```{r echo=FALSE, fig.width=4} -->

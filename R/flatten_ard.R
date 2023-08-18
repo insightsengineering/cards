@@ -18,5 +18,16 @@
 #'   flatten_ard()
 flatten_ard <- function(x) {
   # convert list columns to character for a nicer print
-  dplyr::mutate(x, dplyr::across(where(is.list), ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character()))
+  dplyr::mutate(
+    x,
+    dplyr::across(
+      where(.is_list_column_of_scalars),
+      ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character()
+    )
+  )
+}
+
+# predicate fn whether column is a list that can be represented as vector
+.is_list_column_of_scalars <- function(x) {
+  is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
 }

@@ -1,6 +1,6 @@
 #' Print Methods
 #'
-#' @param x a cardinal table
+#' @param x a cards table
 #' @param ... Not used
 #'
 #' @return a gt table
@@ -8,6 +8,6 @@
 #'
 #' @examples
 #' # TODO: add example
-print.cardinal <- function(x, ...) {
-  convert_cardinal(x)
+print.cards <- function(x, ...) {
+  convert_cards(x)
 }
