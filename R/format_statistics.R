@@ -4,7 +4,7 @@ format_statistics <- function(x, verbose = FALSE) {
   if (!inherits(x, "card")) {
     cli::cli_abort("Argument {.code x} must be class {.cls card}")
   }
-  required_cols <- c("stat_format_fn", "statistic")
+  required_cols <- c("statistic_fmt_fn", "statistic")
   if (any(!required_cols %in% colnames(x))) {
     if (verbose) {
       cli::cli_inform("Columns {.val {required_cols}} are required to format statistics.")
@@ -18,7 +18,7 @@ format_statistics <- function(x, verbose = FALSE) {
       FUN = function(x, fn) {
         do.call(fn[[1]], args = list(x[[1]]))
       },
-      dots = list(x$statistic, x$stat_format_fn),
+      dots = list(x$statistic, x$statistic_fmt_fn),
       MoreArgs = NULL
     )
 

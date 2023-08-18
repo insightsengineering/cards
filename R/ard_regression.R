@@ -26,6 +26,6 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
       names_to = "stat_name",
       values_to = "statistic"
     ) |>
-    dplyr::mutate(context = "regression") %>%
+    dplyr::mutate(context = list("regression")) %>%
     structure(., class = c("card", class(.)))
 }

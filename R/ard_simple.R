@@ -58,8 +58,8 @@ ard_continuous <- function(data,
     ) |>
     dplyr::mutate(
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
-      stat_format_fn =
-        .data$stat_format_fn |>
+      statistic_fmt_fn =
+        .data$statistic_fmt_fn |>
         lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
     )
 
@@ -110,7 +110,7 @@ ard_continuous <- function(data,
   df_return |>
     dplyr::select(-"...ard_nested_data...") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
-    dplyr::mutate(context = "continuous") %>%
+    dplyr::mutate(context = list("continuous")) %>%
     structure(., class = c("card", class(.)))
 }
 
@@ -180,7 +180,7 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
 
   # bind data frames with stats, and return to user ----------------------------
   dplyr::bind_rows(df_ard_tablulation, df_ard) |>
-    dplyr::mutate(context = "categorical") %>%
+    dplyr::mutate(context = list("categorical")) %>%
     structure(., class = c("card", class(.)))
 }
 
@@ -231,6 +231,6 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
   ) %>%
     {dplyr::tibble(
       stat_name = names(.),
-      stat_format_fn = unname(.)
+      statistic_fmt_fn = unname(.)
     )}
 }

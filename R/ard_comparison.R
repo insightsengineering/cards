@@ -61,7 +61,7 @@ ard_ttest <- function(data, by, variable, ...) {
   # return and add warning/errors ----------------------------------------------
   ret |>
     dplyr::mutate(
-      context = "t.test",
+      context = list("t.test"),
       warning = lst_ttest["warning"],
       error = lst_ttest["error"]
     ) %>%
@@ -114,7 +114,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   # return and add warning/errors ----------------------------------------------
   ret |>
     dplyr::mutate(
-      context = "wilcox.test",
+      context = list("wilcox.test"),
       warning = lst_wilcox["warning"],
       error = lst_wilcox["error"]
     ) %>%

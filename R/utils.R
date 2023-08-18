@@ -116,4 +116,21 @@
   unique(x) |> sort()
 }
 
+.imap <- function(.x, .f, ...) {
+  .mapply(
+    FUN = .f,
+    dots = list(.x, colnames(.x)),
+    MoreArgs = rlang::list2(...)
+  ) |>
+    stats::setNames(nm = colnames(.x))
+}
+
+.map2 <- function(.x, .y, .f, ...) {
+  .mapply(
+    FUN = .f,
+    dots = list(.x, colnames(.x)),
+    MoreArgs = rlang::list2(...)
+  )
+}
+
 

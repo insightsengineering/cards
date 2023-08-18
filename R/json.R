@@ -70,7 +70,7 @@ as_nested_list <- function(x) {
       statistic_fmt =
         .mapply(
           FUN = function(x, fn) if (!is.null(fn)) fn(x) else NULL,
-          dots = list(.data$statistic, .data$stat_format_fn),
+          dots = list(.data$statistic, .data$statistic_fmt_fn),
           MoreArgs = NULL
         )
     ) %>%
@@ -102,8 +102,8 @@ as_nested_list <- function(x) {
         df_preparation,
         any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
       ) |>
-      unlist() |> # this removes the NULL elements, e.g. the error col when there is no error. TODO: is this what we want? it will probably break if there is anything other than a simple scalar statistic
-      as.list()
+      # this essentially flattens the nested list one level, while maintaining the names
+      .imap(function(x, y) x[[1]])
   )
 }
 
