@@ -86,21 +86,17 @@ ard_continuous <- function(data,
         df_statsistics |>
           dplyr::mutate(
             result =
-              .mapply(
-                FUN = function(variable, stat_name) {
+              .map2(
+                df_statsistics$variable,
+                df_statsistics$stat_name,
+                function(variable, stat_name) {
                   eval_capture_conditions(
                     do.call(statistics[[variable]][[stat_name]], args = list(nested_data[[variable]]))
                   ) |>
                     lapply(FUN = list) |>
                     dplyr::as_tibble() |>
                     dplyr::rename(statistic = .data$result)
-                },
-                dots =
-                  list(
-                    df_statsistics$variable,
-                    df_statsistics$stat_name
-                  ),
-                MoreArgs = NULL
+                }
               )
           ) |>
           tidyr::unnest(cols = "result")

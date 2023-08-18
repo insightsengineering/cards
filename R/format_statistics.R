@@ -14,12 +14,10 @@ format_statistics <- function(x, verbose = FALSE) {
 
   # add column with formatted statistics ---------------------------------------
   x$statistics_formatted <-
-    .mapply(
-      FUN = function(x, fn) {
-        do.call(fn[[1]], args = list(x[[1]]))
-      },
-      dots = list(x$statistic, x$statistic_fmt_fn),
-      MoreArgs = NULL
+    .map2(
+      x$statistic,
+      x$statistic_fmt_fn,
+      function(x, fn) do.call(fn[[1]], args = list(x[[1]]))
     )
 
   # return ARD with new formatted statistics column ----------------------------

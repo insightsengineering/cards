@@ -46,15 +46,14 @@ header_plan_simple <- function(ard, header = "{group}  \nN = {n}") {
   nested_ard |>
     dplyr::mutate(
       data =
-        .mapply(
-          dots = list(.data$data, .data$variable_level),
-          FUN = function(data, level) {
+        .map2(
+          .data$data, .data$variable_level,
+          function(data, level) {
             dplyr::bind_rows(
               data,
               dplyr::tibble(stat_name = "group", statistic = level)
             )
-          },
-          MoreArgs = list()
+          }
         ),
       fmt_statistics =
         lapply(

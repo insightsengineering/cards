@@ -116,6 +116,16 @@
   unique(x) |> sort()
 }
 
+#' Wrappers for `.mapply()` with a purrr-like API.
+#'
+#' `.imap()` returns a list maintaining the names as the input.
+#'
+#' @param .x a vector or list
+#' @param .y a vector or list
+#' @param .f a function with two inputs
+#'
+#' @return a list
+#' @noRd
 .imap <- function(.x, .f, ...) {
   .mapply(
     FUN = .f,
@@ -126,11 +136,7 @@
 }
 
 .map2 <- function(.x, .y, .f, ...) {
-  .mapply(
-    FUN = .f,
-    dots = list(.x, colnames(.x)),
-    MoreArgs = rlang::list2(...)
-  )
+  .mapply(FUN = .f, dots = list(.x, .y), MoreArgs = rlang::list2(...))
 }
 
 

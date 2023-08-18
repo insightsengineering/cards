@@ -68,10 +68,10 @@ as_nested_list <- function(x) {
         .fns = function(x) x[[1]]
       ),
       statistic_fmt =
-        .mapply(
-          FUN = function(x, fn) if (!is.null(fn)) fn(x) else NULL,
-          dots = list(.data$statistic, .data$statistic_fmt_fn),
-          MoreArgs = NULL
+        .map2(
+          .data$statistic,
+          .data$statistic_fmt_fn,
+          function(x, fn) if (!is.null(fn)) fn(x) else NULL
         )
     ) %>%
     # reorder with primary variable first, followed by stratum
