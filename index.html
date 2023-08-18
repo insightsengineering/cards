@@ -89,36 +89,36 @@
 <span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 42 × 10</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label stat_format_fn  statistic</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt;    </span></span>
-<span><span class="co">#&gt;  1 cyl     4             mpg      N         N          "function (x) … 11       </span></span>
-<span><span class="co">#&gt;  2 cyl     4             mpg      N_miss    N Missing  "function (x) … 0        </span></span>
-<span><span class="co">#&gt;  3 cyl     4             mpg      N_tot     Total N    "function (x) … 11       </span></span>
-<span><span class="co">#&gt;  4 cyl     4             mpg      mean      Mean       "function (x) … 26.66363…</span></span>
-<span><span class="co">#&gt;  5 cyl     4             mpg      sd        SD         "function (x) … 4.509827…</span></span>
-<span><span class="co">#&gt;  6 cyl     4             mpg      min       Min        "function (x) … 21.4     </span></span>
-<span><span class="co">#&gt;  7 cyl     4             mpg      max       Max        "function (x) … 33.9     </span></span>
-<span><span class="co">#&gt;  8 cyl     4             hp       N         N          "function (x) … 11       </span></span>
-<span><span class="co">#&gt;  9 cyl     4             hp       N_miss    N Missing  "function (x) … 0        </span></span>
-<span><span class="co">#&gt; 10 cyl     4             hp       N_tot     Total N    "function (x) … 11       </span></span>
+<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label statistic_fmt_fn  statistic</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt;  1 cyl    4            mpg      N         N          "function (x) \n… 11       </span></span>
+<span><span class="co">#&gt;  2 cyl    4            mpg      N_miss    N Missing  "function (x) \n… 0        </span></span>
+<span><span class="co">#&gt;  3 cyl    4            mpg      N_tot     Total N    "function (x) \n… 11       </span></span>
+<span><span class="co">#&gt;  4 cyl    4            mpg      mean      Mean       "function (x) \n… 26.66363…</span></span>
+<span><span class="co">#&gt;  5 cyl    4            mpg      sd        SD         "function (x) \n… 4.509827…</span></span>
+<span><span class="co">#&gt;  6 cyl    4            mpg      min       Min        "function (x) \n… 21.4     </span></span>
+<span><span class="co">#&gt;  7 cyl    4            mpg      max       Max        "function (x) \n… 33.9     </span></span>
+<span><span class="co">#&gt;  8 cyl    4            hp       N         N          "function (x) \n… 11       </span></span>
+<span><span class="co">#&gt;  9 cyl    4            hp       N_miss    N Missing  "function (x) \n… 0        </span></span>
+<span><span class="co">#&gt; 10 cyl    4            hp       N_tot     Total N    "function (x) \n… 11       </span></span>
 <span><span class="co">#&gt; # ℹ 32 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"gear"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 48 × 11</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable stat_label stat_format_fn       variable_level</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                &lt;chr&gt;         </span></span>
-<span><span class="co">#&gt;  1 cyl     4             am       table      "function (x) \nfor… 0             </span></span>
-<span><span class="co">#&gt;  2 cyl     4             am       table      "function (x) \nfor… 0             </span></span>
-<span><span class="co">#&gt;  3 cyl     4             am       table      "function (x) \nfor… 1             </span></span>
-<span><span class="co">#&gt;  4 cyl     4             am       table      "function (x) \nfor… 1             </span></span>
-<span><span class="co">#&gt;  5 cyl     6             am       table      "function (x) \nfor… 0             </span></span>
-<span><span class="co">#&gt;  6 cyl     6             am       table      "function (x) \nfor… 0             </span></span>
-<span><span class="co">#&gt;  7 cyl     6             am       table      "function (x) \nfor… 1             </span></span>
-<span><span class="co">#&gt;  8 cyl     6             am       table      "function (x) \nfor… 1             </span></span>
-<span><span class="co">#&gt;  9 cyl     8             am       table      "function (x) \nfor… 0             </span></span>
-<span><span class="co">#&gt; 10 cyl     8             am       table      "function (x) \nfor… 0             </span></span>
+<span><span class="co">#&gt;    group1 group1_level variable stat_label statistic_fmt_fn       variable_level</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                  &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt;  1 cyl    4            am       table      "function (x) \nforma… 0             </span></span>
+<span><span class="co">#&gt;  2 cyl    4            am       table      "function (x) \nforma… 0             </span></span>
+<span><span class="co">#&gt;  3 cyl    4            am       table      "function (x) \nforma… 1             </span></span>
+<span><span class="co">#&gt;  4 cyl    4            am       table      "function (x) \nforma… 1             </span></span>
+<span><span class="co">#&gt;  5 cyl    6            am       table      "function (x) \nforma… 0             </span></span>
+<span><span class="co">#&gt;  6 cyl    6            am       table      "function (x) \nforma… 0             </span></span>
+<span><span class="co">#&gt;  7 cyl    6            am       table      "function (x) \nforma… 1             </span></span>
+<span><span class="co">#&gt;  8 cyl    6            am       table      "function (x) \nforma… 1             </span></span>
+<span><span class="co">#&gt;  9 cyl    8            am       table      "function (x) \nforma… 0             </span></span>
+<span><span class="co">#&gt; 10 cyl    8            am       table      "function (x) \nforma… 0             </span></span>
 <span><span class="co">#&gt; # ℹ 38 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 5 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   stat_name &lt;chr&gt;, statistic &lt;chr&gt;</span></span>
@@ -126,18 +126,18 @@
 <span><span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"am"</span>, variable <span class="op">=</span> <span class="st">"hp"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 8</span></span>
-<span><span class="co">#&gt;    group1 variable stat_name   statistic    group1_level context warning error</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
-<span><span class="co">#&gt;  1 am      hp       estimate    33.41700404… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  2 am      hp       estimate1   160.2631578… 0             t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  3 am      hp       estimate2   126.8461538… 1             t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  4 am      hp       statistic   1.266188769… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  5 am      hp       p.value     0.220979581… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  6 am      hp       parameter   18.71540966… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  7 am      hp       conf.low    -21.8785802… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  8 am      hp       conf.high   88.71258829… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  9 am      hp       method      Welch Two S… &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt; 10 am      hp       alternative two.sided    &lt;NA&gt;          t.test  &lt;NA&gt;    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt;    group1 variable stat_name   statistic      group1_level context warning error</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 am     hp       estimate    33.4170040485… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  2 am     hp       estimate1   160.263157894… 0            t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  3 am     hp       estimate2   126.846153846… 1            t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  4 am     hp       statistic   1.26618876980… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  5 am     hp       p.value     0.22097958133… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  6 am     hp       parameter   18.7154096625… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  7 am     hp       conf.low    -21.878580201… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  8 am     hp       conf.high   88.7125882988… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  9 am     hp       method      Welch Two Sam… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; 10 am     hp       alternative two.sided      &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="va">mpg</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
