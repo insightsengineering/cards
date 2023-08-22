@@ -22,7 +22,8 @@ knitr::opts_chunk$set(
 
 This package is in a **preliminary state**, and **breaking changes** will be made **without notice or deprecation**.
 
-The {cards} package creates **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
+The [CDISC Analysis Results Standard](https://www.cdisc.org/standards/foundational/analysis-results-standards) aims to facilitate automation, reproducibility, reusability, and traceability of analysis results data (ARD).
+The {cards} package creates these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
 ## Installation
 

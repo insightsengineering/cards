@@ -10,11 +10,7 @@
 #' @name json
 #'
 #' @examples
-#' ard <-
-#'   dplyr::bind_rows(
-#'     ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")),
-#'     ard_continuous(mtcars, by = c(cyl, gear), variables = c("mpg", "hp"))
-#'   )
+#' ard <- ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
 #'
 #' ard_as_json(ard)
 NULL
@@ -53,8 +49,7 @@ as_nested_list <- function(x) {
   }
 
   # return nested list result --------------------------------------------------
-  list(variable = lst_return)
-
+  lst_return
 }
 
 .one_row_ard_to_nested_list <- function(x) {
@@ -89,7 +84,8 @@ as_nested_list <- function(x) {
     df_preparation |>
     dplyr::select(any_of(c("variable", "variable_level")), starts_with("group"), "stat_name") |>
     as.list() |>
-    lapply(FUN = function(x) glue::glue("[[{shQuote(x)}]]")) |>
+    .imap(function(x, y) glue::glue("[[{shQuote(y)}]][[{shQuote(x)}]]")) |>
+    # lapply(FUN = function(x) glue::glue("[[{shQuote(x)}]]")) |>
     unlist() %>%
     paste(collapse = "") %>%
     # 'lst_return' is the name of the nested list that will be converted to JSON

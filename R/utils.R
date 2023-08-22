@@ -129,7 +129,7 @@
 .imap <- function(.x, .f, ...) {
   .mapply(
     FUN = .f,
-    dots = list(.x, colnames(.x)),
+    dots = list(.x, names(.x)),
     MoreArgs = rlang::list2(...)
   ) |>
     stats::setNames(nm = colnames(.x))

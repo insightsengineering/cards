@@ -27,11 +27,7 @@ a JSON object
 Convert ARDs to JSON or write to disk as JSON
 }
 \examples{
-ard <-
-  dplyr::bind_rows(
-    ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp")),
-    ard_continuous(mtcars, by = c(cyl, gear), variables = c("mpg", "hp"))
-  )
+ard <- ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
 
 ard_as_json(ard)
 }
