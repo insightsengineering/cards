@@ -7,7 +7,7 @@ Authors@R:
 Description: The package constructs CDISC-compliant Analysis Results Data
     objects. These objects are used (and re-used) to construct summary tables,
     visualizations, and written reports.
-License: MIT + file LICENSE
+License: Apache License 2.0 | file LICENSE
 URL: https://github.com/insightsengineering/cards,
     https://refactored-bassoon-49o3774.pages.github.io/
 BugReports: https://github.com/insightsengineering/cards/issues
