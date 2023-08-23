@@ -17,14 +17,22 @@
 #' ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |>
 #'   flatten_ard()
 flatten_ard <- function(x) {
-  # convert list columns to character for a nicer print
-  dplyr::mutate(
-    x,
-    dplyr::across(
-      where(.is_list_column_of_scalars),
-      ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character()
-    )
-  )
+  x |>
+    # remove the formatting functions
+    dplyr::select(-where(function(x) all(lapply(x, function(y) is.function(y)) |> unlist()))) |>
+    # convert list columns to character for a nicer print
+    dplyr::mutate(
+      dplyr::across(
+        where(.is_list_column_of_scalars),
+        ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character()
+      )
+    ) |>
+    dplyr::select(-any_of("context")) |>
+    dplyr::relocate(dplyr::starts_with("group"), dplyr::starts_with("variable"),
+                    dplyr::any_of(c("stat_name", "stat_label", "statistic")), .before = 0L) %>%
+    dplyr::arrange(dplyr::pick(dplyr::any_of("variable")),
+                    dplyr::pick(dplyr::matches("^group[0-9]+$")),
+                    dplyr::pick(dplyr::matches("^group[0-9]+_level$")))
 }
 
 # predicate fn whether column is a list that can be represented as vector

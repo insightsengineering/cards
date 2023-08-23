@@ -9,6 +9,7 @@
 #'
 #' @return a table object
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' # Construct the ARD

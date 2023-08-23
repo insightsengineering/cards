@@ -27,6 +27,7 @@ NULL
 
 #' @rdname plan_simple
 #' @export
+#' @keywords internal
 table_plan_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd})",  "{min}, {max}")) {
   # check the function inputs match availability in the ARD --------------------
 
@@ -97,6 +98,7 @@ table_plan_simple_continuous <- function(ard, statistics = c("{N}", "{mean} ({sd
 
 #' @rdname plan_simple
 #' @export
+#' @keywords internal
 table_plan_simple_categorical <- function(ard, statistics = "{n} ({p}%)") {
   # check the function inputs match availability in the ARD --------------------
   # construct table body -------------------------------------------------------

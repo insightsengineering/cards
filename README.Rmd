@@ -43,17 +43,26 @@ library(cards)
 library(dplyr) |> suppressPackageStartupMessages()
 
 ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
-  flatten_ard()
+  flatten_ard() |> 
+  head(n = 10) |> 
+  knitr::kable()
 
 ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
-  flatten_ard()
+  flatten_ard() |> 
+  head(n = 10) |> 
+  knitr::kable()
 
 ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
-  flatten_ard()
+  flatten_ard() |> 
+  head(n = 10) |> 
+  knitr::kable()
 
-glm(am ~ mpg + factor(cyl), data = mtcars, family = binomial) |>
+glm(am ~ factor(cyl), data = mtcars, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
-  flatten_ard()
+  flatten_ard() |> 
+  dplyr::filter(variable_level %in% "8") |> 
+  tidyr::drop_na() |> 
+  knitr::kable()
 ```
 
 <!-- ARD  -> Table Example -->

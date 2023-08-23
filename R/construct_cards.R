@@ -9,6 +9,7 @@
 #'
 #' @return a cards table
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' # Construct the ARD

@@ -172,7 +172,12 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
           )
       }
     ) |>
-    dplyr::bind_rows()
+    dplyr::bind_rows() |>
+    dplyr::rows_update(
+      .default_statistic_labels(),
+      by = "stat_name",
+      unmatched = "ignore"
+    )
 
   # bind data frames with stats, and return to user ----------------------------
   dplyr::bind_rows(df_ard_tablulation, df_ard) |>

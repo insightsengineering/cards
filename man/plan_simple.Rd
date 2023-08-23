@@ -33,3 +33,4 @@ ard_continuous(mtcars, by = cyl, variables = "mpg") |>
 ard_categorical(mtcars, by = cyl, variables = "am") |>
   table_plan_simple_categorical()
 }
+\keyword{internal}
