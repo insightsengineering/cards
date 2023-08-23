@@ -87,104 +87,502 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 42 × 10</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label statistic_fmt_fn  statistic</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;             &lt;chr&gt;    </span></span>
-<span><span class="co">#&gt;  1 cyl    4            mpg      N         N          "function (x) \n… 11       </span></span>
-<span><span class="co">#&gt;  2 cyl    4            mpg      N_miss    N Missing  "function (x) \n… 0        </span></span>
-<span><span class="co">#&gt;  3 cyl    4            mpg      N_tot     Total N    "function (x) \n… 11       </span></span>
-<span><span class="co">#&gt;  4 cyl    4            mpg      mean      Mean       "function (x) \n… 26.66363…</span></span>
-<span><span class="co">#&gt;  5 cyl    4            mpg      sd        SD         "function (x) \n… 4.509827…</span></span>
-<span><span class="co">#&gt;  6 cyl    4            mpg      min       Min        "function (x) \n… 21.4     </span></span>
-<span><span class="co">#&gt;  7 cyl    4            mpg      max       Max        "function (x) \n… 33.9     </span></span>
-<span><span class="co">#&gt;  8 cyl    4            hp       N         N          "function (x) \n… 11       </span></span>
-<span><span class="co">#&gt;  9 cyl    4            hp       N_miss    N Missing  "function (x) \n… 0        </span></span>
-<span><span class="co">#&gt; 10 cyl    4            hp       N_tot     Total N    "function (x) \n… 11       </span></span>
-<span><span class="co">#&gt; # ℹ 32 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 3 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;</span></span>
-<span></span>
+<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="8%">
+<col width="15%">
+<col width="11%">
+<col width="12%">
+<col width="13%">
+<col width="20%">
+<col width="10%">
+<col width="7%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group1</th>
+<th align="left">group1_level</th>
+<th align="left">variable</th>
+<th align="left">stat_name</th>
+<th align="left">stat_label</th>
+<th align="left">statistic</th>
+<th align="left">warning</th>
+<th align="left">error</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">N</td>
+<td align="left">N</td>
+<td align="left">11</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">N_miss</td>
+<td align="left">N Missing</td>
+<td align="left">0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">N_tot</td>
+<td align="left">Total N</td>
+<td align="left">11</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">mean</td>
+<td align="left">Mean</td>
+<td align="left">82.6363636363636</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">sd</td>
+<td align="left">SD</td>
+<td align="left">20.934529979308</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">min</td>
+<td align="left">Min</td>
+<td align="left">52</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">hp</td>
+<td align="left">max</td>
+<td align="left">Max</td>
+<td align="left">113</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">hp</td>
+<td align="left">N</td>
+<td align="left">N</td>
+<td align="left">7</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">hp</td>
+<td align="left">N_miss</td>
+<td align="left">N Missing</td>
+<td align="left">0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">hp</td>
+<td align="left">N_tot</td>
+<td align="left">Total N</td>
+<td align="left">7</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"gear"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 48 × 11</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable stat_label statistic_fmt_fn       variable_level</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;                  &lt;chr&gt;         </span></span>
-<span><span class="co">#&gt;  1 cyl    4            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt;  2 cyl    4            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt;  3 cyl    4            am       table      "function (x) \nforma… 1             </span></span>
-<span><span class="co">#&gt;  4 cyl    4            am       table      "function (x) \nforma… 1             </span></span>
-<span><span class="co">#&gt;  5 cyl    6            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt;  6 cyl    6            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt;  7 cyl    6            am       table      "function (x) \nforma… 1             </span></span>
-<span><span class="co">#&gt;  8 cyl    6            am       table      "function (x) \nforma… 1             </span></span>
-<span><span class="co">#&gt;  9 cyl    8            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt; 10 cyl    8            am       table      "function (x) \nforma… 0             </span></span>
-<span><span class="co">#&gt; # ℹ 38 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 5 more variables: warning &lt;chr&gt;, error &lt;chr&gt;, context &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   stat_name &lt;chr&gt;, statistic &lt;chr&gt;</span></span>
-<span></span>
+<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="7%">
+<col width="13%">
+<col width="9%">
+<col width="15%">
+<col width="10%">
+<col width="11%">
+<col width="17%">
+<col width="8%">
+<col width="6%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group1</th>
+<th align="left">group1_level</th>
+<th align="left">variable</th>
+<th align="left">variable_level</th>
+<th align="left">stat_name</th>
+<th align="left">stat_label</th>
+<th align="left">statistic</th>
+<th align="left">warning</th>
+<th align="left">error</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">0</td>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">3</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">0</td>
+<td align="left">p</td>
+<td align="left">%</td>
+<td align="left">0.272727272727273</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">1</td>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">8</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">1</td>
+<td align="left">p</td>
+<td align="left">%</td>
+<td align="left">0.727272727272727</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">N</td>
+<td align="left">N</td>
+<td align="left">11</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">N_miss</td>
+<td align="left">N Missing</td>
+<td align="left">0</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">4</td>
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">N_tot</td>
+<td align="left">Total N</td>
+<td align="left">11</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">am</td>
+<td align="left">0</td>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">4</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">am</td>
+<td align="left">0</td>
+<td align="left">p</td>
+<td align="left">%</td>
+<td align="left">0.571428571428571</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">cyl</td>
+<td align="left">6</td>
+<td align="left">am</td>
+<td align="left">1</td>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">3</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"am"</span>, variable <span class="op">=</span> <span class="st">"hp"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 10 × 8</span></span>
-<span><span class="co">#&gt;    group1 variable stat_name   statistic      group1_level context warning error</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
-<span><span class="co">#&gt;  1 am     hp       estimate    33.4170040485… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  2 am     hp       estimate1   160.263157894… 0            t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  3 am     hp       estimate2   126.846153846… 1            t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  4 am     hp       statistic   1.26618876980… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  5 am     hp       p.value     0.22097958133… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  6 am     hp       parameter   18.7154096625… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  7 am     hp       conf.low    -21.878580201… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  8 am     hp       conf.high   88.7125882988… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt;  9 am     hp       method      Welch Two Sam… &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt; </span></span>
-<span><span class="co">#&gt; 10 am     hp       alternative two.sided      &lt;NA&gt;         t.test  &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="va">mpg</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="16%">
+<col width="11%">
+<col width="15%">
+<col width="29%">
+<col width="10%">
+<col width="8%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group1</th>
+<th align="left">group1_level</th>
+<th align="left">variable</th>
+<th align="left">stat_name</th>
+<th align="left">statistic</th>
+<th align="left">warning</th>
+<th align="left">error</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">am</td>
+<td align="left">0</td>
+<td align="left">hp</td>
+<td align="left">estimate1</td>
+<td align="left">160.263157894737</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">am</td>
+<td align="left">1</td>
+<td align="left">hp</td>
+<td align="left">estimate2</td>
+<td align="left">126.846153846154</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">estimate</td>
+<td align="left">33.417004048583</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">statistic</td>
+<td align="left">1.26618876980934</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">p.value</td>
+<td align="left">0.220979581335913</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">parameter</td>
+<td align="left">18.7154096625045</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">conf.low</td>
+<td align="left">-21.8785802016468</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">conf.high</td>
+<td align="left">88.7125882988128</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">method</td>
+<td align="left">Welch Two Sample t-test</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">am</td>
+<td align="left">NA</td>
+<td align="left">hp</td>
+<td align="left">alternative</td>
+<td align="left">two.sided</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 68 × 5</span></span>
-<span><span class="co">#&gt;    variable variable_level stat_name      statistic  context   </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;     </span></span>
-<span><span class="co">#&gt;  1 mpg      &lt;NA&gt;           term           mpg        regression</span></span>
-<span><span class="co">#&gt;  2 mpg      &lt;NA&gt;           var_label      mpg        regression</span></span>
-<span><span class="co">#&gt;  3 mpg      &lt;NA&gt;           var_class      numeric    regression</span></span>
-<span><span class="co">#&gt;  4 mpg      &lt;NA&gt;           var_type       continuous regression</span></span>
-<span><span class="co">#&gt;  5 mpg      &lt;NA&gt;           var_nlevels    &lt;NA&gt;       regression</span></span>
-<span><span class="co">#&gt;  6 mpg      &lt;NA&gt;           contrasts      &lt;NA&gt;       regression</span></span>
-<span><span class="co">#&gt;  7 mpg      &lt;NA&gt;           contrasts_type &lt;NA&gt;       regression</span></span>
-<span><span class="co">#&gt;  8 mpg      &lt;NA&gt;           reference_row  &lt;NA&gt;       regression</span></span>
-<span><span class="co">#&gt;  9 mpg      &lt;NA&gt;           label          mpg        regression</span></span>
-<span><span class="co">#&gt; 10 mpg      &lt;NA&gt;           n_obs          32         regression</span></span>
-<span><span class="co">#&gt; # ℹ 58 more rows</span></span></code></pre></div>
-<!-- ARD  -> Table Example -->
-<!-- ```{r} -->
-<!-- # Construct the ARD -->
-<!-- table_ard <- -->
-<!--   bind_rows( -->
-<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
-<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
-<!--     ard_categorical(mtcars, variables = "cyl") -->
-<!--   ) -->
-<!-- # convert ARD to a cards table -->
-<!-- table <- -->
-<!--   construct_cards( -->
-<!--     table_plan = -->
-<!--       bind_rows( -->
-<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
-<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
-<!--       ), -->
-<!--     header_plan = -->
-<!--       table_ard |> -->
-<!--       filter(variable %in% "cyl") |> -->
-<!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> -->
-<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
-<!--   ) |> -->
-<!--   convert_cards(engine = "gt") -->
-<!-- ``` -->
-<!-- ```{r echo=FALSE, fig.width=4} -->
-<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
-<!-- ``` -->
-<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
+<span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"8"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">variable</th>
+<th align="left">variable_level</th>
+<th align="left">stat_name</th>
+<th align="left">statistic</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">term</td>
+<td align="left">factor(cyl)8</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">var_label</td>
+<td align="left">factor(cyl)</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">var_class</td>
+<td align="left">factor</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">var_type</td>
+<td align="left">categorical</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">var_nlevels</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">contrasts</td>
+<td align="left">contr.treatment</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">contrasts_type</td>
+<td align="left">treatment</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">reference_row</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">label</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">estimate</td>
+<td align="left">-2.77258872223715</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">std.error</td>
+<td align="left">1.0206203034945</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">statistic</td>
+<td align="left">-2.71657217943254</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">p.value</td>
+<td align="left">0.0065961810499368</td>
+</tr>
+<tr class="even">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">conf.low</td>
+<td align="left">-5.04529335824973</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(cyl)</td>
+<td align="left">8</td>
+<td align="left">conf.high</td>
+<td align="left">-0.93331910323904</td>
+</tr>
+</tbody>
+</table>
+<!-- ARD  -> Table Example --><!-- ```{r} --><!-- # Construct the ARD --><!-- table_ard <- --><!--   bind_rows( --><!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), --><!--     ard_categorical(mtcars, by = cyl, variables = "am"), --><!--     ard_categorical(mtcars, variables = "cyl") --><!--   ) --><!-- # convert ARD to a cards table --><!-- table <- --><!--   construct_cards( --><!--     table_plan = --><!--       bind_rows( --><!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), --><!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() --><!--       ), --><!--     header_plan = --><!--       table_ard |> --><!--       filter(variable %in% "cyl") |> --><!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> --><!--       modifyList(val = list(label = gt::md("**Characteristic**"))) --><!--   ) |> --><!--   convert_cards(engine = "gt") --><!-- ``` --><!-- ```{r echo=FALSE, fig.width=4} --><!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") --><!-- ``` --><!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

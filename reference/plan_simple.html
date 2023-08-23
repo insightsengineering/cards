@@ -88,12 +88,9 @@ resulting table. Default is <code>c("{N}", "{mean} ({sd})",  "{min}, {max}")</co
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">cyl</span>, variables <span class="op">=</span> <span class="st">"am"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">table_plan_simple_categorical</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable header_row label stat_1    stat_2    stat_3    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> am       TRUE       am    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       FALSE      0     3 (27.3%) 4 (57.1%) 12 (85.7%)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       FALSE      1     8 (72.7%) 3 (42.9%) 2 (14.3%) </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::mutate(tidyr::nest(tidyr::unnest(nested_ard, cols = "data"),     data = c("stat_name", "statistic")), fmt_statistics = lapply(.data$data,     FUN = function(x) {        unlist(lapply(statistics, function(one_stat) {            glue::glue(one_stat, .envir = rlang::as_environment(.data_frame_to_named_list(x)))        }))    }), label = as.character(.data$variable_level), header_row = FALSE):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `fmt_statistics = lapply(...)`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> object 'p' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
