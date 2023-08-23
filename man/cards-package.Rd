@@ -20,5 +20,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Daniel D. Sjoberg \email{danield.sjoberg@gmail.com} (\href{https://orcid.org/0000-0003-0862-2018}{ORCID})
 
+Other contributors:
+\itemize{
+  \item F. Hoffmann-La Roche AG [copyright holder, funder]
+}
+
 }
 \keyword{internal}

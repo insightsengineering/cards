@@ -1,12 +1,14 @@
 Package: cards
 Title: CDISC Analysis Results Data
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-0862-2018"))
+           comment = c(ORCID = "0000-0003-0862-2018")),
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+  )
 Description: The package constructs CDISC-compliant Analysis Results Data
-    objects. These objects are used (and re-used) to construct summary tables,
-    visualizations, and written reports.
+    objects. These objects are used (and re-used) to construct summary
+    tables, visualizations, and written reports.
 License: Apache License 2.0 | file LICENSE
 URL: https://github.com/insightsengineering/cards,
     https://refactored-bassoon-49o3774.pages.github.io/
@@ -24,8 +26,8 @@ Suggests:
     jsonlite,
     spelling,
     testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Config/testthat/edition: 3
-Language: en-US
