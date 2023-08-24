@@ -6,7 +6,7 @@
 #' If there are no errors or warnings, those elements will be `NULL`.
 #' If there is an error, the result element will be `NULL`.
 #'
-#' Messages are nether saved nor printed to the console.
+#' Messages are neither saved nor printed to the console.
 #'
 #' Evaluation is done via `rlang::eval_tidy()`.
 #'

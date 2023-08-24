@@ -28,7 +28,7 @@ Function always returns a named list \code{list(result=, warning=, error=)}.
 If there are no errors or warnings, those elements will be \code{NULL}.
 If there is an error, the result element will be \code{NULL}.
 
-Messages are nether saved nor printed to the console.
+Messages are neither saved nor printed to the console.
 
 Evaluation is done via \code{rlang::eval_tidy()}.
 }
