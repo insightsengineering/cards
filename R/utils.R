@@ -99,9 +99,11 @@
 
 #' ARD-flavor of unique()
 #'
-#' Essentially a wrapper for `unique(x) |> sort()`, expect in the case of
-#' factor vectors with NA levels removed.
+#' Essentially a wrapper for `unique(x) |> sort()` with NA levels removed.
+#' Expect in the case of factor and logical vectors.
 #' For factors, all levels are returned even if they are unobserved.
+#' Similarly, logical vectors always return `c(TRUE, FALSE)`, even if
+#' both levels are not observed.
 #'
 #' @param x a vector
 #' @return a vector
@@ -110,6 +112,9 @@
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
     return(factor(levels(x), levels = levels(x)))
+  }
+  if (inherits(x, "logical")) {
+    return(c(TRUE, FALSE))
   }
 
   # otherwise, return a simple unique and sort of the vector
