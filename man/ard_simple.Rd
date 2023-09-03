@@ -6,25 +6,23 @@
 \alias{ard_categorical}
 \title{Simple ARD Statistics}
 \usage{
-ard_continuous(
-  data,
-  by = dplyr::group_vars(data),
-  variables = everything(),
-  statistics = NULL
-)
+ard_continuous(data, variables, by = NULL, statistics = NULL)
 
-ard_categorical(data, by = dplyr::group_vars(data), variables = everything())
+ard_categorical(data, variables, by = NULL, denominator = NULL)
 }
 \arguments{
 \item{data}{a data frame}
 
+\item{variables}{columns to include in summaries. Default is \code{everything()}.}
+
 \item{by}{columns to compute statistics by. Default are the columns
 returned by \code{dplyr::group_vars(data)}.}
 
-\item{variables}{columns to include in summaries. Default is \code{everything()}.}
-
 \item{statistics}{a named list of functions that return a summary statistic,
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
+
+\item{denominator}{Specify this argument to change the denominator,
+e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 }
 \value{
 a data frame
@@ -33,6 +31,46 @@ a data frame
 Compute Analysis Results Data (ARD) for simple summary statistics from
 continuous and categorical data.
 }
+\section{Denominators}{
+
+By default, the \code{ard_categorical()} function returns the statistics \code{"n"} and \code{"N"},
+where little \code{"n"} are the counts for the variable levels, and \code{"N"} is
+the number of non-missing observations. The default calculation for the
+percentage is merely \code{p = n/N}.
+
+However, it is sometimes necessary to provide a different \code{"N"} to use
+as the denominator in this calculation. For example, in a calculation
+of the rates of various observed adverse events, you may need to update the
+denominator to the number of subjects who received treatment.
+
+In such cases, use the \code{denominator} argument to specify a new definition
+of \code{"N"}, and subsequently \code{"p"}.
+The argument expects a named list. The names are argument names that will be passed
+to \code{ard_continuous()} to make the variable-wide calculations.
+When an argument is not specified, then the value passed to \code{ard_categorical()}
+will be utilized.
+
+Take an example where we need to update the denominator to be subjects enrolled
+in a trial. The argument may look something like this:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_categorical(
+  data = ADAE,
+  by = TRT01P,
+  variable = AE
+  denominator =
+    list(
+      data = ADSL,
+      statistic = list(N = function(x) sum(!is.na(x)))
+    )
+)
+}\if{html}{\out{</div>}}
+
+Note in the above example, no \code{by} argument was added to the named list,
+and therefore, the \code{by} argument from the primary call to \code{ard_categorical()}
+will be used.
+TODO: Update this with a real example for an AE table.
+}
+
 \examples{
 ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
 ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))

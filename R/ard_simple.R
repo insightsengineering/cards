@@ -9,6 +9,47 @@
 #' @param statistics a named list of functions that return a summary statistic,
 #' e.g. `list(mpg = list(mean = \(x) mean(x, na.rm = TRUE)))`
 #' @param variables columns to include in summaries. Default is `everything()`.
+#' @param denominator Specify this argument to change the denominator,
+#' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#'
+#' @section Denominators:
+#' By default, the `ard_categorical()` function returns the statistics `"n"` and `"N"`,
+#' where little `"n"` are the counts for the variable levels, and `"N"` is
+#' the number of non-missing observations. The default calculation for the
+#' percentage is merely `p = n/N`.
+#'
+#' However, it is sometimes necessary to provide a different `"N"` to use
+#' as the denominator in this calculation. For example, in a calculation
+#' of the rates of various observed adverse events, you may need to update the
+#' denominator to the number of subjects who received treatment.
+#'
+#' In such cases, use the `denominator` argument to specify a new definition
+#' of `"N"`, and subsequently `"p"`.
+#' The argument expects a named list. The names are argument names that will be passed
+#' to `ard_continuous()` to make the variable-wide calculations.
+#' When an argument is not specified, then the value passed to `ard_categorical()`
+#' will be utilized.
+#'
+#' Take an example where we need to update the denominator to be subjects enrolled
+#' in a trial. The argument may look something like this:
+#'
+#' ```r
+#' ard_categorical(
+#'   data = ADAE,
+#'   by = TRT01P,
+#'   variable = AE
+#'   denominator =
+#'     list(
+#'       data = ADSL,
+#'       statistic = list(N = function(x) sum(!is.na(x)))
+#'     )
+#' )
+#' ```
+#'
+#' Note in the above example, no `by` argument was added to the named list,
+#' and therefore, the `by` argument from the primary call to `ard_categorical()`
+#' will be used.
+#' TODO: Update this with a real example for an AE table.
 #'
 #' @return a data frame
 #' @name ard_simple
@@ -21,25 +62,25 @@ NULL
 #' @rdname ard_simple
 #' @export
 ard_continuous <- function(data,
-                           by = dplyr::group_vars(data),
-                           variables = everything(),
+                           variables,
+                           by = NULL,
                            statistics = NULL) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
-  all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
+  variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
   data <- dplyr::ungroup(data)
 
   # check inputs (will make this more robust later) ----------------------------
 
   # setting default statistics -------------------------------------------------
   statistics <-
-    all_summary_variables |>
+    variables |>
     lapply(function(x) statistics[[x]] %||% .default_continuous_statistics()) |>
-    stats::setNames(nm = all_summary_variables)
+    stats::setNames(nm = variables)
 
   df_statsistics <-
     lapply(
-      X = all_summary_variables,
+      X = variables,
       FUN = function(x) {
         dplyr::tibble(
           variable = x,
@@ -112,38 +153,30 @@ ard_continuous <- function(data,
 
 #' @rdname ard_simple
 #' @export
-ard_categorical <- function(data, by = dplyr::group_vars(data), variables = everything()) {
+ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
-  all_summary_variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
+  variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
   data <- dplyr::ungroup(data)
 
   # check inputs (will make this more robust later) ----------------------------
+  # the denominator arg needs a fn named "N"
 
   # calculating summary stats --------------------------------------------------
-  # first, calculating variable-level stats
-  statistics <-
-    rep_len(
-      list(.default_continuous_statistics()[c("N", "N_miss", "N_tot")]),
-      length.out = length(all_summary_variables)
-    ) |>
-    stats::setNames(nm = all_summary_variables)
-
-  df_ard <-
-    ard_continuous(
-      data = data,
-      by = !!all_of(by),
-      statistics = statistics,
-      variables = !!all_of(all_summary_variables)
+  # first, calculate the variable level statistics (e.g. N, length)
+  df_ard_variables <-
+    rlang::inject(
+      ard_continuous(!!!.construct_n_args(data, variables, by, denominator))
     )
 
   # second, tabulate variable
   df_ard_tablulation <-
     lapply(
-      X = all_summary_variables,
+      X = variables,
       FUN = function(v) {
         ard_continuous(
           data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
+          variables = dplyr::all_of(v),
           by = !!all_of(by),
           statistics =
             list(
@@ -172,28 +205,50 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
           )
       }
     ) |>
-    dplyr::bind_rows() |>
+    dplyr::bind_rows()
+
+  # bind data frames with stats, and return to user ----------------------------
+  ard_final <- dplyr::bind_rows(df_ard_tablulation, df_ard_variables)
+  # if a custom function for the denom was provided, udpate the percent statistics using the custom N calculation
+  if (!rlang::is_empty(denominator))
+    ard_final <- .update_percent_statistic(ard_final)
+
+  ard_final |>
     dplyr::rows_update(
       .default_statistic_labels(),
       by = "stat_name",
       unmatched = "ignore"
-    )
-
-  # bind data frames with stats, and return to user ----------------------------
-  dplyr::bind_rows(df_ard_tablulation, df_ard) |>
+    ) |>
     dplyr::mutate(context = list("categorical")) %>%
     structure(., class = c("card", class(.)))
 }
 
 
-
+.construct_n_args <- function(data, variables, by, denominator) {
+  list(
+    data = denominator$data %||% data,
+    by = denominator$by %||% by,
+    statistics =
+      rep_len(
+        list(
+          utils::modifyList(
+            x = .default_continuous_statistics()[c("N", "length")],
+            val = denominator$statistics %||% list()
+          )
+        ),
+        length.out = length(variables)
+      ) |>
+      stats::setNames(nm = variables),
+  variables = variables
+  )
+}
 
 
 .default_continuous_statistics <- function() {
   list(
     N = function(x) sum(!is.na(x)),
-    N_miss = function(x) sum(is.na(x)),
-    N_tot = function(x) length(x),
+    # N_miss = function(x) sum(is.na(x)),
+    length = function(x) length(x),
     mean = function(x) mean(x, na.rm = TRUE),
     sd = function(x) stats::sd(x, na.rm = TRUE),
     min = function(x) min(x, na.rm = TRUE),
@@ -217,6 +272,32 @@ ard_categorical <- function(data, by = dplyr::group_vars(data), variables = ever
     {dplyr::tibble(
       stat_name = names(.),
       stat_label = unlist(.) |> unname()
+    )}
+}
+
+
+.update_percent_statistic <- function(x) {
+  x |>
+    dplyr::group_by(
+      dplyr::pick(dplyr::any_of("variable")),
+      dplyr::pick(dplyr::matches("^group[0-9]+$")),
+      dplyr::pick(dplyr::matches("^group[0-9]+_level$"))
+    ) |>
+    dplyr::group_map(
+      ~ dplyr::filter(.x, .data$stat_name %in% "n") |>
+        dplyr::mutate(
+          stat_name = "p",
+          statistic =
+            (unlist(.data$statistic) / unlist(.x[.x$stat_name %in% "N", "statistic"])) |>
+            as.list()
+        ),
+      .keep = TRUE
+    ) %>%
+    {dplyr::bind_rows(
+      x |>
+        # remove the old percent calculation based on the typical denominator
+        dplyr::filter(!.data$stat_name %in% "p"),
+      !!!.
     )}
 }
 

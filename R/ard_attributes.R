@@ -19,8 +19,8 @@
 #' df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
 #' attr(df$var1, 'label') <- "Lowercase Letters"
 #'
-#' ard_attributess(df)
-ard_attributes <- function(data, label = NULL, variables = everything()) {
+#' ard_attributes(df, variables = everything())
+ard_attributes <- function(data, variables, label = NULL) {
   variables <- dplyr::select(data, {{ variables }}) |> colnames()
 
   variables |>

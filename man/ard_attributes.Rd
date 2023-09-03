@@ -4,15 +4,15 @@
 \alias{ard_attributes}
 \title{ARD Attributes}
 \usage{
-ard_attributes(data, label = NULL, variables = everything())
+ard_attributes(data, variables, label = NULL)
 }
 \arguments{
 \item{data}{a data frame}
 
+\item{variables}{variable to include}
+
 \item{label}{named list of variable labels, e.g. \code{list(mpg = "MPG")}.
 Default is \code{NULL}}
-
-\item{variables}{variable to include}
 }
 \value{
 a data frame
@@ -31,5 +31,5 @@ the column name will be placed in the label statistic.
 df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
 attr(df$var1, 'label') <- "Lowercase Letters"
 
-ard_attributess(df)
+ard_attributes(df, variables = everything())
 }
