@@ -72,6 +72,6 @@ TODO: Update this with a real example for an AE table.
 }
 
 \examples{
-ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
-ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))
+ard_continuous(ADSL, by = "ARM", variables = "AGE")
+ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 }

@@ -26,6 +26,6 @@ data frame
 Comparison ARD Statistics
 }
 \examples{
-ard_ttest(data = mtcars, by = "am", variable = "hp")
-ard_wilcoxtest(data = mtcars, by = "am", variable = "hp")
+ard_ttest(data = ADSL, by = "ARM", variable = "AGE")
+ard_wilcoxtest(data = ADSL, by = "ARM", variable = "AGE")
 }

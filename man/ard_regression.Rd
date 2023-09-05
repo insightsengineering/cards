@@ -21,6 +21,6 @@ Function takes a regression model object and converts it to a ARD
 structure using the \code{broom.helpers} package.
 }
 \examples{
-lm(hp ~ mpg + factor(cyl), data = mtcars) |>
+lm(AGE ~ ARM, data = ADSL) |>
   ard_regression(add_estimate_to_reference_rows = TRUE)
 }
