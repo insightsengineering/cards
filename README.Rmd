@@ -40,61 +40,30 @@ ARD Examples
 
 ```{r example}
 library(cards)
-library(dplyr) |> suppressPackageStartupMessages()
 
-ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
+ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 
-ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
+ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 
-ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
+ADSL |>
+  dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
+  ard_ttest(by = "ARM", variable = "AGE") |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 
-glm(am ~ factor(cyl), data = mtcars, family = binomial) |>
+# the example below ignores the time to event nature of the outcome
+# and are provided to illustrate functionality only
+glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   flatten_ard() |> 
-  dplyr::filter(variable_level %in% "8") |> 
-  tidyr::drop_na() |> 
+  dplyr::filter(variable_level %in% "Xanomeline High Dose") |> 
+  tidyr::drop_na() |>
   knitr::kable()
 ```
-
-<!-- ARD  -> Table Example -->
-
-<!-- ```{r} -->
-<!-- # Construct the ARD -->
-<!-- table_ard <- -->
-<!--   bind_rows( -->
-<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
-<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
-<!--     ard_categorical(mtcars, variables = "cyl") -->
-<!--   ) -->
-
-<!-- # convert ARD to a cards table -->
-<!-- table <- -->
-<!--   construct_cards( -->
-<!--     table_plan = -->
-<!--       bind_rows( -->
-<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
-<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
-<!--       ), -->
-<!--     header_plan = -->
-<!--       table_ard |> -->
-<!--       filter(variable %in% "cyl") |> -->
-<!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> -->
-<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
-<!--   ) |> -->
-<!--   convert_cards(engine = "gt") -->
-<!-- ``` -->
-
-<!-- ```{r echo=FALSE, fig.width=4} -->
-<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
-<!-- ``` -->
-
-<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->

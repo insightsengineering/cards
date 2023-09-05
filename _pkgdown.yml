@@ -1,4 +1,31 @@
 url: https://refactored-bassoon-49o3774.pages.github.io/
 template:
   bootstrap: 5
+  params:
+    bootswatch: flatly
 
+# development:
+#   mode: auto
+#   version_label: default
+
+authors:
+  Daniel D. Sjoberg:
+    href: "http://www.danieldsjoberg.com/"
+
+reference:
+  - title: "ARD Creation Functions"
+    contents:
+      - ard_categorical
+      - starts_with("ard_")
+
+  - title: "Utility Functions"
+    contents:
+      - json
+      - flatten_ard
+      - eval_capture_conditions
+
+  - title: "Data"
+    contents:
+      - ADSL
+      - ADAE
+      - ADTTE

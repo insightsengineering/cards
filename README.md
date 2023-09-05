@@ -33,123 +33,98 @@ ARD Examples
 
 ``` r
 library(cards)
-library(dplyr) |> suppressPackageStartupMessages()
 
-ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |> 
+ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | stat_name | stat_label | statistic        | warning | error |
-|:-------|:-------------|:---------|:----------|:-----------|:-----------------|:--------|:------|
-| cyl    | 4            | hp       | N         | N          | 11               | NA      | NA    |
-| cyl    | 4            | hp       | N_miss    | N Missing  | 0                | NA      | NA    |
-| cyl    | 4            | hp       | N_tot     | Total N    | 11               | NA      | NA    |
-| cyl    | 4            | hp       | mean      | Mean       | 82.6363636363636 | NA      | NA    |
-| cyl    | 4            | hp       | sd        | SD         | 20.934529979308  | NA      | NA    |
-| cyl    | 4            | hp       | min       | Min        | 52               | NA      | NA    |
-| cyl    | 4            | hp       | max       | Max        | 113              | NA      | NA    |
-| cyl    | 6            | hp       | N         | N          | 7                | NA      | NA    |
-| cyl    | 6            | hp       | N_miss    | N Missing  | 0                | NA      | NA    |
-| cyl    | 6            | hp       | N_tot     | Total N    | 7                | NA      | NA    |
+| group1 | group1_level         | variable | stat_name | stat_label | statistic        | warning | error |
+|:-------|:---------------------|:---------|:----------|:-----------|:-----------------|:--------|:------|
+| ARM    | Placebo              | AGE      | N         | N          | 86               | NA      | NA    |
+| ARM    | Placebo              | AGE      | length    | length     | 86               | NA      | NA    |
+| ARM    | Placebo              | AGE      | mean      | Mean       | 75.2093023255814 | NA      | NA    |
+| ARM    | Placebo              | AGE      | sd        | SD         | 8.59016712714193 | NA      | NA    |
+| ARM    | Placebo              | AGE      | min       | Min        | 52               | NA      | NA    |
+| ARM    | Placebo              | AGE      | max       | Max        | 89               | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | N         | N          | 84               | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | length    | length     | 84               | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | mean      | Mean       | 74.3809523809524 | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | sd        | SD         | 7.88609384869824 | NA      | NA    |
 
 ``` r
 
-ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |> 
+ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | variable_level | stat_name | stat_label | statistic         | warning | error |
-|:-------|:-------------|:---------|:---------------|:----------|:-----------|:------------------|:--------|:------|
-| cyl    | 4            | am       | 0              | n         | n          | 3                 | NA      | NA    |
-| cyl    | 4            | am       | 0              | p         | %          | 0.272727272727273 | NA      | NA    |
-| cyl    | 4            | am       | 1              | n         | n          | 8                 | NA      | NA    |
-| cyl    | 4            | am       | 1              | p         | %          | 0.727272727272727 | NA      | NA    |
-| cyl    | 4            | am       | NA             | N         | N          | 11                | NA      | NA    |
-| cyl    | 4            | am       | NA             | N_miss    | N Missing  | 0                 | NA      | NA    |
-| cyl    | 4            | am       | NA             | N_tot     | Total N    | 11                | NA      | NA    |
-| cyl    | 6            | am       | 0              | n         | n          | 4                 | NA      | NA    |
-| cyl    | 6            | am       | 0              | p         | %          | 0.571428571428571 | NA      | NA    |
-| cyl    | 6            | am       | 1              | n         | n          | 3                 | NA      | NA    |
+| group1 | group1_level         | variable | variable_level | stat_name | stat_label | statistic         | warning | error |
+|:-------|:---------------------|:---------|:---------------|:----------|:-----------|:------------------|:--------|:------|
+| ARM    | Placebo              | AGEGR1   | \<65           | n         | n          | 14                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \<65           | p         | %          | 0.162790697674419 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \>80           | n         | n          | 30                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \>80           | p         | %          | 0.348837209302326 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | 65-80          | n         | n          | 42                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | 65-80          | p         | %          | 0.488372093023256 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | NA             | N         | N          | 86                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | NA             | length    | length     | 86                | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | n         | n          | 11                | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | p         | %          | 0.130952380952381 | NA      | NA    |
 
 ``` r
 
-ard_ttest(data = mtcars, by = "am", variable = "hp") |> 
+ADSL |>
+  dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
+  ard_ttest(by = "ARM", variable = "AGE") |> 
   flatten_ard() |> 
   head(n = 10) |> 
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | stat_name   | statistic               | warning | error |
-|:-------|:-------------|:---------|:------------|:------------------------|:--------|:------|
-| am     | 0            | hp       | estimate1   | 160.263157894737        | NA      | NA    |
-| am     | 1            | hp       | estimate2   | 126.846153846154        | NA      | NA    |
-| am     | NA           | hp       | estimate    | 33.417004048583         | NA      | NA    |
-| am     | NA           | hp       | statistic   | 1.26618876980934        | NA      | NA    |
-| am     | NA           | hp       | p.value     | 0.220979581335913       | NA      | NA    |
-| am     | NA           | hp       | parameter   | 18.7154096625045        | NA      | NA    |
-| am     | NA           | hp       | conf.low    | -21.8785802016468       | NA      | NA    |
-| am     | NA           | hp       | conf.high   | 88.7125882988128        | NA      | NA    |
-| am     | NA           | hp       | method      | Welch Two Sample t-test | NA      | NA    |
-| am     | NA           | hp       | alternative | two.sided               | NA      | NA    |
+| group1 | group1_level         | variable | stat_name   | statistic               | warning | error |
+|:-------|:---------------------|:---------|:------------|:------------------------|:--------|:------|
+| ARM    | Placebo              | AGE      | estimate1   | 75.2093023255814        | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | estimate2   | 74.3809523809524        | NA      | NA    |
+| ARM    | NA                   | AGE      | estimate    | 0.828349944629011       | NA      | NA    |
+| ARM    | NA                   | AGE      | statistic   | 0.655196351798793       | NA      | NA    |
+| ARM    | NA                   | AGE      | p.value     | 0.513240888362863       | NA      | NA    |
+| ARM    | NA                   | AGE      | parameter   | 167.362493715531        | NA      | NA    |
+| ARM    | NA                   | AGE      | conf.low    | -1.66763676468001       | NA      | NA    |
+| ARM    | NA                   | AGE      | conf.high   | 3.32433665393803        | NA      | NA    |
+| ARM    | NA                   | AGE      | method      | Welch Two Sample t-test | NA      | NA    |
+| ARM    | NA                   | AGE      | alternative | two.sided               | NA      | NA    |
 
 ``` r
 
-glm(am ~ factor(cyl), data = mtcars, family = binomial) |>
+# the example below ignores the time to event nature of the outcome
+# and are provided to illustrate functionality only
+glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   flatten_ard() |> 
-  dplyr::filter(variable_level %in% "8") |> 
-  tidyr::drop_na() |> 
+  dplyr::filter(variable_level %in% "Xanomeline High Dose") |> 
+  tidyr::drop_na() |>
   knitr::kable()
 ```
 
-| variable    | variable_level | stat_name      | statistic          |
-|:------------|:---------------|:---------------|:-------------------|
-| factor(cyl) | 8              | term           | factor(cyl)8       |
-| factor(cyl) | 8              | var_label      | factor(cyl)        |
-| factor(cyl) | 8              | var_class      | factor             |
-| factor(cyl) | 8              | var_type       | categorical        |
-| factor(cyl) | 8              | var_nlevels    | 3                  |
-| factor(cyl) | 8              | contrasts      | contr.treatment    |
-| factor(cyl) | 8              | contrasts_type | treatment          |
-| factor(cyl) | 8              | reference_row  | FALSE              |
-| factor(cyl) | 8              | label          | 8                  |
-| factor(cyl) | 8              | estimate       | -2.77258872223715  |
-| factor(cyl) | 8              | std.error      | 1.0206203034945    |
-| factor(cyl) | 8              | statistic      | -2.71657217943254  |
-| factor(cyl) | 8              | p.value        | 0.0065961810499368 |
-| factor(cyl) | 8              | conf.low       | -5.04529335824973  |
-| factor(cyl) | 8              | conf.high      | -0.93331910323904  |
-
-<!-- ARD  -> Table Example -->
-<!-- ```{r} -->
-<!-- # Construct the ARD -->
-<!-- table_ard <- -->
-<!--   bind_rows( -->
-<!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), -->
-<!--     ard_categorical(mtcars, by = cyl, variables = "am"), -->
-<!--     ard_categorical(mtcars, variables = "cyl") -->
-<!--   ) -->
-<!-- # convert ARD to a cards table -->
-<!-- table <- -->
-<!--   construct_cards( -->
-<!--     table_plan = -->
-<!--       bind_rows( -->
-<!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), -->
-<!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() -->
-<!--       ), -->
-<!--     header_plan = -->
-<!--       table_ard |> -->
-<!--       filter(variable %in% "cyl") |> -->
-<!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> -->
-<!--       modifyList(val = list(label = gt::md("**Characteristic**"))) -->
-<!--   ) |> -->
-<!--   convert_cards(engine = "gt") -->
-<!-- ``` -->
-<!-- ```{r echo=FALSE, fig.width=4} -->
-<!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") -->
-<!-- ``` -->
-<!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
+| variable | variable_level       | stat_name      | statistic                |
+|:---------|:---------------------|:---------------|:-------------------------|
+| TRTP     | Xanomeline High Dose | term           | TRTPXanomeline High Dose |
+| TRTP     | Xanomeline High Dose | var_label      | Planned Treatment        |
+| TRTP     | Xanomeline High Dose | var_class      | character                |
+| TRTP     | Xanomeline High Dose | var_type       | categorical              |
+| TRTP     | Xanomeline High Dose | var_nlevels    | 3                        |
+| TRTP     | Xanomeline High Dose | contrasts      | contr.treatment          |
+| TRTP     | Xanomeline High Dose | contrasts_type | treatment                |
+| TRTP     | Xanomeline High Dose | reference_row  | FALSE                    |
+| TRTP     | Xanomeline High Dose | label          | Xanomeline High Dose     |
+| TRTP     | Xanomeline High Dose | n_obs          | 84                       |
+| TRTP     | Xanomeline High Dose | n_event        | 61                       |
+| TRTP     | Xanomeline High Dose | estimate       | 1.65113508608955         |
+| TRTP     | Xanomeline High Dose | std.error      | 0.334511905011521        |
+| TRTP     | Xanomeline High Dose | statistic      | 4.93595313456089         |
+| TRTP     | Xanomeline High Dose | p.value        | 7.97602603440836e-07     |
+| TRTP     | Xanomeline High Dose | conf.low       | 1.0082797171968          |
+| TRTP     | Xanomeline High Dose | conf.high      | 2.32276375858544         |
