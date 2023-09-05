@@ -26,7 +26,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
@@ -84,21 +84,20 @@
 <p>ARD Examples</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cards" class="external-link">cards</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu"><a href="reference/ard_simple.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="st">"BMIBL"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="8%">
-<col width="15%">
+<col width="22%">
+<col width="10%">
 <col width="11%">
 <col width="12%">
-<col width="13%">
-<col width="20%">
-<col width="10%">
+<col width="18%">
+<col width="9%">
 <col width="7%">
 </colgroup>
 <thead><tr class="header">
@@ -113,102 +112,102 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
 <td align="left">N</td>
 <td align="left">N</td>
-<td align="left">11</td>
+<td align="left">86</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
-<td align="left">N_miss</td>
-<td align="left">N Missing</td>
-<td align="left">0</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
+<td align="left">length</td>
+<td align="left">length</td>
+<td align="left">86</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
-<td align="left">N_tot</td>
-<td align="left">Total N</td>
-<td align="left">11</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
 <td align="left">mean</td>
 <td align="left">Mean</td>
-<td align="left">82.6363636363636</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
-<td align="left">sd</td>
-<td align="left">SD</td>
-<td align="left">20.934529979308</td>
+<td align="left">75.2093023255814</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
+<td align="left">sd</td>
+<td align="left">SD</td>
+<td align="left">8.59016712714193</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
 <td align="left">min</td>
 <td align="left">Min</td>
 <td align="left">52</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">hp</td>
+<tr class="even">
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
 <td align="left">max</td>
 <td align="left">Max</td>
-<td align="left">113</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">hp</td>
-<td align="left">N</td>
-<td align="left">N</td>
-<td align="left">7</td>
+<td align="left">89</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">hp</td>
-<td align="left">N_miss</td>
-<td align="left">N Missing</td>
-<td align="left">0</td>
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGE</td>
+<td align="left">N</td>
+<td align="left">N</td>
+<td align="left">84</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">hp</td>
-<td align="left">N_tot</td>
-<td align="left">Total N</td>
-<td align="left">7</td>
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGE</td>
+<td align="left">length</td>
+<td align="left">length</td>
+<td align="left">84</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGE</td>
+<td align="left">mean</td>
+<td align="left">Mean</td>
+<td align="left">74.3809523809524</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGE</td>
+<td align="left">sd</td>
+<td align="left">SD</td>
+<td align="left">7.88609384869824</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
@@ -216,20 +215,20 @@
 </table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"gear"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu"><a href="reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGEGR1"</span>, <span class="st">"SEX"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="7%">
-<col width="13%">
-<col width="9%">
-<col width="15%">
-<col width="10%">
-<col width="11%">
-<col width="17%">
+<col width="19%">
 <col width="8%">
+<col width="14%">
+<col width="9%">
+<col width="10%">
+<col width="16%">
+<col width="7%">
 <col width="6%">
 </colgroup>
 <thead><tr class="header">
@@ -245,112 +244,112 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">0</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">&lt;65</td>
 <td align="left">n</td>
 <td align="left">n</td>
-<td align="left">3</td>
+<td align="left">14</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">0</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">&lt;65</td>
 <td align="left">p</td>
 <td align="left">%</td>
-<td align="left">0.272727272727273</td>
+<td align="left">0.162790697674419</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">1</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">&gt;80</td>
 <td align="left">n</td>
 <td align="left">n</td>
-<td align="left">8</td>
+<td align="left">30</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">1</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">&gt;80</td>
 <td align="left">p</td>
 <td align="left">%</td>
-<td align="left">0.727272727272727</td>
+<td align="left">0.348837209302326</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">65-80</td>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">42</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">65-80</td>
+<td align="left">p</td>
+<td align="left">%</td>
+<td align="left">0.488372093023256</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
 <td align="left">NA</td>
 <td align="left">N</td>
 <td align="left">N</td>
+<td align="left">86</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGEGR1</td>
+<td align="left">NA</td>
+<td align="left">length</td>
+<td align="left">length</td>
+<td align="left">86</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGEGR1</td>
+<td align="left">&lt;65</td>
+<td align="left">n</td>
+<td align="left">n</td>
 <td align="left">11</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">NA</td>
-<td align="left">N_miss</td>
-<td align="left">N Missing</td>
-<td align="left">0</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">cyl</td>
-<td align="left">4</td>
-<td align="left">am</td>
-<td align="left">NA</td>
-<td align="left">N_tot</td>
-<td align="left">Total N</td>
-<td align="left">11</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">am</td>
-<td align="left">0</td>
-<td align="left">n</td>
-<td align="left">n</td>
-<td align="left">4</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">am</td>
-<td align="left">0</td>
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGEGR1</td>
+<td align="left">&lt;65</td>
 <td align="left">p</td>
 <td align="left">%</td>
-<td align="left">0.571428571428571</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">cyl</td>
-<td align="left">6</td>
-<td align="left">am</td>
-<td align="left">1</td>
-<td align="left">n</td>
-<td align="left">n</td>
-<td align="left">3</td>
+<td align="left">0.130952380952381</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
@@ -358,19 +357,21 @@
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"am"</span>, variable <span class="op">=</span> <span class="st">"hp"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">ADSL</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># only only two groups for a t-test</span></span>
+<span>  <span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="9%">
-<col width="16%">
-<col width="11%">
-<col width="15%">
-<col width="29%">
-<col width="10%">
 <col width="8%">
+<col width="23%">
+<col width="10%">
+<col width="13%">
+<col width="26%">
+<col width="9%">
+<col width="7%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">group1</th>
@@ -383,90 +384,90 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">am</td>
-<td align="left">0</td>
-<td align="left">hp</td>
+<td align="left">ARM</td>
+<td align="left">Placebo</td>
+<td align="left">AGE</td>
 <td align="left">estimate1</td>
-<td align="left">160.263157894737</td>
+<td align="left">75.2093023255814</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">am</td>
-<td align="left">1</td>
-<td align="left">hp</td>
+<td align="left">ARM</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">AGE</td>
 <td align="left">estimate2</td>
-<td align="left">126.846153846154</td>
+<td align="left">74.3809523809524</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">estimate</td>
-<td align="left">33.417004048583</td>
+<td align="left">0.828349944629011</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">statistic</td>
-<td align="left">1.26618876980934</td>
+<td align="left">0.655196351798793</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">p.value</td>
-<td align="left">0.220979581335913</td>
+<td align="left">0.513240888362863</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">parameter</td>
-<td align="left">18.7154096625045</td>
+<td align="left">167.362493715531</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">conf.low</td>
-<td align="left">-21.8785802016468</td>
+<td align="left">-1.66763676468001</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">conf.high</td>
-<td align="left">88.7125882988128</td>
+<td align="left">3.32433665393803</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">method</td>
 <td align="left">Welch Two Sample t-test</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">am</td>
+<td align="left">ARM</td>
 <td align="left">NA</td>
-<td align="left">hp</td>
+<td align="left">AGE</td>
 <td align="left">alternative</td>
 <td align="left">two.sided</td>
 <td align="left">NA</td>
@@ -476,13 +477,21 @@
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="co"># the example below ignores the time to event nature of the outcome</span></span>
+<span><span class="co"># and are provided to illustrate functionality only</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">CNSR</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">TRTP</span>, data <span class="op">=</span> <span class="va">ADTTE</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"8"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"Xanomeline High Dose"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="13%">
+<col width="29%">
+<col width="21%">
+<col width="35%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">variable</th>
 <th align="left">variable_level</th>
@@ -491,98 +500,109 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">term</td>
-<td align="left">factor(cyl)8</td>
+<td align="left">TRTPXanomeline High Dose</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">var_label</td>
-<td align="left">factor(cyl)</td>
+<td align="left">Planned Treatment</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">var_class</td>
-<td align="left">factor</td>
+<td align="left">character</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">var_type</td>
 <td align="left">categorical</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">var_nlevels</td>
 <td align="left">3</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">contrasts</td>
 <td align="left">contr.treatment</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">contrasts_type</td>
 <td align="left">treatment</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">reference_row</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">label</td>
-<td align="left">8</td>
+<td align="left">Xanomeline High Dose</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">n_obs</td>
+<td align="left">84</td>
+</tr>
+<tr class="odd">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
+<td align="left">n_event</td>
+<td align="left">61</td>
+</tr>
+<tr class="even">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">estimate</td>
-<td align="left">-2.77258872223715</td>
+<td align="left">1.65113508608955</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">std.error</td>
-<td align="left">1.0206203034945</td>
+<td align="left">0.334511905011521</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">statistic</td>
-<td align="left">-2.71657217943254</td>
+<td align="left">4.93595313456089</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">p.value</td>
-<td align="left">0.0065961810499368</td>
+<td align="left">7.97602603440836e-07</td>
 </tr>
 <tr class="even">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">conf.low</td>
-<td align="left">-5.04529335824973</td>
+<td align="left">1.0082797171968</td>
 </tr>
 <tr class="odd">
-<td align="left">factor(cyl)</td>
-<td align="left">8</td>
+<td align="left">TRTP</td>
+<td align="left">Xanomeline High Dose</td>
 <td align="left">conf.high</td>
-<td align="left">-0.93331910323904</td>
+<td align="left">2.32276375858544</td>
 </tr>
 </tbody>
 </table>
-<!-- ARD  -> Table Example --><!-- ```{r} --><!-- # Construct the ARD --><!-- table_ard <- --><!--   bind_rows( --><!--     ard_continuous(mtcars, by = cyl, variables = "mpg"), --><!--     ard_categorical(mtcars, by = cyl, variables = "am"), --><!--     ard_categorical(mtcars, variables = "cyl") --><!--   ) --><!-- # convert ARD to a cards table --><!-- table <- --><!--   construct_cards( --><!--     table_plan = --><!--       bind_rows( --><!--         table_ard |> filter(variable %in% "mpg") |>  table_plan_simple_continuous(), --><!--         table_ard |> filter(variable %in% "am") |> table_plan_simple_categorical() --><!--       ), --><!--     header_plan = --><!--       table_ard |> --><!--       filter(variable %in% "cyl") |> --><!--       header_plan_simple(header = "**{group} Cylinders**  \nN={n}  ({p}%)") |> --><!--       modifyList(val = list(label = gt::md("**Characteristic**"))) --><!--   ) |> --><!--   convert_cards(engine = "gt") --><!-- ``` --><!-- ```{r echo=FALSE, fig.width=4} --><!-- gt::gtsave(table, filename = "man/figures/README-table_example.png") --><!-- ``` --><!-- <img src="man/figures/README-table_example.png" style="width: 50%"> -->
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -612,7 +632,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Daniel D. Sjoberg <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0862-2018" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="http://www.danieldsjoberg.com/" class="external-link">Daniel D. Sjoberg</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0862-2018" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>F. Hoffmann-La Roche AG <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
@@ -625,7 +646,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Daniel D. Sjoberg, F. Hoffmann-La Roche AG.</p>
+<p>Developed by <a href="http://www.danieldsjoberg.com/" class="external-link">Daniel D. Sjoberg</a>, F. Hoffmann-La Roche AG.</p>
 </div>
 
 <div class="pkgdown-footer-right">
