@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' lm(AGE ~ ARM, data = ADSL) |>
-#'   ard_regression(add_estimate_to_reference_rows = TRUE)
+#'   ard_regression(add_estimate_to_reference_rows = TRUE) |>
+#'   flatten_ard()
 ard_regression <- function(model, tidy_fun = NULL, ...) {
   rlang::check_installed("broom.helpers")
 

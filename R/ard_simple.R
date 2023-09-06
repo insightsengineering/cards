@@ -21,42 +21,41 @@
 #' However, it is sometimes necessary to provide a different `"N"` to use
 #' as the denominator in this calculation. For example, in a calculation
 #' of the rates of various observed adverse events, you may need to update the
-#' denominator to the number of subjects who received treatment.
+#' denominator to the number of enrolled subjects.
 #'
 #' In such cases, use the `denominator` argument to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
-#' The argument expects a named list. The names are argument names that will be passed
-#' to `ard_continuous()` to make the variable-wide calculations.
-#' When an argument is not specified, then the value passed to `ard_categorical()`
-#' will be utilized.
+#' The argument expects a data frame, and the data frame must include the columns
+#' specified in `ard_categorical(by=)`.
+#' The updated `N` and `length` elements will be updated to be calculated as
+#' the number of rows in each combination of the `by` variables.
 #'
 #' Take an example where we need to update the denominator to be subjects enrolled
-#' in a trial. The argument may look something like this:
+#' in a trial, e.g. tabulating the number of AEs that occurred within an SOC
+#' where some subjects may not have experienced an AE and would not be represented
+#' in the ADAE data set. All patients appear in ADSL, however.
 #'
-#' ```r
+#' ```{r}
 #' ard_categorical(
-#'   data = ADAE,
-#'   by = TRT01P,
-#'   variable = AE
-#'   denominator =
-#'     list(
-#'       data = ADSL,
-#'       statistic = list(N = function(x) sum(!is.na(x)))
-#'     )
-#' )
+#'   data =
+#'     ADAE |>
+#'       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
+#'       dplyr::filter(AOCCSFL %in% "Y"),
+#'   by = ARM,
+#'   variables = "AESOC",
+#'   denominator = ADSL
+#' ) |>
+#' flatten_ard()
 #' ```
-#'
-#' Note in the above example, no `by` argument was added to the named list,
-#' and therefore, the `by` argument from the primary call to `ard_categorical()`
-#' will be used.
-#' TODO: Update this with a real example for an AE table.
 #'
 #' @return a data frame
 #' @name ard_simple
 #'
 #' @examples
-#' ard_continuous(ADSL, by = "ARM", variables = "AGE")
-#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
+#'   flatten_ard()
+#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+#'   flatten_ard()
 NULL
 
 #' @rdname ard_simple
@@ -160,13 +159,32 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   data <- dplyr::ungroup(data)
 
   # check inputs (will make this more robust later) ----------------------------
-  # the denominator arg needs a fn named "N"
+  if (!is.null(denominator)){
+    if (!is.data.frame(denominator))
+      cli::cli_abort("The {.code denominator} argument must be class {.cls data.frame}.")
+    if (!rlang::is_empty(setdiff(by, names(denominator))))
+      cli::cli_abort("The {.code denominator} data frame must contain columns {.val {by}}.")
+  }
 
   # calculating summary stats --------------------------------------------------
   # first, calculate the variable level statistics (e.g. N, length)
   df_ard_variables <-
-    rlang::inject(
-      ard_continuous(!!!.construct_n_args(data, variables, by, denominator))
+    ard_continuous(
+      data =
+        switch(
+          is.null(denominator) |> as.character(),
+          "TRUE" = data,
+          "FALSE" =
+            denominator |>
+            dplyr::select(all_of(by)) |>
+            dplyr::mutate(!!!(rep_len(list(1L), length(variables)) |> stats::setNames(variables)))
+        ),
+      variables = variables,
+      by = by,
+      statistics =
+        variables |>
+        lapply(function(x) .default_continuous_statistics()[c("N", "length")]) |>
+        stats::setNames(nm = variables)
     )
 
   # second, tabulate variable
@@ -222,27 +240,6 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
     dplyr::mutate(context = list("categorical")) %>%
     structure(., class = c("card", class(.)))
 }
-
-
-.construct_n_args <- function(data, variables, by, denominator) {
-  list(
-    data = denominator$data %||% data,
-    by = denominator$by %||% by,
-    statistics =
-      rep_len(
-        list(
-          utils::modifyList(
-            x = .default_continuous_statistics()[c("N", "length")],
-            val = denominator$statistics %||% list()
-          )
-        ),
-        length.out = length(variables)
-      ) |>
-      stats::setNames(nm = variables),
-  variables = variables
-  )
-}
-
 
 .default_continuous_statistics <- function() {
   list(

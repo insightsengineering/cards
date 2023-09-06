@@ -26,6 +26,8 @@ data frame
 Comparison ARD Statistics
 }
 \examples{
-ard_ttest(data = ADSL, by = "ARM", variable = "AGE")
-ard_wilcoxtest(data = ADSL, by = "ARM", variable = "AGE")
+ard_ttest(data = ADSL, by = "ARM", variable = "AGE") |>
+  flatten_ard()
+ard_wilcoxtest(data = ADSL, by = "ARM", variable = "AGE") |>
+  flatten_ard()
 }
