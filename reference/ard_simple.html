@@ -98,74 +98,86 @@ percentage is merely <code>p = n/N</code>.</p>
 <p>However, it is sometimes necessary to provide a different <code>"N"</code> to use
 as the denominator in this calculation. For example, in a calculation
 of the rates of various observed adverse events, you may need to update the
-denominator to the number of subjects who received treatment.</p>
+denominator to the number of enrolled subjects.</p>
 <p>In such cases, use the <code>denominator</code> argument to specify a new definition
 of <code>"N"</code>, and subsequently <code>"p"</code>.
-The argument expects a named list. The names are argument names that will be passed
-to <code>ard_continuous()</code> to make the variable-wide calculations.
-When an argument is not specified, then the value passed to <code>ard_categorical()</code>
-will be utilized.</p>
+The argument expects a data frame, and the data frame must include the columns
+specified in <code>ard_categorical(by=)</code>.
+The updated <code>N</code> and <code>length</code> elements will be updated to be calculated as
+the number of rows in each combination of the <code>by</code> variables.</p>
 <p>Take an example where we need to update the denominator to be subjects enrolled
-in a trial. The argument may look something like this:</p>
-<p></p><div class="sourceCode r"><pre><code>ard_categorical(
-  data = ADAE,
-  by = TRT01P,
-  variable = AE
-  denominator =
-    list(
-      data = ADSL,
-      statistic = list(N = function(x) sum(!is.na(x)))
-    )
-)
-</code></pre><p></p></div>
-<p>Note in the above example, no <code>by</code> argument was added to the named list,
-and therefore, the <code>by</code> argument from the primary call to <code>ard_categorical()</code>
-will be used.
-TODO: Update this with a real example for an AE table.</p>
+in a trial, e.g. tabulating the number of AEs that occurred within an SOC
+where some subjects may not have experienced an AE and would not be represented
+in the ADAE data set. All patients appear in ADSL, however.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/ard_simple.html">ard_categorical</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span></span>
+<span>    <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">ADSL</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"ARM"</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">AOCCSFL</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"Y"</span><span class="op">)</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>  variables <span class="op">=</span> <span class="st">"AESOC"</span>,</span>
+<span>  denominator <span class="op">=</span> <span class="va">ADSL</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="../reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 144 x 9</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable variable_level    stat_name stat_label statistic</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt;  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       </span></span>
+<span><span class="co">#&gt;  2 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        </span></span>
+<span><span class="co">#&gt;  3 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        </span></span>
+<span><span class="co">#&gt;  4 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        </span></span>
+<span><span class="co">#&gt;  5 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       </span></span>
+<span><span class="co">#&gt;  6 ARM    Placebo      AESOC    GENERAL DISORDER~ n         n          21       </span></span>
+<span><span class="co">#&gt;  7 ARM    Placebo      AESOC    HEPATOBILIARY DI~ n         n          1        </span></span>
+<span><span class="co">#&gt;  8 ARM    Placebo      AESOC    IMMUNE SYSTEM DI~ n         n          0        </span></span>
+<span><span class="co">#&gt;  9 ARM    Placebo      AESOC    INFECTIONS AND I~ n         n          16       </span></span>
+<span><span class="co">#&gt; 10 ARM    Placebo      AESOC    INJURY, POISONIN~ n         n          4        </span></span>
+<span><span class="co">#&gt; # i 134 more rows</span></span>
+<span><span class="co">#&gt; # i 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span></code></pre><p></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_continuous</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name stat_label statistic_fmt_fn statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      N         N          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      length    length     <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      mean      Mean       <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      sd        SD         <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      min       Min        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      max       Max        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      N         N          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      length    length     <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      mean      Mean       <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      sd        SD         <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      min       Min        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      max       Max        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      N         N          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      length    length     <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      mean      Mean       <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      sd        SD         <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      min       Min        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGE      max       Max        <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: warning &lt;list&gt;, error &lt;list&gt;, context &lt;list&gt;</span></span>
-<span class="r-in"><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_label statistic_fmt_fn variable_level</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   n          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   %          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   n          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   %          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   n          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   %          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   n          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   %          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   n          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   %          <span style="color: #949494;">&lt;fn&gt;</span>             <span style="color: #949494;">&lt;chr [1]&gt;</span>     </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_continuous</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level     variable stat_name stat_label statistic warning error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo          AGE      N         N          86        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo          AGE      length    length     86        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo          AGE      mean      Mean       75.20930… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo          AGE      sd        SD         8.590167… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo          AGE      min       Min        52        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo          AGE      max       Max        89        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Xanomeline High… AGE      N         N          84        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Xanomeline High… AGE      length    length     84        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Xanomeline High… AGE      mean      Mean       74.38095… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline High… AGE      sd        SD         7.886093… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ARM    Xanomeline High… AGE      min       Min        56        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> ARM    Xanomeline High… AGE      max       Max        88        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> ARM    Xanomeline Low … AGE      N         N          84        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ARM    Xanomeline Low … AGE      length    length     84        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> ARM    Xanomeline Low … AGE      mean      Mean       75.66666… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> ARM    Xanomeline Low … AGE      sd        SD         8.286050… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> ARM    Xanomeline Low … AGE      min       Min        51        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> ARM    Xanomeline Low … AGE      max       Max        88        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level    variable variable_level stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo         AGEGR1   65-80          n         n          42       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo         AGEGR1   65-80          p         %          0.488372…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo         AGEGR1   &lt;65            n         n          14       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo         AGEGR1   &lt;65            p         %          0.162790…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo         AGEGR1   &gt;80            n         n          30       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo         AGEGR1   &gt;80            p         %          0.348837…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Placebo         AGEGR1   <span style="color: #BB0000;">NA</span>             N         N          86       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Placebo         AGEGR1   <span style="color: #BB0000;">NA</span>             length    length     86       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Xanomeline Hig… AGEGR1   65-80          n         n          55       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline Hig… AGEGR1   65-80          p         %          0.654761…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: warning &lt;list&gt;, error &lt;list&gt;, context &lt;list&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   stat_name &lt;chr&gt;, statistic &lt;list&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
