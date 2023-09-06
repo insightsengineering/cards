@@ -21,7 +21,7 @@ returned by \code{dplyr::group_vars(data)}.}
 \item{statistics}{a named list of functions that return a summary statistic,
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
 
-\item{denominator}{Specify this argument to change the denominator,
+\item{denominator}{Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 }
 \value{

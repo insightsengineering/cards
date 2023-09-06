@@ -9,7 +9,7 @@
 #' @param statistics a named list of functions that return a summary statistic,
 #' e.g. `list(mpg = list(mean = \(x) mean(x, na.rm = TRUE)))`
 #' @param variables columns to include in summaries. Default is `everything()`.
-#' @param denominator Specify this argument to change the denominator,
+#' @param denominator Specify this *optional* argument to change the denominator,
 #' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #'
 #' @section Denominators:
