@@ -54,16 +54,16 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |>
 ADSL |>
   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
   ard_ttest(by = "ARM", variable = "AGE") |> 
+  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value")) |> 
   flatten_ard() |> 
-  head(n = 10) |> 
   knitr::kable()
 
 # the example below ignores the time to event nature of the outcome
 # and are provided to illustrate functionality only
 glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
+  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value")) |> 
   flatten_ard() |> 
-  dplyr::filter(variable_level %in% "Xanomeline High Dose") |> 
   tidyr::drop_na() |>
   knitr::kable()
 ```

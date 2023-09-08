@@ -79,23 +79,17 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |>
 ADSL |>
   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
   ard_ttest(by = "ARM", variable = "AGE") |> 
+  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value")) |> 
   flatten_ard() |> 
-  head(n = 10) |> 
   knitr::kable()
 ```
 
-| group1 | group1_level         | variable | stat_name   | statistic               | warning | error |
-|:-------|:---------------------|:---------|:------------|:------------------------|:--------|:------|
-| ARM    | Placebo              | AGE      | estimate1   | 75.2093023255814        | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGE      | estimate2   | 74.3809523809524        | NA      | NA    |
-| ARM    | NA                   | AGE      | estimate    | 0.828349944629011       | NA      | NA    |
-| ARM    | NA                   | AGE      | statistic   | 0.655196351798793       | NA      | NA    |
-| ARM    | NA                   | AGE      | p.value     | 0.513240888362863       | NA      | NA    |
-| ARM    | NA                   | AGE      | parameter   | 167.362493715531        | NA      | NA    |
-| ARM    | NA                   | AGE      | conf.low    | -1.66763676468001       | NA      | NA    |
-| ARM    | NA                   | AGE      | conf.high   | 3.32433665393803        | NA      | NA    |
-| ARM    | NA                   | AGE      | method      | Welch Two Sample t-test | NA      | NA    |
-| ARM    | NA                   | AGE      | alternative | two.sided               | NA      | NA    |
+| group1 | group1_level | variable | stat_name | statistic         | warning | error |
+|:-------|:-------------|:---------|:----------|:------------------|:--------|:------|
+| ARM    | NA           | AGE      | estimate  | 0.828349944629011 | NA      | NA    |
+| ARM    | NA           | AGE      | p.value   | 0.513240888362863 | NA      | NA    |
+| ARM    | NA           | AGE      | conf.low  | -1.66763676468001 | NA      | NA    |
+| ARM    | NA           | AGE      | conf.high | 3.32433665393803  | NA      | NA    |
 
 ``` r
 
@@ -103,28 +97,20 @@ ADSL |>
 # and are provided to illustrate functionality only
 glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
+  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value")) |> 
   flatten_ard() |> 
-  dplyr::filter(variable_level %in% "Xanomeline High Dose") |> 
   tidyr::drop_na() |>
   knitr::kable()
 ```
 
-| variable | variable_level       | stat_name      | statistic                |
-|:---------|:---------------------|:---------------|:-------------------------|
-| TRTP     | Xanomeline High Dose | term           | TRTPXanomeline High Dose |
-| TRTP     | Xanomeline High Dose | var_label      | Planned Treatment        |
-| TRTP     | Xanomeline High Dose | var_class      | character                |
-| TRTP     | Xanomeline High Dose | var_type       | categorical              |
-| TRTP     | Xanomeline High Dose | var_nlevels    | 3                        |
-| TRTP     | Xanomeline High Dose | contrasts      | contr.treatment          |
-| TRTP     | Xanomeline High Dose | contrasts_type | treatment                |
-| TRTP     | Xanomeline High Dose | reference_row  | FALSE                    |
-| TRTP     | Xanomeline High Dose | label          | Xanomeline High Dose     |
-| TRTP     | Xanomeline High Dose | n_obs          | 84                       |
-| TRTP     | Xanomeline High Dose | n_event        | 61                       |
-| TRTP     | Xanomeline High Dose | estimate       | 1.65113508608955         |
-| TRTP     | Xanomeline High Dose | std.error      | 0.334511905011521        |
-| TRTP     | Xanomeline High Dose | statistic      | 4.93595313456089         |
-| TRTP     | Xanomeline High Dose | p.value        | 7.97602603440836e-07     |
-| TRTP     | Xanomeline High Dose | conf.low       | 1.0082797171968          |
-| TRTP     | Xanomeline High Dose | conf.high      | 2.32276375858544         |
+| variable | variable_level       | stat_name | statistic            |
+|:---------|:---------------------|:----------|:---------------------|
+| TRTP     | Placebo              | estimate  | 0                    |
+| TRTP     | Xanomeline High Dose | estimate  | 1.65113508608955     |
+| TRTP     | Xanomeline High Dose | p.value   | 7.97602603440836e-07 |
+| TRTP     | Xanomeline High Dose | conf.low  | 1.0082797171968      |
+| TRTP     | Xanomeline High Dose | conf.high | 2.32276375858544     |
+| TRTP     | Xanomeline Low Dose  | estimate  | 1.71184736953176     |
+| TRTP     | Xanomeline Low Dose  | p.value   | 3.79931423922493e-07 |
+| TRTP     | Xanomeline Low Dose  | conf.low  | 1.0647564793032      |
+| TRTP     | Xanomeline Low Dose  | conf.high | 2.389373240016       |
