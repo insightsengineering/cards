@@ -79,17 +79,18 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |>
 ADSL |>
   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
   ard_ttest(by = "ARM", variable = "AGE") |> 
-  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value")) |> 
+  filter_ard(stat_name = c("estimate", "conf.low", "conf.high", "p.value", "method")) |> 
   flatten_ard() |> 
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | stat_name | statistic         | warning | error |
-|:-------|:-------------|:---------|:----------|:------------------|:--------|:------|
-| ARM    | NA           | AGE      | estimate  | 0.828349944629011 | NA      | NA    |
-| ARM    | NA           | AGE      | p.value   | 0.513240888362863 | NA      | NA    |
-| ARM    | NA           | AGE      | conf.low  | -1.66763676468001 | NA      | NA    |
-| ARM    | NA           | AGE      | conf.high | 3.32433665393803  | NA      | NA    |
+| group1 | group1_level | variable | stat_name | statistic               | warning | error |
+|:-------|:-------------|:---------|:----------|:------------------------|:--------|:------|
+| ARM    | NA           | AGE      | estimate  | 0.828349944629011       | NA      | NA    |
+| ARM    | NA           | AGE      | p.value   | 0.513240888362863       | NA      | NA    |
+| ARM    | NA           | AGE      | conf.low  | -1.66763676468001       | NA      | NA    |
+| ARM    | NA           | AGE      | conf.high | 3.32433665393803        | NA      | NA    |
+| ARM    | NA           | AGE      | method    | Welch Two Sample t-test | NA      | NA    |
 
 ``` r
 
