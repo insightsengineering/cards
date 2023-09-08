@@ -360,18 +360,18 @@
 <span><span class="va">ADSL</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># only only two groups for a t-test</span></span>
 <span>  <span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/ard-helpers.html">filter_ard</a></span><span class="op">(</span>stat_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"estimate"</span>, <span class="st">"conf.low"</span>, <span class="st">"conf.high"</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="8%">
-<col width="23%">
 <col width="10%">
-<col width="13%">
-<col width="26%">
-<col width="9%">
-<col width="7%">
+<col width="17%">
+<col width="12%">
+<col width="14%">
+<col width="24%">
+<col width="11%">
+<col width="8%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">group1</th>
@@ -385,24 +385,6 @@
 <tbody>
 <tr class="odd">
 <td align="left">ARM</td>
-<td align="left">Placebo</td>
-<td align="left">AGE</td>
-<td align="left">estimate1</td>
-<td align="left">75.2093023255814</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">ARM</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">AGE</td>
-<td align="left">estimate2</td>
-<td align="left">74.3809523809524</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">ARM</td>
 <td align="left">NA</td>
 <td align="left">AGE</td>
 <td align="left">estimate</td>
@@ -414,26 +396,8 @@
 <td align="left">ARM</td>
 <td align="left">NA</td>
 <td align="left">AGE</td>
-<td align="left">statistic</td>
-<td align="left">0.655196351798793</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">ARM</td>
-<td align="left">NA</td>
-<td align="left">AGE</td>
 <td align="left">p.value</td>
 <td align="left">0.513240888362863</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">ARM</td>
-<td align="left">NA</td>
-<td align="left">AGE</td>
-<td align="left">parameter</td>
-<td align="left">167.362493715531</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
@@ -455,24 +419,6 @@
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
-<tr class="odd">
-<td align="left">ARM</td>
-<td align="left">NA</td>
-<td align="left">AGE</td>
-<td align="left">method</td>
-<td align="left">Welch Two Sample t-test</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">ARM</td>
-<td align="left">NA</td>
-<td align="left">AGE</td>
-<td align="left">alternative</td>
-<td align="left">two.sided</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -481,17 +427,11 @@
 <span><span class="co"># and are provided to illustrate functionality only</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">CNSR</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">TRTP</span>, data <span class="op">=</span> <span class="va">ADTTE</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/ard-helpers.html">filter_ard</a></span><span class="op">(</span>stat_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"estimate"</span>, <span class="st">"conf.low"</span>, <span class="st">"conf.high"</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"Xanomeline High Dose"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<colgroup>
-<col width="13%">
-<col width="29%">
-<col width="21%">
-<col width="35%">
-</colgroup>
 <thead><tr class="header">
 <th align="left">variable</th>
 <th align="left">variable_level</th>
@@ -501,87 +441,15 @@
 <tbody>
 <tr class="odd">
 <td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">term</td>
-<td align="left">TRTPXanomeline High Dose</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">var_label</td>
-<td align="left">Planned Treatment</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">var_class</td>
-<td align="left">character</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">var_type</td>
-<td align="left">categorical</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">var_nlevels</td>
-<td align="left">3</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">contrasts</td>
-<td align="left">contr.treatment</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">contrasts_type</td>
-<td align="left">treatment</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">reference_row</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">label</td>
-<td align="left">Xanomeline High Dose</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">n_obs</td>
-<td align="left">84</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">n_event</td>
-<td align="left">61</td>
+<td align="left">Placebo</td>
+<td align="left">estimate</td>
+<td align="left">0</td>
 </tr>
 <tr class="even">
 <td align="left">TRTP</td>
 <td align="left">Xanomeline High Dose</td>
 <td align="left">estimate</td>
 <td align="left">1.65113508608955</td>
-</tr>
-<tr class="odd">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">std.error</td>
-<td align="left">0.334511905011521</td>
-</tr>
-<tr class="even">
-<td align="left">TRTP</td>
-<td align="left">Xanomeline High Dose</td>
-<td align="left">statistic</td>
-<td align="left">4.93595313456089</td>
 </tr>
 <tr class="odd">
 <td align="left">TRTP</td>
@@ -600,6 +468,30 @@
 <td align="left">Xanomeline High Dose</td>
 <td align="left">conf.high</td>
 <td align="left">2.32276375858544</td>
+</tr>
+<tr class="even">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline Low Dose</td>
+<td align="left">estimate</td>
+<td align="left">1.71184736953176</td>
+</tr>
+<tr class="odd">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline Low Dose</td>
+<td align="left">p.value</td>
+<td align="left">3.79931423922493e-07</td>
+</tr>
+<tr class="even">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline Low Dose</td>
+<td align="left">conf.low</td>
+<td align="left">1.0647564793032</td>
+</tr>
+<tr class="odd">
+<td align="left">TRTP</td>
+<td align="left">Xanomeline Low Dose</td>
+<td align="left">conf.high</td>
+<td align="left">2.389373240016</td>
 </tr>
 </tbody>
 </table>
