@@ -20,9 +20,13 @@ reference:
       - ard_regression
       - ard_attributes
 
-  - title: "Utility Functions"
+  - title: "JSON"
     contents:
       - json
+
+  - title: "Utility Functions"
+    contents:
+      - ard-helpers
       - flatten_ard
       - eval_capture_conditions
 
