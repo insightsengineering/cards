@@ -3,31 +3,32 @@
 \name{ard-helpers}
 \alias{ard-helpers}
 \alias{get_ard_statistics}
-\alias{filter_ard}
 \title{ARD Helpers}
 \usage{
 get_ard_statistics(x, ...)
-
-filter_ard(x, ...)
 }
 \arguments{
 \item{x}{an ARD data frame of class 'card'}
 
 \item{...}{optional named arguments indicating rows to subset of the ARD.
 For example, to return only rows where the column \code{"AGEGR1"} is \code{"65-80"},
-pass \code{AGEGR1 = "65-80"}.}
+pass \code{AGEGR1 \%in\% "65-80"}.}
 }
 \value{
 a transformed ARD
 }
 \description{
-Helper functions for working with ARD data frames
+Helper functions for working with ARD data frames.
+}
+\details{
+\itemize{
+\item \code{get_ard_statistics()}: This function returns the statistics from an ARD
+as a named list. The statistic label, formatting instruction, and any error
+or warning messages are returned as attributes.
+}
 }
 \examples{
 ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
-filter_ard(ard, group1_level = "Placebo", variable_level = "65-80") |>
-  flatten_ard()
-
-get_ard_statistics(ard, group1_level = "Placebo", variable_level = "65-80")
+get_ard_statistics(ard, group1_level \%in\% "Placebo", variable_level \%in\% "65-80")
 }
