@@ -7,6 +7,12 @@
     <loc>https://insightsengineering.github.io/cards/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/articles/structures.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/authors.html</loc>
   </url>
   <url>
@@ -37,6 +43,9 @@
     <loc>https://insightsengineering.github.io/cards/reference/ard_simple.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/as_nested_list.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/cards-package.html</loc>
   </url>
   <url>
@@ -47,9 +56,6 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/json.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/reexports.html</loc>

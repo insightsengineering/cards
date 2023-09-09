@@ -1,8 +1,9 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles: {}
-last_built: 2023-09-09T00:55Z
+articles:
+  structures: structures.html
+last_built: 2023-09-09T03:25Z
 urls:
   reference: https://insightsengineering.github.io/cards/reference
   article: https://insightsengineering.github.io/cards/articles
