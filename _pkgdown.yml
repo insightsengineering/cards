@@ -20,12 +20,10 @@ reference:
       - ard_regression
       - ard_attributes
 
-  - title: "JSON"
-    contents:
-      - json
 
   - title: "Utility Functions"
     contents:
+      - as_nested_list
       - ard-helpers
       - flatten_ard
       - eval_capture_conditions
