@@ -1,35 +1,16 @@
-#' ARD as JSON
+#' ARD as Nested List
 #'
-#' Convert ARDs to JSON or write to disk as JSON
+#' Convert ARDs to Nested Lists
 #'
 #' @param x an ARD
-#' @param path file on disk
-#' @param ... additional conversion arguments, see also `jsonlite::toJSON()`
 #'
-#' @return a JSON object
-#' @name json
+#' @return a nested list
+#' @export
 #'
 #' @examples
 #' ard <- ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
 #'
-#' ard_as_json(ard)
-NULL
-
-#' @export
-#' @rdname json
-ard_as_json <- function(x, ...) {
-  as_nested_list(x) |> jsonlite::toJSON(...)
-}
-
-#' @export
-#' @rdname json
-write_ard_as_json <- function(x, path, ...) {
-  as_nested_list(x) |> jsonlite::write_json(...)
-}
-
-
-#' @export
-#' @rdname json
+#' as_nested_list(ard)
 as_nested_list <- function(x) {
   # check in inputs ------------------------------------------------------------
   rlang::check_installed("jsonlite")

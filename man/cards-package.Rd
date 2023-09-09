@@ -6,7 +6,7 @@
 \alias{cards-package}
 \title{cards: CDISC Analysis Results Data}
 \description{
-The package constructs CDISC-compliant Analysis Results Data objects. These objects are used (and re-used) to construct summary tables, visualizations, and written reports.
+The package constructs CDISC-compliant Analysis Results Data objects. These objects are used (and re-used) to construct summary tables, visualizations, and written reports. The results may also be represented as JSON or YAML objects.
 }
 \seealso{
 Useful links:

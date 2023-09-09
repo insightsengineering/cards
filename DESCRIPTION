@@ -8,11 +8,14 @@ Authors@R: c(
   )
 Description: The package constructs CDISC-compliant Analysis Results Data
     objects. These objects are used (and re-used) to construct summary
-    tables, visualizations, and written reports.
+    tables, visualizations, and written reports. The results may also be
+    represented as JSON or YAML objects.
 License: Apache License 2.0 | file LICENSE
 URL: https://github.com/insightsengineering/cards,
     https://refactored-bassoon-49o3774.pages.github.io/
 BugReports: https://github.com/insightsengineering/cards/issues
+Depends: 
+    R (>= 2.10)
 Imports: 
     cli (>= 3.6.1),
     dplyr (>= 1.1.2),
@@ -22,14 +25,12 @@ Imports:
 Suggests: 
     broom (>= 1.0.5),
     broom.helpers (>= 1.13.0),
-    jsonlite,
     spelling,
     testthat (>= 3.0.0)
+Config/Needs/website: rmarkdown, jsonlite yaml, plumber
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 2.10)
-LazyData: true
