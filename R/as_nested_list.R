@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' ard <- ard_continuous(mtcars, by = cyl, variables = c("mpg", "hp"))
+#' ard <- ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
 #'
 #' as_nested_list(ard)
 as_nested_list <- function(x) {

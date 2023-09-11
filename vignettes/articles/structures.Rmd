@@ -33,10 +33,9 @@ knitr::knit_hooks$set(output = function(x, options) {
 
 ```{r setup, message=FALSE}
 library(cards)
-library(dplyr)
 
 ard <-
-  bind_rows(
+  bind_ard(
     ard_continuous(ADSL, by = "ARM", variables = "AGE"),
     ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
   ) 

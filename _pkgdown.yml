@@ -13,15 +13,16 @@ authors:
     href: "http://www.danieldsjoberg.com/"
 
 reference:
-  - title: "ARD Creation Functions"
+  - title: "ARD Creation"
     contents:
+      - ard_continuous
       - ard_categorical
       - ard_comparison
       - ard_regression
       - ard_attributes
 
 
-  - title: "Utility Functions"
+  - title: "ARD Utilities"
     contents:
       - as_nested_list
       - ard-helpers

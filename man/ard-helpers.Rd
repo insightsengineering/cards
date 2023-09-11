@@ -3,16 +3,34 @@
 \name{ard-helpers}
 \alias{ard-helpers}
 \alias{get_ard_statistics}
+\alias{bind_ard}
+\alias{all_ard_groups}
+\alias{all_ard_variables}
 \title{ARD Helpers}
 \usage{
 get_ard_statistics(x, ...)
+
+bind_ard(..., .update = FALSE)
+
+all_ard_groups()
+
+all_ard_variables()
 }
 \arguments{
 \item{x}{an ARD data frame of class 'card'}
 
-\item{...}{optional named arguments indicating rows to subset of the ARD.
+\item{...}{\itemize{
+\item \code{get_ard_statistics()}: optional named arguments indicating rows to subset of the ARD.
 For example, to return only rows where the column \code{"AGEGR1"} is \code{"65-80"},
-pass \code{AGEGR1 \%in\% "65-80"}.}
+pass \code{AGEGR1 \%in\% "65-80"}.
+\item \code{bind_ard()}: ARDs to combine. Each argument can either be an ARD,
+or a list of ARDs. Columns are matched by name, and any missing
+columns will be filled with \code{NA.}
+}}
+
+\item{.update}{logical indicating whether to update duplicate ARD statistics.
+Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},
+the more recently added statistics will be retained, and the others omitted.}
 }
 \value{
 a transformed ARD
@@ -25,6 +43,14 @@ Helper functions for working with ARD data frames.
 \item \code{get_ard_statistics()}: This function returns the statistics from an ARD
 as a named list. The statistic label, formatting instruction, and any error
 or warning messages are returned as attributes.
+\item \code{bind_ard()}: A wrapper for \code{dplyr::bind_rows()} with additional checks
+for duplicated statistics
+\item \code{all_ard_groups()}: Use this function in dplyr selecting environments, such
+as \code{dplyr::select()}. Function selects grouping columns, e.g. columns
+named \code{"group##"} or \code{"group##_level"}.
+\item \code{all_ard_variables()}: Use this function in dplyr selecting environments, such
+as \code{dplyr::select()}. Function selects variables columns, e.g. columns
+named \code{"variable"} or \code{"variable_level"}.
 }
 }
 \examples{

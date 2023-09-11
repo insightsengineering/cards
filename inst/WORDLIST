@@ -3,6 +3,7 @@ ADSL
 ADTTE
 ADaM
 AE
+AEs
 AGEGR
 ARD
 ARDs
@@ -12,17 +13,16 @@ JSON
 ORCID
 SDTM
 TRTP
-TRTPXanomeline
 Welch
 Xanomeline
+YAML
 ata
 conf
-contr
+dplyr
 esult
 ets
 funder
 nalysis
-nlevels
 quosures
 reproducibility
 reusability

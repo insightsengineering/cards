@@ -30,7 +30,7 @@ ard_attributes <- function(data, variables, label = NULL) {
         # add/update variable label
         attr[["label"]] <- label[[x]] %||% attr[["label"]] %||% x
         # attributes() doesn't always return class, adding it if not already present
-        attr[["class"]] <- attr[["class"]] %||% class(x)
+        attr[["class"]] <- attr[["class"]] %||% class(data[[x]])
 
         dplyr::tibble(
           variable = .env$x,
@@ -39,7 +39,15 @@ ard_attributes <- function(data, variables, label = NULL) {
         )
       }
     ) |>
-    dplyr::bind_rows() %>%
+    dplyr::bind_rows() |>
+    dplyr::mutate(
+      stat_label = dplyr::case_when(
+        .data$stat_name %in% "label" ~ "Variable Label",
+        .data$stat_name %in% "class" ~ "Variable Class",
+        TRUE ~ .data$stat_name
+      ),
+      context = "attributes"
+    ) %>%
     structure(., class = c("card", class(.)))
 }
 
