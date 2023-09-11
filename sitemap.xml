@@ -34,13 +34,16 @@
     <loc>https://insightsengineering.github.io/cards/reference/ard_attributes.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_categorical.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_comparison.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ard_regression.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_continuous.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ard_simple.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_regression.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/as_nested_list.html</loc>
