@@ -101,7 +101,7 @@ ard_continuous <- function(data,
   df_return |>
     dplyr::select(-"...ard_nested_data...") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
-    dplyr::mutate(context = list("continuous")) %>%
+    dplyr::mutate(context = "continuous") %>%
     structure(., class = c("card", class(.)))
 }
 

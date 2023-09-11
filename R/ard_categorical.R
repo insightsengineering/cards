@@ -136,7 +136,7 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
       by = "stat_name",
       unmatched = "ignore"
     ) |>
-    dplyr::mutate(context = list("categorical")) %>%
+    dplyr::mutate(context = "categorical") %>%
     structure(., class = c("card", class(.)))
 }
 

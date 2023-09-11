@@ -27,6 +27,7 @@ reference:
       - as_nested_list
       - ard-helpers
       - flatten_ard
+      - tidy_ard_column_order
       - eval_capture_conditions
 
   - title: "Data"

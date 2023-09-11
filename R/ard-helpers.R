@@ -64,6 +64,10 @@ get_ard_statistics <- function(x, ...) {
 #' @export
 #' @rdname ard-helpers
 bind_ard <- function(..., .update = FALSE) {
+  # check inputs ---------------------------------------------------------------
+  if (!rlang::is_scalar_logical(.update))
+    cli::cli_abort("Argument {.code .update} must be a class {.cls logical} of length 1.")
+
   # stack ARDs -----------------------------------------------------------------
   data <- dplyr::bind_rows(...)
 
@@ -86,7 +90,7 @@ bind_ard <- function(..., .update = FALSE) {
   }
 
   # return stacked ARDs --------------------------------------------------------
-  data
+  tidy_ard_column_order(data)
 }
 
 #' @export
