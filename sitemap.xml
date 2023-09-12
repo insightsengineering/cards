@@ -19,13 +19,7 @@
     <loc>https://insightsengineering.github.io/cards/index.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ADAE.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ADSL.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ADTTE.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/adam.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard-helpers.html</loc>
@@ -41,6 +35,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_continuous.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_crosstab.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_regression.html</loc>
@@ -62,6 +59,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/selectors.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/tidy_ard_column_order.html</loc>

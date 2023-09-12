@@ -56,11 +56,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ard_statistics</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">...</span>, .update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">all_ard_groups</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">all_ard_variables</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">...</span>, .update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -99,12 +95,6 @@ as a named list. The statistic label, formatting instruction, and any error
 or warning messages are returned as attributes.</p></li>
 <li><p><code>bind_ard()</code>: A wrapper for <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> with additional checks
 for duplicated statistics</p></li>
-<li><p><code>all_ard_groups()</code>: Use this function in dplyr selecting environments, such
-as <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>. Function selects grouping columns, e.g. columns
-named <code>"group##"</code> or <code>"group##_level"</code>.</p></li>
-<li><p><code>all_ard_variables()</code>: Use this function in dplyr selecting environments, such
-as <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>. Function selects variables columns, e.g. columns
-named <code>"variable"</code> or <code>"variable_level"</code>.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -119,7 +109,7 @@ named <code>"variable"</code> or <code>"variable_level"</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"statistic_fmt_fn")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> format(round(x, digits = 0), nsmall = 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559917a8f7e0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5625ee851ed0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4883721</span>
@@ -128,8 +118,27 @@ named <code>"variable"</code> or <code>"variable_level"</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"statistic_fmt_fn")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> format(round(x, digits = 0), nsmall = 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x559917a8f7e0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5625ee851ed0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">ard</span>, <span class="va">ard</span>, .update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> 24 duplicate observations removed.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level context     stat_name stat_label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical n         n         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical p         %         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical n         n         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical p         %         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical n         n         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical p         %         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical n         n         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical p         %         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical n         n         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    <span style="color: #949494;">&lt;chr [1]&gt;</span>    AGEGR1   <span style="color: #949494;">&lt;chr [1]&gt;</span>      categorical p         %         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: statistic &lt;list&gt;, statistic_fmt_fn &lt;list&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   warning &lt;list&gt;, error &lt;list&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
