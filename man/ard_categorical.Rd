@@ -57,7 +57,7 @@ in the ADAE data set. All patients appear in ADSL, however.
   denominator = ADSL
 ) |>
   flatten_ard()
-#> # A tibble: 144 x 9
+#> # A tibble: 141 x 9
 #>    group1 group1_level variable variable_level    stat_name stat_label statistic
 #>    <chr>  <chr>        <chr>    <chr>             <chr>     <chr>      <chr>    
 #>  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       
@@ -70,7 +70,7 @@ in the ADAE data set. All patients appear in ADSL, however.
 #>  8 ARM    Placebo      AESOC    IMMUNE SYSTEM DI~ n         n          0        
 #>  9 ARM    Placebo      AESOC    INFECTIONS AND I~ n         n          16       
 #> 10 ARM    Placebo      AESOC    INJURY, POISONIN~ n         n          4        
-#> # i 134 more rows
+#> # i 131 more rows
 #> # i 2 more variables: warning <chr>, error <chr>
 }\if{html}{\out{</div>}}
 }

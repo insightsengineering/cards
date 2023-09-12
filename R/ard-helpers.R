@@ -9,14 +9,6 @@
 #' - `bind_ard()`: A wrapper for `dplyr::bind_rows()` with additional checks
 #'   for duplicated statistics
 #'
-#' - `all_ard_groups()`: Use this function in dplyr selecting environments, such
-#'   as `dplyr::select()`. Function selects grouping columns, e.g. columns
-#'   named `"group##"` or `"group##_level"`.
-#'
-#' - `all_ard_variables()`: Use this function in dplyr selecting environments, such
-#'   as `dplyr::select()`. Function selects variables columns, e.g. columns
-#'   named `"variable"` or `"variable_level"`.
-#'
 #' @param x an ARD data frame of class 'card'
 #' @param ...
 #' - `get_ard_statistics()`: optional named arguments indicating rows to subset of the ARD.
@@ -36,6 +28,8 @@
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' get_ard_statistics(ard, group1_level %in% "Placebo", variable_level %in% "65-80")
+#'
+#' bind_ard(ard, ard, .update = TRUE)
 NULL
 
 #' @export
@@ -93,14 +87,4 @@ bind_ard <- function(..., .update = FALSE) {
   tidy_ard_column_order(data)
 }
 
-#' @export
-#' @rdname ard-helpers
-all_ard_groups <- function() {
-  dplyr::matches("^group[0-9]+$|^group[0-9]+_level$")
-}
 
-#' @export
-#' @rdname ard-helpers
-all_ard_variables <- function() {
-  dplyr::any_of(c("variable", "variable_level"))
-}

@@ -46,11 +46,16 @@
 #' ```
 #'
 #' @return a data frame
+#' @name ard_categorical
 #' @export
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
 #'   flatten_ard()
+NULL
+
+#' @rdname ard_categorical
+#' @export
 ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   # process arguments -----------------------------------------------------------
   by <- dplyr::select(data, {{ by }}) |> colnames()
@@ -164,7 +169,9 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
         # remove the old percent calculation based on the typical denominator
         dplyr::filter(!.data$stat_name %in% "p"),
       !!!.
-    )}
+    )} |>
+    # the length stat becomes much more difficult to interpret in this situation, so removing
+    dplyr::filter(!.data$stat_name %in% "length")
 }
 
 

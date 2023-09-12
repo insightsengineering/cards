@@ -4,17 +4,11 @@
 \alias{ard-helpers}
 \alias{get_ard_statistics}
 \alias{bind_ard}
-\alias{all_ard_groups}
-\alias{all_ard_variables}
 \title{ARD Helpers}
 \usage{
 get_ard_statistics(x, ...)
 
 bind_ard(..., .update = FALSE)
-
-all_ard_groups()
-
-all_ard_variables()
 }
 \arguments{
 \item{x}{an ARD data frame of class 'card'}
@@ -45,16 +39,12 @@ as a named list. The statistic label, formatting instruction, and any error
 or warning messages are returned as attributes.
 \item \code{bind_ard()}: A wrapper for \code{dplyr::bind_rows()} with additional checks
 for duplicated statistics
-\item \code{all_ard_groups()}: Use this function in dplyr selecting environments, such
-as \code{dplyr::select()}. Function selects grouping columns, e.g. columns
-named \code{"group##"} or \code{"group##_level"}.
-\item \code{all_ard_variables()}: Use this function in dplyr selecting environments, such
-as \code{dplyr::select()}. Function selects variables columns, e.g. columns
-named \code{"variable"} or \code{"variable_level"}.
 }
 }
 \examples{
 ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
 get_ard_statistics(ard, group1_level \%in\% "Placebo", variable_level \%in\% "65-80")
+
+bind_ard(ard, ard, .update = TRUE)
 }

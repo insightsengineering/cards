@@ -14,11 +14,19 @@ authors:
 
 reference:
   - title: "ARD Creation"
-    contents:
+  - subtitle: "Data Summaries"
+  -  contents:
       - ard_continuous
       - ard_categorical
+      - ard_crosstab
+
+  - subtitle: "Model and Test Summaries"
+  -  contents:
       - ard_comparison
       - ard_regression
+
+  - subtitle: "Misc."
+  -  contents:
       - ard_attributes
 
 
@@ -27,11 +35,10 @@ reference:
       - as_nested_list
       - ard-helpers
       - flatten_ard
+      - selectors
       - tidy_ard_column_order
       - eval_capture_conditions
 
   - title: "Data"
     contents:
-      - ADSL
-      - ADAE
-      - ADTTE
+      - adam
