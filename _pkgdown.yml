@@ -37,6 +37,7 @@ reference:
       - flatten_ard
       - selectors
       - tidy_ard_column_order
+      - apply_statistic_fmt_fn
       - eval_capture_conditions
 
   - title: "Data"
