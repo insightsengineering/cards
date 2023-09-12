@@ -57,6 +57,11 @@
   # if no stratifying variables, simply return the data frame
   if (rlang::is_empty(by)) return((dplyr::tibble("{key}" := list(data))))
 
+  n_missing <- nrow(data) - nrow(tidyr::drop_na(data, all_of(by)))
+  if (n_missing > 0L) {
+    cli::cli_inform("{n_missing} missing observation{?s} in the {.val {by}} column{?s} have been removed.")
+  }
+
   # get a named list of all unique values for each by variable (including unobserved levels)
   lst_unique_vals <-
     by |>
