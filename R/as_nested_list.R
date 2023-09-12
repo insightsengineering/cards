@@ -8,14 +8,18 @@
 #' @export
 #'
 #' @examples
-#' ard <- ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
-#'
-#' as_nested_list(ard)
+#' ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
+#'   as_nested_list()
 as_nested_list <- function(x) {
   # check in inputs ------------------------------------------------------------
   rlang::check_installed("jsonlite")
   if (!inherits(x, "card")) {
     cli::cli_abort("Argument {.code x} must be class {.cls card}.")
+  }
+
+  # format/round the statistics, if not already done ---------------------------
+  if (!"statistic_fmt" %in% names(x)) {
+    x <- apply_statistic_fmt_fn(x)
   }
 
   # construct the nested lists to convert to JSON ------------------------------
@@ -42,13 +46,7 @@ as_nested_list <- function(x) {
         # TODO: Does the statistic column need to remain in a list for more complex returns?
         .col = where(is.list) & (dplyr::matches("^group[0-9]+_level$") | any_of("variable_level")),
         .fns = function(x) x[[1]]
-      ),
-      statistic_fmt =
-        .map2(
-          .data$statistic,
-          .data$statistic_fmt_fn,
-          function(x, fn) if (!is.null(fn)) fn(x) else NULL
-        )
+      )
     ) %>%
     # reorder with primary variable first, followed by stratum
     dplyr::select(., all_of(colnames(.) |> sort())) %>%

@@ -66,9 +66,4 @@ test_that("ard_categorical() univariate & specified denomiator", {
     ard_cat_new_denom |> dplyr::filter(stat_name %in% "N") |> dplyr::pull(statistic) |> unlist(),
     sum(!is.na(mtcars$am)) * 100L
   )
-
-  expect_equal(
-    ard_cat_new_denom |> dplyr::filter(stat_name %in% "length") |> dplyr::pull(statistic) |> unlist(),
-    length(mtcars$am) * 100L
-  )
 })

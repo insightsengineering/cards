@@ -83,8 +83,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
             dplyr::select(all_of(by)) |>
             dplyr::mutate(!!!(rep_len(list(1L), length(variables)) |> stats::setNames(variables)))
         ),
-      variables = variables,
-      by = by,
+      variables = all_of(variables),
+      by = all_of(by),
       statistics =
         variables |>
         lapply(function(x) .default_continuous_statistics()[c("N", "length")]) |>
@@ -99,7 +99,7 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
         ard_continuous(
           data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
           variables = dplyr::all_of(v),
-          by = !!all_of(by),
+          by = all_of(by),
           statistics =
             list(
               table = function(x) {

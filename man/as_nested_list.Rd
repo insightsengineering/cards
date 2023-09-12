@@ -16,7 +16,6 @@ a nested list
 Convert ARDs to Nested Lists
 }
 \examples{
-ard <- ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp"))
-
-as_nested_list(ard)
+ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
+  as_nested_list()
 }
