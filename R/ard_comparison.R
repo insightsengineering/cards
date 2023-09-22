@@ -30,7 +30,7 @@ ard_ttest <- function(data, by, variable, ...) {
       lst_ttest[["result"]] |>
       broom::tidy() |>
       dplyr::mutate(
-        conf.level = attr(lst_ttest[["result"]], "conf.level"),
+        conf.level = attr(lst_ttest[["result"]][["conf.int"]], "conf.level"),
         dplyr::across(everything(), .fns = list),
         group1 = .env$by,
         variable = .env$variable
@@ -85,7 +85,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
 
     # add the confidence level if it's reported
     if (!is.null(attr(lst_wilcox[["result"]], "conf.level"))) {
-      tidy_wilcoxtest$conf.level <- attr(lst_wilcox[["result"]], "conf.level")
+      tidy_wilcoxtest$conf.level <- attr(lst_wilcox[["result"]][["conf.int"]], "conf.level")
     }
 
     ret <-

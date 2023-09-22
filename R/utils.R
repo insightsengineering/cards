@@ -149,4 +149,15 @@
   .mapply(FUN = .f, dots = list(.x, .y), MoreArgs = rlang::list2(...))
 }
 
+.process_args_data_variable_by <- function(data, variables, by, env = rlang::caller_env()) {
+  ret <-
+    list(
+      by = dplyr::select(data, {{ by }}) |> colnames(),
+      variables = dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by),
+      data = dplyr::ungroup(data)
+    )
+
+  rlang::env_bind(.env = env, !!!ret)
+}
+
 
