@@ -12,13 +12,13 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical_with_strata(
+#' ard_stratified_categorical(
 #'   data = ADAE |> dplyr::filter(AOCCPFL %in% "Y"),
 #'   strata = "AESOC",
 #'   variables = "AEDECOD",
 #'   denominator = ADSL
 #' )
-ard_categorical_with_strata <- function(data, strata, variables, by = NULL, denominator = NULL) {
+ard_stratified_categorical <- function(data, strata, variables, by = NULL, denominator = NULL) {
   # process arguments ----------------------------------------------------------
   .process_args_data_variable_by(data, variables, by)
   strata <- dplyr::select(data, {{ strata }}) |> colnames()
@@ -47,7 +47,7 @@ ard_categorical_with_strata <- function(data, strata, variables, by = NULL, deno
     ) |>
     dplyr::select(-"data") |>
     tidyr::unnest(cols = -dplyr::ends_with("_level")) |>
-    dplyr::mutate(context = "ard_categorical_with_strata") |>
+    dplyr::mutate(context = "ard_stratified_categorical") |>
     tidy_ard_column_order()  %>%
     structure(., class = c("card", class(.)))
 }

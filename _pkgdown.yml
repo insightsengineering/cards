@@ -18,7 +18,7 @@ reference:
   -  contents:
       - ard_continuous
       - ard_categorical
-      - ard_categorical_with_strata
+      - ard_stratified_categorical
       - ard_crosstab
 
   - subtitle: "Model and Test Summaries"
