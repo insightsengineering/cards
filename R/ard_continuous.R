@@ -22,6 +22,7 @@ ard_continuous <- function(data,
                            statistics = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
+  check_not_missing(variables, "variables")
   check_class_data_frame(data = data)
   check_class(class = "list", statistics = statistics, allow_null = TRUE)
 

@@ -21,6 +21,12 @@ ard_ttest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(data, "data")
+  check_not_missing(variable, "variable")
+  check_not_missing(by, "by")
+  check_class_data_frame(data = data)
+
   # perform t-test and format results ------------------------------------------
   lst_ttest <- eval_capture_conditions(stats::t.test(data[[variable]] ~ data[[by]], ...))
 
@@ -75,6 +81,12 @@ ard_ttest <- function(data, by, variable, ...) {
 ard_wilcoxtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
+
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(data, "data")
+  check_not_missing(variable, "variable")
+  check_not_missing(by, "by")
+  check_class_data_frame(data = data)
 
   # perform Wilcoxon test and format results -----------------------------------
   lst_wilcox <- eval_capture_conditions(stats::wilcox.test(data[[variable]] ~ data[[by]], ...))

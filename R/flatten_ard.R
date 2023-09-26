@@ -17,6 +17,10 @@
 #' ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |>
 #'   flatten_ard()
 flatten_ard <- function(x) {
+  # check inputs ---------------------------------------------------------------
+  check_class(class = "card", x = x)
+
+  # flatten ard table for easier viewing ---------------------------------------
   x |>
     # remove the formatting functions
     dplyr::select(-where(function(x) all(lapply(x, function(y) is.function(y)) |> unlist()))) |>

@@ -15,8 +15,13 @@
 #'   ard_regression(add_estimate_to_reference_rows = TRUE) |>
 #'   flatten_ard()
 ard_regression <- function(model, tidy_fun = NULL, ...) {
+  # check installed packages ---------------------------------------------------
   rlang::check_installed("broom.helpers")
 
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(model, "model")
+
+  # summarize model ------------------------------------------------------------
   broom.helpers::tidy_plus_plus(model = model, tidy_fun = tidy_fun %||% broom.helpers::tidy_with_broom_or_parameters, ...) |>
     dplyr::mutate(
       variable_level = dplyr::if_else(.data$var_type %in% "continuous", NA_character_, .data$label),

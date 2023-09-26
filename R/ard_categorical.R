@@ -57,14 +57,20 @@ NULL
 #' @rdname ard_categorical
 #' @export
 ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(data, "data")
+  check_not_missing(variables, "variables")
+  check_class_data_frame(data = data)
+
   # process arguments ----------------------------------------------------------
   .process_selecting_args(data, variables = {{ variables }}, by = {{ by }})
 
   # check inputs ---------------------------------------------------------------
   if (!is.null(denominator)) {
     check_class_data_frame(denominator = denominator)
-    check_columns_in_data_frame(denominator, columns = by,
-                                msg = "Columns {.val {missing_cols}} must appear in {.arg denominator}.")
+    check_columns_in_data_frame(
+      denominator, columns = by,
+      msg = "Columns {.val {missing_cols}} must appear in {.arg denominator}.")
   }
 
   # calculating summary stats --------------------------------------------------

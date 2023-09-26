@@ -21,7 +21,13 @@
 #'
 #' ard_attributes(df, variables = everything())
 ard_attributes <- function(data, variables, label = NULL) {
-  variables <- dplyr::select(data, {{ variables }}) |> colnames()
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(data, "data")
+  check_not_missing(variables, "variables")
+  check_class_data_frame(data = data)
+
+  # process arguments ----------------------------------------------------------
+  .process_selecting_args(data, variables = {{ variables }})
 
   variables |>
     lapply(

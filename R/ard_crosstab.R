@@ -12,10 +12,14 @@
 #' @examples
 #' ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")
 ard_crosstab <- function(data, variables, by) {
-  # process arguments -----------------------------------------------------------
-  by <- dplyr::select(data, {{ by }}) |> colnames()
-  variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
-  data <- dplyr::ungroup(data)
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(data, "data")
+  check_not_missing(variables, "variables")
+  check_not_missing(by, "by")
+  check_class_data_frame(data = data)
+
+  # process arguments ----------------------------------------------------------
+  .process_selecting_args(data, variables = {{ variables }}, by = {{ by }})
 
   # tabulate crosstab ----------------------------------------------------------
   lapply(

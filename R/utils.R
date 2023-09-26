@@ -175,7 +175,10 @@
   data <- dplyr::select(data, !!!unname(dots)) |> dplyr::ungroup()
 
   # save processed args to the calling env (well, that is the default env)
-  rlang::env_bind(.env = env, data = data, !!!ret)
+  assign(x = "data", value = data, envir = env)
+  for (i in seq_along(ret)) {
+    assign(x = names(ret)[i], value = ret[[i]], envir = env)
+  }
 }
 
 
