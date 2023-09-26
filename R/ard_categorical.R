@@ -38,7 +38,7 @@
 #'     ADAE |>
 #'       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
 #'       dplyr::filter(AOCCSFL %in% "Y"),
-#'   by = ARM,
+#'   by = "ARM",
 #'   variables = "AESOC",
 #'   denominator = ADSL
 #' ) |>
@@ -57,17 +57,14 @@ NULL
 #' @rdname ard_categorical
 #' @export
 ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
-  # process arguments -----------------------------------------------------------
-  by <- dplyr::select(data, {{ by }}) |> colnames()
-  variables <- dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by)
-  data <- dplyr::ungroup(data)
+  # process arguments ----------------------------------------------------------
+  .process_selecting_args(data, variables = {{ variables }}, by = {{ by }})
 
-  # check inputs (will make this more robust later) ----------------------------
-  if (!is.null(denominator)){
-    if (!is.data.frame(denominator))
-      cli::cli_abort("The {.code denominator} argument must be class {.cls data.frame}.")
-    if (!rlang::is_empty(setdiff(by, names(denominator))))
-      cli::cli_abort("The {.code denominator} data frame must contain columns {.val {by}}.")
+  # check inputs ---------------------------------------------------------------
+  if (!is.null(denominator)) {
+    check_class_data_frame(denominator = denominator)
+    check_columns_in_data_frame(denominator, columns = by,
+                                msg = "Columns {.val {missing_cols}} must appear in {.arg denominator}.")
   }
 
   # calculating summary stats --------------------------------------------------
@@ -83,8 +80,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
             dplyr::select(all_of(by)) |>
             dplyr::mutate(!!!(rep_len(list(1L), length(variables)) |> stats::setNames(variables)))
         ),
-      variables = all_of(variables),
-      by = all_of(by),
+      variables = rlang::expr(!!variables),
+      by = rlang::expr(!!by),
       statistics =
         variables |>
         lapply(function(x) .default_continuous_statistics()[c("N", "length")]) |>
@@ -98,8 +95,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
       FUN = function(v) {
         ard_continuous(
           data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
-          variables = dplyr::all_of(v),
-          by = all_of(by),
+          variables = v,
+          by = by,
           statistics =
             list(
               table = function(x) {

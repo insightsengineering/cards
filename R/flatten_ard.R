@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical(mtcars, by = cyl, variables = c("am", "gear")) |>
+#' ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |>
 #'   flatten_ard()
 flatten_ard <- function(x) {
   x |>

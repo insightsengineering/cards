@@ -20,14 +20,10 @@
 #' )
 ard_stratified_categorical <- function(data, strata, variables, by = NULL, denominator = NULL) {
   # process arguments ----------------------------------------------------------
-  .process_args_data_variable_by(data, variables, by)
-  strata <- dplyr::select(data, {{ strata }}) |> colnames()
+  .process_selecting_args(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
   if (!rlang::is_string(strata)) {
     cli::cli_abort("The {.arg strata} argument must select one and only only one column.")
   }
-
-  # convert strata to character if factor to only report on observed stratum
-  data <- dplyr::mutate(data, dplyr::across(all_of(strata), ~ifelse(is.factor(.), as.character(.), .)))
 
   # cycle over strata levels to perform tabulations
   data |>

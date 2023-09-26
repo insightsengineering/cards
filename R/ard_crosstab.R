@@ -29,7 +29,7 @@ ard_crosstab <- function(data, variables, by) {
         ) |>
         tidyr::unnest(cols = dplyr::everything())
 
-      ard_categorical(data = data, variables = all_of(variable), by = all_of(by), denominator = denominator)
+      ard_categorical(data = data, variables = variable, by = by, denominator = denominator)
     }
   ) |>
     dplyr::bind_rows() |>

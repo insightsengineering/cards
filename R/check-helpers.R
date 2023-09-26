@@ -50,3 +50,20 @@ check_not_missing <- function(x, arg_name, call = parent.frame()) {
   }
   invisible()
 }
+
+#' Check Columns in Data Frame
+#'
+#' @param data a data frame
+#' @param columns character vector of column names to check
+#' @param msg string passed to `cli::cli_abort(message=)`
+#' @inheritParams check_class
+#' @keywords internal
+check_columns_in_data_frame <- function(data, columns,
+                                        msg = "Columns {.val {missing_cols}} not found in {.arg data}.",
+                                        call = parent.frame()) {
+  missing_cols <- columns |> setdiff(names(data))
+  if (!rlang::is_empty(missing_cols)) {
+    cli::cli_abort(message = msg, call = call)
+  }
+  invisible()
+}

@@ -52,7 +52,7 @@ in the ADAE data set. All patients appear in ADSL, however.
     ADAE |>
       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
       dplyr::filter(AOCCSFL \%in\% "Y"),
-  by = ARM,
+  by = "ARM",
   variables = "AESOC",
   denominator = ADSL
 ) |>

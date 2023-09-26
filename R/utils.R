@@ -142,22 +142,40 @@
     dots = list(.x, names(.x)),
     MoreArgs = rlang::list2(...)
   ) |>
-    stats::setNames(nm = colnames(.x))
+    stats::setNames(nm = names(.x))
 }
+# TODO: check out rlang's standalone re-implementation of these purr functions.
+#       probably best to use those for consistency in the future.
 
+#' @return a list
+#' @noRd
 .map2 <- function(.x, .y, .f, ...) {
   .mapply(FUN = .f, dots = list(.x, .y), MoreArgs = rlang::list2(...))
 }
 
-.process_args_data_variable_by <- function(data, variables, by, env = rlang::caller_env()) {
-  ret <-
-    list(
-      by = dplyr::select(data, {{ by }}) |> colnames(),
-      variables = dplyr::select(data, {{ variables }}) |> colnames() |> setdiff(by),
-      data = dplyr::ungroup(data)
-    )
+#' Process tidyselect args
+#'
+#' Function processes the `variable` and `by` arguments that appear in most
+#' `ard_*()` function calls. If the `data` is grouped, it is returned ungrouped.
+#'
+#' @inheritParams ard_continuous
+#' @param env env to save the results to. Default is the calling environment.
+#'
+#' @noRd
+.process_selecting_args <- function(data, ..., env = rlang::caller_env()) {
+  # saved dots as named list of quos
+  dots <- rlang::enquos(...)
 
-  rlang::env_bind(.env = env, !!!ret)
+  # save named list of character column names selected
+  ret <-
+    lapply(dots, function(x) dplyr::select(data, !!x) |> names()) |>
+    stats::setNames(names(dots))
+
+  # ungroup and select the variables used (this also includes potential column renaming)
+  data <- dplyr::select(data, !!!unname(dots)) |> dplyr::ungroup()
+
+  # save processed args to the calling env (well, that is the default env)
+  rlang::env_bind(.env = env, data = data, !!!ret)
 }
 
 

@@ -26,7 +26,7 @@ ard_continuous <- function(data,
   check_class(class = "list", statistics = statistics, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
-  .process_args_data_variable_by(data, variables, by)
+  .process_selecting_args(data, variables = {{variables}}, by = {{by}})
 
   # setting default statistics -------------------------------------------------
   statistics <-
@@ -64,7 +64,7 @@ ard_continuous <- function(data,
   df_return <-
     data |>
     .ard_nest(
-      by = all_of(by),
+      by = by,
       key = "...ard_nested_data..."
     )
 
