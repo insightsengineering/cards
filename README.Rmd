@@ -26,9 +26,13 @@ The [CDISC Analysis Results Standard](https://www.cdisc.org/standards/foundation
 The {cards} package creates these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
 Uses cases:
+
 1. Quality Control (QC) of existing tables and figures.
+
 1. Pre-calculate statistics to be summarized in tables and figures.
+
 1. Medical writers may easily access statistics and place in reports without copying and pasting from reports.
+
 1. Provides a consistent format for results and lends results to be combined across studies for re-use and re-analysis.
 
 ## Installation
