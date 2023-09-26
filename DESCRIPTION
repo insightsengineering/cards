@@ -12,7 +12,7 @@ Description: The package constructs CDISC-compliant Analysis Results Data
     represented as JSON or YAML objects.
 License: Apache License 2.0 | file LICENSE
 URL: https://github.com/insightsengineering/cards,
-    https://refactored-bassoon-49o3774.pages.github.io/
+    https://insightsengineering.github.io/cards/
 BugReports: https://github.com/insightsengineering/cards/issues
 Depends: 
     R (>= 2.10)

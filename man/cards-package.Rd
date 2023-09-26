@@ -12,7 +12,7 @@ The package constructs CDISC-compliant Analysis Results Data objects. These obje
 Useful links:
 \itemize{
   \item \url{https://github.com/insightsengineering/cards}
-  \item \url{https://refactored-bassoon-49o3774.pages.github.io/}
+  \item \url{https://insightsengineering.github.io/cards/}
   \item Report bugs at \url{https://github.com/insightsengineering/cards/issues}
 }
 
