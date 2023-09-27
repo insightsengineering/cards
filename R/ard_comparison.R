@@ -109,20 +109,28 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
 
   # if there are results, put them in the ARD format ---------------------------
   if (!is.null(lst_wilcox[["result"]])) {
-    tidy_wilcoxtest <- broom::tidy(lst_wilcox[["result"]])
-
-    # add the confidence level if it's reported
-    if (!is.null(attr(lst_wilcox[["result"]], "conf.level"))) {
-      tidy_wilcoxtest$conf.level <- attr(lst_wilcox[["result"]][["conf.int"]], "conf.level")
-    }
+    # additional args passed by user (and default values) will appended to broom::tidy() results
+    df_wilcoxtest_args <-
+      utils::modifyList(
+        # grab the default arg values
+        x = formals(asNamespace("stats")[["wilcox.test.default"]]) %>%
+          `[`(c("mu", "paired", "exact", "correct", "conf.int",
+                "conf.level", "tol.root", "digits.rank")),
+        # update with any values passed by the user
+        val = rlang::dots_list(...),
+        keep.null = FALSE
+      ) |>
+      lapply(function(x) list(x)) |>
+      dplyr::as_tibble()
 
     ret <-
-      tidy_wilcoxtest |>
+      broom::tidy(lst_wilcox[["result"]]) |>
       dplyr::mutate(
         dplyr::across(everything(), .fns = list),
-        group1 = by,
-        variable = variable
+        group1 = .env$by,
+        variable = .env$variable
       ) |>
+      dplyr::bind_cols(df_wilcoxtest_args) |>
       tidyr::pivot_longer(
         cols = -c("group1", "variable"),
         names_to = "stat_name",
