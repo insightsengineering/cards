@@ -26,8 +26,13 @@ data frame
 Comparison ARD Statistics
 }
 \examples{
-ard_ttest(data = ADSL, by = "ARM", variable = "AGE") |>
+ADSL |>
+  dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
+  ard_ttest(by = "ARM", variable = "AGE") |>
   flatten_ard()
-ard_wilcoxtest(data = ADSL, by = "ARM", variable = "AGE") |>
+
+ADSL |>
+  dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
+  ard_wilcoxtest(by = "ARM", variable = "AGE") |>
   flatten_ard()
 }

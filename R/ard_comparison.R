@@ -9,9 +9,14 @@
 #' @name ard_comparison
 #'
 #' @examples
-#' ard_ttest(data = ADSL, by = "ARM", variable = "AGE") |>
+#' ADSL |>
+#'   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
+#'   ard_ttest(by = "ARM", variable = "AGE") |>
 #'   flatten_ard()
-#' ard_wilcoxtest(data = ADSL, by = "ARM", variable = "AGE") |>
+#'
+#' ADSL |>
+#'   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
+#'   ard_wilcoxtest(by = "ARM", variable = "AGE") |>
 #'   flatten_ard()
 NULL
 
@@ -32,11 +37,22 @@ ard_ttest <- function(data, by, variable, ...) {
 
   # if there are results, put them in the ARD format ---------------------------
   if (!is.null(lst_ttest[["result"]])) {
+    # additional args passed by user (and default values) will appended to broom::tidy() results
+    df_ttest_args <-
+      utils::modifyList(
+        # grab the default arg values
+        x = formals(asNamespace("stats")[["t.test.default"]])[c("mu", "paired", "var.equal", "conf.level")],
+        # update with any values passed by the user
+        val = rlang::dots_list(...)
+      ) |>
+      dplyr::as_tibble()
+
+    # tidy results, then put them in ARD format
     ret <-
       lst_ttest[["result"]] |>
       broom::tidy() |>
+      dplyr::bind_cols(df_ttest_args) |>
       dplyr::mutate(
-        conf.level = attr(lst_ttest[["result"]][["conf.int"]], "conf.level"),
         dplyr::across(everything(), .fns = list),
         group1 = .env$by,
         variable = .env$variable
