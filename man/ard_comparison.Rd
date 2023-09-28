@@ -4,11 +4,17 @@
 \alias{ard_comparison}
 \alias{ard_ttest}
 \alias{ard_wilcoxtest}
+\alias{ard_chisqtest}
+\alias{ard_fishertest}
 \title{Comparison ARD Statistics}
 \usage{
 ard_ttest(data, by, variable, ...)
 
 ard_wilcoxtest(data, by, variable, ...)
+
+ard_chisqtest(data, by, variable, ...)
+
+ard_fishertest(data, by, variable, ...)
 }
 \arguments{
 \item{data}{a data frame}
@@ -34,5 +40,14 @@ ADSL |>
 ADSL |>
   dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
   ard_wilcoxtest(by = "ARM", variable = "AGE") |>
+  flatten_ard()
+
+
+ADSL |>
+  ard_chisqtest(by = "ARM", variable = "AGEGR1") |>
+  flatten_ard()
+
+ADSL[1:30,] |>
+  ard_fishertest(by = "ARM", variable = "AGEGR1") |>
   flatten_ard()
 }
