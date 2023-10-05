@@ -40,7 +40,8 @@ ard_ttest <- function(data, by, variable, ...) {
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
-  .process_selecting_args(data, by = {{ by }}, variable = {{ variable }})
+  data <- dplyr::ungroup(data)
+  process_selectors(data, by = {{ by }}, variable = {{ variable }})
 
   # perform t-test and format results ------------------------------------------
   lst_ttest <- eval_capture_conditions(stats::t.test(data[[variable]] ~ data[[by]], ...))
@@ -113,7 +114,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
-  .process_selecting_args(data, by = {{ by }}, variable = {{ variable }})
+  process_selectors(data, by = {{ by }}, variable = {{ variable }})
 
   # perform Wilcoxon test and format results -----------------------------------
   lst_wilcox <- eval_capture_conditions(stats::wilcox.test(data[[variable]] ~ data[[by]], ...))
@@ -182,7 +183,7 @@ ard_chisqtest <- function(data, by, variable, ...) {
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
-  .process_selecting_args(data, by = {{ by }}, variable = {{ variable }})
+  process_selectors(data, by = {{ by }}, variable = {{ variable }})
 
   # perform chisq test and format results -----------------------------------
   lst_chisq <-
@@ -250,7 +251,7 @@ ard_fishertest <- function(data, by, variable, ...) {
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
-  .process_selecting_args(data, by = {{ by }}, variable = {{ variable }})
+  process_selectors(data, by = {{ by }}, variable = {{ variable }})
 
   # perform fisher test and format results -----------------------------------
   lst_fisher <-

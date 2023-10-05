@@ -27,7 +27,8 @@ ard_continuous <- function(data,
   check_class(class = "list", statistics = statistics, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
-  .process_selecting_args(data, variables = {{variables}}, by = {{by}})
+  data <- dplyr::ungroup(data)
+  process_selectors(data, variables = {{variables}}, by = {{by}})
 
   # setting default statistics -------------------------------------------------
   statistics <-

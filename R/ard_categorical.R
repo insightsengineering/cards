@@ -63,7 +63,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   check_class_data_frame(data = data)
 
   # process arguments ----------------------------------------------------------
-  .process_selecting_args(data, variables = {{ variables }}, by = {{ by }})
+  data <- dplyr::ungroup(data)
+  process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
   # check inputs ---------------------------------------------------------------
   if (!is.null(denominator)) {
@@ -86,8 +87,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
             dplyr::select(all_of(by)) |>
             dplyr::mutate(!!!(rep_len(list(1L), length(variables)) |> stats::setNames(variables)))
         ),
-      variables = rlang::expr(!!variables),
-      by = rlang::expr(!!by),
+      variables = all_of(variables),
+      by = all_of(!!by),
       statistics =
         variables |>
         lapply(function(x) .default_continuous_statistics()[c("N", "length")]) |>
@@ -101,8 +102,8 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
       FUN = function(v) {
         ard_continuous(
           data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
-          variables = v,
-          by = by,
+          variables = all_of(v),
+          by = all_of(by),
           statistics =
             list(
               table = function(x) {

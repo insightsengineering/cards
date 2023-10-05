@@ -22,6 +22,7 @@ YAML
 ata
 conf
 dplyr
+env
 esult
 ets
 funder
@@ -31,3 +32,5 @@ reproducibility
 reusability
 sd
 tidyselect
+tidyselector
+tidyselectors
