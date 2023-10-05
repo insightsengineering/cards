@@ -40,6 +40,7 @@ reference:
       - tidy_ard_column_order
       - apply_statistic_fmt_fn
       - eval_capture_conditions
+      - process_selectors
 
   - title: "Data"
     contents:
