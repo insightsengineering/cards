@@ -27,7 +27,8 @@ ard_attributes <- function(data, variables, label = NULL) {
   check_class_data_frame(data = data)
 
   # process arguments ----------------------------------------------------------
-  .process_selecting_args(data, variables = {{ variables }})
+  data <- dplyr::ungroup(data)
+  process_selectors(data, variables = {{ variables }})
 
   variables |>
     lapply(

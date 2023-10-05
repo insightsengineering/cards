@@ -153,32 +153,32 @@
   .mapply(FUN = .f, dots = list(.x, .y), MoreArgs = rlang::list2(...))
 }
 
-#' Process tidyselect args
+#' Named list predicate
 #'
-#' Function processes the `variable` and `by` arguments that appear in most
-#' `ard_*()` function calls. If the `data` is grouped, it is returned ungrouped.
+#' A predicate function whether input is a named list and _not_ a data frame.
 #'
-#' @inheritParams ard_continuous
-#' @param env env to save the results to. Default is the calling environment.
-#'
+#' @param x object to check
+#' @keywords internal
 #' @noRd
-.process_selecting_args <- function(data, ..., env = rlang::caller_env()) {
-  # saved dots as named list of quos
-  dots <- rlang::enquos(...)
-
-  # save named list of character column names selected
-  ret <-
-    lapply(dots, function(x) dplyr::select(data, !!x) |> names()) |>
-    stats::setNames(names(dots))
-
-  # ungroup and select the variables used (this also includes potential column renaming)
-  data <- dplyr::select(data, !!!unname(dots)) |> dplyr::ungroup()
-
-  # save processed args to the calling env (well, that is the default env)
-  assign(x = "data", value = data, envir = env)
-  for (i in seq_along(ret)) {
-    assign(x = names(ret)[i], value = ret[[i]], envir = env)
-  }
+.is_named_list <- function(x) {
+  is.list(x) && rlang::is_named(x) && !is.data.frame(x)
 }
 
+#' A list_flatten()-like function
+#'
+#' Function operates similarly to `purrr::list_flatten(x, name_spec = "{inner}")`
+#'
+#' @param x a named list
+#' @keywords internal
+#' @noRd
+.purrr_list_flatten <- function(x) {
+  ret <- list()
+
+  for (i in seq_along(x)) {
+    if (.is_named_list(x[[i]])) ret <- append(ret, values = x[[i]])
+    else ret <- append(ret, values = x[i])
+  }
+
+  ret
+}
 

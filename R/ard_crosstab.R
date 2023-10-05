@@ -19,7 +19,8 @@ ard_crosstab <- function(data, variables, by) {
   check_class_data_frame(data = data)
 
   # process arguments ----------------------------------------------------------
-  .process_selecting_args(data, variables = {{ variables }}, by = {{ by }})
+  data <- dplyr::ungroup(data)
+  process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
   # tabulate crosstab ----------------------------------------------------------
   lapply(
