@@ -1,8 +1,9 @@
 # ard_regression() works
 
     Code
-      as.data.frame(flatten_ard(ard_regression(lm(AGE ~ ARM, data = ADSL),
-      add_estimate_to_reference_rows = TRUE)))
+      as.data.frame(flatten_ard(dplyr::mutate(ard_regression(lm(AGE ~ ARM, data = ADSL),
+      add_estimate_to_reference_rows = TRUE), statistic = lapply(statistic, function(
+        x) ifelse(is.numeric(x), round(x), x)))))
     Output
          variable       variable_level      stat_name                  statistic
       1       ARM              Placebo           term                 ARMPlacebo
@@ -31,12 +32,12 @@
       24      ARM Xanomeline High Dose  reference_row                      FALSE
       25      ARM Xanomeline High Dose          label       Xanomeline High Dose
       26      ARM Xanomeline High Dose          n_obs                         84
-      27      ARM Xanomeline High Dose       estimate          -0.82834994462904
-      28      ARM Xanomeline High Dose      std.error           1.26739429339024
-      29      ARM Xanomeline High Dose      statistic         -0.653585035808572
-      30      ARM Xanomeline High Dose        p.value          0.513977478950898
-      31      ARM Xanomeline High Dose       conf.low          -3.32443259767247
-      32      ARM Xanomeline High Dose      conf.high           1.66773270841439
+      27      ARM Xanomeline High Dose       estimate                         -1
+      28      ARM Xanomeline High Dose      std.error                          1
+      29      ARM Xanomeline High Dose      statistic                         -1
+      30      ARM Xanomeline High Dose        p.value                          1
+      31      ARM Xanomeline High Dose       conf.low                         -3
+      32      ARM Xanomeline High Dose      conf.high                          2
       33      ARM  Xanomeline Low Dose           term     ARMXanomeline Low Dose
       34      ARM  Xanomeline Low Dose      var_label Description of Planned Arm
       35      ARM  Xanomeline Low Dose      var_class                  character
@@ -47,10 +48,10 @@
       40      ARM  Xanomeline Low Dose  reference_row                      FALSE
       41      ARM  Xanomeline Low Dose          label        Xanomeline Low Dose
       42      ARM  Xanomeline Low Dose          n_obs                         84
-      43      ARM  Xanomeline Low Dose       estimate          0.457364341085245
-      44      ARM  Xanomeline Low Dose      std.error           1.26739429339024
-      45      ARM  Xanomeline Low Dose      statistic          0.360869812552027
-      46      ARM  Xanomeline Low Dose        p.value          0.718500302212188
-      47      ARM  Xanomeline Low Dose       conf.low          -2.03871831195818
-      48      ARM  Xanomeline Low Dose      conf.high           2.95344699412867
+      43      ARM  Xanomeline Low Dose       estimate                          0
+      44      ARM  Xanomeline Low Dose      std.error                          1
+      45      ARM  Xanomeline Low Dose      statistic                          0
+      46      ARM  Xanomeline Low Dose        p.value                          1
+      47      ARM  Xanomeline Low Dose       conf.low                         -2
+      48      ARM  Xanomeline Low Dose      conf.high                          3
 
