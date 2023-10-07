@@ -57,18 +57,3 @@ ard_attributes <- function(data, variables, label = NULL) {
     ) %>%
     structure(., class = c("card", class(.)))
 }
-
-# ard_label <- function(data, label = NULL, variables = everything()) {
-#   variables <- dplyr::select(data, {{ variables }}) |> colnames()
-#
-#   dplyr::tibble(variable = variables) |>
-#     dplyr::mutate(
-#       stat_name = "label",
-#       statistic =
-#         lapply(
-#           .data$variable,
-#           function(x) label[[x]] %||% attr(x, "label") %||% x
-#         )
-#     ) %>%
-#     structure(., class = c("card", class(.)))
-# }

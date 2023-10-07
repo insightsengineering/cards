@@ -91,7 +91,7 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
       by = all_of(!!by),
       statistics =
         variables |>
-        lapply(function(x) .default_continuous_statistics()[c("N", "length")]) |>
+        lapply(function(x) continuous_variable_summary_fns(c("N", "length"))) |>
         stats::setNames(nm = variables)
     )
 

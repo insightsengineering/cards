@@ -4,7 +4,12 @@
 \alias{ard_continuous}
 \title{Continuous ARD Statistics}
 \usage{
-ard_continuous(data, variables, by = NULL, statistics = NULL)
+ard_continuous(
+  data,
+  variables,
+  by = NULL,
+  statistics = everything() ~ continuous_variable_summary_fns()
+)
 }
 \arguments{
 \item{data}{a data frame}
@@ -14,7 +19,9 @@ ard_continuous(data, variables, by = NULL, statistics = NULL)
 \item{by}{columns to compute statistics by. Default are the columns
 returned by \code{dplyr::group_vars(data)}.}
 
-\item{statistics}{a named list of functions that return a summary statistic,
+\item{statistics}{a named list of functions, a list of formulas,
+or a single formula where the list element is a function (or the RHS of
+a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
 }
 \value{

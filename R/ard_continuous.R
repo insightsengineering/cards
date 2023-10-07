@@ -5,7 +5,9 @@
 #' @param data a data frame
 #' @param by columns to compute statistics by. Default are the columns
 #' returned by `dplyr::group_vars(data)`.
-#' @param statistics a named list of functions that return a summary statistic,
+#' @param statistics a named list of functions, a list of formulas,
+#' or a single formula where the list element is a function (or the RHS of
+#' a formula),
 #' e.g. `list(mpg = list(mean = \(x) mean(x, na.rm = TRUE)))`
 #' @param variables columns to include in summaries.
 #'
@@ -19,21 +21,22 @@
 ard_continuous <- function(data,
                            variables,
                            by = NULL,
-                           statistics = NULL) {
+                           statistics = everything() ~ continuous_variable_summary_fns()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")
   check_class_data_frame(data = data)
-  check_class(class = "list", statistics = statistics, allow_null = TRUE)
+  check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}})
+  process_formula_selectors(data = data[variables], statistics = statistics)
 
   # setting default statistics -------------------------------------------------
   statistics <-
     variables |>
-    lapply(function(x) statistics[[x]] %||% .default_continuous_statistics()) |>
+    lapply(function(x) statistics[[x]] %||% continuous_variable_summary_fns()) |>
     stats::setNames(nm = variables)
 
   df_statsistics <-
@@ -70,6 +73,7 @@ ard_continuous <- function(data,
       key = "...ard_nested_data..."
     )
 
+  # add columns for the by variables
   if (!rlang::is_empty(by)) {
     df_return <-
       df_return |>
@@ -109,23 +113,15 @@ ard_continuous <- function(data,
     structure(., class = c("card", class(.)))
 }
 
-.default_continuous_statistics <- function() {
-  list(
-    N = function(x) sum(!is.na(x)),
-    # N_miss = function(x) sum(is.na(x)),
-    length = function(x) length(x),
-    mean = function(x) mean(x, na.rm = TRUE),
-    sd = function(x) stats::sd(x, na.rm = TRUE),
-    min = function(x) min(x, na.rm = TRUE),
-    max = function(x) max(x, na.rm = TRUE)
-  )
-}
 
 .default_statistic_labels <- function() {
   list(
     mean = "Mean",
     sd = "SD",
     var = "Variance",
+    median = "Median",
+    p25 = "25th Percentile",
+    p75 = "75th Percentile",
     min = "Min",
     max = "Max",
     n = "n",

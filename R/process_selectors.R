@@ -120,7 +120,7 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
   x <- .purrr_list_flatten(x)
 
   # remove duplicates (keeping the last one)
-  x[names(x) |> rev() |> duplicated() %>% `!`()]
+  x[names(x) |> rev() |> Negate(duplicated)()]
 }
 
 

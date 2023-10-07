@@ -41,6 +41,7 @@ reference:
       - apply_statistic_fmt_fn
       - eval_capture_conditions
       - process_selectors
+      - continuous_variable_summary_fns
 
   - title: "Data"
     contents:
