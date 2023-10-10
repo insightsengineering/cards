@@ -67,3 +67,18 @@ check_columns_in_data_frame <- function(data, columns,
   }
   invisible()
 }
+
+#' Check Length
+#'
+#' @param x object to check
+#' @param msg string passed to `cli::cli_abort(message=)`
+#' @param length integer specifying the required length
+#' @keywords internal
+check_length <- function(x, arg_name, length = 1L,
+                                        msg = "The {.arg by} argument must be length {.val {length}}.",
+                                        call = parent.frame()) {
+  if (length(x) != length) {
+    cli::cli_abort(message = msg, call = call)
+  }
+  invisible()
+}

@@ -1,6 +1,14 @@
 #' Comparison ARD Statistics
 #'
-#' @param data a data frame
+#' @description
+#' ARD functions for comparing values between groups.
+#'
+#' `ard_ttest()` -> `t.test(data[[variable]] ~ data[[by]], ...)`
+#' `ard_wilcoxtest()` -> `wilcox.test(data[[variable]] ~ data[[by]], ...)`
+#' `ard_chisqtest()` -> `chisq.test(x = data[[variable]], y = data[[by]], ...)`
+#' `ard_fishertest()` -> `fisher.test(x = data[[variable]], y = data[[by]], ...)`
+#'
+#' @inheritParams ard_continuous
 #' @param by character column name to compare by
 #' @param variable character column name to be compared
 #' @param ... arguments passed to method.
@@ -19,7 +27,6 @@
 #'   ard_wilcoxtest(by = "ARM", variable = "AGE") |>
 #'   flatten_ard()
 #'
-#'
 #' ADSL |>
 #'   ard_chisqtest(by = "ARM", variable = "AGEGR1") |>
 #'   flatten_ard()
@@ -35,13 +42,15 @@ ard_ttest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
-  # check inputs ---------------------------------------------------------------
+  # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
   data <- dplyr::ungroup(data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
+  check_length(by, "by", 1L)
+  check_length(variable, "variable", 1L)
 
   # perform t-test and format results ------------------------------------------
   lst_ttest <- eval_capture_conditions(stats::t.test(data[[variable]] ~ data[[by]], ...))
@@ -109,12 +118,14 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
-  # check inputs ---------------------------------------------------------------
+  # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
+  check_length(by, "by", 1L)
+  check_length(variable, "variable", 1L)
 
   # perform Wilcoxon test and format results -----------------------------------
   lst_wilcox <- eval_capture_conditions(stats::wilcox.test(data[[variable]] ~ data[[by]], ...))
@@ -178,12 +189,14 @@ ard_chisqtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
-  # check inputs ---------------------------------------------------------------
+  # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
+  check_length(by, "by", 1L)
+  check_length(variable, "variable", 1L)
 
   # perform chisq test and format results -----------------------------------
   lst_chisq <-
@@ -246,12 +259,14 @@ ard_fishertest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom")
 
-  # check inputs ---------------------------------------------------------------
+  # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variable, "variable")
   check_not_missing(by, "by")
   check_class_data_frame(data = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
+  check_length(by, "by", 1L)
+  check_length(variable, "variable", 1L)
 
   # perform fisher test and format results -----------------------------------
   lst_fisher <-

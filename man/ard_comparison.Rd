@@ -29,7 +29,12 @@ ard_fishertest(data, by, variable, ...)
 data frame
 }
 \description{
-Comparison ARD Statistics
+ARD functions for comparing values between groups.
+
+\code{ard_ttest()} -> \code{t.test(data[[variable]] ~ data[[by]], ...)}
+\code{ard_wilcoxtest()} -> \code{wilcox.test(data[[variable]] ~ data[[by]], ...)}
+\code{ard_chisqtest()} -> \code{chisq.test(x = data[[variable]], y = data[[by]], ...)}
+\code{ard_fishertest()} -> \code{fisher.test(x = data[[variable]], y = data[[by]], ...)}
 }
 \examples{
 ADSL |>
@@ -41,7 +46,6 @@ ADSL |>
   dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
   ard_wilcoxtest(by = "ARM", variable = "AGE") |>
   flatten_ard()
-
 
 ADSL |>
   ard_chisqtest(by = "ARM", variable = "AGEGR1") |>
