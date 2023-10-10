@@ -22,18 +22,21 @@ apply_statistic_fmt_fn <- function(x) {
         .map2(
           .data$statistic,
           .data$statistic_fmt_fn,
-          function(x, fn) if (!is.null(fn)) fn(x) else NULL
+          function(x, fn) {
+            if (!is.null(fn)) do.call(.convert_alias_to_fmt_fn(fn), args = list(x))
+            else NULL
+          }
         )
     )
 }
 
-.convert_alias_to_fmt_fn <- function(x) {
+.convert_alias_to_fmt_fn <- function(x, call = rlang::caller_env()) {
   if (is.function(x))
     return(x)
   if (rlang::is_integerish(x) && x >= 0L)
-    return(function(x) format(round(x * 100, digits = as.integer(x)), nsmall = as.integer(x)))
+    return(function(.x) format(round(.x, digits = as.integer(x)), nsmall = as.integer(x)))
   if (rlang::is_string(x)) {
-    .check_fmt_string(x)
+    .check_fmt_string(x, call = call)
     # scale by 100 if it's a percentage
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
@@ -51,7 +54,7 @@ apply_statistic_fmt_fn <- function(x) {
     fn <- function(y) {
       fmt <- format(round(y * scale, digits = decimal_n), nsmall = decimal_n)
       if (nchar(fmt) > width) {
-        cli::cli_warn("Formatted statistic, {.val {fmt}}, is longer than allowed by format {.val {x}}")
+        cli::cli_warn("Formatted statistic, {.val {fmt}}, is longer than allowed by format {.val {x}}", call = call)
         return(fmt)
       }
       paste0(strrep(" ", width - nchar(fmt)), fmt)
@@ -60,10 +63,10 @@ apply_statistic_fmt_fn <- function(x) {
     return(fn)
   }
 
-  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.")
+  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = call)
 }
 
-.check_fmt_string <- function(x) {
+.check_fmt_string <- function(x, call = rlang::caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
@@ -72,7 +75,7 @@ apply_statistic_fmt_fn <- function(x) {
     (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
-    cli::cli_abort("The format {.val {x}} is not valid.")
+    cli::cli_abort("The format {.val {x}} is not valid.", call = call)
   }
   fmt_is_good
 }

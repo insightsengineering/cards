@@ -25,7 +25,7 @@ This package is in a **preliminary state**, and **breaking changes** will be mad
 The [CDISC Analysis Results Standard](https://www.cdisc.org/standards/foundational/analysis-results-standards) aims to facilitate automation, reproducibility, reusability, and traceability of analysis results data (ARD).
 The {cards} package creates these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
-Uses cases:
+Use cases:
 
 1. Quality Control (QC) of existing tables and figures.
 

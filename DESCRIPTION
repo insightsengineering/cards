@@ -27,7 +27,7 @@ Suggests:
     broom (>= 1.0.5),
     broom.helpers (>= 1.13.0),
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.2.0)
 Config/Needs/website: rmarkdown, jsonlite, yaml, plumber
 Config/testthat/edition: 3
 Encoding: UTF-8

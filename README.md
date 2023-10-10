@@ -19,7 +19,7 @@ aims to facilitate automation, reproducibility, reusability, and
 traceability of analysis results data (ARD). The {cards} package creates
 these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
-Uses cases:
+Use cases:
 
 1.  Quality Control (QC) of existing tables and figures.
 
@@ -54,18 +54,18 @@ ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |>
   knitr::kable()
 ```
 
-| group1 | group1_level         | variable | stat_name | stat_label    | statistic        | warning | error |
-|:-------|:---------------------|:---------|:----------|:--------------|:-----------------|:--------|:------|
-| ARM    | Placebo              | AGE      | N         | N             | 86               | NA      | NA    |
-| ARM    | Placebo              | AGE      | length    | Vector Length | 86               | NA      | NA    |
-| ARM    | Placebo              | AGE      | mean      | Mean          | 75.2093023255814 | NA      | NA    |
-| ARM    | Placebo              | AGE      | sd        | SD            | 8.59016712714193 | NA      | NA    |
-| ARM    | Placebo              | AGE      | min       | Min           | 52               | NA      | NA    |
-| ARM    | Placebo              | AGE      | max       | Max           | 89               | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGE      | N         | N             | 84               | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGE      | length    | Vector Length | 84               | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGE      | mean      | Mean          | 74.3809523809524 | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGE      | sd        | SD            | 7.88609384869824 | NA      | NA    |
+| group1 | group1_level | variable | stat_name | stat_label      | statistic        | warning | error |
+|:-------|:-------------|:---------|:----------|:----------------|:-----------------|:--------|:------|
+| ARM    | Placebo      | AGE      | N         | N               | 86               | NA      | NA    |
+| ARM    | Placebo      | AGE      | N_miss    | N_miss          | 0                | NA      | NA    |
+| ARM    | Placebo      | AGE      | p_miss    | p_miss          | 0                | NA      | NA    |
+| ARM    | Placebo      | AGE      | length    | Vector Length   | 86               | NA      | NA    |
+| ARM    | Placebo      | AGE      | mean      | Mean            | 75.2093023255814 | NA      | NA    |
+| ARM    | Placebo      | AGE      | sd        | SD              | 8.59016712714193 | NA      | NA    |
+| ARM    | Placebo      | AGE      | median    | Median          | 76               | NA      | NA    |
+| ARM    | Placebo      | AGE      | p25       | 25th Percentile | 69.25            | NA      | NA    |
+| ARM    | Placebo      | AGE      | p75       | 75th Percentile | 81.75            | NA      | NA    |
+| ARM    | Placebo      | AGE      | min       | Min             | NA               | NA      | NA    |
 
 ``` r
 
