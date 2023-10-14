@@ -269,57 +269,25 @@ ard_fishertest <- function(data, by, variable, ...) {
   check_length(variable, "variable", 1L)
 
   # perform fisher test and format results -----------------------------------
-  lst_fisher <-
-    eval_capture_conditions(stats::fisher.test(x = data[[variable]], y = data[[by]], ...))
+  lst_tidy_fisher <-
+    eval_capture_conditions(
+      stats::fisher.test(x = data[[variable]], y = data[[by]], ...) |>
+        broom::tidy()
+    )
 
-  # if there are results, put them in the ARD format ---------------------------
-  if (!is.null(lst_fisher[["result"]])) {
-    # additional args passed by user (and default values) will appended to broom::tidy() results
-    df_fishertest_args <-
-      utils::modifyList(
-        # grab the default arg values
-        x = formals(stats::fisher.test) %>%
-          `[`(c("workspace", "hybrid", "hybridPars", "control", "or",
-                "conf.int", "conf.level", "simulate.p.value", "B")),
-        # update with any values passed by the user
-        val = rlang::dots_list(...),
-        keep.null = FALSE
-      ) |>
-      lapply(function(x) list(x)) |>
-      dplyr::as_tibble()
-
-    ret <-
-      broom::tidy(lst_fisher[["result"]]) |>
-      dplyr::mutate(
-        dplyr::across(everything(), .fns = list),
-        group1 = .env$by,
-        variable = .env$variable
-      ) |>
-      dplyr::bind_cols(df_fishertest_args) |>
-      tidyr::pivot_longer(
-        cols = -c("group1", "variable"),
-        names_to = "stat_name",
-        values_to = "statistic"
-      )
-  }
-
-  # if there was an error, return empty data frame in ARD format ---------------
-  else {
-    ret <-
-      dplyr::tibble(
-        group1 = .env$by,
-        variable = .env$variable,
-        stat_name = NA_character_,
-        statistic = list(NULL)
-      )
-  }
-
-  # return and add warning/errors ----------------------------------------------
-  ret |>
-    dplyr::mutate(
-      context = "fishertest",
-      warning = lst_fisher["warning"],
-      error = lst_fisher["error"]
-    ) %>%
-    structure(., class = c("card", class(.)))
+  # build ARD ------------------------------------------------------------------
+  tidy_as_ard(
+    lst_tidy = lst_tidy_fisher,
+    tidy_result_names =
+      c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+    fun_args_to_record =
+      c("workspace", "hybrid", "hybridPars", "control", "or",
+        "conf.int", "conf.level", "simulate.p.value", "B"),
+    formals = formals(stats::fisher.test),
+    passed_args = rlang::dots_list(...),
+    context = "fishertest",
+    lst_ard_columns = list(group1 = by, variable = variable)
+  )
 }
+
+
