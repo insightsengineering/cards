@@ -43,3 +43,30 @@ Function converts a model's one-row tidy data frame into an ARD structure.
 The tidied data frame must have been constructed with
 \code{eval_capture_conditions()}.
 }
+\examples{
+# example how one may create a fisher.test() ARD function
+my_ard_fishertest <- function(data, by, variable, ...) {
+  # perform fisher test and format results -----------------------------------
+  lst_tidy_fisher <-
+    eval_capture_conditions(
+      stats::fisher.test(x = data[[variable]], y = data[[by]], ...) |>
+        broom::tidy()
+    )
+
+  # build ARD ------------------------------------------------------------------
+  tidy_as_ard(
+    lst_tidy = lst_tidy_fisher,
+    tidy_result_names =
+      c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+    fun_args_to_record =
+      c("workspace", "hybrid", "hybridPars", "control", "or",
+        "conf.int", "conf.level", "simulate.p.value", "B"),
+    formals = formals(stats::fisher.test),
+    passed_args = rlang::dots_list(...),
+    context = "fishertest",
+    lst_ard_columns = list(group1 = by, variable = variable)
+  )
+}
+
+my_ard_fishertest(mtcars, by = "am", variable = "vs")
+}
