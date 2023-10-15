@@ -1,8 +1,12 @@
 #' Build ARD from tidier
 #'
+#' @description
 #' Function converts a model's one-row tidy data frame into an ARD structure.
 #' The tidied data frame must have been constructed with
 #' `eval_capture_conditions()`.
+#'
+#' This function is primarily for developers and few consistency checks have
+#' been included.
 #'
 #' @param lst_tidy list of tidied results constructed with `eval_capture_conditions()`,
 #' e.g. `eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())`
@@ -14,7 +18,6 @@
 #' This is used to get the default argument values from unspecified arguments.
 #' @param passed_args named list of additional arguments passed to the modeling
 #' function.
-#' @param context a string added as the context column in the resulting ARD
 #' @param lst_ard_columns named list of values that will be added to the ARD
 #' data frame.
 #'
@@ -41,8 +44,7 @@
 #'         "conf.int", "conf.level", "simulate.p.value", "B"),
 #'     formals = formals(stats::fisher.test),
 #'     passed_args = rlang::dots_list(...),
-#'     context = "fishertest",
-#'     lst_ard_columns = list(group1 = by, variable = variable)
+#'     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
 #'   )
 #' }
 #'
@@ -52,14 +54,16 @@ tidy_as_ard <- function(lst_tidy,
                         fun_args_to_record,
                         formals = list(),
                         passed_args = list(),
-                        context,
                         lst_ard_columns) {
   # used argument values -------------------------------------------------------
   lst_used_fun_args <-
     tryCatch(
       utils::modifyList(
-        x = formals %||% list(),
-        val = passed_args %||% list(),
+        x =
+          # missing() is TRUE if the arg is not specified,
+          # not actually missing (ie it can still have its default value)
+          if (missing(formals)) formals else formals[fun_args_to_record],
+        val = passed_args,
         keep.null = TRUE
       ),
       error = function(e) list()
@@ -89,12 +93,12 @@ tidy_as_ard <- function(lst_tidy,
 
   # add results to tibble ------------------------------------------------------
   dplyr::tibble(
-    !!!lst_ard_columns,
     stat_name = names(lst_all_results),
     statistic = lst_all_results,
-    context = .env$context,
     warning = lst_tidy["warning"],
-    error = lst_tidy["error"]
-  ) %>%
+    error = lst_tidy["error"],
+    !!!lst_ard_columns,
+  ) |>
+    tidy_ard_column_order() %>%
     structure(., class = c("card", class(.)))
 }

@@ -10,7 +10,6 @@ tidy_as_ard(
   fun_args_to_record,
   formals = list(),
   passed_args = list(),
-  context,
   lst_ard_columns
 )
 }
@@ -30,8 +29,6 @@ This is used to get the default argument values from unspecified arguments.}
 \item{passed_args}{named list of additional arguments passed to the modeling
 function.}
 
-\item{context}{a string added as the context column in the resulting ARD}
-
 \item{lst_ard_columns}{named list of values that will be added to the ARD
 data frame.}
 }
@@ -42,6 +39,9 @@ a data frame
 Function converts a model's one-row tidy data frame into an ARD structure.
 The tidied data frame must have been constructed with
 \code{eval_capture_conditions()}.
+
+This function is primarily for developers and few consistency checks have
+been included.
 }
 \examples{
 # example how one may create a fisher.test() ARD function
@@ -63,8 +63,7 @@ my_ard_fishertest <- function(data, by, variable, ...) {
         "conf.int", "conf.level", "simulate.p.value", "B"),
     formals = formals(stats::fisher.test),
     passed_args = rlang::dots_list(...),
-    context = "fishertest",
-    lst_ard_columns = list(group1 = by, variable = variable)
+    lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
   )
 }
 

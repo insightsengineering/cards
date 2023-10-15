@@ -4,8 +4,11 @@
 #' ARD functions for comparing values between groups.
 #'
 #' `ard_ttest()` -> `t.test(data[[variable]] ~ data[[by]], ...)`
+#'
 #' `ard_wilcoxtest()` -> `wilcox.test(data[[variable]] ~ data[[by]], ...)`
+#'
 #' `ard_chisqtest()` -> `chisq.test(x = data[[variable]], y = data[[by]], ...)`
+#'
 #' `ard_fishertest()` -> `fisher.test(x = data[[variable]], y = data[[by]], ...)`
 #'
 #' @inheritParams ard_continuous
@@ -52,64 +55,41 @@ ard_ttest <- function(data, by, variable, ...) {
   check_length(by, "by", 1L)
   check_length(variable, "variable", 1L)
 
-  # perform t-test and format results ------------------------------------------
-  lst_ttest <- eval_capture_conditions(stats::t.test(data[[variable]] ~ data[[by]], ...))
+  # build ARD ------------------------------------------------------------------
+  ret <-
+    tidy_as_ard(
+      lst_tidy =
+        eval_capture_conditions(
+          stats::t.test(data[[variable]] ~ data[[by]], ...) |>
+            broom::tidy()
+        ),
+      tidy_result_names = c("estimate", "estimate1", "estimate2", "statistic",
+                            "p.value", "parameter", "conf.low", "conf.high",
+                            "method", "alternative"),
+      fun_args_to_record = c("mu", "paired", "var.equal", "conf.level"),
+      formals = formals(asNamespace("stats")[["t.test.default"]]),
+      passed_args = rlang::dots_list(...),
+      lst_ard_columns = list(group1 = by, variable = variable, context = "ttest")
+    )
 
-  # if there are results, put them in the ARD format ---------------------------
-  if (!is.null(lst_ttest[["result"]])) {
-    # additional args passed by user (and default values) will appended to broom::tidy() results
-    df_ttest_args <-
-      utils::modifyList(
-        # grab the default arg values
-        x = formals(asNamespace("stats")[["t.test.default"]])[c("mu", "paired", "var.equal", "conf.level")],
-        # update with any values passed by the user
-        val = rlang::dots_list(...)
-      ) |>
-      dplyr::as_tibble()
+  # add the estimate levels and return object ----------------------------------
+  tryCatch({
+    group1_levels <-
+      unique(data[[by]]) |> stats::na.omit() |>  sort()
+    if (length(group1_levels) != 2L) stop("generic message that no one will see.")
 
-    # tidy results, then put them in ARD format
-    ret <-
-      lst_ttest[["result"]] |>
-      broom::tidy() |>
-      dplyr::bind_cols(df_ttest_args) |>
-      dplyr::mutate(
-        dplyr::across(everything(), .fns = list),
-        group1 = .env$by,
-        variable = .env$variable
-      ) |>
-      tidyr::pivot_longer(
-        cols = -c("group1", "variable"),
-        names_to = "stat_name",
-        values_to = "statistic"
-      ) |>
+    ret |>
       dplyr::mutate(
         group1_level =
           dplyr::case_when(
-            .data$stat_name %in% "estimate1" ~ unique(data[[by]]) |> stats::na.omit() |>  sort() |> dplyr::first() |> list(),
-            .data$stat_name %in% "estimate2" ~ unique(data[[by]]) |> stats::na.omit() |>sort() |> dplyr::last() |> list(),
+            .data$stat_name %in% "estimate1" ~ dplyr::first(group1_levels) |> list(),
+            .data$stat_name %in% "estimate2" ~ dplyr::last(group1_levels) |> list(),
           )
-      )
-  }
-
-  # if there was an error, return empty data frame in ARD format ---------------
-  else {
-    ret <-
-      dplyr::tibble(
-        group1 = .env$by,
-        variable = .env$variable,
-        stat_name = NA_character_,
-        statistic = list(NULL)
-      )
-  }
-
-  # return and add warning/errors ----------------------------------------------
-  ret |>
-    dplyr::mutate(
-      context = "ttest",
-      warning = lst_ttest["warning"],
-      error = lst_ttest["error"]
-    ) %>%
-    structure(., class = c("card", class(.)))
+       )},
+    # in case of an error, simply return ARD without these levels
+    error = function(e) dplyr::mutate(ret, group1_level = list(NULL))
+  ) |>
+    tidy_ard_column_order()
 }
 
 #' @rdname ard_comparison
@@ -127,59 +107,21 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   check_length(by, "by", 1L)
   check_length(variable, "variable", 1L)
 
-  # perform Wilcoxon test and format results -----------------------------------
-  lst_wilcox <- eval_capture_conditions(stats::wilcox.test(data[[variable]] ~ data[[by]], ...))
-
-  # if there are results, put them in the ARD format ---------------------------
-  if (!is.null(lst_wilcox[["result"]])) {
-    # additional args passed by user (and default values) will appended to broom::tidy() results
-    df_wilcoxtest_args <-
-      utils::modifyList(
-        # grab the default arg values
-        x = formals(asNamespace("stats")[["wilcox.test.default"]]) %>%
-          `[`(c("mu", "paired", "exact", "correct", "conf.int",
-                "conf.level", "tol.root", "digits.rank")),
-        # update with any values passed by the user
-        val = rlang::dots_list(...),
-        keep.null = FALSE
-      ) |>
-      lapply(function(x) list(x)) |>
-      dplyr::as_tibble()
-
-    ret <-
-      broom::tidy(lst_wilcox[["result"]]) |>
-      dplyr::mutate(
-        dplyr::across(everything(), .fns = list),
-        group1 = .env$by,
-        variable = .env$variable
-      ) |>
-      dplyr::bind_cols(df_wilcoxtest_args) |>
-      tidyr::pivot_longer(
-        cols = -c("group1", "variable"),
-        names_to = "stat_name",
-        values_to = "statistic"
-      )
-  }
-
-  # if there was an error, return empty data frame in ARD format ---------------
-  else {
-    ret <-
-      dplyr::tibble(
-        group1 = .env$by,
-        variable = .env$variable,
-        stat_name = NA_character_,
-        statistic = list(NULL)
-      )
-  }
-
-  # return and add warning/errors ----------------------------------------------
-  ret |>
-    dplyr::mutate(
-      context = "wilcoxtest",
-      warning = lst_wilcox["warning"],
-      error = lst_wilcox["error"]
-    ) %>%
-    structure(., class = c("card", class(.)))
+  # build ARD ------------------------------------------------------------------
+  tidy_as_ard(
+    lst_tidy =
+      eval_capture_conditions(
+        stats::wilcox.test(data[[variable]] ~ data[[by]], ...) |>
+          broom::tidy()
+      ),
+    tidy_result_names = c("statistic", "p.value", "method", "alternative"),
+    fun_args_to_record =
+      c("mu", "paired", "exact", "correct", "conf.int",
+        "conf.level", "tol.root", "digits.rank"),
+    formals = formals(asNamespace("stats")[["wilcox.test.default"]]),
+    passed_args = rlang::dots_list(...),
+    lst_ard_columns = list(group1 = by, variable = variable, context = "wilcoxtest")
+  )
 }
 
 
@@ -198,59 +140,20 @@ ard_chisqtest <- function(data, by, variable, ...) {
   check_length(by, "by", 1L)
   check_length(variable, "variable", 1L)
 
-  # perform chisq test and format results -----------------------------------
-  lst_chisq <-
-    eval_capture_conditions(stats::chisq.test(x = data[[variable]], y = data[[by]], ...))
-
-  # if there are results, put them in the ARD format ---------------------------
-  if (!is.null(lst_chisq[["result"]])) {
-    # additional args passed by user (and default values) will appended to broom::tidy() results
-    df_chisqtest_args <-
-      utils::modifyList(
-        # grab the default arg values
-        x = formals(stats::chisq.test) %>%
-          `[`(c("correct", "p", "rescale.p", "simulate.p.value", "B")),
-        # update with any values passed by the user
-        val = rlang::dots_list(...),
-        keep.null = FALSE
-      ) |>
-      lapply(function(x) list(x)) |>
-      dplyr::as_tibble()
-
-    ret <-
-      broom::tidy(lst_chisq[["result"]]) |>
-      dplyr::mutate(
-        dplyr::across(everything(), .fns = list),
-        group1 = .env$by,
-        variable = .env$variable
-      ) |>
-      dplyr::bind_cols(df_chisqtest_args) |>
-      tidyr::pivot_longer(
-        cols = -c("group1", "variable"),
-        names_to = "stat_name",
-        values_to = "statistic"
-      )
-  }
-
-  # if there was an error, return empty data frame in ARD format ---------------
-  else {
-    ret <-
-      dplyr::tibble(
-        group1 = .env$by,
-        variable = .env$variable,
-        stat_name = NA_character_,
-        statistic = list(NULL)
-      )
-  }
-
-  # return and add warning/errors ----------------------------------------------
-  ret |>
-    dplyr::mutate(
-      context = "chisqtest",
-      warning = lst_chisq["warning"],
-      error = lst_chisq["error"]
-    ) %>%
-    structure(., class = c("card", class(.)))
+  # build ARD ------------------------------------------------------------------
+  tidy_as_ard(
+    lst_tidy =
+      eval_capture_conditions(
+        stats::chisq.test(x = data[[variable]], y = data[[by]], ...) |>
+          broom::tidy()
+      ),
+    tidy_result_names = c("statistic", "p.value", "parameter", "method"),
+    fun_args_to_record =
+      c("correct", "p", "rescale.p", "simulate.p.value", "B"),
+    formals = formals(stats::chisq.test),
+    passed_args = rlang::dots_list(...),
+    lst_ard_columns = list(group1 = by, variable = variable, context = "chisqtest")
+  )
 }
 
 #' @rdname ard_comparison
@@ -268,16 +171,13 @@ ard_fishertest <- function(data, by, variable, ...) {
   check_length(by, "by", 1L)
   check_length(variable, "variable", 1L)
 
-  # perform fisher test and format results -----------------------------------
-  lst_tidy_fisher <-
-    eval_capture_conditions(
-      stats::fisher.test(x = data[[variable]], y = data[[by]], ...) |>
-        broom::tidy()
-    )
-
   # build ARD ------------------------------------------------------------------
   tidy_as_ard(
-    lst_tidy = lst_tidy_fisher,
+    lst_tidy =
+      eval_capture_conditions(
+        stats::fisher.test(x = data[[variable]], y = data[[by]], ...) |>
+          broom::tidy()
+      ),
     tidy_result_names =
       c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
     fun_args_to_record =
@@ -285,8 +185,7 @@ ard_fishertest <- function(data, by, variable, ...) {
         "conf.int", "conf.level", "simulate.p.value", "B"),
     formals = formals(stats::fisher.test),
     passed_args = rlang::dots_list(...),
-    context = "fishertest",
-    lst_ard_columns = list(group1 = by, variable = variable)
+    lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
   )
 }
 
