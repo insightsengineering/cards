@@ -42,6 +42,7 @@ reference:
       - eval_capture_conditions
       - process_selectors
       - continuous_variable_summary_fns
+      - tidy_as_ard
 
   - title: "Data"
     contents:
