@@ -21,6 +21,12 @@ test_that("ard_ttest() works", {
     ignore_attr = TRUE
   )
 
+  # errors are properly handled
+  expect_snapshot(
+    ADSL |>
+      ard_ttest(by = ARM, variable = AGE, var.equal = TRUE) |>
+      as.data.frame()
+  )
 })
 
 test_that("ard_wilcoxtest() works", {

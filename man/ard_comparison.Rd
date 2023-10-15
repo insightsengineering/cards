@@ -32,8 +32,11 @@ data frame
 ARD functions for comparing values between groups.
 
 \code{ard_ttest()} -> \code{t.test(data[[variable]] ~ data[[by]], ...)}
+
 \code{ard_wilcoxtest()} -> \code{wilcox.test(data[[variable]] ~ data[[by]], ...)}
+
 \code{ard_chisqtest()} -> \code{chisq.test(x = data[[variable]], y = data[[by]], ...)}
+
 \code{ard_fishertest()} -> \code{fisher.test(x = data[[variable]], y = data[[by]], ...)}
 }
 \examples{
