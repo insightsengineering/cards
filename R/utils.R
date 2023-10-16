@@ -126,32 +126,6 @@
   unique(x) |> sort()
 }
 
-#' Wrappers for `.mapply()` with a purrr-like API.
-#'
-#' `.imap()` returns a list maintaining the names as the input.
-#'
-#' @param .x a vector or list
-#' @param .y a vector or list
-#' @param .f a function with two inputs
-#'
-#' @return a list
-#' @noRd
-.imap <- function(.x, .f, ...) {
-  .mapply(
-    FUN = .f,
-    dots = list(.x, names(.x)),
-    MoreArgs = rlang::list2(...)
-  ) |>
-    stats::setNames(nm = names(.x))
-}
-# TODO: check out rlang's standalone re-implementation of these purr functions.
-#       probably best to use those for consistency in the future.
-
-#' @return a list
-#' @noRd
-.map2 <- function(.x, .y, .f, ...) {
-  .mapply(FUN = .f, dots = list(.x, .y), MoreArgs = rlang::list2(...))
-}
 
 #' Named list predicate
 #'

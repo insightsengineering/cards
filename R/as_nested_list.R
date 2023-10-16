@@ -63,7 +63,7 @@ as_nested_list <- function(x) {
     df_preparation |>
     dplyr::select(any_of(c("variable", "variable_level")), starts_with("group"), "stat_name") |>
     as.list() |>
-    .imap(function(x, y) glue::glue("[[{shQuote(y)}]][[{shQuote(x)}]]")) |>
+    imap(function(x, y) glue::glue("[[{shQuote(y)}]][[{shQuote(x)}]]")) |>
     # lapply(FUN = function(x) glue::glue("[[{shQuote(x)}]]")) |>
     unlist() %>%
     paste(collapse = "") %>%
@@ -78,7 +78,7 @@ as_nested_list <- function(x) {
         any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
       ) |>
       # this essentially flattens the nested list one level, while maintaining the names
-      .imap(function(x, y) x[[1]])
+      imap(function(x, y) x[[1]])
   )
 }
 
