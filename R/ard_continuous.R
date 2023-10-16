@@ -89,7 +89,7 @@ ard_continuous <- function(data,
         df_statsistics |>
           dplyr::mutate(
             result =
-              .map2(
+               map2(
                 df_statsistics$variable,
                 df_statsistics$stat_name,
                 function(variable, stat_name) {

@@ -19,7 +19,7 @@ apply_statistic_fmt_fn <- function(x) {
     dplyr::mutate(
       .after = "statistic",
       statistic_fmt =
-        .map2(
+        map2(
           .data$statistic,
           .data$statistic_fmt_fn,
           function(x, fn) {
