@@ -89,61 +89,15 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
       )
   )
 
-  # if the denominator argument is supplied, then re-calculate the N statistic
-  if (!is.null(denominator)) {
-    df_variables_only <-
-      matrix(TRUE, nrow = nrow(denominator), ncol = length(variables)) |>
-      data.frame() |>
-      stats::setNames(variables)
+  # if the denominator argument is supplied, then re-calculate the N statistic -
+  if (!is.null(denominator))
+    df_result <- .ard_categorical_recalc_N(df_result, denominator, variables, by)
 
-    withr::with_options(
-      new = list("cards.ard_continuous.suppress-variable-level-stats" = TRUE),
-      df_result_N <-
-        ard_continuous(
-          data = denominator[by] |> dplyr::bind_cols(df_variables_only),
-          variables = all_of(variables),
-          by = all_of(by),
-          statistics = ~list(N = function(x) length(x))
-        )
-    )
+  # process the table() results and add to the ARD data frame ------------------
+  df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
 
-    df_result <- suppressMessages(bind_ard(df_result, df_result_N, .update = TRUE))
-  }
-
-  # process the table() results and add to the ARD data frame
-  df_results_n <-
-    df_result |>
-    dplyr::filter(.data$stat_label %in% "table") |>
-    dplyr::mutate(
-      variable_level = map(.data$variable, ~.unique_and_sorted(data[[.x]]) |> as.list()),
-      statistic = map(.data$statistic, ~as.integer(.x) |> as.list()),
-      stat_name = "n",
-      stat_label = "n"
-    ) |>
-    tidyr::unnest(cols = c("variable_level", "statistic"))
-
-  df_results_p <-
-    df_results_n %>%
-    {suppressMessages(dplyr::left_join(
-      .,
-      df_result |>
-        dplyr::filter(.data$stat_name %in% "N") |>
-        dplyr::select(all_ard_groups(), "variable", ..N.. = "statistic")
-    ))} |>
-    dplyr::mutate(
-      statistic = map2(.data$statistic, .data$..N.., ~.x / .y),
-      stat_name = "p",
-      stat_label = "%",
-      statistic_fmt_fn = list(function(x) format(round(x * 100, digits = 1), nsmall = 1))
-    ) |>
-    dplyr::select(-"..N..")
-
-  # combine all results
-  dplyr::bind_rows(
-    df_result |> dplyr::filter(!.data$stat_name %in% "table"),
-    df_results_n,
-    df_results_p
-  ) |>
+  # merge in stat labels and format ARD for return -----------------------------
+  df_result_final |>
     dplyr::rows_update(
       .default_statistic_labels(),
       by = "stat_name",
@@ -156,32 +110,79 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
 }
 
 
+# this function replaces the `table()` results with n and percent results
+.convert_table_to_n_and_percent <- function(df_result, data, denominator) {
+  # convert table() results to counts (n)
+  df_results_n <-
+    df_result |>
+    dplyr::filter(.data$stat_label %in% "table") |>
+    dplyr::mutate(
+      variable_level = map(.data$variable, ~.unique_and_sorted(data[[.x]]) |> as.list()),
+      statistic = map(.data$statistic, ~as.integer(.x) |> as.list()),
+      stat_name = "n",
+      stat_label = "n"
+    ) |>
+    tidyr::unnest(cols = c("variable_level", "statistic"))
 
-# .update_percent_statistic <- function(x) {
-#   x |>
-#     dplyr::group_by(
-#       dplyr::pick(dplyr::any_of("variable")),
-#       dplyr::pick(dplyr::matches("^group[0-9]+$")),
-#       dplyr::pick(dplyr::matches("^group[0-9]+_level$"))
-#     ) |>
-#     dplyr::group_map(
-#       ~ dplyr::filter(.x, .data$stat_name %in% "n") |>
-#         dplyr::mutate(
-#           stat_name = "p",
-#           statistic =
-#             (unlist(.data$statistic) / unlist(.x[.x$stat_name %in% "N", "statistic"])) |>
-#             as.list()
-#         ),
-#       .keep = TRUE
-#     ) %>%
-#     {dplyr::bind_rows(
-#       x |>
-#         # remove the old percent calculation based on the typical denominator
-#         dplyr::filter(!.data$stat_name %in% "p"),
-#       !!!.
-#     )} |>
-#     # the length stat becomes much more difficult to interpret in this situation, so removing
-#     dplyr::filter(!.data$stat_name %in% "length")
-# }
+  # convert table() results to percents (p)
+  if (is.null(denominator)) {
+    df_results_p <-
+      df_results_n |>
+      dplyr::mutate(
+        .by = c(all_ard_groups(), "variable"),
+        statistic =
+          (unlist(.data$statistic) / (sum(unlist(.data$statistic)))) |> as.list()
+      )
+  }
+  else {
+    df_results_p <-
+      df_results_n %>%
+      {suppressMessages(dplyr::left_join(
+        .,
+        df_result |>
+          dplyr::filter(.data$stat_name %in% "N") |>
+          dplyr::select(all_ard_groups(), "variable", ..N.. = "statistic")
+      ))} |>
+      dplyr::mutate(
+        statistic = map2(.data$statistic, .data$..N.., ~.x / .y)
+      ) |>
+      dplyr::select(-"..N..")
+  }
 
 
+  # append and percent results to primary results
+  dplyr::bind_rows(
+    df_result |> dplyr::filter(!.data$stat_name %in% "table"),
+    df_results_n,
+    df_results_p |>
+      dplyr::mutate(
+        stat_name = "p",
+        stat_label = "%",
+        statistic_fmt_fn = list(function(x) format(round(x * 100, digits = 1), nsmall = 1))
+      )
+  )
+}
+
+# when the denominator argument is passed, recalculate the N statistic
+.ard_categorical_recalc_N <- function(df_result, denominator, variables, by) {
+  # create a data set for the calculation
+  df_variables_only <-
+    matrix(TRUE, nrow = nrow(denominator), ncol = length(variables)) |>
+    data.frame() |>
+    stats::setNames(variables)
+
+  # calculate the new N
+  withr::with_options(
+    new = list("cards.ard_continuous.suppress-variable-level-stats" = TRUE),
+    df_result_N <-
+      ard_continuous(
+        data = denominator[by] |> dplyr::bind_cols(df_variables_only),
+        variables = all_of(variables),
+        by = all_of(by),
+        statistics = ~list(N = function(x) length(x))
+      )
+  )
+
+  # replace N stat with new N stat
+  suppressMessages(bind_ard(df_result, df_result_N, .update = TRUE))
+}
