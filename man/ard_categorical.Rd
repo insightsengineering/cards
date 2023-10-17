@@ -47,7 +47,7 @@ in a trial, e.g. tabulating the number of AEs that occurred within an SOC
 where some subjects may not have experienced an AE and would not be represented
 in the ADAE data set. All patients appear in ADSL, however.
 
-\if{html}{\out{<div class="sourceCode {r}">}}\preformatted{ard_categorical(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_categorical(
   data =
     ADAE |>
       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
@@ -57,6 +57,21 @@ in the ADAE data set. All patients appear in ADSL, however.
   denominator = ADSL
 ) |>
   flatten_ard()
+#> # A tibble: 141 x 9
+#>    group1 group1_level variable variable_level    stat_name stat_label statistic
+#>    <chr>  <chr>        <chr>    <chr>             <chr>     <chr>      <chr>    
+#>  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       
+#>  2 ARM    Placebo      AESOC    CARDIAC DISORDERS p         \%          0.139534~
+#>  3 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        
+#>  4 ARM    Placebo      AESOC    CONGENITAL, FAMI~ p         \%          0        
+#>  5 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        
+#>  6 ARM    Placebo      AESOC    EAR AND LABYRINT~ p         \%          0.011627~
+#>  7 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        
+#>  8 ARM    Placebo      AESOC    EYE DISORDERS     p         \%          0.023255~
+#>  9 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       
+#> 10 ARM    Placebo      AESOC    GASTROINTESTINAL~ p         \%          0.197674~
+#> # i 131 more rows
+#> # i 2 more variables: warning <chr>, error <chr>
 }\if{html}{\out{</div>}}
 }
 

@@ -12,6 +12,8 @@
 #'   function processes these inputs and returns a named list. If an name is
 #'   repeated, the last entry is kept.
 #'
+#' - `compute_formula_selector()`:
+#'
 #' @param data a data frame
 #' @param ... named arguments where the value of the argument is processed with tidyselect.
 #' - `process_selectors()`: the values are tidyselect-compatible selectors
@@ -19,6 +21,10 @@
 #'   a combination of both, or a single formula. Users may pass `~value` as a
 #'   shortcut for `everything() ~ value`.
 #' @param env env to save the results to. Default is the calling environment.
+#' @param x a named list, list of formulas, or a single formula that will be
+#' converted to a named list.
+#' @param arg_name a string with the argument named being processed. Used
+#' in error messaging.
 #'
 #' @name process_selectors
 #'
@@ -69,8 +75,8 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
     stats::setNames(nm = names(dots))
   for (i in seq_along(dots)) {
     ret[[i]] <-
-      .process_single_formula_selector(data = data, x = dots[[i]],
-                                       arg_name = names(dots)[i], env = env)
+      compute_formula_selector(data = data, x = dots[[i]],
+                               arg_name = names(dots)[i], env = env)
   }
 
   # save processed args to the calling env (well, that is the default env)
@@ -79,7 +85,9 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
   }
 }
 
-.process_single_formula_selector <- function(data, x, arg_name, env) {
+#' @name process_selectors
+#' @export
+compute_formula_selector <- function(data, x, arg_name = '', env = rlang::caller_env()) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) return(x)
 

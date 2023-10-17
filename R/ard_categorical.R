@@ -116,7 +116,7 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
     dplyr::filter(.data$stat_label %in% "table") |>
     dplyr::mutate(
       variable_level = map(.data$variable, ~.unique_and_sorted(data[[.x]]) |> as.list()),
-      statistic = map(statistic, ~as.integer(.x) |> as.list()),
+      statistic = map(.data$statistic, ~as.integer(.x) |> as.list()),
       stat_name = "n",
       stat_label = "n"
     ) |>
