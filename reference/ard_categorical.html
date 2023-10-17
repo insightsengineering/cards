@@ -119,15 +119,15 @@ in the ADAE data set. All patients appear in ADSL, however.</p>
 <span><span class="co">#&gt;    group1 group1_level variable variable_level    stat_name stat_label statistic</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;    </span></span>
 <span><span class="co">#&gt;  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       </span></span>
-<span><span class="co">#&gt;  2 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        </span></span>
-<span><span class="co">#&gt;  3 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        </span></span>
-<span><span class="co">#&gt;  4 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        </span></span>
-<span><span class="co">#&gt;  5 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       </span></span>
-<span><span class="co">#&gt;  6 ARM    Placebo      AESOC    GENERAL DISORDER~ n         n          21       </span></span>
-<span><span class="co">#&gt;  7 ARM    Placebo      AESOC    HEPATOBILIARY DI~ n         n          1        </span></span>
-<span><span class="co">#&gt;  8 ARM    Placebo      AESOC    IMMUNE SYSTEM DI~ n         n          0        </span></span>
-<span><span class="co">#&gt;  9 ARM    Placebo      AESOC    INFECTIONS AND I~ n         n          16       </span></span>
-<span><span class="co">#&gt; 10 ARM    Placebo      AESOC    INJURY, POISONIN~ n         n          4        </span></span>
+<span><span class="co">#&gt;  2 ARM    Placebo      AESOC    CARDIAC DISORDERS p         %          0.139534~</span></span>
+<span><span class="co">#&gt;  3 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        </span></span>
+<span><span class="co">#&gt;  4 ARM    Placebo      AESOC    CONGENITAL, FAMI~ p         %          0        </span></span>
+<span><span class="co">#&gt;  5 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        </span></span>
+<span><span class="co">#&gt;  6 ARM    Placebo      AESOC    EAR AND LABYRINT~ p         %          0.011627~</span></span>
+<span><span class="co">#&gt;  7 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        </span></span>
+<span><span class="co">#&gt;  8 ARM    Placebo      AESOC    EYE DISORDERS     p         %          0.023255~</span></span>
+<span><span class="co">#&gt;  9 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       </span></span>
+<span><span class="co">#&gt; 10 ARM    Placebo      AESOC    GASTROINTESTINAL~ p         %          0.197674~</span></span>
 <span><span class="co">#&gt; # i 131 more rows</span></span>
 <span><span class="co">#&gt; # i 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span></code></pre><p></p></div>
     </div>
@@ -136,20 +136,20 @@ in the ADAE data set. All patients appear in ADSL, however.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level    variable variable_level stat_name stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo         AGEGR1   65-80          n         n          42       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo         AGEGR1   65-80          p         %          0.488372…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo         AGEGR1   &lt;65            n         n          14       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo         AGEGR1   &lt;65            p         %          0.162790…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo         AGEGR1   &gt;80            n         n          30       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo         AGEGR1   &gt;80            p         %          0.348837…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Placebo         AGEGR1   <span style="color: #BB0000;">NA</span>             N         N          86       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Placebo         AGEGR1   <span style="color: #BB0000;">NA</span>             length    Vector Le… 86       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Xanomeline Hig… AGEGR1   65-80          n         n          55       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline Hig… AGEGR1   65-80          p         %          0.654761…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 36 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level stat_name stat_label statistic   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo      AGEGR1   65-80          n         n          42          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo      AGEGR1   65-80          p         %          0.488372093…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo      AGEGR1   &lt;65            n         n          14          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo      AGEGR1   &lt;65            p         %          0.162790697…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo      AGEGR1   &gt;80            n         n          30          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo      AGEGR1   &gt;80            p         %          0.348837209…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Placebo      AGEGR1   <span style="color: #BB0000;">NA</span>             N         N          86          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Placebo      AGEGR1   <span style="color: #BB0000;">NA</span>             N_obs     N_obs      86          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Placebo      AGEGR1   <span style="color: #BB0000;">NA</span>             N_miss    N_miss     0           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Placebo      AGEGR1   <span style="color: #BB0000;">NA</span>             N_nonmiss N_nonmiss  86          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 26 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>

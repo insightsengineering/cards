@@ -71,7 +71,7 @@ when an empty vector is passed.</p>
     <dl><dt>summaries</dt>
 <dd><p>a character vector of functions to include in output. Default
 is <code>NULL</code>, which selects all summary functions. Select one or more from
-'N', 'N_miss', 'p_miss', 'length', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.</p></dd>
+'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -86,15 +86,15 @@ is <code>NULL</code>, which selects all summary functions. Select one or more fr
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">continuous_variable_summary_fns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"median"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $N</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sum(!is.na(x))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x558fcb6d47e0&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x558fd1024c58&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length(x)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5555e5f4fb08&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5555e867cb70&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $median</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stats::median(x, na.rm = TRUE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x558fcb6d3c10&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x558fd1024c58&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5555e5f533f8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5555e867cb70&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
