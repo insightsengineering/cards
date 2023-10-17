@@ -3,11 +3,14 @@
 \name{process_selectors}
 \alias{process_selectors}
 \alias{process_formula_selectors}
+\alias{compute_formula_selector}
 \title{Process tidyselectors}
 \usage{
 process_selectors(data, ..., env = rlang::caller_env())
 
 process_formula_selectors(data, ..., env = rlang::caller_env())
+
+compute_formula_selector(data, x, arg_name = "", env = rlang::caller_env())
 }
 \arguments{
 \item{data}{a data frame}
@@ -21,6 +24,12 @@ shortcut for \code{everything() ~ value}.
 }}
 
 \item{env}{env to save the results to. Default is the calling environment.}
+
+\item{x}{a named list, list of formulas, or a single formula that will be
+converted to a named list.}
+
+\item{arg_name}{a string with the argument named being processed. Used
+in error messaging.}
 }
 \description{
 Functions processes tidyselect arguments passed to functions in the cards package.
@@ -32,6 +41,7 @@ converted to a vector of character column names.
 lists of formulas (where the LHS of the formula is a tidyselector). This
 function processes these inputs and returns a named list. If an name is
 repeated, the last entry is kept.
+\item \code{compute_formula_selector()}:
 }
 }
 \examples{

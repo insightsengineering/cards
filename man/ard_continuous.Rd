@@ -22,7 +22,16 @@ returned by \code{dplyr::group_vars(data)}.}
 \item{statistics}{a named list of functions, a list of formulas,
 or a single formula where the list element is a function (or the RHS of
 a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) mean(x, na.rm = TRUE)))}}
+e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
+
+The value assigned to each variable must also be a named list, where the names
+are used to reference a function and the element is the function object.
+Typically, this function will return a scalar statistic, but a function that
+returns a named list of results is also acceptable, e.g.
+\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
+will be less clear in this setting.
+
+See the \code{\link{selecting_syntax}} help file for details.}
 }
 \value{
 a data frame

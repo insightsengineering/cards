@@ -61,15 +61,15 @@ in the ADAE data set. All patients appear in ADSL, however.
 #>    group1 group1_level variable variable_level    stat_name stat_label statistic
 #>    <chr>  <chr>        <chr>    <chr>             <chr>     <chr>      <chr>    
 #>  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       
-#>  2 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        
-#>  3 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        
-#>  4 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        
-#>  5 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       
-#>  6 ARM    Placebo      AESOC    GENERAL DISORDER~ n         n          21       
-#>  7 ARM    Placebo      AESOC    HEPATOBILIARY DI~ n         n          1        
-#>  8 ARM    Placebo      AESOC    IMMUNE SYSTEM DI~ n         n          0        
-#>  9 ARM    Placebo      AESOC    INFECTIONS AND I~ n         n          16       
-#> 10 ARM    Placebo      AESOC    INJURY, POISONIN~ n         n          4        
+#>  2 ARM    Placebo      AESOC    CARDIAC DISORDERS p         \%          0.139534~
+#>  3 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        
+#>  4 ARM    Placebo      AESOC    CONGENITAL, FAMI~ p         \%          0        
+#>  5 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        
+#>  6 ARM    Placebo      AESOC    EAR AND LABYRINT~ p         \%          0.011627~
+#>  7 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        
+#>  8 ARM    Placebo      AESOC    EYE DISORDERS     p         \%          0.023255~
+#>  9 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       
+#> 10 ARM    Placebo      AESOC    GASTROINTESTINAL~ p         \%          0.197674~
 #> # i 131 more rows
 #> # i 2 more variables: warning <chr>, error <chr>
 }\if{html}{\out{</div>}}
