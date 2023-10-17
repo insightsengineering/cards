@@ -75,107 +75,113 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   }
 
   # calculating summary stats --------------------------------------------------
-  # first, calculate the variable level statistics (e.g. N, length)
-  df_ard_variables <-
-    ard_continuous(
-      data =
-        switch(
-          is.null(denominator) |> as.character(),
-          "TRUE" = data,
-          "FALSE" =
-            denominator |>
-            dplyr::select(all_of(by)) |>
-            dplyr::mutate(!!!(rep_len(list(1L), length(variables)) |> stats::setNames(variables)))
-        ),
-      variables = all_of(variables),
-      by = all_of(!!by),
-      statistics =
-        variables |>
-        lapply(function(x) continuous_variable_summary_fns(c("N", "length"))) |>
-        stats::setNames(nm = variables)
+  withr::with_options(
+    new = list("cards.ard_continuous.suppress-variable-level-stats" = !is.null(denominator)),
+    df_result <-
+      ard_continuous(
+        data = # creating a factor, so unobserved levels appear in tabulation
+          data |>
+          dplyr::mutate(across(all_of(variables),
+                               ~factor(.x, levels = .unique_and_sorted(.x)))),
+        variables = all_of(variables),
+        by = all_of(by),
+        statistics = ~list(table = function(x) table(x), N = function(x) length(x))
+      )
+  )
+
+  # if the denominator argument is supplied, then re-calculate the N statistic
+  if (!is.null(denominator)) {
+    df_variables_only <-
+      matrix(TRUE, nrow = nrow(denominator), ncol = length(variables)) |>
+      data.frame() |>
+      stats::setNames(variables)
+
+    withr::with_options(
+      new = list("cards.ard_continuous.suppress-variable-level-stats" = TRUE),
+      df_result_N <-
+        ard_continuous(
+          data = denominator[by] |> dplyr::bind_cols(df_variables_only),
+          variables = all_of(variables),
+          by = all_of(by),
+          statistics = ~list(N = function(x) length(x))
+        )
     )
 
-  # second, tabulate variable
-  df_ard_tablulation <-
-    lapply(
-      X = variables,
-      FUN = function(v) {
-        ard_continuous(
-          data = data |> dplyr::select(all_of(c(by, v))) |> tidyr::drop_na(),
-          variables = all_of(v),
-          by = all_of(by),
-          statistics =
-            list(
-              table = function(x) {
-                dplyr::tibble(
-                  variable_level = # referencing `data` to get all observed levels in the full data set
-                    rlang::inject(!!.unique_and_sorted(data[[v]])),
-                  n = # creating a factor, so unobserved levels appear in tabulation
-                    factor(x, levels = rlang::inject(!!.unique_and_sorted(data[[v]]))) |>  table() |> as.integer(),
-                  p = .data$n / sum(.data$n)
-                )
-              }
-            ) |>
-            list() |>
-            stats::setNames(nm = v)
-        ) |>
-          dplyr::select(-"stat_name") |>
-          tidyr::unnest(cols = "statistic") |>
-          dplyr::mutate(
-            dplyr::across(c("variable_level", "n", "p"), .fns = as.list)
-          ) |>
-          tidyr::pivot_longer(
-            cols = c("n", "p"),
-            names_to = "stat_name",
-            values_to = "statistic"
-          )
-      }
+    df_result <- suppressMessages(bind_ard(df_result, df_result_N, .update = TRUE))
+  }
+
+  # process the table() results and add to the ARD data frame
+  df_results_n <-
+    df_result |>
+    dplyr::filter(.data$stat_label %in% "table") |>
+    dplyr::mutate(
+      variable_level = map(.data$variable, ~.unique_and_sorted(data[[.x]]) |> as.list()),
+      statistic = map(statistic, ~as.integer(.x) |> as.list()),
+      stat_name = "n",
+      stat_label = "n"
     ) |>
-    dplyr::bind_rows()
+    tidyr::unnest(cols = c("variable_level", "statistic"))
 
-  # bind data frames with stats, and return to user ----------------------------
-  ard_final <- dplyr::bind_rows(df_ard_tablulation, df_ard_variables)
-  # if a custom function for the denom was provided, udpate the percent statistics using the custom N calculation
-  if (!rlang::is_empty(denominator))
-    ard_final <- .update_percent_statistic(ard_final)
+  df_results_p <-
+    df_results_n %>%
+    {suppressMessages(dplyr::left_join(
+      .,
+      df_result |>
+        dplyr::filter(.data$stat_name %in% "N") |>
+        dplyr::select(all_ard_groups(), "variable", ..N.. = "statistic")
+    ))} |>
+    dplyr::mutate(
+      statistic = map2(.data$statistic, .data$..N.., ~.x / .y),
+      stat_name = "p",
+      stat_label = "%",
+      statistic_fmt_fn = list(function(x) format(round(x * 100, digits = 1), nsmall = 1))
+    ) |>
+    dplyr::select(-"..N..")
 
-  ard_final |>
+  # combine all results
+  dplyr::bind_rows(
+    df_result |> dplyr::filter(!.data$stat_name %in% "table"),
+    df_results_n,
+    df_results_p
+  ) |>
     dplyr::rows_update(
       .default_statistic_labels(),
       by = "stat_name",
       unmatched = "ignore"
     ) |>
-    dplyr::mutate(context = "categorical") %>%
+    dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
+    dplyr::mutate(context = "categorical") |>
+    tidy_ard_column_order() %>%
     structure(., class = c("card", class(.)))
 }
 
 
 
-.update_percent_statistic <- function(x) {
-  x |>
-    dplyr::group_by(
-      dplyr::pick(dplyr::any_of("variable")),
-      dplyr::pick(dplyr::matches("^group[0-9]+$")),
-      dplyr::pick(dplyr::matches("^group[0-9]+_level$"))
-    ) |>
-    dplyr::group_map(
-      ~ dplyr::filter(.x, .data$stat_name %in% "n") |>
-        dplyr::mutate(
-          stat_name = "p",
-          statistic =
-            (unlist(.data$statistic) / unlist(.x[.x$stat_name %in% "N", "statistic"])) |>
-            as.list()
-        ),
-      .keep = TRUE
-    ) %>%
-    {dplyr::bind_rows(
-      x |>
-        # remove the old percent calculation based on the typical denominator
-        dplyr::filter(!.data$stat_name %in% "p"),
-      !!!.
-    )} |>
-    # the length stat becomes much more difficult to interpret in this situation, so removing
-    dplyr::filter(!.data$stat_name %in% "length")
-}
+# .update_percent_statistic <- function(x) {
+#   x |>
+#     dplyr::group_by(
+#       dplyr::pick(dplyr::any_of("variable")),
+#       dplyr::pick(dplyr::matches("^group[0-9]+$")),
+#       dplyr::pick(dplyr::matches("^group[0-9]+_level$"))
+#     ) |>
+#     dplyr::group_map(
+#       ~ dplyr::filter(.x, .data$stat_name %in% "n") |>
+#         dplyr::mutate(
+#           stat_name = "p",
+#           statistic =
+#             (unlist(.data$statistic) / unlist(.x[.x$stat_name %in% "N", "statistic"])) |>
+#             as.list()
+#         ),
+#       .keep = TRUE
+#     ) %>%
+#     {dplyr::bind_rows(
+#       x |>
+#         # remove the old percent calculation based on the typical denominator
+#         dplyr::filter(!.data$stat_name %in% "p"),
+#       !!!.
+#     )} |>
+#     # the length stat becomes much more difficult to interpret in this situation, so removing
+#     dplyr::filter(!.data$stat_name %in% "length")
+# }
 
 

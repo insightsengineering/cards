@@ -18,17 +18,17 @@ continuous_variable_summary_fns <- function(summaries = NULL) {
   # list all functions available by default ------------------------------------
   list_fns <-
     list(
-      N = function(x) sum(!is.na(x)),
-      N_miss = function(x) sum(is.na(x)),
-      p_miss = function(x) sum(is.na(x)) / length(x),
-      length = function(x) length(x),
+      N = function(x) length(x),
+      # N_miss = function(x) sum(is.na(x)),
+      # p_miss = function(x) sum(is.na(x)) / length(x),
+      # length = function(x) length(x),
       mean = function(x) mean(x, na.rm = TRUE),
       sd = function(x) stats::sd(x, na.rm = TRUE),
       median = function(x) stats::median(x, na.rm = TRUE),
       p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE) |> unname(),
       p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE) |> unname(),
-      min = function(x) ifelse(length(x[!is.na(x)]), .classed_NA(x), min(x, na.rm = TRUE)),
-      max = function(x) ifelse(length(x[!is.na(x)]), .classed_NA(x), max(x, na.rm = TRUE))
+      min = function(x) ifelse(length(x) == 0L, .classed_NA(x), min(x, na.rm = TRUE)),
+      max = function(x) ifelse(length(x) == 0L, .classed_NA(x), max(x, na.rm = TRUE))
     )
 
   # process the selection of the summary stats to include ----------------------

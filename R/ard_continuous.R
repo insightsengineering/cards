@@ -39,17 +39,61 @@ ard_continuous <- function(data,
     lapply(function(x) statistics[[x]] %||% continuous_variable_summary_fns()) |>
     stats::setNames(nm = variables)
 
-  df_statsistics <-
-    lapply(
-      X = variables,
-      FUN = function(x) {
-        dplyr::tibble(
-          variable = x,
-          stat_name = names(statistics[[x]])
-        )
-      }
-    ) |>
-    dplyr::bind_rows() |>
+  # calculate statistics -------------------------------------------------------
+  df_nested <-
+    data |>
+    .ard_nest(
+      by = by,
+      key = "...ard_nested_data..."
+    )
+
+  # add columns for the by variables
+  if (!rlang::is_empty(by)) {
+    df_nested <-
+      df_nested |>
+      # setting column names for stratum levels
+      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by)))), .before = 0L) |>
+      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by), "_level"))))
+  }
+
+  # calculate statistics indicated by user in statistics argument
+  df_nested <-
+    .calculate_stats_as_ard(
+      df_nested = df_nested,
+      variables = variables,
+      statistics = statistics,
+      new_col_name = "..ard_all_stats..",
+      omit_na = TRUE
+    )
+
+  # add variable-level stats like length of vector, proportion missing, etc.
+  if (!isTRUE(getOption("cards.ard_continuous.suppress-variable-level-stats"))) {
+    process_formula_selectors(
+      data[variables],
+      variable_level_stats =
+        ~list(var_level = function(x) dplyr::tibble(N_obs = length(x),
+                                                    N_miss = sum(is.na(x)),
+                                                    N_nonmiss = N_obs - N_miss,
+                                                    p_miss = N_miss / N_obs,
+                                                    p_nonmiss = N_nonmiss / N_obs)))
+    df_nested_variable_level_stats <-
+      .calculate_stats_as_ard(
+        df_nested = df_nested,
+        variables = variables,
+        statistics = variable_level_stats,
+        new_col_name = "..ard_all_stats..",
+        omit_na = FALSE
+      )
+  }
+  else df_nested_variable_level_stats <- data.frame()
+
+
+
+  # unnest results and add default function labels and formatters
+  df_results <-
+    dplyr::bind_rows(df_nested, df_nested_variable_level_stats) |>
+    dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
+    tidyr::unnest(cols = "..ard_all_stats..") |>
     dplyr::left_join(
       .default_statistic_labels(),
       by = "stat_name"
@@ -65,52 +109,48 @@ ard_continuous <- function(data,
         lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
     )
 
-  # calculate statistics -------------------------------------------------------
-  df_return <-
-    data |>
-    .ard_nest(
-      by = by,
-      key = "...ard_nested_data..."
-    )
+  # add meta data and class
+  df_results |>
+    dplyr::mutate(context = "continuous") |>
+    dplyr::arrange(dplyr::across(all_ard_groups())) |>
+    tidy_ard_column_order() %>%
+    structure(., class = c("card", class(.)))
+}
 
-  # add columns for the by variables
-  if (!rlang::is_empty(by)) {
-    df_return <-
-      df_return |>
-      # setting column names for stratum levels
-      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by)))), .before = 0L) |>
-      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by), "_level"))))
-  }
 
-  df_return$..ard_all_stats.. <-
-    lapply(
-      df_return[["...ard_nested_data..."]],
-      FUN = function(nested_data) {
-        df_statsistics |>
-          dplyr::mutate(
-            result =
-               map2(
-                df_statsistics$variable,
-                df_statsistics$stat_name,
-                function(variable, stat_name) {
-                  eval_capture_conditions(
-                    do.call(statistics[[variable]][[stat_name]], args = list(nested_data[[variable]]))
-                  ) |>
-                    lapply(FUN = list) |>
-                    dplyr::as_tibble() |>
-                    dplyr::rename(statistic = "result")
-                }
-              )
-          ) |>
-          tidyr::unnest(cols = "result")
+.calculate_stats_as_ard <- function(df_nested, variables, statistics,
+                                    new_col_name = "..ard_all_stats..",
+                                    omit_na = TRUE) {
+  pre_process_fun <- if (isTRUE(omit_na)) stats::na.omit else identity
+
+  df_nested[[new_col_name]] <-
+    map(
+      df_nested[["...ard_nested_data..."]],
+      function(nested_data) {
+        map(
+          variables,
+          function(variable) {
+            map2(
+              statistics[[variable]], names(statistics[[variable]]),
+              function(fun, fun_name) {
+                .lst_results_as_df(
+                  x = # calculate results, and place in tibble
+                    eval_capture_conditions(
+                      do.call(fun, args = list(pre_process_fun(nested_data[[variable]])))
+                    ),
+                  variable = variable,
+                  fun_name = fun_name
+                )
+              }
+            ) |>
+              unname()
+          }
+        ) |>
+          dplyr::bind_rows()
       }
     )
 
-  df_return |>
-    dplyr::select(-"...ard_nested_data...") |>
-    tidyr::unnest(cols = "..ard_all_stats..") |>
-    dplyr::mutate(context = "continuous") %>%
-    structure(., class = c("card", class(.)))
+  df_nested
 }
 
 
@@ -134,6 +174,31 @@ ard_continuous <- function(data,
       stat_name = names(.),
       stat_label = unlist(.) |> unname()
     )}
+}
+
+.lst_results_as_df <- function(x, variable, fun_name) {
+  # unnesting results if needed
+  if (.is_named_list(x$result, allow_df = TRUE)) {
+    if (is.data.frame(x$result)) x$result <- unclass(x$result)
+    df_ard <-
+      dplyr::tibble(
+        stat_name = names(x$result),
+        result = unname(x$result),
+        warning = list(x$warning),
+        error = list(x$error)
+      )
+  }
+  # if result is not a nested list, return a single row tibble
+  else {
+    df_ard <-
+      map(x, list) |>
+      dplyr::as_tibble() |>
+      dplyr::mutate(stat_name = .env$fun_name)
+  }
+
+  df_ard |>
+    dplyr::mutate(variable = .env$variable) |>
+    dplyr::rename(statistic = "result")
 }
 
 

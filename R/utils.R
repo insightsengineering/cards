@@ -134,8 +134,11 @@
 #' @param x object to check
 #' @keywords internal
 #' @noRd
-.is_named_list <- function(x) {
-  is.list(x) && rlang::is_named(x) && !is.data.frame(x)
+.is_named_list <- function(x, allow_df = FALSE) {
+  if (isFALSE(allow_df))
+    return(is.list(x) && rlang::is_named(x) && !is.data.frame(x))
+  if (isTRUE(allow_df))
+    return(is.list(x) && rlang::is_named(x))
 }
 
 #' A list_flatten()-like function

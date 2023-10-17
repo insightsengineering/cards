@@ -4,7 +4,8 @@ test_that("apply_statistic_fmt_fn() works", {
       data = mtcars,
       variables = mpg,
       statistics = ~continuous_variable_summary_fns(c("mean", "sd"))
-    )
+    ) |>
+    dplyr::filter(stat_name %in% c("mean", "sd"))
 
   expect_equal(
     ard_fmt_checks |>

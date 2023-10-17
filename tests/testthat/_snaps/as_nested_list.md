@@ -27,57 +27,6 @@
       [1] "continuous"
       
       
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length$statistic
-      [1] 11
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length$statistic_fmt
-      [1] "11"
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`4`$stat_name$length$context
-      [1] "continuous"
-      
-      
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean$statistic
       [1] 82.63636
@@ -165,10 +114,10 @@
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$statistic
-      [1] NA
+      [1] 52
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$statistic_fmt
-      [1] "NA"
+      [1] "52"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$warning
       NULL
@@ -182,10 +131,10 @@
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$statistic
-      [1] NA
+      [1] 113
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$statistic_fmt
-      [1] "NA"
+      [1] "113"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$warning
       NULL
@@ -194,6 +143,91 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs$statistic
+      [1] 11
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs$statistic_fmt
+      [1] "11"
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_obs$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss$statistic
+      [1] 11
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss$statistic_fmt
+      [1] "11"
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$N_nonmiss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss$statistic
+      [1] 1
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss$statistic_fmt
+      [1] "1"
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`4`$stat_name$p_nonmiss$context
       [1] "continuous"
       
       
@@ -215,57 +249,6 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$N$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length$statistic
-      [1] 7
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length$statistic_fmt
-      [1] "7"
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`6`$stat_name$length$context
       [1] "continuous"
       
       
@@ -356,10 +339,10 @@
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$statistic
-      [1] NA
+      [1] 105
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$statistic_fmt
-      [1] "NA"
+      [1] "105"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$warning
       NULL
@@ -373,10 +356,10 @@
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$statistic
-      [1] NA
+      [1] 175
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$statistic_fmt
-      [1] "NA"
+      [1] "175"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$warning
       NULL
@@ -385,6 +368,91 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs$statistic
+      [1] 7
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs$statistic_fmt
+      [1] "7"
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_obs$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss$statistic
+      [1] 7
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss$statistic_fmt
+      [1] "7"
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$N_nonmiss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss$statistic
+      [1] 1
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss$statistic_fmt
+      [1] "1"
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`6`$stat_name$p_nonmiss$context
       [1] "continuous"
       
       
@@ -406,57 +474,6 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$N$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$statistic
-      [1] 0
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$statistic_fmt
-      [1] "0"
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$context
-      [1] "continuous"
-      
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length$statistic
-      [1] 14
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length$statistic_fmt
-      [1] "14"
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length$warning
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length$error
-      NULL
-      
-      $variable$hp$group1$cyl$group1_level$`8`$stat_name$length$context
       [1] "continuous"
       
       
@@ -547,10 +564,10 @@
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$statistic
-      [1] NA
+      [1] 150
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$statistic_fmt
-      [1] "NA"
+      [1] "150"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$warning
       NULL
@@ -564,10 +581,10 @@
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$statistic
-      [1] NA
+      [1] 335
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$statistic_fmt
-      [1] "NA"
+      [1] "335"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$warning
       NULL
@@ -576,6 +593,91 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs$statistic
+      [1] 14
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs$statistic_fmt
+      [1] "14"
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_obs$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss$statistic
+      [1] 14
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss$statistic_fmt
+      [1] "14"
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$N_nonmiss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$statistic
+      [1] 0
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$statistic_fmt
+      [1] "0"
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_miss$context
+      [1] "continuous"
+      
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss$statistic
+      [1] 1
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss$statistic_fmt
+      [1] "1"
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss$warning
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss$error
+      NULL
+      
+      $variable$hp$group1$cyl$group1_level$`8`$stat_name$p_nonmiss$context
       [1] "continuous"
       
       

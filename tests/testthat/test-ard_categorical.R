@@ -28,7 +28,7 @@ test_that("ard_categorical() univariate", {
   )
 
   expect_equal(
-    ard_cat_uni |> dplyr::filter(stat_name %in% "length") |> dplyr::pull(statistic) |> unlist(),
+    ard_cat_uni |> dplyr::filter(stat_name %in% "N_obs") |> dplyr::pull(statistic) |> unlist(),
     length(mtcars$am)
   )
 })
