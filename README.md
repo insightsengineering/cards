@@ -57,15 +57,15 @@ ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |>
 | group1 | group1_level | variable | stat_name | stat_label      | statistic        | warning | error |
 |:-------|:-------------|:---------|:----------|:----------------|:-----------------|:--------|:------|
 | ARM    | Placebo      | AGE      | N         | N               | 86               | NA      | NA    |
-| ARM    | Placebo      | AGE      | N_miss    | N_miss          | 0                | NA      | NA    |
-| ARM    | Placebo      | AGE      | p_miss    | p_miss          | 0                | NA      | NA    |
-| ARM    | Placebo      | AGE      | length    | Vector Length   | 86               | NA      | NA    |
 | ARM    | Placebo      | AGE      | mean      | Mean            | 75.2093023255814 | NA      | NA    |
 | ARM    | Placebo      | AGE      | sd        | SD              | 8.59016712714193 | NA      | NA    |
 | ARM    | Placebo      | AGE      | median    | Median          | 76               | NA      | NA    |
 | ARM    | Placebo      | AGE      | p25       | 25th Percentile | 69.25            | NA      | NA    |
 | ARM    | Placebo      | AGE      | p75       | 75th Percentile | 81.75            | NA      | NA    |
-| ARM    | Placebo      | AGE      | min       | Min             | NA               | NA      | NA    |
+| ARM    | Placebo      | AGE      | min       | Min             | 52               | NA      | NA    |
+| ARM    | Placebo      | AGE      | max       | Max             | 89               | NA      | NA    |
+| ARM    | Placebo      | AGE      | N_obs     | N_obs           | 86               | NA      | NA    |
+| ARM    | Placebo      | AGE      | N_miss    | N_miss          | 0                | NA      | NA    |
 
 ``` r
 
@@ -75,18 +75,18 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |>
   knitr::kable()
 ```
 
-| group1 | group1_level         | variable | variable_level | stat_name | stat_label    | statistic         | warning | error |
-|:-------|:---------------------|:---------|:---------------|:----------|:--------------|:------------------|:--------|:------|
-| ARM    | Placebo              | AGEGR1   | \<65           | n         | n             | 14                | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | \<65           | p         | %             | 0.162790697674419 | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | \>80           | n         | n             | 30                | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | \>80           | p         | %             | 0.348837209302326 | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | 65-80          | n         | n             | 42                | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | 65-80          | p         | %             | 0.488372093023256 | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | NA             | N         | N             | 86                | NA      | NA    |
-| ARM    | Placebo              | AGEGR1   | NA             | length    | Vector Length | 86                | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | n         | n             | 11                | NA      | NA    |
-| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | p         | %             | 0.130952380952381 | NA      | NA    |
+| group1 | group1_level | variable | variable_level | stat_name | stat_label | statistic         | warning | error |
+|:-------|:-------------|:---------|:---------------|:----------|:-----------|:------------------|:--------|:------|
+| ARM    | Placebo      | AGEGR1   | \<65           | n         | n          | 14                | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | \<65           | p         | %          | 0.162790697674419 | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | \>80           | n         | n          | 30                | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | \>80           | p         | %          | 0.348837209302326 | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | 65-80          | n         | n          | 42                | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | 65-80          | p         | %          | 0.488372093023256 | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | NA             | N         | N          | 86                | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | NA             | N_obs     | N_obs      | 86                | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | NA             | N_miss    | N_miss     | 0                 | NA      | NA    |
+| ARM    | Placebo      | AGEGR1   | NA             | N_nonmiss | N_nonmiss  | 86                | NA      | NA    |
 
 ``` r
 
@@ -110,7 +110,7 @@ ADSL |>
 
 # the example below ignores the time to event nature of the outcome
 # and are provided to illustrate functionality only
-glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
+survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value")) |> 
   flatten_ard() |> 
@@ -121,11 +121,11 @@ glm(abs(CNSR - 1) ~ TRTP, data = ADTTE, family = binomial) |>
 | variable | variable_level       | stat_name | statistic            |
 |:---------|:---------------------|:----------|:---------------------|
 | TRTP     | Placebo              | estimate  | 0                    |
-| TRTP     | Xanomeline High Dose | estimate  | 1.65113508608955     |
-| TRTP     | Xanomeline High Dose | p.value   | 7.97602603440836e-07 |
-| TRTP     | Xanomeline High Dose | conf.low  | 1.0082797171968      |
-| TRTP     | Xanomeline High Dose | conf.high | 2.32276375858544     |
-| TRTP     | Xanomeline Low Dose  | estimate  | 1.71184736953176     |
-| TRTP     | Xanomeline Low Dose  | p.value   | 3.79931423922493e-07 |
-| TRTP     | Xanomeline Low Dose  | conf.low  | 1.0647564793032      |
-| TRTP     | Xanomeline Low Dose  | conf.high | 2.389373240016       |
+| TRTP     | Xanomeline High Dose | estimate  | 1.61461847858267     |
+| TRTP     | Xanomeline High Dose | p.value   | 4.45457988435316e-12 |
+| TRTP     | Xanomeline High Dose | conf.low  | 1.15743624809338     |
+| TRTP     | Xanomeline High Dose | conf.high | 2.07180070907195     |
+| TRTP     | Xanomeline Low Dose  | estimate  | 1.42255495286673     |
+| TRTP     | Xanomeline Low Dose  | p.value   | 5.71009941439089e-10 |
+| TRTP     | Xanomeline Low Dose  | conf.low  | 0.972724008925098    |
+| TRTP     | Xanomeline Low Dose  | conf.high | 1.87238589680836     |
