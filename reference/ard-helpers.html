@@ -54,7 +54,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ard_statistics</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ard_statistics</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .column <span class="op">=</span> <span class="st">"statistic"</span>,</span>
+<span>  .attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"stat_label"</span>, <span class="st">"statistic_fmt_fn"</span>, <span class="st">"warning"</span>, <span class="st">"error"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">...</span>, .update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -73,6 +78,17 @@ pass <code>AGEGR1 %in% "65-80"</code>.</p></li>
 or a list of ARDs. Columns are matched by name, and any missing
 columns will be filled with <code>NA.</code></p></li>
 </ul></dd>
+
+
+<dt>.column</dt>
+<dd><p>string indicating the column that will be returned in the list.
+Default is <code>"statistic"</code></p></dd>
+
+
+<dt>.attributes</dt>
+<dd><p>character vector of column names that will be returned
+in the list as attributes.
+Default is <code>c("stat_label", "statistic_fmt_fn", "warning", "error")</code></p></dd>
 
 
 <dt>.update</dt>
@@ -105,20 +121,24 @@ for duplicated statistics</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"stat_label")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "n"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ARM"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"statistic_fmt_fn")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> format(round(x, digits = 0), nsmall = 0)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c057569760&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Placebo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"warning")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AGEGR1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"error")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "65-80"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4883721</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"stat_label")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "%"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ARM"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"statistic_fmt_fn")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (x) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> format(round(x * 100, digits = 1), nsmall = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55c057e8bdf8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Placebo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"warning")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AGEGR1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"error")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "65-80"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">ard</span>, <span class="va">ard</span>, .update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
