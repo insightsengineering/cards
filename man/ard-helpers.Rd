@@ -6,7 +6,12 @@
 \alias{bind_ard}
 \title{ARD Helpers}
 \usage{
-get_ard_statistics(x, ...)
+get_ard_statistics(
+  x,
+  ...,
+  .column = "statistic",
+  .attributes = c("stat_label", "statistic_fmt_fn", "warning", "error")
+)
 
 bind_ard(..., .update = FALSE)
 }
@@ -21,6 +26,13 @@ pass \code{AGEGR1 \%in\% "65-80"}.
 or a list of ARDs. Columns are matched by name, and any missing
 columns will be filled with \code{NA.}
 }}
+
+\item{.column}{string indicating the column that will be returned in the list.
+Default is \code{"statistic"}}
+
+\item{.attributes}{character vector of column names that will be returned
+in the list as attributes.
+Default is \code{c("stat_label", "statistic_fmt_fn", "warning", "error")}}
 
 \item{.update}{logical indicating whether to update duplicate ARD statistics.
 Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},

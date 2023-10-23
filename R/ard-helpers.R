@@ -20,6 +20,11 @@
 #' @param .update logical indicating whether to update duplicate ARD statistics.
 #'   Default is `FALSE`. If a statistic type is repeated and `.update=TRUE`,
 #'   the more recently added statistics will be retained, and the others omitted.
+#' @param .column string indicating the column that will be returned in the list.
+#' Default is `"statistic"`
+#' @param .attributes character vector of column names that will be returned
+#' in the list as attributes.
+#' Default is `c("stat_label", "statistic_fmt_fn", "warning", "error")`
 #'
 #' @return a transformed ARD
 #' @name ard-helpers
@@ -34,7 +39,10 @@ NULL
 
 #' @export
 #' @rdname ard-helpers
-get_ard_statistics <- function(x, ...) {
+get_ard_statistics <- function(x, ...,
+                               .column = "statistic",
+                               .attributes = c("stat_label", "statistic_fmt_fn",
+                                              "warning", "error")) {
   # subset the ARD
   ard_subset <- dplyr::filter(x, ...)
 
@@ -43,16 +51,21 @@ get_ard_statistics <- function(x, ...) {
   seq_len(nrow(ard_subset)) |>
     lapply(
       FUN = function(i) {
-        ard_subset$statistic[[i]] |>
-          structure(
-            stat_label = ard_subset[["stat_label"]][[i]],
-            statistic_fmt_fn = ard_subset[["statistic_fmt_fn"]][[i]],
-            warning = ard_subset[["warning"]][[i]],
-            error = ard_subset[["error"]][[i]]
-          )
+        ard_subset[[.column]][[i]] %>%
+          {rlang::inject(structure(
+           ., !!!.create_list_for_attributes(ard_subset, .attributes, i)
+          ))}
       }
     ) |>
     stats::setNames(ard_subset[["stat_name"]])
+}
+
+.create_list_for_attributes <- function(ard_subset, attributes, i) {
+  ret <- list()
+  for (attr in seq_along(attributes)) {
+    ret <- c(ret, list(ard_subset[[attr]][[i]]))
+  }
+  stats::setNames(ret, nm = attributes)
 }
 
 #' @export
