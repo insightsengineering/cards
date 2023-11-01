@@ -67,3 +67,90 @@ test_that("ard_categorical() univariate & specified denomiator", {
     sum(!is.na(mtcars$am)) * 100L
   )
 })
+
+
+test_that("ard_categorical() with strata and by arguments", {
+  ADAE_small <-
+    ADAE |>
+    dplyr::filter(AESOC %in% c("EYE DISORDERS", "INVESTIGATIONS")) |>
+    dplyr::slice_head(by = AESOC, n = 3)
+
+  expect_error(
+    card_ae_strata <-
+      ard_categorical(
+        data = ADAE_small,
+        strata = c(AESOC, AELLT),
+        by = TRTA,
+        variables = AESEV,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      ),
+    NA
+  )
+
+  # check that all combinations of AESOC and AELLT are NOT present
+  expect_equal(
+    card_ae_strata |>
+      dplyr::filter(group2_level %in% "EYE DISORDERS",
+                    group3_level %in% "NASAL MUCOSA BIOPSY") |>
+      nrow(),
+    0L
+  )
+
+  # check the rate calculations in the first SOC/LLT combination
+  expect_equal(
+    card_ae_strata |>
+      dplyr::filter(
+        group1_level %in% "Placebo",
+        group2_level %in% "EYE DISORDERS",
+        group3_level %in% "EYES SWOLLEN",
+        variable_level %in% "MILD",
+        stat_name %in% "n"
+      ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    ADAE_small |>
+      dplyr::filter(
+        AESOC %in% "EYE DISORDERS",
+        AELLT %in% "EYES SWOLLEN",
+        TRTA %in% "Placebo",
+        AESEV %in% "MILD"
+      ) |>
+      nrow()
+  )
+
+  expect_equal(
+    card_ae_strata |>
+      dplyr::filter(
+        group1_level %in% "Placebo",
+        group2_level %in% "EYE DISORDERS",
+        group3_level %in% "EYES SWOLLEN",
+        variable_level %in% "MILD",
+        stat_name %in% "p"
+      ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    (ADAE_small |>
+       dplyr::filter(
+         AESOC %in% "EYE DISORDERS",
+         AELLT %in% "EYES SWOLLEN",
+         TRTA %in% "Placebo",
+         AESEV %in% "MILD"
+       ) |>
+       nrow()) /
+      (ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow())
+  )
+
+  expect_equal(
+    card_ae_strata |>
+      dplyr::filter(
+        group1_level %in% "Placebo",
+        group2_level %in% "EYE DISORDERS",
+        group3_level %in% "EYES SWOLLEN",
+        stat_name %in% "N"
+      ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow()
+  )
+
+})

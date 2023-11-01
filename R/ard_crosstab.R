@@ -1,10 +1,10 @@
 #' ARD Crosstab
 #'
 #' Similar to `ard_categorical()` except the percentages and N statistics are
-#' based on the entire data set, rather than stratified by the columns
-#' specified in the `by` argument.
+#' based on the entire data set, rather than stratified columns.
 #'
 #' @inheritParams ard_categorical
+#' @param by columns to compute statistics by.
 #'
 #' @return a data frame
 #' @export
@@ -28,7 +28,7 @@ ard_crosstab <- function(data, variables, by) {
     FUN = function(variable) {
       denominator <-
         data |>
-        .ard_nest(by = by) |>
+        nest_for_ard(by = by, rename_columns = FALSE) |>
         dplyr::mutate(
           data = .env$data[c(by, variable)] |> tidyr::drop_na() |> dplyr::select(all_of(variable)) |> list()
         ) |>

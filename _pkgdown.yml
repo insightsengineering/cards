@@ -18,7 +18,6 @@ reference:
   -  contents:
       - ard_continuous
       - ard_categorical
-      - ard_stratified_categorical
       - ard_crosstab
 
   - subtitle: "Model and Test Summaries"
@@ -43,6 +42,7 @@ reference:
       - process_selectors
       - continuous_variable_summary_fns
       - tidy_as_ard
+      - nest_for_ard
 
   - title: "Data"
     contents:
