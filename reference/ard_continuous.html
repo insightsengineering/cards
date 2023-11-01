@@ -58,6 +58,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">variables</span>,</span>
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  statistics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="continuous_variable_summary_fns.html">continuous_variable_summary_fns</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -72,9 +73,14 @@
 <dd><p>columns to include in summaries.</p></dd>
 
 
-<dt>by</dt>
-<dd><p>columns to compute statistics by. Default are the columns
-returned by <code>dplyr::group_vars(data)</code>.</p></dd>
+<dt>by, strata</dt>
+<dd><p>columns to by/stratified by for summary statistic
+calculation. Arguments are similar, but with an important distinction:</p>
+<p><code>by</code>: results are calculated by <strong>all combinations</strong> of the columns specified,
+including unobserved combinations and unobserved factor levels.</p>
+<p><code>strata</code>: results are calculated by <strong>all <em>observed</em> combinations</strong> of the
+columns specified.</p>
+<p>Arguments may be used in conjunction with one another.</p></dd>
 
 
 <dt>statistics</dt>

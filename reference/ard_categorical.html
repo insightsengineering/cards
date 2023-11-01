@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">data</span>, <span class="va">variables</span>, by <span class="op">=</span> <span class="cn">NULL</span>, denominator <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">data</span>, <span class="va">variables</span>, by <span class="op">=</span> <span class="cn">NULL</span>, strata <span class="op">=</span> <span class="cn">NULL</span>, denominator <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,9 +67,14 @@
 <dd><p>columns to include in summaries. Default is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
-<dt>by</dt>
-<dd><p>columns to compute statistics by. Default are the columns
-returned by <code>dplyr::group_vars(data)</code>.</p></dd>
+<dt>by, strata</dt>
+<dd><p>columns to by/stratified by for tabulation.
+Arguments are similar, but with an important distinction:</p>
+<p><code>by</code>: results are tabulated by <strong>all combinations</strong> of the columns specified,
+including unobserved combinations and unobserved factor levels.</p>
+<p><code>strata</code>: results are tabulated by <strong>all <em>observed</em> combinations</strong> of the
+columns specified.</p>
+<p>Arguments may be used in conjunction with one another.</p></dd>
 
 
 <dt>denominator</dt>
@@ -98,7 +103,7 @@ denominator to the number of enrolled subjects.</p>
 <p>In such cases, use the <code>denominator</code> argument to specify a new definition
 of <code>"N"</code>, and subsequently <code>"p"</code>.
 The argument expects a data frame, and the data frame must include the columns
-specified in <code>ard_categorical(by=)</code>.
+specified in <code>ard_categorical(by=)</code> (strata columns are not considered).
 The updated <code>N</code> and <code>length</code> elements will be updated to be calculated as
 the number of rows in each combination of the <code>by</code> variables.</p>
 <p>Take an example where we need to update the denominator to be subjects enrolled
