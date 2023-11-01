@@ -43,6 +43,7 @@ reference:
       - process_selectors
       - continuous_variable_summary_fns
       - tidy_as_ard
+      - nest_for_ard
 
   - title: "Data"
     contents:

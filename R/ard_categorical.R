@@ -3,8 +3,16 @@
 #' Compute Analysis Results Data (ARD) for categorical summary statistics.
 #'
 #' @param data a data frame
-#' @param by columns to compute statistics by. Default are the columns
-#' returned by `dplyr::group_vars(data)`.
+#' @param by,strata columns to by/stratified by for tabulation.
+#' Arguments are similar, but with an important distinction:
+#'
+#' `by`: results are tabulated by **all combinations** of the columns specified,
+#' including unobserved combinations and unobserved factor levels.
+#'
+#' `strata`: results are tabulated by **all _observed_ combinations** of the
+#' columns specified.
+#'
+#' Arguments may be used in conjunction with one another.
 #' @param variables columns to include in summaries. Default is `everything()`.
 #' @param denominator Specify this *optional* argument to change the denominator,
 #' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
@@ -23,7 +31,7 @@
 #' In such cases, use the `denominator` argument to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
 #' The argument expects a data frame, and the data frame must include the columns
-#' specified in `ard_categorical(by=)`.
+#' specified in `ard_categorical(by=)` (strata columns are not considered).
 #' The updated `N` and `length` elements will be updated to be calculated as
 #' the number of rows in each combination of the `by` variables.
 #'
@@ -56,7 +64,7 @@ NULL
 
 #' @rdname ard_categorical
 #' @export
-ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
+ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominator = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")
@@ -64,7 +72,12 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
-  process_selectors(data, variables = {{ variables }}, by = {{ by }})
+  process_selectors(
+    data,
+    variables = {{ variables }},
+    by = {{ by }},
+    strata = {{ strata }}
+  )
 
   # check inputs ---------------------------------------------------------------
   if (!is.null(denominator)) {
@@ -85,13 +98,15 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
                                ~factor(.x, levels = .unique_and_sorted(.x)))),
         variables = all_of(variables),
         by = all_of(by),
+        strata = all_of(strata),
         statistics = ~list(table = function(x) table(x), N = function(x) length(x))
       )
   )
 
   # if the denominator argument is supplied, then re-calculate the N statistic -
   if (!is.null(denominator))
-    df_result <- .ard_categorical_recalc_N(df_result, denominator, variables, by)
+    df_result <-
+    .ard_categorical_recalc_N(df_result, denominator, variables, by = by)
 
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
@@ -144,7 +159,7 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
           dplyr::select(all_ard_groups(), "variable", ..N.. = "statistic")
       ))} |>
       dplyr::mutate(
-        statistic = map2(.data$statistic, .data$..N.., ~.x / .y)
+        statistic = (unlist(.data$statistic) / unlist(.data$..N..)) |> as.list()
       ) |>
       dplyr::select(-"..N..")
   }
@@ -184,5 +199,10 @@ ard_categorical <- function(data, variables, by = NULL, denominator = NULL) {
   )
 
   # replace N stat with new N stat
-  suppressMessages(bind_ard(df_result, df_result_N, .update = TRUE))
+  dplyr::rows_update(
+    df_result,
+    dplyr::select(df_result_N, all_ard_groups(), "stat_name", "statistic", "warning", "error"),
+    by = dplyr::select(df_result_N, all_ard_groups(), "stat_name") |> names(),
+    unmatched = "ignore"
+  )
 }

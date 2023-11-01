@@ -4,8 +4,17 @@
 #'
 #' @param data a data frame
 #' @param variables columns to include in summaries.
-#' @param by columns to compute statistics by. Default are the columns
-#' returned by `dplyr::group_vars(data)`.
+#' @param by,strata columns to by/stratified by for summary statistic
+#' calculation. Arguments are similar, but with an important distinction:
+#'
+#' `by`: results are calculated by **all combinations** of the columns specified,
+#' including unobserved combinations and unobserved factor levels.
+#'
+#' `strata`: results are calculated by **all _observed_ combinations** of the
+#' columns specified.
+#'
+#' Arguments may be used in conjunction with one another.
+#'
 #' @param statistics a named list of functions, a list of formulas,
 #' or a single formula where the list element is a function (or the RHS of
 #' a formula),
@@ -30,6 +39,7 @@
 ard_continuous <- function(data,
                            variables,
                            by = NULL,
+                           strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
@@ -39,7 +49,7 @@ ard_continuous <- function(data,
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
-  process_selectors(data, variables = {{variables}}, by = {{by}})
+  process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
   process_formula_selectors(data = data[variables], statistics = statistics)
 
   # setting default statistics -------------------------------------------------
@@ -51,19 +61,11 @@ ard_continuous <- function(data,
   # calculate statistics -------------------------------------------------------
   df_nested <-
     data |>
-    .ard_nest(
+    nest_for_ard(
       by = by,
+      strata = strata,
       key = "...ard_nested_data..."
     )
-
-  # add columns for the by variables
-  if (!rlang::is_empty(by)) {
-    df_nested <-
-      df_nested |>
-      # setting column names for stratum levels
-      dplyr::mutate(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by)))), .before = 0L) |>
-      dplyr::rename(!!!(as.list(by) |> stats::setNames(paste0("group", seq_along(by), "_level"))))
-  }
 
   # calculate statistics indicated by user in statistics argument
   df_nested <-

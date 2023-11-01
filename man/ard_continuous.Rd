@@ -8,6 +8,7 @@ ard_continuous(
   data,
   variables,
   by = NULL,
+  strata = NULL,
   statistics = everything() ~ continuous_variable_summary_fns()
 )
 }
@@ -16,8 +17,16 @@ ard_continuous(
 
 \item{variables}{columns to include in summaries.}
 
-\item{by}{columns to compute statistics by. Default are the columns
-returned by \code{dplyr::group_vars(data)}.}
+\item{by, strata}{columns to by/stratified by for summary statistic
+calculation. Arguments are similar, but with an important distinction:
+
+\code{by}: results are calculated by \strong{all combinations} of the columns specified,
+including unobserved combinations and unobserved factor levels.
+
+\code{strata}: results are calculated by \strong{all \emph{observed} combinations} of the
+columns specified.
+
+Arguments may be used in conjunction with one another.}
 
 \item{statistics}{a named list of functions, a list of formulas,
 or a single formula where the list element is a function (or the RHS of

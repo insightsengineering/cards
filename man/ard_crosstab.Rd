@@ -11,16 +11,14 @@ ard_crosstab(data, variables, by)
 
 \item{variables}{columns to include in summaries. Default is \code{everything()}.}
 
-\item{by}{columns to compute statistics by. Default are the columns
-returned by \code{dplyr::group_vars(data)}.}
+\item{by}{columns to compute statistics by.}
 }
 \value{
 a data frame
 }
 \description{
 Similar to \code{ard_categorical()} except the percentages and N statistics are
-based on the entire data set, rather than stratified by the columns
-specified in the \code{by} argument.
+based on the entire data set, rather than stratified columns.
 }
 \examples{
 ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")

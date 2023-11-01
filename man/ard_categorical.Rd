@@ -4,15 +4,23 @@
 \alias{ard_categorical}
 \title{Categorical ARD Statistics}
 \usage{
-ard_categorical(data, variables, by = NULL, denominator = NULL)
+ard_categorical(data, variables, by = NULL, strata = NULL, denominator = NULL)
 }
 \arguments{
 \item{data}{a data frame}
 
 \item{variables}{columns to include in summaries. Default is \code{everything()}.}
 
-\item{by}{columns to compute statistics by. Default are the columns
-returned by \code{dplyr::group_vars(data)}.}
+\item{by, strata}{columns to by/stratified by for tabulation.
+Arguments are similar, but with an important distinction:
+
+\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
+including unobserved combinations and unobserved factor levels.
+
+\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
+columns specified.
+
+Arguments may be used in conjunction with one another.}
 
 \item{denominator}{Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
@@ -38,7 +46,7 @@ denominator to the number of enrolled subjects.
 In such cases, use the \code{denominator} argument to specify a new definition
 of \code{"N"}, and subsequently \code{"p"}.
 The argument expects a data frame, and the data frame must include the columns
-specified in \code{ard_categorical(by=)}.
+specified in \code{ard_categorical(by=)} (strata columns are not considered).
 The updated \code{N} and \code{length} elements will be updated to be calculated as
 the number of rows in each combination of the \code{by} variables.
 
