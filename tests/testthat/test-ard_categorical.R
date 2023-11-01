@@ -31,6 +31,14 @@ test_that("ard_categorical() univariate", {
     ard_cat_uni |> dplyr::filter(stat_name %in% "N_obs") |> dplyr::pull(statistic) |> unlist(),
     length(mtcars$am)
   )
+
+  expect_equal(
+    ard_categorical(
+      mtcars,
+      variables = starts_with("xxxxx")
+    ),
+    dplyr::tibble()
+  )
 })
 
 test_that("ard_categorical() univariate & specified denomiator", {

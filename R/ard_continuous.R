@@ -52,6 +52,9 @@ ard_continuous <- function(data,
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
   process_formula_selectors(data = data[variables], statistics = statistics)
 
+  # return empty tibble if no variables selected -------------------------------
+  if (rlang::is_empty(variables)) return(dplyr::tibble())
+
   # setting default statistics -------------------------------------------------
   statistics <-
     variables |>

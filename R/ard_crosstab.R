@@ -22,6 +22,9 @@ ard_crosstab <- function(data, variables, by) {
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
+  # return empty tibble if no variables selected -------------------------------
+  if (rlang::is_empty(variables)) return(dplyr::tibble())
+
   # tabulate crosstab ----------------------------------------------------------
   lapply(
     variables,

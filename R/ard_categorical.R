@@ -87,6 +87,9 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominat
       msg = "Columns {.val {missing_cols}} must appear in {.arg denominator}.")
   }
 
+  # return empty tibble if no variables selected -------------------------------
+  if (rlang::is_empty(variables)) return(dplyr::tibble())
+
   # calculating summary stats --------------------------------------------------
   withr::with_options(
     new = list("cards.ard_continuous.suppress-variable-level-stats" = !is.null(denominator)),

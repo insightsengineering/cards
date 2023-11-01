@@ -17,4 +17,12 @@ test_that("multiplication works", {
          mean = with(mtcars, mean(mpg[am %in% 0 & vs %in% 0]))),
     ignore_attr = TRUE
   )
+
+  expect_equal(
+    ard_continuous(
+      mtcars,
+      variables = starts_with("xxxxx")
+    ),
+    dplyr::tibble()
+  )
 })

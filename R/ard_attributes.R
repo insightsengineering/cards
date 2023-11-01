@@ -20,7 +20,7 @@
 #' attr(df$var1, 'label') <- "Lowercase Letters"
 #'
 #' ard_attributes(df, variables = everything())
-ard_attributes <- function(data, variables, label = NULL) {
+ard_attributes <- function(data, variables = everything(), label = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")

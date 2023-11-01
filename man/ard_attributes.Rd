@@ -4,7 +4,7 @@
 \alias{ard_attributes}
 \title{ARD Attributes}
 \usage{
-ard_attributes(data, variables, label = NULL)
+ard_attributes(data, variables = everything(), label = NULL)
 }
 \arguments{
 \item{data}{a data frame}
