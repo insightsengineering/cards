@@ -1,0 +1,153 @@
+---
+name: Version bump ⬆
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      REPO_GITHUB_TOKEN:
+        description: Github token with write access to the repo
+        required: false
+    inputs:
+      disable-precommit-autoupdate:
+        description: Disable precommit autoupdate
+        required: false
+        default: false
+        type: boolean
+      vbump-after-release:
+        description: Whether the vbump workflow is running after a release has been published
+        required: false
+        default: false
+        type: boolean
+      package-subdirectory:
+        description: Subdirectory in the repository, where the R package is located.
+        required: false
+        type: string
+        default: "."
+
+concurrency:
+  group: vbump-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vbump:
+    name: Bump version ⤴
+    runs-on: ubuntu-latest
+    if: |
+      !(contains(github.event.commits[0].message, '[skip vbump]') ||
+        contains(github.event.head_commit.message, '[skip vbump]')
+      )
+    container:
+      image: docker.io/rocker/tidyverse:4.3.1
+
+    steps:
+      - name: Setup token 🔑
+        id: github-token
+        run: |
+          if [ "${{ secrets.REPO_GITHUB_TOKEN }}" == "" ]; then
+            echo "REPO_GITHUB_TOKEN is empty. Substituting it with GITHUB_TOKEN."
+            echo "token=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          else
+            echo "Using REPO_GITHUB_TOKEN."
+            echo "token=${{ secrets.REPO_GITHUB_TOKEN }}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Checkout repo 🛎
+        uses: actions/checkout@v3
+        with:
+          token: ${{ steps.github-token.outputs.token }}
+
+      - name: Bump version in DESCRIPTION 📜
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || inputs.vbump-after-release == true }}
+        run: desc::desc_bump_version("dev", normalize = TRUE)
+        shell: Rscript {0}
+        working-directory: ${{ inputs.package-subdirectory }}
+
+      - name: Update Date field 📅
+        run: if (desc::desc_has_fields("Date")) desc::desc_set("Date", Sys.Date())
+        shell: Rscript {0}
+        working-directory: ${{ inputs.package-subdirectory }}
+
+      - name: Bump version in NEWS.md 📰
+        run: |
+          if [ -f NEWS.md ]
+          then {
+            git config --global --add safe.directory $(pwd)
+            DESC_VERSION=$(R --slave -e 'cat(paste(desc::desc_get_version()))')
+            NEWS_VERSION=$(awk '/^#+ /{print $3; exit}' NEWS.md)
+            FIRST_NEWS_LINE=$(head -1 NEWS.md)
+            if [ "${{ inputs.vbump-after-release }}" == "true" ]; then
+              # Add a new section with the released version that will be vbumped below.
+              printf "$FIRST_NEWS_LINE\n\n" | cat - NEWS.md > temp-news.md
+              mv temp-news.md NEWS.md
+            fi
+            # Replace only the first occurence of $NEWS_VERSION.
+            sed -i "0,/$NEWS_VERSION/s/$NEWS_VERSION/$DESC_VERSION/" NEWS.md
+            NEWS_VERSION=$(awk '/^#+ /{print $3; exit}' NEWS.md)
+            echo "Updated NEWS.md version: $NEWS_VERSION"
+            if (test $DESC_VERSION != $NEWS_VERSION ); then
+              echo "🙈 Updated NEWS.md and DESCRIPTION have different versions!"
+              echo "Please ensure that the versions in the NEWS.md and DESCRIPTION are the same 🙏"
+              exit 1
+            fi
+            echo "NEW_PKG_VERSION=${DESC_VERSION}" >> $GITHUB_ENV
+          }
+          fi
+        shell: bash
+        working-directory: ${{ inputs.package-subdirectory }}
+
+      - name: Check if a pre-commit config exists
+        id: precommit-config-exists
+        uses: andstor/file-existence-action@v2
+        with:
+          files: ".pre-commit-config.yaml"
+
+      - name: Setup Python 🐍
+        if: |
+          inputs.disable-precommit-autoupdate != 'true' &&
+            steps.precommit-config-exists.outputs.files_exists == 'true'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Precommit autoupdate 🅿️
+        if: |
+          inputs.disable-precommit-autoupdate != 'true' &&
+            steps.precommit-config-exists.outputs.files_exists == 'true'
+        run: |
+          git config --global --add safe.directory $(pwd)
+          python -m pip -q install pre-commit
+          pre-commit autoupdate
+
+      - name: Checkout to main 🛎
+        if: ${{ inputs.vbump-after-release == true }}
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+
+      - name: Set file pattern to commit ⚙️
+        id: file-pattern
+        run: |
+          if [[ "${{ inputs.package-subdirectory }}" == "." ]]; then
+            FILE_PATTERN="NEWS.md DESCRIPTION"
+          else
+            FILE_PATTERN="${{ inputs.package-subdirectory }}/NEWS.md ${{ inputs.package-subdirectory }}/DESCRIPTION"
+          fi
+          echo "file-pattern=$FILE_PATTERN" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Commit and push changes 📌
+        if: ${{ env.NEW_PKG_VERSION }}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[skip actions] Bump version to ${{ env.NEW_PKG_VERSION }}"
+          file_pattern: "${{ steps.file-pattern.outputs.file-pattern }} .pre-commit-config.yaml"
+          commit_user_name: insights-engineering-bot
+          commit_user_email: >-
+            68416928+insights-engineering-bot@users.noreply.github.com
+        continue-on-error: true
