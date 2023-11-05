@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("ard_continuous() works", {
   expect_error(
     ard_test <-
       ard_continuous(mtcars, variables = c(mpg, hp), by = c(am, vs)),
@@ -26,3 +26,13 @@ test_that("multiplication works", {
     dplyr::tibble()
   )
 })
+
+test_that("ard_continuous() messaging", {
+  # proper error message when statistics argument mis-specified
+  expect_snapshot(
+    ard_continuous(mtcars, variables = "mpg", statistics = ~list(mean = "this is a string")),
+    error = TRUE
+  )
+
+})
+
