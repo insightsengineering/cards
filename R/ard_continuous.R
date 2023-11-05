@@ -51,6 +51,13 @@ ard_continuous <- function(data,
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
   process_formula_selectors(data = data[variables], statistics = statistics)
+  check_list_elements(
+    statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
+    error_msg =
+      list(statistics =
+             c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+               "i" = "Value must be a named list of functions."))
+  )
 
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())

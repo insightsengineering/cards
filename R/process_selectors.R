@@ -12,7 +12,12 @@
 #'   function processes these inputs and returns a named list. If an name is
 #'   repeated, the last entry is kept.
 #'
-#' - `compute_formula_selector()`:
+#' - `compute_formula_selector()`: used in `process_formula_selectors()` to
+#'   evaluate a single argument.
+#'
+#' - `check_list_elements()`: accepts named arguments where the name is a list
+#'   that exists in the env, and the argument value is a predicate function
+#'   used to the values of the list.
 #'
 #' @param data a data frame
 #' @param ... named arguments where the value of the argument is processed with tidyselect.
@@ -20,11 +25,18 @@
 #' - `process_formula_selectors()`: the values are named lists, list of formulas
 #'   a combination of both, or a single formula. Users may pass `~value` as a
 #'   shortcut for `everything() ~ value`.
+#' - `check_list_elements()`: named arguments where the name matches an existing
+#'   list in the `env` environment, and the value is a predicate function
+#'   to test each element of the list, e.g. each element must be a string or
+#'   a function.
 #' @param env env to save the results to. Default is the calling environment.
 #' @param x a named list, list of formulas, or a single formula that will be
 #' converted to a named list.
 #' @param arg_name a string with the argument named being processed. Used
 #' in error messaging.
+#' @param error_msg a named list where the list elements are strings that will
+#' be used in error messaging when mis-specified arguments are passed. Elements
+#' `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
 #'
 #' @name process_selectors
 #'
@@ -131,4 +143,29 @@ compute_formula_selector <- function(data, x, arg_name = '', env = rlang::caller
   x[names(x) |> rev() |> Negate(duplicated)()]
 }
 
+
+#' @name process_selectors
+#' @export
+check_list_elements <- function(..., error_msg = list(), env = rlang::caller_env()) {
+  dots <- rlang::dots_list(...)
+
+  imap(
+    dots,
+    function(predicate_fn, arg_name) {
+      imap(
+        get(arg_name, envir = env),
+        function(lst_element, variable) {
+          if (!isTRUE(predicate_fn(lst_element))) {
+            msg <-
+              error_msg[[arg_name]] %||%
+              "The value for argument {.arg {arg_name}} and variable {.val {variable}} is not the expected type."
+            cli::cli_abort(message = msg)
+          }
+        }
+      )
+    }
+  )
+
+  invisible()
+}
 

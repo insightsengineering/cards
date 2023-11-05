@@ -4,6 +4,7 @@
 \alias{process_selectors}
 \alias{process_formula_selectors}
 \alias{compute_formula_selector}
+\alias{check_list_elements}
 \title{Process tidyselectors}
 \usage{
 process_selectors(data, ..., env = rlang::caller_env())
@@ -11,6 +12,8 @@ process_selectors(data, ..., env = rlang::caller_env())
 process_formula_selectors(data, ..., env = rlang::caller_env())
 
 compute_formula_selector(data, x, arg_name = "", env = rlang::caller_env())
+
+check_list_elements(..., error_msg = list(), env = rlang::caller_env())
 }
 \arguments{
 \item{data}{a data frame}
@@ -21,6 +24,10 @@ compute_formula_selector(data, x, arg_name = "", env = rlang::caller_env())
 \item \code{process_formula_selectors()}: the values are named lists, list of formulas
 a combination of both, or a single formula. Users may pass \code{~value} as a
 shortcut for \code{everything() ~ value}.
+\item \code{check_list_elements()}: named arguments where the name matches an existing
+list in the \code{env} environment, and the value is a predicate function
+to test each element of the list, e.g. each element must be a string or
+a function.
 }}
 
 \item{env}{env to save the results to. Default is the calling environment.}
@@ -30,6 +37,10 @@ converted to a named list.}
 
 \item{arg_name}{a string with the argument named being processed. Used
 in error messaging.}
+
+\item{error_msg}{a named list where the list elements are strings that will
+be used in error messaging when mis-specified arguments are passed. Elements
+\code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }
 \description{
 Functions processes tidyselect arguments passed to functions in the cards package.
@@ -41,7 +52,11 @@ converted to a vector of character column names.
 lists of formulas (where the LHS of the formula is a tidyselector). This
 function processes these inputs and returns a named list. If an name is
 repeated, the last entry is kept.
-\item \code{compute_formula_selector()}:
+\item \code{compute_formula_selector()}: used in \code{process_formula_selectors()} to
+evaluate a single argument.
+\item \code{check_list_elements()}: accepts named arguments where the name is a list
+that exists in the env, and the argument value is a predicate function
+used to the values of the list.
 }
 }
 \examples{
