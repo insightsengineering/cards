@@ -97,7 +97,12 @@ used to the values of the list.</p></li>
 <span></span>
 <span><span class="fu">process_formula_selectors</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">compute_formula_selector</span><span class="op">(</span><span class="va">data</span>, <span class="va">x</span>, arg_name <span class="op">=</span> <span class="st">""</span>, env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">compute_formula_selector</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  arg_name <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">check_list_elements</span><span class="op">(</span><span class="va">...</span>, error_msg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>, env <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -159,41 +164,47 @@ be used in error messaging when mis-specified arguments are passed. Elements
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01PN</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTSDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTEDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTDUR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x561c3f85f4a8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563b83a72b0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTSDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (..., na.rm = FALSE)  .Primitive("min")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># process one list</span></span></span>
+<span class="r-in"><span><span class="fu">compute_formula_selector</span><span class="op">(</span><span class="va">ADSL</span>, x <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"U"</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1L</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $USUBJID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
