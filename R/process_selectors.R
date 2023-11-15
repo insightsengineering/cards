@@ -53,6 +53,9 @@
 #'   env = example_env
 #' )
 #' get(x = "statistics", envir = example_env)
+#'
+#' # process one list
+#' compute_formula_selector(ADSL, x = starts_with("U") ~ 1L)
 NULL
 
 #' @name process_selectors
@@ -99,7 +102,7 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
-compute_formula_selector <- function(data, x, arg_name = '', env = rlang::caller_env()) {
+compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), env = rlang::caller_env()) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) return(x)
 

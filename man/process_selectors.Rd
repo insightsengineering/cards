@@ -11,7 +11,12 @@ process_selectors(data, ..., env = rlang::caller_env())
 
 process_formula_selectors(data, ..., env = rlang::caller_env())
 
-compute_formula_selector(data, x, arg_name = "", env = rlang::caller_env())
+compute_formula_selector(
+  data,
+  x,
+  arg_name = rlang::caller_arg(x),
+  env = rlang::caller_env()
+)
 
 check_list_elements(..., error_msg = list(), env = rlang::caller_env())
 }
@@ -72,4 +77,7 @@ process_formula_selectors(
   env = example_env
 )
 get(x = "statistics", envir = example_env)
+
+# process one list
+compute_formula_selector(ADSL, x = starts_with("U") ~ 1L)
 }
