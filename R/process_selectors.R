@@ -85,9 +85,8 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
   # saved dots as named list
   dots <- rlang::dots_list(...)
 
-  ret <-
-    vector(mode = 'list', length = length(dots)) |>
-    stats::setNames(nm = names(dots))
+  # initialize an empty list
+  ret <- rlang::rep_named(names(dots), list())
   for (i in seq_along(dots)) {
     ret[[i]] <-
       compute_formula_selector(data = data, x = dots[[i]],
@@ -97,6 +96,27 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
   # save processed args to the calling env (well, that is the default env)
   for (i in seq_along(ret)) {
     assign(x = names(ret)[i], value = ret[[i]], envir = env)
+  }
+}
+
+#' @name process_selectors
+#' @export
+fill_missing_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
+  # saved dots as named list
+  dots <- rlang::dots_list(...)
+  data_names <- names(data)
+
+  browser()
+  for (i in seq_along(dots)) {
+    if (!setequal(data_names, names(dots[i]))) {
+      dots[[i]] <-
+        utils::modifyList(
+          x =
+            compute_formula_selector(data = data, x = dots[[i]],
+                                     arg_name = names(dots)[i], env = env)
+        )
+
+    }
   }
 }
 
@@ -170,5 +190,15 @@ check_list_elements <- function(..., error_msg = list(), env = rlang::caller_env
   )
 
   invisible()
+}
+
+.combine_formula_selectors <- function(x, y) {
+  if (rlang::is_call(x)) x <- eval(x)
+  if (rlang::is_call(y)) y <- eval(y)
+
+  if (rlang::is_formula(x)) x <- list(x)
+  if (rlang::is_formula(y)) y <- list(y)
+
+  c(x, y)
 }
 

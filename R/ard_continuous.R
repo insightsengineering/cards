@@ -50,7 +50,10 @@ ard_continuous <- function(data,
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
-  process_formula_selectors(data = data[variables], statistics = statistics)
+  process_formula_selectors(
+    data = data[variables],
+    statistics = .combine_formula_selectors(formals(ard_continuous)[["statistics"]], statistics)
+  )
   check_list_elements(
     statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
     error_msg =
