@@ -12,6 +12,11 @@
 #'   function processes these inputs and returns a named list. If an name is
 #'   repeated, the last entry is kept.
 #'
+#' - `fill_formula_selectors()`: when users override the default argument values,
+#'   it can be important to ensure that each column from a data frame is assigned
+#'   a value. This function checks that each column in `data` has an assigned
+#'   value, and if not, fills the value in with the default value passed here.
+#'
 #' - `compute_formula_selector()`: used in `process_formula_selectors()` to
 #'   evaluate a single argument.
 #'
@@ -102,6 +107,32 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
+fill_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
+  dots <- rlang::dots_list(...)
+  ret <- rlang::rep_named(names(dots), list(NULL))
+  data_names <- names(data)
+  dots_names <- names(dots)
+
+  for (i in seq_along(dots)) {
+    if (!rlang::is_empty(setdiff(data_names, names(get(dots_names[i], envir = env))))) {
+      # process the default selector
+      ret[[i]] <-
+        compute_formula_selector(data = data, x = dots[[i]],
+                                 arg_name = dots_names[i], env = env)
+      # add the previously specified values and overwrite the default
+      ret[[i]][names(get(dots_names[i], envir = env))] <-
+        get(dots_names[i], envir = env)
+    }
+  }
+
+  # save processed args to the calling env (well, that is the default env)
+  for (i in seq_along(ret)) {
+    if (!is.null(ret[[i]])) assign(x = names(ret)[i], value = ret[[i]], envir = env)
+  }
+}
+
+#' @name process_selectors
+#' @export
 compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), env = rlang::caller_env()) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) return(x)
@@ -145,7 +176,6 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
   # remove duplicates (keeping the last one)
   x[names(x) |> rev() |> Negate(duplicated)()]
 }
-
 
 #' @name process_selectors
 #' @export
