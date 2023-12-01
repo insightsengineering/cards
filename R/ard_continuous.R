@@ -51,6 +51,10 @@ ard_continuous <- function(data,
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
   process_formula_selectors(data = data[variables], statistics = statistics)
+  fill_formula_selectors(
+    data = data[variables],
+    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
+  )
   check_list_elements(
     statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
     error_msg =
