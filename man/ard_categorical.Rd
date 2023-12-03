@@ -4,7 +4,14 @@
 \alias{ard_categorical}
 \title{Categorical ARD Statistics}
 \usage{
-ard_categorical(data, variables, by = NULL, strata = NULL, denominator = NULL)
+ard_categorical(
+  data,
+  variables,
+  by = NULL,
+  strata = NULL,
+  denominator = NULL,
+  fmt_fn = NULL
+)
 }
 \arguments{
 \item{data}{a data frame}
@@ -24,6 +31,13 @@ Arguments may be used in conjunction with one another.}
 
 \item{denominator}{Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
+
+\item{fmt_fn}{a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.
+
+See the \code{\link{selecting_syntax}} help file for details.}
 }
 \value{
 a data frame

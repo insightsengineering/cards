@@ -16,6 +16,7 @@
 #' @param variables columns to include in summaries. Default is `everything()`.
 #' @param denominator Specify this *optional* argument to change the denominator,
 #' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#' @inheritParams ard_continuous
 #'
 #' @section Denominators:
 #' By default, the `ard_categorical()` function returns the statistics `"n"` and `"N"`,
@@ -64,7 +65,7 @@ NULL
 
 #' @rdname ard_categorical
 #' @export
-ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominator = NULL) {
+ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominator = NULL, fmt_fn = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")
@@ -113,6 +114,9 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominat
 
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
+
+  # if user passed formatting functions, update data frame
+  df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>

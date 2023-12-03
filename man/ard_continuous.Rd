@@ -9,7 +9,8 @@ ard_continuous(
   variables,
   by = NULL,
   strata = NULL,
-  statistics = everything() ~ continuous_variable_summary_fns()
+  statistics = everything() ~ continuous_variable_summary_fns(),
+  fmt_fn = NULL
 )
 }
 \arguments{
@@ -28,9 +29,9 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{statistics}{a named list of functions, a list of formulas,
-or a single formula where the list element is a function (or the RHS of
-a formula),
+\item{statistics}{a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
 
 The value assigned to each variable must also be a named list, where the names
@@ -39,6 +40,13 @@ Typically, this function will return a scalar statistic, but a function that
 returns a named list of results is also acceptable, e.g.
 \code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
 will be less clear in this setting.
+
+See the \code{\link{selecting_syntax}} help file for details.}
+
+\item{fmt_fn}{a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.
 
 See the \code{\link{selecting_syntax}} help file for details.}
 }
