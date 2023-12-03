@@ -57,7 +57,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">data</span>, <span class="va">variables</span>, by <span class="op">=</span> <span class="cn">NULL</span>, strata <span class="op">=</span> <span class="cn">NULL</span>, denominator <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_categorical</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">variables</span>,</span>
+<span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  denominator <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,6 +90,14 @@ columns specified.</p>
 <dt>denominator</dt>
 <dd><p>Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
+
+
+<dt>fmt_fn</dt>
+<dd><p>a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. <code>list(mpg = list(mean = \(x) round(x, digits = 2) |&gt; as.character))</code>.</p>
+<p>See the <code><a href="selecting_syntax.html">selecting_syntax</a></code> help file for details.</p></dd>
 
 </dl></div>
     <div class="section level2">
