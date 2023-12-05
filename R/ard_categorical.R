@@ -17,6 +17,11 @@
 #' @param denominator Specify this *optional* argument to change the denominator,
 #' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #'
+#' @param stat_labels a named list, a list of formulas, or a single formula where
+#'   the list element is either a named list or a list of formulas defining the
+#'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
+#'   `everything() ~ list(n ~ "n", p ~ "pct")`.
+#'
 #' @section Denominators:
 #' By default, the `ard_categorical()` function returns the statistics `"n"` and `"N"`,
 #' where little `"n"` are the counts for the variable levels, and `"N"` is
@@ -64,11 +69,17 @@ NULL
 
 #' @rdname ard_categorical
 #' @export
-ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominator = NULL) {
+ard_categorical <- function(data,
+                            variables,
+                            by = NULL,
+                            strata = NULL,
+                            denominator = NULL,
+                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")
   check_class_data_frame(data = data)
+  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -78,6 +89,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominat
     by = {{ by }},
     strata = {{ strata }}
   )
+  process_formula_selectors(data = data[variables], stat_labels = stat_labels)
 
   # check inputs ---------------------------------------------------------------
   if (!is.null(denominator)) {
@@ -114,11 +126,14 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL, denominat
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
 
+  # final processing of stat labels -------------------------------------------------
+  df_stat_labels <- process_stat_labels(stat_labels, list(default_stat_labels()))
+
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
     dplyr::rows_update(
-      .default_statistic_labels(),
-      by = "stat_name",
+      df_stat_labels,
+      by = c("variable","stat_name"),
       unmatched = "ignore"
     ) |>
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>

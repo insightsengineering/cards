@@ -4,7 +4,14 @@
 \alias{ard_categorical}
 \title{Categorical ARD Statistics}
 \usage{
-ard_categorical(data, variables, by = NULL, strata = NULL, denominator = NULL)
+ard_categorical(
+  data,
+  variables,
+  by = NULL,
+  strata = NULL,
+  denominator = NULL,
+  stat_labels = everything() ~ default_stat_labels()
+)
 }
 \arguments{
 \item{data}{a data frame}
@@ -24,6 +31,11 @@ Arguments may be used in conjunction with one another.}
 
 \item{denominator}{Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
+
+\item{stat_labels}{a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
+\code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
 a data frame

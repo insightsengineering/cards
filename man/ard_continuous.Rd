@@ -9,7 +9,8 @@ ard_continuous(
   variables,
   by = NULL,
   strata = NULL,
-  statistics = everything() ~ continuous_variable_summary_fns()
+  statistics = everything() ~ continuous_variable_summary_fns(),
+  stat_labels = everything() ~ default_stat_labels()
 )
 }
 \arguments{
@@ -41,6 +42,11 @@ returns a named list of results is also acceptable, e.g.
 will be less clear in this setting.
 
 See the \code{\link{selecting_syntax}} help file for details.}
+
+\item{stat_labels}{a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
+\code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
 }
 \value{
 a data frame
