@@ -15,9 +15,9 @@
 #'
 #' Arguments may be used in conjunction with one another.
 #'
-#' @param statistics a named list of functions, a list of formulas,
-#' or a single formula where the list element is a function (or the RHS of
-#' a formula),
+#' @param statistics a named list, a list of formulas,
+#' or a single formula where the list element is a named list of functions
+#' (or the RHS of a formula),
 #' e.g. `list(mpg = list(mean = \(x) mean(x)))`.
 #'
 #' The value assigned to each variable must also be a named list, where the names
@@ -26,6 +26,12 @@
 #' returns a named list of results is also acceptable, e.g.
 #' `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
 #' will be less clear in this setting.
+#'
+#' See the [`selecting_syntax`] help file for details.
+#' @param fmt_fn a named list, a list of formulas,
+#' or a single formula where the list element is a named list of functions
+#' (or the RHS of a formula),
+#' e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
 #'
 #' See the [`selecting_syntax`] help file for details.
 #'
@@ -46,9 +52,8 @@ ard_continuous <- function(data,
                            by = NULL,
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
-                           stat_labels = everything() ~ default_stat_labels()
-                           ) {
-
+                           fmt_fn = NULL,
+                           stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
   check_not_missing(variables, "variables")
@@ -59,7 +64,15 @@ ard_continuous <- function(data,
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
-  process_formula_selectors(data = data[variables], statistics = statistics)
+  process_formula_selectors(
+    data = data[variables],
+    statistics = statistics,
+    fmt_fn = fmt_fn
+  )
+  fill_formula_selectors(
+    data = data[variables],
+    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
+  )
   process_formula_selectors(data = data[variables], stat_labels = stat_labels)
 
   check_list_elements(
@@ -150,12 +163,43 @@ ard_continuous <- function(data,
         lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
     )
 
+  # if user passed formatting functions, update data frame
+  df_results <- .update_with_fmt_fn(df_results, fmt_fn)
+
   # add meta data and class
   df_results |>
     dplyr::mutate(context = "continuous") |>
     dplyr::arrange(dplyr::across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
     structure(., class = c("card", class(.)))
+}
+
+.update_with_fmt_fn <- function(x, fmt_fn) {
+  if (rlang::is_empty(fmt_fn)) return(x)
+
+  # recast the argument values as a data frame
+  df_fmt_fn <-
+    dplyr::tibble(variable = names(fmt_fn)) |>
+    dplyr::mutate(
+      data =
+        lapply(
+          .data$variable,
+          function(x) {
+            dplyr::tibble(
+              stat_name = names(fmt_fn[[x]]),
+              statistic_fmt_fn = fmt_fn[[x]]
+            )
+          }
+        )
+    ) |>
+    tidyr::unnest(cols = "data")
+
+  x |>
+    dplyr::rows_update(
+      df_fmt_fn,
+      by = c("variable", "stat_name"),
+      unmatched = "ignore"
+    )
 }
 
 

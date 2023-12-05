@@ -9,7 +9,7 @@ continuous_variable_summary_fns(summaries = NULL)
 \arguments{
 \item{summaries}{a character vector of functions to include in output. Default
 is \code{NULL}, which selects all summary functions. Select one or more from
-'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.}
+"N", "mean", "sd", "median", "p25", "p75", "min", "max".}
 }
 \value{
 named list of summary functions

@@ -21,6 +21,7 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.
+#' @inheritParams ard_continuous
 #'
 #' @section Denominators:
 #' By default, the `ard_categorical()` function returns the statistics `"n"` and `"N"`,
@@ -74,6 +75,7 @@ ard_categorical <- function(data,
                             by = NULL,
                             strata = NULL,
                             denominator = NULL,
+                            fmt_fn = NULL,
                             stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data, "data")
@@ -128,6 +130,9 @@ ard_categorical <- function(data,
 
   # final processing of stat labels -------------------------------------------------
   df_stat_labels <- process_stat_labels(stat_labels, list(default_stat_labels()))
+
+  # if user passed formatting functions, update data frame
+  df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>

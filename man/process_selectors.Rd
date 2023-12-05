@@ -3,6 +3,7 @@
 \name{process_selectors}
 \alias{process_selectors}
 \alias{process_formula_selectors}
+\alias{fill_formula_selectors}
 \alias{compute_formula_selector}
 \alias{check_list_elements}
 \title{Process tidyselectors}
@@ -10,6 +11,8 @@
 process_selectors(data, ..., env = rlang::caller_env())
 
 process_formula_selectors(data, ..., env = rlang::caller_env())
+
+fill_formula_selectors(data, ..., env = rlang::caller_env())
 
 compute_formula_selector(
   data,
@@ -57,6 +60,10 @@ converted to a vector of character column names.
 lists of formulas (where the LHS of the formula is a tidyselector). This
 function processes these inputs and returns a named list. If an name is
 repeated, the last entry is kept.
+\item \code{fill_formula_selectors()}: when users override the default argument values,
+it can be important to ensure that each column from a data frame is assigned
+a value. This function checks that each column in \code{data} has an assigned
+value, and if not, fills the value in with the default value passed here.
 \item \code{compute_formula_selector()}: used in \code{process_formula_selectors()} to
 evaluate a single argument.
 \item \code{check_list_elements()}: accepts named arguments where the name is a list

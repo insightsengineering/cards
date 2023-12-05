@@ -76,6 +76,26 @@ test_that("ard_categorical() univariate & specified denomiator", {
   )
 })
 
+test_that("ard_continuous(fmt_fn) argument works", {
+  ard_categorical(
+    mtcars,
+    variables = "am",
+    fmt_fn =
+      list(
+        am =
+          list(
+            p = function(x) round(x * 100, digits = 3) |> as.character(),
+            N = function(x) format(round(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+          )
+      )
+  ) |>
+    apply_statistic_fmt_fn() |>
+    dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
+    as.data.frame() |>
+    expect_snapshot()
+})
+
 
 test_that("ard_categorical() with strata and by arguments", {
   ADAE_small <-
