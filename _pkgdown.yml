@@ -43,6 +43,7 @@ reference:
       - continuous_variable_summary_fns
       - tidy_as_ard
       - nest_for_ard
+      - default_stat_labels
 
   - title: "Data"
     contents:
