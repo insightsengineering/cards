@@ -11,7 +11,7 @@ test_that("ard_crosstab works", {
     ard_crosstab |>
       dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "n") |>
       dplyr::pull(statistic) |>
-      unlist(),
+      getElement(1),
     mtrx_conts["<65", "Placebo"]
   )
 
@@ -19,7 +19,7 @@ test_that("ard_crosstab works", {
     ard_crosstab |>
       dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "p") |>
       dplyr::pull(statistic) |>
-      unlist(),
+      getElement(1),
     mtrx_percs["<65", "Placebo"]
   )
 

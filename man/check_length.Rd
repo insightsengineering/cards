@@ -6,7 +6,7 @@
 \usage{
 check_length(
   x,
-  arg_name,
+  arg_name = rlang::caller_arg(x),
   length = 1L,
   msg = "The {.arg by} argument must be length {.val {length}}.",
   call = parent.frame()

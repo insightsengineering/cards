@@ -19,9 +19,6 @@ continuous_variable_summary_fns <- function(summaries = NULL) {
   list_fns <-
     list(
       N = function(x) length(x),
-      # N_miss = function(x) sum(is.na(x)),
-      # p_miss = function(x) sum(is.na(x)) / length(x),
-      # length = function(x) length(x),
       mean = function(x) mean(x, na.rm = TRUE),
       sd = function(x) stats::sd(x, na.rm = TRUE),
       median = function(x) stats::median(x, na.rm = TRUE),
