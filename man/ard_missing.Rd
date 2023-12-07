@@ -8,7 +8,7 @@ ard_missing(
   data,
   variables,
   by = NULL,
-  statistics = everything() ~ variable_level_summary_fns(),
+  statistics = everything() ~ missing_variable_summary_fns(),
   fmt_fn = NULL
 )
 }

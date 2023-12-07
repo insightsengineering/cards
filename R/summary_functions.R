@@ -9,7 +9,7 @@
 #' - `categorical_variable_summary_fns()` summary functions for categorical
 #'   variables.
 #'
-#' - `variable_level_summary_fns()` summary functions suitable for variable-level
+#' - `missing_variable_summary_fns()` summary functions suitable for variable-level
 #'   summaries, such as number and rate of missing data.
 #'
 #' @param summaries a character vector of results to include in output.
@@ -19,8 +19,8 @@
 #' - `continuous_variable_summary_fns()`: Select one or more from
 #'   `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
-#' - `variable_level_summary_fns()`: Select one or more from
-#'   `r formals(variable_level_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#' - `missing_variable_summary_fns()`: Select one or more from
+#'   `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
 #' @return named list of summary functions
 #' @name summary_functions
@@ -46,7 +46,7 @@
 #' ard_missing(
 #'   ADSL,
 #'   variables = c("AGE", "AGEGR1"),
-#'   statistics = ~variable_level_summary_fns()
+#'   statistics = ~missing_variable_summary_fns()
 #' ) |>
 #'   flatten_ard()
 NULL
@@ -99,7 +99,7 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
 
 #' @rdname summary_functions
 #' @export
-variable_level_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_nonmiss", "p_miss", "p_nonmiss")) {
+missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_nonmiss", "p_miss", "p_nonmiss")) {
   summaries <- rlang::arg_match(summaries, multiple = TRUE)
 
   list(

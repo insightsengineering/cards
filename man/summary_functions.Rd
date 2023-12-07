@@ -4,7 +4,7 @@
 \alias{summary_functions}
 \alias{categorical_variable_summary_fns}
 \alias{continuous_variable_summary_fns}
-\alias{variable_level_summary_fns}
+\alias{missing_variable_summary_fns}
 \title{Summary Functions}
 \usage{
 categorical_variable_summary_fns(summaries = c("n", "p", "N"))
@@ -13,7 +13,7 @@ continuous_variable_summary_fns(
   summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max")
 )
 
-variable_level_summary_fns(
+missing_variable_summary_fns(
   summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")
 )
 }
@@ -23,7 +23,7 @@ variable_level_summary_fns(
 \item \code{categorical_variable_summary_fns()}: Select one or more from 'N', 'n', 'p'
 \item \code{continuous_variable_summary_fns()}: Select one or more from
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
-\item \code{variable_level_summary_fns()}: Select one or more from
+\item \code{missing_variable_summary_fns()}: Select one or more from
 'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
 }}
 }
@@ -38,7 +38,7 @@ their base equivalents. For example, the \code{min()} and \code{max()} functions
 return \code{NA} instead of \code{Inf} when an empty vector is passed.
 \item \code{categorical_variable_summary_fns()} summary functions for categorical
 variables.
-\item \code{variable_level_summary_fns()} summary functions suitable for variable-level
+\item \code{missing_variable_summary_fns()} summary functions suitable for variable-level
 summaries, such as number and rate of missing data.
 }
 }
@@ -63,7 +63,7 @@ ard_categorical(
 ard_missing(
   ADSL,
   variables = c("AGE", "AGEGR1"),
-  statistics = ~variable_level_summary_fns()
+  statistics = ~missing_variable_summary_fns()
 ) |>
   flatten_ard()
 }
