@@ -23,13 +23,8 @@ test_that("ard_categorical() univariate", {
   )
 
   expect_equal(
-    ard_cat_uni |> dplyr::filter(stat_name %in% "N") |> dplyr::pull(statistic) |> unlist(),
+    dplyr::filter(ard_cat_uni, stat_name %in% "N")$statistic[[1]],
     sum(!is.na(mtcars$am))
-  )
-
-  expect_equal(
-    ard_cat_uni |> dplyr::filter(stat_name %in% "N_obs") |> dplyr::pull(statistic) |> unlist(),
-    length(mtcars$am)
   )
 
   expect_equal(
@@ -71,7 +66,7 @@ test_that("ard_categorical() univariate & specified denomiator", {
   )
 
   expect_equal(
-    ard_cat_new_denom |> dplyr::filter(stat_name %in% "N") |> dplyr::pull(statistic) |> unlist(),
+    dplyr::filter(ard_cat_new_denom, stat_name %in% "N")$statistic[[1]],
     sum(!is.na(mtcars$am)) * 100L
   )
 })
@@ -135,7 +130,7 @@ test_that("ard_categorical() with strata and by arguments", {
         stat_name %in% "n"
       ) |>
       dplyr::pull(statistic) |>
-      unlist(),
+      getElement(1),
     ADAE_small |>
       dplyr::filter(
         AESOC %in% "EYE DISORDERS",
@@ -156,7 +151,7 @@ test_that("ard_categorical() with strata and by arguments", {
         stat_name %in% "p"
       ) |>
       dplyr::pull(statistic) |>
-      unlist(),
+      getElement(1),
     (ADAE_small |>
        dplyr::filter(
          AESOC %in% "EYE DISORDERS",
@@ -172,12 +167,10 @@ test_that("ard_categorical() with strata and by arguments", {
     card_ae_strata |>
       dplyr::filter(
         group1_level %in% "Placebo",
-        group2_level %in% "EYE DISORDERS",
-        group3_level %in% "EYES SWOLLEN",
         stat_name %in% "N"
       ) |>
       dplyr::pull(statistic) |>
-      unlist(),
+      getElement(1),
     ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow()
   )
 

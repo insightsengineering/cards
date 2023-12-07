@@ -44,7 +44,7 @@ check_class_data_frame <- function(..., allow_null = FALSE, call = parent.frame(
 #' @param arg_name string indicating the name of the argument. Used in the error messaging.
 #' @inheritParams check_class
 #' @keywords internal
-check_not_missing <- function(x, arg_name, call = parent.frame()) {
+check_not_missing <- function(x, arg_name = rlang::caller_arg(x), call = parent.frame()) {
   if (missing(x)) {
     cli::cli_abort("The {.arg {arg_name}} argument cannot be missing.", call = call)
   }
@@ -74,7 +74,7 @@ check_columns_in_data_frame <- function(data, columns,
 #' @param msg string passed to `cli::cli_abort(message=)`
 #' @param length integer specifying the required length
 #' @keywords internal
-check_length <- function(x, arg_name, length = 1L,
+check_length <- function(x, arg_name = rlang::caller_arg(x), length = 1L,
                                         msg = "The {.arg by} argument must be length {.val {length}}.",
                                         call = parent.frame()) {
   if (length(x) != length) {

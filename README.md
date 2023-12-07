@@ -54,18 +54,18 @@ ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |>
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | stat_name | stat_label      | statistic        | warning | error |
-|:-------|:-------------|:---------|:----------|:----------------|:-----------------|:--------|:------|
-| ARM    | Placebo      | AGE      | N         | N               | 86               | NA      | NA    |
-| ARM    | Placebo      | AGE      | mean      | Mean            | 75.2093023255814 | NA      | NA    |
-| ARM    | Placebo      | AGE      | sd        | SD              | 8.59016712714193 | NA      | NA    |
-| ARM    | Placebo      | AGE      | median    | Median          | 76               | NA      | NA    |
-| ARM    | Placebo      | AGE      | p25       | 25th Percentile | 69.25            | NA      | NA    |
-| ARM    | Placebo      | AGE      | p75       | 75th Percentile | 81.75            | NA      | NA    |
-| ARM    | Placebo      | AGE      | min       | Min             | 52               | NA      | NA    |
-| ARM    | Placebo      | AGE      | max       | Max             | 89               | NA      | NA    |
-| ARM    | Placebo      | AGE      | N_obs     | N_obs           | 86               | NA      | NA    |
-| ARM    | Placebo      | AGE      | N_miss    | N_miss          | 0                | NA      | NA    |
+| group1 | group1_level         | variable | stat_name | stat_label      | statistic        | warning | error |
+|:-------|:---------------------|:---------|:----------|:----------------|:-----------------|:--------|:------|
+| ARM    | Placebo              | AGE      | N         | N               | 86               | NA      | NA    |
+| ARM    | Placebo              | AGE      | mean      | Mean            | 75.2093023255814 | NA      | NA    |
+| ARM    | Placebo              | AGE      | sd        | SD              | 8.59016712714193 | NA      | NA    |
+| ARM    | Placebo              | AGE      | median    | Median          | 76               | NA      | NA    |
+| ARM    | Placebo              | AGE      | p25       | 25th Percentile | 69.25            | NA      | NA    |
+| ARM    | Placebo              | AGE      | p75       | 75th Percentile | 81.75            | NA      | NA    |
+| ARM    | Placebo              | AGE      | min       | Min             | 52               | NA      | NA    |
+| ARM    | Placebo              | AGE      | max       | Max             | 89               | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | N         | N               | 84               | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGE      | mean      | Mean            | 74.3809523809524 | NA      | NA    |
 
 ``` r
 
@@ -75,18 +75,18 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |>
   knitr::kable()
 ```
 
-| group1 | group1_level | variable | variable_level | stat_name | stat_label | statistic         | warning | error |
-|:-------|:-------------|:---------|:---------------|:----------|:-----------|:------------------|:--------|:------|
-| ARM    | Placebo      | AGEGR1   | \<65           | n         | n          | 14                | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | \<65           | p         | %          | 0.162790697674419 | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | \>80           | n         | n          | 30                | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | \>80           | p         | %          | 0.348837209302326 | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | 65-80          | n         | n          | 42                | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | 65-80          | p         | %          | 0.488372093023256 | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | NA             | N         | N          | 86                | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | NA             | N_obs     | N_obs      | 86                | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | NA             | N_miss    | N_miss     | 0                 | NA      | NA    |
-| ARM    | Placebo      | AGEGR1   | NA             | N_nonmiss | N_nonmiss  | 86                | NA      | NA    |
+| group1 | group1_level         | variable | variable_level | stat_name | stat_label | statistic         | warning | error |
+|:-------|:---------------------|:---------|:---------------|:----------|:-----------|:------------------|:--------|:------|
+| ARM    | Placebo              | AGEGR1   | \<65           | n         | n          | 14                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \<65           | p         | %          | 0.162790697674419 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \>80           | n         | n          | 30                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | \>80           | p         | %          | 0.348837209302326 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | 65-80          | n         | n          | 42                | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | 65-80          | p         | %          | 0.488372093023256 | NA      | NA    |
+| ARM    | Placebo              | AGEGR1   | NA             | N         | N          | 86                | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | n         | n          | 11                | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGEGR1   | \<65           | p         | %          | 0.130952380952381 | NA      | NA    |
+| ARM    | Xanomeline High Dose | AGEGR1   | \>80           | n         | n          | 18                | NA      | NA    |
 
 ``` r
 

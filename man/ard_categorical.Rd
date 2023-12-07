@@ -9,6 +9,7 @@ ard_categorical(
   variables,
   by = NULL,
   strata = NULL,
+  statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL
 )
@@ -28,6 +29,20 @@ including unobserved combinations and unobserved factor levels.
 columns specified.
 
 Arguments may be used in conjunction with one another.}
+
+\item{statistics}{a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
+
+The value assigned to each variable must also be a named list, where the names
+are used to reference a function and the element is the function object.
+Typically, this function will return a scalar statistic, but a function that
+returns a named list of results is also acceptable, e.g.
+\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
+will be less clear in this setting.
+
+See the \code{\link{selecting_syntax}} help file for details.}
 
 \item{denominator}{Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
@@ -79,21 +94,6 @@ in the ADAE data set. All patients appear in ADSL, however.
   denominator = ADSL
 ) |>
   flatten_ard()
-#> # A tibble: 141 x 9
-#>    group1 group1_level variable variable_level    stat_name stat_label statistic
-#>    <chr>  <chr>        <chr>    <chr>             <chr>     <chr>      <chr>    
-#>  1 ARM    Placebo      AESOC    CARDIAC DISORDERS n         n          12       
-#>  2 ARM    Placebo      AESOC    CARDIAC DISORDERS p         \%          0.139534~
-#>  3 ARM    Placebo      AESOC    CONGENITAL, FAMI~ n         n          0        
-#>  4 ARM    Placebo      AESOC    CONGENITAL, FAMI~ p         \%          0        
-#>  5 ARM    Placebo      AESOC    EAR AND LABYRINT~ n         n          1        
-#>  6 ARM    Placebo      AESOC    EAR AND LABYRINT~ p         \%          0.011627~
-#>  7 ARM    Placebo      AESOC    EYE DISORDERS     n         n          2        
-#>  8 ARM    Placebo      AESOC    EYE DISORDERS     p         \%          0.023255~
-#>  9 ARM    Placebo      AESOC    GASTROINTESTINAL~ n         n          17       
-#> 10 ARM    Placebo      AESOC    GASTROINTESTINAL~ p         \%          0.197674~
-#> # i 131 more rows
-#> # i 2 more variables: warning <chr>, error <chr>
 }\if{html}{\out{</div>}}
 }
 
