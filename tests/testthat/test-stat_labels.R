@@ -98,5 +98,27 @@ test_that("ard_categorical() labels", {
 
   expect_equal(actual_labs, expected_labs, ignore_attr = "class")
 
-})
+  # variable-specific
+  ard_test <-ard_categorical(data = ADSL,
+                             by = "ARM",
+                             variables = c("AGEGR1","SEX"),
+                             stat_labels = AGEGR1 ~ list(c("n","p") ~ "n (pct)"))
 
+
+  actual_labs <- ard_test %>%
+    dplyr::filter(stat_name %in% c("n","p")) |>
+    dplyr::select(variable, stat_name, stat_label) |>
+    dplyr::arrange(variable, stat_name, stat_label) |>
+    unique()
+
+  expected_labs <- dplyr::tribble(
+    ~ variable  ,  ~stat_name, ~stat_label,
+    "AGEGR1"    , "n"        , "n (pct)",
+    "AGEGR1"    , "p"        , "n (pct)",
+    "SEX"       , "n"        , "n",
+    "SEX"       , "p"        , "%"
+  )
+
+  expect_equal(actual_labs, expected_labs, ignore_attr = "class")
+
+})
