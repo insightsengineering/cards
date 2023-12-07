@@ -73,6 +73,10 @@ ard_continuous <- function(data,
     statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
   )
   process_formula_selectors(data = data[variables], stat_labels = stat_labels)
+  fill_formula_selectors(
+    data = data[variables],
+    stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
+  )
 
   check_list_elements(
     statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
@@ -84,12 +88,6 @@ ard_continuous <- function(data,
 
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
-
-  # setting default stat labels -------------------------------------------------
-  stat_labels <-
-    variables |>
-    lapply(function(x) stat_labels[[x]] %||% default_stat_labels()) |>
-    stats::setNames(nm = variables)
 
   # final processing of stat labels -------------------------------------------------
   df_stat_labels <- process_stat_labels(stat_labels = stat_labels, statistics = statistics)
