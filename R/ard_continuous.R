@@ -46,7 +46,6 @@
 #' @examples
 #' ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
 #'   flatten_ard()
-
 ard_continuous <- function(data,
                            variables,
                            by = NULL,
@@ -55,8 +54,8 @@ ard_continuous <- function(data,
                            fmt_fn = NULL,
                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data, "data")
-  check_not_missing(variables, "variables")
+  check_not_missing(data)
+  check_not_missing(variables)
   check_class_data_frame(data = data)
   check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
   check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
@@ -86,12 +85,6 @@ ard_continuous <- function(data,
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
 
-  # setting default statistics -------------------------------------------------
-  statistics <-
-    variables |>
-    lapply(function(x) statistics[[x]] %||% continuous_variable_summary_fns()) |>
-    stats::setNames(nm = variables)
-
   # setting default stat labels -------------------------------------------------
   stat_labels <-
     variables |>
@@ -120,32 +113,9 @@ ard_continuous <- function(data,
       omit_na = TRUE
     )
 
-  # add variable-level stats like length of vector, proportion missing, etc.
-  if (!isTRUE(getOption("cards.ard_continuous.suppress-variable-level-stats"))) {
-    variable_level_stats <-
-      compute_formula_selector(
-        data = data[variables],
-        x =
-          ~list(var_level = function(x) dplyr::tibble(N_obs = length(x),
-                                                      N_miss = sum(is.na(x)),
-                                                      N_nonmiss = N_obs - N_miss,
-                                                      p_miss = N_miss / N_obs,
-                                                      p_nonmiss = N_nonmiss / N_obs))
-      )
-    df_nested_variable_level_stats <-
-      .calculate_stats_as_ard(
-        df_nested = df_nested,
-        variables = variables,
-        statistics = variable_level_stats,
-        new_col_name = "..ard_all_stats..",
-        omit_na = FALSE
-      )
-  }
-  else df_nested_variable_level_stats <- data.frame()
-
   # unnest results and add default function labels and formatters
   df_results <-
-    dplyr::bind_rows(df_nested, df_nested_variable_level_stats) |>
+    df_nested |>
     dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
     dplyr::left_join(

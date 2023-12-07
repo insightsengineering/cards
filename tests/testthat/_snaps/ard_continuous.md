@@ -12,11 +12,6 @@
       1      AGE         N       254        254.00
       2      AGE      mean  75.08661        75.087
       3      AGE    median        77            77
-      4      AGE     N_obs       254        254.00
-      5      AGE    N_miss         0             0
-      6      AGE N_nonmiss       254           254
-      7      AGE    p_miss         0             0
-      8      AGE p_nonmiss         1             1
 
 # ard_continuous() messaging
 
