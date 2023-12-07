@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="cards-development-version">cards (development version)<a class="anchor" aria-label="anchor" href="#cards-development-version"></a></h2>
-<ul><li>Initial CRAN submission.</li>
+<ul><li>Added <code>ard_categorical(statistics)</code> argument.</li>
+<li>Added function <code><a href="../reference/summary_functions.html">categorical_variable_summary_fns()</a></code> and made it the default value for <code>ard_categorical(statistics)</code>.</li>
+<li>The variable-level statistics regarding missingness are no longer returned by default in <code><a href="../reference/ard_continuous.html">ard_continuous()</a></code> and <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code>.</li>
+<li>Added function <code><a href="../reference/ard_missing.html">ard_missing()</a></code> to tabulate statistics related to missingness. The default statistics returned are from the new function <code><a href="../reference/summary_functions.html">missing_variable_summary_fns()</a></code>: ‘N_obs’, ‘N_miss’, ‘N_nonmiss’, ‘p_miss’, ‘p_nonmiss’.</li>
 </ul></div>
   </main></div>
 
