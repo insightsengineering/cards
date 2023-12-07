@@ -43,11 +43,9 @@
 #'   flatten_ard()
 #'
 #' # summary for rates of missing data
-#' ard_continuous(
-#' # first, create T/F variable for is underlying value is NA
-#'   ADSL[c("AGE", "AGEGR1")] |>
-#'     dplyr::mutate(dplyr::across(everything(), Negate(is.na))),
-#'   variables = everything(),
+#' ard_missing(
+#'   ADSL,
+#'   variables = c("AGE", "AGEGR1"),
 #'   statistics = ~variable_level_summary_fns()
 #' ) |>
 #'   flatten_ard()

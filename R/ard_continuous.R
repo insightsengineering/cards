@@ -95,31 +95,6 @@ ard_continuous <- function(data,
       omit_na = TRUE
     )
 
-  # add variable-level stats like length of vector, proportion missing, etc.
-  # if (!isTRUE(getOption("cards.ard_continuous.suppress-variable-level-stats"))) {
-  #   variable_level_stats <-
-  #     compute_formula_selector(
-  #       data = data[variables],
-  #       x =
-  #         ~list(var_level = function(x) dplyr::tibble(N_obs = length(x),
-  #                                                     N_miss = sum(is.na(x)),
-  #                                                     N_nonmiss = N_obs - N_miss,
-  #                                                     p_miss = N_miss / N_obs,
-  #                                                     p_nonmiss = N_nonmiss / N_obs))
-  #     )
-  #   df_nested_variable_level_stats <-
-  #     .calculate_stats_as_ard(
-  #       df_nested = df_nested,
-  #       variables = variables,
-  #       statistics = variable_level_stats,
-  #       new_col_name = "..ard_all_stats..",
-  #       omit_na = FALSE
-  #     )
-  # }
-  # else df_nested_variable_level_stats <- data.frame()
-
-
-
   # unnest results and add default function labels and formatters
   df_results <-
     df_nested |>
