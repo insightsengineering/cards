@@ -17,7 +17,7 @@ ard_missing <- function(data,
                         statistics = everything() ~ variable_level_summary_fns(),
                         fmt_fn = NULL) {
   # process variable inputs ----------------------------------------------------
-  process_selectors(data, variables = variables)
+  process_selectors(data, variables = {{ variables }})
 
   # convert all variables to T/F whether it's missing --------------------------
   data <- data |>
