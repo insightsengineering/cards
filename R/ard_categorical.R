@@ -78,7 +78,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
-  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
+ # check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -89,7 +89,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     strata = {{ strata }}
   )
 
-  process_formula_selectors(data = data[variables], stat_labels = stat_labels)
+ # process_formula_selectors(data = data[variables], stat_labels = stat_labels)
   process_formula_selectors(
     data = data[variables],
     statistics = statistics
@@ -116,7 +116,8 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       variables = all_of(variables),
       by = all_of(by),
       strata = all_of(strata),
-      statistics = statistics
+      statistics = statistics,
+      stat_labels = stat_labels
     )
 
   # if the denominator argument is supplied, then re-calculate the N statistic -
@@ -127,19 +128,11 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
 
-  # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- .process_stat_labels(stat_labels, list(default_stat_labels()))
-
   # if user passed formatting functions, update data frame
   df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::rows_update(
-      df_stat_labels,
-      by = c("variable","stat_name"),
-      unmatched = "ignore"
-    ) |>
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
