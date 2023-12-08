@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,8 @@
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  statistics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">continuous_variable_summary_fns</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stat_labels <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="default_stat_labels.html">default_stat_labels</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -108,6 +109,13 @@ or a single formula where the list element is a named list of functions
 e.g. <code>list(mpg = list(mean = \(x) round(x, digits = 2) |&gt; as.character))</code>.</p>
 <p>See the <code><a href="selecting_syntax.html">selecting_syntax</a></code> help file for details.</p></dd>
 
+
+<dt>stat_labels</dt>
+<dd><p>a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code> or
+<code>everything() ~ list(mean ~ "Mean", sd ~ "SD")</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -141,7 +149,7 @@ e.g. <code>list(mpg = list(mean = \(x) round(x, digits = 2) |&gt; as.character))
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://www.danieldsjoberg.com/" class="external-link">Daniel D. Sjoberg</a>, F. Hoffmann-La Roche AG.</p>
+  <p></p><p>Developed by <a href="http://www.danieldsjoberg.com/" class="external-link">Daniel D. Sjoberg</a>, Becca Krouse, F. Hoffmann-La Roche AG.</p>
 </div>
 
 <div class="pkgdown-footer-right">
