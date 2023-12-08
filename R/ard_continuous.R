@@ -90,7 +90,7 @@ ard_continuous <- function(data,
   if (rlang::is_empty(variables)) return(dplyr::tibble())
 
   # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- .process_stat_labels(stat_labels = stat_labels, statistics = statistics)
+  df_stat_labels <- .process_stat_labels(stat_labels)
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -206,17 +206,13 @@ ard_continuous <- function(data,
   df_nested
 }
 
-.process_stat_labels <- function(stat_labels, statistics){
+.process_stat_labels <- function(stat_labels){
 
   # create the tibble of stat names and labels 1 variable at a time
    # both the stat_labels and statistics are a named (variable-level) list of stat info
-  stat_labels <- map2(stat_labels, statistics, function(x,y){
-
+  stat_labels <- map(stat_labels, function(x){
     # handle the named list or formula & create tibble
-       # note:
-       # - when x is a named list, if a labeled stat is not found in the statistics it is ignored
-       # - if x is a formula, if a labeled stat is not found is the statistics an error is thrown
-    compute_formula_selector(data=y, x=x) %>%
+    compute_formula_selector(data=NULL, x=x) %>%
       {dplyr::tibble(
         stat_name = names(.),
         stat_label = unlist(.) |> unname()
