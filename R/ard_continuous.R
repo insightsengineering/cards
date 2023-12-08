@@ -90,7 +90,7 @@ ard_continuous <- function(data,
   if (rlang::is_empty(variables)) return(dplyr::tibble())
 
   # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- process_stat_labels(stat_labels = stat_labels, statistics = statistics)
+  df_stat_labels <- .process_stat_labels(stat_labels = stat_labels, statistics = statistics)
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -206,7 +206,7 @@ ard_continuous <- function(data,
   df_nested
 }
 
-process_stat_labels <- function(stat_labels, statistics){
+.process_stat_labels <- function(stat_labels, statistics){
 
   # create the tibble of stat names and labels 1 variable at a time
    # both the stat_labels and statistics are a named (variable-level) list of stat info

@@ -128,7 +128,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
 
   # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- process_stat_labels(stat_labels, list(default_stat_labels()))
+  df_stat_labels <- .process_stat_labels(stat_labels, list(default_stat_labels()))
 
   # if user passed formatting functions, update data frame
   df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
