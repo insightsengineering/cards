@@ -36,3 +36,44 @@
       14 0.01190476    NULL  NULL
       15  0.9880952    NULL  NULL
 
+# ard_missing(stat_labels) argument works
+
+    Code
+      unique(dplyr::filter(dplyr::select(ard_missing(data = ADSL, by = "ARM",
+        variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(c("N_obs",
+          "N_miss") ~ "N, miss")), stat_name, stat_label), stat_name %in% c("N_obs",
+        "N_miss")))
+    Output
+      # A tibble: 2 x 2
+        stat_name stat_label
+        <chr>     <chr>     
+      1 N_obs     N, miss   
+      2 N_miss    N, miss   
+
+---
+
+    Code
+      unique(dplyr::filter(dplyr::select(ard_missing(data = ADSL, by = "ARM",
+        variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(p_miss = "% miss",
+          p_nonmiss = "% non miss")), stat_name, stat_label), stat_name %in% c(
+        "p_miss", "p_nonmiss")))
+    Output
+      # A tibble: 2 x 2
+        stat_name stat_label
+        <chr>     <chr>     
+      1 p_miss    % miss    
+      2 p_nonmiss % non miss
+
+---
+
+    Code
+      unique(dplyr::filter(dplyr::select(ard_missing(data = ADSL, by = "ARM",
+        variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(N_obs = "Number of Obs")),
+      variable, stat_name, stat_label), stat_name == "N_obs"))
+    Output
+      # A tibble: 2 x 3
+        variable stat_name stat_label   
+        <chr>    <chr>     <chr>        
+      1 AGE      N_obs     Number of Obs
+      2 BMIBL    N_obs     Vector Length
+
