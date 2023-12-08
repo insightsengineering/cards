@@ -1,10 +1,11 @@
 Package: cards
 Title: CDISC Analysis Results Data
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018")),
-    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
+    person("Becca", "Krouse", , "becca.z.krouse@gsk.com", role = "aut")
   )
 Description: The package constructs CDISC-compliant Analysis Results Data
     objects. These objects are used (and re-used) to construct summary
