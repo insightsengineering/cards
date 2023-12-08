@@ -58,3 +58,62 @@ test_that("ard_continuous() messaging", {
 
 })
 
+test_that("ard_continuous(stat_labels) argument works", {
+
+  # formula
+  expect_snapshot(
+    ard_continuous(data = ADSL,
+                             by = "ARM",
+                             variables = c("AGE","BMIBL"),
+                             stat_labels = everything() ~ list(c("min","max") ~ "min - max")) |>
+      dplyr::select(stat_name, stat_label) |>
+      dplyr::filter(stat_name %in% c("min","max")) |>
+      unique()
+  )
+
+  # list
+  expect_snapshot(
+    ard_continuous(data = ADSL,
+                             by = "ARM",
+                             variables = c("AGE","BMIBL"),
+                             stat_labels = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")) |>
+      dplyr::select(stat_name, stat_label)  |>
+      dplyr::filter(stat_name %in% c("p25","p75")) |>
+      unique()
+  )
+
+  # variable-specific
+  expect_snapshot(
+    ard_continuous(data = ADSL,
+                             by = "ARM",
+                             variables = c("AGE","BMIBL"),
+                             stat_labels = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")) |>
+    dplyr::filter(stat_name %in% c("p25","p75")) |>
+    dplyr::select(variable, stat_name, stat_label) |>
+    unique()
+  )
+
+  # statistics returns a named list of summaries
+  conf_int <- function(x) t.test(x) |> broom::tidy() |> dplyr::select("conf.low", "conf.high") |> as.list()
+  ard1 <- ard_continuous(
+      ADSL,
+      variables = "AGE",
+      statistics = ~list(conf.int = conf_int),
+      stat_labels = ~list(conf.low = "LB", conf.high = "UB")
+    ) |>
+      dplyr::select(variable, stat_name, stat_label)
+
+  expect_snapshot(ard1)
+
+  ard2 <- ard_continuous(
+      ADSL,
+      variables = "AGE",
+      statistics = ~list(conf.int = conf_int),
+      stat_labels = ~list("conf.low" ~ "LB", "conf.high" ~ "UB")
+    ) |>
+      dplyr::select(variable, stat_name, stat_label)
+
+  expect_equal(ard1, ard2)
+
+
+})

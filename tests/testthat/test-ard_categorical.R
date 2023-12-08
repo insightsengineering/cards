@@ -175,3 +175,41 @@ test_that("ard_categorical() with strata and by arguments", {
   )
 
 })
+
+test_that("ard_categorical(stat_labels) argument works", {
+
+
+  # formula
+  expect_snapshot(
+    ard_categorical(data = ADSL,
+                    by = "ARM",
+                    variables = c("AGEGR1","SEX"),
+                    stat_labels = everything() ~ list(c("n","p") ~ "n (pct)")) |>
+      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::select(stat_name, stat_label) |>
+      unique()
+  )
+
+  # list
+  expect_snapshot(
+    ard_categorical(data = ADSL,
+                    by = "ARM",
+                    variables = c("AGEGR1","SEX"),
+                    stat_labels = everything() ~ list(n = "num", p = "pct")) |>
+      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::select(stat_name, stat_label) |>
+      unique()
+  )
+
+  # variable-specific
+  expect_snapshot(
+    ard_categorical(data = ADSL,
+                    by = "ARM",
+                    variables = c("AGEGR1","SEX"),
+                    stat_labels = AGEGR1 ~ list(c("n","p") ~ "n (pct)")) |>
+      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::select(variable, stat_name, stat_label) |>
+      unique()
+  )
+
+})

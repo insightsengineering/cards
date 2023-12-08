@@ -35,6 +35,11 @@
 #'
 #' See the [`selecting_syntax`] help file for details.
 #'
+#' @param stat_labels a named list, a list of formulas, or a single formula where
+#'   the list element is either a named list or a list of formulas defining the
+#'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
+#'   `everything() ~ list(mean ~ "Mean", sd ~ "SD")`.
+#'
 #' @return a data frame
 #' @export
 #'
@@ -46,12 +51,14 @@ ard_continuous <- function(data,
                            by = NULL,
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
-                           fmt_fn = NULL) {
+                           fmt_fn = NULL,
+                           stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
   check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
+  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -65,6 +72,12 @@ ard_continuous <- function(data,
     data = data[variables],
     statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
   )
+  process_formula_selectors(data = data[variables], stat_labels = stat_labels)
+  fill_formula_selectors(
+    data = data[variables],
+    stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
+  )
+
   check_list_elements(
     statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
     error_msg =
@@ -75,6 +88,9 @@ ard_continuous <- function(data,
 
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
+
+  # final processing of stat labels -------------------------------------------------
+  df_stat_labels <- .process_stat_labels(stat_labels)
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -101,8 +117,8 @@ ard_continuous <- function(data,
     dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
     tidyr::unnest(cols = "..ard_all_stats..") |>
     dplyr::left_join(
-      .default_statistic_labels(),
-      by = "stat_name"
+      df_stat_labels,
+      by = c("variable", "stat_name")
     ) |>
     dplyr::left_join(
       .default_statistic_formatters(),
@@ -190,34 +206,23 @@ ard_continuous <- function(data,
   df_nested
 }
 
+.process_stat_labels <- function(stat_labels){
 
-.default_statistic_labels <- function() {
-  list(
-    mean = "Mean",
-    sd = "SD",
-    var = "Variance",
-    median = "Median",
-    p25 = "25th Percentile",
-    p75 = "75th Percentile",
-    min = "Min",
-    max = "Max",
+  # create the tibble of stat names and labels 1 variable at a time
+   # both the stat_labels and statistics are a named (variable-level) list of stat info
+  stat_labels <- map(stat_labels, function(x){
+    # handle the named list or formula & create tibble
+    compute_formula_selector(data=NULL, x=x) %>%
+      {dplyr::tibble(
+        stat_name = names(.),
+        stat_label = unlist(.) |> unname()
+      )}
+  })
 
-    n = "n",
-    N = "N",
-    length = "Vector Length",
-    p = "%",
-    p_cell = "%",
+  # stack result
+  stat_labels |>
+    dplyr::bind_rows(.id = "variable")
 
-    N_obs = "Vector Length",
-    N_miss = "N Missing",
-    N_nonmiss = "N Non-missing",
-    p_miss = "% Missing",
-    p_nonmiss = "% Non-missing"
-  ) %>%
-    {dplyr::tibble(
-      stat_name = names(.),
-      stat_label = unlist(.) |> unname()
-    )}
 }
 
 .lst_results_as_df <- function(x, variable, fun_name) {

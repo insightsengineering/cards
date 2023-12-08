@@ -16,6 +16,11 @@
 #' @param variables columns to include in summaries. Default is `everything()`.
 #' @param denominator Specify this *optional* argument to change the denominator,
 #' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#'
+#' @param stat_labels a named list, a list of formulas, or a single formula where
+#'   the list element is either a named list or a list of formulas defining the
+#'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
+#'   `everything() ~ list(n ~ "n", p ~ "pct")`.
 #' @inheritParams ard_continuous
 #'
 #' @section Denominators:
@@ -67,11 +72,13 @@ NULL
 #' @export
 ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
-                            denominator = NULL, fmt_fn = NULL) {
+                            denominator = NULL, fmt_fn = NULL,
+                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
+ # check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -81,6 +88,8 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     by = {{ by }},
     strata = {{ strata }}
   )
+
+ # process_formula_selectors(data = data[variables], stat_labels = stat_labels)
   process_formula_selectors(
     data = data[variables],
     statistics = statistics
@@ -107,7 +116,8 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       variables = all_of(variables),
       by = all_of(by),
       strata = all_of(strata),
-      statistics = statistics
+      statistics = statistics,
+      stat_labels = stat_labels
     )
 
   # if the denominator argument is supplied, then re-calculate the N statistic -
@@ -123,11 +133,6 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::rows_update(
-      .default_statistic_labels(),
-      by = "stat_name",
-      unmatched = "ignore"
-    ) |>
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%

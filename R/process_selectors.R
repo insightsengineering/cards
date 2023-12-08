@@ -148,14 +148,21 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
     }
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
+
+      lhs_expr <- rlang::f_lhs(x[[i]])
+
+      if (!is.null(data)){
+        lhs_expr <- tidyselect::eval_select(
+          # if nothing found on LHS of formula, using `everything()`
+          rlang::f_lhs(x[[i]]) %||% dplyr::everything(),
+          data = data
+        ) |>
+          names()
+      }
+
       colnames <-
         eval(
-          tidyselect::eval_select(
-            # if nothing found on LHS of formula, using `everything()`
-            rlang::f_lhs(x[[i]]) %||% dplyr::everything(),
-            data = data
-          ) |>
-            names(),
+          lhs_expr,
           envir = attr(x[[i]], ".Environment")
         )
       x[i] <-

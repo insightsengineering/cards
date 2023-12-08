@@ -9,7 +9,8 @@ ard_missing(
   variables,
   by = NULL,
   statistics = everything() ~ missing_variable_summary_fns(),
-  fmt_fn = NULL
+  fmt_fn = NULL,
+  stat_labels = everything() ~ default_stat_labels()
 )
 }
 \arguments{
@@ -39,6 +40,11 @@ or a single formula where the list element is a named list of functions
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.
 
 See the \code{\link{selecting_syntax}} help file for details.}
+
+\item{stat_labels}{a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
+\code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
 }
 \value{
 a data frame
