@@ -1,12 +1,33 @@
-test_that("apply_statistic_fmt_fn() works", {
-  ard_fmt_checks <-
-    ard_continuous(
-      data = mtcars,
-      variables = mpg,
-      statistics = ~continuous_variable_summary_fns(c("mean", "sd"))
-    ) |>
-    dplyr::filter(stat_name %in% c("mean", "sd"))
+ard_fmt_checks <-
+  ard_continuous(
+    data = mtcars,
+    variables = mpg,
+    statistics = ~continuous_variable_summary_fns(c("mean", "sd"))
+  )
 
+
+test_that("apply_statistic_fmt_fn() works", {
+  expect_equal(
+    ard_fmt_checks |>
+      apply_statistic_fmt_fn() |>
+      dplyr::pull(statistic_fmt) |>
+      unlist(),
+    c("20", "6")
+  )
+
+  # no errors when there is no formatting function
+  expect_equal(
+    ard_fmt_checks |>
+      dplyr::mutate(
+        statistic_fmt_fn = list(NULL, 2)
+      ) |>
+      apply_statistic_fmt_fn() |>
+      dplyr::pull(statistic_fmt),
+    list(NULL, "6.03")
+  )
+})
+
+test_that("apply_statistic_fmt_fn() works with integer specification", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
@@ -17,7 +38,9 @@ test_that("apply_statistic_fmt_fn() works", {
       unlist(),
     c("20.09", "6.03")
   )
+})
 
+test_that("apply_statistic_fmt_fn() works with xx specification", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
@@ -28,5 +51,57 @@ test_that("apply_statistic_fmt_fn() works", {
       unlist(),
     c("20.09", " 6.03")
   )
+
+  expect_equal(
+    ard_categorical(
+      data = mtcars,
+      variables = am,
+      fmt_fn = list(
+        am = list(
+          n = "xx",
+          N = "xx",
+          p = "xx.xx%"
+        )
+      )
+    ) |>
+      apply_statistic_fmt_fn() |>
+      dplyr::pull(statistic_fmt) |>
+      unlist() |>
+      unname(),
+    c("19", "59.38", "13", "40.62", "32")
+  )
 })
 
+test_that("apply_statistic_fmt_fn() error messaging", {
+  expect_snapshot(
+    apply_statistic_fmt_fn(letters),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    ard_fmt_checks |>
+      dplyr::mutate(
+        statistic_fmt_fn = list("xoxo", "xoxo")
+      ) |>
+      apply_statistic_fmt_fn(),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    ard_fmt_checks |>
+      dplyr::mutate(
+        statistic_fmt_fn = list(-1L, -1L)
+      ) |>
+      apply_statistic_fmt_fn(),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    ard_fmt_checks |>
+      dplyr::mutate(
+        statistic = lapply(statistic, function(x) x * 1000),
+        statistic_fmt_fn = list("xx", "xx")
+      ) |>
+      apply_statistic_fmt_fn()
+  )
+})
