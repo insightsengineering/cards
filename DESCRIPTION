@@ -7,11 +7,13 @@ Authors@R: c(
     person("Becca", "Krouse", , "becca.z.krouse@gsk.com", role = "aut"),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
   )
-Description: The package constructs CDISC-compliant Analysis Results Data
-    objects. These objects are used (and re-used) to construct summary
-    tables, visualizations, and written reports. The results may also be
-    represented as JSON or YAML objects.
-License: Apache License 2.0 | file LICENSE
+Description: The package constructs Clinical Data Interchange Standards
+    Consortium (CDISC) compliant Analysis Results Data objects. These
+    objects are used and re-used to construct summary tables,
+    visualizations, and written reports. The results may also be
+    represented as JavaScript Object Notation (JSON) or Yet Another Markup
+    Language (YAML) structures.
+License: Apache License 2.0
 URL: https://github.com/insightsengineering/cards,
     https://insightsengineering.github.io/cards/
 BugReports: https://github.com/insightsengineering/cards/issues
@@ -27,7 +29,7 @@ Imports:
 Suggests: 
     broom (>= 1.0.5),
     broom.helpers (>= 1.13.0),
-    spelling,
+    spelling (>= 2.2.0),
     testthat (>= 3.2.0)
 Config/Needs/website: rmarkdown, jsonlite, yaml, plumber, survival,
     ggsurvfit

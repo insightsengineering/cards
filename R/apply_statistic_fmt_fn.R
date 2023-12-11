@@ -49,7 +49,7 @@ apply_statistic_fmt_fn <- function(x) {
           `[`(2) %>% # get the string after the period
           {ifelse(is.na(.), 0L, nchar(.))}
       )
-    width <- nchar(x)
+    width <- nchar(x) - endsWith(x, "%")
 
     fn <- function(y) {
       fmt <- format(round(y * scale, digits = decimal_n), nsmall = decimal_n)
