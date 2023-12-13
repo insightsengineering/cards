@@ -34,6 +34,20 @@ test_that("ard_categorical() univariate", {
     ),
     dplyr::tibble()
   )
+
+  # works for ordered factors
+  expect_equal(
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic),
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic)
+  )
 })
 
 test_that("ard_categorical() univariate & specified denomiator", {
