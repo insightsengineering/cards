@@ -66,6 +66,25 @@ apply_statistic_fmt_fn <- function(x) {
   cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = call)
 }
 
+
+#' Check 'xx' Format Structure
+#'
+#' @description
+#' A function that checks a **single** string for consistency.
+#' String must begin with 'x' and only consist of x's, a single period or none,
+#' and may end with a percent symbol.
+#'
+#' If string is consistent, `TRUE` is returned. Otherwise an error.
+#'
+#'
+#' @param x string to check
+#' @param call calling environment. Default is `rlang::caller_env()`
+#'
+#' @return logical
+#'
+#' @examples
+#' cards:::.check_fmt_string("xx.x")  # TRUE
+#' cards:::.check_fmt_string("xx.x%") # TRUE
 .check_fmt_string <- function(x, call = rlang::caller_env()) {
   # perform checks on the string
   fmt_is_good <-
