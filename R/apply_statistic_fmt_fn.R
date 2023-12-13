@@ -81,6 +81,7 @@ apply_statistic_fmt_fn <- function(x) {
 #' @param call calling environment. Default is `rlang::caller_env()`
 #'
 #' @return logical
+#' @keywords internal
 #'
 #' @examples
 #' cards:::.check_fmt_string("xx.x")  # TRUE

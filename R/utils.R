@@ -8,7 +8,7 @@
 #'
 #' @param x a vector
 #' @return a vector
-#' @noRd
+#' @keywords internal
 .unique_and_sorted <- function(x) {
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
@@ -29,7 +29,6 @@
 #'
 #' @param x object to check
 #' @keywords internal
-#' @noRd
 .is_named_list <- function(x, allow_df = FALSE) {
   if (isFALSE(allow_df))
     return(is.list(x) && rlang::is_named(x) && !is.data.frame(x))
@@ -43,7 +42,6 @@
 #'
 #' @param x a named list
 #' @keywords internal
-#' @noRd
 .purrr_list_flatten <- function(x) {
   ret <- list()
 

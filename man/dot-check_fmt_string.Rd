@@ -25,3 +25,4 @@ If string is consistent, \code{TRUE} is returned. Otherwise an error.
 cards:::.check_fmt_string("xx.x")  # TRUE
 cards:::.check_fmt_string("xx.x\%") # TRUE
 }
+\keyword{internal}
