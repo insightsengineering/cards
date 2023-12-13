@@ -1,4 +1,3 @@
-
 #' List of stat labels
 #'
 #' Returns a list of stat labels
