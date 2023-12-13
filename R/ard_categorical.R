@@ -126,7 +126,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     .ard_categorical_recalc_N(df_result, denominator, by, variables)
 
   # process the table() results and add to the ARD data frame ------------------
-  df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
+  df_result_final <- .unnest_table_object(df_result, data)
 
   # if user passed formatting functions, update data frame
   df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
@@ -140,8 +140,27 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 }
 
 
-# this function replaces the `table()` results with n and percent results
-.convert_table_to_n_and_percent <- function(df_result, data, denominator) {
+#' Unnest `table()` to ARD Structure
+#'
+#' This function takes the 'statistic' returned from the `table()` function,
+#' and unnests it to the ARD format including the `"variable_level"` column
+#' and the scalar statistics (i.e. `"n"` and `"p"`).
+#'
+#' @param df_result an ARD data frame
+#' @param data the data frame used to construct the ARD data frame. This is used
+#' to extract the variable levels and add to the unnested data frame.
+#'
+#' @return an ARD data frame
+#' @keywords internal
+#'
+#' @examples
+#' ard_continuous(
+#'   mtcars,
+#'   variables = cyl,
+#'   statistics = cyl ~ list(table = function(x) table(x))
+#' ) |>
+#'   cards:::.unnest_table_object(data = mtcars)
+.unnest_table_object <- function(df_result, data) {
   # convert table() results to counts (n)
   df_results_tables <-
     df_result |>
@@ -160,6 +179,30 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 }
 
 # when the denominator argument is passed, recalculate the N statistic
+#' Recalculate N and p
+#'
+#' If a user passes `ard_categorical(denominator)` the N and p need to be adjusted
+#' to match the data frame in `denominator`.
+#'
+#' @param df_result an ARD data frame
+#' @param denominator a data frame
+#' @param by character vector of by variables passed in `ard_categorical(by)`
+#' @param variables vector string of the variables passed in `ard_categorical(variables)`
+#'
+#' @return an ARD data frame
+#'
+#' @keywords internal
+#' @examples
+#' ard_categorical(
+#'   mtcars,
+#'   variables = cyl
+#' ) |>
+#'   cards:::.ard_categorical_recalc_N(
+#'     denominator = rep(list(mtcars), 10) |> dplyr::bind_rows(),
+#'     by = NULL,
+#'     variables = "cyl"
+#'   ) |>
+#'   flatten_ard()
 .ard_categorical_recalc_N <- function(df_result, denominator, by, variables) {
   # create a data set for the calculation
   df_variables_only <-
@@ -184,6 +227,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       stat_name = "p",
       stat_label = "%"
     ) %>%
+    # merging on all common columns and suppressing the merged variable note
     {suppressMessages(dplyr::left_join(
       .,
       df_result_denom_N |>

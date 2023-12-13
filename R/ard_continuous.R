@@ -142,6 +142,15 @@ ard_continuous <- function(data,
     structure(., class = c("card", class(.)))
 }
 
+#' Update Formatting Functions
+#'
+#' Updates the default formatting functions with those passed in this function.
+#'
+#' @param x a ARD object of class 'cards'
+#' @inheritParams ard_continuous
+#'
+#' @keywords internal
+#' @return a ARD object of class 'cards'
 .update_with_fmt_fn <- function(x, fmt_fn) {
   if (rlang::is_empty(fmt_fn)) return(x)
 
@@ -171,6 +180,19 @@ ard_continuous <- function(data,
 }
 
 
+#' Calculate Continuous Statistics
+#'
+#' Calculate statistics and return in an ARD format
+#'
+#' @param df_nested a nested data frame
+#' @param variables character vector of variables
+#' @param statistics named list of statistical functions
+#' @param new_col_name string of new column name
+#' @param omit_na logical indicating whether to omit NA values before calculating
+#' statistics. Default is TRUE
+#'
+#' @keywords internal
+#' @return data frame
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
                                     new_col_name = "..ard_all_stats..",
                                     omit_na = TRUE) {
@@ -206,6 +228,15 @@ ard_continuous <- function(data,
   df_nested
 }
 
+#' Process Statistic Labels
+#'
+#' @param stat_labels named list
+#'
+#' @return named list
+#' @keywords internal
+#' @examples
+#' list(AGE = list(c("N", "n") ~ "{n} / {N}")) |>
+#'   cards:::.process_stat_labels()
 .process_stat_labels <- function(stat_labels){
 
   # create the tibble of stat names and labels 1 variable at a time
@@ -251,8 +282,16 @@ ard_continuous <- function(data,
 }
 
 
-# the global default is to round the statistic to one decimal place.
-# for all other rounding, the default function must be listed below
+#' Default formatting functions
+#'
+#' Global default is to round the statistic to one decimal place for
+#' all other rounding, the default function must be listed below
+#'
+#' @return named list of functions
+#' @keywords internal
+#'
+#' @examples
+#' cards:::.default_statistic_formatters()
 .default_statistic_formatters <- function() {
   list(
     n = function(x) format(round(x, digits = 0), nsmall = 0),
