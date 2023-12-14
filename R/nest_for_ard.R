@@ -8,24 +8,28 @@
 #' The levels are wrapped in lists so they can be stacked with other types
 #' of different classes.
 #'
-#' @param data a data frame
-#' @param by,strata columns to nest by/stratified by. Arguments are similar,
-#' but with an important distinction:
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param by,strata (`character`)\cr
+#'   columns to nest by/stratified by. Arguments are similar,
+#'   but with an important distinction:
 #'
-#' `by`: data frame is nested by **all combinations** of the columns specified,
-#' including unobserved combinations and unobserved factor levels.
+#'   `by`: data frame is nested by **all combinations** of the columns specified,
+#'   including unobserved combinations and unobserved factor levels.
 #'
-#' `strata`: data frame is nested by **all _observed_ combinations** of the
-#' columns specified.
+#'   `strata`: data frame is nested by **all _observed_ combinations** of the
+#'   columns specified.
 #'
-#' Arguments may be used in conjunction with one another.
+#'   Arguments may be used in conjunction with one another.
 #'
-#' @param key the name of the new column with the nested data frame.
-#' Default is `"data"`
-#' @param rename_columns logical indicating whether to rename the by and strata variables.
-#' Default is `TRUE`
-#' @param list_columns logical indicating whether to put levels of `by` and
-#' `strata` columns in a list. Default is `TRUE`
+#' @param key (`string`)\cr
+#'   the name of the new column with the nested data frame. Default is `"data"`
+#' @param rename_columns (`logical` scalar)\cr
+#'   logical indicating whether to rename the by and strata variables.
+#'   Default is `TRUE`
+#' @param list_columns (`logical` scalar)\cr
+#'   logical indicating whether to put levels of `by` and
+#'   `strata` columns in a list. Default is `TRUE`
 #'
 #' @return a nested data frame
 #' @export

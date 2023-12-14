@@ -2,22 +2,27 @@
 #'
 #' Compute Analysis Results Data (ARD) for categorical summary statistics.
 #'
-#' @param data a data frame
-#' @param by,strata columns to by/stratified by for tabulation.
-#' Arguments are similar, but with an important distinction:
+#' @param data (`data.frame`)\cr
+#' a data frame
+#' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to by/stratified by for tabulation.
+#'   Arguments are similar, but with an important distinction:
 #'
-#' `by`: results are tabulated by **all combinations** of the columns specified,
-#' including unobserved combinations and unobserved factor levels.
+#'   `by`: results are tabulated by **all combinations** of the columns specified,
+#'      including unobserved combinations and unobserved factor levels.
 #'
-#' `strata`: results are tabulated by **all _observed_ combinations** of the
-#' columns specified.
+#'   `strata`: results are tabulated by **all _observed_ combinations** of the
+#'     columns specified.
 #'
-#' Arguments may be used in conjunction with one another.
-#' @param variables columns to include in summaries. Default is `everything()`.
-#' @param denominator Specify this *optional* argument to change the denominator,
-#' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#'   Arguments may be used in conjunction with one another.
+#' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to include in summaries. Default is `everything()`.
+#' @param denominator (`data.frame`)\cr
+#'   Specify this *optional* argument to change the denominator,
+#'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #'
-#' @param stat_labels a named list, a list of formulas, or a single formula where
+#' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.

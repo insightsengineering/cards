@@ -14,23 +14,26 @@ tidy_as_ard(
 )
 }
 \arguments{
-\item{lst_tidy}{list of tidied results constructed with \code{eval_capture_conditions()},
+\item{lst_tidy}{(named \code{list})\cr
+list of tidied results constructed with \code{eval_capture_conditions()},
 e.g. \code{eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())}}
 
-\item{tidy_result_names}{character vector of column names expected from the
+\item{tidy_result_names}{(\code{character})\cr
+character vector of column names expected from the
 tidier method. This is used to construct blank results in the event of an error.}
 
-\item{fun_args_to_record}{character vector of function argument names that
-are added to the ARD.}
+\item{fun_args_to_record}{(\code{character})\cr
+character vector of function argument names that are added to the ARD.}
 
-\item{formals}{the results from \code{formals()}, e.g. \code{formals(fisher.test)}.
+\item{formals}{(\code{pairlist})\cr
+the results from \code{formals()}, e.g. \code{formals(fisher.test)}.
 This is used to get the default argument values from unspecified arguments.}
 
-\item{passed_args}{named list of additional arguments passed to the modeling
-function.}
+\item{passed_args}{(named \code{list})\cr
+named list of additional arguments passed to the modeling function.}
 
-\item{lst_ard_columns}{named list of values that will be added to the ARD
-data frame.}
+\item{lst_ard_columns}{(named \code{list})\cr
+named list of values that will be added to the ARD data frame.}
 }
 \value{
 a data frame

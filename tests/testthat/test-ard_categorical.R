@@ -191,8 +191,6 @@ test_that("ard_categorical() with strata and by arguments", {
 })
 
 test_that("ard_categorical(stat_labels) argument works", {
-
-
   # formula
   expect_snapshot(
     ard_categorical(data = ADSL,
@@ -225,5 +223,18 @@ test_that("ard_categorical(stat_labels) argument works", {
       dplyr::select(variable, stat_name, stat_label) |>
       unique()
   )
+})
 
+
+test_that("ard_categorical() messaging", {
+  # denominator arg must have by column
+  expect_snapshot(
+    ard_categorical(
+      mtcars,
+      by = cyl,
+      variables = am,
+      denominator = iris
+    ),
+    error = TRUE
+  )
 })

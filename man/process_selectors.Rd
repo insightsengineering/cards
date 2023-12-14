@@ -24,9 +24,11 @@ compute_formula_selector(
 check_list_elements(..., error_msg = list(), env = rlang::caller_env())
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{...}{named arguments where the value of the argument is processed with tidyselect.
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
+named arguments where the value of the argument is processed with tidyselect.
 \itemize{
 \item \code{process_selectors()}: the values are tidyselect-compatible selectors
 \item \code{process_formula_selectors()}: the values are named lists, list of formulas
@@ -38,15 +40,19 @@ to test each element of the list, e.g. each element must be a string or
 a function.
 }}
 
-\item{env}{env to save the results to. Default is the calling environment.}
+\item{env}{(\code{environment})\cr
+env to save the results to. Default is the calling environment.}
 
-\item{x}{a named list, list of formulas, or a single formula that will be
+\item{x}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, list of formulas, or a single formula that will be
 converted to a named list.}
 
-\item{arg_name}{a string with the argument named being processed. Used
-in error messaging.}
+\item{arg_name}{(\code{string})\cr
+a string with the argument named being processed. Used
+in error messaging. Default is \code{rlang::caller_arg(x)}}
 
-\item{error_msg}{a named list where the list elements are strings that will
+\item{error_msg}{(\code{character})\cr
+a named list where the list elements are strings that will
 be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }

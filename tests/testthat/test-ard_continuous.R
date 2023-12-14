@@ -56,6 +56,18 @@ test_that("ard_continuous() messaging", {
     error = TRUE
   )
 
+  # proper error message when non-data frame passed
+  expect_snapshot(
+    ard_continuous(letters, variables = "mpg"),
+    error = TRUE
+  )
+
+  # proper error message when variables not passed
+  expect_snapshot(
+    ard_continuous(mtcars),
+    error = TRUE
+  )
+
 })
 
 test_that("ard_continuous(stat_labels) argument works", {
