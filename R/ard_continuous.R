@@ -131,7 +131,7 @@ ard_continuous <- function(data,
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
       statistic_fmt_fn =
         .data$statistic_fmt_fn |>
-        lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
+        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 0), nsmall = 0))
     )
 
   # if user passed formatting functions, update data frame
@@ -297,11 +297,11 @@ ard_continuous <- function(data,
 #' cards:::.default_statistic_formatters()
 .default_statistic_formatters <- function() {
   list(
-    n = function(x) format(round(x, digits = 0), nsmall = 0),
-    N_miss = function(x) format(round(x, digits = 0), nsmall = 0),
-    length = function(x) format(round(x, digits = 0), nsmall = 0),
-    p = function(x) format(round(x * 100, digits = 1), nsmall = 1),
-    p_cell = function(x) format(round(x * 100, digits = 1), nsmall = 1)
+    n = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N_miss = function(x) format(round5(x, digits = 0), nsmall = 0),
+    length = function(x) format(round5(x, digits = 0), nsmall = 0),
+    p = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
+    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
   ) %>%
     {dplyr::tibble(
       stat_name = names(.),

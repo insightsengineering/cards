@@ -35,7 +35,7 @@ apply_statistic_fmt_fn <- function(x) {
   if (is.function(x))
     return(x)
   if (rlang::is_integerish(x) && x >= 0L)
-    return(function(.x) format(round(.x, digits = as.integer(x)), nsmall = as.integer(x)))
+    return(function(.x) format(round5(.x, digits = as.integer(x)), nsmall = as.integer(x)))
   if (rlang::is_string(x)) {
     .check_fmt_string(x, call = call)
     # scale by 100 if it's a percentage
@@ -53,7 +53,7 @@ apply_statistic_fmt_fn <- function(x) {
     width <- nchar(x) - endsWith(x, "%")
 
     fn <- function(y) {
-      fmt <- format(round(y * scale, digits = decimal_n), nsmall = decimal_n)
+      fmt <- format(round5(y * scale, digits = decimal_n), nsmall = decimal_n)
       if (nchar(fmt) > width) {
         cli::cli_warn("Formatted statistic, {.val {fmt}}, is longer than allowed by format {.val {x}}", call = call)
         return(fmt)

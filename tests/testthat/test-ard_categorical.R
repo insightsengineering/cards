@@ -93,9 +93,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
       list(
         am =
           list(
-            p = function(x) round(x * 100, digits = 3) |> as.character(),
-            N = function(x) format(round(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+            p = function(x) round5(x * 100, digits = 3) |> as.character(),
+            N = function(x) format(round5(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
           )
       )
   ) |>
