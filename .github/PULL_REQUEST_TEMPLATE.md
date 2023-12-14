@@ -15,7 +15,7 @@ Reviewer Checklist (if item does not apply, mark is as complete)
 - [ ] Code coverage is suitable for any new functions/features: `devtools::test_coverage()`
 - [ ] `usethis::use_spell_check()` runs with no spelling errors in documentation
 
-When the branch is ready to be merged into master:
+When the branch is ready to be merged:
 - [ ] Update `NEWS.md` with the changes from this pull request under the heading "`# cards (development version)`". If there is an issue associated with the pull request, reference it in parentheses at the end update (see `NEWS.md` for examples).
 - [ ] Increment the version number using `usethis::use_version(which = "dev")`
 - [ ] Run `usethis::use_spell_check()` again
