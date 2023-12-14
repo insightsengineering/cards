@@ -1,9 +1,7 @@
 **What changes are proposed in this pull request?**
-_Put in a format suitable to be copied into `NEWS.md`, e.g. '* I made an update. (#23)'_
 
 
-**If there is an GitHub issue associated with this pull request, please provide link.**
-_For example, 'closes #23'_
+**Reference GitHub issue associated with pull request.** _e.g., 'closes #1'_
 
 
 --------------------------------------------------------------------------------
