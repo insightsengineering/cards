@@ -16,11 +16,14 @@ ard_categorical(
 )
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{variables}{columns to include in summaries. Default is \code{everything()}.}
+\item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+columns to include in summaries. Default is \code{everything()}.}
 
-\item{by, strata}{columns to by/stratified by for tabulation.
+\item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+columns to by/stratified by for tabulation.
 Arguments are similar, but with an important distinction:
 
 \code{by}: results are tabulated by \strong{all combinations} of the columns specified,
@@ -31,7 +34,8 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{statistics}{a named list, a list of formulas,
+\item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
@@ -41,21 +45,20 @@ are used to reference a function and the element is the function object.
 Typically, this function will return a scalar statistic, but a function that
 returns a named list of results is also acceptable, e.g.
 \code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
-will be less clear in this setting.
+will be less clear in this setting.}
 
-See the \code{\link{selecting_syntax}} help file for details.}
-
-\item{denominator}{Specify this \emph{optional} argument to change the denominator,
+\item{denominator}{(\code{data.frame})\cr
+Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
-\item{fmt_fn}{a named list, a list of formulas,
+\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-See the \code{\link{selecting_syntax}} help file for details.}
-
-\item{stat_labels}{a named list, a list of formulas, or a single formula where
+\item{stat_labels}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}

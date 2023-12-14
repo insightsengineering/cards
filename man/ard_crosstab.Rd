@@ -7,11 +7,14 @@
 ard_crosstab(data, variables, by)
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{variables}{columns to include in summaries. Default is \code{everything()}.}
+\item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+columns to include in summaries. Default is \code{everything()}.}
 
-\item{by}{columns to compute statistics by.}
+\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+columns to compute statistics by.}
 }
 \value{
 a data frame

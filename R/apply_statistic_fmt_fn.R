@@ -2,7 +2,8 @@
 #'
 #' Apply the formatting functions to each of the raw statistics.
 #'
-#' @param x an ARD data frame
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
 #' @return an ARD data frame
 #' @export

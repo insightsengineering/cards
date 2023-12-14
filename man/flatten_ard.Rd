@@ -7,7 +7,8 @@
 flatten_ard(x)
 }
 \arguments{
-\item{x}{an ARD object}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
 data frame

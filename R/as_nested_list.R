@@ -2,7 +2,8 @@
 #'
 #' Convert ARDs to Nested Lists
 #'
-#' @param x an ARD
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
 #' @return a nested list
 #' @export

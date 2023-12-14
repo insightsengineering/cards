@@ -12,15 +12,16 @@
 #' - `missing_variable_summary_fns()` summary functions suitable for variable-level
 #'   summaries, such as number and rate of missing data.
 #'
-#' @param summaries a character vector of results to include in output.
+#' @param summaries (`character`)\cr
+#'   a character vector of results to include in output.
 #'
-#' - `categorical_variable_summary_fns()`: Select one or more from 'N', 'n', 'p'
+#'   - `categorical_variable_summary_fns()`: Select one or more from 'N', 'n', 'p'
 #'
-#' - `continuous_variable_summary_fns()`: Select one or more from
-#'   `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'   - `continuous_variable_summary_fns()`: Select one or more from
+#'     `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
-#' - `missing_variable_summary_fns()`: Select one or more from
-#'   `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'   - `missing_variable_summary_fns()`: Select one or more from
+#'     `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
 #' @return named list of summary functions
 #' @name summary_functions

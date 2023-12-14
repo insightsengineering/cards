@@ -24,24 +24,30 @@
 #'   that exists in the env, and the argument value is a predicate function
 #'   used to the values of the list.
 #'
-#' @param data a data frame
-#' @param ... named arguments where the value of the argument is processed with tidyselect.
-#' - `process_selectors()`: the values are tidyselect-compatible selectors
-#' - `process_formula_selectors()`: the values are named lists, list of formulas
-#'   a combination of both, or a single formula. Users may pass `~value` as a
-#'   shortcut for `everything() ~ value`.
-#' - `check_list_elements()`: named arguments where the name matches an existing
-#'   list in the `env` environment, and the value is a predicate function
-#'   to test each element of the list, e.g. each element must be a string or
-#'   a function.
-#' @param env env to save the results to. Default is the calling environment.
-#' @param x a named list, list of formulas, or a single formula that will be
-#' converted to a named list.
-#' @param arg_name a string with the argument named being processed. Used
-#' in error messaging.
-#' @param error_msg a named list where the list elements are strings that will
-#' be used in error messaging when mis-specified arguments are passed. Elements
-#' `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
+#'   named arguments where the value of the argument is processed with tidyselect.
+#'   - `process_selectors()`: the values are tidyselect-compatible selectors
+#'   - `process_formula_selectors()`: the values are named lists, list of formulas
+#'     a combination of both, or a single formula. Users may pass `~value` as a
+#'     shortcut for `everything() ~ value`.
+#'   - `check_list_elements()`: named arguments where the name matches an existing
+#'     list in the `env` environment, and the value is a predicate function
+#'     to test each element of the list, e.g. each element must be a string or
+#'     a function.
+#' @param env (`environment`)\cr
+#'   env to save the results to. Default is the calling environment.
+#' @param x ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, list of formulas, or a single formula that will be
+#'   converted to a named list.
+#' @param arg_name (`string`)\cr
+#'   a string with the argument named being processed. Used
+#'   in error messaging. Default is `rlang::caller_arg(x)`
+#' @param error_msg (`character`)\cr
+#'   a named list where the list elements are strings that will
+#'   be used in error messaging when mis-specified arguments are passed. Elements
+#'   `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
 #'
 #' @name process_selectors
 #'

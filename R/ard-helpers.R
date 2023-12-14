@@ -9,7 +9,8 @@
 #' - `bind_ard()`: A wrapper for `dplyr::bind_rows()` with additional checks
 #'   for duplicated statistics
 #'
-#' @param x an ARD data frame of class 'card'
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #' @param ...
 #' - `get_ard_statistics()`: optional named arguments indicating rows to subset of the ARD.
 #'   For example, to return only rows where the column `"AGEGR1"` is `"65-80"`,
@@ -17,14 +18,17 @@
 #' - `bind_ard()`: ARDs to combine. Each argument can either be an ARD,
 #'   or a list of ARDs. Columns are matched by name, and any missing
 #'   columns will be filled with `NA.`
-#' @param .update logical indicating whether to update duplicate ARD statistics.
+#' @param .update (`logical` scalar)\cr
+#'   logical indicating whether to update duplicate ARD statistics.
 #'   Default is `FALSE`. If a statistic type is repeated and `.update=TRUE`,
 #'   the more recently added statistics will be retained, and the others omitted.
-#' @param .column string indicating the column that will be returned in the list.
-#' Default is `"statistic"`
-#' @param .attributes character vector of column names that will be returned
-#' in the list as attributes.
-#' Default is `c("stat_label", "statistic_fmt_fn", "warning", "error")`
+#' @param .column (`string`)\cr
+#'   string indicating the column that will be returned in the list.
+#'   Default is `"statistic"`
+#' @param .attributes (`character`)\cr
+#'   character vector of column names that will be returned
+#'   in the list as attributes.
+#'   Default is `c("stat_label", "statistic_fmt_fn", "warning", "error")`
 #'
 #' @return a transformed ARD
 #' @name ard-helpers
