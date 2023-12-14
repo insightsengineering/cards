@@ -8,7 +8,8 @@
 #' elements are cannot easily be coerced to a character vector, the function
 #' will fail.
 #'
-#' @param x an ARD object
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
 #' @return data frame
 #' @export
