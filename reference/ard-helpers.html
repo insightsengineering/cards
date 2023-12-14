@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>an ARD data frame of class 'card'</p></dd>
+<dd><p>(<code>data.frame</code>)<br>
+an ARD data frame of class 'card'</p></dd>
 
 
 <dt>...</dt>
@@ -84,18 +85,21 @@ columns will be filled with <code>NA.</code></p></li>
 
 
 <dt>.column</dt>
-<dd><p>string indicating the column that will be returned in the list.
+<dd><p>(<code>string</code>)<br>
+string indicating the column that will be returned in the list.
 Default is <code>"statistic"</code></p></dd>
 
 
 <dt>.attributes</dt>
-<dd><p>character vector of column names that will be returned
+<dd><p>(<code>character</code>)<br>
+character vector of column names that will be returned
 in the list as attributes.
 Default is <code>c("stat_label", "statistic_fmt_fn", "warning", "error")</code></p></dd>
 
 
 <dt>.update</dt>
-<dd><p>logical indicating whether to update duplicate ARD statistics.
+<dd><p>(<code>logical</code> scalar)<br>
+logical indicating whether to update duplicate ARD statistics.
 Default is <code>FALSE</code>. If a statistic type is repeated and <code>.update=TRUE</code>,
 the more recently added statistics will be retained, and the others omitted.</p></dd>
 

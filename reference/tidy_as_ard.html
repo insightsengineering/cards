@@ -18,7 +18,7 @@ been included."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,33 +82,36 @@ been included.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>lst_tidy</dt>
-<dd><p>list of tidied results constructed with <code><a href="eval_capture_conditions.html">eval_capture_conditions()</a></code>,
+<dd><p>(named <code>list</code>)<br>
+list of tidied results constructed with <code><a href="eval_capture_conditions.html">eval_capture_conditions()</a></code>,
 e.g. <code>eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |&gt; broom::tidy())</code></p></dd>
 
 
 <dt>tidy_result_names</dt>
-<dd><p>character vector of column names expected from the
+<dd><p>(<code>character</code>)<br>
+character vector of column names expected from the
 tidier method. This is used to construct blank results in the event of an error.</p></dd>
 
 
 <dt>fun_args_to_record</dt>
-<dd><p>character vector of function argument names that
-are added to the ARD.</p></dd>
+<dd><p>(<code>character</code>)<br>
+character vector of function argument names that are added to the ARD.</p></dd>
 
 
 <dt>formals</dt>
-<dd><p>the results from <code><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals()</a></code>, e.g. <code>formals(fisher.test)</code>.
+<dd><p>(<code>pairlist</code>)<br>
+the results from <code><a href="https://rdrr.io/r/base/formals.html" class="external-link">formals()</a></code>, e.g. <code>formals(fisher.test)</code>.
 This is used to get the default argument values from unspecified arguments.</p></dd>
 
 
 <dt>passed_args</dt>
-<dd><p>named list of additional arguments passed to the modeling
-function.</p></dd>
+<dd><p>(named <code>list</code>)<br>
+named list of additional arguments passed to the modeling function.</p></dd>
 
 
 <dt>lst_ard_columns</dt>
-<dd><p>named list of values that will be added to the ARD
-data frame.</p></dd>
+<dd><p>(named <code>list</code>)<br>
+named list of values that will be added to the ARD data frame.</p></dd>
 
 </dl></div>
     <div class="section level2">

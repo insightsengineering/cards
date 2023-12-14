@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,15 +72,18 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>a data frame</p></dd>
+<dd><p>(<code>data.frame</code>)<br>
+a data frame</p></dd>
 
 
 <dt>variables</dt>
-<dd><p>columns to include in summaries. Default is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+<dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
+columns to include in summaries. Default is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>by, strata</dt>
-<dd><p>columns to by/stratified by for tabulation.
+<dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
+columns to by/stratified by for tabulation.
 Arguments are similar, but with an important distinction:</p>
 <p><code>by</code>: results are tabulated by <strong>all combinations</strong> of the columns specified,
 including unobserved combinations and unobserved factor levels.</p>
@@ -90,7 +93,8 @@ columns specified.</p>
 
 
 <dt>statistics</dt>
-<dd><p>a named list, a list of formulas,
+<dd><p>(<code><a href="selecting_syntax.html">formula-list-selector</a></code>)<br>
+a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. <code>list(mpg = list(mean = \(x) mean(x)))</code>.</p>
@@ -99,25 +103,26 @@ are used to reference a function and the element is the function object.
 Typically, this function will return a scalar statistic, but a function that
 returns a named list of results is also acceptable, e.g.
 <code>list(conf.low = -1, conf.high = 1)</code>. However, when errors occur, the messaging
-will be less clear in this setting.</p>
-<p>See the <code><a href="selecting_syntax.html">selecting_syntax</a></code> help file for details.</p></dd>
+will be less clear in this setting.</p></dd>
 
 
 <dt>denominator</dt>
-<dd><p>Specify this <em>optional</em> argument to change the denominator,
+<dd><p>(<code>data.frame</code>)<br>
+Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
 
 
 <dt>fmt_fn</dt>
-<dd><p>a named list, a list of formulas,
+<dd><p>(<code><a href="selecting_syntax.html">formula-list-selector</a></code>)<br>
+a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. <code>list(mpg = list(mean = \(x) round(x, digits = 2) |&gt; as.character))</code>.</p>
-<p>See the <code><a href="selecting_syntax.html">selecting_syntax</a></code> help file for details.</p></dd>
+e.g. <code>list(mpg = list(mean = \(x) round(x, digits = 2) |&gt; as.character))</code>.</p></dd>
 
 
 <dt>stat_labels</dt>
-<dd><p>a named list, a list of formulas, or a single formula where
+<dd><p>(<code><a href="selecting_syntax.html">formula-list-selector</a></code>)<br>
+a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 <code>everything() ~ list(n ~ "n", p ~ "pct")</code>.</p></dd>

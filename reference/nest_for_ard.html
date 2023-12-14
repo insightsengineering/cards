@@ -18,7 +18,7 @@ of different classes."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,11 +82,13 @@ of different classes.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>a data frame</p></dd>
+<dd><p>(<code>data.frame</code>)<br>
+a data frame</p></dd>
 
 
 <dt>by, strata</dt>
-<dd><p>columns to nest by/stratified by. Arguments are similar,
+<dd><p>(<code>character</code>)<br>
+columns to nest by/stratified by. Arguments are similar,
 but with an important distinction:</p>
 <p><code>by</code>: data frame is nested by <strong>all combinations</strong> of the columns specified,
 including unobserved combinations and unobserved factor levels.</p>
@@ -96,17 +98,19 @@ columns specified.</p>
 
 
 <dt>key</dt>
-<dd><p>the name of the new column with the nested data frame.
-Default is <code>"data"</code></p></dd>
+<dd><p>(<code>string</code>)<br>
+the name of the new column with the nested data frame. Default is <code>"data"</code></p></dd>
 
 
 <dt>rename_columns</dt>
-<dd><p>logical indicating whether to rename the by and strata variables.
+<dd><p>(<code>logical</code> scalar)<br>
+logical indicating whether to rename the by and strata variables.
 Default is <code>TRUE</code></p></dd>
 
 
 <dt>list_columns</dt>
-<dd><p>logical indicating whether to put levels of <code>by</code> and
+<dd><p>(<code>logical</code> scalar)<br>
+logical indicating whether to put levels of <code>by</code> and
 <code>strata</code> columns in a list. Default is <code>TRUE</code></p></dd>
 
 </dl></div>
