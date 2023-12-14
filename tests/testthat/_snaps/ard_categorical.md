@@ -55,3 +55,11 @@
       3 SEX      n         n         
       4 SEX      p         %         
 
+# ard_categorical() messaging
+
+    Code
+      ard_categorical(mtcars, by = cyl, variables = am, denominator = iris)
+    Condition
+      Error in `ard_categorical()`:
+      ! Columns "cyl" must appear in `denominator`.
+

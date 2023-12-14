@@ -22,6 +22,22 @@
       ! Error in the argument `statistics` for variable "mpg".
       i Value must be a named list of functions.
 
+---
+
+    Code
+      ard_continuous(letters, variables = "mpg")
+    Condition
+      Error in `ard_continuous()`:
+      ! The `data` argument must be class <data.frame>.
+
+---
+
+    Code
+      ard_continuous(mtcars)
+    Condition
+      Error in `ard_continuous()`:
+      ! The `variables` argument cannot be missing.
+
 # ard_continuous(stat_labels) argument works
 
     Code
