@@ -37,7 +37,7 @@ See the \code{\link{selecting_syntax}} help file for details.}
 \item{fmt_fn}{a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) round2(x, digits = 2) |> as.character))}.
+e.g. \verb{list(mpg = list(mean = \\(x) round5(x, digits = 2) |> as.character))}.
 
 See the \code{\link{selecting_syntax}} help file for details.}
 

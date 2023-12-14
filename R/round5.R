@@ -1,9 +1,9 @@
 #' Rounding of Numbers
 #'
 #' Rounds the values in its first argument to the specified number of
-#' decimal places (default 0). Importantly, `round2()` **does not** use Base R's
+#' decimal places (default 0). Importantly, `round5()` **does not** use Base R's
 #' "round to even" default. Standard rounding methods are implemented, for example,
-#' `round2(0.5) = 1`.
+#' `round5(0.5) = 1`.
 #'
 #' @details
 #' Function inspired by `janitor::round_half_up()`.
@@ -16,10 +16,10 @@
 #'
 #' @examples
 #' x <- 0:4 / 2
-#' round2(x)
+#' round5(x) |> setNames(x)
 #'
 #' # compare results to Base R
-#' round(x)
-round2 <- function(x, digits = 0) {
+#' round(x) |> setNames(x)
+round5 <- function(x, digits = 0) {
   trunc(abs(x) * 10 ^ digits + 0.5 + sqrt(.Machine$double.eps)) / 10 ^ digits * sign(as.numeric(x))
 }

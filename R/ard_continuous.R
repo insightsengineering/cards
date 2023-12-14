@@ -31,7 +31,7 @@
 #' @param fmt_fn a named list, a list of formulas,
 #' or a single formula where the list element is a named list of functions
 #' (or the RHS of a formula),
-#' e.g. `list(mpg = list(mean = \(x) round2(x, digits = 2) |> as.character))`.
+#' e.g. `list(mpg = list(mean = \(x) round5(x, digits = 2) |> as.character))`.
 #'
 #' See the [`selecting_syntax`] help file for details.
 #'
@@ -128,7 +128,7 @@ ard_continuous <- function(data,
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
       statistic_fmt_fn =
         .data$statistic_fmt_fn |>
-        lapply(function(fn) fn %||% function(x) format(round2(x, digits = 0), nsmall = 0))
+        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 0), nsmall = 0))
     )
 
   # if user passed formatting functions, update data frame
@@ -294,11 +294,11 @@ ard_continuous <- function(data,
 #' cards:::.default_statistic_formatters()
 .default_statistic_formatters <- function() {
   list(
-    n = function(x) format(round2(x, digits = 0), nsmall = 0),
-    N_miss = function(x) format(round2(x, digits = 0), nsmall = 0),
-    length = function(x) format(round2(x, digits = 0), nsmall = 0),
-    p = function(x) format(round2(x * 100, digits = 1), nsmall = 1),
-    p_cell = function(x) format(round2(x * 100, digits = 1), nsmall = 1)
+    n = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N_miss = function(x) format(round5(x, digits = 0), nsmall = 0),
+    length = function(x) format(round5(x, digits = 0), nsmall = 0),
+    p = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
+    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
   ) %>%
     {dplyr::tibble(
       stat_name = names(.),
