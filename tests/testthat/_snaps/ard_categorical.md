@@ -2,10 +2,10 @@
 
     Code
       as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_categorical(mtcars,
-        variables = "am", fmt_fn = list(am = list(p = function(x) as.character(round(
-          x * 100, digits = 3)), N = function(x) format(round(x, digits = 2), nsmall = 2),
-        N_obs = function(x) format(round(x, digits = 2), nsmall = 2))))), variable,
-      variable_level, stat_name, statistic, statistic_fmt))
+        variables = "am", fmt_fn = list(am = list(p = function(x) as.character(round2(
+          x * 100, digits = 3)), N = function(x) format(round2(x, digits = 2),
+        nsmall = 2), N_obs = function(x) format(round2(x, digits = 2), nsmall = 2))))),
+      variable, variable_level, stat_name, statistic, statistic_fmt))
     Output
         variable variable_level stat_name statistic statistic_fmt
       1       am              0         n        19            19

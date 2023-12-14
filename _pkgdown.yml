@@ -45,6 +45,7 @@ reference:
       - tidy_as_ard
       - nest_for_ard
       - default_stat_labels
+      - round2
 
   - title: "Data"
     contents:

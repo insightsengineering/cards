@@ -37,9 +37,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
       list(
         AGE =
           list(
-            mean = function(x) round(x, digits = 3) |> as.character(),
-            N = function(x) format(round(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+            mean = function(x) round2(x, digits = 3) |> as.character(),
+            N = function(x) format(round2(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round2(x, digits = 2), nsmall = 2)
           )
       )
   ) |>

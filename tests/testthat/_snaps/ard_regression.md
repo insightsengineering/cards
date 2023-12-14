@@ -3,7 +3,7 @@
     Code
       as.data.frame(flatten_ard(dplyr::mutate(ard_regression(lm(AGE ~ ARM, data = ADSL),
       add_estimate_to_reference_rows = TRUE), statistic = lapply(statistic, function(
-        x) ifelse(is.numeric(x), round(x, 3), x)))))
+        x) ifelse(is.numeric(x), round2(x, 3), x)))))
     Output
          variable       variable_level      stat_name                  statistic
       1       ARM              Placebo           term                 ARMPlacebo
