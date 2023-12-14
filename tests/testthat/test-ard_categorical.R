@@ -93,9 +93,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
       list(
         am =
           list(
-            p = function(x) round(x * 100, digits = 3) |> as.character(),
-            N = function(x) format(round(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+            p = function(x) round5(x * 100, digits = 3) |> as.character(),
+            N = function(x) format(round5(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
           )
       )
   ) |>
@@ -191,8 +191,6 @@ test_that("ard_categorical() with strata and by arguments", {
 })
 
 test_that("ard_categorical(stat_labels) argument works", {
-
-
   # formula
   expect_snapshot(
     ard_categorical(data = ADSL,
@@ -225,5 +223,18 @@ test_that("ard_categorical(stat_labels) argument works", {
       dplyr::select(variable, stat_name, stat_label) |>
       unique()
   )
+})
 
+
+test_that("ard_categorical() messaging", {
+  # denominator arg must have by column
+  expect_snapshot(
+    ard_categorical(
+      mtcars,
+      by = cyl,
+      variables = am,
+      denominator = iris
+    ),
+    error = TRUE
+  )
 })

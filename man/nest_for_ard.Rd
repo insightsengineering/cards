@@ -14,9 +14,11 @@ nest_for_ard(
 )
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{by, strata}{columns to nest by/stratified by. Arguments are similar,
+\item{by, strata}{(\code{character})\cr
+columns to nest by/stratified by. Arguments are similar,
 but with an important distinction:
 
 \code{by}: data frame is nested by \strong{all combinations} of the columns specified,
@@ -27,13 +29,15 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{key}{the name of the new column with the nested data frame.
-Default is \code{"data"}}
+\item{key}{(\code{string})\cr
+the name of the new column with the nested data frame. Default is \code{"data"}}
 
-\item{rename_columns}{logical indicating whether to rename the by and strata variables.
+\item{rename_columns}{(\code{logical} scalar)\cr
+logical indicating whether to rename the by and strata variables.
 Default is \code{TRUE}}
 
-\item{list_columns}{logical indicating whether to put levels of \code{by} and
+\item{list_columns}{(\code{logical} scalar)\cr
+logical indicating whether to put levels of \code{by} and
 \code{strata} columns in a list. Default is \code{TRUE}}
 }
 \value{

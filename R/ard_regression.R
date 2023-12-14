@@ -4,7 +4,8 @@
 #' structure using the `broom.helpers` package.
 #'
 #' @param model regression model object
-#' @param tidy_fun a tidier. Default is broom.helpers::tidy_with_broom_or_parameters
+#' @param tidy_fun (`function`)\cr
+#'   a tidier. Default is broom.helpers::tidy_with_broom_or_parameters
 #' @param ... Arguments passed to `broom.helpers::tidy_plus_plus()`
 #'
 #' @return data frame
@@ -22,7 +23,11 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
   check_not_missing(model, "model")
 
   # summarize model ------------------------------------------------------------
-  broom.helpers::tidy_plus_plus(model = model, tidy_fun = tidy_fun %||% broom.helpers::tidy_with_broom_or_parameters, ...) |>
+  broom.helpers::tidy_plus_plus(
+    model = model,
+    tidy_fun = tidy_fun %||% broom.helpers::tidy_with_broom_or_parameters,
+    ...
+  )|>
     dplyr::mutate(
       variable_level = dplyr::if_else(.data$var_type %in% "continuous", NA_character_, .data$label),
       dplyr::across(-c("variable", "variable_level"), .fns = as.list)

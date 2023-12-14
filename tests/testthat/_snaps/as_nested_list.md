@@ -346,7 +346,7 @@
       [1] 192.5
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$statistic_fmt
-      [1] "192"
+      [1] "193"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$warning
       NULL

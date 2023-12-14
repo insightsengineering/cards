@@ -2,40 +2,43 @@
 #'
 #' Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 #'
-#' @param data a data frame
-#' @param variables columns to include in summaries.
-#' @param by,strata columns to by/stratified by for summary statistic
-#' calculation. Arguments are similar, but with an important distinction:
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to include in summaries
+#' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to by/stratified by for summary statistic
+#'   calculation. Arguments are similar, but with an important distinction:
 #'
-#' `by`: results are calculated by **all combinations** of the columns specified,
-#' including unobserved combinations and unobserved factor levels.
+#'   `by`: results are calculated by **all combinations** of the columns specified,
+#'      including unobserved combinations and unobserved factor levels.
 #'
-#' `strata`: results are calculated by **all _observed_ combinations** of the
-#' columns specified.
+#'   `strata`: results are calculated by **all _observed_ combinations** of the
+#'     columns specified.
 #'
-#' Arguments may be used in conjunction with one another.
+#'   Arguments may be used in conjunction with one another.
 #'
-#' @param statistics a named list, a list of formulas,
-#' or a single formula where the list element is a named list of functions
-#' (or the RHS of a formula),
-#' e.g. `list(mpg = list(mean = \(x) mean(x)))`.
+#' @param statistics ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas,
+#'   or a single formula where the list element is a named list of functions
+#'   (or the RHS of a formula),
+#'   e.g. `list(mpg = list(mean = \(x) mean(x)))`.
 #'
-#' The value assigned to each variable must also be a named list, where the names
-#' are used to reference a function and the element is the function object.
-#' Typically, this function will return a scalar statistic, but a function that
-#' returns a named list of results is also acceptable, e.g.
-#' `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
-#' will be less clear in this setting.
+#'   The value assigned to each variable must also be a named list, where the names
+#'   are used to reference a function and the element is the function object.
+#'   Typically, this function will return a scalar statistic, but a function that
+#'   returns a named list of results is also acceptable, e.g.
+#'   `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
+#'   will be less clear in this setting.
 #'
-#' See the [`selecting_syntax`] help file for details.
-#' @param fmt_fn a named list, a list of formulas,
-#' or a single formula where the list element is a named list of functions
-#' (or the RHS of a formula),
-#' e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
+#' @param fmt_fn ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas,
+#'   or a single formula where the list element is a named list of functions
+#'   (or the RHS of a formula),
+#'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
 #'
-#' See the [`selecting_syntax`] help file for details.
-#'
-#' @param stat_labels a named list, a list of formulas, or a single formula where
+#' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
 #'   `everything() ~ list(mean ~ "Mean", sd ~ "SD")`.
@@ -128,7 +131,7 @@ ard_continuous <- function(data,
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
       statistic_fmt_fn =
         .data$statistic_fmt_fn |>
-        lapply(function(fn) fn %||% function(x) format(round(x, digits = 0), nsmall = 0))
+        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 0), nsmall = 0))
     )
 
   # if user passed formatting functions, update data frame
@@ -294,11 +297,11 @@ ard_continuous <- function(data,
 #' cards:::.default_statistic_formatters()
 .default_statistic_formatters <- function() {
   list(
-    n = function(x) format(round(x, digits = 0), nsmall = 0),
-    N_miss = function(x) format(round(x, digits = 0), nsmall = 0),
-    length = function(x) format(round(x, digits = 0), nsmall = 0),
-    p = function(x) format(round(x * 100, digits = 1), nsmall = 1),
-    p_cell = function(x) format(round(x * 100, digits = 1), nsmall = 1)
+    n = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N_miss = function(x) format(round5(x, digits = 0), nsmall = 0),
+    length = function(x) format(round5(x, digits = 0), nsmall = 0),
+    p = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
+    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
   ) %>%
     {dplyr::tibble(
       stat_name = names(.),

@@ -7,10 +7,13 @@
 #' - The `class` attribute will also be returned for all columns.
 #' - Any other attribute returned by `attributes()` will also be added, e.g. factor levels.
 #'
-#' @param data a data frame
-#' @param label named list of variable labels, e.g. `list(mpg = "MPG")`.
-#' Default is `NULL`
-#' @param variables variable to include
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param label (named `list`)\cr
+#'   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
+#'   Default is `NULL`
+#' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   variables to include
 #'
 #' @return a data frame
 #' @export

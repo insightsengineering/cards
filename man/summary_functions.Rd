@@ -18,7 +18,8 @@ missing_variable_summary_fns(
 )
 }
 \arguments{
-\item{summaries}{a character vector of results to include in output.
+\item{summaries}{(\code{character})\cr
+a character vector of results to include in output.
 \itemize{
 \item \code{categorical_variable_summary_fns()}: Select one or more from 'N', 'n', 'p'
 \item \code{continuous_variable_summary_fns()}: Select one or more from

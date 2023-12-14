@@ -16,7 +16,8 @@ get_ard_statistics(
 bind_ard(..., .update = FALSE)
 }
 \arguments{
-\item{x}{an ARD data frame of class 'card'}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 
 \item{...}{\itemize{
 \item \code{get_ard_statistics()}: optional named arguments indicating rows to subset of the ARD.
@@ -27,14 +28,17 @@ or a list of ARDs. Columns are matched by name, and any missing
 columns will be filled with \code{NA.}
 }}
 
-\item{.column}{string indicating the column that will be returned in the list.
+\item{.column}{(\code{string})\cr
+string indicating the column that will be returned in the list.
 Default is \code{"statistic"}}
 
-\item{.attributes}{character vector of column names that will be returned
+\item{.attributes}{(\code{character})\cr
+character vector of column names that will be returned
 in the list as attributes.
 Default is \code{c("stat_label", "statistic_fmt_fn", "warning", "error")}}
 
-\item{.update}{logical indicating whether to update duplicate ARD statistics.
+\item{.update}{(\code{logical} scalar)\cr
+logical indicating whether to update duplicate ARD statistics.
 Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},
 the more recently added statistics will be retained, and the others omitted.}
 }

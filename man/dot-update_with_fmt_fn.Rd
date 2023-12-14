@@ -9,12 +9,11 @@
 \arguments{
 \item{x}{a ARD object of class 'cards'}
 
-\item{fmt_fn}{a named list, a list of formulas,
+\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.
-
-See the \code{\link{selecting_syntax}} help file for details.}
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 }
 \value{
 a ARD object of class 'cards'

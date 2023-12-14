@@ -7,11 +7,14 @@
 ard_attributes(data, variables = everything(), label = NULL)
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{variables}{variable to include}
+\item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+variables to include}
 
-\item{label}{named list of variable labels, e.g. \code{list(mpg = "MPG")}.
+\item{label}{(named \code{list})\cr
+named list of variable labels, e.g. \code{list(cyl = "No. Cylinders")}.
 Default is \code{NULL}}
 }
 \value{

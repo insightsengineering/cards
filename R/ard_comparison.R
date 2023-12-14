@@ -12,8 +12,10 @@
 #' `ard_fishertest()` -> `fisher.test(x = data[[variable]], y = data[[by]], ...)`
 #'
 #' @inheritParams ard_continuous
-#' @param by character column name to compare by
-#' @param variable character column name to be compared
+#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   character column name to compare by
+#' @param variable ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   character column name to be compared
 #' @param ... arguments passed to method.
 #'
 #' @return data frame

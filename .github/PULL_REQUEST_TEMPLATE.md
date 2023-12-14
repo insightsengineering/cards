@@ -1,9 +1,7 @@
 **What changes are proposed in this pull request?**
-_Put in a format suitable to be copied into `NEWS.md`, e.g. '* I made an update. (#23)'_
 
 
-**If there is an GitHub issue associated with this pull request, please provide link.**
-_For example, 'closes #23'_
+**Reference GitHub issue associated with pull request.** _e.g., 'closes #1'_
 
 
 --------------------------------------------------------------------------------
@@ -17,7 +15,7 @@ Reviewer Checklist (if item does not apply, mark is as complete)
 - [ ] Code coverage is suitable for any new functions/features: `devtools::test_coverage()`
 - [ ] `usethis::use_spell_check()` runs with no spelling errors in documentation
 
-When the branch is ready to be merged into master:
+When the branch is ready to be merged:
 - [ ] Update `NEWS.md` with the changes from this pull request under the heading "`# cards (development version)`". If there is an issue associated with the pull request, reference it in parentheses at the end update (see `NEWS.md` for examples).
 - [ ] Increment the version number using `usethis::use_version(which = "dev")`
 - [ ] Run `usethis::use_spell_check()` again

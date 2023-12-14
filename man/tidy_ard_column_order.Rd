@@ -7,7 +7,8 @@
 tidy_ard_column_order(x)
 }
 \arguments{
-\item{x}{a data frame of class 'card'}
+\item{x}{(\code{data.frame})\cr
+a ARD data frame of class 'card'}
 }
 \value{
 a data frame

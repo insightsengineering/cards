@@ -68,7 +68,7 @@ test_that("apply_statistic_fmt_fn() works with xx specification", {
       dplyr::pull(statistic_fmt) |>
       unlist() |>
       unname(),
-    c("19", "59.38", "13", "40.62", "32")
+    c("19", "59.38", "13", "40.63", "32")
   )
 })
 

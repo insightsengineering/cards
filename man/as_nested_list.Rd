@@ -7,7 +7,8 @@
 as_nested_list(x)
 }
 \arguments{
-\item{x}{an ARD}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
 a nested list
