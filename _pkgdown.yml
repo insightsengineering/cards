@@ -47,6 +47,7 @@ reference:
       - nest_for_ard
       - default_stat_labels
       - round5
+      - max_value
 
   - title: "Data"
     contents:
