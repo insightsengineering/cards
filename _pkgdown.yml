@@ -19,6 +19,7 @@ reference:
       - ard_continuous
       - ard_categorical
       - ard_crosstab
+      - ard_dichotomous
       - ard_missing
 
   - subtitle: "Model and Test Summaries"
@@ -46,6 +47,7 @@ reference:
       - nest_for_ard
       - default_stat_labels
       - round5
+      - max_value
 
   - title: "Data"
     contents:

@@ -4,6 +4,7 @@ test_that("ard_continuous() works", {
       ard_continuous(mtcars, variables = c(mpg, hp), by = c(am, vs)),
     NA
   )
+  expect_snapshot(class(ard_test))
 
   expect_equal(
     get_ard_statistics(
