@@ -141,7 +141,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    structure(., class = unique(c("card", class(.))))
+    {structure(., class = unique(c("card", class(.))))}
 }
 
 
