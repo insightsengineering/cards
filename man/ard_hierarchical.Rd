@@ -3,7 +3,7 @@
 \name{ard_hierarchical}
 \alias{ard_hierarchical}
 \alias{ard_hierarchical_count}
-\title{Title}
+\title{Hierarchical ARD Statistics}
 \usage{
 ard_hierarchical(
   data,
@@ -67,7 +67,8 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 an ARD data frame
 }
 \description{
-Title
+Performs hierarchical or nested tabulations, e.g. tabulates AE terms
+nested within AE system organ class.
 }
 \examples{
 ard_hierarchical(

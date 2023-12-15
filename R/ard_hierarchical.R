@@ -1,4 +1,7 @@
-#' Title
+#' Hierarchical ARD Statistics
+#'
+#' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
+#' nested within AE system organ class.
 #'
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform the nested/hierarchical tabulations within
