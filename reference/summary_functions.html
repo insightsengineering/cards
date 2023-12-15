@@ -5,6 +5,9 @@ continuous_variable_summary_fns() returns a named list of summary functions
 for continuous variables. Some functions include slight modifications to
 their base equivalents. For example, the min() and max() functions
 return NA instead of Inf when an empty vector is passed.
+Statistics &quot;p25&quot; and &quot;p75&quot; are calculated with quantile(type = 2),
+which matches
+SAS's default value.
 categorical_variable_summary_fns() summary functions for categorical
 variables.
 missing_variable_summary_fns() summary functions suitable for variable-level
@@ -16,6 +19,9 @@ continuous_variable_summary_fns() returns a named list of summary functions
 for continuous variables. Some functions include slight modifications to
 their base equivalents. For example, the min() and max() functions
 return NA instead of Inf when an empty vector is passed.
+Statistics &quot;p25&quot; and &quot;p75&quot; are calculated with quantile(type = 2),
+which matches
+SAS's default value.
 categorical_variable_summary_fns() summary functions for categorical
 variables.
 missing_variable_summary_fns() summary functions suitable for variable-level
@@ -78,7 +84,10 @@ summaries, such as number and rate of missing data.
 <ul><li><p><code>continuous_variable_summary_fns()</code> returns a named list of summary functions
 for continuous variables. Some functions include slight modifications to
 their base equivalents. For example, the <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min()</a></code> and <code><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max()</a></code> functions
-return <code>NA</code> instead of <code>Inf</code> when an empty vector is passed.</p></li>
+return <code>NA</code> instead of <code>Inf</code> when an empty vector is passed.
+Statistics <code>"p25"</code> and <code>"p75"</code> are calculated with <code>quantile(type = 2)</code>,
+which matches
+<a href="https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html" class="external-link">SAS's default value</a>.</p></li>
 <li><p><code>categorical_variable_summary_fns()</code> summary functions for categorical
 variables.</p></li>
 <li><p><code>missing_variable_summary_fns()</code> summary functions suitable for variable-level
