@@ -19,6 +19,7 @@ reference:
       - ard_continuous
       - ard_categorical
       - ard_crosstab
+      - ard_dichotomous
       - ard_missing
 
   - subtitle: "Model and Test Summaries"
