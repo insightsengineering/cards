@@ -16,3 +16,4 @@ an ARD data frame
 In the \verb{ard_hierarchical*()} functions, the last grouping variable is
 renamed to variable and variable_level before returning
 }
+\keyword{internal}

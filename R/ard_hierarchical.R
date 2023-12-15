@@ -142,6 +142,7 @@ ard_hierarchical_count <- function(data, variables, by = NULL, fmt_fn = NULL,
 #' @param df_result an ARD data frame
 #'
 #' @return an ARD data frame
+#' @keywords internal
 .rename_last_group_as_variable <- function(df_result) {
   df_result <- dplyr::select(df_result, -all_ard_variables())
 
