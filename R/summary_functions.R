@@ -5,6 +5,9 @@
 #'   for continuous variables. Some functions include slight modifications to
 #'   their base equivalents. For example, the `min()` and `max()` functions
 #'   return `NA` instead of `Inf` when an empty vector is passed.
+#'   Statistics `"p25"` and `"p75"` are calculated with `quantile(type = 2)`,
+#'   which matches
+#'   [SAS's default value](https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html).
 #'
 #' - `categorical_variable_summary_fns()` summary functions for categorical
 #'   variables.
@@ -88,8 +91,8 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
       mean = function(x) mean(x, na.rm = TRUE),
       sd = function(x) stats::sd(x, na.rm = TRUE),
       median = function(x) stats::median(x, na.rm = TRUE),
-      p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE) |> unname(),
-      p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE) |> unname(),
+      p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE, type=2) |> unname(),
+      p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE, type=2) |> unname(),
       min = function(x) ifelse(length(x) == 0L, .classed_NA(x), min(x, na.rm = TRUE)),
       max = function(x) ifelse(length(x) == 0L, .classed_NA(x), max(x, na.rm = TRUE))
     )
