@@ -8,18 +8,21 @@
 #' This function is primarily for developers and few consistency checks have
 #' been included.
 #'
-#' @param lst_tidy list of tidied results constructed with `eval_capture_conditions()`,
-#' e.g. `eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())`
-#' @param tidy_result_names character vector of column names expected from the
-#' tidier method. This is used to construct blank results in the event of an error.
-#' @param fun_args_to_record character vector of function argument names that
-#' are added to the ARD.
-#' @param formals the results from `formals()`, e.g. `formals(fisher.test)`.
-#' This is used to get the default argument values from unspecified arguments.
-#' @param passed_args named list of additional arguments passed to the modeling
-#' function.
-#' @param lst_ard_columns named list of values that will be added to the ARD
-#' data frame.
+#' @param lst_tidy (named `list`)\cr
+#'   list of tidied results constructed with `eval_capture_conditions()`,
+#'   e.g. `eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())`
+#' @param tidy_result_names (`character`)\cr
+#'   character vector of column names expected from the
+#'   tidier method. This is used to construct blank results in the event of an error.
+#' @param fun_args_to_record (`character`)\cr
+#'   character vector of function argument names that are added to the ARD.
+#' @param formals (`pairlist`)\cr
+#'   the results from `formals()`, e.g. `formals(fisher.test)`.
+#'   This is used to get the default argument values from unspecified arguments.
+#' @param passed_args (named `list`)\cr
+#'   named list of additional arguments passed to the modeling function.
+#' @param lst_ard_columns (named `list`)\cr
+#'   named list of values that will be added to the ARD data frame.
 #'
 #' @return a data frame
 #' @export

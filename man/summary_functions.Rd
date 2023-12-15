@@ -18,7 +18,8 @@ missing_variable_summary_fns(
 )
 }
 \arguments{
-\item{summaries}{a character vector of results to include in output.
+\item{summaries}{(\code{character})\cr
+a character vector of results to include in output.
 \itemize{
 \item \code{categorical_variable_summary_fns()}: Select one or more from 'N', 'n', 'p'
 \item \code{continuous_variable_summary_fns()}: Select one or more from
@@ -36,6 +37,9 @@ named list of summary functions
 for continuous variables. Some functions include slight modifications to
 their base equivalents. For example, the \code{min()} and \code{max()} functions
 return \code{NA} instead of \code{Inf} when an empty vector is passed.
+Statistics \code{"p25"} and \code{"p75"} are calculated with \code{quantile(type = 2)},
+which matches
+\href{https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html}{SAS's default value}.
 \item \code{categorical_variable_summary_fns()} summary functions for categorical
 variables.
 \item \code{missing_variable_summary_fns()} summary functions suitable for variable-level

@@ -2,7 +2,8 @@
 #'
 #' Relocate all columns in ARD to the standard order.
 #'
-#' @param x a data frame of class 'card'
+#' @param x (`data.frame`)\cr
+#'   a ARD data frame of class 'card'
 #'
 #' @return a data frame
 #' @export

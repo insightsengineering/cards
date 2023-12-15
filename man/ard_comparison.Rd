@@ -17,11 +17,14 @@ ard_chisqtest(data, by, variable, ...)
 ard_fishertest(data, by, variable, ...)
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{by}{character column name to compare by}
+\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+character column name to compare by}
 
-\item{variable}{character column name to be compared}
+\item{variable}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+character column name to be compared}
 
 \item{...}{arguments passed to method.}
 }

@@ -3,6 +3,7 @@ test_that("ard_categorical() univariate", {
     ard_cat_uni <- ard_categorical(mtcars, variables = "am"),
     NA
   )
+  expect_snapshot(class(ard_cat_uni))
 
   expect_equal(
     ard_cat_uni |>
@@ -34,6 +35,20 @@ test_that("ard_categorical() univariate", {
     ),
     dplyr::tibble()
   )
+
+  # works for ordered factors
+  expect_equal(
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic),
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic)
+  )
 })
 
 test_that("ard_categorical() univariate & specified denomiator", {
@@ -46,6 +61,8 @@ test_that("ard_categorical() univariate & specified denomiator", {
       ),
     NA
   )
+  expect_snapshot(class(ard_cat_new_denom))
+
 
   expect_equal(
     ard_cat_new_denom |>
@@ -79,9 +96,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
       list(
         am =
           list(
-            p = function(x) round(x * 100, digits = 3) |> as.character(),
-            N = function(x) format(round(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+            p = function(x) round5(x * 100, digits = 3) |> as.character(),
+            N = function(x) format(round5(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
           )
       )
   ) |>
@@ -177,8 +194,6 @@ test_that("ard_categorical() with strata and by arguments", {
 })
 
 test_that("ard_categorical(stat_labels) argument works", {
-
-
   # formula
   expect_snapshot(
     ard_categorical(data = ADSL,
@@ -211,5 +226,18 @@ test_that("ard_categorical(stat_labels) argument works", {
       dplyr::select(variable, stat_name, stat_label) |>
       unique()
   )
+})
 
+
+test_that("ard_categorical() messaging", {
+  # denominator arg must have by column
+  expect_snapshot(
+    ard_categorical(
+      mtcars,
+      by = cyl,
+      variables = am,
+      denominator = iris
+    ),
+    error = TRUE
+  )
 })

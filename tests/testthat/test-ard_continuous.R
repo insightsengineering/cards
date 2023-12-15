@@ -4,6 +4,7 @@ test_that("ard_continuous() works", {
       ard_continuous(mtcars, variables = c(mpg, hp), by = c(am, vs)),
     NA
   )
+  expect_snapshot(class(ard_test))
 
   expect_equal(
     get_ard_statistics(
@@ -37,9 +38,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
       list(
         AGE =
           list(
-            mean = function(x) round(x, digits = 3) |> as.character(),
-            N = function(x) format(round(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round(x, digits = 2), nsmall = 2)
+            mean = function(x) round5(x, digits = 3) |> as.character(),
+            N = function(x) format(round5(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
           )
       )
   ) |>
@@ -53,6 +54,18 @@ test_that("ard_continuous() messaging", {
   # proper error message when statistics argument mis-specified
   expect_snapshot(
     ard_continuous(mtcars, variables = "mpg", statistics = ~list(mean = "this is a string")),
+    error = TRUE
+  )
+
+  # proper error message when non-data frame passed
+  expect_snapshot(
+    ard_continuous(letters, variables = "mpg"),
+    error = TRUE
+  )
+
+  # proper error message when variables not passed
+  expect_snapshot(
+    ard_continuous(mtcars),
     error = TRUE
   )
 

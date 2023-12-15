@@ -1,11 +1,25 @@
+# ard_categorical() univariate
+
+    Code
+      class(ard_cat_uni)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
+# ard_categorical() univariate & specified denomiator
+
+    Code
+      class(ard_cat_new_denom)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
 # ard_continuous(fmt_fn) argument works
 
     Code
       as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_categorical(mtcars,
-        variables = "am", fmt_fn = list(am = list(p = function(x) as.character(round(
-          x * 100, digits = 3)), N = function(x) format(round(x, digits = 2), nsmall = 2),
-        N_obs = function(x) format(round(x, digits = 2), nsmall = 2))))), variable,
-      variable_level, stat_name, statistic, statistic_fmt))
+        variables = "am", fmt_fn = list(am = list(p = function(x) as.character(round5(
+          x * 100, digits = 3)), N = function(x) format(round5(x, digits = 2),
+        nsmall = 2), N_obs = function(x) format(round5(x, digits = 2), nsmall = 2))))),
+      variable, variable_level, stat_name, statistic, statistic_fmt))
     Output
         variable variable_level stat_name statistic statistic_fmt
       1       am              0         n        19            19
@@ -54,4 +68,12 @@
       2 AGEGR1   p         n (pct)   
       3 SEX      n         n         
       4 SEX      p         %         
+
+# ard_categorical() messaging
+
+    Code
+      ard_categorical(mtcars, by = cyl, variables = am, denominator = iris)
+    Condition
+      Error in `ard_categorical()`:
+      ! Columns "cyl" must appear in `denominator`.
 

@@ -2,22 +2,27 @@
 #'
 #' Compute Analysis Results Data (ARD) for categorical summary statistics.
 #'
-#' @param data a data frame
-#' @param by,strata columns to by/stratified by for tabulation.
-#' Arguments are similar, but with an important distinction:
+#' @param data (`data.frame`)\cr
+#' a data frame
+#' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to by/stratified by for tabulation.
+#'   Arguments are similar, but with an important distinction:
 #'
-#' `by`: results are tabulated by **all combinations** of the columns specified,
-#' including unobserved combinations and unobserved factor levels.
+#'   `by`: results are tabulated by **all combinations** of the columns specified,
+#'      including unobserved combinations and unobserved factor levels.
 #'
-#' `strata`: results are tabulated by **all _observed_ combinations** of the
-#' columns specified.
+#'   `strata`: results are tabulated by **all _observed_ combinations** of the
+#'     columns specified.
 #'
-#' Arguments may be used in conjunction with one another.
-#' @param variables columns to include in summaries. Default is `everything()`.
-#' @param denominator Specify this *optional* argument to change the denominator,
-#' e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#'   Arguments may be used in conjunction with one another.
+#' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to include in summaries. Default is `everything()`.
+#' @param denominator (`data.frame`)\cr
+#'   Specify this *optional* argument to change the denominator,
+#'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #'
-#' @param stat_labels a named list, a list of formulas, or a single formula where
+#' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.
@@ -78,7 +83,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
- # check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
+  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -89,10 +94,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     strata = {{ strata }}
   )
 
- # process_formula_selectors(data = data[variables], stat_labels = stat_labels)
   process_formula_selectors(
     data = data[variables],
-    statistics = statistics
+    statistics = statistics,
+    stat_labels = stat_labels
   )
 
   # check inputs ---------------------------------------------------------------
@@ -126,7 +131,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     .ard_categorical_recalc_N(df_result, denominator, by, variables)
 
   # process the table() results and add to the ARD data frame ------------------
-  df_result_final <- .convert_table_to_n_and_percent(df_result, data, denominator)
+  df_result_final <- .unnest_table_object(df_result, data)
 
   # if user passed formatting functions, update data frame
   df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
@@ -136,12 +141,31 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    structure(., class = c("card", class(.)))
+    structure(., class = unique(c("card", class(.))))
 }
 
 
-# this function replaces the `table()` results with n and percent results
-.convert_table_to_n_and_percent <- function(df_result, data, denominator) {
+#' Unnest `table()` to ARD Structure
+#'
+#' This function takes the 'statistic' returned from the `table()` function,
+#' and unnests it to the ARD format including the `"variable_level"` column
+#' and the scalar statistics (i.e. `"n"` and `"p"`).
+#'
+#' @param df_result an ARD data frame
+#' @param data the data frame used to construct the ARD data frame. This is used
+#' to extract the variable levels and add to the unnested data frame.
+#'
+#' @return an ARD data frame
+#' @keywords internal
+#'
+#' @examples
+#' ard_continuous(
+#'   mtcars,
+#'   variables = cyl,
+#'   statistics = cyl ~ list(table = function(x) table(x))
+#' ) |>
+#'   cards:::.unnest_table_object(data = mtcars)
+.unnest_table_object <- function(df_result, data) {
   # convert table() results to counts (n)
   df_results_tables <-
     df_result |>
@@ -160,6 +184,30 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 }
 
 # when the denominator argument is passed, recalculate the N statistic
+#' Recalculate N and p
+#'
+#' If a user passes `ard_categorical(denominator)` the N and p need to be adjusted
+#' to match the data frame in `denominator`.
+#'
+#' @param df_result an ARD data frame
+#' @param denominator a data frame
+#' @param by character vector of by variables passed in `ard_categorical(by)`
+#' @param variables vector string of the variables passed in `ard_categorical(variables)`
+#'
+#' @return an ARD data frame
+#'
+#' @keywords internal
+#' @examples
+#' ard_categorical(
+#'   mtcars,
+#'   variables = cyl
+#' ) |>
+#'   cards:::.ard_categorical_recalc_N(
+#'     denominator = rep(list(mtcars), 10) |> dplyr::bind_rows(),
+#'     by = NULL,
+#'     variables = "cyl"
+#'   ) |>
+#'   flatten_ard()
 .ard_categorical_recalc_N <- function(df_result, denominator, by, variables) {
   # create a data set for the calculation
   df_variables_only <-
@@ -184,6 +232,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       stat_name = "p",
       stat_label = "%"
     ) %>%
+    # merging on all common columns and suppressing the merged variable note
     {suppressMessages(dplyr::left_join(
       .,
       df_result_denom_N |>

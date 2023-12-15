@@ -4,7 +4,8 @@
 #' based on the entire data set, rather than stratified columns.
 #'
 #' @inheritParams ard_categorical
-#' @param by columns to compute statistics by.
+#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to compute statistics by.
 #'
 #' @return a data frame
 #' @export

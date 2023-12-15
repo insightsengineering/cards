@@ -108,8 +108,6 @@ ADSL |>
 
 ``` r
 
-# the example below ignores the time to event nature of the outcome
-# and are provided to illustrate functionality only
 survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value")) |> 

@@ -2,7 +2,8 @@
 #'
 #' Convert ARDs to Nested Lists
 #'
-#' @param x an ARD
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
 #' @return a nested list
 #' @export
@@ -37,6 +38,19 @@ as_nested_list <- function(x) {
   lst_return
 }
 
+
+#' Convert One Row to Nested List
+#'
+#' @param x an ARD data frame with one row
+#'
+#' @return expression that represents an element of a nested list
+#' @keywords internal
+#'
+#' @examples
+#' ard_continuous(mtcars, variables = mpg) |>
+#'   dplyr::filter(dplyr::row_number() %in% 1L) |>
+#'   apply_statistic_fmt_fn() |>
+#'   cards:::.one_row_ard_to_nested_list()
 .one_row_ard_to_nested_list <- function(x) {
   df_preparation <-
     x |>

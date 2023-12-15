@@ -7,7 +7,8 @@
 apply_statistic_fmt_fn(x)
 }
 \arguments{
-\item{x}{an ARD data frame}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
 an ARD data frame
