@@ -49,6 +49,9 @@
     <loc>https://insightsengineering.github.io/cards/reference/ard_crosstab.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_dichotomous.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_missing.html</loc>
   </url>
   <url>
@@ -85,6 +88,9 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-calculate_stats_as_ard.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-check_dichotomous_values.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-check_fmt_string.html</loc>
   </url>
   <url>
@@ -119,6 +125,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/max_value.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/nest_for_ard.html</loc>
