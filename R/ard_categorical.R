@@ -83,7 +83,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
- # check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
+  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -94,10 +94,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     strata = {{ strata }}
   )
 
- # process_formula_selectors(data = data[variables], stat_labels = stat_labels)
   process_formula_selectors(
     data = data[variables],
-    statistics = statistics
+    statistics = statistics,
+    stat_labels = stat_labels
   )
 
   # check inputs ---------------------------------------------------------------
@@ -141,7 +141,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    structure(., class = c("card", class(.)))
+    structure(., class = unique(c("card", class(.))))
 }
 
 

@@ -3,6 +3,7 @@ test_that("ard_categorical() univariate", {
     ard_cat_uni <- ard_categorical(mtcars, variables = "am"),
     NA
   )
+  expect_snapshot(class(ard_cat_uni))
 
   expect_equal(
     ard_cat_uni |>
@@ -60,6 +61,8 @@ test_that("ard_categorical() univariate & specified denomiator", {
       ),
     NA
   )
+  expect_snapshot(class(ard_cat_new_denom))
+
 
   expect_equal(
     ard_cat_new_denom |>

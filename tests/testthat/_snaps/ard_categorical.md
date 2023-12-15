@@ -1,3 +1,17 @@
+# ard_categorical() univariate
+
+    Code
+      class(ard_cat_uni)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
+# ard_categorical() univariate & specified denomiator
+
+    Code
+      class(ard_cat_new_denom)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
 # ard_continuous(fmt_fn) argument works
 
     Code
