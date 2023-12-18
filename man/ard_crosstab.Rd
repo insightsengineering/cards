@@ -4,7 +4,13 @@
 \alias{ard_crosstab}
 \title{ARD Crosstab}
 \usage{
-ard_crosstab(data, variables, by)
+ard_crosstab(
+  data,
+  variables,
+  by,
+  statistics = everything() ~ categorical_variable_summary_fns(),
+  percent = c("cell", "column", "row")
+)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -14,7 +20,24 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to compute statistics by.}
+a single column to compute statistics by.}
+
+\item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
+
+The value assigned to each variable must also be a named list, where the names
+are used to reference a function and the element is the function object.
+Typically, this function will return a scalar statistic, but a function that
+returns a named list of results is also acceptable, e.g.
+\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
+will be less clear in this setting.}
+
+\item{percent}{(\code{string})\cr
+one of \code{c("cell", "column", "row")} that determines how the percentage is
+calculated. Default is \code{"cell"}}
 }
 \value{
 a data frame
