@@ -7,9 +7,11 @@
 shuffle_ard(x, trim = TRUE)
 }
 \arguments{
-\item{x}{an ARD object}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame}
 
-\item{trim}{Boolean representing whether or not to trim away statistic-level metadata and filter only on numeric statistic values.}
+\item{trim}{(\code{logical(1)})\cr
+Boolean representing whether or not to trim away statistic-level metadata and filter only on numeric statistic values.}
 }
 \value{
 data frame
