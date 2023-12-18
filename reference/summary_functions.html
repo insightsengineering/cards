@@ -9,7 +9,9 @@ Statistics &quot;p25&quot; and &quot;p75&quot; are calculated with quantile(type
 which matches
 SAS's default value.
 categorical_variable_summary_fns() summary functions for categorical
-variables.
+variables. Options are c(&quot;n&quot;, &quot;N&quot;, &quot;p&quot;). If a user requests, for example,
+only &quot;p&quot;, the function will return n and N as well, since they are
+needed to calculate &quot;p&quot;.
 missing_variable_summary_fns() summary functions suitable for variable-level
 summaries, such as number and rate of missing data.
 
@@ -23,7 +25,9 @@ Statistics &quot;p25&quot; and &quot;p75&quot; are calculated with quantile(type
 which matches
 SAS's default value.
 categorical_variable_summary_fns() summary functions for categorical
-variables.
+variables. Options are c(&quot;n&quot;, &quot;N&quot;, &quot;p&quot;). If a user requests, for example,
+only &quot;p&quot;, the function will return n and N as well, since they are
+needed to calculate &quot;p&quot;.
 missing_variable_summary_fns() summary functions suitable for variable-level
 summaries, such as number and rate of missing data.
 
@@ -89,7 +93,9 @@ Statistics <code>"p25"</code> and <code>"p75"</code> are calculated with <code>q
 which matches
 <a href="https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html" class="external-link">SAS's default value</a>.</p></li>
 <li><p><code>categorical_variable_summary_fns()</code> summary functions for categorical
-variables.</p></li>
+variables. Options are <code>c("n", "N", "p")</code>. If a user requests, for example,
+only <code>"p"</code>, the function will return <code>n</code> and <code>N</code> as well, since they are
+needed to calculate <code>"p"</code>.</p></li>
 <li><p><code>missing_variable_summary_fns()</code> summary functions suitable for variable-level
 summaries, such as number and rate of missing data.</p></li>
 </ul></div>

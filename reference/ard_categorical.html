@@ -97,13 +97,7 @@ columns specified.</p>
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. <code>list(mpg = list(mean = \(x) mean(x)))</code>.</p>
-<p>The value assigned to each variable must also be a named list, where the names
-are used to reference a function and the element is the function object.
-Typically, this function will return a scalar statistic, but a function that
-returns a named list of results is also acceptable, e.g.
-<code>list(conf.low = -1, conf.high = 1)</code>. However, when errors occur, the messaging
-will be less clear in this setting.</p></dd>
+e.g. <code>list(mpg = categorical_variable_summary_fns())</code>.</p></dd>
 
 
 <dt>denominator</dt>
@@ -152,20 +146,6 @@ The argument expects a data frame, and the data frame must include the columns
 specified in <code>ard_categorical(by=)</code> (strata columns are not considered).
 The updated <code>N</code> and <code>length</code> elements will be updated to be calculated as
 the number of rows in each combination of the <code>by</code> variables.</p>
-<p>Take an example where we need to update the denominator to be subjects enrolled
-in a trial, e.g. tabulating the number of AEs that occurred within an SOC
-where some subjects may not have experienced an AE and would not be represented
-in the ADAE data set. All patients appear in ADSL, however.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/ard_categorical.html">ard_categorical</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span></span>
-<span>    <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">ADSL</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"ARM"</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">AOCCSFL</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"Y"</span><span class="op">)</span>,</span>
-<span>  by <span class="op">=</span> <span class="st">"ARM"</span>,</span>
-<span>  variables <span class="op">=</span> <span class="st">"AESOC"</span>,</span>
-<span>  denominator <span class="op">=</span> <span class="va">ADSL</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
     </div>
 
     <div class="section level2">

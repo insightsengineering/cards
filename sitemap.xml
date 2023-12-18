@@ -52,6 +52,9 @@
     <loc>https://insightsengineering.github.io/cards/reference/ard_dichotomous.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/ard_hierarchical.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_missing.html</loc>
   </url>
   <url>
@@ -107,6 +110,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-purrr_list_flatten.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-rename_last_group_as_variable.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-unique_and_sorted.html</loc>
