@@ -77,7 +77,8 @@ NULL
 #' @export
 ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
-                            denominator = NULL, fmt_fn = NULL,
+                            denominator = NULL,
+                            fmt_fn = everything() ~ default_fmt_fns(),
                             stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -122,6 +123,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       by = all_of(by),
       strata = all_of(strata),
       statistics = statistics,
+      fmt_fn = fmt_fn,
       stat_labels = stat_labels
     )
 
@@ -132,9 +134,6 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .unnest_table_object(df_result, data)
-
-  # if user passed formatting functions, update data frame
-  df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>

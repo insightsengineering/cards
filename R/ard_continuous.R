@@ -54,7 +54,7 @@ ard_continuous <- function(data,
                            by = NULL,
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
-                           fmt_fn = NULL,
+                           fmt_fn = everything() ~ default_fmt_fns(),
                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -62,10 +62,12 @@ ard_continuous <- function(data,
   check_class_data_frame(data = data)
   check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
   check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
+  check_class(class = c("list", "formula"), fmt_fn = fmt_fn, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
+
   process_formula_selectors(
     data = data[variables],
     statistics = statistics,
@@ -75,6 +77,7 @@ ard_continuous <- function(data,
   fill_formula_selectors(
     data = data[variables],
     statistics = formals(cards::ard_continuous)[["statistics"]] |> eval(),
+    fmt_fn = formals(cards::ard_continuous)[["fmt_fn"]] |> eval(),
     stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
   )
 
@@ -89,8 +92,11 @@ ard_continuous <- function(data,
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
 
+  # final processing of fmt_fn -------------------------------------------------
+  df_fmt_fn <- .process_stat_arg(fmt_fn, col_name = "statistic_fmt_fn")
+
   # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- .process_stat_labels(stat_labels)
+  df_stat_labels <- .process_stat_arg(stat_labels, col_name = "stat_label")
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -121,8 +127,8 @@ ard_continuous <- function(data,
       by = c("variable", "stat_name")
     ) |>
     dplyr::left_join(
-      .default_statistic_formatters(),
-      by = "stat_name"
+      df_fmt_fn,
+      by = c("variable", "stat_name")
     ) |>
     dplyr::mutate(
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
@@ -131,9 +137,6 @@ ard_continuous <- function(data,
         lapply(function(fn) fn %||% function(x) format(round5(x, digits = 0), nsmall = 0))
     )
 
-  # if user passed formatting functions, update data frame
-  df_results <- .update_with_fmt_fn(df_results, fmt_fn)
-
   # add meta data and class
   df_results |>
     dplyr::mutate(context = "continuous") |>
@@ -141,44 +144,6 @@ ard_continuous <- function(data,
     tidy_ard_column_order() %>%
     structure(., class = c("card", class(.)))
 }
-
-#' Update Formatting Functions
-#'
-#' Updates the default formatting functions with those passed in this function.
-#'
-#' @param x a ARD object of class 'cards'
-#' @inheritParams ard_continuous
-#'
-#' @keywords internal
-#' @return a ARD object of class 'cards'
-.update_with_fmt_fn <- function(x, fmt_fn) {
-  if (rlang::is_empty(fmt_fn)) return(x)
-
-  # recast the argument values as a data frame
-  df_fmt_fn <-
-    dplyr::tibble(variable = names(fmt_fn)) |>
-    dplyr::mutate(
-      data =
-        lapply(
-          .data$variable,
-          function(x) {
-            dplyr::tibble(
-              stat_name = names(fmt_fn[[x]]),
-              statistic_fmt_fn = fmt_fn[[x]]
-            )
-          }
-        )
-    ) |>
-    tidyr::unnest(cols = "data")
-
-  x |>
-    dplyr::rows_update(
-      df_fmt_fn,
-      by = c("variable", "stat_name"),
-      unmatched = "ignore"
-    )
-}
-
 
 #' Calculate Continuous Statistics
 #'
@@ -230,28 +195,28 @@ ard_continuous <- function(data,
 
 #' Process Statistic Labels
 #'
-#' @param stat_labels named list
-#'
+#' @param stat_arg_list named list
+#' @param col_name column name in the ARD to make for the stat arg
 #' @return named list
 #' @keywords internal
 #' @examples
 #' list(AGE = list(c("N", "n") ~ "{n} / {N}")) |>
-#'   cards:::.process_stat_labels()
-.process_stat_labels <- function(stat_labels){
+#'   cards:::.process_stat_arg(col_name = "stat_label")
+.process_stat_arg <- function(stat_arg_list, col_name){
 
   # create the tibble of stat names and labels 1 variable at a time
    # both the stat_labels and statistics are a named (variable-level) list of stat info
-  stat_labels <- map(stat_labels, function(x){
+  args_tbl <- map(stat_arg_list, function(x, y){
     # handle the named list or formula & create tibble
     compute_formula_selector(data=NULL, x=x) %>%
       {dplyr::tibble(
         stat_name = names(.),
-        stat_label = unlist(.) |> unname()
+        !!col_name := unlist(.) |> unname()
       )}
   })
 
   # stack result
-  stat_labels |>
+  args_tbl |>
     dplyr::bind_rows(.id = "variable")
 
 }
@@ -280,6 +245,8 @@ ard_continuous <- function(data,
     dplyr::mutate(variable = .env$variable) |>
     dplyr::rename(statistic = "result")
 }
+
+
 
 
 #' Default formatting functions

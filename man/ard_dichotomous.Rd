@@ -12,7 +12,7 @@ ard_dichotomous(
   values = max_value(data[variables]),
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
-  fmt_fn = NULL,
+  fmt_fn = everything() ~ default_fmt_fns(),
   stat_labels = everything() ~ default_stat_labels()
 )
 }

@@ -10,7 +10,7 @@ ard_continuous(
   by = NULL,
   strata = NULL,
   statistics = everything() ~ continuous_variable_summary_fns(),
-  fmt_fn = NULL,
+  fmt_fn = everything() ~ default_fmt_fns(),
   stat_labels = everything() ~ default_stat_labels()
 )
 }

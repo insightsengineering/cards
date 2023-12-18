@@ -9,7 +9,7 @@ ard_missing(
   variables,
   by = NULL,
   statistics = everything() ~ missing_variable_summary_fns(),
-  fmt_fn = NULL,
+  fmt_fn = everything() ~ default_fmt_fns(),
   stat_labels = everything() ~ default_stat_labels()
 )
 }
