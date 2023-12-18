@@ -43,14 +43,7 @@ which returns the largest/last value after a sort.}
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
-
-The value assigned to each variable must also be a named list, where the names
-are used to reference a function and the element is the function object.
-Typically, this function will return a scalar statistic, but a function that
-returns a named list of results is also acceptable, e.g.
-\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
-will be less clear in this setting.}
+e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
 \item{denominator}{(\code{data.frame})\cr
 Specify this \emph{optional} argument to change the denominator,

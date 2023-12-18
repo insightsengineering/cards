@@ -2,9 +2,15 @@
 #'
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
+#' - `ard_hierarchical()` includes summaries for the last variable listed
+#'   in the `variables` argument, nested within the other variables included.
+#' - `ard_hierarchical_count()` includes summaries for _all_ variables
+#'   listed in the `variables` argument each summary nested within the preceding
+#'   variables, e.g. `variables=c(AESOC, AETERM)` summarizes `AETERM` nested
+#'   in `AESOC`, and also summarizes the counts of `AESOC`.
 #'
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   variables to perform the nested/hierarchical tabulations within
+#'   variables to perform the nested/hierarchical tabulations within.
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform tabulations by. All combinations of the variables
 #'   specified here appear in results. Default is `NULL`

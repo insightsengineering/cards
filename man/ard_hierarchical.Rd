@@ -28,7 +28,7 @@ ard_hierarchical_count(
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-variables to perform the nested/hierarchical tabulations within}
+variables to perform the nested/hierarchical tabulations within.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to perform tabulations by. All combinations of the variables
@@ -38,14 +38,7 @@ specified here appear in results. Default is \code{NULL}}
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
-
-The value assigned to each variable must also be a named list, where the names
-are used to reference a function and the element is the function object.
-Typically, this function will return a scalar statistic, but a function that
-returns a named list of results is also acceptable, e.g.
-\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
-will be less clear in this setting.}
+e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
 \item{denominator}{(\code{data.frame})\cr
 Specify this \emph{optional} argument to change the denominator,
@@ -69,6 +62,14 @@ an ARD data frame
 \description{
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
+\itemize{
+\item \code{ard_hierarchical()} includes summaries for the last variable listed
+in the \code{variables} argument, nested within the other variables included.
+\item \code{ard_hierarchical_count()} includes summaries for \emph{all} variables
+listed in the \code{variables} argument each summary nested within the preceding
+variables, e.g. \code{variables=c(AESOC, AETERM)} summarizes \code{AETERM} nested
+in \code{AESOC}, and also summarizes the counts of \code{AESOC}.
+}
 }
 \examples{
 ard_hierarchical(
