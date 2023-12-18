@@ -28,8 +28,8 @@
        2 Placebo AGE      Mean(SD)      mean          75.2  continuous
        3 Placebo AGE      Mean(SD)      sd             8.59 continuous
        4 Placebo AGE      median        median        76    continuous
-       5 Placebo AGE      p25           p25           69.2  continuous
-       6 Placebo AGE      p75           p75           81.8  continuous
+       5 Placebo AGE      p25           p25           69    continuous
+       6 Placebo AGE      p75           p75           82    continuous
        7 Placebo AGE      min           min           52    continuous
        8 Placebo AGE      max           max           89    continuous
        9 Placebo AGE      Vector Length N_obs         86    missing   
@@ -48,8 +48,8 @@
        2 Placebo AGE      Mean(SD)      mean          75.2  continuous
        3 Placebo AGE      Mean(SD)      sd             8.59 continuous
        4 Placebo AGE      median        median        76    continuous
-       5 Placebo AGE      p25           p25           69.2  continuous
-       6 Placebo AGE      p75           p75           81.8  continuous
+       5 Placebo AGE      p25           p25           69    continuous
+       6 Placebo AGE      p75           p75           82    continuous
        7 Placebo AGE      min           min           52    continuous
        8 Placebo AGE      max           max           89    continuous
        9 Placebo AGE      Vector Length N_obs         86    missing   

@@ -16,6 +16,15 @@ test_that("shuffle/trim works", {
   ard_grp_shuffled <- ard_grp |> shuffle_ard(trim = FALSE) |> dplyr::filter(!stat_name == "N")
   expect_true(all(!is.na(ard_grp_shuffled$ARM)))
 
+  ard_hier <- ard_hierarchical_count(
+    data = ADAE,
+    variables = c(AESOC, AETERM),
+    by = TRTA
+  )
+  ard_hier_shuff <- ard_hier |> shuffle_ard(trim = FALSE)
+  expect_true(all(!is.na(ard_hier_shuff$AESOC)))
+
+
   # shuffle many different formats
   ard_test <-  bind_ard(
     ard_categorical(ADSL, variables = "ARM"),
