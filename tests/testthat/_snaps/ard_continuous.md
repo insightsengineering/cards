@@ -18,7 +18,7 @@
         variable stat_name statistic statistic_fmt
       1      AGE         N       254        254.00
       2      AGE      mean  75.08661        75.087
-      3      AGE    median        77            77
+      3      AGE    median        77          77.0
 
 ---
 
@@ -30,7 +30,7 @@
     Output
         variable stat_name statistic statistic_fmt
       1      AGE      mean  75.08661        75.087
-      2    BMIBL      mean  24.67233            25
+      2    BMIBL      mean  24.67233          24.7
 
 # ard_continuous() messaging
 

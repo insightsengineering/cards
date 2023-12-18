@@ -12,7 +12,7 @@ test_that("apply_statistic_fmt_fn() works", {
       apply_statistic_fmt_fn() |>
       dplyr::pull(statistic_fmt) |>
       unlist(),
-    c("20", "6")
+    c("20.1", "6.0")
   )
 
   # no errors when there is no formatting function

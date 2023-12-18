@@ -134,7 +134,7 @@ ard_continuous <- function(data,
       stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
       statistic_fmt_fn =
         .data$statistic_fmt_fn |>
-        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 0), nsmall = 0))
+        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 1), nsmall = 1))
     )
 
   # add meta data and class
