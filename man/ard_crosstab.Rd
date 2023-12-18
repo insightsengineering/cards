@@ -2,7 +2,7 @@
 % Please edit documentation in R/ard_crosstab.R
 \name{ard_crosstab}
 \alias{ard_crosstab}
-\title{ARD Crosstab}
+\title{Cross Tabulation ARD}
 \usage{
 ard_crosstab(
   data,
@@ -43,8 +43,8 @@ calculated. Default is \code{"cell"}}
 a data frame
 }
 \description{
-Similar to \code{ard_categorical()} except the percentages and N statistics are
-based on the entire data set, rather than stratified columns.
+Produces summary statistics similar to those that would appear in a
+cross tabulation of two variables.
 }
 \examples{
 ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")

@@ -1,4 +1,4 @@
-#' ARD Crosstab
+#' Cross Tabulation ARD
 #'
 #' Produces summary statistics similar to those that would appear in a
 #' cross tabulation of two variables.
