@@ -10,7 +10,9 @@
 #'   [SAS's default value](https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html).
 #'
 #' - `categorical_variable_summary_fns()` summary functions for categorical
-#'   variables.
+#'   variables. Options are `c("n", "N", "p")`. If a user requests, for example,
+#'   only `"p"`, the function will return `n` and `N` as well, since they are
+#'   needed to calculate `"p"`.
 #'
 #' - `missing_variable_summary_fns()` summary functions suitable for variable-level
 #'   summaries, such as number and rate of missing data.

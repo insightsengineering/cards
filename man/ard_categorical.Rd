@@ -38,14 +38,7 @@ Arguments may be used in conjunction with one another.}
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
-
-The value assigned to each variable must also be a named list, where the names
-are used to reference a function and the element is the function object.
-Typically, this function will return a scalar statistic, but a function that
-returns a named list of results is also acceptable, e.g.
-\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
-will be less clear in this setting.}
+e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
 \item{denominator}{(\code{data.frame})\cr
 Specify this \emph{optional} argument to change the denominator,
@@ -87,23 +80,6 @@ The argument expects a data frame, and the data frame must include the columns
 specified in \code{ard_categorical(by=)} (strata columns are not considered).
 The updated \code{N} and \code{length} elements will be updated to be calculated as
 the number of rows in each combination of the \code{by} variables.
-
-Take an example where we need to update the denominator to be subjects enrolled
-in a trial, e.g. tabulating the number of AEs that occurred within an SOC
-where some subjects may not have experienced an AE and would not be represented
-in the ADAE data set. All patients appear in ADSL, however.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_categorical(
-  data =
-    ADAE |>
-      dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
-      dplyr::filter(AOCCSFL \%in\% "Y"),
-  by = "ARM",
-  variables = "AESOC",
-  denominator = ADSL
-) |>
-  flatten_ard()
-}\if{html}{\out{</div>}}
 }
 
 \examples{

@@ -58,5 +58,5 @@ ard_attributes <- function(data, variables = everything(), label = NULL) {
       ),
       context = "attributes"
     ) %>%
-    structure(., class = c("card", class(.)))
+    {structure(., class = c("card", class(.)))}
 }
