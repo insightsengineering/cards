@@ -196,7 +196,7 @@ ard_continuous <- function(data,
 #' Process Statistic Labels
 #'
 #' @param stat_arg_list named list
-#' @param col_name column name in the ARD to make for the stat arg
+#' @param col_name column name in the ARD to make for the stat argument
 #' @return named list
 #' @keywords internal
 #' @examples

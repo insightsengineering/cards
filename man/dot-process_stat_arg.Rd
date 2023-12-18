@@ -9,7 +9,7 @@
 \arguments{
 \item{stat_arg_list}{named list}
 
-\item{col_name}{column name in the ARD to make for the stat arg}
+\item{col_name}{column name in the ARD to make for the stat argument}
 }
 \value{
 named list
