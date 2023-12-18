@@ -69,15 +69,12 @@ ard_continuous <- function(data,
   process_formula_selectors(
     data = data[variables],
     statistics = statistics,
-    fmt_fn = fmt_fn
+    fmt_fn = fmt_fn,
+    stat_labels = stat_labels
   )
   fill_formula_selectors(
     data = data[variables],
-    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
-  )
-  process_formula_selectors(data = data[variables], stat_labels = stat_labels)
-  fill_formula_selectors(
-    data = data[variables],
+    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval(),
     stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
   )
 
