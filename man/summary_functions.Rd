@@ -41,7 +41,9 @@ Statistics \code{"p25"} and \code{"p75"} are calculated with \code{quantile(type
 which matches
 \href{https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html}{SAS's default value}.
 \item \code{categorical_variable_summary_fns()} summary functions for categorical
-variables.
+variables. Options are \code{c("n", "N", "p")}. If a user requests, for example,
+only \code{"p"}, the function will return \code{n} and \code{N} as well, since they are
+needed to calculate \code{"p"}.
 \item \code{missing_variable_summary_fns()} summary functions suitable for variable-level
 summaries, such as number and rate of missing data.
 }
