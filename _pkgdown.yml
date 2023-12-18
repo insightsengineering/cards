@@ -49,6 +49,7 @@ reference:
       - default_stat_labels
       - round5
       - max_value
+      - shuffle_ard
 
   - title: "Data"
     contents:

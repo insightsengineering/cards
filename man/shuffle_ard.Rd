@@ -17,7 +17,7 @@ Boolean representing whether or not to trim away statistic-level metadata and fi
 data frame
 }
 \description{
-This function ingests an ARD object and shuffles the information to prepare for analysis. Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1 column, backfills missing grouping values from the variable levels where possible, and optionally trims statistics-level metadata.
+This function ingests an ARD object and shuffles the information to prepare for analysis. Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1 column, back fills missing grouping values from the variable levels where possible, and optionally trims statistics-level metadata.
 }
 \examples{
 bind_ard(
