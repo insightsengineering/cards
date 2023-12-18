@@ -142,7 +142,7 @@ ard_continuous <- function(data,
     dplyr::mutate(context = "continuous") |>
     dplyr::arrange(dplyr::across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
-    structure(., class = c("card", class(.)))
+    {structure(., class = c("card", class(.)))}
 }
 
 #' Calculate Continuous Statistics

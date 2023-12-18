@@ -20,7 +20,11 @@
 #' @param denominator (`data.frame`)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
-#'
+#' @param statistics ([`formula-list-selector`][selecting_syntax])\cr
+#'   a named list, a list of formulas,
+#'   or a single formula where the list element is a named list of functions
+#'   (or the RHS of a formula),
+#'   e.g. `list(mpg = categorical_variable_summary_fns())`.
 #' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
@@ -45,24 +49,6 @@
 #' specified in `ard_categorical(by=)` (strata columns are not considered).
 #' The updated `N` and `length` elements will be updated to be calculated as
 #' the number of rows in each combination of the `by` variables.
-#'
-#' Take an example where we need to update the denominator to be subjects enrolled
-#' in a trial, e.g. tabulating the number of AEs that occurred within an SOC
-#' where some subjects may not have experienced an AE and would not be represented
-#' in the ADAE data set. All patients appear in ADSL, however.
-#'
-#' ```r
-#' ard_categorical(
-#'   data =
-#'     ADAE |>
-#'       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
-#'       dplyr::filter(AOCCSFL %in% "Y"),
-#'   by = "ARM",
-#'   variables = "AESOC",
-#'   denominator = ADSL
-#' ) |>
-#'   flatten_ard()
-#' ```
 #'
 #' @return a data frame
 #' @name ard_categorical
@@ -140,7 +126,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     dplyr::arrange(dplyr::across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    structure(., class = unique(c("card", class(.))))
+    {structure(., class = unique(c("card", class(.))))}
 }
 
 
