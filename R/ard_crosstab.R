@@ -1,7 +1,7 @@
 #' ARD Crosstab
 #'
-#' Similar to `ard_categorical()` except the percentages and N statistics are
-#' based on the entire data set, rather than stratified columns.
+#' Produces summary statistics similar to those that would appear in a
+#' cross tabulation of two variables.
 #'
 #' @inheritParams ard_categorical
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -55,14 +55,24 @@ ard_crosstab <- function(data, variables, by,
   lapply(
     variables,
     FUN = function(variable) {
-      ard_categorical(data, variables = all_of(by), by = all_of(variable))
+      ard_categorical(data, variables = all_of(by), by = all_of(variable)) %>%
+        # filling in N stat across rows
+        {dplyr::bind_rows(
+          dplyr::filter(., !.data$stat_name %in% "N"),
+          dplyr::filter(., .data$stat_name %in% "N") |>
+            dplyr::mutate(
+              variable_level = list(.$variable_level |> unique() |> compact())
+            ) |>
+            tidyr::unnest(.data$variable_level)
+        )}
     }
   ) |>
     dplyr::bind_rows() |>
-    dplyr::rename(group1 = "variable",
-                  group1_level = "variable_level",
-                  variable = "group1",
-                  variable_level = "group1_level")
+    dplyr::rename(
+      group1 = "variable", group1_level = "variable_level",
+      variable = "group1", variable_level = "group1_level"
+    ) |>
+    cards::tidy_ard_column_order()
 }
 
 .ard_crosstab_cell <- function(data, variables, by, statistics) {

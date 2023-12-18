@@ -1,7 +1,6 @@
 test_that("ARD helpers works", {
   ard <-
-    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-    dplyr::mutate()
+    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
   expect_error(
     get_ard_statistics(
@@ -15,5 +14,20 @@ test_that("ARD helpers works", {
   expect_error(
     bind_ard(ard, ard, .update = TRUE),
     NA
+  )
+})
+
+test_that("ARD helpers messaging", {
+  ard <-
+    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+
+  expect_snapshot(
+    bind_ard(ard, ard, .update = letters),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    bind_ard(ard, ard, .update = FALSE),
+    error = TRUE
   )
 })

@@ -93,8 +93,8 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
       median = function(x) stats::median(x, na.rm = TRUE),
       p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE, type=2) |> unname(),
       p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE, type=2) |> unname(),
-      min = function(x) ifelse(length(x) == 0L, .classed_NA(x), min(x, na.rm = TRUE)),
-      max = function(x) ifelse(length(x) == 0L, .classed_NA(x), max(x, na.rm = TRUE))
+      min = function(x) ifelse(length(x) == 0L, NA, min(x, na.rm = TRUE)),
+      max = function(x) ifelse(length(x) == 0L, NA, max(x, na.rm = TRUE))
     )
 
   # return list of functions ---------------------------------------------------
@@ -125,15 +125,4 @@ missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_no
         res
       }
   )
-}
-
-
-
-# returns NA the same class as the input
-.classed_NA <- function(x, length = 1L) {
-  if (inherits(x, "character")) return(rep_len(NA_character_, length.out = length))
-  if (inherits(x, "integer")) return(rep_len(NA_integer_, length.out = length))
-  if (inherits(x, "numeric")) return(rep_len(NA_real_, length.out = length))
-
-  rep_len(NA, length.out = length)
 }
