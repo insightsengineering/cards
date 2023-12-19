@@ -54,11 +54,11 @@ apply_statistic_fmt_fn <- function(x) {
 
     fn <- function(y) {
       fmt <- format(round5(y * scale, digits = decimal_n), nsmall = decimal_n)
-      if (nchar(fmt) > width) {
-        cli::cli_warn("Formatted statistic, {.val {fmt}}, is longer than allowed by format {.val {x}}", call = call)
-        return(fmt)
-      }
-      paste0(strrep(" ", width - nchar(fmt)), fmt)
+      ifelse(
+        nchar(fmt) >= width,
+        fmt,
+        paste0(strrep(" ", width - nchar(fmt)), fmt)
+      )
     }
 
     return(fn)
