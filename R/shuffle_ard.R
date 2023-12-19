@@ -164,7 +164,7 @@ shuffle_ard <- function(x, trim = TRUE){
 
     # rename as the variable level within the unique levels of the grouping variable
     x <- x |>
-      dplyr::mutate(!!v := forcats::fct_inorder(.data[[v]])) |>
+      dplyr::mutate(!!v := fct_inorder(.data[[v]])) |>
       dplyr::group_by(.data[[v]]) |>
       dplyr::group_split()|>
       map(function(dat){
@@ -196,7 +196,7 @@ shuffle_ard <- function(x, trim = TRUE){
   # within each variable, check if there is a match against one of the grouping cols
   # if the corresponding value in that grouping col is missing, backfill with the variable level
   x %>%
-    dplyr::mutate(variable = forcats::fct_inorder(.data$variable)) |>
+    dplyr::mutate(variable = fct_inorder(.data$variable)) |>
     dplyr::group_by(.data$variable) |>
     dplyr::group_split() |>
     map(function(dat){
