@@ -48,9 +48,9 @@ default_stat_labels <- function() {
 default_fmt_fns <- function(){
 
   list(
-    c("n", "N", "N_obs", "N_miss", "N_nonmiss") ~ function(x) format(round5(x, digits = 0), nsmall = 0),
+    c("n", "N", "N_obs", "N_miss", "N_nonmiss") ~ 0L,
     c("p", "p_cell", "p_miss", "p_nonmiss") ~  function(x) format(round5(x * 100, digits = 1), nsmall = 1),
-    everything() ~ function(x) format(round5(x, digits = 1), nsmall = 1)
+    everything() ~ 1L
   )
 
 }

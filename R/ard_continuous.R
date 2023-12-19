@@ -131,7 +131,8 @@ ard_continuous <- function(data,
   # final processing of stat labels -------------------------------------------------
   df_stat_labels <- .process_stat_arg(data = df_results,
                                       stat_arg_list = stat_labels,
-                                      col_name = "stat_label")
+                                      col_name = "stat_label") |>
+  tidyr::unnest("stat_label")
 
   df_results_fmt <-
     df_results |>
@@ -228,14 +229,20 @@ ard_continuous <- function(data,
     # handle the named list or formula & create tibble
     #   simply ignore any formats for stats not found in data,
     #   if multiple specified for 1 stat, keep the first
-    compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
+    stats_df <- compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
       {dplyr::tibble(
         stat_name = names(.),
-        !!col_name := unlist(.) |> unname()
+        !!col_name := unname(.)
       )} |>
       dplyr::group_by(.data$stat_name) |>
       dplyr::slice(1) |>
       dplyr::ungroup()
+
+    if (!is.list(stats_df[[col_name]])){
+      stats_df[[col_name]] <- as.list(stats_df[[col_name]])
+    }
+
+    stats_df
   })
 
   # stack result
