@@ -1,3 +1,10 @@
+# ard_continuous() works
+
+    Code
+      class(ard_test)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
 # ard_continuous(fmt_fn) argument works
 
     Code

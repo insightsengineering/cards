@@ -33,14 +33,6 @@
     Code
       apply_statistic_fmt_fn(dplyr::mutate(ard_fmt_checks, statistic = lapply(
         statistic, function(x) x * 1000), statistic_fmt_fn = list("xx", "xx")))
-    Condition
-      Warning:
-      There were 2 warnings in `dplyr::mutate()`.
-      The first warning was:
-      i In argument: `statistic_fmt = map2(...)`.
-      Caused by warning:
-      ! Formatted statistic, "20091", is longer than allowed by format "xx"
-      i Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.
     Output
       # A tibble: 2 x 9
         variable context stat_name stat_label statistic statistic_fmt statistic_fmt_fn
