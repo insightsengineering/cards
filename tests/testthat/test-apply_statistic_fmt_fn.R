@@ -96,6 +96,7 @@ test_that("apply_statistic_fmt_fn() error messaging", {
     error = TRUE
   )
 
+  # everything still works when the formatted value is longer than the xxx string
   expect_snapshot(
     ard_fmt_checks |>
       dplyr::mutate(
