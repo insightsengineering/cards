@@ -15,7 +15,7 @@
       [1] 11
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$N$statistic_fmt
-      [1] "11.0"
+      [1] "11"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$N$warning
       NULL
@@ -155,7 +155,7 @@
       [1] 7
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$N$statistic_fmt
-      [1] "7.0"
+      [1] "7"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$N$warning
       NULL
@@ -295,7 +295,7 @@
       [1] 14
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$N$statistic_fmt
-      [1] "14.0"
+      [1] "14"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$N$warning
       NULL

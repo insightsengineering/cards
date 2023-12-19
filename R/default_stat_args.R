@@ -49,10 +49,14 @@ default_fmt_fns <- function(){
 
   list(
     n = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N_obs = function(x) format(round5(x, digits = 0), nsmall = 0),
     N_miss = function(x) format(round5(x, digits = 0), nsmall = 0),
-    length = function(x) format(round5(x, digits = 0), nsmall = 0),
+    N_nonmiss = function(x) format(round5(x, digits = 0), nsmall = 0),
     p = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
-    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
+    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
+    p_miss = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
+    p_nonmiss = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
   )
 
 }
