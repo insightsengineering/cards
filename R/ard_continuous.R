@@ -92,12 +92,6 @@ ard_continuous <- function(data,
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
 
-  # final processing of fmt_fn -------------------------------------------------
-  df_fmt_fn <- .process_stat_arg(fmt_fn, col_name = "statistic_fmt_fn")
-
-  # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- .process_stat_arg(stat_labels, col_name = "stat_label")
-
   # calculate statistics -------------------------------------------------------
   df_nested <-
     data |>
@@ -117,11 +111,30 @@ ard_continuous <- function(data,
       omit_na = TRUE
     )
 
-  # unnest results and add default function labels and formatters
+  # unnest results
   df_results <-
     df_nested |>
     dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
-    tidyr::unnest(cols = "..ard_all_stats..") |>
+    tidyr::unnest(cols = "..ard_all_stats..")
+
+  # add default function labels and formatters
+  df_results <-
+    df_nested |>
+    dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
+    tidyr::unnest(cols = "..ard_all_stats..")
+
+  # final processing of fmt_fn -------------------------------------------------
+  df_fmt_fn <- .process_stat_arg(data = df_results,
+                                 stat_arg_list = fmt_fn,
+                                 col_name = "statistic_fmt_fn")
+
+  # final processing of stat labels -------------------------------------------------
+  df_stat_labels <- .process_stat_arg(data = df_results,
+                                      stat_arg_list = stat_labels,
+                                      col_name = "stat_label")
+
+  df_results_fmt <-
+    df_results |>
     dplyr::left_join(
       df_stat_labels,
       by = c("variable", "stat_name")
@@ -138,7 +151,7 @@ ard_continuous <- function(data,
     )
 
   # add meta data and class
-  df_results |>
+  df_results_fmt |>
     dplyr::mutate(context = "continuous") |>
     dplyr::arrange(dplyr::across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
@@ -195,24 +208,34 @@ ard_continuous <- function(data,
 
 #' Process Statistic Labels
 #'
+#' @param data ARD data frame containing variable and statistics columns
 #' @param stat_arg_list named list
 #' @param col_name column name in the ARD to make for the stat argument
 #' @return named list
 #' @keywords internal
 #' @examples
-#' list(AGE = list(c("N", "n") ~ "{n} / {N}")) |>
-#'   cards:::.process_stat_arg(col_name = "stat_label")
-.process_stat_arg <- function(stat_arg_list, col_name){
+#' ard <- ard_categorical(ADSL, variables = "AGE")
+#' stat_arg_list <- list(AGE = list(c("N", "n") ~ "{n} / {N}"))
+#' cards:::.process_stat_arg(data = ard, stat_arg_list = stat_arg_list, col_name = "stat_label")
+.process_stat_arg <- function(data, stat_arg_list, col_name){
 
-  # create the tibble of stat names and labels 1 variable at a time
-   # both the stat_labels and statistics are a named (variable-level) list of stat info
-  args_tbl <- map(stat_arg_list, function(x, y){
+  # create the tibble of stat names and arg values 1 variable at a time
+  args_tbl <- imap(stat_arg_list, function(x, y){
+
+    # get a named vector of stats to evaluate on
+    stats <- data |> dplyr::filter(.data$variable==y) |> dplyr::pull(.data$stat_name) %>% set_names(., .)
+
     # handle the named list or formula & create tibble
-    compute_formula_selector(data=NULL, x=x) %>%
+    #   simply ignore any formats for stats not found in data,
+    #   if multiple specified for 1 stat, keep the first
+    compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
       {dplyr::tibble(
         stat_name = names(.),
         !!col_name := unlist(.) |> unname()
-      )}
+      )} |>
+      dplyr::group_by(.data$stat_name) |>
+      dplyr::slice(1) |>
+      dplyr::ungroup()
   })
 
   # stack result

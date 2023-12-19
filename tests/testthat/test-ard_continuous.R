@@ -65,6 +65,18 @@ test_that("ard_continuous(fmt_fn) argument works", {
     dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
+
+  # tidyselect works
+  ard_continuous(
+    ADSL,
+    variables = c("AGE","BMIBL"),
+    statistics = ~ continuous_variable_summary_fns(c("mean","sd")),
+    fmt_fn = ~ list(~ function(x) round(x, 4))
+  ) |>
+    apply_statistic_fmt_fn() |>
+    dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
+    as.data.frame() |>
+    expect_snapshot()
 })
 
 test_that("ard_continuous() messaging", {

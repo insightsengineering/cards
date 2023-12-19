@@ -48,6 +48,9 @@
 #'   a named list where the list elements are strings that will
 #'   be used in error messaging when mis-specified arguments are passed. Elements
 #'   `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
+#' @param strict (`logical` scalar)\cr
+#'   whether to throw an error if a variable doesn't exist in the reference data
+#'   (passed to `tidyselect::eval_select`)
 #'
 #' @name process_selectors
 #'
@@ -139,7 +142,7 @@ fill_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
-compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), env = rlang::caller_env()) {
+compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), env = rlang::caller_env(), strict = TRUE) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) return(x)
 
@@ -161,7 +164,8 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
         lhs_expr <- tidyselect::eval_select(
           # if nothing found on LHS of formula, using `everything()`
           rlang::f_lhs(x[[i]]) %||% dplyr::everything(),
-          data = data
+          data = data,
+          strict = strict
         ) |>
           names()
       }

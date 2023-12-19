@@ -32,6 +32,20 @@
       1      AGE      mean  75.08661        75.087
       2    BMIBL      mean  24.67233          24.7
 
+---
+
+    Code
+      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_continuous(ADSL,
+        variables = c("AGE", "BMIBL"), statistics = ~ continuous_variable_summary_fns(
+          c("mean", "sd")), fmt_fn = ~ list(~ function(x) round(x, 4)))), variable,
+      stat_name, statistic, statistic_fmt))
+    Output
+        variable stat_name statistic statistic_fmt
+      1      AGE      mean  75.08661       75.0866
+      2      AGE        sd  8.246234        8.2462
+      3    BMIBL      mean  24.67233       24.6723
+      4    BMIBL        sd  4.092185        4.0922
+
 # ard_continuous() messaging
 
     Code

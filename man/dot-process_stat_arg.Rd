@@ -4,9 +4,11 @@
 \alias{.process_stat_arg}
 \title{Process Statistic Labels}
 \usage{
-.process_stat_arg(stat_arg_list, col_name)
+.process_stat_arg(data, stat_arg_list, col_name)
 }
 \arguments{
+\item{data}{ARD data frame containing variable and statistics columns}
+
 \item{stat_arg_list}{named list}
 
 \item{col_name}{column name in the ARD to make for the stat argument}
@@ -18,7 +20,8 @@ named list
 Process Statistic Labels
 }
 \examples{
-list(AGE = list(c("N", "n") ~ "{n} / {N}")) |>
-  cards:::.process_stat_arg(col_name = "stat_label")
+ard <- ard_categorical(ADSL, variables = "AGE")
+stat_arg_list <- list(AGE = list(c("N", "n") ~ "{n} / {N}"))
+cards:::.process_stat_arg(data = ard, stat_arg_list = stat_arg_list, col_name = "stat_label")
 }
 \keyword{internal}
