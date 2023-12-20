@@ -2,9 +2,17 @@
 % Please edit documentation in R/ard_crosstab.R
 \name{ard_crosstab}
 \alias{ard_crosstab}
-\title{ARD Crosstab}
+\title{Cross Tabulation ARD}
 \usage{
-ard_crosstab(data, variables, by)
+ard_crosstab(
+  data,
+  variables,
+  by,
+  percent = c("cell", "column", "row"),
+  statistics = everything() ~ categorical_variable_summary_fns(),
+  fmt_fn = NULL,
+  stat_labels = everything() ~ default_stat_labels()
+)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -14,14 +22,39 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to compute statistics by.}
+a single column to compute statistics by.}
+
+\item{percent}{(\code{string})\cr
+one of \code{c("cell", "column", "row")} that determines how the percentage is
+calculated. Default is \code{"cell"}}
+
+\item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
+
+\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
+
+\item{stat_labels}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
+\code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
 a data frame
 }
 \description{
-Similar to \code{ard_categorical()} except the percentages and N statistics are
-based on the entire data set, rather than stratified columns.
+Produces summary statistics similar to those that would appear in a
+cross tabulation of two variables.
+The rows of the cross tabulation are the columns named in the
+\code{variables} argument, and the column of the cross tabulation is the column
+named in the \code{by} argument.
 }
 \examples{
 ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")
