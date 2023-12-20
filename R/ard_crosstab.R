@@ -31,11 +31,7 @@ ard_crosstab <- function(data, variables, by,
   check_class_data_frame(data = data)
   process_selectors(data, variables = {{ variables }}, by = {{ by }})
   check_length(by, length = 1L)
-  process_formula_selectors(
-    data = data[variables],
-    statistics = statistics,
-    stat_labels = stat_labels
-  )
+
 
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
@@ -65,11 +61,18 @@ ard_crosstab <- function(data, variables, by,
 }
 
 .ard_crosstab_row <- function(data, variables, by, statistics, fmt_fn, stat_labels) {
+  process_formula_selectors(
+    data = data[variables],
+    statistics = statistics,
+    stat_labels = stat_labels,
+    fmt_fn = fmt_fn
+  )
+
   # tabulate crosstab ----------------------------------------------------------
   lapply(
     variables,
     FUN = function(variable) {
-      if (!is.null(fmt_fn[variable])) {
+      if (!rlang::is_empty(fmt_fn[[variable]])) {
         fmt_fn <- fmt_fn[variable] |> stats::setNames(by)
       }
       ard_categorical(data, variables = all_of(by), by = all_of(variable),
