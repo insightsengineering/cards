@@ -8,8 +8,10 @@ ard_crosstab(
   data,
   variables,
   by,
+  percent = c("cell", "column", "row"),
   statistics = everything() ~ categorical_variable_summary_fns(),
-  percent = c("cell", "column", "row")
+  fmt_fn = NULL,
+  stat_labels = everything() ~ default_stat_labels()
 )
 }
 \arguments{
@@ -22,22 +24,27 @@ columns to include in summaries. Default is \code{everything()}.}
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 a single column to compute statistics by.}
 
+\item{percent}{(\code{string})\cr
+one of \code{c("cell", "column", "row")} that determines how the percentage is
+calculated. Default is \code{"cell"}}
+
 \item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \verb{list(mpg = list(mean = \\(x) mean(x)))}.
+e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-The value assigned to each variable must also be a named list, where the names
-are used to reference a function and the element is the function object.
-Typically, this function will return a scalar statistic, but a function that
-returns a named list of results is also acceptable, e.g.
-\code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
-will be less clear in this setting.}
+\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
+or a single formula where the list element is a named list of functions
+(or the RHS of a formula),
+e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-\item{percent}{(\code{string})\cr
-one of \code{c("cell", "column", "row")} that determines how the percentage is
-calculated. Default is \code{"cell"}}
+\item{stat_labels}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+a named list, a list of formulas, or a single formula where
+the list element is either a named list or a list of formulas defining the
+statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
+\code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
 a data frame
@@ -45,6 +52,9 @@ a data frame
 \description{
 Produces summary statistics similar to those that would appear in a
 cross tabulation of two variables.
+The rows of the cross tabulation are the columns named in the
+\code{variables} argument, and the column of the cross tabulation is the column
+named in the \code{by} argument.
 }
 \examples{
 ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")

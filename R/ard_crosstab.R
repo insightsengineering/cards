@@ -2,6 +2,9 @@
 #'
 #' Produces summary statistics similar to those that would appear in a
 #' cross tabulation of two variables.
+#' The rows of the cross tabulation are the columns named in the
+#' `variables` argument, and the column of the cross tabulation is the column
+#' named in the `by` argument.
 #'
 #' @inheritParams ard_categorical
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -16,8 +19,10 @@
 #' @examples
 #' ard_crosstab(ADSL, variables = "AGEGR1", by = "ARM")
 ard_crosstab <- function(data, variables, by,
+                         percent = c("cell", "column", "row"),
                          statistics = everything() ~ categorical_variable_summary_fns(),
-                         percent = c("cell", "column", "row")) {
+                         fmt_fn = NULL,
+                         stat_labels = everything() ~ default_stat_labels()) {
   # process arguments ----------------------------------------------------------
   percent <- rlang::arg_match(percent)
   check_not_missing(data)
@@ -26,6 +31,11 @@ ard_crosstab <- function(data, variables, by,
   check_class_data_frame(data = data)
   process_selectors(data, variables = {{ variables }}, by = {{ by }})
   check_length(by, length = 1L)
+  process_formula_selectors(
+    data = data[variables],
+    statistics = statistics,
+    stat_labels = stat_labels
+  )
 
   # return empty tibble if no variables selected -------------------------------
   if (rlang::is_empty(variables)) return(dplyr::tibble())
@@ -35,27 +45,37 @@ ard_crosstab <- function(data, variables, by,
     percent,
     "column" =
       .ard_crosstab_column(data = data, variables = variables,
-                        by = by, statistics = statistics),
+                        by = by, statistics = statistics,
+                        fmt_fn = fmt_fn, stat_labels = stat_labels),
     "row" =
       .ard_crosstab_row(data = data, variables = variables,
-                        by = by, statistics = statistics),
+                        by = by, statistics = statistics,
+                        fmt_fn = fmt_fn, stat_labels = stat_labels),
     "cell" =
       .ard_crosstab_cell(data = data, variables = variables,
-                         by = by, statistics = statistics)
+                         by = by, statistics = statistics,
+                         fmt_fn = fmt_fn, stat_labels = stat_labels)
   ) |>
     dplyr::mutate(context = "crosstab")
 }
 
-.ard_crosstab_column <- function(data, variables, by, statistics) {
-  ard_categorical(data, variables = all_of(variables), by = all_of(by))
+.ard_crosstab_column <- function(data, variables, by, statistics, fmt_fn, stat_labels) {
+  ard_categorical(data, variables = all_of(variables), by = all_of(by),
+                  statistics = statistics, fmt_fn = fmt_fn, stat_labels = stat_labels)
 }
 
-.ard_crosstab_row <- function(data, variables, by, statistics) {
+.ard_crosstab_row <- function(data, variables, by, statistics, fmt_fn, stat_labels) {
   # tabulate crosstab ----------------------------------------------------------
   lapply(
     variables,
     FUN = function(variable) {
-      ard_categorical(data, variables = all_of(by), by = all_of(variable)) %>%
+      if (!is.null(fmt_fn[variable])) {
+        fmt_fn <- fmt_fn[variable] |> stats::setNames(by)
+      }
+      ard_categorical(data, variables = all_of(by), by = all_of(variable),
+                      statistics = statistics[variable] |> stats::setNames(by),
+                      fmt_fn = fmt_fn,
+                      stat_labels = stat_labels[variable] |> stats::setNames(by)) %>%
         # filling in N stat across rows
         {dplyr::bind_rows(
           dplyr::filter(., !.data$stat_name %in% "N"),
@@ -63,7 +83,7 @@ ard_crosstab <- function(data, variables, by,
             dplyr::mutate(
               variable_level = list(.$variable_level |> unique() |> compact())
             ) |>
-            tidyr::unnest(.data$variable_level)
+            tidyr::unnest("variable_level")
         )}
     }
   ) |>
@@ -75,7 +95,7 @@ ard_crosstab <- function(data, variables, by,
     cards::tidy_ard_column_order()
 }
 
-.ard_crosstab_cell <- function(data, variables, by, statistics) {
+.ard_crosstab_cell <- function(data, variables, by, statistics, fmt_fn, stat_labels) {
   # tabulate crosstab ----------------------------------------------------------
   lapply(
     variables,
@@ -89,7 +109,12 @@ ard_crosstab <- function(data, variables, by,
         ) |>
         tidyr::uncount(weights = .data$...ard_denom_n...)
 
-      ard_categorical(data, variables = all_of(variable), by = all_of(by), denominator = denominator)
+      ard_categorical(data,
+                      variables = all_of(variable), by = all_of(by),
+                      denominator = denominator,
+                      statistics = statistics,
+                      fmt_fn = fmt_fn,
+                      stat_labels = stat_labels)
     }
   ) |>
     dplyr::bind_rows()

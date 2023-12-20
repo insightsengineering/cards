@@ -76,6 +76,26 @@ test_that("ard_crosstab(percent='row') works", {
       unlist(),
     ignore_attr = TRUE
   )
+
+  # testing the arguments work properly
+  expect_error(
+    ard_with_args <-
+      ard_crosstab(
+        ADSL, variables = "AGEGR1", by = "ARM",
+        percent = "row",
+        statistics = list(AGEGR1 = categorical_variable_summary_fns(c("n", "N"))),
+        fmt_fn = list(AGEGR1 = list("n" = 2))
+      ),
+    NA
+  )
+
+  expect_snapshot(
+    ard_with_args |>
+      apply_statistic_fmt_fn() |>
+      flatten_ard() |>
+      dplyr::select(-statistic_fmt_fn, -warning, -error) |>
+      as.data.frame()
+  )
 })
 
 test_that("ard_crosstab(percent='column') works", {
