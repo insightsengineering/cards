@@ -54,7 +54,7 @@ ard_continuous <- function(data,
                            by = NULL,
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
-                           fmt_fn = everything() ~ default_fmt_fns(),
+                           fmt_fn = NULL,
                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -77,7 +77,6 @@ ard_continuous <- function(data,
   fill_formula_selectors(
     data = data[variables],
     statistics = formals(cards::ard_continuous)[["statistics"]] |> eval(),
-    fmt_fn = formals(cards::ard_continuous)[["fmt_fn"]] |> eval(),
     stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
   )
 
@@ -124,35 +123,26 @@ ard_continuous <- function(data,
     tidyr::unnest(cols = "..ard_all_stats..")
 
   # final processing of fmt_fn -------------------------------------------------
-  df_fmt_fn <- .process_stat_arg(data = df_results,
-                                 stat_arg_list = fmt_fn,
-                                 col_name = "statistic_fmt_fn")
-
-  # final processing of stat labels -------------------------------------------------
-  df_stat_labels <- .process_stat_arg(data = df_results,
-                                      stat_arg_list = stat_labels,
-                                      col_name = "stat_label") |>
-  tidyr::unnest("stat_label")
-
-  df_results_fmt <-
-    df_results |>
-    dplyr::left_join(
-      df_stat_labels,
-      by = c("variable", "stat_name")
+  df_results <-
+    .process_nested_list_as_df(
+      x = df_results,
+      arg = fmt_fn,
+      new_column = "statistic_fmt_fn"
     ) |>
-    dplyr::left_join(
-      df_fmt_fn,
-      by = c("variable", "stat_name")
-    ) |>
-    dplyr::mutate(
-      stat_label = ifelse(is.na(.data$stat_label), .data$stat_name, .data$stat_label),
-      statistic_fmt_fn =
-        .data$statistic_fmt_fn |>
-        lapply(function(fn) fn %||% function(x) format(round5(x, digits = 1), nsmall = 1))
-    )
+    .default_fmt_fn()
 
-  # add meta data and class
-  df_results_fmt |>
+  # final processing of stat labels --------------------------------------------
+  df_results <-
+    .process_nested_list_as_df(
+      x = df_results,
+      arg = stat_labels,
+      new_column = "stat_label",
+      unlist = TRUE
+    ) |>
+    dplyr::mutate(stat_label = dplyr::coalesce(.data$stat_label, .data$stat_name))
+
+  # add meta data and class ----------------------------------------------------
+  df_results |>
     dplyr::mutate(context = "continuous") |>
     dplyr::arrange(dplyr::across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
@@ -207,55 +197,6 @@ ard_continuous <- function(data,
   df_nested
 }
 
-#' Process Statistic Labels
-#'
-#' @param data ARD data frame containing variable and statistics columns
-#' @param stat_arg_list named list
-#' @param col_name column name in the ARD to make for the stat argument
-#' @return named list
-#' @keywords internal
-#' @examples
-#' ard <- ard_categorical(ADSL, variables = "AGE")
-#' stat_arg_list <- list(AGE = list(c("N", "n") ~ "{n} / {N}"))
-#' cards:::.process_stat_arg(data = ard, stat_arg_list = stat_arg_list, col_name = "stat_label")
-.process_stat_arg <- function(data, stat_arg_list, col_name){
-
-  # create the tibble of stat names and arg values 1 variable at a time
-  args_tbl <-
-    imap(
-      stat_arg_list,
-      function(x, y) {
-        # get a named vector of stats to evaluate on
-        stats <- data |>
-          dplyr::filter(.data$variable == y) |>
-          dplyr::pull(.data$stat_name) %>%
-          set_names(., .)
-
-        # handle the named list or formula & create tibble
-        #   simply ignore any formats for stats not found in data,
-        #   if multiple specified for 1 stat, keep the first
-        stats_df <- compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
-          {dplyr::tibble(
-            stat_name = names(.),
-            !!col_name := unname(.)
-          )} |>
-          dplyr::group_by(.data$stat_name) |>
-          dplyr::slice(1) |>
-          dplyr::ungroup()
-
-        if (!is.list(stats_df[[col_name]])){
-          stats_df[[col_name]] <- as.list(stats_df[[col_name]])
-        }
-
-        stats_df
-      }
-    )
-
-  # stack result
-  args_tbl |>
-    dplyr::bind_rows(.id = "variable")
-
-}
 
 .lst_results_as_df <- function(x, variable, fun_name) {
   # unnesting results if needed
@@ -283,28 +224,61 @@ ard_continuous <- function(data,
 }
 
 
+.process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
+  # add statistic_fmt_fn column if not already present
+  if (!new_column %in% names(x)) {
+    x[[new_column]] <- list(NULL)
+  }
 
+  # process argument if not NULL, and update new column
+  if (!rlang::is_empty(arg)) {
+    df_argument <-
+      imap(
+        arg,
+        function(enlst_arg, variable) {
+          lst_stat_names <-
+            x[c("variable", "stat_name")] |>
+            dplyr::filter(.data$variable %in% .env$variable) |>
+            unique() %>%
+            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])}
 
-#' Default formatting functions
-#'
-#' Global default is to round the statistic to one decimal place for
-#' all other rounding, the default function must be listed below
-#'
-#' @return named list of functions
-#' @keywords internal
-#'
-#' @examples
-#' cards:::.default_statistic_formatters()
-.default_statistic_formatters <- function() {
-  list(
-    n = function(x) format(round5(x, digits = 0), nsmall = 0),
-    N_miss = function(x) format(round5(x, digits = 0), nsmall = 0),
-    length = function(x) format(round5(x, digits = 0), nsmall = 0),
-    p = function(x) format(round5(x * 100, digits = 1), nsmall = 1),
-    p_cell = function(x) format(round5(x * 100, digits = 1), nsmall = 1)
-  ) %>%
-    {dplyr::tibble(
-      stat_name = names(.),
-      statistic_fmt_fn = unname(.)
-    )}
+          compute_formula_selector(
+            data = lst_stat_names,
+            x = enlst_arg
+          ) %>%
+            {dplyr::tibble(
+              variable = variable,
+              stat_name = names(.),
+              "{new_column}" := unname(.)
+            )}
+        }
+      ) |>
+      dplyr::bind_rows()
+
+    x <- x |> dplyr::rows_update(df_argument, by = c("variable", "stat_name"), unmatched = "ignore")
+  }
+
+  if (isTRUE(unlist)) {
+    x[[new_column]] <- lapply(x[[new_column]], function(x) x %||% NA) |>  unlist()
+  }
+
+  x
 }
+
+.default_fmt_fn <- function(x) {
+  x |>
+    dplyr::mutate(
+      statistic_fmt_fn =
+        map2(
+          .data$stat_name, .data$statistic_fmt_fn,
+          function(stat_name, statistic_fmt_fn) {
+            if (!rlang::is_empty(statistic_fmt_fn)) return(statistic_fmt_fn)
+            if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) return(0L)
+            if (stat_name %in% c("p", "p_miss", "p_nonmiss")) return(function(x) format(round5(x * 100, digits = 1), nsmall = 1))
+
+            return(1L)
+          }
+        )
+    )
+}
+

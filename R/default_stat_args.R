@@ -18,7 +18,6 @@
 #' @rdname default_stat_args
 #' @export
 default_stat_labels <- function() {
-
   list(
     mean = "Mean",
     sd = "SD",
@@ -31,9 +30,7 @@ default_stat_labels <- function() {
 
     n = "n",
     N = "N",
-    length = "Vector Length",
     p = "%",
-    p_cell = "%",
 
     N_obs = "Vector Length",
     N_miss = "N Missing",
@@ -41,15 +38,4 @@ default_stat_labels <- function() {
     p_miss = "% Missing",
     p_nonmiss = "% Non-missing"
   )
-}
-
-#' @rdname default_stat_args
-#' @export
-default_fmt_fns <- function() {
-  list(
-    everything() ~ 1L,
-    any_of(c("n", "N", "N_obs", "N_miss", "N_nonmiss")) ~ 0L,
-    any_of(c("p", "p_cell", "p_miss", "p_nonmiss")) ~  function(x) format(round5(x * 100, digits = 1), nsmall = 1)
-  )
-
 }

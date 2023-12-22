@@ -2,12 +2,9 @@
 % Please edit documentation in R/default_stat_args.R
 \name{default_stat_labels}
 \alias{default_stat_labels}
-\alias{default_fmt_fns}
 \title{Defaults for statistical arguments}
 \usage{
 default_stat_labels()
-
-default_fmt_fns()
 }
 \value{
 named list of values

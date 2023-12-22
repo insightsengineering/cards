@@ -11,7 +11,7 @@ ard_categorical(
   strata = NULL,
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
-  fmt_fn = everything() ~ default_fmt_fns(),
+  fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
 )
 }

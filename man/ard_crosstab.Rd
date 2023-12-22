@@ -10,7 +10,7 @@ ard_crosstab(
   by,
   percent = c("cell", "column", "row"),
   statistics = everything() ~ categorical_variable_summary_fns(),
-  fmt_fn = everything() ~ default_fmt_fns(),
+  fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
 )
 }
