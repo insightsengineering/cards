@@ -97,16 +97,10 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-check_fmt_string.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-default_statistic_formatters.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-is_named_list.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-one_row_ard_to_nested_list.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-process_stat_labels.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-purrr_list_flatten.html</loc>
@@ -119,9 +113,6 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-unnest_table_object.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-update_with_fmt_fn.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/eval_capture_conditions.html</loc>

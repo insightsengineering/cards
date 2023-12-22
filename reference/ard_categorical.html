@@ -152,7 +152,7 @@ the number of rows in each combination of the <code>by</code> variables.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level    variable variable_level stat_name stat_label statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo         AGEGR1   65-80          n         n          42       </span>
@@ -166,7 +166,7 @@ the number of rows in each combination of the <code>by</code> variables.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Xanomeline Hig… AGEGR1   65-80          p         %          0.654761…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline Hig… AGEGR1   &lt;65            n         n          11       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: statistic_fmt_fn &lt;chr&gt;, warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
