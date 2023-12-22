@@ -2,16 +2,18 @@
 % Please edit documentation in R/default_stat_labels.R
 \name{default_stat_labels}
 \alias{default_stat_labels}
-\title{List of stat labels}
+\title{Defaults for statistical arguments}
 \usage{
 default_stat_labels()
 }
 \value{
-named list of stat labels
+named list of values
 }
 \description{
-Returns a list of stat labels
+Returns a named list of statistics labels
 }
 \examples{
+# stat labels
 default_stat_labels()
+
 }

@@ -63,7 +63,8 @@ NULL
 #' @export
 ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
-                            denominator = NULL, fmt_fn = NULL,
+                            denominator = NULL,
+                            fmt_fn = NULL,
                             stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -83,7 +84,12 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   process_formula_selectors(
     data = data[variables],
     statistics = statistics,
-    stat_labels = stat_labels
+    stat_labels = stat_labels,
+    fmt_fn = fmt_fn
+  )
+  fill_formula_selectors(
+    data = data[variables],
+    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
   )
 
   # check inputs ---------------------------------------------------------------
@@ -108,8 +114,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       by = all_of(by),
       strata = all_of(strata),
       statistics = statistics,
-      stat_labels = stat_labels
-    )
+      fmt_fn = NULL,
+      stat_labels = NULL
+    ) |>
+    dplyr::select(-"statistic_fmt_fn", -"stat_label")
 
   # if the denominator argument is supplied, then re-calculate the N statistic -
   if (!is.null(denominator))
@@ -119,8 +127,30 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   # process the table() results and add to the ARD data frame ------------------
   df_result_final <- .unnest_table_object(df_result, data)
 
-  # if user passed formatting functions, update data frame
-  df_result_final <- .update_with_fmt_fn(df_result_final, fmt_fn)
+  # final processing of fmt_fn -------------------------------------------------
+  df_result_final <-
+    .process_nested_list_as_df(
+      x = df_result_final,
+      arg = fmt_fn,
+      new_column = "statistic_fmt_fn"
+    ) |>
+    .default_fmt_fn()
+
+  # final processing of stat labels --------------------------------------------
+  df_result_final <-
+    .process_nested_list_as_df(
+      x = df_result_final,
+      arg = stat_labels,
+      new_column = "stat_label",
+      unlist = TRUE
+    ) |>
+    dplyr::mutate(
+      stat_label =
+        map2_chr(
+          .data$stat_label, .data$stat_name,
+          function(stat_label, stat_name) dplyr::coalesce(stat_label, default_stat_labels()[[stat_name]], stat_name)
+        )
+    )
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
@@ -208,15 +238,15 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       variables = all_of(variables),
       by = all_of(by),
       statistics = ~categorical_variable_summary_fns("N")
-    )
+    ) |>
+    dplyr::select(-"stat_label", -"statistic_fmt_fn")
 
   # recalculating the percentages using the new big N
   df_result_denom_p <-
     df_result |>
     dplyr::filter(.data$stat_name %in% "n") |>
     dplyr::mutate(
-      stat_name = "p",
-      stat_label = "%"
+      stat_name = "p"
     ) %>%
     # merging on all common columns and suppressing the merged variable note
     {suppressMessages(dplyr::left_join(

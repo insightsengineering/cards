@@ -32,7 +32,7 @@
       [1] 82.63636
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean$statistic_fmt
-      [1] "83"
+      [1] "82.6"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean$warning
       NULL
@@ -49,7 +49,7 @@
       [1] 20.93453
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd$statistic_fmt
-      [1] "21"
+      [1] "20.9"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd$warning
       NULL
@@ -66,7 +66,7 @@
       [1] 91
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$median$statistic_fmt
-      [1] "91"
+      [1] "91.0"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$median$warning
       NULL
@@ -83,7 +83,7 @@
       [1] 65
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25$statistic_fmt
-      [1] "65"
+      [1] "65.0"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25$warning
       NULL
@@ -100,7 +100,7 @@
       [1] 97
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75$statistic_fmt
-      [1] "97"
+      [1] "97.0"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75$warning
       NULL
@@ -117,7 +117,7 @@
       [1] 52
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$statistic_fmt
-      [1] "52"
+      [1] "52.0"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$warning
       NULL
@@ -134,7 +134,7 @@
       [1] 113
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$statistic_fmt
-      [1] "113"
+      [1] "113.0"
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$warning
       NULL
@@ -172,7 +172,7 @@
       [1] 122.2857
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean$statistic_fmt
-      [1] "122"
+      [1] "122.3"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean$warning
       NULL
@@ -189,7 +189,7 @@
       [1] 24.26049
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd$statistic_fmt
-      [1] "24"
+      [1] "24.3"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd$warning
       NULL
@@ -206,7 +206,7 @@
       [1] 110
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$median$statistic_fmt
-      [1] "110"
+      [1] "110.0"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$median$warning
       NULL
@@ -223,7 +223,7 @@
       [1] 110
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25$statistic_fmt
-      [1] "110"
+      [1] "110.0"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25$warning
       NULL
@@ -240,7 +240,7 @@
       [1] 123
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75$statistic_fmt
-      [1] "123"
+      [1] "123.0"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75$warning
       NULL
@@ -257,7 +257,7 @@
       [1] 105
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$statistic_fmt
-      [1] "105"
+      [1] "105.0"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$warning
       NULL
@@ -274,7 +274,7 @@
       [1] 175
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$statistic_fmt
-      [1] "175"
+      [1] "175.0"
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$warning
       NULL
@@ -312,7 +312,7 @@
       [1] 209.2143
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean$statistic_fmt
-      [1] "209"
+      [1] "209.2"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean$warning
       NULL
@@ -329,7 +329,7 @@
       [1] 50.97689
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd$statistic_fmt
-      [1] "51"
+      [1] "51.0"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd$warning
       NULL
@@ -346,7 +346,7 @@
       [1] 192.5
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$statistic_fmt
-      [1] "193"
+      [1] "192.5"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$warning
       NULL
@@ -363,7 +363,7 @@
       [1] 175
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25$statistic_fmt
-      [1] "175"
+      [1] "175.0"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25$warning
       NULL
@@ -380,7 +380,7 @@
       [1] 245
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75$statistic_fmt
-      [1] "245"
+      [1] "245.0"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75$warning
       NULL
@@ -397,7 +397,7 @@
       [1] 150
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$statistic_fmt
-      [1] "150"
+      [1] "150.0"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$warning
       NULL
@@ -414,7 +414,7 @@
       [1] 335
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$statistic_fmt
-      [1] "335"
+      [1] "335.0"
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$warning
       NULL

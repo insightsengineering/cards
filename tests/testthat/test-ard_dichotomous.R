@@ -16,10 +16,12 @@ test_that("ard_dichotomous() works", {
       variables = cyl
     ) |>
       dplyr::filter(variable_level %in% 4) |>
-      dplyr::select(-context),
+      dplyr::select(-context) |>
+      flatten_ard(),
     ard_dich |>
       dplyr::filter(variable %in% "cyl", variable_level %in% 4) |>
-      dplyr::select(-context)
+      dplyr::select(-context) |>
+      flatten_ard()
   )
 
   expect_equal(
@@ -28,10 +30,12 @@ test_that("ard_dichotomous() works", {
       variables = am
     ) |>
       dplyr::filter(variable_level %in% TRUE) |>
-      dplyr::select(-context),
+      dplyr::select(-context) |>
+      flatten_ard(),
     ard_dich |>
       dplyr::filter(variable %in% "am", variable_level %in% TRUE) |>
-      dplyr::select(-context)
+      dplyr::select(-context) |>
+      flatten_ard()
   )
 
   expect_snapshot(

@@ -18,7 +18,8 @@ compute_formula_selector(
   data,
   x,
   arg_name = rlang::caller_arg(x),
-  env = rlang::caller_env()
+  env = rlang::caller_env(),
+  strict = TRUE
 )
 
 check_list_elements(..., error_msg = list(), env = rlang::caller_env())
@@ -50,6 +51,10 @@ converted to a named list.}
 \item{arg_name}{(\code{string})\cr
 a string with the argument named being processed. Used
 in error messaging. Default is \code{rlang::caller_arg(x)}}
+
+\item{strict}{(\code{logical} scalar)\cr
+whether to throw an error if a variable doesn't exist in the reference data
+(passed to \code{tidyselect::eval_select})}
 
 \item{error_msg}{(\code{character})\cr
 a named list where the list elements are strings that will
