@@ -36,3 +36,13 @@ test_that("process_formula_selectors() error messaging", {
     error = TRUE
   )
 })
+
+test_that("compute_formula_selector() selects the last assignment when multiple appear", {
+  expect_snapshot(
+    compute_formula_selector(
+      data = mtcars[c("mpg", "hp")],
+      x = list(everything() ~ "THE DEFAULT", mpg = "Special for MPG")
+    )
+  )
+})
+

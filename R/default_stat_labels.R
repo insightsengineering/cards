@@ -1,14 +1,16 @@
-#' List of stat labels
+#' Defaults for statistical arguments
 #'
-#' Returns a list of stat labels
+#' @description
+#' Returns a named list of statistics labels
 #'
-#' @return named list of stat labels
-#' @export
+#' @return named list of values
 #'
 #' @examples
+#' # stat labels
 #' default_stat_labels()
+#'
+#' @export
 default_stat_labels <- function() {
-
   list(
     mean = "Mean",
     sd = "SD",
@@ -21,9 +23,7 @@ default_stat_labels <- function() {
 
     n = "n",
     N = "N",
-    length = "Vector Length",
     p = "%",
-    p_cell = "%",
 
     N_obs = "Vector Length",
     N_miss = "N Missing",

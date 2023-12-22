@@ -28,6 +28,26 @@
       4       am              1         p   0.40625        40.625
       5       am           NULL         N        32         32.00
 
+---
+
+    Code
+      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_categorical(mtcars,
+        variables = c("am", "vs"), fmt_fn = list(am = list(p = function(x) round5(x *
+          100, digits = 3)), vs = list(p = function(x) round5(x * 100, digits = 1))))),
+      variable, variable_level, stat_name, statistic, statistic_fmt))
+    Output
+         variable variable_level stat_name statistic statistic_fmt
+      1        am              0         n        19            19
+      2        am              0         p   0.59375        59.375
+      3        am              1         n        13            13
+      4        am              1         p   0.40625        40.625
+      5        am           NULL         N        32            32
+      6        vs              0         n        18            18
+      7        vs              0         p    0.5625          56.3
+      8        vs              1         n        14            14
+      9        vs              1         p    0.4375          43.8
+      10       vs           NULL         N        32            32
+
 # ard_categorical(stat_labels) argument works
 
     Code

@@ -106,6 +106,20 @@ test_that("ard_continuous(fmt_fn) argument works", {
     dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
+
+  ard_categorical(
+    mtcars,
+    variables = c("am","vs"),
+    fmt_fn = list(
+      am = list(p = function(x) round5(x * 100, digits = 3)),
+      vs = list(p = function(x) round5(x * 100, digits = 1))
+      )
+    )|>
+    apply_statistic_fmt_fn() |>
+    dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
+    as.data.frame() |>
+    expect_snapshot()
+
 })
 
 

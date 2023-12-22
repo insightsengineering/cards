@@ -86,6 +86,17 @@ test_that("ard_hierarchical() works with by variable not present in 'denominator
   )
 })
 
+test_that("ard_hierarchical() works without any variables", {
+  expect_snapshot(
+    ard_hierarchical(
+      data = ADAE,
+      variables = starts_with("xxxx"),
+      by = c(TRTA, AESEV)
+    )
+  )
+})
+
+
 
 # ard_hierarchical_count() -----------------------------------------------------
 test_that("ard_hierarchical_count() works without by variables", {
@@ -176,6 +187,16 @@ test_that("ard_hierarchical_count() works with by variable not present in 'denom
                       AESOC == "CARDIAC DISORDERS",
                       AETERM == "ATRIAL HYPERTROPHY") |>
         nrow()
+    )
+  )
+})
+
+test_that("ard_hierarchical_count() works without any variables", {
+  expect_snapshot(
+    ard_hierarchical_count(
+      data = ADAE,
+      variables = starts_with("xxxx"),
+      by = c(TRTA, AESEV)
     )
   )
 })

@@ -15,7 +15,8 @@
 ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
                             values = max_value(data[variables]),
                             statistics = everything() ~ categorical_variable_summary_fns(),
-                            denominator = NULL, fmt_fn = NULL,
+                            denominator = NULL,
+                            fmt_fn = NULL,
                             stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
