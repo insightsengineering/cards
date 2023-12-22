@@ -191,7 +191,7 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
   x <- .purrr_list_flatten(x)
 
   # remove duplicates (keeping the last one)
-  x[names(x) |> rev() |> Negate(duplicated)()]
+  x[names(x) |> rev() |> Negate(duplicated)() |> rev()]
 }
 
 #' @name process_selectors

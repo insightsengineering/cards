@@ -45,12 +45,11 @@ default_stat_labels <- function() {
 
 #' @rdname default_stat_args
 #' @export
-default_fmt_fns <- function(){
-
+default_fmt_fns <- function() {
   list(
-    c("n", "N", "N_obs", "N_miss", "N_nonmiss") ~ 0L,
-    c("p", "p_cell", "p_miss", "p_nonmiss") ~  function(x) format(round5(x * 100, digits = 1), nsmall = 1),
-    everything() ~ 1L
+    everything() ~ 1L,
+    any_of(c("n", "N", "N_obs", "N_miss", "N_nonmiss")) ~ 0L,
+    any_of(c("p", "p_cell", "p_miss", "p_nonmiss")) ~  function(x) format(round5(x * 100, digits = 1), nsmall = 1)
   )
 
 }

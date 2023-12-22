@@ -221,29 +221,35 @@ ard_continuous <- function(data,
 .process_stat_arg <- function(data, stat_arg_list, col_name){
 
   # create the tibble of stat names and arg values 1 variable at a time
-  args_tbl <- imap(stat_arg_list, function(x, y){
+  args_tbl <-
+    imap(
+      stat_arg_list,
+      function(x, y) {
+        # get a named vector of stats to evaluate on
+        stats <- data |>
+          dplyr::filter(.data$variable == y) |>
+          dplyr::pull(.data$stat_name) %>%
+          set_names(., .)
 
-    # get a named vector of stats to evaluate on
-    stats <- data |> dplyr::filter(.data$variable==y) |> dplyr::pull(.data$stat_name) %>% set_names(., .)
+        # handle the named list or formula & create tibble
+        #   simply ignore any formats for stats not found in data,
+        #   if multiple specified for 1 stat, keep the first
+        stats_df <- compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
+          {dplyr::tibble(
+            stat_name = names(.),
+            !!col_name := unname(.)
+          )} |>
+          dplyr::group_by(.data$stat_name) |>
+          dplyr::slice(1) |>
+          dplyr::ungroup()
 
-    # handle the named list or formula & create tibble
-    #   simply ignore any formats for stats not found in data,
-    #   if multiple specified for 1 stat, keep the first
-    stats_df <- compute_formula_selector(data=stats, x=x, strict=FALSE) %>%
-      {dplyr::tibble(
-        stat_name = names(.),
-        !!col_name := unname(.)
-      )} |>
-      dplyr::group_by(.data$stat_name) |>
-      dplyr::slice(1) |>
-      dplyr::ungroup()
+        if (!is.list(stats_df[[col_name]])){
+          stats_df[[col_name]] <- as.list(stats_df[[col_name]])
+        }
 
-    if (!is.list(stats_df[[col_name]])){
-      stats_df[[col_name]] <- as.list(stats_df[[col_name]])
-    }
-
-    stats_df
-  })
+        stats_df
+      }
+    )
 
   # stack result
   args_tbl |>
