@@ -1,3 +1,12 @@
+# process_selectors() works
+
+    Code
+      process_selectors(mtcars, variables = not_a_column)
+    Condition
+      Error:
+      ! There was an error selecting the `variables` argument. See message below:
+      i Can't subset columns that don't exist. x Column `not_a_column` doesn't exist.
+
 # process_formula_selectors() error messaging
 
     Code

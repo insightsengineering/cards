@@ -80,11 +80,23 @@ process_selectors <- function(data, ..., env = rlang::caller_env()) {
 
   # save named list of character column names selected
   ret <-
-    lapply(
+    imap(
       dots,
-      function(x) tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
-    ) |>
-    stats::setNames(names(dots))
+      function(x, arg_name) {
+        processed_value <-
+          eval_capture_conditions({
+            tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
+          })
+        if (!is.null(processed_value[["result"]])) return(processed_value[["result"]])
+
+        cli::cli_abort(
+          c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
+            "i" = "{processed_value[['error']]}"),
+          class = "process_selectors_error",
+          call = env
+        )
+      }
+    )
 
   # save processed args to the calling env (well, that is the default env)
   for (i in seq_along(ret)) {

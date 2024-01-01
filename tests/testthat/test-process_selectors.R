@@ -12,6 +12,12 @@ test_that("process_selectors() works", {
     list(variables = variables, by = by)},
     list(variables = "am", by = "am")
   )
+
+  # proper error messaging
+  expect_snapshot(
+    error = TRUE,
+    process_selectors(mtcars, variables = not_a_column)
+  )
 })
 
 test_that("process_formula_selectors() works", {
