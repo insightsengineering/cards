@@ -83,7 +83,15 @@ shuffle_ard <- function(x, trim = TRUE){
 }
 
 
-# trim extra variables and subset to numeric results only
+#' Trim ARD
+#'
+#' This function ingests an ARD object and trims columns and rows for downstream use in displays. The resulting data frame contains only numeric results, no supplemental information about errors/warnings, and unnested list columns.
+#'
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame
+#'
+#' @return data frame
+#' @keywords internal
 .trim_ard <- function(x) {
 
   check_class_data_frame(x)
@@ -105,8 +113,16 @@ shuffle_ard <- function(x, trim = TRUE){
     )
 }
 
-# check all group and variable names against protected names,
-#  and modify to be unique if needed
+#' Check variable names
+#'
+#' Check variable names in a data frame against protected names and modifies
+#' them if needed
+#'
+#' @param x data frame
+#' @param vars_protected character vector of protected names
+#'
+#' @return data frame
+#' @keywords internal
 .check_var_nms <- function(x, vars_protected){
 
   # get all represented variable names from original data
@@ -139,16 +155,16 @@ shuffle_ard <- function(x, trim = TRUE){
 
 }
 
-.capture_grp_vars <- function(x){
 
-  grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
-
-  x |>
-    dplyr::rowwise() |>
-    dplyr::mutate(.cards_grp_vars = list(dplyr::c_across(any_of(grp_vars))))
-}
-
-# function to rename group variables
+#' Rename group variables
+#'
+#' This function combines each pair of `group` and `group_level` columns into a
+#' single column. The `group_level` column is renamed according to the value of
+#' the `group` column.
+#'
+#' @param x data frame
+#' @return data frame
+#' @keywords internal
 .rnm_grp_vars <- function(x){
 
   grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
@@ -189,7 +205,16 @@ shuffle_ard <- function(x, trim = TRUE){
     dplyr::relocate(all_ard_variables(), any_of(".cards_idx"), .after = last_col())
 }
 
-# back fill grp variables if any variables match them
+#' Back fill group variables
+#'
+#' This function backfills the values of group variables using
+#' variable/variable_levels. The backfilling will occur if the value of the
+#' `variable` column matches the name of a grouping variable, and the grouping
+#' variable's value is NA.
+#'
+#' @param x data frame
+#' @return data frame
+#' @keywords internal
 .fill_grps_from_variables <- function(x){
 
   # within each variable, check if there is a match against one of the grouping cols
