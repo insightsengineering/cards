@@ -366,3 +366,14 @@
       81   0.3307087
       82 254.0000000
 
+# shuffle_ard notifies user about warnings/errors before dropping
+
+    Code
+      as.data.frame(shuffle_ard(ard_ttest(data = ADSL, by = "ARM", variable = "AGEGR1")))
+    Message
+      "error" column contains messages that will be removed.
+    Output
+        variable context  stat_name statistic
+      1   AGEGR1   ttest         mu      0.00
+      2   AGEGR1   ttest conf.level      0.95
+

@@ -98,6 +98,8 @@ shuffle_ard <- function(x, trim = TRUE){
 
   # flatten ard table for easier viewing ---------------------------------------
   x |>
+    # detect any warning/error messages and notify user
+    .detect_msgs("warning", "error") |>
     # filter to numeric statistic values
     dplyr::filter(map_lgl(.data$statistic, is.numeric)) |>
     # unlist the list-columns
@@ -106,6 +108,31 @@ shuffle_ard <- function(x, trim = TRUE){
       ) |>
     # remove the formatting functions / warning / error
     dplyr::select(-where(is.list), -any_of("stat_label"))
+}
+
+
+#' Detect columns for non-null contents
+#'
+#' Function looks for non-null contents in requested columns and notifies user
+#' before removal. Specifically used for detecting messages.
+#'
+#' @param x data frame
+#' @param ... columns to search within
+#'
+#' @return data frame
+#' @keywords internal
+.detect_msgs <- function(x, ...){
+
+  dots <- rlang::dots_list(...)
+
+  lapply(dots, function(var){
+    if (any(!map_lgl(x[[var]], is.null))){
+      cli::cli_inform("{.val {var}} column contains messages that will be removed.")
+    }
+
+  })
+
+  x
 }
 
 #' Check variable names

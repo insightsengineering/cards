@@ -66,4 +66,17 @@ test_that("shuffle_ard handles protected names", {
 
 })
 
+test_that("shuffle_ard notifies user about warnings/errors before dropping",{
+
+  expect_snapshot(
+    ard_ttest(
+      data = ADSL,
+      by = "ARM",
+      variable = "AGEGR1"
+    ) |>
+      shuffle_ard() |>
+      as.data.frame()
+  )
+
+})
 
