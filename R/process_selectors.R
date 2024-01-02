@@ -38,7 +38,7 @@
 #'     a function.
 #' @param env (`environment`)\cr
 #'   env to save the results to. Default is the calling environment.
-#' @param x ([`formula-list-selector`][selecting_syntax])\cr
+#' @param x ([`formula-list-selector`][syntax])\cr
 #'   a named list, list of formulas, or a single formula that will be
 #'   converted to a named list.
 #' @param arg_name (`string`)\cr
@@ -80,11 +80,23 @@ process_selectors <- function(data, ..., env = rlang::caller_env()) {
 
   # save named list of character column names selected
   ret <-
-    lapply(
+    imap(
       dots,
-      function(x) tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
-    ) |>
-    stats::setNames(names(dots))
+      function(x, arg_name) {
+        processed_value <-
+          eval_capture_conditions({
+            tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
+          })
+        if (!is.null(processed_value[["result"]])) return(processed_value[["result"]])
+
+        cli::cli_abort(
+          c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
+            "i" = "{processed_value[['error']]}"),
+          class = "process_selectors_error",
+          call = env
+        )
+      }
+    )
 
   # save processed args to the calling env (well, that is the default env)
   for (i in seq_along(ret)) {
@@ -99,9 +111,8 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
   # saved dots as named list
   dots <- rlang::dots_list(...)
 
-  ret <-
-    vector(mode = 'list', length = length(dots)) |>
-    stats::setNames(nm = names(dots))
+  # initialize empty list to store results and evaluate each input
+  ret <- rlang::rep_named(names(dots), list())
   for (i in seq_along(dots)) {
     ret[[i]] <-
       compute_formula_selector(data = data, x = dots[[i]],
@@ -152,7 +163,8 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
   for(i in seq_along(x)) {
     # first check the class of the list element
     if (!.is_named_list(x[i]) && !inherits(x[[i]], "formula")) {
-      "The {.arg {arg_name}} argument must be a named list, list of formulas, or a single formula." |>
+      c("The {.arg {arg_name}} argument must be a named list, list of formulas, or a single formula.",
+        "i" = "Review {.help [?syntax](cards::syntax)} for examples and details.") |>
       cli::cli_abort(call = env)
     }
     # if element is a formula, convert to a named list

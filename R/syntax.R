@@ -1,6 +1,6 @@
 #' Selecting Syntax
 #'
-#' @name selecting_syntax
+#' @name syntax
 #' @keywords internal
 #' @description
 #'

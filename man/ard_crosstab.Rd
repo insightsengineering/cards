@@ -28,19 +28,19 @@ a single column to compute statistics by.}
 one of \code{c("cell", "column", "row")} that determines how the percentage is
 calculated. Default is \code{"cell"}}
 
-\item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-\item{stat_labels}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{stat_labels}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or

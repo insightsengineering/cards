@@ -44,7 +44,7 @@ a function.
 \item{env}{(\code{environment})\cr
 env to save the results to. Default is the calling environment.}
 
-\item{x}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{x}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, list of formulas, or a single formula that will be
 converted to a named list.}
 
