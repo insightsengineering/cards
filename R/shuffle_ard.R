@@ -202,8 +202,8 @@ shuffle_ard <- function(x, trim = TRUE){
 
 #' Back fill group variables
 #'
-#' This function backfills the values of group variables using
-#' variable/variable_levels. The backfilling will occur if the value of the
+#' This function back fills the values of group variables using
+#' variable/variable_levels. The back filling will occur if the value of the
 #' `variable` column matches the name of a grouping variable, and the grouping
 #' variable's value is NA.
 #'
