@@ -98,19 +98,14 @@ shuffle_ard <- function(x, trim = TRUE){
 
   # flatten ard table for easier viewing ---------------------------------------
   x |>
-    # remove the formatting functions / warning / error
-    dplyr::select(-where(function(x) all(lapply(x, function(y) is.null(y) || is.function(y)) |> unlist())),
-                  -"warning", -"error",
-                  -any_of(c("stat_label"))) |>
     # filter to numeric statistic values
     dplyr::filter(map_lgl(.data$statistic, is.numeric)) |>
     # unlist the list-columns
-    dplyr::mutate(
-      dplyr::across(
-        where(.is_list_column_of_scalars),
-        ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> unname()
-      )
-    )
+    dplyr::mutate(statistic = lapply(.data$statistic,
+                                           \(x) if (!is.null(x)) x else NA) |> unlist() |> unname()
+      ) |>
+    # remove the formatting functions / warning / error
+    dplyr::select(-where(is.list), -any_of("stat_label"))
 }
 
 #' Check variable names
