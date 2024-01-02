@@ -24,8 +24,7 @@ shuffle_ard <- function(x, trim = TRUE){
 
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
-    dplyr::relocate(dplyr::starts_with("group"), dplyr::starts_with("variable"),
-                    dplyr::any_of(c("stat_name", "stat_label", "statistic")), .before = 0L) %>%
+    tidy_ard_column_order() |>
     dplyr::arrange(dplyr::pick(dplyr::any_of("variable")),
                    dplyr::pick(dplyr::matches("^group[0-9]+$")),
                    dplyr::pick(dplyr::matches("^group[0-9]+_level$"))) |>
@@ -187,7 +186,7 @@ shuffle_ard <- function(x, trim = TRUE){
   }
 
   x |>
-    dplyr::relocate(any_of(c("variable","variable_level",".cards_idx")), .after = last_col())
+    dplyr::relocate(all_ard_variables(), any_of(".cards_idx"), .after = last_col())
 }
 
 # back fill grp variables if any variables match them
