@@ -4,7 +4,9 @@ test_that("shuffle/trim works", {
   # shuffle without group/var levels
   ard_simple <- ard_continuous(ADSL, variables = "AGE")
 
-  ard_simple_shuffled <- ard_simple|> shuffle_ard(trim = FALSE)
+  ard_simple_shuffled <- ard_simple|>
+    shuffle_ard(trim = FALSE) |>
+    as.data.frame()
 
   expect_snapshot(ard_simple_shuffled)
 
@@ -21,7 +23,9 @@ test_that("shuffle/trim works", {
     variables = c(AESOC, AETERM),
     by = TRTA
   )
-  ard_hier_shuff <- ard_hier |> shuffle_ard(trim = FALSE)
+  ard_hier_shuff <- ard_hier |>
+    shuffle_ard(trim = FALSE) |>
+    as.data.frame()
   expect_true(all(!is.na(ard_hier_shuff$AESOC)))
 
 
@@ -33,13 +37,15 @@ test_that("shuffle/trim works", {
     ard_missing(ADSL, by = "ARM", variables = c("AGEGR1","AGE"))
   )
   ard_shuffled <- ard_test|>
-    shuffle_ard()
+    shuffle_ard() |>
+    as.data.frame()
 
   expect_snapshot(ard_shuffled)
 
   # shuffle & trim
   ard_shuff_trim <- ard_test |>
-    shuffle_ard()
+    shuffle_ard() |>
+    as.data.frame()
   expect_snapshot(ard_shuff_trim)
   # only numeric stats
   expect_type(ard_shuff_trim$statistic, "double")
