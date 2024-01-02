@@ -14,6 +14,7 @@
     Condition
       Error:
       ! The `variables` argument must be a named list, list of formulas, or a single formula.
+      i Review ?syntax (`?cards::syntax()`) for examples and details.
 
 # compute_formula_selector() selects the last assignment when multiple appear
 

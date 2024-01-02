@@ -20,12 +20,12 @@
 #' @param denominator (`data.frame`)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
-#' @param statistics ([`formula-list-selector`][selecting_syntax])\cr
+#' @param statistics ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = categorical_variable_summary_fns())`.
-#' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
+#' @param stat_labels ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or

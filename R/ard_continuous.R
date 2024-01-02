@@ -18,7 +18,7 @@
 #'
 #'   Arguments may be used in conjunction with one another.
 #'
-#' @param statistics ([`formula-list-selector`][selecting_syntax])\cr
+#' @param statistics ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
@@ -31,13 +31,13 @@
 #'   `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
 #'   will be less clear in this setting.
 #'
-#' @param fmt_fn ([`formula-list-selector`][selecting_syntax])\cr
+#' @param fmt_fn ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
 #'
-#' @param stat_labels ([`formula-list-selector`][selecting_syntax])\cr
+#' @param stat_labels ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or

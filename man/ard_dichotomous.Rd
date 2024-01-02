@@ -39,7 +39,7 @@ Arguments may be used in conjunction with one another.}
 named list of dichotomous values to tabulate. Default is \code{max_value(data)},
 which returns the largest/last value after a sort.}
 
-\item{statistics}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -49,13 +49,13 @@ e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
-\item{fmt_fn}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-\item{stat_labels}{(\code{\link[=selecting_syntax]{formula-list-selector}})\cr
+\item{stat_labels}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
