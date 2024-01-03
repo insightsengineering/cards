@@ -209,13 +209,24 @@ shuffle_ard <- function(x, trim = TRUE){
         v_lev <- paste0(v, "_level")
         v_new <- unique(dat[[v]]) |> as.character()
 
-        # drop if all missing
-        if (is.na(v_new) | all(is.na(dat[[v_lev]]))) {
+        # drop if no grouping values
+        if (is.na(v_new)){
           dplyr::select(dat, -all_of(c(v_lev, v)))
         } else {
 
-          #rename _level var & drop source
+          # create _level var if it does not exist
+          if (is.null(dat[[v_lev]])){
+            dat <- dat |> dplyr::mutate(!!v_lev := NA_character_)
+          }
+
+          # fill any NA _level
+          v_new_fill <- make.unique(c(unique(dat[[v_lev]]),
+                                      paste("Overall", v_new))) |>
+            dplyr::last()
+
+          # rename _level var & drop source
           dat %>%
+            dplyr::mutate(!!v_lev := tidyr::replace_na(.data[[v_lev]], v_new_fill)) |>
             dplyr::rename(!!v_new := all_of(v_lev)) |>
             dplyr::select(-all_of(v))
         }
