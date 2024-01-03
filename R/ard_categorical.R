@@ -59,16 +59,11 @@
 #'   be used as the updated `"N"` in the calculations.
 #'
 #' @return a data frame
-#' @name ard_categorical
 #' @export
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
 #'   flatten_ard()
-NULL
-
-#' @rdname ard_categorical
-#' @export
 ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(c("n", "p", "N")),
                             denominator = NULL,
@@ -172,7 +167,17 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     {structure(., class = unique(c("card", class(.))))}
 }
 
+
+#' Calculate Tabulation Statistics
+#'
+#' Function takes the summary instructions from the
+#' `statistics = list(variable_name = list(tabulation=c("n", "N", "p")))`
+#' argument, and returns the tabulations in an ARD structure.
+#'
+#' @inheritParams ard_categorical
+#' @keywords internal
 .calcualte_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics) {
+  # extract the "tabulation" statistics.
   statistics_tabulation <-
     lapply(statistics, function(x) x["tabulation"] |> compact()) |> compact()
 
@@ -255,6 +260,21 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       )
 }
 
+#' Results from `table()` as Data Frame
+#'
+#' Takes the results from `table()` and returns them as a data frame.
+#' After the `table()` results are made into a data frame, all the variables
+#' are made into character columns, and the function also restores the
+#' column types to their original classes. For `strata` columns,
+#' only observed combinations are returned.
+#'
+#' @param data a data frame
+#' @param variable a string indicating a column in data
+#' @param by a character vector indicating columns in data
+#' @param strata a character vector indicating columns in data
+#'
+#' @keywords internal
+#' @return data frame
 .table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL, count_column = "...ard_n...") {
   # tabulate results and save in data frame
   df_table <-
@@ -290,6 +310,21 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_table
 }
 
+
+#' Process Denominator Argument
+#'
+#' Function takes the `ard_categorical(denominator)` argument and returns a
+#' structured data frame that is merged with the count data and used as the
+#' denominator in percentage calculations.
+#'
+#' @inheritParams ard_categorical
+#' @param env env used in error reporting.
+#'
+#' @keywords internal
+#' @return data frame
+#'
+#' @examples
+#' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
 .process_denominator <- function(data, variables, denominator, by, strata, env = caller_env()) {
   if (is_empty(variables)) return(list())
   # if no by/strata and no denominator (or column), then use number of non-missing in variable

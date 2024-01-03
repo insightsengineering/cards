@@ -278,6 +278,12 @@ ard_continuous <- function(data,
   x
 }
 
+#' Add Default Formatting Functions
+#'
+#' @param data frame with cards structure
+#'
+#' @keywords internal
+#' @return data frame
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(
