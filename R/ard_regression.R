@@ -17,7 +17,7 @@
 #'   flatten_ard()
 ard_regression <- function(model, tidy_fun = NULL, ...) {
   # check installed packages ---------------------------------------------------
-  rlang::check_installed("broom.helpers")
+  check_installed("broom.helpers")
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(model, "model")
@@ -30,7 +30,7 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
   )|>
     dplyr::mutate(
       variable_level = dplyr::if_else(.data$var_type %in% "continuous", NA_character_, .data$label),
-      dplyr::across(-c("variable", "variable_level"), .fns = as.list)
+      across(-c("variable", "variable_level"), .fns = as.list)
     ) |>
     tidyr::pivot_longer(
       cols = -c("variable", "variable_level"),

@@ -2,14 +2,14 @@ test_that("eval_capture_conditions() works", {
   # no errors
   expect_snapshot(
     eval_capture_conditions(
-      rlang::expr(TRUE)
+      expr(TRUE)
     )
   )
 
   # capture the error
   expect_snapshot(
     eval_capture_conditions(
-      rlang::expr(cli::cli_abort("BIG ERROR"))
+      expr(cli::cli_abort("BIG ERROR"))
     )
   )
 
@@ -19,7 +19,7 @@ test_that("eval_capture_conditions() works", {
       cli::cli_warn("BIG WARNING")
       TRUE
     }
-    eval_capture_conditions(rlang::expr(one_warn_foo()))
+    eval_capture_conditions(expr(one_warn_foo()))
   })
 
   # capture multiple warning
@@ -29,6 +29,6 @@ test_that("eval_capture_conditions() works", {
       cli::cli_warn("BIG WARNING2")
       TRUE
     }
-    eval_capture_conditions(rlang::expr(two_warn_foo()))
+    eval_capture_conditions(expr(two_warn_foo()))
   })
 })

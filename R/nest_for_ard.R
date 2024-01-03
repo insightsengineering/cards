@@ -46,7 +46,7 @@
 nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
                          rename_columns = TRUE, list_columns = TRUE) {
   # if no by/stratifying variables, simply return the data frame
-  if (rlang::is_empty(by) && rlang::is_empty(strata))
+  if (is_empty(by) && is_empty(strata))
     return((dplyr::tibble("{key}" := list(data))))
 
   n_missing <- nrow(data) - nrow(tidyr::drop_na(data, all_of(by), all_of(strata)))
@@ -55,16 +55,16 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   }
 
   # create nested strata data --------------------------------------------------
-  if (!rlang::is_empty(strata)) {
+  if (!is_empty(strata)) {
     df_strata <-
       data[strata] |>
       tidyr::drop_na() |>
       dplyr::distinct() |>
-      dplyr::arrange(dplyr::across(all_of(strata)))
+      dplyr::arrange(across(all_of(strata)))
   }
 
   # create nested by data --------------------------------------------------
-  if (!rlang::is_empty(by)) {
+  if (!is_empty(by)) {
     # get a named list of all unique values for each by variable (including unobserved levels)
     lst_unique_vals <-
       by |>
@@ -76,9 +76,9 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   }
 
   # combining by and strata data sets into one, as needed ----------------------
-  if (!rlang::is_empty(by) && rlang::is_empty(strata)) df_return <- df_by
-  else if (rlang::is_empty(by) && !rlang::is_empty(strata)) df_return <- df_strata
-  else if (!rlang::is_empty(by) && !rlang::is_empty(strata)) {
+  if (!is_empty(by) && is_empty(strata)) df_return <- df_by
+  else if (is_empty(by) && !is_empty(strata)) df_return <- df_strata
+  else if (!is_empty(by) && !is_empty(strata)) {
     df_return <-
       df_strata |>
       dplyr::mutate(
@@ -98,7 +98,7 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
         lapply(
           X = c(by, strata),
           FUN = function(z) {
-            rlang::expr(!!rlang::data_sym(z) %in% df_return[[!!z]][!!i])
+            expr(!!data_sym(z) %in% df_return[[!!z]][!!i])
           }
         )
       }
@@ -125,11 +125,27 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   if (isTRUE(rename_columns)) {
     df_return <-
       df_return |>
-      dplyr::mutate(!!!(as.list(c(by, strata)) |> stats::setNames(paste0("group", seq_along(c(strata, by))))), .before = 0L) |>
-      dplyr::rename(!!!(as.list(c(by, strata)) |> stats::setNames(paste0("group", seq_along(c(strata, by)), "_level")))) |>
-      tidy_ard_column_order()
+      .rename_ard_columns(by = by, strata = strata)
   }
 
   # returning final nested tibble ----------------------------------------------
-  df_return
+  df_return |> dplyr::as_tibble()
+}
+
+
+.rename_ard_columns <- function(x, variable = NULL, by = NULL, strata = NULL) {
+  if (!is_empty(variable)) {
+    x <-
+      x |>
+      dplyr::mutate(variable = .env$variable, .before = 0L) |>
+      dplyr::rename(variable_level = !!sym(variable))
+  }
+  if (!is_empty(by) || !is_empty(strata)) {
+    x <-
+      x |>
+      dplyr::mutate(!!!(as.list(c(by, strata)) |> stats::setNames(paste0("group", seq_along(c(strata, by))))), .before = 0L) |>
+      dplyr::rename(!!!(as.list(c(by, strata)) |> stats::setNames(paste0("group", seq_along(c(strata, by)), "_level"))))
+  }
+
+  tidy_ard_column_order(x)
 }

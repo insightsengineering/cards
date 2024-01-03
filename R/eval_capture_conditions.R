@@ -8,7 +8,7 @@
 #'
 #' Messages are neither saved nor printed to the console.
 #'
-#' Evaluation is done via `rlang::eval_tidy()`.
+#' Evaluation is done via `eval_tidy()`.
 #'
 #' @inheritParams rlang::eval_tidy
 #' @return a named list
@@ -26,7 +26,7 @@
 #'
 #' # messages are not printed to the console
 #' eval_capture_conditions({message("A message!"); letters[1:2]})
-eval_capture_conditions <- function(expr, data = NULL, env = rlang::caller_env()) {
+eval_capture_conditions <- function(expr, data = NULL, env = caller_env()) {
   # IF WE EVER NEED TO REWORK/DEBUG REVIEW THE ADVANCED R CONDITIONS CHAPTER
   # https://adv-r.hadley.nz/conditions.html#conditions
 
@@ -40,7 +40,7 @@ eval_capture_conditions <- function(expr, data = NULL, env = rlang::caller_env()
     withCallingHandlers(
       expr = {
         lst_result[["result"]] <-
-          suppressMessages(rlang::eval_tidy(expr, data = data, env = env))
+          suppressMessages(eval_tidy(expr, data = data, env = env))
       },
       warning = function(w) {
         # TODO: update this `<<-`: I don't think CRAN likes the super assignment

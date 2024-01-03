@@ -7,10 +7,14 @@
 \alias{missing_variable_summary_fns}
 \title{Summary Functions}
 \usage{
-categorical_variable_summary_fns(summaries = c("n", "p", "N"))
+categorical_variable_summary_fns(
+  summaries = c("n", "p", "N"),
+  other_stats = NULL
+)
 
 continuous_variable_summary_fns(
-  summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max")
+  summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max"),
+  other_stats = NULL
 )
 
 missing_variable_summary_fns(
@@ -21,12 +25,16 @@ missing_variable_summary_fns(
 \item{summaries}{(\code{character})\cr
 a character vector of results to include in output.
 \itemize{
-\item \code{categorical_variable_summary_fns()}: Select one or more from 'N', 'n', 'p'
+\item \code{categorical_variable_summary_fns()}: Select one or more from
+'n', 'p', 'N'.
 \item \code{continuous_variable_summary_fns()}: Select one or more from
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
 \item \code{missing_variable_summary_fns()}: Select one or more from
 'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
 }}
+
+\item{other_stats}{named list of other statistic functions to supplement the
+pre-programmed functions.}
 }
 \value{
 named list of summary functions

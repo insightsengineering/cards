@@ -4,7 +4,7 @@
 \alias{eval_capture_conditions}
 \title{Evaluate and Capture Conditions}
 \usage{
-eval_capture_conditions(expr, data = NULL, env = rlang::caller_env())
+eval_capture_conditions(expr, data = NULL, env = caller_env())
 }
 \arguments{
 \item{expr}{An \link[rlang:topic-defuse]{expression} or
@@ -30,7 +30,7 @@ If there is an error, the result element will be \code{NULL}.
 
 Messages are neither saved nor printed to the console.
 
-Evaluation is done via \code{rlang::eval_tidy()}.
+Evaluation is done via \code{eval_tidy()}.
 }
 \examples{
 # function executes without error or warning

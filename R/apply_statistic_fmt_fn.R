@@ -31,12 +31,12 @@ apply_statistic_fmt_fn <- function(x) {
     )
 }
 
-.convert_alias_to_fmt_fn <- function(x, call = rlang::caller_env()) {
+.convert_alias_to_fmt_fn <- function(x, call = caller_env()) {
   if (is.function(x))
     return(x)
-  if (rlang::is_integerish(x) && x >= 0L)
+  if (is_integerish(x) && x >= 0L)
     return(function(.x) format(round5(.x, digits = as.integer(x)), nsmall = as.integer(x)))
-  if (rlang::is_string(x)) {
+  if (is_string(x)) {
     .check_fmt_string(x, call = call)
     # scale by 100 if it's a percentage
     scale <- ifelse(endsWith(x, "%"), 100, 1)
@@ -79,7 +79,7 @@ apply_statistic_fmt_fn <- function(x) {
 #'
 #'
 #' @param x string to check
-#' @param call calling environment. Default is `rlang::caller_env()`
+#' @param call calling environment. Default is `caller_env()`
 #'
 #' @return logical
 #' @keywords internal
@@ -87,7 +87,7 @@ apply_statistic_fmt_fn <- function(x) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x")  # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = rlang::caller_env()) {
+.check_fmt_string <- function(x, call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent

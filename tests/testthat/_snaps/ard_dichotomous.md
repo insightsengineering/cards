@@ -12,14 +12,14 @@
     Output
         variable variable_level     context stat_name stat_label statistic
       1       am           TRUE dichotomous         n          n        13
-      2       am           TRUE dichotomous         p          %   0.40625
-      3       am           NULL dichotomous         N          N        32
+      2       am           TRUE dichotomous         N          N        32
+      3       am           TRUE dichotomous         p          %   0.40625
       4      cyl              4 dichotomous         n          n        11
-      5      cyl              4 dichotomous         p          %   0.34375
-      6      cyl           NULL dichotomous         N          N        32
+      5      cyl              4 dichotomous         N          N        32
+      6      cyl              4 dichotomous         p          %   0.34375
       7     gear              3 dichotomous         n          n         5
-      8     gear              3 dichotomous         p          %   0.15625
-      9     gear           NULL dichotomous         N          N        32
+      8     gear              3 dichotomous         N          N        32
+      9     gear              3 dichotomous         p          %   0.15625
 
 ---
 

@@ -26,7 +26,7 @@
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   named arguments where the value of the argument is processed with tidyselect.
 #'   - `process_selectors()`: the values are tidyselect-compatible selectors
 #'   - `process_formula_selectors()`: the values are named lists, list of formulas
@@ -43,7 +43,7 @@
 #'   converted to a named list.
 #' @param arg_name (`string`)\cr
 #'   a string with the argument named being processed. Used
-#'   in error messaging. Default is `rlang::caller_arg(x)`
+#'   in error messaging. Default is `caller_arg(x)`
 #' @param error_msg (`character`)\cr
 #'   a named list where the list elements are strings that will
 #'   be used in error messaging when mis-specified arguments are passed. Elements
@@ -74,9 +74,9 @@ NULL
 
 #' @name process_selectors
 #' @export
-process_selectors <- function(data, ..., env = rlang::caller_env()) {
+process_selectors <- function(data, ..., env = caller_env()) {
   # saved dots as named list of quos
-  dots <- rlang::enquos(...)
+  dots <- enquos(...)
 
   # save named list of character column names selected
   ret <-
@@ -107,12 +107,12 @@ process_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
-process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
+process_formula_selectors <- function(data, ..., env = caller_env()) {
   # saved dots as named list
-  dots <- rlang::dots_list(...)
+  dots <- dots_list(...)
 
   # initialize empty list to store results and evaluate each input
-  ret <- rlang::rep_named(names(dots), list())
+  ret <- rep_named(names(dots), list())
   for (i in seq_along(dots)) {
     ret[[i]] <-
       compute_formula_selector(data = data, x = dots[[i]],
@@ -127,14 +127,14 @@ process_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
-fill_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
-  dots <- rlang::dots_list(...)
-  ret <- rlang::rep_named(names(dots), list(NULL))
+fill_formula_selectors <- function(data, ..., env = caller_env()) {
+  dots <- dots_list(...)
+  ret <- rep_named(names(dots), list(NULL))
   data_names <- names(data)
   dots_names <- names(dots)
 
   for (i in seq_along(dots)) {
-    if (!rlang::is_empty(setdiff(data_names, names(get(dots_names[i], envir = env))))) {
+    if (!is_empty(setdiff(data_names, names(get(dots_names[i], envir = env))))) {
       # process the default selector
       ret[[i]] <-
         compute_formula_selector(data = data, x = dots[[i]],
@@ -153,7 +153,7 @@ fill_formula_selectors <- function(data, ..., env = rlang::caller_env()) {
 
 #' @name process_selectors
 #' @export
-compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), env = rlang::caller_env(), strict = TRUE) {
+compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(), strict = TRUE) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) return(x)
 
@@ -170,12 +170,12 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
 
-      lhs_expr <- rlang::f_lhs(x[[i]])
+      lhs_expr <- f_lhs(x[[i]])
 
       if (!is.null(data)){
         lhs_expr <- tidyselect::eval_select(
           # if nothing found on LHS of formula, using `everything()`
-          rlang::f_lhs(x[[i]]) %||% dplyr::everything(),
+          f_lhs(x[[i]]) %||% dplyr::everything(),
           data = data,
           strict = strict
         ) |>
@@ -190,7 +190,7 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
       x[i] <-
         rep_len(
           list(
-            rlang::eval_tidy(rlang::f_rhs(x[[i]]), env = attr(x[[i]], ".Environment"))
+            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment"))
             ),
           length.out = length(colnames)
         ) |>
@@ -208,8 +208,8 @@ compute_formula_selector <- function(data, x, arg_name = rlang::caller_arg(x), e
 
 #' @name process_selectors
 #' @export
-check_list_elements <- function(..., error_msg = list(), env = rlang::caller_env()) {
-  dots <- rlang::dots_list(...)
+check_list_elements <- function(..., error_msg = list(), env = caller_env()) {
+  dots <- dots_list(...)
 
   imap(
     dots,

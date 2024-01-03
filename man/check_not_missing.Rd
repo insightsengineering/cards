@@ -4,7 +4,7 @@
 \alias{check_not_missing}
 \title{Check Argument not Missing}
 \usage{
-check_not_missing(x, arg_name = rlang::caller_arg(x), call = parent.frame())
+check_not_missing(x, arg_name = caller_arg(x), call = parent.frame())
 }
 \arguments{
 \item{x}{argument to check}

@@ -20,7 +20,8 @@ test_that("ard_hierarchical() works without by variables", {
         ADAE |>
         dplyr::filter(AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
         nrow(),
-      p = n / nrow(ADSL)
+      N = nrow(ADSL),
+      p = n / N
     ) |>
       as.list()
   )
@@ -47,7 +48,8 @@ test_that("ard_hierarchical() works with by variable", {
         ADAE |>
         dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
         nrow(),
-      p = n / (ADSL |> dplyr::filter(ARM == "Placebo") |> nrow())
+      N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
+      p = n / N
     ) |>
       as.list()
   )
@@ -80,7 +82,8 @@ test_that("ard_hierarchical() works with by variable not present in 'denominator
                       AESOC == "CARDIAC DISORDERS",
                       AETERM == "ATRIAL HYPERTROPHY") |>
         nrow(),
-      p = n / (ADSL |> dplyr::filter(ARM == "Placebo") |> nrow())
+      N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
+      p = n / N
     ) |>
       as.list()
   )
