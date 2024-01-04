@@ -52,7 +52,7 @@
 #' - a string: one of `c("column", "row", "cell")`. `"column"` is equivalent
 #'   to `denominator=NULL`. `"row"` gives 'row' percentages where `by`/`strata`
 #'   columns are are the 'top' of a cross table, and the variables are the rows.
-#'   `"cell"` gives percentages were the denominator is the number of non-missing
+#'   `"cell"` gives percentages where the denominator is the number of non-missing
 #'   rows in the source data frame.
 #' - a structured data frame. The data frame will include columns from `by`/`strata`.
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
