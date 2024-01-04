@@ -9,7 +9,7 @@ ard_categorical(
   variables,
   by = NULL,
   strata = NULL,
-  statistics = everything() ~ categorical_variable_summary_fns(c("n", "p", "N")),
+  statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
