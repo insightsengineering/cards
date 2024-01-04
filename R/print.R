@@ -4,6 +4,10 @@
 #'
 #' @param x object of class 'card'
 #' @param n integer specifying the number of rows to print
+#' @param columns string indicating whether to print a selected number of
+#' columns or all.
+#' @param n_col some columns are removed when there are more than a threshold
+#' of columns present. This argument sets that threshold. Default is `6L`
 #' @param ... not used
 #'
 #' @return data frame
@@ -12,7 +16,7 @@
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
-print.card <- function(x, n = NULL, ...) {
+print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
   # convert to a data frame so the list columns print the values in the list ---
   x_print <- as.data.frame(x)
 
@@ -20,15 +24,18 @@ print.card <- function(x, n = NULL, ...) {
   n <- n %||% ifelse(nrow(x_print) > 20L, 10L, nrow(x_print))
   x_print <- utils::head(x_print, n = n)
 
-  # remove warning and error columns if nothing to report ----------------------
-  if ("error" %in% names(x_print) && every(x_print[["error"]], is.null))
-    x_print[["error"]] <- NULL
-  if ("warning" %in% names(x_print) && every(x_print[["warning"]], is.null))
-    x_print[["warning"]] <- NULL
-  if (ncol(x_print) > 6L)
-    x_print[["statistic_fmt_fn"]] <- NULL # remove this col if there are many cols
-  if (ncol(x_print) > 6L)
-    x_print[["context"]] <- NULL # remove this col if there are many cols
+  # remove columns -------------------------------------------------------------
+  if (arg_match(columns) %in% "auto") {
+    # remove warning and error columns if nothing to report
+    if ("error" %in% names(x_print) && every(x_print[["error"]], is.null))
+      x_print[["error"]] <- NULL
+    if ("warning" %in% names(x_print) && every(x_print[["warning"]], is.null))
+      x_print[["warning"]] <- NULL
+    if (ncol(x_print) > n_col)
+      x_print[["statistic_fmt_fn"]] <- NULL # remove this col if there are many cols
+    if (ncol(x_print) > n_col)
+      x_print[["context"]] <- NULL # remove this col if there are many cols
+  }
 
   # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ------
   x_print <-
