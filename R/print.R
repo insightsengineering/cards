@@ -27,6 +27,8 @@ print.card <- function(x, n = NULL, ...) {
     x_print[["warning"]] <- NULL
   if (ncol(x_print) > 6L)
     x_print[["statistic_fmt_fn"]] <- NULL # remove this col if there are many cols
+  if (ncol(x_print) > 6L)
+    x_print[["context"]] <- NULL # remove this col if there are many cols
 
   # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ------
   x_print <-
@@ -36,7 +38,7 @@ print.card <- function(x, n = NULL, ...) {
           across(
             c(all_ard_groups(FALSE, TRUE),
               all_ard_variables(FALSE, TRUE),
-              any_of(c("context", "warning", "error"))),
+              any_of(c("context", "stat_label", "warning", "error"))),
             function(x) {
               lapply(
                 x,
@@ -86,7 +88,7 @@ print.card <- function(x, n = NULL, ...) {
   if (ncol(x) > ncol(x_print)) {
     missing_cols <- names(x) |> setdiff(names(x_print))
     cli::cli_alert_info(cli::col_grey(
-      "{length(missing_cols)} more variables: {paste(missing_cols, collapse = ', ')}"
+      "{length(missing_cols)} more variable{?s}: {paste(missing_cols, collapse = ', ')}"
     ))
   }
   invisible(x)
