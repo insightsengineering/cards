@@ -188,7 +188,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     .process_denominator(
       data = data,
       variables =
-        lapply(
+        imap(
           statistics_tabulation,
           function(x, variable) {
             if (any(c("N", "p") %in% x[["tabulation"]])) TRUE
@@ -277,10 +277,11 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #' @return data frame
 .table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL, count_column = "...ard_n...") {
   # tabulate results and save in data frame
+  ...ard_tab_vars... <- c(by, strata, variable)
   df_table <-
-    data[c(by, strata, variable)] |>
+    data[...ard_tab_vars...] |>
     dplyr::mutate(across(where(is.logical), ~factor(., levels = c("FALSE", "TRUE")))) |>
-    with(inject(table(!!!syms(c(by, strata, variable))))) |>
+    with(inject(table(!!!syms(...ard_tab_vars...)))) |>
     dplyr::as_tibble(n = count_column)
 
   # construct a matching data frame with the variables in their original type/class
@@ -288,13 +289,14 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     lapply(c(by, strata, variable), function(x) .unique_and_sorted(data[[x]])) |>
     stats::setNames(c(by, strata, variable)) %>%
     {tidyr::expand_grid(!!!.)} |>
-    dplyr::arrange(!!!syms(rev(c(by, strata, variable))))
+    dplyr::arrange(!!!syms(rev(...ard_tab_vars...)))
 
   # if all columns match, then replace the coerced character cols with their original type/class
   all_cols_equal <-
     every(c(by, strata, variable), ~all(df_table[[.x]] == df_original_types[[.x]]))
   if (isTRUE(all_cols_equal)) {
-    df_table <- dplyr::bind_cols(df_original_types, df_table[count_column])
+    df_table <-
+      dplyr::bind_cols(df_original_types, df_table[count_column], .name_repair = "minimal")
   }
 
   # if strata is present, remove unobserved rows

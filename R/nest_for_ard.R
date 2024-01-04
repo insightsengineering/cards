@@ -137,8 +137,8 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   if (!is_empty(variable)) {
     x <-
       x |>
-      dplyr::mutate(variable = .env$variable, .before = 0L) |>
-      dplyr::rename(variable_level = !!sym(variable))
+      dplyr::rename(variable_level = !!sym(variable)) |>
+      dplyr::mutate(variable = .env$variable, .before = 0L)
   }
   if (!is_empty(by) || !is_empty(strata)) {
     x <-

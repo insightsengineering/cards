@@ -420,7 +420,7 @@ test_that("ard_categorical(statistics) works with custom fns", {
   )
 })
 
-test_that("ard_continuous() and ARD column names", {
+test_that("ard_categorical() and ARD column names", {
   ard_colnames <- c("group1", "group1_level", "variable", "variable_level",
                     "context", "stat_name", "stat_label", "statistic",
                     "statistic_fmt_fn", "warning", "error")
@@ -430,7 +430,7 @@ test_that("ard_continuous() and ARD column names", {
     lapply(
       ard_colnames,
       function(var) {
-        df <- mtcars[c("am", "mpg")]
+        df <- mtcars[c("am", "cyl")]
         names(df) <- c("am", var)
         ard_categorical(
           data = df,
