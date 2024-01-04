@@ -84,7 +84,7 @@ columns will be used to calculate the new \code{"N"}.
 \item a string: one of \code{c("column", "row", "cell")}. \code{"column"} is equivalent
 to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
 columns are are the 'top' of a cross table, and the variables are the rows.
-\code{"cell"} gives percentages were the denominator is the number of non-missing
+\code{"cell"} gives percentages where the denominator is the number of non-missing
 rows in the source data frame.
 \item a structured data frame. The data frame will include columns from \code{by}/\code{strata}.
 The last column must be named \code{"...ard_N..."}. The integers in this column will
