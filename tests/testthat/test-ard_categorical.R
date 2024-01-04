@@ -205,6 +205,17 @@ test_that("ard_categorical() with strata and by arguments", {
     ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow()
   )
 
+  # check for messaging about missing by/strata combos in denominator arg
+  expect_snapshot(
+    error = TRUE,
+    ard_categorical(
+      ADSL,
+      by = "ARM",
+      variables = "AGEGR1",
+      denominator = ADSL |> dplyr::filter(ARM %in% "Placebo")
+    )
+  )
+
 })
 
 test_that("ard_categorical(stat_labels) argument works", {
@@ -383,6 +394,16 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
           ARM = c("Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
           ...ard_N... = c(86, 86, 84, 84)
         )
+    )
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    ard_categorical(
+      ADSL,
+      by = ARM,
+      variables = AGEGR1,
+      denominator = data.frame(ARM = "Placebo", ...ard_N... = 86)
     )
   )
 })

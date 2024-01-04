@@ -51,6 +51,15 @@
       11       vs              1         N        32            32
       12       vs              1         p    0.4375          43.8
 
+# ard_categorical() with strata and by arguments
+
+    Code
+      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1", denominator = dplyr::filter(
+        ADSL, ARM %in% "Placebo"))
+    Condition
+      Error in `ard_categorical()`:
+      ! The following `by/strata` combinations are missing from the `denominator` data frame: ARM (Xanomeline High Dose) and ARM (Xanomeline Low Dose).
+
 # ard_categorical(stat_labels) argument works
 
     Code
@@ -144,8 +153,17 @@
         ARM = c("Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
         ...ard_N... = c(86, 86, 84, 84)))
     Condition
-      Error in `.calcualte_tabulation_statistics()`:
+      Error in `ard_categorical()`:
       ! Specified counts in column "'...ard_N...'" are not unique in the `denominator` argument across the `by` and `strata` columns.
+
+---
+
+    Code
+      ard_categorical(ADSL, by = ARM, variables = AGEGR1, denominator = data.frame(
+        ARM = "Placebo", ...ard_N... = 86))
+    Condition
+      Error in `ard_categorical()`:
+      ! The following `by/strata` combinations are missing from the `denominator` data frame: ARM (Xanomeline High Dose) and ARM (Xanomeline Low Dose).
 
 # ard_categorical(statistics) works with custom fns
 
