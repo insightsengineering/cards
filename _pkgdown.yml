@@ -49,6 +49,7 @@ reference:
       - round5
       - max_value
       - shuffle_ard
+      - check_ard_structure
 
   - title: "Data"
     contents:
