@@ -255,3 +255,43 @@ test_that("ard_categorical() messaging", {
     error = TRUE
   )
 })
+
+test_that("ard_continuous() and ARD column names", {
+  ard_colnames <- c("group1", "group1_level", "variable", "variable_level",
+                    "context", "stat_name", "stat_label", "statistic",
+                    "statistic_fmt_fn", "warning", "error")
+
+  # no errors when these variables are the summary vars
+  expect_error({
+    lapply(
+      ard_colnames,
+      function(var) {
+        df <- mtcars[c("am", "mpg")]
+        names(df) <- c("am", var)
+        ard_categorical(
+          data = df,
+          by = "am",
+          variables = all_of(var)
+        )
+      }
+    )},
+    NA
+  )
+
+  # no errors when these vars are the by var
+  expect_error({
+    lapply(
+      ard_colnames,
+      function(byvar) {
+        df <- mtcars[c("am", "cyl")]
+        names(df) <- c(byvar, "cyl")
+        ard_continuous(
+          data = df,
+          by = all_of(byvar),
+          variables = "cyl"
+        )
+      }
+    )},
+    NA
+  )
+})
