@@ -233,8 +233,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
         }
 
         df_result_tabulation |>
+          .rename_ard_columns(variable = variable, by = by, strata = strata) |>
           dplyr::mutate(
-            across(any_of(c("...ard_n...", "...ard_N...", "...ard_p...")), as.list)
+            across(any_of(c("...ard_n...", "...ard_N...", "...ard_p...")), as.list),
+            across(c(matches("^group[0-9]+_level$"), any_of("variable_level")), as.list)
           ) |>
           tidyr::pivot_longer(
             cols = any_of(c("...ard_n...", "...ard_N...", "...ard_p...")),
@@ -244,11 +246,9 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
           dplyr::mutate(
             stat_name =
               gsub(pattern = "^...ard_", replacement = "", x = .data$stat_name) %>%
-              gsub(pattern = "...$", replacement = "", x = .),
-            across(all_of(c(variable, by, strata)), as.list)
+              gsub(pattern = "...$", replacement = "", x = .)
           ) |>
-          dplyr::filter(.data$stat_name %in% tab_stats[["tabulation"]]) |>
-          .rename_ard_columns(variable = variable, by = by, strata = strata)
+          dplyr::filter(.data$stat_name %in% tab_stats[["tabulation"]])
       }
     ) |>
     dplyr::bind_rows()
