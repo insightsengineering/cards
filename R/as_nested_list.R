@@ -13,7 +13,6 @@
 #'   as_nested_list()
 as_nested_list <- function(x) {
   # check in inputs ------------------------------------------------------------
-  rlang::check_installed("jsonlite")
   if (!inherits(x, "card")) {
     cli::cli_abort("Argument {.code x} must be class {.cls card}.")
   }

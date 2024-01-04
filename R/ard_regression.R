@@ -13,8 +13,7 @@
 #'
 #' @examples
 #' lm(AGE ~ ARM, data = ADSL) |>
-#'   ard_regression(add_estimate_to_reference_rows = TRUE) |>
-#'   flatten_ard()
+#'   ard_regression(add_estimate_to_reference_rows = TRUE)
 ard_regression <- function(model, tidy_fun = NULL, ...) {
   # check installed packages ---------------------------------------------------
   rlang::check_installed("broom.helpers")
@@ -37,6 +36,13 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
       names_to = "stat_name",
       values_to = "statistic"
     ) |>
-    dplyr::mutate(context = "regression") %>%
+    dplyr::mutate(
+      statistic_fmt_fn =
+        lapply(
+          .data$statistic,
+          function(x) switch(is.integer(x), 0L) %||% switch(is.numeric(x), 1L)),
+      context = "regression"
+    ) |>
+    tidy_ard_column_order() %>%
     {structure(., class = c("card", class(.)))}
 }

@@ -23,6 +23,5 @@ structure using the \code{broom.helpers} package.
 }
 \examples{
 lm(AGE ~ ARM, data = ADSL) |>
-  ard_regression(add_estimate_to_reference_rows = TRUE) |>
-  flatten_ard()
+  ard_regression(add_estimate_to_reference_rows = TRUE)
 }
