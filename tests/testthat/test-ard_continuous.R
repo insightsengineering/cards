@@ -156,6 +156,40 @@ test_that("ard_continuous(stat_labels) argument works", {
       dplyr::select(variable, stat_name, stat_label)
 
   expect_equal(ard1, ard2)
-
-
 })
+
+test_that("ard_continuous() and ARD column names", {
+  ard_colnames <- c("group1", "group1_level", "variable", "variable_level",
+                    "context", "stat_name", "stat_label", "statistic",
+                    "statistic_fmt_fn", "warning", "error")
+
+  # no errors when these variables are the summary vars
+  expect_error({
+    df <- mtcars
+    names(df) <- ard_colnames
+    ard_continuous(
+      data = cbind(mtcars["am"], df),
+      variables = all_of(ard_colnames),
+      by = "am"
+    )},
+    NA
+  )
+
+  # no errors when these vars are the by var
+  expect_error({
+    lapply(
+      ard_colnames,
+      function(byvar) {
+        df <- mtcars[c("am", "mpg")]
+        names(df) <- c(byvar, "mpg")
+        ard_continuous(
+          data = df,
+          by = all_of(byvar),
+          variables = "mpg"
+        )
+      }
+    )},
+    NA
+  )
+})
+
