@@ -41,7 +41,25 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
         lapply(
           .data$statistic,
           function(x) switch(is.integer(x), 0L) %||% switch(is.numeric(x), 1L)),
-      context = "regression"
+      context = "regression",
+      stat_label =
+        dplyr::case_when(
+          .data$stat_name %in% "var_label" ~ "Label",
+          .data$stat_name %in% "var_class" ~ "Class",
+          .data$stat_name %in% "var_type" ~ "Type",
+          .data$stat_name %in% "var_nlevels" ~ "N Levels",
+          .data$stat_name %in% "contrasts_type" ~ "Contrast Type",
+          .data$stat_name %in% "label" ~ "Level Label",
+          .data$stat_name %in% "n_obs" ~ "N Obs.",
+          .data$stat_name %in% "n_event" ~ "N Events",
+          .data$stat_name %in% "exposure" ~ "Exposure Time",
+          .data$stat_name %in% "estimate" ~ "Coefficient",
+          .data$stat_name %in% "std.error" ~ "Standard Error",
+          .data$stat_name %in% "p.value" ~ "p-value",
+          .data$stat_name %in% "conf.low" ~ "CI Lower Bound",
+          .data$stat_name %in% "conf.high" ~ "CI Upper Bound",
+          TRUE ~ .data$stat_name
+        )
     ) |>
     tidy_ard_column_order() %>%
     {structure(., class = c("card", class(.)))}

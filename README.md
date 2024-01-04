@@ -106,18 +106,19 @@ ADSL |>
 survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
   dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value"))
-#> {cards} data frame: 12 x 6
-#>    variable variable_level   context stat_name statistic statistic_fmt_fn
-#> 1      TRTP        Placebo regressi…  estimate         0                1
-#> 2      TRTP        Placebo regressi…   p.value        NA                1
-#> 3      TRTP        Placebo regressi…  conf.low        NA                1
-#> 4      TRTP        Placebo regressi… conf.high        NA                1
-#> 5      TRTP      Xanomeli… regressi…  estimate     1.615                1
-#> 6      TRTP      Xanomeli… regressi…   p.value         0                1
-#> 7      TRTP      Xanomeli… regressi…  conf.low     1.157                1
-#> 8      TRTP      Xanomeli… regressi… conf.high     2.072                1
-#> 9      TRTP      Xanomeli… regressi…  estimate     1.423                1
-#> 10     TRTP      Xanomeli… regressi…   p.value         0                1
-#> 11     TRTP      Xanomeli… regressi…  conf.low     0.973                1
-#> 12     TRTP      Xanomeli… regressi… conf.high     1.872                1
+#> {cards} data frame: 12 x 7
+#>    variable variable_level   context stat_name stat_label statistic
+#> 1      TRTP        Placebo regressi…  estimate  Coeffici…         0
+#> 2      TRTP        Placebo regressi…   p.value    p-value        NA
+#> 3      TRTP        Placebo regressi…  conf.low  CI Lower…        NA
+#> 4      TRTP        Placebo regressi… conf.high  CI Upper…        NA
+#> 5      TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.615
+#> 6      TRTP      Xanomeli… regressi…   p.value    p-value         0
+#> 7      TRTP      Xanomeli… regressi…  conf.low  CI Lower…     1.157
+#> 8      TRTP      Xanomeli… regressi… conf.high  CI Upper…     2.072
+#> 9      TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.423
+#> 10     TRTP      Xanomeli… regressi…   p.value    p-value         0
+#> 11     TRTP      Xanomeli… regressi…  conf.low  CI Lower…     0.973
+#> 12     TRTP      Xanomeli… regressi… conf.high  CI Upper…     1.872
+#> ℹ 1 more variable: statistic_fmt_fn
 ```
