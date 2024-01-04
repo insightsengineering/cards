@@ -91,6 +91,25 @@ ard_ttest <- function(data, by, variable, ...) {
     # in case of an error, simply return ARD without these levels
     error = function(e) dplyr::mutate(ret, group1_level = list(NULL))
   ) |>
+    dplyr::mutate(
+      .after = "stat_name",
+      stat_label =
+        dplyr::case_when(
+          .data$stat_name %in% "estimate1" ~ "Group 1 Mean",
+          .data$stat_name %in% "estimate2" ~ "Group 2 Mean",
+          .data$stat_name %in% "estimate" ~ "Mean Difference",
+          .data$stat_name %in% "p.value" ~ "p-value",
+          .data$stat_name %in% "statistic" ~ "t Statistic",
+          .data$stat_name %in% "parameter" ~ "Degrees of Freedom",
+          .data$stat_name %in% "conf.low" ~ "CI Lower Bound",
+          .data$stat_name %in% "conf.high" ~ "CI Upper Bound",
+          .data$stat_name %in% "mu" ~ "Null Hypothesis Mean",
+          .data$stat_name %in% "paired" ~ "Paired t-test",
+          .data$stat_name %in% "var.equal" ~ "Assumed Equal Variances",
+          .data$stat_name %in% "conf.level" ~ "CI Confidence Level",
+          TRUE ~ .data$stat_name
+        )
+    ) |>
     tidy_ard_column_order()
 }
 
@@ -123,7 +142,18 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
     formals = formals(asNamespace("stats")[["wilcox.test.default"]]),
     passed_args = rlang::dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "wilcoxtest")
-  )
+  ) |>
+    dplyr::mutate(
+      .after = "stat_name",
+      stat_label =
+        dplyr::case_when(
+          .data$stat_name %in% "statistic" ~ "W Statistic",
+          .data$stat_name %in% "p.value" ~ "p-value",
+          .data$stat_name %in% "paired" ~ "Paired test",
+          .data$stat_name %in% "correct" ~ "Continuity Correction",
+          TRUE ~ .data$stat_name
+        )
+    )
 }
 
 
@@ -155,7 +185,17 @@ ard_chisqtest <- function(data, by, variable, ...) {
     formals = formals(stats::chisq.test),
     passed_args = rlang::dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "chisqtest")
-  )
+  ) |>
+    dplyr::mutate(
+      .after = "stat_name",
+      stat_label =
+        dplyr::case_when(
+          .data$stat_name %in% "statistic" ~ "X-squared Statistic",
+          .data$stat_name %in% "p.value" ~ "p-value",
+          .data$stat_name %in% "paramter" ~ "Degrees of Freedom",
+          TRUE ~ .data$stat_name,
+        )
+    )
 }
 
 #' @rdname ard_comparison
@@ -188,7 +228,15 @@ ard_fishertest <- function(data, by, variable, ...) {
     formals = formals(stats::fisher.test),
     passed_args = rlang::dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
-  )
+  ) |>
+    dplyr::mutate(
+      .after = "stat_name",
+      stat_label =
+        dplyr::case_when(
+          .data$stat_name %in% "p.value" ~ "p-value",
+          TRUE ~ .data$stat_name,
+        )
+    )
 }
 
 
