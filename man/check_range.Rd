@@ -11,7 +11,8 @@ check_range(
   arg_name = caller_arg(x),
   scalar = FALSE,
   msg = paste("The {.arg {arg_name}} argument must be in the interval",
-    "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]}, {range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
+    "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]},",
+    "{range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
   call = parent.frame()
 )
 }

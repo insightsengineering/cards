@@ -82,7 +82,8 @@ check_range <- function(x,
                         scalar = FALSE,
                         msg = paste(
                           "The {.arg {arg_name}} argument must be in the interval",
-                          "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]}, {range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
+                          "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]},",
+                          "{range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
                         call = parent.frame()) {
   print_error <- FALSE
   # check input is numeric
@@ -99,7 +100,7 @@ check_range <- function(x,
   }
 
   # check upper bound of range
-  if (isFALSE(print_error) && isTRUE(include_bounds[2]) && isTanyRUE(x > range[2])) {
+  if (isFALSE(print_error) && isTRUE(include_bounds[2]) && any(x > range[2])) {
     print_error <- TRUE
   }
   if (isFALSE(print_error) && isFALSE(include_bounds[2]) && any(x >= range[2])) {
