@@ -15,8 +15,7 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |>
-#'   flatten_ard()
+#' ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))
 flatten_ard <- function(x) {
   # check inputs ---------------------------------------------------------------
   check_class(class = "card", x = x)

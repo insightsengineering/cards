@@ -62,22 +62,19 @@ ard_continuous(
   ADSL,
   variables = "AGE",
   statistics = ~continuous_variable_summary_fns(c("N", "median"))
-) |>
-  flatten_ard()
+)
 
 # categorical variable summaries
 ard_categorical(
   ADSL,
   variables = "AGEGR1",
   statistics = ~categorical_variable_summary_fns(c("n", "N"))
-) |>
-  flatten_ard()
+)
 
 # summary for rates of missing data
 ard_missing(
   ADSL,
   variables = c("AGE", "AGEGR1"),
   statistics = ~missing_variable_summary_fns()
-) |>
-  flatten_ard()
+)
 }

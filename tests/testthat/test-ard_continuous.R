@@ -108,6 +108,7 @@ test_that("ard_continuous(stat_labels) argument works", {
                              by = "ARM",
                              variables = c("AGE","BMIBL"),
                              stat_labels = everything() ~ list(c("min","max") ~ "min - max")) |>
+      as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
       dplyr::filter(stat_name %in% c("min","max")) |>
       unique()
@@ -119,6 +120,7 @@ test_that("ard_continuous(stat_labels) argument works", {
                              by = "ARM",
                              variables = c("AGE","BMIBL"),
                              stat_labels = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")) |>
+      as.data.frame() |>
       dplyr::select(stat_name, stat_label)  |>
       dplyr::filter(stat_name %in% c("p25","p75")) |>
       unique()
@@ -130,6 +132,7 @@ test_that("ard_continuous(stat_labels) argument works", {
                              by = "ARM",
                              variables = c("AGE","BMIBL"),
                              stat_labels = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")) |>
+    as.data.frame() |>
     dplyr::filter(stat_name %in% c("p25","p75")) |>
     dplyr::select(variable, stat_name, stat_label) |>
     unique()
@@ -137,13 +140,15 @@ test_that("ard_continuous(stat_labels) argument works", {
 
   # statistics returns a named list of summaries
   conf_int <- function(x) t.test(x) |> broom::tidy() |> dplyr::select("conf.low", "conf.high") |> as.list()
-  ard1 <- ard_continuous(
+  ard1 <-
+    ard_continuous(
       ADSL,
       variables = "AGE",
       statistics = ~list(conf.int = conf_int),
       stat_labels = ~list(conf.low = "LB", conf.high = "UB")
     ) |>
-      dplyr::select(variable, stat_name, stat_label)
+    dplyr::select(variable, stat_name, stat_label) |>
+    as.data.frame()
 
   expect_snapshot(ard1)
 
@@ -153,7 +158,8 @@ test_that("ard_continuous(stat_labels) argument works", {
       statistics = ~list(conf.int = conf_int),
       stat_labels = ~list("conf.low" ~ "LB", "conf.high" ~ "UB")
     ) |>
-      dplyr::select(variable, stat_name, stat_label)
+      dplyr::select(variable, stat_name, stat_label) |>
+    as.data.frame()
 
   expect_equal(ard1, ard2)
 })

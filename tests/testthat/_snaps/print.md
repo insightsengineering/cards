@@ -1,0 +1,69 @@
+# print.card() works
+
+    Code
+      ard_continuous(ADSL, by = "ARM", variables = "AGE")
+    Message
+      {cards} data frame: 24 x 10
+    Output
+         group1 group1_level variable stat_name stat_label statistic
+      1     ARM      Placebo      AGE         N          N        86
+      2     ARM      Placebo      AGE      mean       Mean    75.209
+      3     ARM      Placebo      AGE        sd         SD      8.59
+      4     ARM      Placebo      AGE    median     Median        76
+      5     ARM      Placebo      AGE       p25  25th Per…        69
+      6     ARM      Placebo      AGE       p75  75th Per…        82
+      7     ARM      Placebo      AGE       min        Min        52
+      8     ARM      Placebo      AGE       max        Max        89
+      9     ARM    Xanomeli…      AGE         N          N        84
+      10    ARM    Xanomeli…      AGE      mean       Mean    74.381
+    Message
+      i 14 more rows
+      i Use `print(n = ...)` to see more rows
+      i 4 more variables: context, statistic_fmt_fn, warning, error
+
+---
+
+    Code
+      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+    Message
+      {cards} data frame: 27 x 11
+    Output
+         group1 group1_level variable variable_level stat_name stat_label statistic
+      1     ARM      Placebo   AGEGR1          65-80         n          n        42
+      2     ARM      Placebo   AGEGR1          65-80         N          N        86
+      3     ARM      Placebo   AGEGR1          65-80         p          %     0.488
+      4     ARM      Placebo   AGEGR1            <65         n          n        14
+      5     ARM      Placebo   AGEGR1            <65         N          N        86
+      6     ARM      Placebo   AGEGR1            <65         p          %     0.163
+      7     ARM      Placebo   AGEGR1            >80         n          n        30
+      8     ARM      Placebo   AGEGR1            >80         N          N        86
+      9     ARM      Placebo   AGEGR1            >80         p          %     0.349
+      10    ARM    Xanomeli…   AGEGR1          65-80         n          n        55
+    Message
+      i 17 more rows
+      i Use `print(n = ...)` to see more rows
+      i 4 more variables: context, statistic_fmt_fn, warning, error
+
+---
+
+    Code
+      ard_regression(lm(AGE ~ ARM, data = ADSL), add_estimate_to_reference_rows = TRUE)
+    Message
+      {cards} data frame: 48 x 7
+    Output
+         variable variable_level   context      stat_name stat_label statistic
+      1       ARM        Placebo regressi…           term       term ARMPlace…
+      2       ARM        Placebo regressi…      var_label      Label Descript…
+      3       ARM        Placebo regressi…      var_class      Class character
+      4       ARM        Placebo regressi…       var_type       Type categori…
+      5       ARM        Placebo regressi…    var_nlevels   N Levels         3
+      6       ARM        Placebo regressi…      contrasts  contrasts contr.tr…
+      7       ARM        Placebo regressi… contrasts_type  Contrast… treatment
+      8       ARM        Placebo regressi…  reference_row  referenc…      TRUE
+      9       ARM        Placebo regressi…          label  Level La…   Placebo
+      10      ARM        Placebo regressi…          n_obs     N Obs.        86
+    Message
+      i 38 more rows
+      i Use `print(n = ...)` to see more rows
+      i 1 more variable: statistic_fmt_fn
+

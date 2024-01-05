@@ -63,43 +63,39 @@
 # ard_categorical(stat_labels) argument works
 
     Code
-      unique(dplyr::select(dplyr::filter(ard_categorical(data = ADSL, by = "ARM",
-        variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(c("n", "p") ~
-          "n (pct)")), stat_name %in% c("n", "p")), stat_name, stat_label))
+      unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(
+          c("n", "p") ~ "n (pct)"))), stat_name %in% c("n", "p")), stat_name,
+      stat_label))
     Output
-      # A tibble: 2 x 2
         stat_name stat_label
-        <chr>     <chr>     
-      1 n         n (pct)   
-      2 p         n (pct)   
+      1         n    n (pct)
+      2         p    n (pct)
 
 ---
 
     Code
-      unique(dplyr::select(dplyr::filter(ard_categorical(data = ADSL, by = "ARM",
-        variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(n = "num",
-          p = "pct")), stat_name %in% c("n", "p")), stat_name, stat_label))
+      unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(
+          n = "num", p = "pct"))), stat_name %in% c("n", "p")), stat_name, stat_label))
     Output
-      # A tibble: 2 x 2
         stat_name stat_label
-        <chr>     <chr>     
-      1 n         num       
-      2 p         pct       
+      1         n        num
+      2         p        pct
 
 ---
 
     Code
-      unique(dplyr::select(dplyr::filter(ard_categorical(data = ADSL, by = "ARM",
-        variables = c("AGEGR1", "SEX"), stat_labels = AGEGR1 ~ list(c("n", "p") ~
-          "n (pct)")), stat_name %in% c("n", "p")), variable, stat_name, stat_label))
+      unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = AGEGR1 ~ list(c("n",
+          "p") ~ "n (pct)"))), stat_name %in% c("n", "p")), variable, stat_name,
+      stat_label))
     Output
-      # A tibble: 4 x 3
         variable stat_name stat_label
-        <chr>    <chr>     <chr>     
-      1 AGEGR1   n         n (pct)   
-      2 AGEGR1   p         n (pct)   
-      3 SEX      n         n         
-      4 SEX      p         %         
+      1   AGEGR1         n    n (pct)
+      2   AGEGR1         p    n (pct)
+      7      SEX         n          n
+      8      SEX         p          %
 
 # ard_categorical(denominator='row') works
 

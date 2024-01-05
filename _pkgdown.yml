@@ -50,6 +50,7 @@ reference:
       - max_value
       - shuffle_ard
       - check_ard_structure
+      - print.card
 
   - title: "Data"
     contents:

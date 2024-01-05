@@ -62,8 +62,7 @@
 #' @export
 #'
 #' @examples
-#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-#'   flatten_ard()
+#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,

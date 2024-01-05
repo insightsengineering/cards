@@ -55,6 +55,5 @@ a data frame
 Compute Analysis Results Data (ARD) for statistics about data missingness.
 }
 \examples{
-ard_missing(ADSL, by = "ARM", variables = "AGE") |>
-  flatten_ard()
+ard_missing(ADSL, by = "ARM", variables = "AGE")
 }

@@ -10,8 +10,7 @@
 #' @export
 #'
 #' @examples
-#' ard_missing(ADSL, by = "ARM", variables = "AGE") |>
-#'   flatten_ard()
+#' ard_missing(ADSL, by = "ARM", variables = "AGE")
 ard_missing <- function(data,
                         variables,
                         by = NULL,

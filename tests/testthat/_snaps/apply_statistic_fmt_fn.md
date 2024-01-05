@@ -31,13 +31,13 @@
 ---
 
     Code
-      apply_statistic_fmt_fn(dplyr::mutate(ard_fmt_checks, statistic = lapply(
-        statistic, function(x) x * 1000), statistic_fmt_fn = list("xx", "xx")))
+      as.data.frame(apply_statistic_fmt_fn(dplyr::mutate(ard_fmt_checks, statistic = lapply(
+        statistic, function(x) x * 1000), statistic_fmt_fn = list("xx", "xx"))))
     Output
-      # A tibble: 2 x 9
-        variable context stat_name stat_label statistic statistic_fmt statistic_fmt_fn
-        <chr>    <chr>   <chr>     <chr>      <list>    <list>        <list>          
-      1 mpg      contin~ mean      Mean       <dbl [1]> <chr [1]>     <chr [1]>       
-      2 mpg      contin~ sd        SD         <dbl [1]> <chr [1]>     <chr [1]>       
-      # i 2 more variables: warning <list>, error <list>
+        variable    context stat_name stat_label statistic statistic_fmt
+      1      mpg continuous      mean       Mean  20090.62         20091
+      2      mpg continuous        sd         SD  6026.948          6027
+        statistic_fmt_fn warning error
+      1               xx    NULL  NULL
+      2               xx    NULL  NULL
 

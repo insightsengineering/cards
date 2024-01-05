@@ -103,6 +103,7 @@ test_that("apply_statistic_fmt_fn() error messaging", {
         statistic = lapply(statistic, function(x) x * 1000),
         statistic_fmt_fn = list("xx", "xx")
       ) |>
-      apply_statistic_fmt_fn()
+      apply_statistic_fmt_fn() |>
+      as.data.frame()
   )
 })

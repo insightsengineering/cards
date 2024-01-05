@@ -98,6 +98,7 @@ tidy_as_ard <- function(lst_tidy,
   dplyr::tibble(
     stat_name = names(lst_all_results),
     statistic = lst_all_results,
+    statistic_fmt_fn = lapply(.data$statistic, function(x) switch(is.numeric(x), 1L)),
     warning = lst_tidy["warning"],
     error = lst_tidy["error"],
     !!!lst_ard_columns,
