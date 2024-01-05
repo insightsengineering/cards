@@ -25,7 +25,7 @@ ard_missing <- function(data,
   # convert all variables to T/F whether it's missing --------------------------
   data <- data |>
     dplyr::mutate(
-      dplyr::across(all_of(variables), Negate(is.na))
+      across(all_of(variables), Negate(is.na))
     )
 
   # get the summary statistics -------------------------------------------------

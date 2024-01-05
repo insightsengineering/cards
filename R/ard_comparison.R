@@ -45,7 +45,7 @@ NULL
 #' @export
 ard_ttest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  rlang::check_installed("broom")
+  check_installed("broom")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -70,7 +70,7 @@ ard_ttest <- function(data, by, variable, ...) {
                             "method", "alternative"),
       fun_args_to_record = c("mu", "paired", "var.equal", "conf.level"),
       formals = formals(asNamespace("stats")[["t.test.default"]]),
-      passed_args = rlang::dots_list(...),
+      passed_args = dots_list(...),
       lst_ard_columns = list(group1 = by, variable = variable, context = "ttest")
     )
 
@@ -117,7 +117,7 @@ ard_ttest <- function(data, by, variable, ...) {
 #' @export
 ard_wilcoxtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  rlang::check_installed("broom")
+  check_installed("broom")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -140,7 +140,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
       c("mu", "paired", "exact", "correct", "conf.int",
         "conf.level", "tol.root", "digits.rank"),
     formals = formals(asNamespace("stats")[["wilcox.test.default"]]),
-    passed_args = rlang::dots_list(...),
+    passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "wilcoxtest")
   ) |>
     dplyr::mutate(
@@ -161,7 +161,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
 #' @export
 ard_chisqtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  rlang::check_installed("broom")
+  check_installed("broom")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -183,7 +183,7 @@ ard_chisqtest <- function(data, by, variable, ...) {
     fun_args_to_record =
       c("correct", "p", "rescale.p", "simulate.p.value", "B"),
     formals = formals(stats::chisq.test),
-    passed_args = rlang::dots_list(...),
+    passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "chisqtest")
   ) |>
     dplyr::mutate(
@@ -202,7 +202,7 @@ ard_chisqtest <- function(data, by, variable, ...) {
 #' @export
 ard_fishertest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  rlang::check_installed("broom")
+  check_installed("broom")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -226,7 +226,7 @@ ard_fishertest <- function(data, by, variable, ...) {
       c("workspace", "hybrid", "hybridPars", "control", "or",
         "conf.int", "conf.level", "simulate.p.value", "B"),
     formals = formals(stats::fisher.test),
-    passed_args = rlang::dots_list(...),
+    passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
   ) |>
     dplyr::mutate(

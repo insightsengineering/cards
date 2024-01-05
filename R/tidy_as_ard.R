@@ -46,7 +46,7 @@
 #'       c("workspace", "hybrid", "hybridPars", "control", "or",
 #'         "conf.int", "conf.level", "simulate.p.value", "B"),
 #'     formals = formals(stats::fisher.test),
-#'     passed_args = rlang::dots_list(...),
+#'     passed_args = dots_list(...),
 #'     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
 #'   )
 #' }

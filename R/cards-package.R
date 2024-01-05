@@ -1,6 +1,5 @@
 #' @keywords internal
 #' @import rlang
-#'
 #' @importFrom dplyr across
 "_PACKAGE"
 
@@ -8,4 +7,4 @@
 ## usethis namespace: end
 NULL
 
-utils::globalVariables(c(".", "!<-", "where"))
+utils::globalVariables(c(".", "!<-", "parse_expr<-"))

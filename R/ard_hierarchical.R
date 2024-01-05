@@ -46,7 +46,6 @@ ard_hierarchical <- function(data, variables, by = NULL,
   check_not_missing(data)
   check_not_missing(variables)
   check_class_data_frame(data = data)
-  check_class_data_frame(denominator = denominator, allow_null = TRUE)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -56,10 +55,10 @@ ard_hierarchical <- function(data, variables, by = NULL,
   )
 
   # return empty tibble if no variables selected -------------------------------
-  if (rlang::is_empty(variables)) return(dplyr::tibble())
+  if (is_empty(variables)) return(dplyr::tibble())
 
   # if denominator doesn't have all by, they need to be added ------------------
-  if (!is.null(denominator) && !all(by %in% names(denominator))) {
+  if (!is.null(denominator) && is.data.frame(denominator) && !all(by %in% names(denominator))) {
     by_vars_not_present <- by |> setdiff(names(denominator))
     denominator <-
       data |>
@@ -112,7 +111,7 @@ ard_hierarchical_count <- function(data, variables, by = NULL, fmt_fn = NULL,
   )
 
   # return empty tibble if no variables selected -------------------------------
-  if (rlang::is_empty(variables)) return(dplyr::tibble())
+  if (is_empty(variables)) return(dplyr::tibble())
 
   # add dummy variable for counting --------------------------------------------
   data[["...ard_dummy_for_counting..."]] <- 1L

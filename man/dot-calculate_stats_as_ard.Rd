@@ -8,7 +8,7 @@
   df_nested,
   variables,
   statistics,
-  new_col_name = "..ard_all_stats..",
+  new_col_name = "...ard_all_stats...",
   omit_na = TRUE
 )
 }

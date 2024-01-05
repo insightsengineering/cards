@@ -40,7 +40,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-\item{denominator}{(\code{data.frame})\cr
+\item{denominator}{(\code{data.frame}, \code{integer()})\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
@@ -76,10 +76,20 @@ denominator to the number of enrolled subjects.
 
 In such cases, use the \code{denominator} argument to specify a new definition
 of \code{"N"}, and subsequently \code{"p"}.
-The argument expects a data frame, and the data frame must include the columns
-specified in \code{ard_categorical(by=)} (strata columns are not considered).
-The updated \code{N} and \code{length} elements will be updated to be calculated as
-the number of rows in each combination of the \code{by} variables.
+The argument expects the following inputs:
+\itemize{
+\item a data frame. Any columns in the data frame that overlap with the \code{by}/\code{strata}
+columns will be used to calculate the new \code{"N"}.
+\item an integer. This single integer will be used as the new \code{"N"}
+\item a string: one of \code{c("column", "row", "cell")}. \code{"column"} is equivalent
+to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
+columns are are the 'top' of a cross table, and the variables are the rows.
+\code{"cell"} gives percentages where the denominator is the number of non-missing
+rows in the source data frame.
+\item a structured data frame. The data frame will include columns from \code{by}/\code{strata}.
+The last column must be named \code{"...ard_N..."}. The integers in this column will
+be used as the updated \code{"N"} in the calculations.
+}
 }
 
 \examples{

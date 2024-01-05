@@ -68,48 +68,56 @@
       38  Xanomeline Low Dose      AGE            % Missing     missing    p_miss
       39  Xanomeline Low Dose      AGE        % Non-missing     missing p_nonmiss
       40              Placebo   AGEGR1                65-80 categorical         n
-      41              Placebo   AGEGR1                65-80 categorical         p
-      42              Placebo   AGEGR1                  <65 categorical         n
-      43              Placebo   AGEGR1                  <65 categorical         p
-      44              Placebo   AGEGR1                  >80 categorical         n
-      45              Placebo   AGEGR1                  >80 categorical         p
-      46              Placebo   AGEGR1                    N categorical         N
-      47              Placebo   AGEGR1        Vector Length     missing     N_obs
-      48              Placebo   AGEGR1            N Missing     missing    N_miss
-      49              Placebo   AGEGR1        N Non-missing     missing N_nonmiss
-      50              Placebo   AGEGR1            % Missing     missing    p_miss
-      51              Placebo   AGEGR1        % Non-missing     missing p_nonmiss
-      52 Xanomeline High Dose   AGEGR1                65-80 categorical         n
-      53 Xanomeline High Dose   AGEGR1                65-80 categorical         p
-      54 Xanomeline High Dose   AGEGR1                  <65 categorical         n
-      55 Xanomeline High Dose   AGEGR1                  <65 categorical         p
-      56 Xanomeline High Dose   AGEGR1                  >80 categorical         n
-      57 Xanomeline High Dose   AGEGR1                  >80 categorical         p
-      58 Xanomeline High Dose   AGEGR1                    N categorical         N
-      59 Xanomeline High Dose   AGEGR1        Vector Length     missing     N_obs
-      60 Xanomeline High Dose   AGEGR1            N Missing     missing    N_miss
-      61 Xanomeline High Dose   AGEGR1        N Non-missing     missing N_nonmiss
-      62 Xanomeline High Dose   AGEGR1            % Missing     missing    p_miss
-      63 Xanomeline High Dose   AGEGR1        % Non-missing     missing p_nonmiss
-      64  Xanomeline Low Dose   AGEGR1                65-80 categorical         n
-      65  Xanomeline Low Dose   AGEGR1                65-80 categorical         p
-      66  Xanomeline Low Dose   AGEGR1                  <65 categorical         n
-      67  Xanomeline Low Dose   AGEGR1                  <65 categorical         p
-      68  Xanomeline Low Dose   AGEGR1                  >80 categorical         n
-      69  Xanomeline Low Dose   AGEGR1                  >80 categorical         p
-      70  Xanomeline Low Dose   AGEGR1                    N categorical         N
-      71  Xanomeline Low Dose   AGEGR1        Vector Length     missing     N_obs
-      72  Xanomeline Low Dose   AGEGR1            N Missing     missing    N_miss
-      73  Xanomeline Low Dose   AGEGR1        N Non-missing     missing N_nonmiss
-      74  Xanomeline Low Dose   AGEGR1            % Missing     missing    p_miss
-      75  Xanomeline Low Dose   AGEGR1        % Non-missing     missing p_nonmiss
-      76              Placebo      ARM              Placebo categorical         n
-      77              Placebo      ARM              Placebo categorical         p
-      78 Xanomeline High Dose      ARM Xanomeline High Dose categorical         n
-      79 Xanomeline High Dose      ARM Xanomeline High Dose categorical         p
-      80  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         n
-      81  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         p
-      82                 <NA>      ARM                    N categorical         N
+      41              Placebo   AGEGR1                65-80 categorical         N
+      42              Placebo   AGEGR1                65-80 categorical         p
+      43              Placebo   AGEGR1                  <65 categorical         n
+      44              Placebo   AGEGR1                  <65 categorical         N
+      45              Placebo   AGEGR1                  <65 categorical         p
+      46              Placebo   AGEGR1                  >80 categorical         n
+      47              Placebo   AGEGR1                  >80 categorical         N
+      48              Placebo   AGEGR1                  >80 categorical         p
+      49              Placebo   AGEGR1        Vector Length     missing     N_obs
+      50              Placebo   AGEGR1            N Missing     missing    N_miss
+      51              Placebo   AGEGR1        N Non-missing     missing N_nonmiss
+      52              Placebo   AGEGR1            % Missing     missing    p_miss
+      53              Placebo   AGEGR1        % Non-missing     missing p_nonmiss
+      54 Xanomeline High Dose   AGEGR1                65-80 categorical         n
+      55 Xanomeline High Dose   AGEGR1                65-80 categorical         N
+      56 Xanomeline High Dose   AGEGR1                65-80 categorical         p
+      57 Xanomeline High Dose   AGEGR1                  <65 categorical         n
+      58 Xanomeline High Dose   AGEGR1                  <65 categorical         N
+      59 Xanomeline High Dose   AGEGR1                  <65 categorical         p
+      60 Xanomeline High Dose   AGEGR1                  >80 categorical         n
+      61 Xanomeline High Dose   AGEGR1                  >80 categorical         N
+      62 Xanomeline High Dose   AGEGR1                  >80 categorical         p
+      63 Xanomeline High Dose   AGEGR1        Vector Length     missing     N_obs
+      64 Xanomeline High Dose   AGEGR1            N Missing     missing    N_miss
+      65 Xanomeline High Dose   AGEGR1        N Non-missing     missing N_nonmiss
+      66 Xanomeline High Dose   AGEGR1            % Missing     missing    p_miss
+      67 Xanomeline High Dose   AGEGR1        % Non-missing     missing p_nonmiss
+      68  Xanomeline Low Dose   AGEGR1                65-80 categorical         n
+      69  Xanomeline Low Dose   AGEGR1                65-80 categorical         N
+      70  Xanomeline Low Dose   AGEGR1                65-80 categorical         p
+      71  Xanomeline Low Dose   AGEGR1                  <65 categorical         n
+      72  Xanomeline Low Dose   AGEGR1                  <65 categorical         N
+      73  Xanomeline Low Dose   AGEGR1                  <65 categorical         p
+      74  Xanomeline Low Dose   AGEGR1                  >80 categorical         n
+      75  Xanomeline Low Dose   AGEGR1                  >80 categorical         N
+      76  Xanomeline Low Dose   AGEGR1                  >80 categorical         p
+      77  Xanomeline Low Dose   AGEGR1        Vector Length     missing     N_obs
+      78  Xanomeline Low Dose   AGEGR1            N Missing     missing    N_miss
+      79  Xanomeline Low Dose   AGEGR1        N Non-missing     missing N_nonmiss
+      80  Xanomeline Low Dose   AGEGR1            % Missing     missing    p_miss
+      81  Xanomeline Low Dose   AGEGR1        % Non-missing     missing p_nonmiss
+      82              Placebo      ARM              Placebo categorical         n
+      83              Placebo      ARM              Placebo categorical         N
+      84              Placebo      ARM              Placebo categorical         p
+      85 Xanomeline High Dose      ARM Xanomeline High Dose categorical         n
+      86 Xanomeline High Dose      ARM Xanomeline High Dose categorical         N
+      87 Xanomeline High Dose      ARM Xanomeline High Dose categorical         p
+      88  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         n
+      89  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         N
+      90  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         p
            statistic
       1   86.0000000
       2   75.2093023
@@ -151,48 +159,56 @@
       38   0.0000000
       39   1.0000000
       40  42.0000000
-      41   0.4883721
-      42  14.0000000
-      43   0.1627907
-      44  30.0000000
-      45   0.3488372
-      46  86.0000000
+      41  86.0000000
+      42   0.4883721
+      43  14.0000000
+      44  86.0000000
+      45   0.1627907
+      46  30.0000000
       47  86.0000000
-      48   0.0000000
+      48   0.3488372
       49  86.0000000
       50   0.0000000
-      51   1.0000000
-      52  55.0000000
-      53   0.6547619
-      54  11.0000000
-      55   0.1309524
-      56  18.0000000
-      57   0.2142857
+      51  86.0000000
+      52   0.0000000
+      53   1.0000000
+      54  55.0000000
+      55  84.0000000
+      56   0.6547619
+      57  11.0000000
       58  84.0000000
-      59  84.0000000
-      60   0.0000000
+      59   0.1309524
+      60  18.0000000
       61  84.0000000
-      62   0.0000000
-      63   1.0000000
-      64  47.0000000
-      65   0.5595238
-      66   8.0000000
-      67   0.0952381
-      68  29.0000000
-      69   0.3452381
-      70  84.0000000
-      71  84.0000000
-      72   0.0000000
-      73  84.0000000
-      74   0.0000000
-      75   1.0000000
-      76  86.0000000
-      77   0.3385827
-      78  84.0000000
-      79   0.3307087
-      80  84.0000000
-      81   0.3307087
-      82 254.0000000
+      62   0.2142857
+      63  84.0000000
+      64   0.0000000
+      65  84.0000000
+      66   0.0000000
+      67   1.0000000
+      68  47.0000000
+      69  84.0000000
+      70   0.5595238
+      71   8.0000000
+      72  84.0000000
+      73   0.0952381
+      74  29.0000000
+      75  84.0000000
+      76   0.3452381
+      77  84.0000000
+      78   0.0000000
+      79  84.0000000
+      80   0.0000000
+      81   1.0000000
+      82  86.0000000
+      83 254.0000000
+      84   0.3385827
+      85  84.0000000
+      86 254.0000000
+      87   0.3307087
+      88  84.0000000
+      89 254.0000000
+      90   0.3307087
 
 ---
 
@@ -240,48 +256,56 @@
       38  Xanomeline Low Dose      AGE            % Missing     missing    p_miss
       39  Xanomeline Low Dose      AGE        % Non-missing     missing p_nonmiss
       40              Placebo   AGEGR1                65-80 categorical         n
-      41              Placebo   AGEGR1                65-80 categorical         p
-      42              Placebo   AGEGR1                  <65 categorical         n
-      43              Placebo   AGEGR1                  <65 categorical         p
-      44              Placebo   AGEGR1                  >80 categorical         n
-      45              Placebo   AGEGR1                  >80 categorical         p
-      46              Placebo   AGEGR1                    N categorical         N
-      47              Placebo   AGEGR1        Vector Length     missing     N_obs
-      48              Placebo   AGEGR1            N Missing     missing    N_miss
-      49              Placebo   AGEGR1        N Non-missing     missing N_nonmiss
-      50              Placebo   AGEGR1            % Missing     missing    p_miss
-      51              Placebo   AGEGR1        % Non-missing     missing p_nonmiss
-      52 Xanomeline High Dose   AGEGR1                65-80 categorical         n
-      53 Xanomeline High Dose   AGEGR1                65-80 categorical         p
-      54 Xanomeline High Dose   AGEGR1                  <65 categorical         n
-      55 Xanomeline High Dose   AGEGR1                  <65 categorical         p
-      56 Xanomeline High Dose   AGEGR1                  >80 categorical         n
-      57 Xanomeline High Dose   AGEGR1                  >80 categorical         p
-      58 Xanomeline High Dose   AGEGR1                    N categorical         N
-      59 Xanomeline High Dose   AGEGR1        Vector Length     missing     N_obs
-      60 Xanomeline High Dose   AGEGR1            N Missing     missing    N_miss
-      61 Xanomeline High Dose   AGEGR1        N Non-missing     missing N_nonmiss
-      62 Xanomeline High Dose   AGEGR1            % Missing     missing    p_miss
-      63 Xanomeline High Dose   AGEGR1        % Non-missing     missing p_nonmiss
-      64  Xanomeline Low Dose   AGEGR1                65-80 categorical         n
-      65  Xanomeline Low Dose   AGEGR1                65-80 categorical         p
-      66  Xanomeline Low Dose   AGEGR1                  <65 categorical         n
-      67  Xanomeline Low Dose   AGEGR1                  <65 categorical         p
-      68  Xanomeline Low Dose   AGEGR1                  >80 categorical         n
-      69  Xanomeline Low Dose   AGEGR1                  >80 categorical         p
-      70  Xanomeline Low Dose   AGEGR1                    N categorical         N
-      71  Xanomeline Low Dose   AGEGR1        Vector Length     missing     N_obs
-      72  Xanomeline Low Dose   AGEGR1            N Missing     missing    N_miss
-      73  Xanomeline Low Dose   AGEGR1        N Non-missing     missing N_nonmiss
-      74  Xanomeline Low Dose   AGEGR1            % Missing     missing    p_miss
-      75  Xanomeline Low Dose   AGEGR1        % Non-missing     missing p_nonmiss
-      76              Placebo      ARM              Placebo categorical         n
-      77              Placebo      ARM              Placebo categorical         p
-      78 Xanomeline High Dose      ARM Xanomeline High Dose categorical         n
-      79 Xanomeline High Dose      ARM Xanomeline High Dose categorical         p
-      80  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         n
-      81  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         p
-      82                 <NA>      ARM                    N categorical         N
+      41              Placebo   AGEGR1                65-80 categorical         N
+      42              Placebo   AGEGR1                65-80 categorical         p
+      43              Placebo   AGEGR1                  <65 categorical         n
+      44              Placebo   AGEGR1                  <65 categorical         N
+      45              Placebo   AGEGR1                  <65 categorical         p
+      46              Placebo   AGEGR1                  >80 categorical         n
+      47              Placebo   AGEGR1                  >80 categorical         N
+      48              Placebo   AGEGR1                  >80 categorical         p
+      49              Placebo   AGEGR1        Vector Length     missing     N_obs
+      50              Placebo   AGEGR1            N Missing     missing    N_miss
+      51              Placebo   AGEGR1        N Non-missing     missing N_nonmiss
+      52              Placebo   AGEGR1            % Missing     missing    p_miss
+      53              Placebo   AGEGR1        % Non-missing     missing p_nonmiss
+      54 Xanomeline High Dose   AGEGR1                65-80 categorical         n
+      55 Xanomeline High Dose   AGEGR1                65-80 categorical         N
+      56 Xanomeline High Dose   AGEGR1                65-80 categorical         p
+      57 Xanomeline High Dose   AGEGR1                  <65 categorical         n
+      58 Xanomeline High Dose   AGEGR1                  <65 categorical         N
+      59 Xanomeline High Dose   AGEGR1                  <65 categorical         p
+      60 Xanomeline High Dose   AGEGR1                  >80 categorical         n
+      61 Xanomeline High Dose   AGEGR1                  >80 categorical         N
+      62 Xanomeline High Dose   AGEGR1                  >80 categorical         p
+      63 Xanomeline High Dose   AGEGR1        Vector Length     missing     N_obs
+      64 Xanomeline High Dose   AGEGR1            N Missing     missing    N_miss
+      65 Xanomeline High Dose   AGEGR1        N Non-missing     missing N_nonmiss
+      66 Xanomeline High Dose   AGEGR1            % Missing     missing    p_miss
+      67 Xanomeline High Dose   AGEGR1        % Non-missing     missing p_nonmiss
+      68  Xanomeline Low Dose   AGEGR1                65-80 categorical         n
+      69  Xanomeline Low Dose   AGEGR1                65-80 categorical         N
+      70  Xanomeline Low Dose   AGEGR1                65-80 categorical         p
+      71  Xanomeline Low Dose   AGEGR1                  <65 categorical         n
+      72  Xanomeline Low Dose   AGEGR1                  <65 categorical         N
+      73  Xanomeline Low Dose   AGEGR1                  <65 categorical         p
+      74  Xanomeline Low Dose   AGEGR1                  >80 categorical         n
+      75  Xanomeline Low Dose   AGEGR1                  >80 categorical         N
+      76  Xanomeline Low Dose   AGEGR1                  >80 categorical         p
+      77  Xanomeline Low Dose   AGEGR1        Vector Length     missing     N_obs
+      78  Xanomeline Low Dose   AGEGR1            N Missing     missing    N_miss
+      79  Xanomeline Low Dose   AGEGR1        N Non-missing     missing N_nonmiss
+      80  Xanomeline Low Dose   AGEGR1            % Missing     missing    p_miss
+      81  Xanomeline Low Dose   AGEGR1        % Non-missing     missing p_nonmiss
+      82              Placebo      ARM              Placebo categorical         n
+      83              Placebo      ARM              Placebo categorical         N
+      84              Placebo      ARM              Placebo categorical         p
+      85 Xanomeline High Dose      ARM Xanomeline High Dose categorical         n
+      86 Xanomeline High Dose      ARM Xanomeline High Dose categorical         N
+      87 Xanomeline High Dose      ARM Xanomeline High Dose categorical         p
+      88  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         n
+      89  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         N
+      90  Xanomeline Low Dose      ARM  Xanomeline Low Dose categorical         p
            statistic
       1   86.0000000
       2   75.2093023
@@ -323,48 +347,56 @@
       38   0.0000000
       39   1.0000000
       40  42.0000000
-      41   0.4883721
-      42  14.0000000
-      43   0.1627907
-      44  30.0000000
-      45   0.3488372
-      46  86.0000000
+      41  86.0000000
+      42   0.4883721
+      43  14.0000000
+      44  86.0000000
+      45   0.1627907
+      46  30.0000000
       47  86.0000000
-      48   0.0000000
+      48   0.3488372
       49  86.0000000
       50   0.0000000
-      51   1.0000000
-      52  55.0000000
-      53   0.6547619
-      54  11.0000000
-      55   0.1309524
-      56  18.0000000
-      57   0.2142857
+      51  86.0000000
+      52   0.0000000
+      53   1.0000000
+      54  55.0000000
+      55  84.0000000
+      56   0.6547619
+      57  11.0000000
       58  84.0000000
-      59  84.0000000
-      60   0.0000000
+      59   0.1309524
+      60  18.0000000
       61  84.0000000
-      62   0.0000000
-      63   1.0000000
-      64  47.0000000
-      65   0.5595238
-      66   8.0000000
-      67   0.0952381
-      68  29.0000000
-      69   0.3452381
-      70  84.0000000
-      71  84.0000000
-      72   0.0000000
-      73  84.0000000
-      74   0.0000000
-      75   1.0000000
-      76  86.0000000
-      77   0.3385827
-      78  84.0000000
-      79   0.3307087
-      80  84.0000000
-      81   0.3307087
-      82 254.0000000
+      62   0.2142857
+      63  84.0000000
+      64   0.0000000
+      65  84.0000000
+      66   0.0000000
+      67   1.0000000
+      68  47.0000000
+      69  84.0000000
+      70   0.5595238
+      71   8.0000000
+      72  84.0000000
+      73   0.0952381
+      74  29.0000000
+      75  84.0000000
+      76   0.3452381
+      77  84.0000000
+      78   0.0000000
+      79  84.0000000
+      80   0.0000000
+      81   1.0000000
+      82  86.0000000
+      83 254.0000000
+      84   0.3385827
+      85  84.0000000
+      86 254.0000000
+      87   0.3307087
+      88  84.0000000
+      89 254.0000000
+      90   0.3307087
 
 # shuffle_ard notifies user about warnings/errors before dropping
 

@@ -12,5 +12,5 @@
       bind_ard(ard, ard, .update = FALSE)
     Condition
       Error in `bind_ard()`:
-      ! 21 duplicate observations found.
+      ! 27 duplicate observations found.
 

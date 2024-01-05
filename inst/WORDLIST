@@ -1,8 +1,5 @@
-ADAE
-ADSL
 ADaM
 AE
-AEs
 AGEGR
 ARD
 ARDs
@@ -16,7 +13,6 @@ Pre
 SAS's
 SDTM
 TRTP
-Unnest
 Welch
 Xanomeline
 YAML
@@ -30,6 +26,7 @@ funder
 mis
 nalysis
 nonmiss
+pre
 quosures
 reproducibility
 reusability
@@ -39,4 +36,3 @@ tidyselect
 tidyselector
 tidyselectors
 unnested
-unnests

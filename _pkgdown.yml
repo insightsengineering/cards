@@ -4,9 +4,9 @@ template:
   params:
     bootswatch: flatly
 
-# development:
-#   mode: auto
-#   version_label: default
+development:
+  mode: auto
+  version_label: default
 
 authors:
   Daniel D. Sjoberg:
@@ -18,9 +18,8 @@ reference:
   -  contents:
       - ard_continuous
       - ard_categorical
-      - ard_crosstab
-      - ard_dichotomous
       - ard_hierarchical
+      - ard_dichotomous
       - ard_missing
 
   - subtitle: "Model and Test Summaries"

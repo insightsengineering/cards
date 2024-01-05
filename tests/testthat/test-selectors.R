@@ -41,10 +41,11 @@ test_that("selectors work", {
 
   # test group selector works for 10+ groups
   expect_equal(
-    rep_len(list(mtcars[c("am", "mpg")]), length.out = 11) |>
-      dplyr::bind_cols() |>
+    suppressMessages(
+      rep_len(list(mtcars[c("am", "vs")]), length.out = 11) |> dplyr::bind_cols()
+    ) |>
       ard_categorical(
-        variables = mpg...2,
+        variables = "vs...2",
         by = starts_with("am"),
         statistics = ~categorical_variable_summary_fns("n")
       ) |>

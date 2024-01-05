@@ -1,7 +1,7 @@
 # eval_capture_conditions() works
 
     Code
-      eval_capture_conditions(rlang::expr(TRUE))
+      eval_capture_conditions(expr(TRUE))
     Output
       $result
       [1] TRUE
@@ -16,7 +16,7 @@
 ---
 
     Code
-      eval_capture_conditions(rlang::expr(cli::cli_abort("BIG ERROR")))
+      eval_capture_conditions(expr(cli::cli_abort("BIG ERROR")))
     Output
       $result
       NULL
@@ -35,7 +35,7 @@
         cli::cli_warn("BIG WARNING")
         TRUE
       })
-      eval_capture_conditions(rlang::expr(one_warn_foo()))
+      eval_capture_conditions(expr(one_warn_foo()))
     Output
       $result
       [1] TRUE
@@ -55,7 +55,7 @@
         cli::cli_warn("BIG WARNING2")
         TRUE
       })
-      eval_capture_conditions(rlang::expr(two_warn_foo()))
+      eval_capture_conditions(expr(two_warn_foo()))
     Output
       $result
       [1] TRUE

@@ -20,13 +20,17 @@
 #' @param summaries (`character`)\cr
 #'   a character vector of results to include in output.
 #'
-#'   - `categorical_variable_summary_fns()`: Select one or more from 'N', 'n', 'p'
+#'   - `categorical_variable_summary_fns()`: Select one or more from
+#'     `r formals(categorical_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
 #'   - `continuous_variable_summary_fns()`: Select one or more from
 #'     `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
 #'   - `missing_variable_summary_fns()`: Select one or more from
 #'     `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'
+#' @param other_stats named list of other statistic functions to supplement the
+#' pre-programmed functions.
 #'
 #' @return named list of summary functions
 #' @name summary_functions
@@ -59,32 +63,29 @@ NULL
 
 #' @rdname summary_functions
 #' @export
-categorical_variable_summary_fns <- function(summaries = c("n", "p", "N")) {
-  summaries <- rlang::arg_match(summaries, multiple = TRUE)
+categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
+  # check inputs ---------------------------------------------------------------
+  if (!is_empty(summaries)) {
+    summaries <-
+      arg_match(summaries, values = c("n", "p", "N"), multiple = TRUE)
+  }
+  check_class("list", other_stats = other_stats, allow_null = TRUE)
 
-  tabulate_fn <-
-    function(x, stats = summaries) {
+  # combine tabulation and other stats -----------------------------------------
+  lst_all_stats <-
+    list(tabulation = summaries) |>
+    c(other_stats)
 
-      res <- list()
-      if (any(c("N", "p") %in% stats))
-        res[["N"]] <- length(x)
-      if (any(c("n", "p") %in% stats))
-        res[["n"]] <- table(x)
-      if ("p" %in% stats)
-        res$p <- res$n / res$N
-
-      res
-    }
-
-  list(tabulate = tabulate_fn)
+  lst_all_stats
 }
 
 #' @rdname summary_functions
 #' @export
 continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'median',
-                                                          'p25', 'p75', 'min', 'max')) {
+                                                          'p25', 'p75', 'min', 'max'),
+                                            other_stats = NULL) {
   # process the selection of the summary stats to include ----------------------
-  summaries <- rlang::arg_match(summaries, multiple = TRUE)
+  summaries <- arg_match(summaries, multiple = TRUE)
 
   # list all functions available by default ------------------------------------
   list_fns <-
@@ -100,13 +101,14 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
     )
 
   # return list of functions ---------------------------------------------------
-  list_fns[summaries]
+  list_fns[summaries] |>
+    c(other_stats)
 }
 
 #' @rdname summary_functions
 #' @export
 missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_nonmiss", "p_miss", "p_nonmiss")) {
-  summaries <- rlang::arg_match(summaries, multiple = TRUE)
+  summaries <- arg_match(summaries, multiple = TRUE)
 
   list(
     var_level =

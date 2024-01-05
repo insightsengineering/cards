@@ -8,27 +8,27 @@
 \alias{check_list_elements}
 \title{Process tidyselectors}
 \usage{
-process_selectors(data, ..., env = rlang::caller_env())
+process_selectors(data, ..., env = caller_env())
 
-process_formula_selectors(data, ..., env = rlang::caller_env())
+process_formula_selectors(data, ..., env = caller_env())
 
-fill_formula_selectors(data, ..., env = rlang::caller_env())
+fill_formula_selectors(data, ..., env = caller_env())
 
 compute_formula_selector(
   data,
   x,
-  arg_name = rlang::caller_arg(x),
-  env = rlang::caller_env(),
+  arg_name = caller_arg(x),
+  env = caller_env(),
   strict = TRUE
 )
 
-check_list_elements(..., error_msg = list(), env = rlang::caller_env())
+check_list_elements(..., error_msg = list(), env = caller_env())
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 named arguments where the value of the argument is processed with tidyselect.
 \itemize{
 \item \code{process_selectors()}: the values are tidyselect-compatible selectors
@@ -50,7 +50,7 @@ converted to a named list.}
 
 \item{arg_name}{(\code{string})\cr
 a string with the argument named being processed. Used
-in error messaging. Default is \code{rlang::caller_arg(x)}}
+in error messaging. Default is \code{caller_arg(x)}}
 
 \item{strict}{(\code{logical} scalar)\cr
 whether to throw an error if a variable doesn't exist in the reference data

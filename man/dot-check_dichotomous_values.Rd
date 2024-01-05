@@ -4,7 +4,7 @@
 \alias{.check_dichotomous_values}
 \title{Perform Value Checks}
 \usage{
-.check_dichotomous_values(data, values, call = rlang::caller_env())
+.check_dichotomous_values(data, values, call = caller_env())
 }
 \arguments{
 \item{data}{(\code{data.frame})
@@ -14,7 +14,7 @@ a data frame}
 a named list}
 
 \item{call}{(\code{environment})
-an environment. Default is \code{rlang::caller_env()}}
+an environment. Default is \code{caller_env()}}
 }
 \description{
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
