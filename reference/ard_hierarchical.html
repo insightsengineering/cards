@@ -28,7 +28,7 @@ in AESOC, and also summarizes the counts of AESOC.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +127,7 @@ e.g. <code>list(mpg = categorical_variable_summary_fns())</code>.</p></dd>
 
 
 <dt>denominator</dt>
-<dd><p>(<code>data.frame</code>)<br>
+<dd><p>(<code>data.frame</code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
 
@@ -164,7 +164,7 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 <span class="r-in"><span>  denominator <span class="op">=</span> <span class="va">ADSL</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4,365 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6,534 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level group3 group3_level      variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC DISORDERS AETERM  </span>
@@ -177,7 +177,7 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC DISORDERS AETERM  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC DISORDERS AETERM  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC DISORDERS AETERM  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4,355 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6,524 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: variable_level &lt;chr&gt;, stat_name &lt;chr&gt;, stat_label &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   statistic &lt;chr&gt;, statistic_fmt_fn &lt;chr&gt;, warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
@@ -190,16 +190,16 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 795 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level     stat_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    CARDIAC DISORDERS  n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    CONGENITAL, FAMIL… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    EAR AND LABYRINTH… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    EYE DISORDERS      n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    GASTROINTESTINAL … n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    GENERAL DISORDERS… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    HEPATOBILIARY DIS… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    IMMUNE SYSTEM DIS… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    INFECTIONS AND IN… n        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    INJURY, POISONING… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    GENERAL DISORDERS… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    GASTROINTESTINAL … n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    SKIN AND SUBCUTAN… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    CARDIAC DISORDERS  n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    INFECTIONS AND IN… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    RESPIRATORY, THOR… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    RENAL AND URINARY… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    MUSCULOSKELETAL A… n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    EYE DISORDERS      n        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> TRTA   Placebo      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>           AESOC    PSYCHIATRIC DISOR… n        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 785 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: stat_label &lt;chr&gt;, statistic &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   statistic_fmt_fn &lt;chr&gt;, warning &lt;chr&gt;, error &lt;chr&gt;</span></span>

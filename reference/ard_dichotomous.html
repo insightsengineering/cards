@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,7 @@ e.g. <code>list(mpg = categorical_variable_summary_fns())</code>.</p></dd>
 
 
 <dt>denominator</dt>
-<dd><p>(<code>data.frame</code>)<br>
+<dd><p>(<code>data.frame</code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
 
@@ -140,14 +140,14 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_dichotomous</span><span class="op">(</span><span class="va">mtcars</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level context     stat_name stat_label statistic   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;named list&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       <span style="color: #949494;">&lt;NULL&gt;</span>         dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> cyl      <span style="color: #949494;">&lt;NULL&gt;</span>         dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level context     stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: statistic_fmt_fn &lt;list&gt;, warning &lt;list&gt;, error &lt;list&gt;</span></span>
 </code></pre></div>
     </div>

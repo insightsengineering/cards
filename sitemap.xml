@@ -46,9 +46,6 @@
     <loc>https://insightsengineering.github.io/cards/reference/ard_continuous.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ard_crosstab.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_dichotomous.html</loc>
   </url>
   <url>
@@ -76,9 +73,6 @@
     <loc>https://insightsengineering.github.io/cards/reference/check_class_data_frame.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/check_columns_in_data_frame.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/cards/reference/check_length.html</loc>
   </url>
   <url>
@@ -88,10 +82,10 @@
     <loc>https://insightsengineering.github.io/cards/reference/default_stat_labels.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-ard_categorical_recalc_N.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-calculate_stats_as_ard.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-calculate_stats_as_ard.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-calculate_tabulation_statistics.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-check_dichotomous_values.html</loc>
@@ -101,6 +95,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-check_var_nms.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-default_fmt_fn.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-detect_msgs.html</loc>
@@ -115,6 +112,9 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-one_row_ard_to_nested_list.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-process_denominator.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-purrr_list_flatten.html</loc>
   </url>
   <url>
@@ -124,13 +124,13 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-rnm_grp_vars.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-table_as_df.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-trim_ard.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-unique_and_sorted.html</loc>
-  </url>
-  <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-unnest_table_object.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/eval_capture_conditions.html</loc>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@ e.g. <code>list(mpg = categorical_variable_summary_fns())</code>.</p></dd>
 
 
 <dt>denominator</dt>
-<dd><p>(<code>data.frame</code>)<br>
+<dd><p>(<code>data.frame</code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
 Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
 
@@ -142,30 +142,37 @@ of the rates of various observed adverse events, you may need to update the
 denominator to the number of enrolled subjects.</p>
 <p>In such cases, use the <code>denominator</code> argument to specify a new definition
 of <code>"N"</code>, and subsequently <code>"p"</code>.
-The argument expects a data frame, and the data frame must include the columns
-specified in <code>ard_categorical(by=)</code> (strata columns are not considered).
-The updated <code>N</code> and <code>length</code> elements will be updated to be calculated as
-the number of rows in each combination of the <code>by</code> variables.</p>
-    </div>
+The argument expects the following inputs:</p><ul><li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
+columns will be used to calculate the new <code>"N"</code>.</p></li>
+<li><p>an integer. This single integer will be used as the new <code>"N"</code></p></li>
+<li><p>a string: one of <code>c("column", "row", "cell")</code>. <code>"column"</code> is equivalent
+to <code>denominator=NULL</code>. <code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code>
+columns are are the 'top' of a cross table, and the variables are the rows.
+<code>"cell"</code> gives percentages where the denominator is the number of non-missing
+rows in the source data frame.</p></li>
+<li><p>a structured data frame. The data frame will include columns from <code>by</code>/<code>strata</code>.
+The last column must be named <code>"...ard_N..."</code>. The integers in this column will
+be used as the updated <code>"N"</code> in the calculations.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_categorical</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 27 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level    variable variable_level stat_name stat_label statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo         AGEGR1   65-80          n         n          42       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo         AGEGR1   65-80          p         %          0.488372…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo         AGEGR1   &lt;65            n         n          14       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo         AGEGR1   &lt;65            p         %          0.162790…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo         AGEGR1   &gt;80            n         n          30       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo         AGEGR1   &gt;80            p         %          0.348837…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Placebo         AGEGR1   <span style="color: #BB0000;">NA</span>             N         N          86       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Xanomeline Hig… AGEGR1   65-80          n         n          55       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Xanomeline Hig… AGEGR1   65-80          p         %          0.654761…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline Hig… AGEGR1   &lt;65            n         n          11       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Placebo         AGEGR1   65-80          N         N          86       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    Placebo         AGEGR1   65-80          p         %          0.488372…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    Placebo         AGEGR1   &lt;65            n         n          14       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    Placebo         AGEGR1   &lt;65            N         N          86       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    Placebo         AGEGR1   &lt;65            p         %          0.162790…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    Placebo         AGEGR1   &gt;80            n         n          30       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    Placebo         AGEGR1   &gt;80            N         N          86       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    Placebo         AGEGR1   &gt;80            p         %          0.348837…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    Xanomeline Hig… AGEGR1   65-80          n         n          55       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: statistic_fmt_fn &lt;chr&gt;, warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>
