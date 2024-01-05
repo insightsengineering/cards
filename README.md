@@ -66,19 +66,19 @@ ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL"))
 #> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
 
 ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
-#> {cards} data frame: 36 x 11
+#> {cards} data frame: 45 x 11
 #>    group1 group1_level variable variable_level stat_name stat_label statistic
 #> 1     ARM      Placebo   AGEGR1            <65         n          n        14
-#> 2     ARM      Placebo   AGEGR1            <65         p          %     0.163
-#> 3     ARM      Placebo   AGEGR1            >80         n          n        30
-#> 4     ARM      Placebo   AGEGR1            >80         p          %     0.349
-#> 5     ARM      Placebo   AGEGR1          65-80         n          n        42
-#> 6     ARM      Placebo   AGEGR1          65-80         p          %     0.488
-#> 7     ARM      Placebo   AGEGR1                        N          N        86
-#> 8     ARM      Placebo      SEX              F         n          n        53
-#> 9     ARM      Placebo      SEX              F         p          %     0.616
-#> 10    ARM      Placebo      SEX              M         n          n        33
-#> ℹ 26 more rows
+#> 2     ARM      Placebo   AGEGR1            <65         N          N        86
+#> 3     ARM      Placebo   AGEGR1            <65         p          %     0.163
+#> 4     ARM      Placebo   AGEGR1            >80         n          n        30
+#> 5     ARM      Placebo   AGEGR1            >80         N          N        86
+#> 6     ARM      Placebo   AGEGR1            >80         p          %     0.349
+#> 7     ARM      Placebo   AGEGR1          65-80         n          n        42
+#> 8     ARM      Placebo   AGEGR1          65-80         N          N        86
+#> 9     ARM      Placebo   AGEGR1          65-80         p          %     0.488
+#> 10    ARM      Placebo      SEX              F         n          n        53
+#> ℹ 35 more rows
 #> ℹ Use `print(n = ...)` to see more rows
 #> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
 
