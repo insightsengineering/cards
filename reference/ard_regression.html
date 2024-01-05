@@ -88,22 +88,22 @@ a tidier. Default is broom.helpers::tidy_with_broom_or_parameters</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">AGE</span> <span class="op">~</span> <span class="va">ARM</span>, data <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_regression</span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 48 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable variable_level stat_name      statistic                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM      Placebo        term           ARMPlacebo                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM      Placebo        var_label      Description of Planned Arm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM      Placebo        var_class      character                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM      Placebo        var_type       categorical               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM      Placebo        var_nlevels    3                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM      Placebo        contrasts      contr.treatment           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM      Placebo        contrasts_type treatment                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM      Placebo        reference_row  TRUE                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM      Placebo        label          Placebo                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM      Placebo        n_obs          86                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more rows</span></span>
+<span class="r-in"><span>  <span class="fu">ard_regression</span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 48 x 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable variable_level   context      stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       ARM        Placebo regressi…           term       term ARMPlace…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       ARM        Placebo regressi…      var_label      Label Descript…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       ARM        Placebo regressi…      var_class      Class character</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       ARM        Placebo regressi…       var_type       Type categori…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       ARM        Placebo regressi…    var_nlevels   N Levels         3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       ARM        Placebo regressi…      contrasts  contrasts contr.tr…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       ARM        Placebo regressi… contrasts_type  Contrast… treatment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       ARM        Placebo regressi…  reference_row  referenc…      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       ARM        Placebo regressi…          label  Level La…   Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      ARM        Placebo regressi…          n_obs     N Obs.        86</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">38 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1 more variable: statistic_fmt_fn</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

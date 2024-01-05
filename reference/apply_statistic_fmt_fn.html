@@ -78,18 +78,17 @@ an ARD data frame of class 'card'</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">apply_statistic_fmt_fn</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label statistic statistic_fmt statistic_fmt_fn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AGE      contin… N         N          <span style="color: #949494;">&lt;int [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AGE      contin… mean      Mean       <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> AGE      contin… sd        SD         <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> AGE      contin… median    Median     <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> AGE      contin… p25       25th Perc… <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> AGE      contin… p75       75th Perc… <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> AGE      contin… min       Min        <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> AGE      contin… max       Max        <span style="color: #949494;">&lt;dbl [1]&gt;</span> <span style="color: #949494;">&lt;chr [1]&gt;</span>     <span style="color: #949494;">&lt;int [1]&gt;</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: warning &lt;list&gt;, error &lt;list&gt;</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 8 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label statistic statistic_fmt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N       254           254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…      mean       Mean    75.087          75.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE continuo…        sd         SD     8.246           8.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE continuo…    median     Median        77          77.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE continuo…       p25  25th Per…        70          70.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE continuo…       p75  75th Per…        81          81.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE continuo…       min        Min        51          51.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE continuo…       max        Max        89          89.0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

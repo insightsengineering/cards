@@ -149,52 +149,48 @@ pre-programmed functions.</p></dd>
 <span class="r-in"><span>  <span class="va">ADSL</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="st">"AGE"</span>,</span></span>
 <span class="r-in"><span>  statistics <span class="op">=</span> <span class="op">~</span><span class="fu">continuous_variable_summary_fns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"median"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable stat_name stat_label statistic statistic_fmt_fn warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AGE      N         N          254       0                <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AGE      median    Median     77        1                <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 2 x 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label statistic statistic_fmt_fn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N       254                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…    median     Median        77                1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># categorical variable summaries</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">ADSL</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="st">"AGEGR1"</span>,</span></span>
 <span class="r-in"><span>  statistics <span class="op">=</span> <span class="op">~</span><span class="fu">categorical_variable_summary_fns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level stat_name stat_label statistic statistic_fmt_fn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AGEGR1   65-80          n         n          144       0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AGEGR1   65-80          N         N          254       0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> AGEGR1   &lt;65            n         n          33        0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> AGEGR1   &lt;65            N         N          254       0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> AGEGR1   &gt;80            n         n          77        0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> AGEGR1   &gt;80            N         N          254       0               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: warning &lt;chr&gt;, error &lt;chr&gt;</span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level   context stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   AGEGR1          65-80 categori…         n          n       144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   AGEGR1          65-80 categori…         N          N       254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   AGEGR1            &lt;65 categori…         n          n        33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   AGEGR1            &lt;65 categori…         N          N       254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   AGEGR1            &gt;80 categori…         n          n        77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   AGEGR1            &gt;80 categori…         N          N       254</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># summary for rates of missing data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_missing.html">ard_missing</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">ADSL</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="st">"AGEGR1"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  statistics <span class="op">=</span> <span class="op">~</span><span class="fu">missing_variable_summary_fns</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable stat_name stat_label    statistic statistic_fmt_fn     warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> AGE      N_obs     Vector Length 254       <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> AGE      N_miss    N Missing     0         <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> AGE      N_nonmiss N Non-missing 254       <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> AGE      p_miss    % Missing     0         <span style="color: #949494;">"</span>function (x) \nfor… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> AGE      p_nonmiss % Non-missing 1         <span style="color: #949494;">"</span>function (x) \nfor… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> AGEGR1   N_obs     Vector Length 254       <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> AGEGR1   N_miss    N Missing     0         <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> AGEGR1   N_nonmiss N Non-missing 254       <span style="color: #949494;">"</span>0<span style="color: #949494;">"</span>                  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AGEGR1   p_miss    % Missing     0         <span style="color: #949494;">"</span>function (x) \nfor… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AGEGR1   p_nonmiss % Non-missing 1         <span style="color: #949494;">"</span>function (x) \nfor… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 10 x 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable context stat_name stat_label statistic statistic_fmt_fn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       AGE missing     N_obs  Vector L…       254                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       AGE missing    N_miss  N Missing         0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       AGE missing N_nonmiss  N Non-mi…       254                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       AGE missing    p_miss  % Missing         0             &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       AGE missing p_nonmiss  % Non-mi…         1             &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    AGEGR1 missing     N_obs  Vector L…       254                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    AGEGR1 missing    N_miss  N Missing         0                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    AGEGR1 missing N_nonmiss  N Non-mi…       254                0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    AGEGR1 missing    p_miss  % Missing         0             &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   AGEGR1 missing p_nonmiss  % Non-mi…         1             &lt;fn&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

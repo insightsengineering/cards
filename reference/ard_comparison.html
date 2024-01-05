@@ -110,80 +110,99 @@ character column name to be compared</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_ttest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level     variable stat_name stat_label statistic warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    Placebo          AGE      estimate1 Group 1 M… 75.20930… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    Xanomeline High… AGE      estimate2 Group 2 M… 74.38095… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      estimate  Mean Diff… 0.828349… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      statistic t Statist… 0.655196… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      p.value   p-value    0.513240… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      parameter Degrees o… 167.3624… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      conf.low  CI Lower … -1.66763… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      conf.high CI Upper … 3.324336… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      method    method     Welch Tw… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      alternat… alternati… two.sided <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      mu        Null Hypo… 0         <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      paired    Paired t-… FALSE     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      var.equal Assumed E… FALSE     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ARM    <span style="color: #BB0000;">NA</span>               AGE      conf.lev… CI Confid… 0.95      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span>  <span class="fu">ard_ttest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 14 x 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable   stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM                   AGE    estimate  Mean Dif…     0.828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo      AGE   estimate1  Group 1 …    75.209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM    Xanomeli…      AGE   estimate2  Group 2 …    74.381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM                   AGE   statistic  t Statis…     0.655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM                   AGE     p.value    p-value     0.513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM                   AGE   parameter  Degrees …   167.362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM                   AGE    conf.low  CI Lower…    -1.668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM                   AGE   conf.high  CI Upper…     3.324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM                   AGE      method     method Welch Tw…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM                   AGE alternative  alternat… two.sided</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    ARM                   AGE          mu    H0 Mean         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    ARM                   AGE      paired  Paired t…     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    ARM                   AGE   var.equal  Equal Va…     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    ARM                   AGE  conf.level  CI Confi…      0.95</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_wilcoxtest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 variable stat_name   stat_label            statistic     warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    AGE      statistic   W Statistic           3862.5        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    AGE      p.value     p-value               0.4354637488… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    AGE      method      method                Wilcoxon ran… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    AGE      alternative alternative           two.sided     <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    AGE      mu          mu                    0             <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    AGE      paired      Paired test           FALSE         <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    AGE      exact       exact                 <span style="color: #BB0000;">NA</span>            <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    AGE      correct     Continuity Correction TRUE          <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    AGE      conf.int    conf.int              FALSE         <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    AGE      conf.level  conf.level            0.95          <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ARM    AGE      tol.root    tol.root              1e-04         <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> ARM    AGE      digits.rank digits.rank           Inf           <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span>  <span class="fu">ard_wilcoxtest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 12 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 variable   context   stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      AGE wilcoxte…   statistic  W Statis…    3862.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      AGE wilcoxte…     p.value    p-value     0.435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      AGE wilcoxte…      method     method Wilcoxon…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      AGE wilcoxte… alternative  alternat… two.sided</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      AGE wilcoxte…          mu         mu         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM      AGE wilcoxte…      paired  Paired t…     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM      AGE wilcoxte…       exact      exact      NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM      AGE wilcoxte…     correct  Continui…      TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM      AGE wilcoxte…    conf.int   conf.int     FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      AGE wilcoxte…  conf.level  conf.lev…      0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    ARM      AGE wilcoxte…    tol.root   tol.root         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    ARM      AGE wilcoxte… digits.rank  digits.r…       Inf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_chisqtest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group1 variable stat_name        stat_label          statistic   warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;named lis&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> ARM    AGEGR1   statistic        X-squared Statistic <span style="color: #949494;">&lt;dbl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ARM    AGEGR1   p.value          p-value             <span style="color: #949494;">&lt;dbl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> ARM    AGEGR1   parameter        parameter           <span style="color: #949494;">&lt;int [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> ARM    AGEGR1   method           method              <span style="color: #949494;">&lt;chr [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> ARM    AGEGR1   correct          correct             <span style="color: #949494;">&lt;lgl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> ARM    AGEGR1   p                p                   <span style="color: #949494;">&lt;language&gt;</span>  <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> ARM    AGEGR1   rescale.p        rescale.p           <span style="color: #949494;">&lt;lgl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> ARM    AGEGR1   simulate.p.value simulate.p.value    <span style="color: #949494;">&lt;lgl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> ARM    AGEGR1   B                B                   <span style="color: #949494;">&lt;dbl [1]&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span>  <span class="fu">ard_chisqtest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 9 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group1 variable   context        stat_name stat_label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM   AGEGR1 chisqtest        statistic  X-square…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM   AGEGR1 chisqtest          p.value    p-value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM   AGEGR1 chisqtest        parameter  parameter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM   AGEGR1 chisqtest           method     method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    ARM   AGEGR1 chisqtest          correct    correct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM   AGEGR1 chisqtest                p          p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM   AGEGR1 chisqtest        rescale.p  rescale.p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM   AGEGR1 chisqtest simulate.p.value  simulate…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    ARM   AGEGR1 chisqtest                B          B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                       6.852</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       0.144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                           4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   Pearson'…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                        TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 rep(1/length(x), length(x))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                       FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                        2000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span>,<span class="op">]</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_fishertest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="flatten_ard.html">flatten_ard</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 variable stat_name        stat_label       statistic    warning error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;named list&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ARM    AGEGR1   p.value          p-value          <span style="color: #949494;">&lt;dbl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ARM    AGEGR1   method           method           <span style="color: #949494;">&lt;chr [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ARM    AGEGR1   alternative      alternative      <span style="color: #949494;">&lt;chr [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> ARM    AGEGR1   workspace        workspace        <span style="color: #949494;">&lt;dbl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> ARM    AGEGR1   hybrid           hybrid           <span style="color: #949494;">&lt;lgl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ARM    AGEGR1   hybridPars       hybridPars       <span style="color: #949494;">&lt;language&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> ARM    AGEGR1   control          control          <span style="color: #949494;">&lt;language&gt;</span>   <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ARM    AGEGR1   or               or               <span style="color: #949494;">&lt;dbl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> ARM    AGEGR1   conf.int         conf.int         <span style="color: #949494;">&lt;lgl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ARM    AGEGR1   conf.level       conf.level       <span style="color: #949494;">&lt;dbl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> ARM    AGEGR1   simulate.p.value simulate.p.value <span style="color: #949494;">&lt;lgl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> ARM    AGEGR1   B                B                <span style="color: #949494;">&lt;dbl [1]&gt;</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-in"><span>  <span class="fu">ard_fishertest</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 12 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 variable   context        stat_name stat_label</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM   AGEGR1 fisherte…          p.value    p-value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM   AGEGR1 fisherte…           method     method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM   AGEGR1 fisherte…      alternative  alternat…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM   AGEGR1 fisherte…        workspace  workspace</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM   AGEGR1 fisherte…           hybrid     hybrid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM   AGEGR1 fisherte…       hybridPars  hybridPa…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM   AGEGR1 fisherte…          control    control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM   AGEGR1 fisherte…               or         or</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM   AGEGR1 fisherte…         conf.int   conf.int</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM   AGEGR1 fisherte…       conf.level  conf.lev…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    ARM   AGEGR1 fisherte… simulate.p.value  simulate…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    ARM   AGEGR1 fisherte…                B          B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                  0.089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                              Fisher's…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                              two.sided</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                  2e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                  FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  c(expect = 5, percent = 80, Emin = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                 list()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                                      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                                   TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                                  0.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                                 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                                  2000</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

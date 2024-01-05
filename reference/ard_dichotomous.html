@@ -139,16 +139,15 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_dichotomous</span><span class="op">(</span><span class="va">mtcars</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level context     stat_name stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> am       <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous n         n          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous N         N          <span style="color: #949494;">&lt;int [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> cyl      <span style="color: #949494;">&lt;dbl [1]&gt;</span>      dichotomous p         %          <span style="color: #949494;">&lt;dbl [1]&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: statistic_fmt_fn &lt;list&gt;, warning &lt;list&gt;, error &lt;list&gt;</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6 x 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level   context stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       am              1 dichotom…         n          n        13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       am              1 dichotom…         N          N        32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       am              1 dichotom…         p          %     0.406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      cyl              4 dichotom…         n          n        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      cyl              4 dichotom…         N          N        32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      cyl              4 dichotom…         p          %     0.344</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
