@@ -56,7 +56,7 @@ get_ard_statistics <- function(x, ...,
     lapply(
       FUN = function(i) {
         ard_subset[[.column]][[i]] %>%
-          {rlang::inject(structure(
+          {inject(structure(
            ., !!!.create_list_for_attributes(ard_subset, .attributes, i)
           ))}
       }
@@ -76,7 +76,7 @@ get_ard_statistics <- function(x, ...,
 #' @rdname ard-helpers
 bind_ard <- function(..., .update = FALSE) {
   # check inputs ---------------------------------------------------------------
-  if (!rlang::is_scalar_logical(.update))
+  if (!is_scalar_logical(.update))
     cli::cli_abort("Argument {.code .update} must be a class {.cls logical} of length 1.")
 
   # stack ARDs -----------------------------------------------------------------

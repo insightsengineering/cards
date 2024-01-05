@@ -4,12 +4,12 @@
 \alias{.check_fmt_string}
 \title{Check 'xx' Format Structure}
 \usage{
-.check_fmt_string(x, call = rlang::caller_env())
+.check_fmt_string(x, call = caller_env())
 }
 \arguments{
 \item{x}{string to check}
 
-\item{call}{calling environment. Default is \code{rlang::caller_env()}}
+\item{call}{calling environment. Default is \code{caller_env()}}
 }
 \value{
 logical

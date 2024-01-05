@@ -35,6 +35,10 @@ dplyr::any_of
 #' @export
 dplyr::everything
 
+#' @importFrom dplyr where
+#' @export
+dplyr::where
+
 #' @importFrom dplyr last_col
 #' @export
 dplyr::last_col

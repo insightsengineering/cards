@@ -40,7 +40,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-\item{denominator}{(\code{data.frame})\cr
+\item{denominator}{(\code{data.frame}, \code{integer()})\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 

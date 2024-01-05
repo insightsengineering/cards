@@ -27,7 +27,7 @@ flatten_ard <- function(x) {
     dplyr::select(-where(function(x) all(lapply(x, function(y) is.function(y)) |> unlist()))) |>
     # convert list columns to character for a nicer print
     dplyr::mutate(
-      dplyr::across(
+      across(
         where(.is_list_column_of_scalars),
         ~lapply(., \(x) if (!is.null(x)) x else NA) |> unlist() |> as.character()
       )

@@ -94,15 +94,15 @@ max_value <- function(data) {
 #' @param values (named `list`)
 #'   a named list
 #' @param call (`environment`)
-#'   an environment. Default is `rlang::caller_env()`
+#'   an environment. Default is `caller_env()`
 #'
 #' @return NULL
 #' @keywords internal
-.check_dichotomous_values <- function(data, values, call = rlang::caller_env()) {
+.check_dichotomous_values <- function(data, values, call = caller_env()) {
   imap(
     values,
     function(value, column) {
-      if (length(value) != 1L || rlang::is_empty(value) || is.na(value) || is.nan(value) || is.infinite(value)) {
+      if (length(value) != 1L || is_empty(value) || is.na(value) || is.nan(value) || is.infinite(value)) {
         cli::cli_abort(c(
           "Error in argument {.arg values} for variable {.val {column}}.",
           "i" = "The length of the value must be one and not one of {.val {c(NA, NaN, Inf)}}."

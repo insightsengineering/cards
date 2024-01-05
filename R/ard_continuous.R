@@ -63,6 +63,7 @@ ard_continuous <- function(data,
   check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
   check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
   check_class(class = c("list", "formula"), fmt_fn = fmt_fn, allow_null = TRUE)
+  .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
@@ -81,7 +82,7 @@ ard_continuous <- function(data,
   )
 
   check_list_elements(
-    statistics = function(x) is.list(x) && rlang::is_named(x) && every(x, is.function),
+    statistics = function(x) is.list(x) && is_named(x) && every(x, is.function),
     error_msg =
       list(statistics =
              c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
@@ -89,7 +90,7 @@ ard_continuous <- function(data,
   )
 
   # return empty tibble if no variables selected -------------------------------
-  if (rlang::is_empty(variables)) return(dplyr::tibble())
+  if (is_empty(variables)) return(dplyr::tibble())
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -106,21 +107,21 @@ ard_continuous <- function(data,
       df_nested = df_nested,
       variables = variables,
       statistics = statistics,
-      new_col_name = "..ard_all_stats..",
+      new_col_name = "...ard_all_stats...",
       omit_na = TRUE
     )
 
   # unnest results
   df_results <-
     df_nested |>
-    dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
-    tidyr::unnest(cols = "..ard_all_stats..")
+    dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
+    tidyr::unnest(cols = "...ard_all_stats...")
 
   # add default function labels and formatters
   df_results <-
     df_nested |>
-    dplyr::select(all_ard_groups(), "..ard_all_stats..") |>
-    tidyr::unnest(cols = "..ard_all_stats..")
+    dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
+    tidyr::unnest(cols = "...ard_all_stats...")
 
   # final processing of fmt_fn -------------------------------------------------
   df_results <-
@@ -144,9 +145,21 @@ ard_continuous <- function(data,
   # add meta data and class ----------------------------------------------------
   df_results |>
     dplyr::mutate(context = "continuous") |>
-    dplyr::arrange(dplyr::across(all_ard_groups())) |>
+    dplyr::arrange(across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
     {structure(., class = c("card", class(.)))}
+}
+
+.check_no_ard_columns <- function(x, env = caller_env(), exceptions = "...ard_dummy_for_counting...") {
+  colnames <- names(x)
+  ard_colnames <-
+    colnames[startsWith(colnames, "...ard_") & endsWith(colnames, "...")] |>
+    setdiff(exceptions)
+
+  if (!is_empty(ard_colnames)) {
+    "Columns beginning with {.val '...ard_'} and ending with {.val '...'} are not allowed." |>
+      cli::cli_abort(call = env)
+  }
 }
 
 #' Calculate Continuous Statistics
@@ -163,7 +176,7 @@ ard_continuous <- function(data,
 #' @keywords internal
 #' @return data frame
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
-                                    new_col_name = "..ard_all_stats..",
+                                    new_col_name = "...ard_all_stats...",
                                     omit_na = TRUE) {
   pre_process_fun <- if (isTRUE(omit_na)) stats::na.omit else identity
 
@@ -231,7 +244,7 @@ ard_continuous <- function(data,
   }
 
   # process argument if not NULL, and update new column
-  if (!rlang::is_empty(arg)) {
+  if (!is_empty(arg)) {
     df_argument <-
       imap(
         arg,
@@ -265,6 +278,12 @@ ard_continuous <- function(data,
   x
 }
 
+#' Add Default Formatting Functions
+#'
+#' @param data frame with cards structure
+#'
+#' @keywords internal
+#' @return data frame
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(
@@ -272,7 +291,7 @@ ard_continuous <- function(data,
         map2(
           .data$stat_name, .data$statistic_fmt_fn,
           function(stat_name, statistic_fmt_fn) {
-            if (!rlang::is_empty(statistic_fmt_fn)) return(statistic_fmt_fn)
+            if (!is_empty(statistic_fmt_fn)) return(statistic_fmt_fn)
             if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) return(0L)
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) return(function(x) format(round5(x * 100, digits = 1), nsmall = 1))
 

@@ -168,7 +168,7 @@ test_that("ard_continuous() and ARD column names", {
     df <- mtcars
     names(df) <- ard_colnames
     ard_continuous(
-      data = cbind(mtcars["am"], df),
+      data = suppressMessages(cbind(mtcars["am"], df)),
       variables = all_of(ard_colnames),
       by = "am"
     )},

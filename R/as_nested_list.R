@@ -55,9 +55,9 @@ as_nested_list <- function(x) {
     x |>
     # variable levels are originally stored in lists. unlisting here and saving in tibble as a scalar
     dplyr::mutate(
-      dplyr::across(
+      across(
         # TODO: Does the statistic column need to remain in a list for more complex returns?
-        .col = where(is.list) & (dplyr::matches("^group[0-9]+_level$") | any_of("variable_level")),
+        .cols = where(is.list) & (dplyr::matches("^group[0-9]+_level$") | any_of("variable_level")),
         .fns = function(x) x[[1]]
       )
     ) %>%
@@ -84,8 +84,8 @@ as_nested_list <- function(x) {
     {paste0("lst_return", .)}
 
   # creating final expression defining the results within the nested list
-  rlang::expr(
-    !!rlang::parse_expr(chr_nested_list_specification) <-
+  expr(
+    !!parse_expr(chr_nested_list_specification) <-
       !!dplyr::select(
         df_preparation,
         any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
