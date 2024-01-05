@@ -10,7 +10,8 @@
   by,
   strata,
   denominator,
-  statistics
+  statistics,
+  env = caller_env()
 )
 }
 \arguments{
