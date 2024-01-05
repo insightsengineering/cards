@@ -2,10 +2,22 @@
 % Please edit documentation in R/ard_proportion_ci.R
 \name{calc_prop_ci}
 \alias{calc_prop_ci}
-\alias{.calc_prop_ci_wald}
+\alias{.prop_wald}
+\alias{.prop_wilson}
+\alias{.prop_clopper_pearson}
+\alias{.prop_agresti_coull}
+\alias{.prop_jeffreys}
 \title{Helper Functions for Calculating Proportion Confidence Intervals}
 \usage{
-.calc_prop_ci_wald(x, conf.level, correct = FALSE)
+.prop_wald(x, conf.level, correct = FALSE)
+
+.prop_wilson(x, conf.level = 0.95, correct = FALSE)
+
+.prop_clopper_pearson(x, conf.level = 0.95)
+
+.prop_agresti_coull(x, conf.level)
+
+.prop_jeffreys(x, conf.level)
 }
 \arguments{
 \item{correct}{(\code{logical})\cr apply continuity correction.}
@@ -18,8 +30,27 @@ Functions to calculate different proportion confidence intervals for use in \cod
 }
 \section{Functions}{
 \itemize{
-\item \code{.calc_prop_ci_wald()}: Calculates the Wald interval by following the usual textbook definition
+\item \code{.prop_wald()}: Calculates the Wald interval by following the usual textbook definition
 for a single proportion confidence interval using the normal approximation.
 
+\item \code{.prop_wilson()}: Calculates the Wilson interval by calling \code{\link[stats:prop.test]{stats::prop.test()}}.
+Also referred to as Wilson score interval.
+
+\item \code{.prop_clopper_pearson()}: Calculates the Clopper-Pearson interval by calling \code{\link[stats:binom.test]{stats::binom.test()}}.
+Also referred to as the \code{exact} method.
+
+\item \code{.prop_agresti_coull()}: Calculates the \code{Agresti-Coull} interval (created by \verb{Alan Agresti} and \verb{Brent Coull}) by
+(for 95\% CI) adding two successes and two failures to the data and then using the Wald formula to construct a CI.
+
+\item \code{.prop_jeffreys()}: Calculates the Jeffreys interval, an equal-tailed interval based on the
+non-informative Jeffreys prior for a binomial proportion.
+
 }}
+\examples{
+rsp <- c(
+  TRUE, TRUE, TRUE, TRUE, TRUE,
+  FALSE, FALSE, FALSE, FALSE, FALSE
+)
+cards:::prop_wilson(rsp, conf.level = 0.9)
+}
 \keyword{internal}

@@ -9,6 +9,7 @@ check_range(
   range,
   include_bounds = c(FALSE, FALSE),
   arg_name = caller_arg(x),
+  scalar = FALSE,
   msg = paste("The {.arg {arg_name}} argument must be in the interval",
     "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]}, {range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
   call = parent.frame()
@@ -21,6 +22,8 @@ check_range(
 
 \item{include_bounds}{logical of length two indicating whether to allow
 the lower and upper bounds}
+
+\item{scalar}{logical indicating whether \code{x} must be a scalar}
 
 \item{msg}{string passed to \code{cli::cli_abort(message=)}}
 }

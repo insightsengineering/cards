@@ -72,12 +72,14 @@ check_length <- function(x, arg_name = caller_arg(x), length = 1L,
 #' @param range numeric vector of length two
 #' @param include_bounds logical of length two indicating whether to allow
 #'   the lower and upper bounds
+#' @param scalar logical indicating whether `x` must be a scalar
 #' @param msg string passed to `cli::cli_abort(message=)`
 #' @keywords internal
 check_range <- function(x,
                         range,
                         include_bounds = c(FALSE, FALSE),
                         arg_name = caller_arg(x),
+                        scalar = FALSE,
                         msg = paste(
                           "The {.arg {arg_name}} argument must be in the interval",
                           "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]}, {range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
