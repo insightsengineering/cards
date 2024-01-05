@@ -8,7 +8,7 @@ check_length(
   x,
   arg_name = caller_arg(x),
   length = 1L,
-  msg = "The {.arg by} argument must be length {.val {length}}.",
+  msg = "The {.arg {arg_name}} argument must be length {.val {length}}.",
   call = parent.frame()
 )
 }

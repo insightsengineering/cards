@@ -58,10 +58,56 @@ check_not_missing <- function(x, arg_name = caller_arg(x), call = parent.frame()
 #' @param length integer specifying the required length
 #' @keywords internal
 check_length <- function(x, arg_name = caller_arg(x), length = 1L,
-                                        msg = "The {.arg by} argument must be length {.val {length}}.",
-                                        call = parent.frame()) {
+                         msg = "The {.arg {arg_name}} argument must be length {.val {length}}.",
+                         call = parent.frame()) {
   if (length(x) != length) {
     cli::cli_abort(message = msg, call = call)
   }
+  invisible()
+}
+
+#' Check Range
+#'
+#' @param x numeric scalar to check
+#' @param range numeric vector of length two
+#' @param include_bounds logical of length two indicating whether to allow
+#'   the lower and upper bounds
+#' @param msg string passed to `cli::cli_abort(message=)`
+#' @keywords internal
+check_range <- function(x,
+                        range,
+                        include_bounds = c(FALSE, FALSE),
+                        arg_name = caller_arg(x),
+                        msg = paste(
+                          "The {.arg {arg_name}} argument must be in the interval",
+                          "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]}, {range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
+                        call = parent.frame()) {
+  print_error <- FALSE
+  # check input is numeric
+  if (!is.numeric(x)) {
+    print_error <- TRUE
+  }
+
+  # check the lower bound of range
+  if (isFALSE(print_error) && isTRUE(include_bounds[1]) && any(x < range[1])) {
+    print_error <- TRUE
+  }
+  if (isFALSE(print_error) && isFALSE(include_bounds[1]) && any(x <= range[1])) {
+    print_error <- TRUE
+  }
+
+  # check upper bound of range
+  if (isFALSE(print_error) && isTRUE(include_bounds[2]) && isTanyRUE(x > range[2])) {
+    print_error <- TRUE
+  }
+  if (isFALSE(print_error) && isFALSE(include_bounds[2]) && any(x >= range[2])) {
+    print_error <- TRUE
+  }
+
+  # print error
+  if (print_error) {
+    cli::cli_abort(msg, call = call)
+  }
+
   invisible()
 }
