@@ -51,6 +51,6 @@ rsp <- c(
   TRUE, TRUE, TRUE, TRUE, TRUE,
   FALSE, FALSE, FALSE, FALSE, FALSE
 )
-cards:::prop_wilson(rsp, conf.level = 0.9)
+cards:::.prop_wilson(rsp, conf.level = 0.9)
 }
 \keyword{internal}

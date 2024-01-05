@@ -112,7 +112,7 @@ NULL
 #'   TRUE, TRUE, TRUE, TRUE, TRUE,
 #'   FALSE, FALSE, FALSE, FALSE, FALSE
 #' )
-#' cards:::prop_wilson(rsp, conf.level = 0.9)
+#' cards:::.prop_wilson(rsp, conf.level = 0.9)
 .prop_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
   x <- stats::na.omit(x)
 
