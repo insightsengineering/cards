@@ -77,13 +77,11 @@ ard_hierarchical(
   variables = c(AESOC, AETERM),
   by = c(TRTA, AESEV),
   denominator = ADSL |> dplyr::rename(TRTA = ARM)
-) |>
-  flatten_ard()
+)
 
 ard_hierarchical_count(
   data = ADAE,
   variables = c(AESOC, AETERM),
   by = TRTA
-) |>
-  flatten_ard()
+)
 }

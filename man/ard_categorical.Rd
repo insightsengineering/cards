@@ -93,6 +93,5 @@ be used as the updated \code{"N"} in the calculations.
 }
 
 \examples{
-ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-  flatten_ard()
+ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 }

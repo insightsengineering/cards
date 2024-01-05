@@ -51,27 +51,15 @@ ARD Examples
 ```{r example}
 library(cards)
 
-ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL")) |> 
-  flatten_ard() |> 
-  head(n = 10) |> 
-  knitr::kable()
+ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL"))
 
-ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX")) |> 
-  flatten_ard() |> 
-  head(n = 10) |> 
-  knitr::kable()
+ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
 
 ADSL |>
   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
-  ard_ttest(by = "ARM", variable = "AGE") |> 
-  dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value", "method")) |> 
-  flatten_ard() |> 
-  knitr::kable()
+  ard_ttest(by = "ARM", variable = "AGE")
 
 survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
   ard_regression(add_estimate_to_reference_rows = TRUE) |> 
-  dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value")) |> 
-  flatten_ard() |> 
-  tidyr::drop_na() |>
-  knitr::kable()
+  dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value"))
 ```

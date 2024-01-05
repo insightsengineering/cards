@@ -47,8 +47,7 @@
 #' @export
 #'
 #' @examples
-#' ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
-#'   flatten_ard()
+#' ard_continuous(ADSL, by = "ARM", variables = "AGE")
 ard_continuous <- function(data,
                            variables,
                            by = NULL,

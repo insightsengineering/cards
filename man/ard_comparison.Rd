@@ -45,19 +45,15 @@ ARD functions for comparing values between groups.
 \examples{
 ADSL |>
   dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
-  ard_ttest(by = "ARM", variable = "AGE") |>
-  flatten_ard()
+  ard_ttest(by = "ARM", variable = "AGE")
 
 ADSL |>
   dplyr::filter(ARM \%in\% c("Placebo", "Xanomeline High Dose")) |>
-  ard_wilcoxtest(by = "ARM", variable = "AGE") |>
-  flatten_ard()
+  ard_wilcoxtest(by = "ARM", variable = "AGE")
 
 ADSL |>
-  ard_chisqtest(by = "ARM", variable = "AGEGR1") |>
-  flatten_ard()
+  ard_chisqtest(by = "ARM", variable = "AGEGR1")
 
 ADSL[1:30,] |>
-  ard_fishertest(by = "ARM", variable = "AGEGR1") |>
-  flatten_ard()
+  ard_fishertest(by = "ARM", variable = "AGEGR1")
 }

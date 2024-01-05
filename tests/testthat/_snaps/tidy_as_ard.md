@@ -25,22 +25,22 @@
       13     am       vs fishertest       conf.level
       14     am       vs fishertest simulate.p.value
       15     am       vs fishertest                B
-                                     statistic warning error
-      1                               1.956055    NULL  NULL
-      2                              0.4726974    NULL  NULL
-      3                              0.3825342    NULL  NULL
-      4                               10.59161    NULL  NULL
-      5     Fisher's Exact Test for Count Data    NULL  NULL
-      6                              two.sided    NULL  NULL
-      7                                  2e+05    NULL  NULL
-      8                                  FALSE    NULL  NULL
-      9  c(expect = 5, percent = 80, Emin = 1)    NULL  NULL
-      10                                list()    NULL  NULL
-      11                                     1    NULL  NULL
-      12                                  TRUE    NULL  NULL
-      13                                  0.95    NULL  NULL
-      14                                 FALSE    NULL  NULL
-      15                                  2000    NULL  NULL
+                                     statistic statistic_fmt_fn warning error
+      1                               1.956055                1    NULL  NULL
+      2                              0.4726974                1    NULL  NULL
+      3                              0.3825342                1    NULL  NULL
+      4                               10.59161                1    NULL  NULL
+      5     Fisher's Exact Test for Count Data             NULL    NULL  NULL
+      6                              two.sided             NULL    NULL  NULL
+      7                                  2e+05                1    NULL  NULL
+      8                                  FALSE             NULL    NULL  NULL
+      9  c(expect = 5, percent = 80, Emin = 1)             NULL    NULL  NULL
+      10                                list()             NULL    NULL  NULL
+      11                                     1                1    NULL  NULL
+      12                                  TRUE             NULL    NULL  NULL
+      13                                  0.95                1    NULL  NULL
+      14                                 FALSE             NULL    NULL  NULL
+      15                                  2000                1    NULL  NULL
 
 ---
 
@@ -69,20 +69,36 @@
       13     am       vs fishertest       conf.level
       14     am       vs fishertest simulate.p.value
       15     am       vs fishertest                B
-                                     statistic warning                       error
-      1                                   NULL    NULL Planned unit testing error!
-      2                                   NULL    NULL Planned unit testing error!
-      3                                   NULL    NULL Planned unit testing error!
-      4                                   NULL    NULL Planned unit testing error!
-      5                                   NULL    NULL Planned unit testing error!
-      6                                   NULL    NULL Planned unit testing error!
-      7                                  2e+05    NULL Planned unit testing error!
-      8                                  FALSE    NULL Planned unit testing error!
-      9  c(expect = 5, percent = 80, Emin = 1)    NULL Planned unit testing error!
-      10                                list()    NULL Planned unit testing error!
-      11                                     1    NULL Planned unit testing error!
-      12                                  TRUE    NULL Planned unit testing error!
-      13                                  0.95    NULL Planned unit testing error!
-      14                                 FALSE    NULL Planned unit testing error!
-      15                                  2000    NULL Planned unit testing error!
+                                     statistic statistic_fmt_fn warning
+      1                                   NULL             NULL    NULL
+      2                                   NULL             NULL    NULL
+      3                                   NULL             NULL    NULL
+      4                                   NULL             NULL    NULL
+      5                                   NULL             NULL    NULL
+      6                                   NULL             NULL    NULL
+      7                                  2e+05                1    NULL
+      8                                  FALSE             NULL    NULL
+      9  c(expect = 5, percent = 80, Emin = 1)             NULL    NULL
+      10                                list()             NULL    NULL
+      11                                     1                1    NULL
+      12                                  TRUE             NULL    NULL
+      13                                  0.95                1    NULL
+      14                                 FALSE             NULL    NULL
+      15                                  2000                1    NULL
+                               error
+      1  Planned unit testing error!
+      2  Planned unit testing error!
+      3  Planned unit testing error!
+      4  Planned unit testing error!
+      5  Planned unit testing error!
+      6  Planned unit testing error!
+      7  Planned unit testing error!
+      8  Planned unit testing error!
+      9  Planned unit testing error!
+      10 Planned unit testing error!
+      11 Planned unit testing error!
+      12 Planned unit testing error!
+      13 Planned unit testing error!
+      14 Planned unit testing error!
+      15 Planned unit testing error!
 

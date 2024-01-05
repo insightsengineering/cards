@@ -24,21 +24,17 @@
 #' @examples
 #' ADSL |>
 #'   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
-#'   ard_ttest(by = "ARM", variable = "AGE") |>
-#'   flatten_ard()
+#'   ard_ttest(by = "ARM", variable = "AGE")
 #'
 #' ADSL |>
 #'   dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
-#'   ard_wilcoxtest(by = "ARM", variable = "AGE") |>
-#'   flatten_ard()
+#'   ard_wilcoxtest(by = "ARM", variable = "AGE")
 #'
 #' ADSL |>
-#'   ard_chisqtest(by = "ARM", variable = "AGEGR1") |>
-#'   flatten_ard()
+#'   ard_chisqtest(by = "ARM", variable = "AGEGR1")
 #'
 #' ADSL[1:30,] |>
-#'   ard_fishertest(by = "ARM", variable = "AGEGR1") |>
-#'   flatten_ard()
+#'   ard_fishertest(by = "ARM", variable = "AGEGR1")
 NULL
 
 #' @rdname ard_comparison
@@ -103,9 +99,9 @@ ard_ttest <- function(data, by, variable, ...) {
           .data$stat_name %in% "parameter" ~ "Degrees of Freedom",
           .data$stat_name %in% "conf.low" ~ "CI Lower Bound",
           .data$stat_name %in% "conf.high" ~ "CI Upper Bound",
-          .data$stat_name %in% "mu" ~ "Null Hypothesis Mean",
+          .data$stat_name %in% "mu" ~ "H0 Mean",
           .data$stat_name %in% "paired" ~ "Paired t-test",
-          .data$stat_name %in% "var.equal" ~ "Assumed Equal Variances",
+          .data$stat_name %in% "var.equal" ~ "Equal Variances",
           .data$stat_name %in% "conf.level" ~ "CI Confidence Level",
           TRUE ~ .data$stat_name
         )
