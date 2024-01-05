@@ -74,54 +74,47 @@
 # ard_continuous(stat_labels) argument works
 
     Code
-      unique(dplyr::filter(dplyr::select(ard_continuous(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(c("min",
-          "max") ~ "min - max")), stat_name, stat_label), stat_name %in% c("min",
-        "max")))
+      unique(dplyr::filter(dplyr::select(as.data.frame(ard_continuous(data = ADSL,
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(
+          c("min", "max") ~ "min - max"))), stat_name, stat_label), stat_name %in% c(
+        "min", "max")))
     Output
-      # A tibble: 2 x 2
         stat_name stat_label
-        <chr>     <chr>     
-      1 min       min - max 
-      2 max       min - max 
+      1       min  min - max
+      2       max  min - max
 
 ---
 
     Code
-      unique(dplyr::filter(dplyr::select(ard_continuous(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(p25 = "25th %ile",
-          p75 = "75th %ile")), stat_name, stat_label), stat_name %in% c("p25", "p75")))
+      unique(dplyr::filter(dplyr::select(as.data.frame(ard_continuous(data = ADSL,
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(
+          p25 = "25th %ile", p75 = "75th %ile"))), stat_name, stat_label),
+      stat_name %in% c("p25", "p75")))
     Output
-      # A tibble: 2 x 2
         stat_name stat_label
-        <chr>     <chr>     
-      1 p25       25th %ile 
-      2 p75       75th %ile 
+      1       p25  25th %ile
+      2       p75  75th %ile
 
 ---
 
     Code
-      unique(dplyr::select(dplyr::filter(ard_continuous(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(p25 = "25th %ile",
-          p75 = "75th %ile")), stat_name %in% c("p25", "p75")), variable, stat_name,
+      unique(dplyr::select(dplyr::filter(as.data.frame(ard_continuous(data = ADSL,
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(p25 = "25th %ile",
+          p75 = "75th %ile"))), stat_name %in% c("p25", "p75")), variable, stat_name,
       stat_label))
     Output
-      # A tibble: 4 x 3
-        variable stat_name stat_label     
-        <chr>    <chr>     <chr>          
-      1 AGE      p25       25th %ile      
-      2 AGE      p75       75th %ile      
-      3 BMIBL    p25       25th Percentile
-      4 BMIBL    p75       75th Percentile
+        variable stat_name      stat_label
+      1      AGE       p25       25th %ile
+      2      AGE       p75       75th %ile
+      3    BMIBL       p25 25th Percentile
+      4    BMIBL       p75 75th Percentile
 
 ---
 
     Code
       ard1
     Output
-      # A tibble: 2 x 3
         variable stat_name stat_label
-        <chr>    <chr>     <chr>     
-      1 AGE      conf.low  LB        
-      2 AGE      conf.high UB        
+      1      AGE  conf.low         LB
+      2      AGE conf.high         UB
 

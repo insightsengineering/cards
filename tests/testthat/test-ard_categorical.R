@@ -225,6 +225,7 @@ test_that("ard_categorical(stat_labels) argument works", {
                     by = "ARM",
                     variables = c("AGEGR1","SEX"),
                     stat_labels = everything() ~ list(c("n","p") ~ "n (pct)")) |>
+      as.data.frame() |>
       dplyr::filter(stat_name %in% c("n","p")) |>
       dplyr::select(stat_name, stat_label) |>
       unique()
@@ -236,6 +237,7 @@ test_that("ard_categorical(stat_labels) argument works", {
                     by = "ARM",
                     variables = c("AGEGR1","SEX"),
                     stat_labels = everything() ~ list(n = "num", p = "pct")) |>
+      as.data.frame() |>
       dplyr::filter(stat_name %in% c("n","p")) |>
       dplyr::select(stat_name, stat_label) |>
       unique()
@@ -247,6 +249,7 @@ test_that("ard_categorical(stat_labels) argument works", {
                     by = "ARM",
                     variables = c("AGEGR1","SEX"),
                     stat_labels = AGEGR1 ~ list(c("n","p") ~ "n (pct)")) |>
+      as.data.frame() |>
       dplyr::filter(stat_name %in% c("n","p")) |>
       dplyr::select(variable, stat_name, stat_label) |>
       unique()

@@ -22,6 +22,5 @@ elements are cannot easily be coerced to a character vector, the function
 will fail.
 }
 \examples{
-ard_categorical(mtcars, by = "cyl", variables = c("am", "gear")) |>
-  flatten_ard()
+ard_categorical(mtcars, by = "cyl", variables = c("am", "gear"))
 }

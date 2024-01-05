@@ -65,6 +65,5 @@ a data frame
 Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 }
 \examples{
-ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
-  flatten_ard()
+ard_continuous(ADSL, by = "ARM", variables = "AGE")
 }
