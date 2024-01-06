@@ -41,13 +41,13 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
         prop_ci =
           switch(
             method,
-            "waldcc" = \(x) .prop_wald(x, conf.level = conf.level, correct = TRUE),
-            "wald" = \(x) .prop_wald(x, conf.level = conf.level, correct = FALSE),
-            "wilsoncc" = \(x) .prop_wilson(x, conf.level = conf.level, correct = TRUE),
-            "wilson" = \(x) .prop_wilson(x, conf.level = conf.level, correct = FALSE),
-            "clopper-pearson" = \(x) .prop_clopper_pearson(x, conf.level = conf.level),
-            "agresti-coull" = \(x) .prop_agresti_coull(x, conf.level = conf.level),
-            "jeffreys" = \(x) .prop_jeffreys(x, conf.level = conf.level)
+            "waldcc" = \(x) proportion_ci_wald(x, conf.level = conf.level, correct = TRUE),
+            "wald" = \(x) proportion_ci_wald(x, conf.level = conf.level, correct = FALSE),
+            "wilsoncc" = \(x) proportion_ci_wilson(x, conf.level = conf.level, correct = TRUE),
+            "wilson" = \(x) proportion_ci_wilson(x, conf.level = conf.level, correct = FALSE),
+            "clopper-pearson" = \(x) proportion_ci_clopper_pearson(x, conf.level = conf.level),
+            "agresti-coull" = \(x) proportion_ci_agresti_coull(x, conf.level = conf.level),
+            "jeffreys" = \(x) proportion_ci_jeffreys(x, conf.level = conf.level)
           )
       )
   ) |>
@@ -56,6 +56,19 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
     )
 }
 
+
+#' Is Binary?
+#'
+#' Checks if a column in a data frame is binary,
+#' that is, if the column is class `<logical>` or
+#' numeric and coded as `c(0, 1)`
+#'
+#' @param data a data frame
+#' @param variable `<string>`\cr a column name from `data`
+#' @param call call environment
+#'
+#' @return invisible
+#' @keywords internal
 .is_binary <- function(data, variable, call = caller_env()) {
   if (!is.logical(data[[variable]]) && !is_empty(setdiff(data[[variable]], c(0, 1, NA)))) {
     paste("Expecting column {.val {variable}} to be either {.cls logical}",
@@ -69,19 +82,29 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
 #'
 #' Functions to calculate different proportion confidence intervals for use in `ard_proportion()`.
 #'
+#' @inheritParams ard_proportion_ci
+#' @param x vector of a binary values, i.e. a logical vector, or numeric with values `c(0, 1)`
 #' @return Confidence interval of a proportion.
 #'
-#' @name calc_prop_ci
-#' @keywords internal
+#' @name proportion_ci
+#' @examples
+#' x <- c(TRUE, TRUE, TRUE, TRUE, TRUE,
+#'          FALSE, FALSE, FALSE, FALSE, FALSE)
+#'
+#' proportion_ci_wald(x, conf.level = 0.9)
+#' proportion_ci_wilson(x, correct = TRUE)
+#' proportion_ci_clopper_pearson(x)
+#' proportion_ci_agresti_coull(x)
+#' proportion_ci_jeffreys(x)
 NULL
 
-#' @describeIn calc_prop_ci Calculates the Wald interval by following the usual textbook definition
+#' @describeIn proportion_ci Calculates the Wald interval by following the usual textbook definition
 #'   for a single proportion confidence interval using the normal approximation.
 #'
 #' @param correct (`logical`)\cr apply continuity correction.
 #'
-#' @keywords internal
-.prop_wald <- function(x, conf.level, correct = FALSE) {
+#' @export
+proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -106,16 +129,11 @@ NULL
 }
 
 
-#' @describeIn calc_prop_ci Calculates the Wilson interval by calling [stats::prop.test()].
+#' @describeIn proportion_ci Calculates the Wilson interval by calling [stats::prop.test()].
 #'  Also referred to as Wilson score interval.
 #'
-#' @examples
-#' rsp <- c(
-#'   TRUE, TRUE, TRUE, TRUE, TRUE,
-#'   FALSE, FALSE, FALSE, FALSE, FALSE
-#' )
-#' cards:::.prop_wilson(rsp, conf.level = 0.9)
-.prop_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
+#' @export
+proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -132,9 +150,10 @@ NULL
   )
 }
 
-#' @describeIn calc_prop_ci Calculates the Clopper-Pearson interval by calling [stats::binom.test()].
+#' @describeIn proportion_ci Calculates the Clopper-Pearson interval by calling [stats::binom.test()].
 #'   Also referred to as the `exact` method.
-.prop_clopper_pearson <- function(x, conf.level = 0.95) {
+#' @export
+proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
   x <- stats::na.omit(x)
   n <- length(x)
 
@@ -151,9 +170,10 @@ NULL
   )
 }
 
-#' @describeIn calc_prop_ci Calculates the `Agresti-Coull` interval (created by `Alan Agresti` and `Brent Coull`) by
+#' @describeIn proportion_ci Calculates the `Agresti-Coull` interval (created by `Alan Agresti` and `Brent Coull`) by
 #'   (for 95% CI) adding two successes and two failures to the data and then using the Wald formula to construct a CI.
-.prop_agresti_coull <- function(x, conf.level) {
+#' @export
+proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -181,9 +201,10 @@ NULL
   )
 }
 
-#' @describeIn calc_prop_ci Calculates the Jeffreys interval, an equal-tailed interval based on the
+#' @describeIn proportion_ci Calculates the Jeffreys interval, an equal-tailed interval based on the
 #'   non-informative Jeffreys prior for a binomial proportion.
-.prop_jeffreys <- function(x, conf.level) {
+#' @export
+proportion_ci_jeffreys <- function(x, conf.level = 0.95) {
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -211,3 +232,4 @@ NULL
     method = glue::glue("Jeffreys Interval")
   )
 }
+

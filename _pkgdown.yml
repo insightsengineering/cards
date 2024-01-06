@@ -53,6 +53,10 @@ reference:
       - check_ard_structure
       - print.card
 
+  - title: "Helpers"
+    contents:
+      - proportion_ci
+
   - title: "Data"
     contents:
       - adam
