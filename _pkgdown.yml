@@ -22,10 +22,11 @@ reference:
       - ard_dichotomous
       - ard_missing
 
-  - subtitle: "Model and Test Summaries"
+  - subtitle: "Model and Inference Summaries"
   -  contents:
       - ard_comparison
       - ard_regression
+      - ard_proportion_ci
 
   - subtitle: "Misc."
   -  contents:

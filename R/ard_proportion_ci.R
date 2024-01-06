@@ -1,5 +1,7 @@
 #' Proportion ARD Statistics
 #'
+#' Calculate confidence intervals for proportions.
+#'
 #' @inheritParams ard_categorical
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Columns must be class `<logical>`

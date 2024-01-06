@@ -36,7 +36,7 @@ Must be one of 'waldcc', 'wald', 'clopper-pearson', 'wilson', 'wilsoncc', 'agres
 an ARD data frame
 }
 \description{
-Proportion ARD Statistics
+Calculate confidence intervals for proportions.
 }
 \examples{
 ard_proportion_ci(mtcars, variables = c(vs, am), method = "wilson")
