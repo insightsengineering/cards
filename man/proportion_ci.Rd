@@ -42,7 +42,7 @@ Default is \code{0.95}}
 \item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{x}.}
 
 \item{weights}{(\code{numeric} or \code{NULL})\cr weights for each level of the strata. If \code{NULL}, they are
-estimated using the iterative algorithm proposed in \insertCite{Yan2010-jt;textual}{cards} that
+estimated using the iterative algorithm that
 minimizes the weighted squared length of the confidence interval.}
 
 \item{max.iterations}{(\code{count})\cr maximum number of iterations for the iterative procedure used
@@ -72,7 +72,9 @@ Also referred to as the \code{exact} method.
 non-informative Jeffreys prior for a binomial proportion.
 
 \item \code{proportion_ci_strat_wilson()}: Calculates the stratified Wilson confidence
-interval for unequal proportions as described in \insertCite{Yan2010-jt;textual}{cards}
+interval for unequal proportions as described in
+Xin YA, Su XG. Stratified Wilson and Newcombe confidence intervals
+for multiple binomial proportions. \emph{Statistics in Biopharmaceutical Research}. 2010;2(3).
 
 }}
 \examples{
@@ -108,7 +110,4 @@ proportion_ci_strat_wilson(
   conf.level = 0.90
 )
 
-}
-\references{
-\insertRef{Yan2010-jt}{cards}
 }

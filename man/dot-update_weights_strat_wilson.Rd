@@ -36,8 +36,6 @@ Default is \code{0.95}}
 A \code{list} of 3 elements: \code{n_it}, \code{weights}, and \code{diff_v}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
-
 This function wraps the iteration procedure that allows you to estimate
 the weights for each proportional strata. This assumes to minimize the
 weighted squared length of the confidence interval.

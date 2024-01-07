@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{weights}{(\code{numeric} or \code{NULL})\cr weights for each level of the strata. If \code{NULL}, they are
-estimated using the iterative algorithm proposed in \insertCite{Yan2010-jt;textual}{cards} that
+estimated using the iterative algorithm that
 minimizes the weighted squared length of the confidence interval.}
 
 \item{conf.level}{(\code{numeric})\cr

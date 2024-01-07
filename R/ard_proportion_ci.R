@@ -240,19 +240,18 @@ proportion_ci_jeffreys <- function(x, conf.level = 0.95) {
 
 
 #' @describeIn proportion_ci Calculates the stratified Wilson confidence
-#'   interval for unequal proportions as described in \insertCite{Yan2010-jt;textual}{cards}
+#'   interval for unequal proportions as described in
+#'   Xin YA, Su XG. Stratified Wilson and Newcombe confidence intervals
+#'   for multiple binomial proportions. _Statistics in Biopharmaceutical Research_. 2010;2(3).
 #'
 #' @param strata (`factor`)\cr variable with one level per stratum and same length as `x`.
 #' @param weights (`numeric` or `NULL`)\cr weights for each level of the strata. If `NULL`, they are
-#'   estimated using the iterative algorithm proposed in \insertCite{Yan2010-jt;textual}{cards} that
+#'   estimated using the iterative algorithm that
 #'   minimizes the weighted squared length of the confidence interval.
 #' @param max.iterations (`count`)\cr maximum number of iterations for the iterative procedure used
 #'   to find estimates of optimal weights.
 #' @param correct (`flag`)\cr include the continuity correction. For further information, see for example
 #'   [stats::prop.test()].
-#'
-#' @references
-#' \insertRef{Yan2010-jt}{cards}
 #'
 #' @examples
 #' # Stratified Wilson confidence interval with unequal probabilities
@@ -396,8 +395,6 @@ proportion_ci_strat_wilson <- function(x,
 }
 
 #' Helper Function for the Estimation of Weights for `proportion_ci_strat_wilson()`
-#'
-#' @description `r lifecycle::badge("stable")`
 #'
 #' This function wraps the iteration procedure that allows you to estimate
 #' the weights for each proportional strata. This assumes to minimize the

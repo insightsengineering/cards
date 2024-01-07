@@ -2,6 +2,7 @@ ADaM
 AE
 ARD
 ARDs
+Biopharmaceutical
 CDISC
 CMD
 Clopper
@@ -9,10 +10,14 @@ Codecov
 Hoffmann
 JSON
 Jeffreys
+Newcombe
 ORCID
 Pre
 SAS's
 SDTM
+Su
+XG
+Xin
 YAML
 agresti
 ata
@@ -33,6 +38,7 @@ quosures
 reproducibility
 reusability
 sd
+strat
 tidyselect
 tidyselector
 tidyselectors
