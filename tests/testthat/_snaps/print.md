@@ -67,3 +67,23 @@
       i Use `print(n = ...)` to see more rows
       i 1 more variable: statistic_fmt_fn
 
+---
+
+    Code
+      ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ function(x) round(
+        x, 3)))
+    Message
+      {cards} data frame: 8 x 8
+    Output
+        variable   context stat_name stat_label statistic statistic_fmt_fn
+      1      AGE continuo…         N          N       254             <fn>
+      2      AGE continuo…      mean       Mean    75.087             <fn>
+      3      AGE continuo…        sd         SD     8.246             <fn>
+      4      AGE continuo…    median     Median        77             <fn>
+      5      AGE continuo…       p25  25th Per…        70             <fn>
+      6      AGE continuo…       p75  75th Per…        81             <fn>
+      7      AGE continuo…       min        Min        51             <fn>
+      8      AGE continuo…       max        Max        89             <fn>
+    Message
+      i 2 more variables: warning, error
+
