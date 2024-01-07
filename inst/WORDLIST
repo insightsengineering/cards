@@ -1,6 +1,5 @@
 ADaM
 AE
-AGEGR
 ARD
 ARDs
 CDISC
@@ -12,12 +11,8 @@ ORCID
 Pre
 SAS's
 SDTM
-TRTP
-Welch
-Xanomeline
 YAML
 ata
-conf
 dplyr
 env
 esult
@@ -31,8 +26,10 @@ quosures
 reproducibility
 reusability
 sd
-th
 tidyselect
 tidyselector
 tidyselectors
+univariable
+unlist
 unnested
+unnests

@@ -450,6 +450,22 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   lst_denominator
 }
 
+
+
+#' Check for missing levels in `denominator`
+#'
+#' When a user passes a data frame in the `denominator` argument, this function
+#' checks that the data frame contains all the same levels of the `by`
+#' and `strata` variables that appear in the `data`
+#'
+#' @param data data frame
+#' @param denominator denominator data frame
+#' @param by character vector of by column names
+#' @param strata character vector of strata column names
+#' @param env environment for error messaging
+#'
+#' @return invisible
+#' @keywords internal
 .check_for_missing_combos_in_denom <- function(data, denominator, by, strata, env = caller_env()) {
   by_vars_to_check <-
     c(by, strata) |>

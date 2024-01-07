@@ -151,6 +151,19 @@ ard_continuous <- function(data,
     {structure(., class = c("card", class(.)))}
 }
 
+
+
+#' Check Protected Column Names
+#'
+#' Checks that column names in a passed data frame are not protected, that is,
+#' they do not begin with `"...ard_"` and end with `"..."`
+#'
+#' @param x data frame
+#' @param env environment for error messaging
+#' @param exceptions character string of column names to exclude from checks
+#'
+#' @return invisible
+#' @keywords internal
 .check_no_ard_columns <- function(x, env = caller_env(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
@@ -211,6 +224,18 @@ ard_continuous <- function(data,
 }
 
 
+#' Prepare Results as Data Frame
+#'
+#' Function take the results from `eval_capture_conditions()`, which is a
+#' named list, e.g. `list(result=, warning=, error=)`, and converts it to a data
+#' frame.
+#'
+#' @param x named list, the result from `eval_capture_conditions()`
+#' @param variable string, variable name of the results
+#' @param fun_name string, name of function called to get results in `x`
+#'
+#' @return data frame
+#' @keywords internal
 .lst_results_as_df <- function(x, variable, fun_name) {
   # unnesting results if needed
   if (.is_named_list(x$result, allow_df = TRUE)) {
@@ -237,6 +262,18 @@ ard_continuous <- function(data,
 }
 
 
+#' Convert Nested Lists to Column
+#'
+#' Some arguments, such as the `stat_label`, are passed as nested lists. This
+#' function properly unnests these lists and adds the to the results data frame.
+#'
+#' @param x result data frame
+#' @param arg the nested list
+#' @param new_column string, new column name
+#' @param unlist logical, whether to fully unlist final results
+#'
+#' @return a data frame
+#' @keywords internal
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
   # add statistic_fmt_fn column if not already present
   if (!new_column %in% names(x)) {
