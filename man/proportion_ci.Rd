@@ -7,6 +7,7 @@
 \alias{proportion_ci_clopper_pearson}
 \alias{proportion_ci_agresti_coull}
 \alias{proportion_ci_jeffreys}
+\alias{proportion_ci_strat_wilson}
 \title{Helper Functions for Calculating Proportion Confidence Intervals}
 \usage{
 proportion_ci_wald(x, conf.level = 0.95, correct = FALSE)
@@ -18,6 +19,15 @@ proportion_ci_clopper_pearson(x, conf.level = 0.95)
 proportion_ci_agresti_coull(x, conf.level = 0.95)
 
 proportion_ci_jeffreys(x, conf.level = 0.95)
+
+proportion_ci_strat_wilson(
+  x,
+  strata,
+  weights = NULL,
+  conf.level = 0.95,
+  max.iterations = 10L,
+  correct = FALSE
+)
 }
 \arguments{
 \item{x}{vector of a binary values, i.e. a logical vector, or numeric with values \code{c(0, 1)}}
@@ -26,7 +36,17 @@ proportion_ci_jeffreys(x, conf.level = 0.95)
 a scalar in \verb{(0, 1)} indicating the confidence level.
 Default is \code{0.95}}
 
-\item{correct}{(\code{logical})\cr apply continuity correction.}
+\item{correct}{(\code{flag})\cr include the continuity correction. For further information, see for example
+\code{\link[stats:prop.test]{stats::prop.test()}}.}
+
+\item{strata}{(\code{factor})\cr variable with one level per stratum and same length as \code{x}.}
+
+\item{weights}{(\code{numeric} or \code{NULL})\cr weights for each level of the strata. If \code{NULL}, they are
+estimated using the iterative algorithm proposed in \insertCite{Yan2010-jt;textual}{cards} that
+minimizes the weighted squared length of the confidence interval.}
+
+\item{max.iterations}{(\code{count})\cr maximum number of iterations for the iterative procedure used
+to find estimates of optimal weights.}
 }
 \value{
 Confidence interval of a proportion.
@@ -51,6 +71,9 @@ Also referred to as the \code{exact} method.
 \item \code{proportion_ci_jeffreys()}: Calculates the Jeffreys interval, an equal-tailed interval based on the
 non-informative Jeffreys prior for a binomial proportion.
 
+\item \code{proportion_ci_strat_wilson()}: Calculates the stratified Wilson confidence
+interval for unequal proportions as described in \insertCite{Yan2010-jt;textual}{cards}
+
 }}
 \examples{
 x <- c(TRUE, TRUE, TRUE, TRUE, TRUE,
@@ -61,4 +84,31 @@ proportion_ci_wilson(x, correct = TRUE)
 proportion_ci_clopper_pearson(x)
 proportion_ci_agresti_coull(x)
 proportion_ci_jeffreys(x)
+# Stratified Wilson confidence interval with unequal probabilities
+
+set.seed(1)
+rsp <- sample(c(TRUE, FALSE), 100, TRUE)
+strata_data <- data.frame(
+  "f1" = sample(c("a", "b"), 100, TRUE),
+  "f2" = sample(c("x", "y", "z"), 100, TRUE),
+  stringsAsFactors = TRUE
+)
+strata <- interaction(strata_data)
+n_strata <- ncol(table(rsp, strata)) # Number of strata
+
+proportion_ci_strat_wilson(
+  x = rsp, strata = strata,
+  conf.level = 0.90
+)
+
+# Not automatic setting of weights
+proportion_ci_strat_wilson(
+  x = rsp, strata = strata,
+  weights = rep(1 / n_strata, n_strata), # TODO: I don't like using an internally calculated value here
+  conf.level = 0.90
+)
+
+}
+\references{
+\insertRef{Yan2010-jt}{cards}
 }
