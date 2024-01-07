@@ -1,5 +1,6 @@
 #' ARD as Nested List
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Convert ARDs to Nested Lists
 #'
 #' @param x (`data.frame`)\cr

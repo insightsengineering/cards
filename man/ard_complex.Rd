@@ -67,6 +67,7 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 a data frame
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Function is similar to \code{ard_continuous()}, but allows for more complex
 summaries. While \code{ard_continuous(statistics)} only allows for a univariable
 function, \code{ard_complex(statistics)} can handle more complex data summaries.
