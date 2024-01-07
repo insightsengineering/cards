@@ -79,4 +79,17 @@ ard_complex(
   variables = "AGE",
   statistics = list(AGE = list(mean = \(x, ...) mean(x)))
 )
+
+# return the grand mean and the mean within the by group
+grand_mean <- function(data, data_full, variable, ...) {
+  list(mean = mean(data[[variable]], na.rm = TRUE),
+       grand_mean = mean(data_full[[variable]], na.rm = TRUE))
+}
+
+ard_complex(
+  ADSL,
+  by = "ARM",
+  variables = "AGE",
+  statistics = list(AGE = list(means = grand_mean))
+)
 }
