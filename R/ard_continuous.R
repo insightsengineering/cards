@@ -107,7 +107,9 @@ ard_continuous <- function(data,
       variables = variables,
       statistics = statistics,
       new_col_name = "...ard_all_stats...",
-      omit_na = TRUE
+      by = by,
+      strata = strata,
+      data = data
     )
 
   # unnest results
@@ -168,16 +170,12 @@ ard_continuous <- function(data,
 #' @param df_nested a nested data frame
 #' @param variables character vector of variables
 #' @param statistics named list of statistical functions
-#' @param new_col_name string of new column name
-#' @param omit_na logical indicating whether to omit NA values before calculating
-#' statistics. Default is TRUE
 #'
 #' @keywords internal
 #' @return data frame
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
-                                    new_col_name = "...ard_all_stats...",
-                                    omit_na = TRUE) {
-  pre_process_fun <- if (isTRUE(omit_na)) stats::na.omit else identity
+                                    by, strata, data,
+                                    new_col_name = "...ard_all_stats...") {
 
   df_nested[[new_col_name]] <-
     map(
@@ -192,7 +190,10 @@ ard_continuous <- function(data,
                 .lst_results_as_df(
                   x = # calculate results, and place in tibble
                     eval_capture_conditions(
-                      do.call(fun, args = list(pre_process_fun(nested_data[[variable]])))
+                      getOption(
+                        "cards.calculate_stats_as_ard.eval_fun",
+                        default = expr(do.call(fun, args = list(stats::na.omit(nested_data[[variable]]))))
+                      )
                     ),
                   variable = variable,
                   fun_name = fun_name
