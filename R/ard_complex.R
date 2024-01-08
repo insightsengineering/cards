@@ -61,7 +61,7 @@ ard_complex <- function(data,
   check_class(class = c("list", "formula"), statistics = statistics, allow_null = FALSE)
 
   # process inputs -------------------------------------------------------------
-  process_selectors(data, variables = variables)
+  process_selectors(data, variables = {{ variables }})
   process_formula_selectors(data[variables], statistics = statistics)
 
   missing_statistics_vars <- setdiff(variables, names(statistics))
