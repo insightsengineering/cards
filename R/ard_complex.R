@@ -90,7 +90,7 @@ ard_complex <- function(data,
 
   ard_continuous(
     data = data,
-    variables = {{ variables }},
+    variables = all_of(variables),
     by = {{ by }},
     strata = {{ strata }},
     statistics = statistics,
