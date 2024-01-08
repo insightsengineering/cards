@@ -8,8 +8,10 @@
   df_nested,
   variables,
   statistics,
-  new_col_name = "...ard_all_stats...",
-  omit_na = TRUE
+  by,
+  strata,
+  data,
+  new_col_name = "...ard_all_stats..."
 )
 }
 \arguments{
@@ -18,11 +20,6 @@
 \item{variables}{character vector of variables}
 
 \item{statistics}{named list of statistical functions}
-
-\item{new_col_name}{string of new column name}
-
-\item{omit_na}{logical indicating whether to omit NA values before calculating
-statistics. Default is TRUE}
 }
 \value{
 data frame

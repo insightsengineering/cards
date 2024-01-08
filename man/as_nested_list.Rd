@@ -14,6 +14,7 @@ an ARD data frame of class 'card'}
 a nested list
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Convert ARDs to Nested Lists
 }
 \examples{

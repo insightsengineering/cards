@@ -21,6 +21,7 @@ reference:
       - ard_hierarchical
       - ard_dichotomous
       - ard_missing
+      - ard_complex
 
   - subtitle: "Model and Inference Summaries"
   -  contents:
@@ -48,7 +49,7 @@ reference:
       - nest_for_ard
       - default_stat_labels
       - round5
-      - max_value
+      - maximum_variable_values
       - shuffle_ard
       - check_ard_structure
       - print.card

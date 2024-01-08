@@ -4,7 +4,7 @@
 #'
 #' @inheritParams ard_categorical
 #' @param values (named `list`)\cr
-#'   named list of dichotomous values to tabulate. Default is `max_value(data)`,
+#'   named list of dichotomous values to tabulate. Default is `maximum_variable_values(data)`,
 #'   which returns the largest/last value after a sort.
 #'
 #' @return a ARD data frame of class 'card'
@@ -13,7 +13,7 @@
 #' @examples
 #' ard_dichotomous(mtcars, variables = c(cyl, am), values = list(cyl = 4))
 ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
-                            values = max_value(data[variables]),
+                            values = maximum_variable_values(data[variables]),
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
@@ -68,12 +68,12 @@ ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @return named list
 #' @export
-#' @name max_value
-#' @rdname max_value
+#' @name maximum_variable_values
+#' @rdname maximum_variable_values
 #'
 #' @examples
-#' ADSL[c("AGEGR1", "BMIBLGR1")] |> max_value()
-max_value <- function(data) {
+#' ADSL[c("AGEGR1", "BMIBLGR1")] |> maximum_variable_values()
+maximum_variable_values <- function(data) {
   data |>
     lapply(
       function(x) {

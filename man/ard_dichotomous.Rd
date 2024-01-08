@@ -9,7 +9,7 @@ ard_dichotomous(
   variables,
   by = NULL,
   strata = NULL,
-  values = max_value(data[variables]),
+  values = maximum_variable_values(data[variables]),
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
@@ -36,7 +36,7 @@ columns specified.
 Arguments may be used in conjunction with one another.}
 
 \item{values}{(named \code{list})\cr
-named list of dichotomous values to tabulate. Default is \code{max_value(data)},
+named list of dichotomous values to tabulate. Default is \code{maximum_variable_values(data)},
 which returns the largest/last value after a sort.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr

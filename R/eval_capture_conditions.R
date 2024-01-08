@@ -40,7 +40,7 @@ eval_capture_conditions <- function(expr, data = NULL, env = caller_env()) {
     withCallingHandlers(
       expr = {
         lst_result[["result"]] <-
-          suppressMessages(eval_tidy(expr, data = data, env = env))
+          suppressMessages(eval_tidy({{ expr }}, data = data, env = env))
       },
       warning = function(w) {
         # TODO: update this `<<-`: I don't think CRAN likes the super assignment
