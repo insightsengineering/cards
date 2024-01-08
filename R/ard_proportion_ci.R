@@ -1,5 +1,6 @@
 #' Proportion ARD Statistics
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Calculate confidence intervals for proportions.
 #'
 #' @inheritParams ard_categorical
@@ -33,11 +34,13 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{  variables }}, by = {{  by }})
   method <- arg_match(method)
-  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
-  # check variables are binary
-  walk(variables, ~.is_binary(data, variable = .x))
+  if (method %in% c("strat_wilson", "strat_wilsoncc")) {
+    process_selectors(data, strata = strata)
+    check_length(strata, length = 1L)
+  }
 
-  ard_continuous(
+
+  ard_complex(
     data = data,
     variables = {{ variables }},
     by = {{ by }},
@@ -46,40 +49,25 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
         prop_ci =
           switch(
             method,
-            "waldcc" = \(x) proportion_ci_wald(x, conf.level = conf.level, correct = TRUE),
-            "wald" = \(x) proportion_ci_wald(x, conf.level = conf.level, correct = FALSE),
-            "wilsoncc" = \(x) proportion_ci_wilson(x, conf.level = conf.level, correct = TRUE),
-            "wilson" = \(x) proportion_ci_wilson(x, conf.level = conf.level, correct = FALSE),
-            "clopper-pearson" = \(x) proportion_ci_clopper_pearson(x, conf.level = conf.level),
-            "agresti-coull" = \(x) proportion_ci_agresti_coull(x, conf.level = conf.level),
-            "jeffreys" = \(x) proportion_ci_jeffreys(x, conf.level = conf.level)
+            "waldcc" = \(x, ...) proportion_ci_wald(x, conf.level = conf.level, correct = TRUE),
+            "wald" = \(x, ...) proportion_ci_wald(x, conf.level = conf.level, correct = FALSE),
+            "wilsoncc" = \(x, ...) proportion_ci_wilson(x, conf.level = conf.level, correct = TRUE),
+            "wilson" = \(x, ...) proportion_ci_wilson(x, conf.level = conf.level, correct = FALSE),
+            "clopper-pearson" = \(x, ...) proportion_ci_clopper_pearson(x, conf.level = conf.level),
+            "agresti-coull" = \(x, ...) proportion_ci_agresti_coull(x, conf.level = conf.level),
+            "jeffreys" = \(x, ...) proportion_ci_jeffreys(x, conf.level = conf.level),
+            "strat_wilsoncc" = \(x, data, ...) {
+              proportion_ci_wilson(x, strata = data[[strata]], max.iterations = max.iterations, conf.level = conf.level, correct = TRUE)
+            },
+            "strat_wilson" = \(x, data, ...) {
+              proportion_ci_wilson(x, strata = data[[strata]], max.iterations = max.iterations, conf.level = conf.level, correct = FALSE)
+            }
           )
       )
   ) |>
     dplyr::mutate(
       context = "proportion_ci"
     )
-}
-
-
-#' Is Binary?
-#'
-#' Checks if a column in a data frame is binary,
-#' that is, if the column is class `<logical>` or
-#' numeric and coded as `c(0, 1)`
-#'
-#' @param data a data frame
-#' @param variable `<string>`\cr a column name from `data`
-#' @param call call environment
-#'
-#' @return invisible
-#' @keywords internal
-.is_binary <- function(data, variable, call = caller_env()) {
-  if (!is.logical(data[[variable]]) && !is_empty(setdiff(data[[variable]], c(0, 1, NA)))) {
-    paste("Expecting column {.val {variable}} to be either {.cls logical}",
-          "or {.cls numeric} coded as {.val {c(0, 1)}}.") |>
-      cli::cli_abort(call = call)
-  }
 }
 
 
@@ -110,6 +98,11 @@ NULL
 #'
 #' @export
 proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
+  check_not_missing(x)
+  check_binary(x)
+  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
+  check_class("logical", correct = correct, length = 1L)
+
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -139,6 +132,11 @@ proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
 #'
 #' @export
 proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
+  check_not_missing(x)
+  check_binary(x)
+  check_class("logical", correct = correct, length = 1L)
+  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
+
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -159,6 +157,10 @@ proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
 #'   Also referred to as the `exact` method.
 #' @export
 proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
+  check_not_missing(x)
+  check_binary(x)
+  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
+
   x <- stats::na.omit(x)
   n <- length(x)
 
@@ -179,6 +181,10 @@ proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
 #'   (for 95% CI) adding two successes and two failures to the data and then using the Wald formula to construct a CI.
 #' @export
 proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
+  check_not_missing(x)
+  check_binary(x)
+  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
+
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -210,6 +216,9 @@ proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
 #'   non-informative Jeffreys prior for a binomial proportion.
 #' @export
 proportion_ci_jeffreys <- function(x, conf.level = 0.95) {
+  check_not_missing(x)
+  check_binary(x)
+  check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
   x <- stats::na.omit(x)
 
   n <- length(x)
@@ -287,12 +296,13 @@ proportion_ci_strat_wilson <- function(x,
                                        correct = FALSE) {
   check_not_missing(x)
   check_not_missing(strata)
+  check_binary(x)
   check_class("logical", correct)
   check_class("factor", strata)
   check_range(conf.level, range = c(0, 1), scalar = TRUE)
 
   if (!inherits(x, "logical")) x <- as.logical(x)
-  tbl <- table(factor(x, levels = c(FALSE, TRUE)), strata)
+  tbl <- table(factor(x, levels = c(FALSE, TRUE)), strata, useNA = "no")
   n_strata <- length(unique(strata))
 
   # Checking the weights and maximum number of iterations.
@@ -353,6 +363,7 @@ proportion_ci_strat_wilson <- function(x,
   ret <-
     list(
       N = sum(tbl),
+      p = mean(x, na.rm = TRUE),
       conf.low = lower,
       conf.high = upper,
       conf.level = conf.level,

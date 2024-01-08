@@ -28,6 +28,9 @@ the lower and upper bounds}
 
 \item{msg}{string passed to \code{cli::cli_abort(message=)}}
 }
+\value{
+invisible
+}
 \description{
 Check Range
 }

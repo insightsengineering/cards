@@ -41,6 +41,7 @@ Must be one of 'waldcc', 'wald', 'clopper-pearson', 'wilson', 'wilsoncc', 'strat
 an ARD data frame
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Calculate confidence intervals for proportions.
 }
 \examples{

@@ -4,7 +4,13 @@
 \alias{check_class}
 \title{Check Class}
 \usage{
-check_class(class, ..., allow_null = FALSE, call = parent.frame())
+check_class(
+  class,
+  ...,
+  allow_null = FALSE,
+  call = parent.frame(),
+  length = NULL
+)
 }
 \arguments{
 \item{class}{character vector or string indicating accepted classes.
@@ -29,6 +35,8 @@ Can also be \code{NULL} or a \link[rlang:topic-defuse]{defused function call} to
 respectively not display any call or hard-code a code to display.
 
 For more information about error calls, see \ifelse{html}{\link[rlang:topic-error-call]{Including function calls in error messages}}{\link[rlang:topic-error-call]{Including function calls in error messages}}.}
+
+\item{length}{When not NULL, includes check the value is the length specified.}
 }
 \description{
 Check Class
