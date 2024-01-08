@@ -62,7 +62,7 @@
 <span>  <span class="va">variables</span>,</span>
 <span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  values <span class="op">=</span> <span class="fu"><a href="max_value.html">max_value</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="va">variables</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  values <span class="op">=</span> <span class="fu"><a href="maximum_variable_values.html">maximum_variable_values</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="va">variables</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  statistics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_variable_summary_fns</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  denominator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -95,7 +95,7 @@ columns specified.</p>
 
 <dt>values</dt>
 <dd><p>(named <code>list</code>)<br>
-named list of dichotomous values to tabulate. Default is <code>max_value(data)</code>,
+named list of dichotomous values to tabulate. Default is <code>maximum_variable_values(data)</code>,
 which returns the largest/last value after a sort.</p></dd>
 
 
