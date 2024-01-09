@@ -55,7 +55,7 @@ check_pkg_installed <- function(pkg,
   compare <- attr(version, "compare")
 
   # get fn name from which the function was called -----------------------------
-  fn <- tryCatch(paste0(as_label(sys.call(1)[[1]]), "()"), error = function(e) NULL)
+  fn <- tryCatch(paste0(as_label(sys.call(which = n)[[1]]), "()"), error = function(e) NULL)
 
   # check installation TRUE/FALSE ----------------------------------------------
   if (isTRUE(boolean)) {
