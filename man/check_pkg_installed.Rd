@@ -7,12 +7,7 @@
 \alias{get_min_version_required}
 \title{Check a package installation status or minimum required version}
 \usage{
-check_pkg_installed(
-  pkg,
-  pkg_search = "cards",
-  boolean = FALSE,
-  call = parent.frame()
-)
+check_pkg_installed(pkg, pkg_search = "cards", boolean = FALSE, n = 1L)
 
 get_pkg_dependencies(pkg_search = "cards")
 
@@ -36,9 +31,10 @@ logical indicating whether to return a \code{TRUE}/\code{FALSE}, rather
 than error when package/package version not available. Default is \code{FALSE},
 which will return an error if \code{pkg} is not installed.}
 
-\item{call}{(\code{environment})\cr
-The execution environment for identifying the function from
-which \code{check_pkg_installed()} was called. Used in messaging to user.}
+\item{n}{(\code{integer})\cr
+Passed to \code{sys.call(n)}; the number of generations to go back. Default is \code{1L}.
+This is used to message user about the original function call the resulted
+in the prompt to install new packages.}
 
 \item{remove_duplicates}{\code{(logical(1))}\cr
 if several versions of a package are installed,
