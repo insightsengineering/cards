@@ -16,7 +16,7 @@
 #'   ard_regression(add_estimate_to_reference_rows = TRUE)
 ard_regression <- function(model, tidy_fun = NULL, ...) {
   # check installed packages ---------------------------------------------------
-  check_installed("broom.helpers")
+  check_pkg_installed("broom.helpers", pkg_search = "cards")
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(model, "model")
