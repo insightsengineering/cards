@@ -1,4 +1,4 @@
-#' Check a package installation status or minimum required version
+#' Check Package Installation
 #'
 #' @description
 #' - `check_pkg_installed()`: checks whether a package is installed and
@@ -13,8 +13,8 @@
 #'
 #' @param pkg (`string`)\cr
 #'   Package required
-#' @param n (`integer`)\cr
-#'   Passed to `sys.call(n)`; the number of generations to go back. Default is `1L`.
+#' @param call (`environment`)\cr
+#'   The execution environment of a currently running function. Default is `parent.frame()`.
 #'   This is used to message user about the original function call the resulted
 #'   in the prompt to install new packages.
 #' @param pkg_search (`string`)\cr
@@ -49,13 +49,16 @@ NULL
 check_pkg_installed <- function(pkg,
                                 pkg_search = "cards",
                                 boolean = FALSE,
-                                n = 1L) {
+                                call = parent.frame()) {
   # check if min version is required -------------------------------------------
   version <- get_min_version_required(pkg, pkg_search)
   compare <- attr(version, "compare")
 
   # get fn name from which the function was called -----------------------------
-  fn <- tryCatch(paste0(as_label(sys.call(which = n)[[1]]), "()"), error = function(e) NULL)
+  fn <- tryCatch(
+    paste0(as_label(evalq(sys.call(1L), envir = call)[[1]]), "()"),
+    error = function(e) NULL
+  )
 
   # check installation TRUE/FALSE ----------------------------------------------
   if (isTRUE(boolean)) {
