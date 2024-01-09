@@ -4,9 +4,9 @@ test_that("check_pkg_installed() works", {
     check_pkg_installed("broom"),
     NA
   )
-  expect_true(check_pkg_installed("broom", boolean = TRUE))
+  expect_true(check_pkg_installed("broom", return_lgl = TRUE))
 
-  expect_false(check_pkg_installed("br000000m", boolean = TRUE))
+  expect_false(check_pkg_installed("br000000m", return_lgl = TRUE))
 
   mv <- c(Suggests = "1.0.5")
   attr(mv, "compare") <- ">="

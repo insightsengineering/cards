@@ -19,7 +19,7 @@
 #'   in the prompt to install new packages.
 #' @param pkg_search (`string`)\cr
 #'   the package the function will search for a minimum required version from.
-#' @param boolean `(logical(1))`
+#' @param return_lgl `(logical(1))`
 #'   logical indicating whether to return a `TRUE`/`FALSE`, rather
 #'   than error when package/package version not available. Default is `FALSE`,
 #'   which will return an error if `pkg` is not installed.
@@ -39,7 +39,7 @@
 #'
 #' @name check_pkg_installed
 #' @examplesIf interactive()
-#' check_pkg_installed("broom", boolean = TRUE)
+#' check_pkg_installed("broom", return_lgl = TRUE)
 #' get_pkg_dependencies()
 #' get_min_version_required("brms")
 NULL
@@ -48,7 +48,7 @@ NULL
 #' @export
 check_pkg_installed <- function(pkg,
                                 pkg_search = "cards",
-                                boolean = FALSE,
+                                return_lgl = FALSE,
                                 call = parent.frame()) {
   # check if min version is required -------------------------------------------
   version <- get_min_version_required(pkg, pkg_search)
@@ -61,7 +61,7 @@ check_pkg_installed <- function(pkg,
   )
 
   # check installation TRUE/FALSE ----------------------------------------------
-  if (isTRUE(boolean)) {
+  if (isTRUE(return_lgl)) {
     return(rlang::is_installed(pkg = pkg, version = version, compare = compare))
   }
 
