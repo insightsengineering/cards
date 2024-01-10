@@ -9,7 +9,7 @@
 #' dependencies of a specific package.
 #'
 #' - `get_min_version_required()` will return, if any, the minimum version
-#' of `pkg` required by `pkg_search`, `NULL` if no minimum version required.
+#' of `pkg` required by `reference_pkg`, `NULL` if no minimum version required.
 #'
 #' @param pkg (`string`)\cr
 #'   Package required
@@ -17,7 +17,7 @@
 #'   The execution environment of a currently running function. Default is `parent.frame()`.
 #'   This is used to message user about the original function call the resulted
 #'   in the prompt to install new packages.
-#' @param pkg_search (`string`)\cr
+#' @param reference_pkg (`string`)\cr
 #'   the package the function will search for a minimum required version from.
 #' @param return_lgl `(logical(1))`
 #'   logical indicating whether to return a `TRUE`/`FALSE`, rather
@@ -47,11 +47,11 @@ NULL
 #' @rdname check_pkg_installed
 #' @export
 check_pkg_installed <- function(pkg,
-                                pkg_search = "cards",
+                                reference_pkg = "cards",
                                 return_lgl = FALSE,
                                 call = parent.frame()) {
   # check if min version is required -------------------------------------------
-  version <- get_min_version_required(pkg, pkg_search)
+  version <- get_min_version_required(pkg, reference_pkg)
   compare <- attr(version, "compare")
 
   # get fn name from which the function was called -----------------------------
@@ -78,11 +78,11 @@ check_pkg_installed <- function(pkg,
 
 #' @rdname check_pkg_installed
 #' @export
-get_pkg_dependencies <- function(pkg_search = "cards") {
-  if (is.null(pkg_search)) {
+get_pkg_dependencies <- function(reference_pkg = "cards") {
+  if (is.null(reference_pkg)) {
     return(NULL)
   }
-  description <- utils::packageDescription(pkg_search)
+  description <- utils::packageDescription(reference_pkg)
   if (identical(description, NA)) {
     return(NULL)
   }
@@ -94,11 +94,11 @@ get_pkg_dependencies <- function(pkg_search = "cards") {
                "Suggests", "Enhances", "LinkingTo"))
     ) |>
     dplyr::rename(
-      pkg_search = "Package",
-      pkg_search_version = "Version"
+      reference_pkg = "Package",
+      reference_pkg_version = "Version"
     ) |>
     tidyr::pivot_longer(
-      -dplyr::all_of(c("pkg_search", "pkg_search_version")),
+      -dplyr::all_of(c("reference_pkg", "reference_pkg_version")),
       values_to = "pkg",
       names_to = "dependency_type",
     ) |>
@@ -119,7 +119,7 @@ get_pkg_dependencies <- function(pkg_search = "cards") {
 #' @rdname check_pkg_installed
 #' @export
 get_all_pkg_dependencies <- function(
-    pkg_search = "cards",
+    reference_pkg = "cards",
     remove_duplicates = FALSE,
     lib.loc = NULL) {
   deps <-
@@ -130,21 +130,21 @@ get_all_pkg_dependencies <- function(
                "Suggests", "Enhances", "LinkingTo"))
     ) |>
     dplyr::rename(
-      pkg_search = "Package",
-      pkg_search_version = "Version",
+      reference_pkg = "Package",
+      reference_pkg_version = "Version",
       lib_path = "LibPath"
     )
 
-  if (!is.null(pkg_search)) {
-    deps <- deps |> dplyr::filter(.data$pkg_search %in% .env$pkg_search)
+  if (!is.null(reference_pkg)) {
+    deps <- deps |> dplyr::filter(.data$reference_pkg %in% .env$reference_pkg)
   }
   if (remove_duplicates) {
-    deps <- deps |> dplyr::distinct("pkg_search", .keep_all = TRUE)
+    deps <- deps |> dplyr::distinct("reference_pkg", .keep_all = TRUE)
   }
 
   deps |>
     tidyr::pivot_longer(
-      -dplyr::all_of(c("pkg_search", "pkg_search_version", "lib_path")),
+      -dplyr::all_of(c("reference_pkg", "reference_pkg_version", "lib_path")),
       values_to = "pkg",
       names_to = "dependency_type",
     ) |>
@@ -164,11 +164,11 @@ get_all_pkg_dependencies <- function(
 
 #' @rdname check_pkg_installed
 #' @export
-get_min_version_required <- function(pkg, pkg_search = "cards") {
-  if (is.null(pkg_search)) {
+get_min_version_required <- function(pkg, reference_pkg = "cards") {
+  if (is.null(reference_pkg)) {
     return(NULL)
   }
-  res <- get_pkg_dependencies(pkg_search) |>
+  res <- get_pkg_dependencies(reference_pkg) |>
     dplyr::filter(.data$pkg == .env$pkg & !is.na(.data$version))
   if (nrow(res) == 0) {
     return(NULL)

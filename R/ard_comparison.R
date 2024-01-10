@@ -41,7 +41,7 @@ NULL
 #' @export
 ard_ttest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  check_pkg_installed("broom.helpers", pkg_search = "cards")
+  check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -113,7 +113,7 @@ ard_ttest <- function(data, by, variable, ...) {
 #' @export
 ard_wilcoxtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  check_pkg_installed("broom.helpers", pkg_search = "cards")
+  check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -157,7 +157,7 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
 #' @export
 ard_chisqtest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  check_pkg_installed("broom.helpers", pkg_search = "cards")
+  check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")
@@ -198,7 +198,7 @@ ard_chisqtest <- function(data, by, variable, ...) {
 #' @export
 ard_fishertest <- function(data, by, variable, ...) {
   # check installed packages ---------------------------------------------------
-  check_pkg_installed("broom.helpers", pkg_search = "cards")
+  check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
   check_not_missing(data, "data")

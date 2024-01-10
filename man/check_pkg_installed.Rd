@@ -9,26 +9,26 @@
 \usage{
 check_pkg_installed(
   pkg,
-  pkg_search = "cards",
+  reference_pkg = "cards",
   return_lgl = FALSE,
   call = parent.frame()
 )
 
-get_pkg_dependencies(pkg_search = "cards")
+get_pkg_dependencies(reference_pkg = "cards")
 
 get_all_pkg_dependencies(
-  pkg_search = "cards",
+  reference_pkg = "cards",
   remove_duplicates = FALSE,
   lib.loc = NULL
 )
 
-get_min_version_required(pkg, pkg_search = "cards")
+get_min_version_required(pkg, reference_pkg = "cards")
 }
 \arguments{
 \item{pkg}{(\code{string})\cr
 Package required}
 
-\item{pkg_search}{(\code{string})\cr
+\item{reference_pkg}{(\code{string})\cr
 the package the function will search for a minimum required version from.}
 
 \item{return_lgl}{\code{(logical(1))}
@@ -62,7 +62,7 @@ the function will check whether a minimum version of a package is required.
 \item \code{get_pkg_dependencies()} returns a tibble with all
 dependencies of a specific package.
 \item \code{get_min_version_required()} will return, if any, the minimum version
-of \code{pkg} required by \code{pkg_search}, \code{NULL} if no minimum version required.
+of \code{pkg} required by \code{reference_pkg}, \code{NULL} if no minimum version required.
 }
 }
 \details{

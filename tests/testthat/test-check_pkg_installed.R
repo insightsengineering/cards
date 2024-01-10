@@ -15,10 +15,10 @@ test_that("check_pkg_installed() works", {
     mv
   )
   expect_null(
-    get_min_version_required("brms", pkg_search = NULL)
+    get_min_version_required("brms", reference_pkg = NULL)
   )
   expect_null(
-    get_min_version_required("broom", pkg_search = NULL)
+    get_min_version_required("broom", reference_pkg = NULL)
   )
 
   expect_error(
@@ -32,7 +32,7 @@ test_that("check_pkg_installed() works", {
 
   expect_equal(
     names(df_deps),
-    c("pkg_search", "pkg_search_version", "dependency_type", "pkg", "version", "compare")
+    c("reference_pkg", "reference_pkg_version", "dependency_type", "pkg", "version", "compare")
   )
 
   expect_error(
