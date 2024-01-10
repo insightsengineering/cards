@@ -49,7 +49,7 @@
     Code
       ard_regression(lm(AGE ~ ARM, data = ADSL), add_estimate_to_reference_rows = TRUE)
     Message
-      {cards} data frame: 48 x 7
+      {cards} data frame: 43 x 7
     Output
          variable variable_level   context      stat_name stat_label statistic
       1       ARM        Placebo regressi…           term       term ARMPlace…
@@ -63,7 +63,7 @@
       9       ARM        Placebo regressi…          label  Level La…   Placebo
       10      ARM        Placebo regressi…          n_obs     N Obs.        86
     Message
-      i 38 more rows
+      i 33 more rows
       i Use `print(n = ...)` to see more rows
       i 1 more variable: statistic_fmt_fn
 
