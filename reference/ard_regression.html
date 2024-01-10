@@ -89,7 +89,7 @@ a tidier. Default is broom.helpers::tidy_with_broom_or_parameters</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">AGE</span> <span class="op">~</span> <span class="va">ARM</span>, data <span class="op">=</span> <span class="va">ADSL</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">ard_regression</span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 48 x 7</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 43 x 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    variable variable_level   context      stat_name stat_label statistic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       ARM        Placebo regressi…           term       term ARMPlace…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       ARM        Placebo regressi…      var_label      Label Descript…</span>
@@ -101,7 +101,7 @@ a tidier. Default is broom.helpers::tidy_with_broom_or_parameters</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8       ARM        Placebo regressi…  reference_row  referenc…      TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9       ARM        Placebo regressi…          label  Level La…   Placebo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      ARM        Placebo regressi…          n_obs     N Obs.        86</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">38 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">33 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1 more variable: statistic_fmt_fn</span></span>
 </code></pre></div>
