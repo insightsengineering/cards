@@ -36,6 +36,7 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
       names_to = "stat_name",
       values_to = "statistic"
     ) |>
+    dplyr::filter(map_lgl(.data$statistic, Negate(is.na))) |>
     dplyr::mutate(
       statistic_fmt_fn =
         lapply(
