@@ -30,7 +30,7 @@
 #'   location of `R` library trees to search through, see
 #'   `utils::installed.packages()`.
 #' @details
-#' `get_all_packages_dependencies()` could be used to get the list of
+#' `get_all_pkg_dependencies(pkg_search = NULL)` could be used to get the list of
 #' dependencies of all installed packages.
 #'
 #' @return logical or error for `check_pkg_installed()`, `NULL` or character with
