@@ -2,22 +2,40 @@
 % Please edit documentation in R/check-helpers.R
 \name{check_length}
 \alias{check_length}
+\alias{check_scalar}
 \title{Check Length}
 \usage{
-check_length(
-  x,
-  arg_name = caller_arg(x),
-  length = 1L,
-  msg = "The {.arg by} argument must be length {.val {length}}.",
-  call = parent.frame()
-)
+check_length(x, length, arg_name = caller_arg(x), call = parent.frame())
+
+check_scalar(x, arg_name = caller_arg(x), call = parent.frame())
 }
 \arguments{
-\item{x}{object to check}
+\item{x}{\code{(object)}\cr
+object to check}
 
-\item{length}{integer specifying the required length}
+\item{length}{(\code{integer(1)})\cr
+integer specifying the required length}
 
-\item{msg}{string passed to \code{cli::cli_abort(message=)}}
+\item{arg_name}{(\code{string})\cr
+string indicating the label/symbol of the object being checked.
+Default is \code{rlang::caller_arg(x)}}
+
+\item{call}{The execution environment of a currently running
+function, e.g. \code{call = caller_env()}. The corresponding function
+call is retrieved and mentioned in error messages as the source
+of the error.
+
+You only need to supply \code{call} when throwing a condition from a
+helper function which wouldn't be relevant to mention in the
+message.
+
+Can also be \code{NULL} or a \link[rlang:topic-defuse]{defused function call} to
+respectively not display any call or hard-code a code to display.
+
+For more information about error calls, see \ifelse{html}{\link[rlang:topic-error-call]{Including function calls in error messages}}{\link[rlang:topic-error-call]{Including function calls in error messages}}.}
+
+\item{msg}{(\code{string})\cr
+string passed to \code{cli::cli_abort(message=)}}
 }
 \description{
 Check Length

@@ -44,14 +44,14 @@ ard_ttest <- function(data, by, variable, ...) {
   check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
-  check_not_missing(data, "data")
-  check_not_missing(variable, "variable")
-  check_not_missing(by, "by")
-  check_class_data_frame(data = data)
+  check_not_missing(data)
+  check_not_missing(variable)
+  check_not_missing(by)
+  check_class_data_frame(x = data)
   data <- dplyr::ungroup(data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
-  check_length(by, "by", 1L)
-  check_length(variable, "variable", 1L)
+  check_scalar(by)
+  check_scalar(variable)
 
   # build ARD ------------------------------------------------------------------
   ret <-
@@ -116,13 +116,13 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
   check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
-  check_not_missing(data, "data")
-  check_not_missing(variable, "variable")
+  check_not_missing(data)
+  check_not_missing(variable)
   check_not_missing(by, "by")
-  check_class_data_frame(data = data)
+  check_class_data_frame(x = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
-  check_length(by, "by", 1L)
-  check_length(variable, "variable", 1L)
+  check_scalar(by)
+  check_scalar(variable)
 
   # build ARD ------------------------------------------------------------------
   tidy_as_ard(
@@ -160,13 +160,13 @@ ard_chisqtest <- function(data, by, variable, ...) {
   check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
-  check_not_missing(data, "data")
-  check_not_missing(variable, "variable")
+  check_not_missing(data)
+  check_not_missing(variable)
   check_not_missing(by, "by")
-  check_class_data_frame(data = data)
+  check_class_data_frame(x = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
-  check_length(by, "by", 1L)
-  check_length(variable, "variable", 1L)
+  check_scalar(by)
+  check_scalar(variable)
 
   # build ARD ------------------------------------------------------------------
   tidy_as_ard(
@@ -201,13 +201,13 @@ ard_fishertest <- function(data, by, variable, ...) {
   check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check/process inputs -------------------------------------------------------
-  check_not_missing(data, "data")
-  check_not_missing(variable, "variable")
-  check_not_missing(by, "by")
-  check_class_data_frame(data = data)
+  check_not_missing(data)
+  check_not_missing(variable)
+  check_not_missing(by)
+  check_class_data_frame(x = data)
   process_selectors(data, by = {{ by }}, variable = {{ variable }})
-  check_length(by, "by", 1L)
-  check_length(variable, "variable", 1L)
+  check_scalar(by)
+  check_scalar(variable)
 
   # build ARD ------------------------------------------------------------------
   tidy_as_ard(

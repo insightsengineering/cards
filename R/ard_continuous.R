@@ -58,10 +58,10 @@ ard_continuous <- function(data,
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(data = data)
-  check_class(class = c("list", "formula"), statistics = statistics, allow_null = TRUE)
-  check_class(class = c("list", "formula"), stat_labels = stat_labels, allow_null = TRUE)
-  check_class(class = c("list", "formula"), fmt_fn = fmt_fn, allow_null = TRUE)
+  check_class_data_frame(x = data)
+  check_class(x = statistics, class = c("list", "formula"), allow_null = TRUE)
+  check_class(x = stat_labels, class = c("list", "formula"), allow_null = TRUE)
+  check_class(x = fmt_fn, class = c("list", "formula"), allow_null = TRUE)
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------

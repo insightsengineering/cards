@@ -7,9 +7,12 @@
 check_not_missing(x, arg_name = caller_arg(x), call = parent.frame())
 }
 \arguments{
-\item{x}{argument to check}
+\item{x}{\code{(object)}\cr
+object to check}
 
-\item{arg_name}{string indicating the name of the argument. Used in the error messaging.}
+\item{arg_name}{(\code{string})\cr
+string indicating the label/symbol of the object being checked.
+Default is \code{rlang::caller_arg(x)}}
 
 \item{call}{The execution environment of a currently running
 function, e.g. \code{call = caller_env()}. The corresponding function

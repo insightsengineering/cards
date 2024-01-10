@@ -4,29 +4,27 @@
 
 #' Check Class
 #'
-#' @param class character vector or string indicating accepted classes.
-#' Passed to `inherits(what=class)`
-#' @param ... named arguments, e.g. `data = data`. The _name_ is used in the error
-#' messaging and the passed object's class is checked.
-#' @param allow_null Logical indicating whether a NULL value will pass the test.
-#' Default is `FALSE`
+#' @param class (`character`)\cr
+#'   character vector or string indicating accepted classes.
+#'   Passed to `inherits(what=class)`
+#' @param x `(object)`\cr
+#'   object to check
+#' @param allow_null (`logical(1)`)\cr
+#'   Logical indicating whether a NULL value will pass the test.
+#'   Default is `FALSE`
+#' @param arg_name (`string`)\cr
+#'   string indicating the label/symbol of the object being checked.
+#'   Default is `rlang::caller_arg(x)`
 #' @inheritParams cli::cli_abort
 #' @keywords internal
-check_class <- function(class, ..., allow_null = FALSE, call = parent.frame()) {
-  dots <- dots_list(..., .named = TRUE)
-
+check_class <- function(x, class, allow_null = FALSE,
+                        arg_name = rlang::caller_arg(x), call = parent.frame()) {
   # include NULL class as acceptable if allow_null is TRUE
-  if (allow_null) class <- c(class, "NULL")
+  if (isTRUE(allow_null) && is.null(x)) return(invisible())
 
-  .mapply(
-    FUN = function(x, y) {
-      if (!inherits(x, class)) {
-        cli::cli_abort("The {.arg {y}} argument must be class {.cls {class}}.", call = call)
-      }
-    },
-    dots = list(dots, names(dots)),
-    MoreArgs = NULL
-  )
+  if (!inherits(x, class)) {
+    cli::cli_abort("The {.arg {arg_name}} argument must be class {.cls {class}}.", call = call)
+  }
   invisible()
 }
 
@@ -34,14 +32,14 @@ check_class <- function(class, ..., allow_null = FALSE, call = parent.frame()) {
 #'
 #' @inheritParams check_class
 #' @keywords internal
-check_class_data_frame <- function(..., allow_null = FALSE, call = parent.frame()) {
-  check_class(class = "data.frame", ..., allow_null = allow_null, call = call)
+check_class_data_frame <- function(x, allow_null = FALSE,
+                                   arg_name = rlang::caller_arg(x), call = parent.frame()) {
+  check_class(x = x, class = "data.frame", allow_null = allow_null,
+              arg_name = arg_name, call = call)
 }
 
 #' Check Argument not Missing
 #'
-#' @param x argument to check
-#' @param arg_name string indicating the name of the argument. Used in the error messaging.
 #' @inheritParams check_class
 #' @keywords internal
 check_not_missing <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
@@ -53,15 +51,24 @@ check_not_missing <- function(x, arg_name = caller_arg(x), call = parent.frame()
 
 #' Check Length
 #'
-#' @param x object to check
-#' @param msg string passed to `cli::cli_abort(message=)`
-#' @param length integer specifying the required length
+#' @param msg (`string`)\cr
+#'   string passed to `cli::cli_abort(message=)`
+#' @param length (`integer(1)`)\cr
+#'   integer specifying the required length
+#' @inheritParams check_class
 #' @keywords internal
-check_length <- function(x, arg_name = caller_arg(x), length = 1L,
-                                        msg = "The {.arg by} argument must be length {.val {length}}.",
-                                        call = parent.frame()) {
+#' @name check_length
+NULL
+
+#' @rdname check_length
+check_length <- function(x, length, arg_name = caller_arg(x), call = parent.frame()) {
   if (length(x) != length) {
-    cli::cli_abort(message = msg, call = call)
+    cli::cli_abort("The {.arg {arg_name}} argument must be length {.val {length}}.", call = call)
   }
   invisible()
+}
+
+#' @rdname check_length
+check_scalar <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
+  check_length(x = x, length = 1L, arg_name = arg_name, call = call)
 }
