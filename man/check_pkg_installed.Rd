@@ -66,7 +66,7 @@ of \code{pkg} required by \code{pkg_search}, \code{NULL} if no minimum version r
 }
 }
 \details{
-\code{get_all_packages_dependencies()} could be used to get the list of
+\code{get_all_pkg_dependencies()} may be used to get the list of
 dependencies of all installed packages.
 }
 \examples{
