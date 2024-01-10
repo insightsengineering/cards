@@ -21,7 +21,7 @@ ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(data = data)
+  check_class_data_frame(x = data)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})

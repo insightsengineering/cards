@@ -16,7 +16,7 @@
 #'   ard_regression(add_estimate_to_reference_rows = TRUE)
 ard_regression <- function(model, tidy_fun = NULL, ...) {
   # check installed packages ---------------------------------------------------
-  check_installed("broom.helpers")
+  check_pkg_installed("broom.helpers", reference_pkg = "cards")
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(model, "model")
@@ -36,6 +36,7 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
       names_to = "stat_name",
       values_to = "statistic"
     ) |>
+    dplyr::filter(map_lgl(.data$statistic, Negate(is.na))) |>
     dplyr::mutate(
       statistic_fmt_fn =
         lapply(

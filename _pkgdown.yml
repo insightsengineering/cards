@@ -52,6 +52,7 @@ reference:
       - maximum_variable_values
       - shuffle_ard
       - check_ard_structure
+      - check_pkg_installed
       - print.card
 
   - title: "Helpers"

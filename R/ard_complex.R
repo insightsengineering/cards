@@ -57,8 +57,8 @@ ard_complex <- function(data,
   check_not_missing(data)
   check_not_missing(variables)
   check_not_missing(statistics)
-  check_class_data_frame(data = data)
-  check_class(class = c("list", "formula"), statistics = statistics, allow_null = FALSE)
+  check_class_data_frame(x = data)
+  check_class(x = statistics, class = c("list", "formula"), allow_null = FALSE)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})

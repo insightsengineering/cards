@@ -4,14 +4,24 @@
 \alias{check_class_data_frame}
 \title{Check Class Data Frame}
 \usage{
-check_class_data_frame(..., allow_null = FALSE, call = parent.frame())
+check_class_data_frame(
+  x,
+  allow_null = FALSE,
+  arg_name = rlang::caller_arg(x),
+  call = parent.frame()
+)
 }
 \arguments{
-\item{...}{named arguments, e.g. \code{data = data}. The \emph{name} is used in the error
-messaging and the passed object's class is checked.}
+\item{x}{\code{(object)}\cr
+object to check}
 
-\item{allow_null}{Logical indicating whether a NULL value will pass the test.
+\item{allow_null}{(\code{logical(1)})\cr
+Logical indicating whether a NULL value will pass the test.
 Default is \code{FALSE}}
+
+\item{arg_name}{(\code{string})\cr
+string indicating the label/symbol of the object being checked.
+Default is \code{rlang::caller_arg(x)}}
 
 \item{call}{The execution environment of a currently running
 function, e.g. \code{call = caller_env()}. The corresponding function

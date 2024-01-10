@@ -43,7 +43,7 @@ ard_hierarchical <- function(data, variables, by = NULL,
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(data = data)
+  check_class_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -99,7 +99,7 @@ ard_hierarchical_count <- function(data, variables, by = NULL, fmt_fn = NULL,
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(data = data)
+  check_class_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
