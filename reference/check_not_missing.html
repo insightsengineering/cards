@@ -63,11 +63,14 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>argument to check</p></dd>
+<dd><p><code>(object)</code><br>
+object to check</p></dd>
 
 
 <dt>arg_name</dt>
-<dd><p>string indicating the name of the argument. Used in the error messaging.</p></dd>
+<dd><p>(<code>string</code>)<br>
+string indicating the label/symbol of the object being checked.
+Default is <code>rlang::caller_arg(x)</code></p></dd>
 
 
 <dt>call</dt>
