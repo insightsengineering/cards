@@ -61,6 +61,7 @@ proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
 #'
 #' @export
 proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
+  check_pkg_installed("broom", reference_pkg = "cards")
   # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
@@ -85,6 +86,7 @@ proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
 #'   Also referred to as the `exact` method.
 #' @export
 proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
+  check_pkg_installed("broom", reference_pkg = "cards")
   # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
