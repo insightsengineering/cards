@@ -72,3 +72,76 @@ check_length <- function(x, length, arg_name = caller_arg(x), call = parent.fram
 check_scalar <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
   check_length(x = x, length = 1L, arg_name = arg_name, call = call)
 }
+
+#' Check Range
+#'
+#' @param x numeric scalar to check
+#' @param range numeric vector of length two
+#' @param include_bounds logical of length two indicating whether to allow
+#'   the lower and upper bounds
+#' @param scalar logical indicating whether `x` must be a scalar
+#' @param msg string passed to `cli::cli_abort(message=)`
+#'
+#' @return invisible
+#' @keywords internal
+check_range <- function(x,
+                        range,
+                        include_bounds = c(FALSE, FALSE),
+                        arg_name = caller_arg(x),
+                        scalar = FALSE,
+                        msg = paste(
+                          "The {.arg {arg_name}} argument must be in the interval",
+                          "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]},",
+                          "{range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
+                        call = parent.frame()) {
+  print_error <- FALSE
+  # check input is numeric
+  if (!is.numeric(x)) {
+    print_error <- TRUE
+  }
+
+  # check the lower bound of range
+  if (isFALSE(print_error) && isTRUE(include_bounds[1]) && any(x < range[1])) {
+    print_error <- TRUE
+  }
+  if (isFALSE(print_error) && isFALSE(include_bounds[1]) && any(x <= range[1])) {
+    print_error <- TRUE
+  }
+
+  # check upper bound of range
+  if (isFALSE(print_error) && isTRUE(include_bounds[2]) && any(x > range[2])) {
+    print_error <- TRUE
+  }
+  if (isFALSE(print_error) && isFALSE(include_bounds[2]) && any(x >= range[2])) {
+    print_error <- TRUE
+  }
+
+  # print error
+  if (print_error) {
+    cli::cli_abort(msg, call = call)
+  }
+
+  invisible()
+}
+
+
+#' Check Binary
+#'
+#' Checks if a column in a data frame is binary,
+#' that is, if the column is class `<logical>` or
+#' `<numeric/integer>` and coded as `c(0, 1)`
+#'
+#' @param x a vector
+#' @param call call environment
+#'
+#' @return invisible
+#' @keywords internal
+check_binary <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
+  if (!is.logical(x) && !(is_integerish(x) && is_empty(setdiff(x, c(0, 1, NA))))) {
+    paste("Expecting column {.arg {arg_name}} to be either {.cls logical}",
+          "or {.cls {c('numeric', 'integer')}} coded as {.val {c(0, 1)}}.") |>
+      cli::cli_abort(call = call)
+  }
+
+  invisible()
+}

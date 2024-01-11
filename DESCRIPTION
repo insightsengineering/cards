@@ -30,7 +30,8 @@ Suggests:
     broom (>= 1.0.5),
     broom.helpers (>= 1.13.0),
     spelling (>= 2.2.0),
-    testthat (>= 3.2.0)
+    testthat (>= 3.2.0),
+    withr
 Config/Needs/website: rmarkdown, jsonlite, yaml, plumber, survival,
     ggsurvfit
 Config/testthat/edition: 3

@@ -25,10 +25,12 @@ NULL
 #'
 #' @export
 proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
   check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
-  check_class("logical", correct = correct, length = 1L)
+  check_class(x = correct, "logical")
+  check_scalar(correct)
 
   x <- stats::na.omit(x)
 
@@ -44,7 +46,7 @@ proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
 
   list(
     N = n,
-    p = p_hat,
+    estimate = p_hat,
     conf.low = l_ci,
     conf.high = u_ci,
     conf.level = conf.level,
@@ -59,9 +61,11 @@ proportion_ci_wald <- function(x, conf.level = 0.95, correct = FALSE) {
 #'
 #' @export
 proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
-  check_class("logical", correct = correct, length = 1L)
+  check_class(x = correct, "logical")
+  check_scalar(correct)
   check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
 
   x <- stats::na.omit(x)
@@ -69,21 +73,19 @@ proportion_ci_wilson <- function(x, conf.level = 0.95, correct = FALSE) {
   n <- length(x)
   y <- stats::prop.test(x = sum(x), n = n, correct = correct, conf.level = conf.level)
 
-  list(
-    N = n,
-    p = mean(x),
-    conf.low = y$conf.int[1],
-    conf.high = y$conf.int[2],
-    conf.level = conf.level,
-    method =
-      glue::glue("Wilson Confidence Interval {ifelse(correct, 'with', 'without')} continuity correction")
-  )
+  list(N = n, conf.level = conf.level) |>
+    utils::modifyList(val = broom::tidy(y) |> as.list()) |>
+    utils::modifyList(
+    list(method =
+           glue::glue("Wilson Confidence Interval {ifelse(correct, 'with', 'without')} continuity correction"))
+    )
 }
 
 #' @describeIn proportion_ci Calculates the Clopper-Pearson interval by calling [stats::binom.test()].
 #'   Also referred to as the `exact` method.
 #' @export
 proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
   check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
@@ -93,21 +95,16 @@ proportion_ci_clopper_pearson <- function(x, conf.level = 0.95) {
 
   y <- stats::binom.test(x = sum(x), n = n, conf.level = conf.level)
 
-  list(
-    N = n,
-    p = mean(x),
-    conf.low = y$conf.int[1],
-    conf.high = y$conf.int[2],
-    conf.level = conf.level,
-    method =
-      glue::glue("Clopper-Pearson Confidence Interval")
-  )
+  list(N = n, conf.level = conf.level) |>
+    utils::modifyList(val = broom::tidy(y) |> as.list()) |>
+    utils::modifyList(list(method = "Clopper-Pearson Confidence Interval"))
 }
 
 #' @describeIn proportion_ci Calculates the `Agresti-Coull` interval (created by `Alan Agresti` and `Brent Coull`) by
 #'   (for 95% CI) adding two successes and two failures to the data and then using the Wald formula to construct a CI.
 #' @export
 proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
   check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
@@ -131,11 +128,11 @@ proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
 
   list(
     N = n,
-    p = mean(x),
+    estimate = mean(x),
     conf.low = l_ci,
     conf.high = u_ci,
     conf.level = conf.level,
-    method = glue::glue("Agresti-Coull Confidence Interval")
+    method = "Agresti-Coull Confidence Interval"
   )
 }
 
@@ -143,6 +140,7 @@ proportion_ci_agresti_coull <- function(x, conf.level = 0.95) {
 #'   non-informative Jeffreys prior for a binomial proportion.
 #' @export
 proportion_ci_jeffreys <- function(x, conf.level = 0.95) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_binary(x)
   check_range(conf.level, range = c(0, 1), include_bounds = c(FALSE, FALSE), scalar = TRUE)
@@ -166,7 +164,7 @@ proportion_ci_jeffreys <- function(x, conf.level = 0.95) {
 
   list(
     N = n,
-    p = mean(x),
+    estimate = mean(x),
     conf.low = l_ci,
     conf.high = u_ci,
     conf.level = conf.level,
@@ -221,19 +219,25 @@ proportion_ci_strat_wilson <- function(x,
                                        conf.level = 0.95,
                                        max.iterations = 10L,
                                        correct = FALSE) {
+  # check inputs ---------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(strata)
   check_binary(x)
-  check_class("logical", correct)
-  check_class("factor", strata)
+  check_class(correct, "logical")
+  check_scalar(correct)
+  check_class(strata, "factor")
   check_range(conf.level, range = c(0, 1), scalar = TRUE)
 
   # remove missing values from x and strata
   is_na <- is.na(x) | is.na(strata)
   x <- x[!is_na]
   strata <- strata[!is_na]
-
   if (!inherits(x, "logical")) x <- as.logical(x)
+  # check all TRUE/FALSE, if so, not calculable
+  if (all(x) || all(!x)) {
+    cli::cli_abort("All values in {.arg x} argument are either {.code TRUE} or {.code FALSE} and CI is not estimable.")
+  }
+
   tbl <- table(factor(x, levels = c(FALSE, TRUE)), strata, useNA = "no")
   n_strata <- length(unique(strata))
 
@@ -268,7 +272,7 @@ proportion_ci_strat_wilson <- function(x,
 
   strata_qnorm <- .strata_normal_quantile(vars, weights, conf.level)
 
-  # Iterative setting of weights if they were not set externally
+  # Iterative setting of weights if they were not passed in `weights` argument
   weights_new <- if (do_iter) {
     .update_weights_strat_wilson(vars, strata_qnorm, weights, ns, max.iterations, conf.level)$weights
   } else {
@@ -292,17 +296,16 @@ proportion_ci_strat_wilson <- function(x,
   upper <- sum(weights_new * upper_by_strata)
 
   # Return values
-  ret <-
-    list(
-      N = length(x),
-      p = mean(x),
-      conf.low = lower,
-      conf.high = upper,
-      conf.level = conf.level,
-      weights = if (do_iter) weights_new else NULL,
-      method =
-        glue::glue("Stratified Wilson Confidence Interval {ifelse(correct, 'with', 'without')} continuity correction")
-    ) |>
+  list(
+    N = length(x),
+    estimate = mean(x),
+    conf.low = lower,
+    conf.high = upper,
+    conf.level = conf.level,
+    weights = if (do_iter) weights_new else NULL,
+    method =
+      glue::glue("Stratified Wilson Confidence Interval {ifelse(correct, 'with', 'without')} continuity correction")
+  ) |>
     compact()
 }
 
