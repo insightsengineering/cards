@@ -20,7 +20,7 @@
 #'
 shuffle_ard <- function(x, trim = TRUE){
 
-  check_class_data_frame(x)
+  check_class(x = x, class = "card")
 
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
