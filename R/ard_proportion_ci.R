@@ -15,7 +15,8 @@
 #' @param method (`string`)\cr
 #'   string indicating the type of confidence interval to calculate.
 #'   Must be one of `r formals(ard_proportion_ci)[["method"]] |> eval() |> shQuote()`.
-#' @param strata,max.iterations arguments passed to `proportion_ci_strat_wilson()`,
+#'   See `?proportion_ci` for details.
+#' @param strata,weights,max.iterations arguments passed to `proportion_ci_strat_wilson()`,
 #'   when `method = 'strat_wilson'`
 #'
 #' @return an ARD data frame
@@ -26,6 +27,7 @@
 ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
                               conf.level = 0.95,
                               strata,
+                              weights = NULL,
                               max.iterations = 10,
                               method = c("waldcc", "wald", "clopper-pearson",
                                          "wilson", "wilsoncc",
@@ -36,10 +38,10 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
   method <- arg_match(method)
   if (method %in% c("strat_wilson", "strat_wilsoncc")) {
     process_selectors(data, strata = strata)
-    check_length(strata, length = 1L)
+    check_scalar(strata)
   }
 
-
+  # calculate confidence intervals ---------------------------------------------
   ard_complex(
     data = data,
     variables = {{ variables }},
@@ -57,10 +59,14 @@ ard_proportion_ci <- function(data, variables, by = dplyr::group_vars(data),
             "agresti-coull" = \(x, ...) proportion_ci_agresti_coull(x, conf.level = conf.level),
             "jeffreys" = \(x, ...) proportion_ci_jeffreys(x, conf.level = conf.level),
             "strat_wilsoncc" = \(x, data, ...) {
-              proportion_ci_wilson(x, strata = data[[strata]], max.iterations = max.iterations, conf.level = conf.level, correct = TRUE)
+              proportion_ci_strat_wilson(x, strata = data[[strata]], weights = weights,
+                                         max.iterations = max.iterations,
+                                         conf.level = conf.level, correct = TRUE)
             },
             "strat_wilson" = \(x, data, ...) {
-              proportion_ci_wilson(x, strata = data[[strata]], max.iterations = max.iterations, conf.level = conf.level, correct = FALSE)
+              proportion_ci_strat_wilson(x, strata = data[[strata]], weights = weights,
+                                         max.iterations = max.iterations,
+                                         conf.level = conf.level, correct = FALSE)
             }
           )
       )

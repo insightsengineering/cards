@@ -94,6 +94,10 @@ check_range <- function(x,
                           "{.code {ifelse(include_bounds[1], '[', '(')}{range[1]},",
                           "{range[2]}{ifelse(include_bounds[2], ']', ')')}}."),
                         call = parent.frame()) {
+  if (isTRUE(scalar)) {
+    check_scalar(x, arg_name = arg_name)
+  }
+
   print_error <- FALSE
   # check input is numeric
   if (!is.numeric(x)) {

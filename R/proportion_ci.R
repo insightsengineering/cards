@@ -253,14 +253,10 @@ proportion_ci_strat_wilson <- function(x,
     }
   }
   check_range(weights, range = c(0, 1), include_bounds = c(TRUE, TRUE))
-  sum_weights <- sum(weights)
-  if (!is_scalar_integerish(max.iterations)) {
-    cli::cli_abort("Argument {.arg weights} must sum to a positive integer.")
+  sum_weights <- sum(weights) |> round() |> as.integer()
+  if (sum_weights != 1L || abs(sum_weights - sum(weights)) > sqrt(.Machine$double.eps)) {
+    cli::cli_abort("The sum of the {.arg weights} argument must be {.val {1L}}")
   }
-  if (as.integer(sum_weights + 0.5) != 1L) {
-    cli::cli_abort("Sum of the {.arg weights} must be {.val {1L}}")
-  }
-
 
   xs <- tbl["TRUE", ]
   ns <- colSums(tbl)

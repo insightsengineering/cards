@@ -585,6 +585,34 @@
 ---
 
     Code
+      proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata)
+    Output
+      $N
+      [1] 80
+      
+      $estimate
+      [1] 0.625
+      
+      $conf.low
+      [1] 0.5242016
+      
+      $conf.high
+      [1] 0.7268788
+      
+      $conf.level
+      [1] 0.95
+      
+      $weights
+            a.x       b.x       a.y       b.y       a.z       b.z 
+      0.2111332 0.1890860 0.1180990 0.1544903 0.1737106 0.1534809 
+      
+      $method
+      Stratified Wilson Confidence Interval without continuity correction
+      
+
+---
+
+    Code
       proportion_ci_strat_wilson(x = rep_len(TRUE, length(rsp)), strata = strata,
       weights = weights)
     Condition
@@ -599,4 +627,40 @@
     Condition
       Error in `proportion_ci_strat_wilson()`:
       ! All values in `x` argument are either `TRUE` or `FALSE` and CI is not estimable.
+
+---
+
+    Code
+      proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata,
+      max.iterations = -1)
+    Condition
+      Error in `proportion_ci_strat_wilson()`:
+      ! Argument `max.iterations` must be a positive integer.
+
+---
+
+    Code
+      proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata,
+      max.iterations = -1)
+    Condition
+      Error in `proportion_ci_strat_wilson()`:
+      ! Argument `max.iterations` must be a positive integer.
+
+---
+
+    Code
+      proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, weights = weights +
+        pi / 5)
+    Condition
+      Error in `proportion_ci_strat_wilson()`:
+      ! The sum of the `weights` argument must be 1
+
+---
+
+    Code
+      proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, weights = weights +
+        pi)
+    Condition
+      Error in `proportion_ci_strat_wilson()`:
+      ! The `weights` argument must be in the interval `[0, 1]`.
 

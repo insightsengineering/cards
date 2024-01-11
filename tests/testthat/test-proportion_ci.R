@@ -104,6 +104,17 @@ test_that("check the proportion_ci_*() functions work", {
   expect_snapshot(proportion_ci_jeffreys(x_rsp, conf.level = 0.95))
   expect_snapshot(proportion_ci_jeffreys(x_true))
   expect_snapshot(proportion_ci_jeffreys(x_false))
+
+  # error messaging ------------------------------------------------------------
+  expect_snapshot(
+    proportion_ci_wilson(x_dbl, conf.level = c(0.9, 0.9)),
+    error = TRUE
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    proportion_ci_wilson(mtcars$cyl)
+  )
 })
 
 test_that("check the proportion_ci_strat_wilson() function works", {
@@ -132,11 +143,33 @@ test_that("check the proportion_ci_strat_wilson() function works", {
     proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, weights = weights)
   )
   expect_snapshot(
+    proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata)
+  )
+
+
+  # checking error messaging
+  expect_snapshot(
     proportion_ci_strat_wilson(x = rep_len(TRUE, length(rsp)), strata = strata, weights = weights),
     error = TRUE
   )
   expect_snapshot(
     proportion_ci_strat_wilson(x = rep_len(FALSE, length(rsp)), strata = strata, weights = weights),
+    error = TRUE
+  )
+  expect_snapshot(
+    proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, max.iterations = -1),
+    error = TRUE
+  )
+  expect_snapshot(
+    proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, max.iterations = -1),
+    error = TRUE
+  )
+  expect_snapshot(
+    proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, weights = weights + pi/5),
+    error = TRUE
+  )
+  expect_snapshot(
+    proportion_ci_strat_wilson(x = as.numeric(rsp), strata = strata, weights = weights + pi),
     error = TRUE
   )
 })

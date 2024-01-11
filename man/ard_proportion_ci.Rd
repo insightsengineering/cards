@@ -10,6 +10,7 @@ ard_proportion_ci(
   by = dplyr::group_vars(data),
   conf.level = 0.95,
   strata,
+  weights = NULL,
   max.iterations = 10,
   method = c("waldcc", "wald", "clopper-pearson", "wilson", "wilsoncc", "strat_wilson",
     "strat_wilsoncc", "agresti-coull", "jeffreys")
@@ -30,12 +31,13 @@ columns to stratify calculations by}
 a scalar in \verb{(0, 1)} indicating the confidence level.
 Default is \code{0.95}}
 
-\item{strata, max.iterations}{arguments passed to \code{proportion_ci_strat_wilson()},
+\item{strata, weights, max.iterations}{arguments passed to \code{proportion_ci_strat_wilson()},
 when \code{method = 'strat_wilson'}}
 
 \item{method}{(\code{string})\cr
 string indicating the type of confidence interval to calculate.
-Must be one of 'waldcc', 'wald', 'clopper-pearson', 'wilson', 'wilsoncc', 'strat_wilson', 'strat_wilsoncc', 'agresti-coull', 'jeffreys'.}
+Must be one of 'waldcc', 'wald', 'clopper-pearson', 'wilson', 'wilsoncc', 'strat_wilson', 'strat_wilsoncc', 'agresti-coull', 'jeffreys'.
+See \code{?proportion_ci} for details.}
 }
 \value{
 an ARD data frame
