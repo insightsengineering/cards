@@ -35,23 +35,31 @@ reference:
 
 
   - title: "ARD Utilities"
+  - subtitle: "Construct ARDs"
     contents:
-      - as_nested_list
-      - ard-helpers
-      - flatten_ard
-      - selectors
+      - bind_ard
       - tidy_ard_column_order
       - apply_statistic_fmt_fn
-      - eval_capture_conditions
       - process_selectors
-      - continuous_variable_summary_fns
       - tidy_as_ard
       - nest_for_ard
       - default_stat_labels
-      - round5
-      - maximum_variable_values
-      - shuffle_ard
       - check_ard_structure
+  - subtitle: "Wrangle ARD"
+    contents:
+      - flatten_ard
+      - shuffle_ard
+      - as_nested_list
+      - get_ard_statistics
+  - subtitle: "Data Summary Funtions"
+    contents:
+      - continuous_variable_summary_fns
+      - maximum_variable_values
+  - subtitle: "Misc."
+    contents:
+      - selectors
+      - eval_capture_conditions
+      - round5
       - check_pkg_installed
       - print.card
 
