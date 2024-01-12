@@ -1,6 +1,7 @@
 #' Apply Formatting Functions
 #'
 #' Apply the formatting functions to each of the raw statistics.
+#' Function aliases are converted to functions using `alias_as_fmt_fn()`.
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
@@ -24,14 +25,40 @@ apply_statistic_fmt_fn <- function(x) {
           .data$statistic,
           .data$statistic_fmt_fn,
           function(x, fn) {
-            if (!is.null(fn)) do.call(.convert_alias_to_fmt_fn(fn), args = list(x))
+            if (!is.null(fn)) do.call(alias_as_fmt_fn(fn), args = list(x))
             else NULL
           }
         )
     )
 }
 
-.convert_alias_to_fmt_fn <- function(x, call = caller_env()) {
+
+
+#' Convert Alias to Function
+#'
+#' @description
+#' Accepted aliases are non-negative integers and strings.
+#'
+#' The integers are converted to functions that round the statistics
+#' to the number of decimal places to match the integer.
+#'
+#' The formatting strings come in the form `"xx"`, `"xx.x"`, `"xx.x%"`, etc.
+#' The number of `x`s that appear after the decimal place indicate the number of
+#' decimal places the statistics will be rounded to.
+#' The number of `x`s that appear before the decimal place indicate the leading
+#' spaces that are added to the result.
+#' If the string ends in `"%"`, results are scaled by 100 before rounding.
+#'
+#' @param x a non-negative integer, string alias, or function
+#' @param call call environment for error messaging
+#'
+#' @return a function
+#' @export
+#'
+#' @examples
+#' alias_as_fmt_fn(1)
+#' alias_as_fmt_fn("xx.x")
+alias_as_fmt_fn <- function(x, call = caller_env()) {
   if (is.function(x))
     return(x)
   if (is_integerish(x) && x >= 0L)
