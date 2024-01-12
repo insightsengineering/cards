@@ -163,20 +163,17 @@
 <span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu">ggsurvfit</span><span class="fu">::</span><span class="fu"><a href="http://www.danieldsjoberg.com/ggsurvfit/reference/Surv_CNSR.html" class="external-link">Surv_CNSR</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="va">TRTP</span>, data <span class="op">=</span> <span class="va">ADTTE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">stat_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"estimate"</span>, <span class="st">"conf.low"</span>, <span class="st">"conf.high"</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {cards} data frame: 12 x 7</span></span>
-<span><span class="co">#&gt;    variable variable_level   context stat_name stat_label statistic</span></span>
-<span><span class="co">#&gt; 1      TRTP        Placebo regressi…  estimate  Coeffici…         0</span></span>
-<span><span class="co">#&gt; 2      TRTP        Placebo regressi…   p.value    p-value        NA</span></span>
-<span><span class="co">#&gt; 3      TRTP        Placebo regressi…  conf.low  CI Lower…        NA</span></span>
-<span><span class="co">#&gt; 4      TRTP        Placebo regressi… conf.high  CI Upper…        NA</span></span>
-<span><span class="co">#&gt; 5      TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.615</span></span>
-<span><span class="co">#&gt; 6      TRTP      Xanomeli… regressi…   p.value    p-value         0</span></span>
-<span><span class="co">#&gt; 7      TRTP      Xanomeli… regressi…  conf.low  CI Lower…     1.157</span></span>
-<span><span class="co">#&gt; 8      TRTP      Xanomeli… regressi… conf.high  CI Upper…     2.072</span></span>
-<span><span class="co">#&gt; 9      TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.423</span></span>
-<span><span class="co">#&gt; 10     TRTP      Xanomeli… regressi…   p.value    p-value         0</span></span>
-<span><span class="co">#&gt; 11     TRTP      Xanomeli… regressi…  conf.low  CI Lower…     0.973</span></span>
-<span><span class="co">#&gt; 12     TRTP      Xanomeli… regressi… conf.high  CI Upper…     1.872</span></span>
+<span><span class="co">#&gt; {cards} data frame: 9 x 7</span></span>
+<span><span class="co">#&gt;   variable variable_level   context stat_name stat_label statistic</span></span>
+<span><span class="co">#&gt; 1     TRTP        Placebo regressi…  estimate  Coeffici…         0</span></span>
+<span><span class="co">#&gt; 2     TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.615</span></span>
+<span><span class="co">#&gt; 3     TRTP      Xanomeli… regressi…   p.value    p-value         0</span></span>
+<span><span class="co">#&gt; 4     TRTP      Xanomeli… regressi…  conf.low  CI Lower…     1.157</span></span>
+<span><span class="co">#&gt; 5     TRTP      Xanomeli… regressi… conf.high  CI Upper…     2.072</span></span>
+<span><span class="co">#&gt; 6     TRTP      Xanomeli… regressi…  estimate  Coeffici…     1.423</span></span>
+<span><span class="co">#&gt; 7     TRTP      Xanomeli… regressi…   p.value    p-value         0</span></span>
+<span><span class="co">#&gt; 8     TRTP      Xanomeli… regressi…  conf.low  CI Lower…     0.973</span></span>
+<span><span class="co">#&gt; 9     TRTP      Xanomeli… regressi… conf.high  CI Upper…     1.872</span></span>
 <span><span class="co">#&gt; ℹ 1 more variable: statistic_fmt_fn</span></span></code></pre></div>
 </div>
 </div>
@@ -224,6 +221,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/insightsengineering/cards?branch=main" class="external-link"><img src="https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 
