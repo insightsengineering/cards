@@ -46,7 +46,7 @@ ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
       pmap(
         list(.data$variable, .data$variable_level),
         function(variable, variable_level) {
-          is.null(variable_level) || variable_level %in% .env$values[[variable]]
+          variable_level %in% .env$values[[variable]]
         }
       ) |>
         unlist()
