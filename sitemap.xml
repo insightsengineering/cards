@@ -31,9 +31,6 @@
     <loc>https://insightsengineering.github.io/cards/reference/apply_statistic_fmt_fn.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/ard-helpers.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/cards/reference/ard_attributes.html</loc>
   </url>
   <url>
@@ -62,6 +59,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/as_nested_list.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/bind_ard.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/cards-package.html</loc>
@@ -155,6 +155,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/flatten_ard.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/get_ard_statistics.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/index.html</loc>
