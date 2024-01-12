@@ -2,6 +2,7 @@
 
 S3method(print,card)
 export("%>%")
+export(alias_as_fmt_fn)
 export(all_ard_groups)
 export(all_ard_variables)
 export(all_of)

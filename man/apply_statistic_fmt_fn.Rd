@@ -15,6 +15,7 @@ an ARD data frame
 }
 \description{
 Apply the formatting functions to each of the raw statistics.
+Function aliases are converted to functions using \code{alias_as_fmt_fn()}.
 }
 \examples{
 ard_continuous(ADSL, variables = "AGE") |>

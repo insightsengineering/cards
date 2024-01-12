@@ -44,6 +44,7 @@ reference:
       - nest_for_ard
       - default_stat_labels
       - check_ard_structure
+      - alias_as_fmt_fn
   - subtitle: "Wrangle ARD"
     contents:
       - flatten_ard
