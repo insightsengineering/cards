@@ -28,7 +28,7 @@
 #' @param .attributes (`character`)\cr
 #'   character vector of column names that will be returned
 #'   in the list as attributes.
-#'   Default is `c("stat_label", "statistic_fmt_fn", "warning", "error")`
+#'   Default is `NULL`
 #'
 #' @return a transformed ARD
 #' @name ard-helpers
@@ -45,8 +45,7 @@ NULL
 #' @rdname ard-helpers
 get_ard_statistics <- function(x, ...,
                                .column = "statistic",
-                               .attributes = c("stat_label", "statistic_fmt_fn",
-                                              "warning", "error")) {
+                               .attributes = NULL) {
   # subset the ARD
   ard_subset <- dplyr::filter(x, ...)
 

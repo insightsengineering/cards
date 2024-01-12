@@ -6,12 +6,7 @@
 \alias{bind_ard}
 \title{ARD Helpers}
 \usage{
-get_ard_statistics(
-  x,
-  ...,
-  .column = "statistic",
-  .attributes = c("stat_label", "statistic_fmt_fn", "warning", "error")
-)
+get_ard_statistics(x, ..., .column = "statistic", .attributes = NULL)
 
 bind_ard(..., .update = FALSE)
 }
@@ -35,7 +30,7 @@ Default is \code{"statistic"}}
 \item{.attributes}{(\code{character})\cr
 character vector of column names that will be returned
 in the list as attributes.
-Default is \code{c("stat_label", "statistic_fmt_fn", "warning", "error")}}
+Default is \code{NULL}}
 
 \item{.update}{(\code{logical} scalar)\cr
 logical indicating whether to update duplicate ARD statistics.
