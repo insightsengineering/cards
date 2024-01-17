@@ -5,7 +5,6 @@ test_that("ard_regression() works", {
       dplyr::mutate(
         statistic = lapply(statistic, function(x) ifelse(is.numeric(x), round5(x, 3), x))
       ) |>
-      flatten_ard() |>
       as.data.frame()
   )
 })

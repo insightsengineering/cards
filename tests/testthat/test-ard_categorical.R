@@ -7,7 +7,6 @@ test_that("ard_categorical() univariate", {
 
   expect_equal(
     ard_cat_uni |>
-      flatten_ard() |>
       dplyr::filter(stat_name %in% "n") |>
       dplyr::pull(statistic) |>
       as.integer(),
@@ -16,7 +15,6 @@ test_that("ard_categorical() univariate", {
 
   expect_equal(
     ard_cat_uni |>
-      flatten_ard() |>
       dplyr::filter(stat_name %in% "p") |>
       dplyr::pull(statistic) |>
       as.numeric(),
@@ -66,7 +64,6 @@ test_that("ard_categorical() univariate & specified denomiator", {
 
   expect_equal(
     ard_cat_new_denom |>
-      flatten_ard() |>
       dplyr::filter(stat_name %in% "n") |>
       dplyr::pull(statistic) |>
       as.integer(),
@@ -75,7 +72,6 @@ test_that("ard_categorical() univariate & specified denomiator", {
 
   expect_equal(
     ard_cat_new_denom |>
-      flatten_ard() |>
       dplyr::filter(stat_name %in% "p") |>
       dplyr::pull(statistic) |>
       as.numeric(),
@@ -342,7 +338,6 @@ test_that("ard_categorical(denominator='row') works", {
   expect_snapshot(
     ard_with_args |>
       apply_statistic_fmt_fn() |>
-      flatten_ard() |>
       dplyr::select(-statistic_fmt_fn, -warning, -error) |>
       as.data.frame()
   )
@@ -366,26 +361,6 @@ test_that("ard_categorical(denominator=integer()) works", {
 })
 
 test_that("ard_categorical(denominator=<data frame with counts>) works", {
-  expect_equal(
-    ard_categorical(
-      ADSL,
-      by = ARM,
-      variables = AGEGR1,
-      denominator =
-        data.frame(
-          ARM = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
-          ...ard_N... = c(86, 84, 84)
-        )
-    ) |>
-      flatten_ard(),
-    ard_categorical(
-      ADSL,
-      by = ARM,
-      variables = AGEGR1
-    ) |>
-      flatten_ard()
-  )
-
   expect_snapshot(
     error = TRUE,
     ard_categorical(
@@ -409,6 +384,26 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
       denominator = data.frame(ARM = "Placebo", ...ard_N... = 86)
     )
   )
+
+  expect_equal(
+    ard_categorical(
+      ADSL,
+      by = ARM,
+      variables = AGEGR1,
+      denominator =
+        data.frame(
+          ARM = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
+          ...ard_N... = c(86, 84, 84)
+        )
+    ) |>
+      dplyr::select(-statistic_fmt_fn),
+    ard_categorical(
+      ADSL,
+      by = ARM,
+      variables = AGEGR1
+    ) |>
+      dplyr::select(-statistic_fmt_fn)
+  )
 })
 
 test_that("ard_categorical(statistics) works with custom fns", {
@@ -422,8 +417,7 @@ test_that("ard_categorical(statistics) works with custom fns", {
             other_stats = list(mode = function(x) table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1),
                                length = function(x) length(x))
           )
-      ) |>
-      flatten_ard()
+      )
   )
 
   expect_equal(
@@ -439,8 +433,7 @@ test_that("ard_categorical(statistics) works with custom fns", {
           other_stats = list(mode = function(x) table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1),
                              length = function(x) length(x))
         )
-    ) |>
-      flatten_ard()
+    )
   )
 })
 

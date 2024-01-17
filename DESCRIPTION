@@ -1,5 +1,5 @@
 Package: cards
-Title: CDISC Analysis Results Data
+Title: Analysis Results Data
 Version: 0.0.0.9010
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),

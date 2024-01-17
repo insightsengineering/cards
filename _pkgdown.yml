@@ -45,9 +45,9 @@ reference:
       - default_stat_labels
       - check_ard_structure
       - alias_as_fmt_fn
+      - label_cards
   - subtitle: "Wrangle ARD"
     contents:
-      - flatten_ard
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
