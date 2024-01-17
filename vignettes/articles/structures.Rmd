@@ -1,5 +1,5 @@
 ---
-title: "structures"
+title: "Other ARD Representations"
 ---
 
 ```{r, include = FALSE}
@@ -9,6 +9,7 @@ knitr::opts_chunk$set(
 )
 
 # taken from SO https://stackoverflow.com/questions/23114654
+# this truncates the number of lines in a chunk output
 hook_output <- knitr::knit_hooks$get("output")
 knitr::knit_hooks$set(output = function(x, options) {
   lines <- options$output.lines
@@ -31,7 +32,14 @@ knitr::knit_hooks$set(output = function(x, options) {
 })
 ```
 
-```{r setup, message=FALSE}
+The default structure of a {cards} object is data frame.
+But it is often needed to represent the results in other formats.
+
+The {cards} objects can easily be expressed in YAML and JSON formats.
+
+Let's begin by creating an Analysis Results Data (ARD) object.
+
+```{r setup, message=TRUE}
 library(cards)
 
 ard <-
@@ -39,6 +47,8 @@ ard <-
     ard_continuous(ADSL, by = "ARM", variables = "AGE"),
     ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
   ) 
+
+ard
 ```
 
 ## YAML
@@ -68,7 +78,7 @@ Use the `jsonlite::write_json()` function to convert to JSON and write to disk s
 
 TODO: Update this section
 
-```{r}
+```{r eval = FALSE}
 library(plumber)
 library(jsonlite)
 
@@ -79,4 +89,10 @@ function() {
   as_nested_list() |> 
   jsonlite::toJSON(auto_unbox = TRUE)
 }
+
+# ------------------------------------------------------------------------------
+library(plumber)
+# 'plumber.R' is the location of the files shown above
+pr("plumber.R") |> 
+  pr_run(port = 8000)
 ```
