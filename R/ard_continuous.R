@@ -330,7 +330,7 @@ ard_continuous <- function(data,
           function(stat_name, statistic_fmt_fn) {
             if (!is_empty(statistic_fmt_fn)) return(statistic_fmt_fn)
             if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) return(0L)
-            if (stat_name %in% c("p", "p_miss", "p_nonmiss")) return(function(x) format(round5(x * 100, digits = 1), nsmall = 1))
+            if (stat_name %in% c("p", "p_miss", "p_nonmiss")) return(label_cards(digits = 1, scale = 100))
 
             return(1L)
           }

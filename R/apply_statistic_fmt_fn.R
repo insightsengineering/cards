@@ -62,7 +62,7 @@ alias_as_fmt_fn <- function(x, call = caller_env()) {
   if (is.function(x))
     return(x)
   if (is_integerish(x) && x >= 0L)
-    return(function(.x) format(round5(.x, digits = as.integer(x)), nsmall = as.integer(x)))
+    return(label_cards(digits = as.integer(x)))
   if (is_string(x)) {
     .check_fmt_string(x, call = call)
     # scale by 100 if it's a percentage
@@ -79,21 +79,50 @@ alias_as_fmt_fn <- function(x, call = caller_env()) {
       )
     width <- nchar(x) - endsWith(x, "%")
 
-    fn <- function(y) {
-      fmt <- format(round5(y * scale, digits = decimal_n), nsmall = decimal_n)
-      ifelse(
-        nchar(fmt) >= width,
-        fmt,
-        paste0(strrep(" ", width - nchar(fmt)), fmt)
-      )
-    }
-
-    return(fn)
+    return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
 
   cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = call)
 }
 
+
+#' Generate Formatting Function
+#'
+#' Returns a function with the requested rounding and scaling schema.
+#'
+#' @param digits a non-negative integer specifying the number of decimal places
+#'   round statistics to
+#' @param scale a scalar real number.
+#'   Before rounding, the input will be scaled by this quantity.
+#' @param width a non-negative integer specifying the minimum width of the
+#'   returned formatted values
+#'
+#' @return a function
+#' @export
+#'
+#' @examples
+#' label_cards(2)(pi)
+#' label_cards(1, scale = 100)(pi)
+#' label_cards(2, width = 5)(pi)
+label_cards <- function(digits = 1, scale = 1, width = NULL) {
+  function(x) {
+    # round and scale vector
+    res <- format(round5(x * scale, digits = digits), nsmall = digits)
+
+    # if width provided, pad formatted result
+    if (!is.null(width)) {
+      res <-
+        ifelse(
+          nchar(res) >= width,
+          res,
+          paste0(strrep(" ", width - nchar(res)), res)
+        )
+    }
+
+    # return final formatted vector
+    res
+  }
+}
 
 #' Check 'xx' Format Structure
 #'
