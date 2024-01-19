@@ -4,7 +4,6 @@ test_that("ard_attributes() works", {
     attr(df$var1, 'label') <- "Lowercase Letters"
 
     ard_attributes(df, variables = everything(), label = list(var2 = "UPPERCASE LETTERS")) |>
-      flatten_ard() |>
       as.data.frame()
   })
 })

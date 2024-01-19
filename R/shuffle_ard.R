@@ -270,4 +270,8 @@ shuffle_ard <- function(x, trim = TRUE){
     dplyr::bind_rows()
 }
 
+# predicate fn whether column is a list that can be represented as vector
+.is_list_column_of_scalars <- function(x) {
+  is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
+}
 

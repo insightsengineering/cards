@@ -100,47 +100,47 @@
 # ard_categorical(denominator='row') works
 
     Code
-      as.data.frame(dplyr::select(flatten_ard(apply_statistic_fmt_fn(ard_with_args)),
+      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_with_args),
       -statistic_fmt_fn, -warning, -error))
     Output
-         group1         group1_level variable variable_level stat_name stat_label
-      1     ARM              Placebo   AGEGR1          65-80         n          n
-      2     ARM              Placebo   AGEGR1          65-80         N          N
-      3     ARM              Placebo   AGEGR1            <65         n          n
-      4     ARM              Placebo   AGEGR1            <65         N          N
-      5     ARM              Placebo   AGEGR1            >80         n          n
-      6     ARM              Placebo   AGEGR1            >80         N          N
-      7     ARM Xanomeline High Dose   AGEGR1          65-80         n          n
-      8     ARM Xanomeline High Dose   AGEGR1          65-80         N          N
-      9     ARM Xanomeline High Dose   AGEGR1            <65         n          n
-      10    ARM Xanomeline High Dose   AGEGR1            <65         N          N
-      11    ARM Xanomeline High Dose   AGEGR1            >80         n          n
-      12    ARM Xanomeline High Dose   AGEGR1            >80         N          N
-      13    ARM  Xanomeline Low Dose   AGEGR1          65-80         n          n
-      14    ARM  Xanomeline Low Dose   AGEGR1          65-80         N          N
-      15    ARM  Xanomeline Low Dose   AGEGR1            <65         n          n
-      16    ARM  Xanomeline Low Dose   AGEGR1            <65         N          N
-      17    ARM  Xanomeline Low Dose   AGEGR1            >80         n          n
-      18    ARM  Xanomeline Low Dose   AGEGR1            >80         N          N
-         statistic statistic_fmt
-      1         42         42.00
-      2        144           144
-      3         14         14.00
-      4         33            33
-      5         30         30.00
-      6         77            77
-      7         55         55.00
-      8        144           144
-      9         11         11.00
-      10        33            33
-      11        18         18.00
-      12        77            77
-      13        47         47.00
-      14       144           144
-      15         8          8.00
-      16        33            33
-      17        29         29.00
-      18        77            77
+         group1         group1_level variable variable_level     context stat_name
+      1     ARM              Placebo   AGEGR1          65-80 categorical         n
+      2     ARM              Placebo   AGEGR1          65-80 categorical         N
+      3     ARM              Placebo   AGEGR1            <65 categorical         n
+      4     ARM              Placebo   AGEGR1            <65 categorical         N
+      5     ARM              Placebo   AGEGR1            >80 categorical         n
+      6     ARM              Placebo   AGEGR1            >80 categorical         N
+      7     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         n
+      8     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         N
+      9     ARM Xanomeline High Dose   AGEGR1            <65 categorical         n
+      10    ARM Xanomeline High Dose   AGEGR1            <65 categorical         N
+      11    ARM Xanomeline High Dose   AGEGR1            >80 categorical         n
+      12    ARM Xanomeline High Dose   AGEGR1            >80 categorical         N
+      13    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         n
+      14    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         N
+      15    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         n
+      16    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         N
+      17    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         n
+      18    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         N
+         stat_label statistic statistic_fmt
+      1           n        42         42.00
+      2           N       144           144
+      3           n        14         14.00
+      4           N        33            33
+      5           n        30         30.00
+      6           N        77            77
+      7           n        55         55.00
+      8           N       144           144
+      9           n        11         11.00
+      10          N        33            33
+      11          n        18         18.00
+      12          N        77            77
+      13          n        47         47.00
+      14          N       144           144
+      15          n         8          8.00
+      16          N        33            33
+      17          n        29         29.00
+      18          N        77            77
 
 # ard_categorical(denominator=<data frame with counts>) works
 
@@ -164,8 +164,8 @@
 # ard_categorical(statistics) works with custom fns
 
     Code
-      ard_custom_fns <- flatten_ard(ard_categorical(ADSL, variables = AGEGR1,
-        statistics = ~ categorical_variable_summary_fns(other_stats = list(mode = function(
-          x) getElement(names(sort(table(x), decreasing = TRUE)), 1), length = function(
-          x) length(x)))))
+      ard_custom_fns <- ard_categorical(ADSL, variables = AGEGR1, statistics = ~
+        categorical_variable_summary_fns(other_stats = list(mode = function(x)
+          getElement(names(sort(table(x), decreasing = TRUE)), 1), length = function(
+          x) length(x))))
 
