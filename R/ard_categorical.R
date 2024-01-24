@@ -160,7 +160,6 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::arrange(across(c(all_ard_groups(), all_ard_variables()))) |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
     {structure(., class = unique(c("card", class(.))))}
