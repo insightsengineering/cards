@@ -10,6 +10,10 @@
 #'   logical indicating whether to update duplicate ARD statistics.
 #'   Default is `FALSE`. If a statistic type is repeated and `.update=TRUE`,
 #'   the more recently added statistics will be retained, and the others omitted.
+#' @param .order (`logical` scalar)\cr logical indicating whether to order the
+#'   rows of the stacked ARDs, allowing statistics that share common group and
+#'   variable values to appear in consecutive rows. Default is `FALSE`. Ordering
+#'   will be based on the order of the group/variable values prior to stacking.
 #'
 #' @return a transformed ARD
 #' @export
@@ -18,10 +22,12 @@
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' bind_ard(ard, ard, .update = TRUE)
-bind_ard <- function(..., .update = FALSE) {
+bind_ard <- function(..., .update = FALSE, .order = FALSE) {
   # check inputs ---------------------------------------------------------------
   check_class(.update, "logical")
   check_scalar(.update)
+  check_class(.order, "logical")
+  check_scalar(.order)
 
   # stack ARDs -----------------------------------------------------------------
   data <- dplyr::bind_rows(...)
@@ -42,6 +48,12 @@ bind_ard <- function(..., .update = FALSE) {
   }
   else if (any(dupes) && isFALSE(.update)) {
     cli::cli_abort(c("!" = "{sum(dupes)} duplicate observation{?/s} found."))
+  }
+
+
+  # optionally reorder ---------------------------------------------------------
+  if (isTRUE(.order)){
+    data <- tidy_ard_row_order(data)
   }
 
   # return stacked ARDs --------------------------------------------------------

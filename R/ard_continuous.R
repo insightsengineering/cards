@@ -146,7 +146,6 @@ ard_continuous <- function(data,
   # add meta data and class ----------------------------------------------------
   df_results |>
     dplyr::mutate(context = "continuous") |>
-    dplyr::arrange(across(all_ard_groups())) |>
     tidy_ard_column_order() %>%
     {structure(., class = c("card", class(.)))}
 }

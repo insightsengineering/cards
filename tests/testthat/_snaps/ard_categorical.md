@@ -91,11 +91,11 @@
           "p") ~ "n (pct)"))), stat_name %in% c("n", "p")), variable, stat_name,
       stat_label))
     Output
-        variable stat_name stat_label
-      1   AGEGR1         n    n (pct)
-      2   AGEGR1         p    n (pct)
-      7      SEX         n          n
-      8      SEX         p          %
+         variable stat_name stat_label
+      1    AGEGR1         n    n (pct)
+      2    AGEGR1         p    n (pct)
+      19      SEX         n          n
+      20      SEX         p          %
 
 # ard_categorical(denominator='row') works
 
@@ -106,39 +106,39 @@
          group1         group1_level variable variable_level     context stat_name
       1     ARM              Placebo   AGEGR1          65-80 categorical         n
       2     ARM              Placebo   AGEGR1          65-80 categorical         N
-      3     ARM              Placebo   AGEGR1            <65 categorical         n
-      4     ARM              Placebo   AGEGR1            <65 categorical         N
-      5     ARM              Placebo   AGEGR1            >80 categorical         n
-      6     ARM              Placebo   AGEGR1            >80 categorical         N
-      7     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         n
-      8     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         N
+      3     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         n
+      4     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         N
+      5     ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         n
+      6     ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         N
+      7     ARM              Placebo   AGEGR1            <65 categorical         n
+      8     ARM              Placebo   AGEGR1            <65 categorical         N
       9     ARM Xanomeline High Dose   AGEGR1            <65 categorical         n
       10    ARM Xanomeline High Dose   AGEGR1            <65 categorical         N
-      11    ARM Xanomeline High Dose   AGEGR1            >80 categorical         n
-      12    ARM Xanomeline High Dose   AGEGR1            >80 categorical         N
-      13    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         n
-      14    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         N
-      15    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         n
-      16    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         N
+      11    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         n
+      12    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         N
+      13    ARM              Placebo   AGEGR1            >80 categorical         n
+      14    ARM              Placebo   AGEGR1            >80 categorical         N
+      15    ARM Xanomeline High Dose   AGEGR1            >80 categorical         n
+      16    ARM Xanomeline High Dose   AGEGR1            >80 categorical         N
       17    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         n
       18    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         N
          stat_label statistic statistic_fmt
       1           n        42         42.00
       2           N       144           144
-      3           n        14         14.00
-      4           N        33            33
-      5           n        30         30.00
-      6           N        77            77
-      7           n        55         55.00
-      8           N       144           144
+      3           n        55         55.00
+      4           N       144           144
+      5           n        47         47.00
+      6           N       144           144
+      7           n        14         14.00
+      8           N        33            33
       9           n        11         11.00
       10          N        33            33
-      11          n        18         18.00
-      12          N        77            77
-      13          n        47         47.00
-      14          N       144           144
-      15          n         8          8.00
-      16          N        33            33
+      11          n         8          8.00
+      12          N        33            33
+      13          n        30         30.00
+      14          N        77            77
+      15          n        18         18.00
+      16          N        77            77
       17          n        29         29.00
       18          N        77            77
 
