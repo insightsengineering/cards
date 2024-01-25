@@ -60,7 +60,7 @@ for duplicated statistics.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">...</span>, .update <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bind_ard</span><span class="op">(</span><span class="va">...</span>, .update <span class="op">=</span> <span class="cn">FALSE</span>, .order <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,6 +76,13 @@ columns will be filled with <code>NA.</code></p></dd>
 logical indicating whether to update duplicate ARD statistics.
 Default is <code>FALSE</code>. If a statistic type is repeated and <code>.update=TRUE</code>,
 the more recently added statistics will be retained, and the others omitted.</p></dd>
+
+
+<dt>.order</dt>
+<dd><p>(<code>logical</code> scalar)<br> logical indicating whether to order the
+rows of the stacked ARDs, allowing statistics that share common group and
+variable values to appear in consecutive rows. Default is <code>FALSE</code>. Ordering
+will be based on the order of the group/variable values prior to stacking.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -96,13 +103,13 @@ the more recently added statistics will be retained, and the others omitted.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo   AGEGR1          65-80         n          n        42</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo   AGEGR1          65-80         N          N        86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo   AGEGR1          65-80         p          %     0.488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      Placebo   AGEGR1            &lt;65         n          n        14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      Placebo   AGEGR1            &lt;65         N          N        86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM      Placebo   AGEGR1            &lt;65         p          %     0.163</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM      Placebo   AGEGR1            &gt;80         n          n        30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM      Placebo   AGEGR1            &gt;80         N          N        86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM      Placebo   AGEGR1            &gt;80         p          %     0.349</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM    Xanomeli…   AGEGR1          65-80         n          n        55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM    Xanomeli…   AGEGR1          65-80         n          n        55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM    Xanomeli…   AGEGR1          65-80         N          N        84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…   AGEGR1          65-80         p          %     0.655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…   AGEGR1          65-80         n          n        47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…   AGEGR1          65-80         N          N        84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…   AGEGR1          65-80         p          %      0.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      Placebo   AGEGR1            &lt;65         n          n        14</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
