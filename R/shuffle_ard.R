@@ -25,9 +25,7 @@ shuffle_ard <- function(x, trim = TRUE){
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
     tidy_ard_column_order() |>
-    dplyr::arrange(dplyr::pick(dplyr::any_of("variable")),
-                   dplyr::pick(dplyr::matches("^group[0-9]+$")),
-                   dplyr::pick(dplyr::matches("^group[0-9]+_level$"))) |>
+    tidy_ard_row_order() |>
     dplyr::mutate(.cards_idx = dplyr::row_number())
 
   # fill stat label if missing

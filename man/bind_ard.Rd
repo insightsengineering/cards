@@ -4,7 +4,7 @@
 \alias{bind_ard}
 \title{Bind ARDs}
 \usage{
-bind_ard(..., .update = FALSE)
+bind_ard(..., .update = FALSE, .order = FALSE)
 }
 \arguments{
 \item{...}{ARDs to combine. Each argument can either be an ARD,
@@ -15,6 +15,11 @@ columns will be filled with \code{NA.}}
 logical indicating whether to update duplicate ARD statistics.
 Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},
 the more recently added statistics will be retained, and the others omitted.}
+
+\item{.order}{(\code{logical} scalar)\cr logical indicating whether to order the
+rows of the stacked ARDs, allowing statistics that share common group and
+variable values to appear in consecutive rows. Default is \code{FALSE}. Ordering
+will be based on the order of the group/variable values prior to stacking.}
 }
 \value{
 a transformed ARD

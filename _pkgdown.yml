@@ -47,6 +47,7 @@ reference:
       - alias_as_fmt_fn
       - print_ard_conditions
       - label_cards
+      - tidy_ard_row_order
   - subtitle: "Wrangle ARD"
     contents:
       - shuffle_ard
