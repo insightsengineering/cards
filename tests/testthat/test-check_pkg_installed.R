@@ -1,12 +1,12 @@
 test_that("check_pkg_installed() works", {
   # broom will always be installed with cards
   expect_error(
-    check_pkg_installed("broom"),
+    check_pkg_installed("dplyr"),
     NA
   )
-  expect_true(check_pkg_installed("broom", return_lgl = TRUE))
+  expect_true(is_pkg_installed("broom"))
 
-  expect_false(check_pkg_installed("br000000m", return_lgl = TRUE))
+  expect_false(is_pkg_installed("br000000m"))
 
   mv <- c(Suggests = "1.0.5")
   attr(mv, "compare") <- ">="
@@ -49,5 +49,14 @@ test_that("check_pkg_installed() works", {
   )
   expect_error(
     check_pkg_installed("br000000m", fn = "test_fun()")
+  )
+
+  expect_equal(
+    get_pkg_dependencies(NULL),
+    NULL
+  )
+  expect_equal(
+    get_pkg_dependencies("br000000m"),
+    NULL
   )
 })
