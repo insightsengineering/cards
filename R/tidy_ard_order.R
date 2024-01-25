@@ -1,14 +1,21 @@
-#' Standard Column Order of ARD
+#' Standard Order of ARD
 #'
-#' Relocate all columns in ARD to the standard order.
+#' @description
+#' ARD functions for relocating columns and rows to the standard order
+#'
+#' - `tidy_ard_column_order()` relocates columns of the ARD to the standard order
+#'
+#' - `tidy_ard_row_order()` orders rows of ARD according to variables, groups, and strata, while retaining the order of the input ARD
 #'
 #' @param x (`data.frame`)\cr
 #'   a ARD data frame of class 'card'
 #'
 #' @return a data frame
-#' @export
+#' @name tidy_ard_order
 #'
 #' @examples
+#'
+#' # order columns
 #' ard <-
 #'   dplyr::bind_rows(
 #'     ard_continuous(mtcars, variables = "mpg"),
@@ -17,6 +24,19 @@
 #' names(ard)
 #'
 #' tidy_ard_column_order(ard)
+#'
+#' # order rows
+#' dplyr::bind_rows(
+#'     ard_continuous(mtcars, variables = c("mpg","disp"), by = "cyl"),
+#'     ard_ttest(mtcars, variable = "mpg", by = "cyl"),
+#'     ard_ttest(mtcars, variable = "disp", by = "cyl")
+#'   ) |>
+#' tidy_ard_row_order()
+#'
+#' NULL
+#'
+#' @rdname tidy_ard_order
+#' @export
 tidy_ard_column_order <- function(x) {
   group_cols <- dplyr::select(x, all_ard_groups()) |> names() |> sort()
 
@@ -34,25 +54,8 @@ tidy_ard_column_order <- function(x) {
 }
 
 
-#' Order rows of ARD
-#'
-#' Order rows of ARD according to variables, groups, and strata, retaining the
-#' order of input ARDs
-#'
-#' @param x (`data.frame`)\cr
-#'   a ARD data frame of class 'card'
-#'
-#' @return a data frame
+#' @rdname tidy_ard_order
 #' @export
-#'
-#' @examples
-#' ard <-
-#'   bind_ard(
-#'     ard_continuous(mtcars, variables = c("mpg","disp"), by = "cyl"),
-#'     ard_ttest(mtcars, variable = "mpg", by = "cyl"),
-#'     ard_ttest(mtcars, variable = "disp", by = "cyl")
-#'   )
-#' tidy_ard_row_order(ard)
 tidy_ard_row_order <- function(x){
 
   # get columns that dictate ordering

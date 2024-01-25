@@ -4,7 +4,7 @@
 \alias{bind_ard}
 \title{Bind ARDs}
 \usage{
-bind_ard(..., .update = FALSE, .order = TRUE)
+bind_ard(..., .update = FALSE, .order = FALSE)
 }
 \arguments{
 \item{...}{ARDs to combine. Each argument can either be an ARD,
@@ -18,7 +18,7 @@ the more recently added statistics will be retained, and the others omitted.}
 
 \item{.order}{(\code{logical} scalar)\cr logical indicating whether to order the
 rows of the stacked ARDs, allowing statistics that share common group and
-variable values to appear in consecutive rows. Default is \code{TRUE}. Ordering
+variable values to appear in consecutive rows. Default is \code{FALSE}. Ordering
 will be based on the order of the group/variable values prior to stacking.}
 }
 \value{

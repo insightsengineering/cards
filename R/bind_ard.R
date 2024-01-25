@@ -12,7 +12,7 @@
 #'   the more recently added statistics will be retained, and the others omitted.
 #' @param .order (`logical` scalar)\cr logical indicating whether to order the
 #'   rows of the stacked ARDs, allowing statistics that share common group and
-#'   variable values to appear in consecutive rows. Default is `TRUE`. Ordering
+#'   variable values to appear in consecutive rows. Default is `FALSE`. Ordering
 #'   will be based on the order of the group/variable values prior to stacking.
 #'
 #' @return a transformed ARD
@@ -22,7 +22,7 @@
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' bind_ard(ard, ard, .update = TRUE)
-bind_ard <- function(..., .update = FALSE, .order = TRUE) {
+bind_ard <- function(..., .update = FALSE, .order = FALSE) {
   # check inputs ---------------------------------------------------------------
   check_class(.update, "logical")
   check_scalar(.update)
