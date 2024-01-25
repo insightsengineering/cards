@@ -27,8 +27,8 @@ print_ard_conditions <- function(x, env = parent.env()) {
   check_class(x, class = "card", call = env)
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "warning")
   .cli_condition_messaging(x, msg_type = "error")
+  .cli_condition_messaging(x, msg_type = "warning")
 
   invisible()
 }
@@ -53,9 +53,16 @@ print_ard_conditions <- function(x, env = parent.env()) {
     dplyr::group_map(
       function(.x, .y) {
         dplyr::tibble(
-          # this column is the messaging for which groups/variable the message apepars in
-          cli_colnames_msg =
-            dplyr::select(.y, all_ard_groups(), all_ard_variables()) |>
+          # this column is the messaging for which groups/variable the message appears in
+          cli_variable_msg =
+            dplyr::select(.y, all_ard_variables(levels = FALSE)) |>
+            dplyr::mutate(across(where(is.list), unlist)) |>
+            dplyr::slice(1L) |>
+            as.list() |>
+            .cli_groups_and_variable() |>
+            list(),
+          cli_group_msg =
+            dplyr::select(.y, all_ard_groups()) |>
             dplyr::mutate(across(where(is.list), unlist)) |>
             dplyr::slice(1L) |>
             as.list() |>
@@ -74,9 +81,12 @@ print_ard_conditions <- function(x, env = parent.env()) {
   cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
   for (i in seq_len(nrow(ard_msg))) {
     cli::cli_inform(c(
-      glue::glue("{ard_msg$cli_colnames_msg[[i]]} for the ",
-                 "{{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
-                 "{ard_msg$cond_msg[[i]]}") |>
+      glue::glue(
+        "For variable {ard_msg$cli_variable_msg[[i]]} ",
+        "{switch(!is.null(ard_msg$cli_group_msg[[i]]), paste0('(', ard_msg$cli_group_msg[[i]], ')')) %||% ''} ",
+        "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
+        "{ard_msg$cond_msg[[i]]}")
+      |>
         stats::setNames(switch(msg_type, "warning" = "!", "error" = "x"))
     ))
   }
