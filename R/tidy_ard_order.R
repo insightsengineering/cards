@@ -58,6 +58,8 @@ tidy_ard_column_order <- function(x) {
 #' @export
 tidy_ard_row_order <- function(x){
 
+  check_class(x, class ="card")
+
   # get columns that dictate ordering
   dat <- x |>
     dplyr::select(all_ard_variables(variables = TRUE, levels = FALSE),
@@ -67,16 +69,7 @@ tidy_ard_row_order <- function(x){
   cols <- dat |>
     names()
 
-  # build a tibble of the desired ordering, based on observed data
-  dat_order <- dat |>
-    dplyr::distinct() |>
-    dplyr::mutate(across(everything(),
-                         .names = "{.col}_idx",
-                         .fns = function(x) match(x, unique(x)))) |>
-    dplyr::arrange(across(all_of(paste0(cols, "_idx")))) |>
-    dplyr::select(all_of(cols))
+  # perform the ordering
+  x |> dplyr::arrange(across(all_of(cols), .fns = function(x) match(x, unique(x))))
 
-  # combine ordering with the original data
-  dplyr::left_join(dat_order, x, by = cols) |>
-    dplyr::select(all_of(names(x)))
 }
