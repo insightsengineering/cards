@@ -2,17 +2,15 @@
 % Please edit documentation in R/check_pkg_installed.R
 \name{check_pkg_installed}
 \alias{check_pkg_installed}
+\alias{is_pkg_installed}
 \alias{get_pkg_dependencies}
 \alias{get_all_pkg_dependencies}
 \alias{get_min_version_required}
 \title{Check Package Installation}
 \usage{
-check_pkg_installed(
-  pkg,
-  reference_pkg = "cards",
-  return_lgl = FALSE,
-  call = parent.frame()
-)
+check_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
+
+is_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
 
 get_pkg_dependencies(reference_pkg = "cards")
 
@@ -30,11 +28,6 @@ Package required}
 
 \item{reference_pkg}{(\code{string})\cr
 the package the function will search for a minimum required version from.}
-
-\item{return_lgl}{\code{(logical(1))}
-logical indicating whether to return a \code{TRUE}/\code{FALSE}, rather
-than error when package/package version not available. Default is \code{FALSE},
-which will return an error if \code{pkg} is not installed.}
 
 \item{call}{(\code{environment})\cr
 The execution environment of a currently running function. Default is \code{parent.frame()}.

@@ -19,10 +19,6 @@
 #'   in the prompt to install new packages.
 #' @param reference_pkg (`string`)\cr
 #'   the package the function will search for a minimum required version from.
-#' @param return_lgl `(logical(1))`
-#'   logical indicating whether to return a `TRUE`/`FALSE`, rather
-#'   than error when package/package version not available. Default is `FALSE`,
-#'   which will return an error if `pkg` is not installed.
 #' @param remove_duplicates `(logical(1))`\cr
 #'   if several versions of a package are installed,
 #'   should only the first one be returned?
@@ -48,7 +44,33 @@ NULL
 #' @export
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
-                                return_lgl = FALSE,
+                                call = parent.frame()) {
+  # check if min version is required -------------------------------------------
+  version <- get_min_version_required(pkg, reference_pkg)
+  compare <- attr(version, "compare")
+
+  # get fn name from which the function was called -----------------------------
+  fn <- tryCatch(
+    paste0(as_label(evalq(sys.call(1L), envir = call)[[1]]), "()"),
+    error = function(e) NULL
+  )
+
+  # prompt user to install package ---------------------------------------------
+  rlang::check_installed(
+    pkg = pkg,
+    version = version,
+    compare = compare,
+    reason = switch(!is.null(fn), glue::glue("for `{fn}`")
+    )
+  )
+  invisible()
+}
+
+
+#' @rdname check_pkg_installed
+#' @export
+is_pkg_installed <- function(pkg,
+                                reference_pkg = "cards",
                                 call = parent.frame()) {
   # check if min version is required -------------------------------------------
   version <- get_min_version_required(pkg, reference_pkg)
@@ -61,19 +83,7 @@ check_pkg_installed <- function(pkg,
   )
 
   # check installation TRUE/FALSE ----------------------------------------------
-  if (isTRUE(return_lgl)) {
-    return(rlang::is_installed(pkg = pkg, version = version, compare = compare))
-  }
-
-  # prompt user to install package ---------------------------------------------
-  rlang::check_installed(
-    pkg = pkg,
-    version = version,
-    compare = compare,
-    reason = switch(!is.null(fn), glue::glue("for `{fn}`")
-    )
-  )
-  invisible()
+  return(rlang::is_installed(pkg = pkg, version = version, compare = compare))
 }
 
 #' @rdname check_pkg_installed
