@@ -50,10 +50,7 @@ check_pkg_installed <- function(pkg,
   compare <- attr(version, "compare")
 
   # get fn name from which the function was called -----------------------------
-  fn <- tryCatch(
-    paste0(as_label(evalq(sys.call(1L), envir = call)[[1]]), "()"),
-    error = function(e) NULL
-  )
+  fn <- error_call(call)
 
   # prompt user to install package ---------------------------------------------
   rlang::check_installed(

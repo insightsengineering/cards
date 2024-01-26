@@ -5,6 +5,9 @@
 #'
 #' @param x (`card`)\cr
 #'   an ARD data frame
+#' @param call (`environment`)\cr
+#'   if supplied, the calling function will be used in messaging to users.
+#'   Default is `NULL`
 #'
 #' @return NULL
 #' @export
@@ -21,18 +24,18 @@
 #'   )
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x) {
+print_ard_conditions <- function(x, call = NULL) {
   check_class(x, class = "card")
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "error")
-  .cli_condition_messaging(x, msg_type = "warning")
+  .cli_condition_messaging(x, msg_type = "error", call = call)
+  .cli_condition_messaging(x, msg_type = "warning", call = call)
 
   invisible()
 }
 
 # this function prints either the warnings or errors saved in the ARD
-.cli_condition_messaging <- function(x, msg_type) {
+.cli_condition_messaging <- function(x, msg_type, call) {
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 
@@ -76,7 +79,12 @@ print_ard_conditions <- function(x) {
     dplyr::bind_rows()
 
   # and finally, print the messages
-  cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
+  if (!is.null(call)) {
+    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned during {.fun {error_call(call)}}:")
+  }
+  else
+    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
+
   for (i in seq_len(nrow(ard_msg))) {
     cli::cli_inform(c(
       glue::glue(
