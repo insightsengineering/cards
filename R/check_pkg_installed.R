@@ -92,7 +92,7 @@ get_pkg_dependencies <- function(reference_pkg = "cards") {
   if (is.null(reference_pkg)) {
     return(NULL)
   }
-  description <- utils::packageDescription(reference_pkg)
+  description <- utils::packageDescription(reference_pkg) |> suppressWarnings()
   if (identical(description, NA)) {
     return(NULL)
   }

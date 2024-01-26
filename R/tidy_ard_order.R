@@ -62,9 +62,9 @@ tidy_ard_row_order <- function(x){
 
   # get columns that dictate ordering
   dat <- x |>
-    dplyr::select(all_ard_variables(variables = TRUE, levels = FALSE),
-                  all_ard_groups(variables = TRUE, levels = FALSE),
-                  all_ard_groups(variables = FALSE, levels = TRUE))
+    dplyr::select(all_ard_variables("variables"),
+                  all_ard_groups("variables"),
+                  all_ard_groups("levels"))
 
   cols <- dat |>
     names()

@@ -9,13 +9,13 @@ test_that("selectors work", {
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_groups(TRUE, FALSE)) |>
+      dplyr::select(all_ard_groups("variables")) |>
       names(),
     "group1"
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_groups(FALSE, TRUE)) |>
+      dplyr::select(all_ard_groups("levels")) |>
       names(),
     "group1_level"
   )
@@ -28,13 +28,13 @@ test_that("selectors work", {
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_variables(TRUE, FALSE)) |>
+      dplyr::select(all_ard_variables("variables")) |>
       names(),
     "variable"
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_variables(FALSE, TRUE)) |>
+      dplyr::select(all_ard_variables("levels")) |>
       names(),
     "variable_level"
   )

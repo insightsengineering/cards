@@ -6,16 +6,14 @@
 \alias{all_ard_variables}
 \title{ARD Selectors}
 \usage{
-all_ard_groups(variables = TRUE, levels = TRUE)
+all_ard_groups(types = c("variables", "levels"))
 
-all_ard_variables(variables = TRUE, levels = TRUE)
+all_ard_variables(types = c("variables", "levels"))
 }
 \arguments{
-\item{variables}{logical indicating whether to select the columns with the
-variable names. Default is \code{TRUE}}
-
-\item{levels}{logical indicating whether to select the columns with the
-variable levels. Default is \code{TRUE}}
+\item{types}{(\code{character})\cr
+type of column to select. \code{"variables"} selects the columns variable name columns,
+and \code{"levels"} selects the level columns. Default is \code{c("variables", "levels")}}
 }
 \value{
 tidyselect output
