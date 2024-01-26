@@ -5,8 +5,6 @@
 #'
 #' @param x (`card`)\cr
 #'   an ARD data frame
-#' @param env (`environment`)\cr
-#'   environment used in error messaging. Default is `parent.env()`
 #'
 #' @return NULL
 #' @export
@@ -23,7 +21,7 @@
 #'   )
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x, env = parent.env()) {
+print_ard_conditions <- function(x) {
   check_class(x, class = "card", call = env)
 
   # print condition messages ---------------------------------------------------

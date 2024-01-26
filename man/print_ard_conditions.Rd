@@ -4,14 +4,11 @@
 \alias{print_ard_conditions}
 \title{Print ARD Condition Messages}
 \usage{
-print_ard_conditions(x, env = parent.env())
+print_ard_conditions(x)
 }
 \arguments{
 \item{x}{(\code{card})\cr
 an ARD data frame}
-
-\item{env}{(\code{environment})\cr
-environment used in error messaging. Default is \code{parent.env()}}
 }
 \description{
 Function parses the errors and warnings observed while calculating the
