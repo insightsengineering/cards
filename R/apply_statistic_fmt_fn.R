@@ -58,7 +58,7 @@ apply_statistic_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, call = caller_env()) {
+alias_as_fmt_fn <- function(x, call = parent.frame()) {
   if (is.function(x))
     return(x)
   if (is_integerish(x) && x >= 0L)

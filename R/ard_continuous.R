@@ -163,7 +163,7 @@ ard_continuous <- function(data,
 #'
 #' @return invisible
 #' @keywords internal
-.check_no_ard_columns <- function(x, env = caller_env(), exceptions = "...ard_dummy_for_counting...") {
+.check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
     colnames[startsWith(colnames, "...ard_") & endsWith(colnames, "...")] |>
@@ -171,7 +171,7 @@ ard_continuous <- function(data,
 
   if (!is_empty(ard_colnames)) {
     "Columns beginning with {.val '...ard_'} and ending with {.val '...'} are not allowed." |>
-      cli::cli_abort(call = env)
+      cli::cli_abort(call = call)
   }
 }
 

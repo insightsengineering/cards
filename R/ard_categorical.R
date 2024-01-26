@@ -174,7 +174,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @inheritParams ard_categorical
 #' @keywords internal
-.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, env = caller_env()) {
+.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
     lapply(statistics, function(x) x["tabulation"] |> compact()) |> compact()
@@ -198,7 +198,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       denominator = denominator,
       by = by,
       strata = strata,
-      env = env
+      call = call
     )
 
   # perform other counts
@@ -326,7 +326,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
-.process_denominator <- function(data, variables, denominator, by, strata, env = caller_env()) {
+.process_denominator <- function(data, variables, denominator, by, strata, call = parent.frame()) {
   if (is_empty(variables)) return(list())
   # if no by/strata and no denominator (or column), then use number of non-missing in variable
   if ((is.null(denominator) || isTRUE(denominator %in% "column")) && is_empty(c(by, strata))) {
@@ -366,7 +366,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   # if user passed a data frame WITHOUT the counts pre-specified with by/strata
   else if (is.data.frame(denominator) && !"...ard_N..." %in% names(denominator)) {
     .check_for_missing_combos_in_denom(
-      data, denominator = denominator, by = by, strata = strata, env = env)
+      data, denominator = denominator, by = by, strata = strata, call = call)
 
     lst_denominator <-
       rep_named(
@@ -427,10 +427,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     ) {
       paste("Specified counts in column {.val '...ard_N...'} are not unique in",
             "the {.arg denominator} argument across the {.arg by} and {.arg strata} columns.") |>
-        cli::cli_abort(call = env)
+        cli::cli_abort(call = call)
     }
     .check_for_missing_combos_in_denom(
-      data, denominator = denominator, by = by, strata = strata, env = env)
+      data, denominator = denominator, by = by, strata = strata, call = call)
 
     # making the by/strata columns character to merge them with the count data frames
     df_denom <-
@@ -443,7 +443,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       rep_named(variables, list(df_denom))
   }
   else {
-    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = env)
+    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = call)
   }
 
   lst_denominator
@@ -465,7 +465,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @return invisible
 #' @keywords internal
-.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, env = caller_env()) {
+.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
   by_vars_to_check <-
     c(by, strata) |>
     intersect(names(data)) |>
@@ -495,7 +495,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
       )
     paste("The following {.arg by/strata} combinations are missing from the",
           "{.arg denominator} data frame: {.val {missing_combos}}.") |>
-      cli::cli_abort(call = env)
+      cli::cli_abort(call = call)
   }
 }
 

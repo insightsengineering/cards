@@ -94,11 +94,11 @@ maximum_variable_values <- function(data) {
 #' @param values (named `list`)
 #'   a named list
 #' @param call (`environment`)
-#'   an environment. Default is `caller_env()`
+#'   an environment. Default is `parent.frame()`
 #'
 #' @return NULL
 #' @keywords internal
-.check_dichotomous_values <- function(data, values, call = caller_env()) {
+.check_dichotomous_values <- function(data, values, call = parent.frame()) {
   imap(
     values,
     function(value, column) {
