@@ -41,3 +41,12 @@
       ! For variable `AGE` (`ARM = "Xanomeline Low Dose"`) and "mean_warning" statistic: warn1
       ! For variable `AGE` (`ARM = "Xanomeline Low Dose"`) and "mean_warning" statistic: warn2
 
+---
+
+    Code
+      print_ard_conditions(dplyr::mutate(ard_continuous(ADSL, variables = AGE),
+      error = list("repeated error")))
+    Message
+      The following errors were returned while calculating statistics:
+      x For variable `AGE` and "N", "mean", "sd", "median", "p25", "p75", "min", and "max" statistics: repeated error
+

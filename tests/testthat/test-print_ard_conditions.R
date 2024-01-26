@@ -33,4 +33,11 @@ test_that("print_ard_conditions() works", {
     ) |>
       print_ard_conditions()
   )
+
+  # expected messaging when the same error appears for all stats (consolidated correctly)
+  expect_snapshot(
+    ard_continuous(ADSL, variables = AGE) |>
+      dplyr::mutate(error = list("repeated error")) |>
+      print_ard_conditions()
+  )
 })
