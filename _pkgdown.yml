@@ -46,13 +46,12 @@ reference:
       - check_ard_structure
       - alias_as_fmt_fn
       - label_cards
-      - tidy_ard_row_order
   - subtitle: "Wrangle ARD"
     contents:
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
-  - subtitle: "Data Summary Funtions"
+  - subtitle: "Data Summary Functions"
     contents:
       - continuous_variable_summary_fns
       - maximum_variable_values
@@ -60,6 +59,7 @@ reference:
     contents:
       - selectors
       - eval_capture_conditions
+      - print_ard_conditions
       - round5
       - check_pkg_installed
       - print.card
