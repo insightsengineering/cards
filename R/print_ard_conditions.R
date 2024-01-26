@@ -85,8 +85,8 @@ print_ard_conditions <- function(x, env = parent.env()) {
         "For variable {ard_msg$cli_variable_msg[[i]]} ",
         "{switch(!is.null(ard_msg$cli_group_msg[[i]]), paste0('(', ard_msg$cli_group_msg[[i]], ')')) %||% ''} ",
         "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
-        "{ard_msg$cond_msg[[i]]}")
-      |>
+        "{ard_msg$cond_msg[[i]]}"
+      ) |>
         stats::setNames(switch(msg_type, "warning" = "!", "error" = "x"))
     ))
   }
@@ -105,7 +105,7 @@ print_ard_conditions <- function(x, env = parent.env()) {
   names(levels) <- sub(pattern = "_level$", replacement = "", x = names(levels))
 
   # first subset on the variable names
-  x[grepl(x = names, pattern = "^group[0-9]+$|^variable$")] |>
+  ret <- x[grepl(x = names, pattern = "^group[0-9]+$|^variable$")] |>
     # add the varname = value where appropriate
     imap(
       \(x, colname) {
@@ -117,4 +117,7 @@ print_ard_conditions <- function(x, env = parent.env()) {
       }
     ) |>
     paste(collapse = ", ")
+
+  if (ret == "") ret <- NULL
+  ret
 }
