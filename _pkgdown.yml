@@ -45,7 +45,6 @@ reference:
       - default_stat_labels
       - check_ard_structure
       - alias_as_fmt_fn
-      - print_ard_conditions
       - label_cards
   - subtitle: "Wrangle ARD"
     contents:
@@ -60,6 +59,7 @@ reference:
     contents:
       - selectors
       - eval_capture_conditions
+      - print_ard_conditions
       - round5
       - check_pkg_installed
       - print.card
