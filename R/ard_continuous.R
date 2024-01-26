@@ -81,11 +81,11 @@ ard_continuous <- function(data,
   )
 
   check_list_elements(
-    statistics = function(x) is.list(x) && is_named(x) && every(x, is.function),
+    x = statistics,
+    predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
     error_msg =
-      list(statistics =
-             c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
-               "i" = "Value must be a named list of functions."))
+      c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+        "i" = "Value must be a named list of functions.")
   )
 
   # return empty tibble if no variables selected -------------------------------

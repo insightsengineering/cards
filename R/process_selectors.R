@@ -20,9 +20,8 @@
 #' - `compute_formula_selector()`: used in `process_formula_selectors()` to
 #'   evaluate a single argument.
 #'
-#' - `check_list_elements()`: accepts named arguments where the name is a list
-#'   that exists in the env, and the argument value is a predicate function
-#'   used to the values of the list.
+#' - `check_list_elements()`: used to check the class/type/values of the list
+#'   elements, primarily those processed with `process_formula_selectors()`
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
@@ -38,14 +37,18 @@
 #'     a function.
 #' @param env (`environment`)\cr
 #'   env to save the results to. Default is the calling environment.
-#' @param x ([`formula-list-selector`][syntax])\cr
-#'   a named list, list of formulas, or a single formula that will be
-#'   converted to a named list.
+#' @param x
+#'  - `compute_formula_selector()`: ([`formula-list-selector`][syntax])\cr
+#'    a named list, list of formulas, or a single formula that will be
+#'    converted to a named list.
+#'  - `check_list_elements()`: (`named list`)\cr
+#'    a named list
+#' @param predicate a predicate function that returns `TRUE` or `FALSE`
 #' @param arg_name (`string`)\cr
 #'   a string with the argument named being processed. Used
 #'   in error messaging. Default is `caller_arg(x)`
 #' @param error_msg (`character`)\cr
-#'   a named list where the list elements are strings that will
+#'   a character vector that will
 #'   be used in error messaging when mis-specified arguments are passed. Elements
 #'   `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
 #' @param strict (`logical` scalar)\cr
@@ -208,23 +211,20 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
 
 #' @name process_selectors
 #' @export
-check_list_elements <- function(..., error_msg = list(), env = caller_env()) {
-  dots <- dots_list(...)
-
+check_list_elements <- function(x,
+                                predicate,
+                                error_msg = NULL,
+                                env = rlang::caller_env(),
+                                arg_name = rlang::caller_arg(x)) {
   imap(
-    dots,
-    function(predicate_fn, arg_name) {
-      imap(
-        get(arg_name, envir = env),
-        function(lst_element, variable) {
-          if (!isTRUE(predicate_fn(lst_element))) {
-            msg <-
-              error_msg[[arg_name]] %||%
-              "The value for argument {.arg {arg_name}} and variable {.val {variable}} is not the expected type."
-            cli::cli_abort(message = msg)
-          }
-        }
-      )
+    x,
+    function(lst_element, variable) {
+      if (!isTRUE(predicate(lst_element))) {
+        msg <-
+          error_msg %||%
+          "The value for argument {.arg {arg_name}} and variable {.val {variable}} is not the expected type."
+        cli::cli_abort(message = msg, call = env)
+      }
     }
   )
 

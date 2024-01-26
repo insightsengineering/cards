@@ -22,7 +22,13 @@ compute_formula_selector(
   strict = TRUE
 )
 
-check_list_elements(..., error_msg = list(), env = caller_env())
+check_list_elements(
+  x,
+  predicate,
+  error_msg = NULL,
+  env = rlang::caller_env(),
+  arg_name = rlang::caller_arg(x)
+)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -44,9 +50,13 @@ a function.
 \item{env}{(\code{environment})\cr
 env to save the results to. Default is the calling environment.}
 
-\item{x}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{x}{\itemize{
+\item \code{compute_formula_selector()}: (\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, list of formulas, or a single formula that will be
-converted to a named list.}
+converted to a named list.
+\item \code{check_list_elements()}: (\verb{named list})\cr
+a named list
+}}
 
 \item{arg_name}{(\code{string})\cr
 a string with the argument named being processed. Used
@@ -56,8 +66,10 @@ in error messaging. Default is \code{caller_arg(x)}}
 whether to throw an error if a variable doesn't exist in the reference data
 (passed to \code{tidyselect::eval_select})}
 
+\item{predicate}{a predicate function that returns \code{TRUE} or \code{FALSE}}
+
 \item{error_msg}{(\code{character})\cr
-a named list where the list elements are strings that will
+a character vector that will
 be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }
@@ -77,9 +89,8 @@ a value. This function checks that each column in \code{data} has an assigned
 value, and if not, fills the value in with the default value passed here.
 \item \code{compute_formula_selector()}: used in \code{process_formula_selectors()} to
 evaluate a single argument.
-\item \code{check_list_elements()}: accepts named arguments where the name is a list
-that exists in the env, and the argument value is a predicate function
-used to the values of the list.
+\item \code{check_list_elements()}: used to check the class/type/values of the list
+elements, primarily those processed with \code{process_formula_selectors()}
 }
 }
 \examples{
