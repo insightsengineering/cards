@@ -14,9 +14,13 @@
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
-#'   statistics = ~list(
+#'   statistics = ~ list(
 #'     mean = \(x) mean(x),
-#'     mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+#'     mean_warning = \(x) {
+#'       warning("warn1")
+#'       warning("warn2")
+#'       mean(x)
+#'     },
 #'     err_fn = \(x) stop("'tis an error")
 #'   )
 #' ) |>
@@ -37,11 +41,16 @@ print_ard_conditions <- function(x) {
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 
   # if no messages, quit the function early
-  if (nrow(ard_condition) == 0L) return(invisible())
+  if (nrow(ard_condition) == 0L) {
+    return(invisible())
+  }
 
   # choose the function for color prints for warnings/errors
   cli_color_fun <-
-    switch(msg_type, "warning" = cli::col_yellow, "error" = cli::col_red)
+    switch(msg_type,
+      "warning" = cli::col_yellow,
+      "error" = cli::col_red
+    )
 
   # create a data frame that is one row per message to print
   # also formats the text that will be printed
@@ -54,18 +63,18 @@ print_ard_conditions <- function(x) {
           # this column is the messaging for which groups/variable the message appears in
           cli_variable_msg =
             dplyr::select(.y, all_ard_variables("variables")) |>
-            dplyr::mutate(across(where(is.list), unlist)) |>
-            dplyr::slice(1L) |>
-            as.list() |>
-            .cli_groups_and_variable() |>
-            list(),
+              dplyr::mutate(across(where(is.list), unlist)) |>
+              dplyr::slice(1L) |>
+              as.list() |>
+              .cli_groups_and_variable() |>
+              list(),
           cli_group_msg =
             dplyr::select(.y, all_ard_groups()) |>
-            dplyr::mutate(across(where(is.list), unlist)) |>
-            dplyr::slice(1L) |>
-            as.list() |>
-            .cli_groups_and_variable() |>
-            list(),
+              dplyr::mutate(across(where(is.list), unlist)) |>
+              dplyr::slice(1L) |>
+              as.list() |>
+              .cli_groups_and_variable() |>
+              list(),
           # character vector of all the stat_names the message applies to
           all_stat_names = list(.x$stat_name),
           # grabs the condition message and colors it with the cli color function
@@ -85,7 +94,10 @@ print_ard_conditions <- function(x) {
         "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
         "{ard_msg$cond_msg[[i]]}"
       ) |>
-        stats::setNames(switch(msg_type, "warning" = "!", "error" = "x"))
+        stats::setNames(switch(msg_type,
+          "warning" = "!",
+          "error" = "x"
+        ))
     ))
   }
 

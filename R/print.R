@@ -47,9 +47,11 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       x_print |>
         dplyr::mutate(
           across(
-            c(all_ard_groups("levels"),
+            c(
+              all_ard_groups("levels"),
               all_ard_variables("levels"),
-              any_of(c("context", "stat_label", "warning", "error"))),
+              any_of(c("context", "stat_label", "warning", "error"))
+            ),
             function(x) {
               lapply(
                 x,
