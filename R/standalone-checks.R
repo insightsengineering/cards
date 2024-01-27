@@ -20,7 +20,9 @@
 check_class <- function(x, class, allow_null = FALSE,
                         arg_name = rlang::caller_arg(x), call = parent.frame()) {
   # include NULL class as acceptable if allow_null is TRUE
-  if (isTRUE(allow_null) && is.null(x)) return(invisible())
+  if (isTRUE(allow_null) && is.null(x)) {
+    return(invisible())
+  }
 
   if (!inherits(x, class)) {
     cli::cli_abort("The {.arg {arg_name}} argument must be class {.cls {class}}.", call = call)
@@ -34,8 +36,10 @@ check_class <- function(x, class, allow_null = FALSE,
 #' @keywords internal
 check_class_data_frame <- function(x, allow_null = FALSE,
                                    arg_name = rlang::caller_arg(x), call = parent.frame()) {
-  check_class(x = x, class = "data.frame", allow_null = allow_null,
-              arg_name = arg_name, call = call)
+  check_class(
+    x = x, class = "data.frame", allow_null = allow_null,
+    arg_name = arg_name, call = call
+  )
 }
 
 #' Check Argument not Missing

@@ -27,18 +27,20 @@
 #'
 #' # order rows
 #' dplyr::bind_rows(
-#'     ard_continuous(mtcars, variables = c("mpg","disp"), by = "cyl"),
-#'     ard_ttest(mtcars, variable = "mpg", by = "cyl"),
-#'     ard_ttest(mtcars, variable = "disp", by = "cyl")
-#'   ) |>
-#' tidy_ard_row_order()
+#'   ard_continuous(mtcars, variables = c("mpg", "disp"), by = "cyl"),
+#'   ard_ttest(mtcars, variable = "mpg", by = "cyl"),
+#'   ard_ttest(mtcars, variable = "disp", by = "cyl")
+#' ) |>
+#'   tidy_ard_row_order()
 #'
 #' NULL
 #'
 #' @rdname tidy_ard_order
 #' @export
 tidy_ard_column_order <- function(x) {
-  group_cols <- dplyr::select(x, all_ard_groups()) |> names() |> sort()
+  group_cols <- dplyr::select(x, all_ard_groups()) |>
+    names() |>
+    sort()
 
   dplyr::select(
     x,
@@ -56,20 +58,20 @@ tidy_ard_column_order <- function(x) {
 
 #' @rdname tidy_ard_order
 #' @export
-tidy_ard_row_order <- function(x){
-
-  check_class(x, class ="card")
+tidy_ard_row_order <- function(x) {
+  check_class(x, class = "card")
 
   # get columns that dictate ordering
   dat <- x |>
-    dplyr::select(all_ard_variables(variables = TRUE, levels = FALSE),
-                  all_ard_groups(variables = TRUE, levels = FALSE),
-                  all_ard_groups(variables = FALSE, levels = TRUE))
+    dplyr::select(
+      all_ard_variables(variables = TRUE, levels = FALSE),
+      all_ard_groups(variables = TRUE, levels = FALSE),
+      all_ard_groups(variables = FALSE, levels = TRUE)
+    )
 
   cols <- dat |>
     names()
 
   # perform the ordering
   x |> dplyr::arrange(across(all_of(cols), .fns = function(x) match(x, unique(x))))
-
 }

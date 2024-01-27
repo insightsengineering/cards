@@ -46,8 +46,9 @@
 nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
                          rename_columns = TRUE, list_columns = TRUE) {
   # if no by/stratifying variables, simply return the data frame
-  if (is_empty(by) && is_empty(strata))
+  if (is_empty(by) && is_empty(strata)) {
     return((dplyr::tibble("{key}" := list(data))))
+  }
 
   n_missing <- nrow(data) - nrow(tidyr::drop_na(data, all_of(by), all_of(strata)))
   if (n_missing > 0L) {
@@ -76,9 +77,11 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   }
 
   # combining by and strata data sets into one, as needed ----------------------
-  if (!is_empty(by) && is_empty(strata)) df_return <- df_by
-  else if (is_empty(by) && !is_empty(strata)) df_return <- df_strata
-  else if (!is_empty(by) && !is_empty(strata)) {
+  if (!is_empty(by) && is_empty(strata)) {
+    df_return <- df_by
+  } else if (is_empty(by) && !is_empty(strata)) {
+    df_return <- df_strata
+  } else if (!is_empty(by) && !is_empty(strata)) {
     df_return <-
       df_strata |>
       dplyr::mutate(
