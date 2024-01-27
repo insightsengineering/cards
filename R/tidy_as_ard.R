@@ -43,8 +43,10 @@
 #'     tidy_result_names =
 #'       c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
 #'     fun_args_to_record =
-#'       c("workspace", "hybrid", "hybridPars", "control", "or",
-#'         "conf.int", "conf.level", "simulate.p.value", "B"),
+#'       c(
+#'         "workspace", "hybrid", "hybridPars", "control", "or",
+#'         "conf.int", "conf.level", "simulate.p.value", "B"
+#'       ),
 #'     formals = formals(stats::fisher.test),
 #'     passed_args = dots_list(...),
 #'     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
@@ -63,8 +65,8 @@ tidy_as_ard <- function(lst_tidy,
     tryCatch(
       utils::modifyList(
         x =
-          # missing() is TRUE if the arg is not specified,
-          # not actually missing (ie it can still have its default value)
+        # missing() is TRUE if the arg is not specified,
+        # not actually missing (ie it can still have its default value)
           if (missing(formals)) formals else formals[fun_args_to_record],
         val = passed_args,
         keep.null = TRUE
@@ -88,7 +90,7 @@ tidy_as_ard <- function(lst_tidy,
             x = list(NULL),
             length.out = length(c(tidy_result_names, fun_args_to_record))
           ) |>
-          stats::setNames(nm = c(tidy_result_names, fun_args_to_record)),
+            stats::setNames(nm = c(tidy_result_names, fun_args_to_record)),
         val = lst_used_fun_args,
         keep.null = TRUE
       )
@@ -98,11 +100,15 @@ tidy_as_ard <- function(lst_tidy,
   dplyr::tibble(
     stat_name = names(lst_all_results),
     statistic = lst_all_results,
-    statistic_fmt_fn = lapply(.data$statistic, function(x) switch(is.numeric(x), 1L)),
+    statistic_fmt_fn = lapply(.data$statistic, function(x) {
+      switch(is.numeric(x),
+        1L
+      )
+    }),
     warning = lst_tidy["warning"],
     error = lst_tidy["error"],
     !!!lst_ard_columns,
   ) |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))}
+    {structure(., class = c("card", class(.)))} # styler: off
 }

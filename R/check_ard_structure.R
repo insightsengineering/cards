@@ -19,12 +19,16 @@ check_ard_structure <- function(x) {
   }
 
   # exit if not a data frame ---------------------------------------------------
-  if (!inherits(x, "data.frame")) return(invisible())
+  if (!inherits(x, "data.frame")) {
+    return(invisible())
+  }
 
   # check expected variables are present ---------------------------------------
   missing_variables <-
-    c("variable", "stat_name", "stat_label", "statistic",
-      "statistic_fmt_fn", "warning", "error") |>
+    c(
+      "variable", "stat_name", "stat_label", "statistic",
+      "statistic_fmt_fn", "warning", "error"
+    ) |>
     setdiff(names(x))
   if (!is_empty(missing_variables)) {
     cli::cli_inform("The following columns are not present: {.val {missing_variables}}.")
@@ -32,8 +36,10 @@ check_ard_structure <- function(x) {
 
   # check columns are list columns as expected ---------------------------------
   expected_lst_columns <-
-    dplyr::select(x, all_ard_groups(), all_ard_variables(),
-                  any_of(c("statistic", "statistic_fmt_fn", "warning", "error"))) |>
+    dplyr::select(
+      x, all_ard_groups(), all_ard_variables(),
+      any_of(c("statistic", "statistic_fmt_fn", "warning", "error"))
+    ) |>
     # remove group## and variable columns
     dplyr::select(-matches("^group[0-9]$"), -"variable") |>
     names()

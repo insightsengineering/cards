@@ -26,7 +26,7 @@ as_nested_list <- function(x) {
   # construct the nested lists to convert to JSON ------------------------------
   lst_pre_json <-
     seq_len(nrow(x)) |>
-    lapply(FUN = function(i) .one_row_ard_to_nested_list(x[i,]))
+    lapply(FUN = function(i) .one_row_ard_to_nested_list(x[i, ]))
 
   # construct nested list that will be converted to JSON -----------------------
   lst_return <- list() # initialize empty list that will be populated with results
@@ -63,7 +63,7 @@ as_nested_list <- function(x) {
       )
     ) %>%
     # reorder with primary variable first, followed by stratum
-    dplyr::select(., all_of(colnames(.) |> sort())) %>%
+    dplyr::select(., all_of(colnames(.) |> sort())) %>% # styler: off
     dplyr::select(
       any_of(c("variable", "variable_level")), starts_with("group"),
       "stat_name", "statistic", "statistic_fmt", "warning", "error", "context" # TODO: we could apply a formatting function and add that here
@@ -78,11 +78,10 @@ as_nested_list <- function(x) {
     dplyr::select(any_of(c("variable", "variable_level")), starts_with("group"), "stat_name") |>
     as.list() |>
     imap(function(x, y) glue::glue("[[{shQuote(y)}]][[{shQuote(x)}]]")) |>
-    # lapply(FUN = function(x) glue::glue("[[{shQuote(x)}]]")) |>
     unlist() %>%
     paste(collapse = "") %>%
     # 'lst_return' is the name of the nested list that will be converted to JSON
-    {paste0("lst_return", .)}
+    {paste0("lst_return", .)} # styler: off
 
   # creating final expression defining the results within the nested list
   expr(
@@ -91,9 +90,7 @@ as_nested_list <- function(x) {
         df_preparation,
         any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
       ) |>
-      # this essentially flattens the nested list one level, while maintaining the names
-      imap(function(x, y) x[[1]])
+        # this essentially flattens the nested list one level, while maintaining the names
+        imap(function(x, y) x[[1]])
   )
 }
-
-

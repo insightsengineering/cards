@@ -10,4 +10,3 @@
 
 #' @rdname adam
 "ADTTE"
-

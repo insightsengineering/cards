@@ -4,11 +4,15 @@
 \alias{print_ard_conditions}
 \title{Print ARD Condition Messages}
 \usage{
-print_ard_conditions(x)
+print_ard_conditions(x, call = NULL)
 }
 \arguments{
 \item{x}{(\code{card})\cr
 an ARD data frame}
+
+\item{call}{(\code{environment})\cr
+if supplied, the calling function will be used in messaging to users.
+Default is \code{NULL}}
 }
 \description{
 Function parses the errors and warnings observed while calculating the
@@ -19,9 +23,13 @@ ard_continuous(
   ADSL,
   by = ARM,
   variables = AGE,
-  statistics = ~list(
+  statistics = ~ list(
     mean = \(x) mean(x),
-    mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+    mean_warning = \(x) {
+      warning("warn1")
+      warning("warn2")
+      mean(x)
+    },
     err_fn = \(x) stop("'tis an error")
   )
 ) |>

@@ -33,11 +33,13 @@ get_ard_statistics <- function(x, ...,
   seq_len(nrow(ard_subset)) |>
     lapply(
       FUN = function(i) {
+        # styler: off
         ard_subset[[.column]][[i]] %>%
           {inject(structure(
             ., !!!.create_list_for_attributes(ard_subset, .attributes, i)
           ))}
       }
+      # styler: on
     ) |>
     stats::setNames(ard_subset[["stat_name"]])
 }
@@ -49,4 +51,3 @@ get_ard_statistics <- function(x, ...,
   }
   stats::setNames(ret, nm = attributes)
 }
-

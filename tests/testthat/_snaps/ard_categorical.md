@@ -165,7 +165,7 @@
 
     Code
       ard_custom_fns <- ard_categorical(ADSL, variables = AGEGR1, statistics = ~
-        categorical_variable_summary_fns(other_stats = list(mode = function(x)
-          getElement(names(sort(table(x), decreasing = TRUE)), 1), length = function(
-          x) length(x))))
+        categorical_variable_summary_fns(other_stats = list(mode = function(x) {
+          getElement(names(sort(table(x), decreasing = TRUE)), 1)
+        }, length = function(x) length(x))))
 

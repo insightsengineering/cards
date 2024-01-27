@@ -61,20 +61,20 @@ summaries, such as number and rate of missing data.
 ard_continuous(
   ADSL,
   variables = "AGE",
-  statistics = ~continuous_variable_summary_fns(c("N", "median"))
+  statistics = ~ continuous_variable_summary_fns(c("N", "median"))
 )
 
 # categorical variable summaries
 ard_categorical(
   ADSL,
   variables = "AGEGR1",
-  statistics = ~categorical_variable_summary_fns(c("n", "N"))
+  statistics = ~ categorical_variable_summary_fns(c("n", "N"))
 )
 
 # summary for rates of missing data
 ard_missing(
   ADSL,
   variables = c("AGE", "AGEGR1"),
-  statistics = ~missing_variable_summary_fns()
+  statistics = ~ missing_variable_summary_fns()
 )
 }

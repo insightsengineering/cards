@@ -26,40 +26,46 @@ test_that("ard_missing() works", {
   )
 })
 
-test_that("ard_missing(stat_labels) argument works",{
+test_that("ard_missing(stat_labels) argument works", {
   # formula
   expect_snapshot(
-    ard_missing(data = ADSL,
-                by = "ARM",
-                variables = c("AGE","BMIBL"),
-                stat_labels = everything() ~ list(c("N_obs","N_miss") ~ "N, miss")) |>
+    ard_missing(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGE", "BMIBL"),
+      stat_labels = everything() ~ list(c("N_obs", "N_miss") ~ "N, miss")
+    ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
-      dplyr::filter(stat_name %in% c("N_obs","N_miss")) |>
+      dplyr::filter(stat_name %in% c("N_obs", "N_miss")) |>
       unique()
   )
 
   # list
   expect_snapshot(
-    ard_missing(data = ADSL,
-                by = "ARM",
-                variables = c("AGEGR1","SEX"),
-                stat_labels = everything() ~ list(p_miss= "% miss", p_nonmiss = "% non miss")) |>
+    ard_missing(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGEGR1", "SEX"),
+      stat_labels = everything() ~ list(p_miss = "% miss", p_nonmiss = "% non miss")
+    ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
-      dplyr::filter(stat_name %in% c("p_miss","p_nonmiss")) |>
+      dplyr::filter(stat_name %in% c("p_miss", "p_nonmiss")) |>
       unique()
   )
 
   # variable-specific
   expect_snapshot(
-    ard_missing(data = ADSL,
-                by = "ARM",
-                variables = c("AGE","BMIBL"),
-                stat_labels = AGE ~ list(N_obs = "Number of Obs")) |>
+    ard_missing(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGE", "BMIBL"),
+      stat_labels = AGE ~ list(N_obs = "Number of Obs")
+    ) |>
       as.data.frame() |>
       dplyr::select(variable, stat_name, stat_label) |>
-      dplyr::filter(stat_name=="N_obs") |>
+      dplyr::filter(stat_name == "N_obs") |>
       unique()
   )
 })

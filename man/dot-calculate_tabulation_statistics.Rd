@@ -11,7 +11,7 @@
   strata,
   denominator,
   statistics,
-  env = caller_env()
+  call = parent.frame()
 )
 }
 \arguments{

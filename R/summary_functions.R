@@ -40,21 +40,21 @@
 #' ard_continuous(
 #'   ADSL,
 #'   variables = "AGE",
-#'   statistics = ~continuous_variable_summary_fns(c("N", "median"))
+#'   statistics = ~ continuous_variable_summary_fns(c("N", "median"))
 #' )
 #'
 #' # categorical variable summaries
 #' ard_categorical(
 #'   ADSL,
 #'   variables = "AGEGR1",
-#'   statistics = ~categorical_variable_summary_fns(c("n", "N"))
+#'   statistics = ~ categorical_variable_summary_fns(c("n", "N"))
 #' )
 #'
 #' # summary for rates of missing data
 #' ard_missing(
 #'   ADSL,
 #'   variables = c("AGE", "AGEGR1"),
-#'   statistics = ~missing_variable_summary_fns()
+#'   statistics = ~ missing_variable_summary_fns()
 #' )
 NULL
 
@@ -78,8 +78,10 @@ categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other
 
 #' @rdname summary_functions
 #' @export
-continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'median',
-                                                          'p25', 'p75', 'min', 'max'),
+continuous_variable_summary_fns <- function(summaries = c(
+                                              "N", "mean", "sd", "median",
+                                              "p25", "p75", "min", "max"
+                                            ),
                                             other_stats = NULL) {
   # process the selection of the summary stats to include ----------------------
   summaries <- arg_match(summaries, multiple = TRUE)
@@ -91,8 +93,8 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
       mean = function(x) mean(x, na.rm = TRUE),
       sd = function(x) stats::sd(x, na.rm = TRUE),
       median = function(x) stats::median(x, na.rm = TRUE),
-      p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE, type=2) |> unname(),
-      p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE, type=2) |> unname(),
+      p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE, type = 2) |> unname(),
+      p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE, type = 2) |> unname(),
       min = function(x) ifelse(length(x) == 0L, NA, min(x, na.rm = TRUE)),
       max = function(x) ifelse(length(x) == 0L, NA, max(x, na.rm = TRUE))
     )
@@ -104,7 +106,7 @@ continuous_variable_summary_fns <- function(summaries = c('N', 'mean', 'sd', 'me
 
 #' @rdname summary_functions
 #' @export
-missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_nonmiss", "p_miss", "p_nonmiss")) {
+missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
   summaries <- arg_match(summaries, multiple = TRUE)
 
   list(
@@ -112,16 +114,21 @@ missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss" , "N_no
       function(x, stats = summaries) {
         res <- list()
 
-        if (any(c("N_obs", "N_nonmiss", "p_miss", "p_nonmiss") %in% stats))
+        if (any(c("N_obs", "N_nonmiss", "p_miss", "p_nonmiss") %in% stats)) {
           res[["N_obs"]] <- length(x)
-        if (any(c("N_miss", "N_nonmiss", "p_miss") %in% stats))
+        }
+        if (any(c("N_miss", "N_nonmiss", "p_miss") %in% stats)) {
           res[["N_miss"]] <- sum(!x)
-        if (any(c("N_nonmiss", "p_nonmiss") %in% stats))
+        }
+        if (any(c("N_nonmiss", "p_nonmiss") %in% stats)) {
           res[["N_nonmiss"]] <- res[["N_obs"]] - res[["N_miss"]]
-        if ("p_miss" %in% stats)
+        }
+        if ("p_miss" %in% stats) {
           res[["p_miss"]] <- res[["N_miss"]] / res[["N_obs"]]
-        if ("p_nonmiss" %in% stats)
+        }
+        if ("p_nonmiss" %in% stats) {
           res[["p_nonmiss"]] <- res[["N_nonmiss"]] / res[["N_obs"]]
+        }
 
         res
       }
