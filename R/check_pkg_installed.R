@@ -57,7 +57,8 @@ check_pkg_installed <- function(pkg,
     pkg = pkg,
     version = version,
     compare = compare,
-    reason = switch(!is.null(fn), glue::glue("for `{fn}`")
+    reason = switch(!is.null(fn),
+      glue::glue("for `{fn}`")
     )
   )
   invisible()
@@ -67,8 +68,8 @@ check_pkg_installed <- function(pkg,
 #' @rdname check_pkg_installed
 #' @export
 is_pkg_installed <- function(pkg,
-                                reference_pkg = "cards",
-                                call = parent.frame()) {
+                             reference_pkg = "cards",
+                             call = parent.frame()) {
   # check if min version is required -------------------------------------------
   version <- get_min_version_required(pkg, reference_pkg)
   compare <- attr(version, "compare")
@@ -97,8 +98,10 @@ get_pkg_dependencies <- function(reference_pkg = "cards") {
     unclass() |>
     dplyr::as_tibble() |>
     dplyr::select(
-      any_of(c("Package", "Version", "Imports", "Depends",
-               "Suggests", "Enhances", "LinkingTo"))
+      any_of(c(
+        "Package", "Version", "Imports", "Depends",
+        "Suggests", "Enhances", "LinkingTo"
+      ))
     ) |>
     dplyr::rename(
       reference_pkg = "Package",
@@ -133,8 +136,10 @@ get_all_pkg_dependencies <- function(
     utils::installed.packages(lib.loc = lib.loc) |>
     dplyr::as_tibble() |>
     dplyr::select(
-      any_of(c("Package", "Version", "LibPath", "Imports", "Depends",
-               "Suggests", "Enhances", "LinkingTo"))
+      any_of(c(
+        "Package", "Version", "LibPath", "Imports", "Depends",
+        "Suggests", "Enhances", "LinkingTo"
+      ))
     ) |>
     dplyr::rename(
       reference_pkg = "Package",

@@ -34,7 +34,7 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
 
   # check for duplicates -------------------------------------------------------
   dupes <-
-    dplyr::select(data, all_ard_groups(), all_ard_variables(), "stat_name")[seq(nrow(data), 1L),] |>
+    dplyr::select(data, all_ard_groups(), all_ard_variables(), "stat_name")[seq(nrow(data), 1L), ] |>
     duplicated()
 
   if (any(dupes) && isTRUE(.update)) {
@@ -45,19 +45,16 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
         .by = c(all_ard_groups(), all_ard_variables(), "stat_name"),
         dplyr::row_number() == dplyr::n()
       )
-  }
-  else if (any(dupes) && isFALSE(.update)) {
+  } else if (any(dupes) && isFALSE(.update)) {
     cli::cli_abort(c("!" = "{sum(dupes)} duplicate observation{?/s} found."))
   }
 
 
   # optionally reorder ---------------------------------------------------------
-  if (isTRUE(.order)){
+  if (isTRUE(.order)) {
     data <- tidy_ard_row_order(data)
   }
 
   # return stacked ARDs --------------------------------------------------------
   tidy_ard_column_order(data)
 }
-
-
