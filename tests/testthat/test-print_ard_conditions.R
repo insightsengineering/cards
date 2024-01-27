@@ -61,5 +61,5 @@ test_that("print_ard_conditions() works", {
       print_ard_conditions(ard, call = current_env())
     }
     tbl_summary()
-   })
+  })
 })
