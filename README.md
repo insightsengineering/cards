@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cards
+# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="138" alt="cards website" /></a>
 
 <!-- badges: start -->
 
@@ -73,13 +73,13 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
 #> 1     ARM      Placebo   AGEGR1            <65         n          n        14
 #> 2     ARM      Placebo   AGEGR1            <65         N          N        86
 #> 3     ARM      Placebo   AGEGR1            <65         p          %     0.163
-#> 4     ARM      Placebo   AGEGR1            >80         n          n        30
-#> 5     ARM      Placebo   AGEGR1            >80         N          N        86
-#> 6     ARM      Placebo   AGEGR1            >80         p          %     0.349
-#> 7     ARM      Placebo   AGEGR1          65-80         n          n        42
-#> 8     ARM      Placebo   AGEGR1          65-80         N          N        86
-#> 9     ARM      Placebo   AGEGR1          65-80         p          %     0.488
-#> 10    ARM      Placebo      SEX              F         n          n        53
+#> 4     ARM    Xanomeli…   AGEGR1            <65         n          n        11
+#> 5     ARM    Xanomeli…   AGEGR1            <65         N          N        84
+#> 6     ARM    Xanomeli…   AGEGR1            <65         p          %     0.131
+#> 7     ARM    Xanomeli…   AGEGR1            <65         n          n         8
+#> 8     ARM    Xanomeli…   AGEGR1            <65         N          N        84
+#> 9     ARM    Xanomeli…   AGEGR1            <65         p          %     0.095
+#> 10    ARM      Placebo   AGEGR1            >80         n          n        30
 #> ℹ 35 more rows
 #> ℹ Use `print(n = ...)` to see more rows
 #> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
