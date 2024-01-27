@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   structures: structures.html
-last_built: 2024-01-27T04:55Z
+last_built: 2024-01-27T05:37Z
 urls:
   reference: https://insightsengineering.github.io/cards/reference
   article: https://insightsengineering.github.io/cards/articles
