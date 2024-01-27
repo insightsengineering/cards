@@ -50,3 +50,16 @@
       The following errors were returned while calculating statistics:
       x For variable `AGE` and "N", "mean", "sd", "median", "p25", "p75", "min", and "max" statistics: repeated error
 
+---
+
+    Code
+      tbl_summary <- (function() {
+        ard <- ard_continuous(ADSL, variables = AGE, statistics = ~ list(err_fn = function(
+          x) stop("'tis an error")))
+        print_ard_conditions(ard, call = current_env())
+      })
+      tbl_summary()
+    Message
+      The following errors were returned during `tbl_summary()`:
+      x For variable `AGE` and "err_fn" statistic: 'tis an error
+

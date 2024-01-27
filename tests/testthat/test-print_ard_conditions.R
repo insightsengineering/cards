@@ -48,4 +48,18 @@ test_that("print_ard_conditions() works", {
       dplyr::mutate(error = list("repeated error")) |>
       print_ard_conditions()
   )
+
+  # calling function name prints correctly
+  expect_snapshot({
+    tbl_summary <- function() {
+      ard <- ard_continuous(
+        ADSL,
+        variables = AGE,
+        statistics = ~ list(err_fn = \(x) stop("'tis an error"))
+      )
+
+      print_ard_conditions(ard, call = current_env())
+    }
+    tbl_summary()
+   })
 })
