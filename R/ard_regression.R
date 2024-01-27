@@ -26,7 +26,7 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
     model = model,
     tidy_fun = tidy_fun %||% broom.helpers::tidy_with_broom_or_parameters,
     ...
-  )|>
+  ) |>
     dplyr::mutate(
       variable_level = dplyr::if_else(.data$var_type %in% "continuous", NA_character_, .data$label),
       across(-c("variable", "variable_level"), .fns = as.list)
@@ -41,7 +41,14 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
       statistic_fmt_fn =
         lapply(
           .data$statistic,
-          function(x) switch(is.integer(x), 0L) %||% switch(is.numeric(x), 1L)),
+          function(x) {
+            switch(is.integer(x),
+              0L
+            ) %||% switch(is.numeric(x),
+              1L
+            )
+          }
+        ),
       context = "regression",
       stat_label =
         dplyr::case_when(

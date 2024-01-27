@@ -17,7 +17,6 @@ ard_missing <- function(data,
                         statistics = everything() ~ missing_variable_summary_fns(),
                         fmt_fn = NULL,
                         stat_labels = everything() ~ default_stat_labels()) {
-
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})
 

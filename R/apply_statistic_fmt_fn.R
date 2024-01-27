@@ -25,8 +25,11 @@ apply_statistic_fmt_fn <- function(x) {
           .data$statistic,
           .data$statistic_fmt_fn,
           function(x, fn) {
-            if (!is.null(fn)) do.call(alias_as_fmt_fn(fn), args = list(x))
-            else NULL
+            if (!is.null(fn)) {
+              do.call(alias_as_fmt_fn(fn), args = list(x))
+            } else {
+              NULL
+            }
           }
         )
     )
@@ -59,10 +62,12 @@ apply_statistic_fmt_fn <- function(x) {
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
 alias_as_fmt_fn <- function(x, call = parent.frame()) {
-  if (is.function(x))
+  if (is.function(x)) {
     return(x)
-  if (is_integerish(x) && x >= 0L)
+  }
+  if (is_integerish(x) && x >= 0L) {
     return(label_cards(digits = as.integer(x)))
+  }
   if (is_string(x)) {
     .check_fmt_string(x, call = call)
     # scale by 100 if it's a percentage
@@ -141,15 +146,15 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @keywords internal
 #'
 #' @examples
-#' cards:::.check_fmt_string("xx.x")  # TRUE
+#' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
 .check_fmt_string <- function(x, call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
-    sum(unlist(gregexpr("\\.", x)) != -1) %in% c(0L, 1L) && # a period appears 0 or 1 times
-    sum(unlist(gregexpr("%", x)) != -1) %in% c(0L, 1L) && # a percent appears 0 or 1 times
-    (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
+      sum(unlist(gregexpr("\\.", x)) != -1) %in% c(0L, 1L) && # a period appears 0 or 1 times
+      sum(unlist(gregexpr("%", x)) != -1) %in% c(0L, 1L) && # a percent appears 0 or 1 times
+      (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort("The format {.val {x}} is not valid.", call = call)
