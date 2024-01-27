@@ -40,8 +40,15 @@ eval_capture_conditions(letters[1:2])
 eval_capture_conditions(stop("Example Error!"))
 
 # if more than one warning is returned, all are saved
-eval_capture_conditions({warning("Warning 1"); warning("Warning 2"); letters[1:2]})
+eval_capture_conditions({
+  warning("Warning 1")
+  warning("Warning 2")
+  letters[1:2]
+})
 
 # messages are not printed to the console
-eval_capture_conditions({message("A message!"); letters[1:2]})
+eval_capture_conditions({
+  message("A message!")
+  letters[1:2]
+})
 }

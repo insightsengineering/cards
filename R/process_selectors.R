@@ -90,11 +90,14 @@ process_selectors <- function(data, ..., env = caller_env()) {
           eval_capture_conditions({
             tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
           })
-        if (!is.null(processed_value[["result"]])) return(processed_value[["result"]])
+        if (!is.null(processed_value[["result"]])) {
+          return(processed_value[["result"]])
+        }
 
         cli::cli_abort(
           c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
-            "i" = "{processed_value[['error']]}"),
+            "i" = "{processed_value[['error']]}"
+          ),
           class = "process_selectors_error",
           call = env
         )
@@ -118,8 +121,10 @@ process_formula_selectors <- function(data, ..., env = caller_env()) {
   ret <- rep_named(names(dots), list())
   for (i in seq_along(dots)) {
     ret[[i]] <-
-      compute_formula_selector(data = data, x = dots[[i]],
-                               arg_name = names(dots)[i], env = env)
+      compute_formula_selector(
+        data = data, x = dots[[i]],
+        arg_name = names(dots)[i], env = env
+      )
   }
 
   # save processed args to the calling env (well, that is the default env)
@@ -140,8 +145,10 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
     if (!is_empty(setdiff(data_names, names(get(dots_names[i], envir = env))))) {
       # process the default selector
       ret[[i]] <-
-        compute_formula_selector(data = data, x = dots[[i]],
-                                 arg_name = dots_names[i], env = env)
+        compute_formula_selector(
+          data = data, x = dots[[i]],
+          arg_name = dots_names[i], env = env
+        )
       # add the previously specified values and overwrite the default
       ret[[i]][names(get(dots_names[i], envir = env))] <-
         get(dots_names[i], envir = env)
@@ -158,24 +165,26 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 #' @export
 compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(), strict = TRUE) {
   # user passed a named list, return unaltered
-  if (.is_named_list(x)) return(x)
+  if (.is_named_list(x)) {
+    return(x)
+  }
 
   # if user passed a single formula, wrap it in a list
   if (inherits(x, "formula")) x <- list(x)
 
-  for(i in seq_along(x)) {
+  for (i in seq_along(x)) {
     # first check the class of the list element
     if (!.is_named_list(x[i]) && !inherits(x[[i]], "formula")) {
       c("The {.arg {arg_name}} argument must be a named list, list of formulas, or a single formula.",
-        "i" = "Review {.help [?syntax](cards::syntax)} for examples and details.") |>
-      cli::cli_abort(call = env)
+        "i" = "Review {.help [?syntax](cards::syntax)} for examples and details."
+      ) |>
+        cli::cli_abort(call = env)
     }
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
-
       lhs_expr <- f_lhs(x[[i]])
 
-      if (!is.null(data)){
+      if (!is.null(data)) {
         lhs_expr <- tidyselect::eval_select(
           # if nothing found on LHS of formula, using `everything()`
           f_lhs(x[[i]]) %||% dplyr::everything(),
@@ -194,7 +203,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
         rep_len(
           list(
             eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment"))
-            ),
+          ),
           length.out = length(colnames)
         ) |>
         stats::setNames(nm = colnames) |>
@@ -206,7 +215,10 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   x <- .purrr_list_flatten(x)
 
   # remove duplicates (keeping the last one)
-  x[names(x) |> rev() |> Negate(duplicated)() |> rev()]
+  x[names(x) |>
+    rev() |>
+    Negate(duplicated)() |>
+    rev()]
 }
 
 #' @name process_selectors
@@ -230,4 +242,3 @@ check_list_elements <- function(x,
 
   invisible()
 }
-

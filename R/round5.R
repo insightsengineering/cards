@@ -21,5 +21,5 @@
 #' # compare results to Base R
 #' round(x) |> setNames(x)
 round5 <- function(x, digits = 0) {
-  trunc(abs(x) * 10 ^ digits + 0.5 + sqrt(.Machine$double.eps)) / 10 ^ digits * sign(as.numeric(x))
+  trunc(abs(x) * 10^digits + 0.5 + sqrt(.Machine$double.eps)) / 10^digits * sign(as.numeric(x))
 }

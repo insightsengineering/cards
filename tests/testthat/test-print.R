@@ -13,6 +13,6 @@ test_that("print.card() works", {
   )
 
   expect_snapshot(
-    ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~\(x) round(x, 3)))
+    ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ \(x) round(x, 3)))
   )
 })

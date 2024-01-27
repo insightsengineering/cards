@@ -96,7 +96,9 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   )
 
   # return empty tibble if no variables selected -------------------------------
-  if (is_empty(variables)) return(dplyr::tibble())
+  if (is_empty(variables)) {
+    return(dplyr::tibble())
+  }
 
   # calculating summary stats --------------------------------------------------
   # first calculate non-tabulation statistics
@@ -106,8 +108,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 
   if (is_empty(statistics_non_tabulation)) {
     df_result_non_tabulation <- dplyr::tibble()
-  }
-  else {
+  } else {
     df_result_non_tabulation <-
       ard_continuous(
         data = data,
@@ -162,7 +163,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    {structure(., class = unique(c("card", class(.))))}
+    {structure(., class = unique(c("card", class(.))))} # styler: off
 }
 
 
@@ -174,12 +175,14 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @inheritParams ard_categorical
 #' @keywords internal
-.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, env = caller_env()) {
+.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
     lapply(statistics, function(x) x["tabulation"] |> compact()) |> compact()
 
-  if (is_empty(statistics_tabulation)) return(dplyr::tibble())
+  if (is_empty(statistics_tabulation)) {
+    return(dplyr::tibble())
+  }
 
   # first process the denominator
   lst_denominator <-
@@ -189,16 +192,19 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
         imap(
           statistics_tabulation,
           function(x, variable) {
-            if (any(c("N", "p") %in% x[["tabulation"]])) TRUE
-            else NULL
+            if (any(c("N", "p") %in% x[["tabulation"]])) {
+              TRUE
+            } else {
+              NULL
+            }
           }
         ) |>
-        compact() |>
-        names(),
+          compact() |>
+          names(),
       denominator = denominator,
       by = by,
       strata = strata,
-      env = env
+      call = call
     )
 
   # perform other counts
@@ -215,13 +221,12 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
                 df_result_tabulation,
                 lst_denominator[[variable]]
               )
+            } else {
+              suppressMessages(dplyr::left_join(
+                df_result_tabulation,
+                lst_denominator[[variable]]
+              ))
             }
-          else {
-            suppressMessages(dplyr::left_join(
-              df_result_tabulation,
-              lst_denominator[[variable]]
-            ))
-          }
         }
         if ("p" %in% tab_stats[["tabulation"]]) {
           df_result_tabulation <-
@@ -245,18 +250,18 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
           dplyr::mutate(
             stat_name =
               gsub(pattern = "^...ard_", replacement = "", x = .data$stat_name) %>%
-              gsub(pattern = "...$", replacement = "", x = .)
+                gsub(pattern = "...$", replacement = "", x = .)
           ) |>
           dplyr::filter(.data$stat_name %in% tab_stats[["tabulation"]])
       }
     ) |>
     dplyr::bind_rows()
 
-    df_result_tabulation |>
-      dplyr::mutate(
-        warning = list(NULL),
-        error = list(NULL)
-      )
+  df_result_tabulation |>
+    dplyr::mutate(
+      warning = list(NULL),
+      error = list(NULL)
+    )
 }
 
 #' Results from `table()` as Data Frame
@@ -279,7 +284,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   ...ard_tab_vars... <- c(by, strata, variable)
   df_table <-
     data[...ard_tab_vars...] |>
-    dplyr::mutate(across(where(is.logical), ~factor(., levels = c("FALSE", "TRUE")))) |>
+    dplyr::mutate(across(where(is.logical), ~ factor(., levels = c("FALSE", "TRUE")))) |>
     with(inject(table(!!!syms(...ard_tab_vars...)))) |>
     dplyr::as_tibble(n = count_column)
 
@@ -287,12 +292,12 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_original_types <-
     lapply(c(by, strata, variable), function(x) .unique_and_sorted(data[[x]])) |>
     stats::setNames(c(by, strata, variable)) %>%
-    {tidyr::expand_grid(!!!.)} |>
+    {tidyr::expand_grid(!!!.)} |> # styler: off
     dplyr::arrange(!!!syms(rev(...ard_tab_vars...)))
 
   # if all columns match, then replace the coerced character cols with their original type/class
   all_cols_equal <-
-    every(c(by, strata, variable), ~all(df_table[[.x]] == df_original_types[[.x]]))
+    every(c(by, strata, variable), ~ all(df_table[[.x]] == df_original_types[[.x]]))
   if (isTRUE(all_cols_equal)) {
     df_table <-
       dplyr::bind_cols(df_original_types, df_table[count_column], .name_repair = "minimal")
@@ -326,8 +331,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
-.process_denominator <- function(data, variables, denominator, by, strata, env = caller_env()) {
-  if (is_empty(variables)) return(list())
+.process_denominator <- function(data, variables, denominator, by, strata, call = parent.frame()) {
+  if (is_empty(variables)) {
+    return(list())
+  }
   # if no by/strata and no denominator (or column), then use number of non-missing in variable
   if ((is.null(denominator) || isTRUE(denominator %in% "column")) && is_empty(c(by, strata))) {
     lst_denominator <-
@@ -355,8 +362,8 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   }
   # if user passed a data frame WITHOUT the counts pre-specified and no by/strata
   else if (is.data.frame(denominator) &&
-           !"...ard_N..." %in% names(denominator) &&
-           is_empty(intersect(c(by, strata), names(denominator)))) {
+    !"...ard_N..." %in% names(denominator) &&
+    is_empty(intersect(c(by, strata), names(denominator)))) {
     lst_denominator <-
       rep_named(
         variables,
@@ -366,7 +373,9 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   # if user passed a data frame WITHOUT the counts pre-specified with by/strata
   else if (is.data.frame(denominator) && !"...ard_N..." %in% names(denominator)) {
     .check_for_missing_combos_in_denom(
-      data, denominator = denominator, by = by, strata = strata, env = env)
+      data,
+      denominator = denominator, by = by, strata = strata, call = call
+    )
 
     lst_denominator <-
       rep_named(
@@ -423,14 +432,18 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     # check there are no duplicates in by/strata variables
     if (
       (any(c(by, strata) %in% names(denominator)) && any(duplicated(denominator[c(by, strata)]))) ||
-      (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
+        (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
     ) {
-      paste("Specified counts in column {.val '...ard_N...'} are not unique in",
-            "the {.arg denominator} argument across the {.arg by} and {.arg strata} columns.") |>
-        cli::cli_abort(call = env)
+      paste(
+        "Specified counts in column {.val '...ard_N...'} are not unique in",
+        "the {.arg denominator} argument across the {.arg by} and {.arg strata} columns."
+      ) |>
+        cli::cli_abort(call = call)
     }
     .check_for_missing_combos_in_denom(
-      data, denominator = denominator, by = by, strata = strata, env = env)
+      data,
+      denominator = denominator, by = by, strata = strata, call = call
+    )
 
     # making the by/strata columns character to merge them with the count data frames
     df_denom <-
@@ -441,9 +454,8 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 
     lst_denominator <-
       rep_named(variables, list(df_denom))
-  }
-  else {
-    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = env)
+  } else {
+    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = call)
   }
 
   lst_denominator
@@ -465,12 +477,14 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
 #'
 #' @return invisible
 #' @keywords internal
-.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, env = caller_env()) {
+.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
   by_vars_to_check <-
     c(by, strata) |>
     intersect(names(data)) |>
     intersect(names(denominator))
-  if (is_empty(by_vars_to_check)) return(invisible())
+  if (is_empty(by_vars_to_check)) {
+    return(invisible())
+  }
 
   # find missing combinations
   df_denom_level_check <-
@@ -485,7 +499,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
     missing_combos <-
       df_denom_level_check |>
       unique() |>
-      imap(~glue::glue("{.y} ({.x})")) |>
+      imap(~ glue::glue("{.y} ({.x})")) |>
       dplyr::bind_cols() |>
       as.matrix() |>
       apply(
@@ -493,10 +507,10 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
         FUN = function(x) paste(x, collapse = "/"),
         simplify = FALSE
       )
-    paste("The following {.arg by/strata} combinations are missing from the",
-          "{.arg denominator} data frame: {.val {missing_combos}}.") |>
-      cli::cli_abort(call = env)
+    paste(
+      "The following {.arg by/strata} combinations are missing from the",
+      "{.arg denominator} data frame: {.val {missing_combos}}."
+    ) |>
+      cli::cli_abort(call = call)
   }
 }
-
-

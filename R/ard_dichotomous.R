@@ -28,7 +28,7 @@ ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
   process_formula_selectors(data[variables], values = values)
   fill_formula_selectors(
     data = data[variables],
-    values =  formals(cards::ard_dichotomous)[["values"]] |> eval()
+    values = formals(cards::ard_dichotomous)[["values"]] |> eval()
   )
   .check_dichotomous_values(data, values)
 
@@ -77,9 +77,16 @@ maximum_variable_values <- function(data) {
   data |>
     lapply(
       function(x) {
-        if (inherits(x, "factor")) return(levels(x) |> dplyr::last())
-        if (inherits(x, "logical")) return(TRUE)
-        stats::na.omit(x) |> unique() |> sort() |> dplyr::last()
+        if (inherits(x, "factor")) {
+          return(levels(x) |> dplyr::last())
+        }
+        if (inherits(x, "logical")) {
+          return(TRUE)
+        }
+        stats::na.omit(x) |>
+          unique() |>
+          sort() |>
+          dplyr::last()
       }
     )
 }
@@ -94,11 +101,11 @@ maximum_variable_values <- function(data) {
 #' @param values (named `list`)
 #'   a named list
 #' @param call (`environment`)
-#'   an environment. Default is `caller_env()`
+#'   an environment. Default is `parent.frame()`
 #'
 #' @return NULL
 #' @keywords internal
-.check_dichotomous_values <- function(data, values, call = caller_env()) {
+.check_dichotomous_values <- function(data, values, call = parent.frame()) {
   imap(
     values,
     function(value, column) {
@@ -113,8 +120,7 @@ maximum_variable_values <- function(data) {
           "Error in argument {.arg values} for variable {.val {column}}.",
           "i" = "A value of {.val {value}} was passed, but must be one of {.val {levels(data[[column]])}}."
         ), call = call)
-      }
-      else if (!value %in% data[[column]]) {
+      } else if (!value %in% data[[column]]) {
         cli::cli_abort(c(
           "Error in argument {.arg values} for variable {.val {column}}.",
           "i" = "A value of {.val {value}} was passed, but must be one of {.val {unique(data[[column]]) |> na.omit() |> sort()}}."

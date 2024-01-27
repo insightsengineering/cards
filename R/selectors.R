@@ -27,21 +27,27 @@ NULL
 #' @export
 #' @rdname selectors
 all_ard_groups <- function(variables = TRUE, levels = TRUE) {
-  if (isTRUE(variables) && isTRUE(levels))
+  if (isTRUE(variables) && isTRUE(levels)) {
     return(dplyr::matches("^group[0-9]+$|^group[0-9]+_level$"))
-  if (isTRUE(variables))
+  }
+  if (isTRUE(variables)) {
     return(dplyr::matches("^group[0-9]+$$"))
-  if (isTRUE(levels))
+  }
+  if (isTRUE(levels)) {
     return(dplyr::matches("^group[0-9]+_level$"))
+  }
 }
 
 #' @export
 #' @rdname selectors
 all_ard_variables <- function(variables = TRUE, levels = TRUE) {
-  if (isTRUE(variables) && isTRUE(levels))
+  if (isTRUE(variables) && isTRUE(levels)) {
     return(dplyr::any_of(c("variable", "variable_level")))
-  if (isTRUE(variables))
+  }
+  if (isTRUE(variables)) {
     return(dplyr::any_of("variable"))
-  if (isTRUE(levels))
+  }
+  if (isTRUE(levels)) {
     return(dplyr::any_of("variable_level"))
+  }
 }

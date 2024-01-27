@@ -33,7 +33,7 @@
 #' ADSL |>
 #'   ard_chisqtest(by = "ARM", variable = "AGEGR1")
 #'
-#' ADSL[1:30,] |>
+#' ADSL[1:30, ] |>
 #'   ard_fishertest(by = "ARM", variable = "AGEGR1")
 NULL
 
@@ -61,9 +61,11 @@ ard_ttest <- function(data, by, variable, ...) {
           stats::t.test(data[[variable]] ~ data[[by]], ...) |>
             broom::tidy()
         ),
-      tidy_result_names = c("estimate", "estimate1", "estimate2", "statistic",
-                            "p.value", "parameter", "conf.low", "conf.high",
-                            "method", "alternative"),
+      tidy_result_names = c(
+        "estimate", "estimate1", "estimate2", "statistic",
+        "p.value", "parameter", "conf.low", "conf.high",
+        "method", "alternative"
+      ),
       fun_args_to_record = c("mu", "paired", "var.equal", "conf.level"),
       formals = formals(asNamespace("stats")[["t.test.default"]]),
       passed_args = dots_list(...),
@@ -71,19 +73,23 @@ ard_ttest <- function(data, by, variable, ...) {
     )
 
   # add the estimate levels and return object ----------------------------------
-  tryCatch({
-    group1_levels <-
-      unique(data[[by]]) |> stats::na.omit() |>  sort()
-    if (length(group1_levels) != 2L) stop("generic message that no one will see.")
+  tryCatch(
+    {
+      group1_levels <-
+        unique(data[[by]]) |>
+        stats::na.omit() |>
+        sort()
+      if (length(group1_levels) != 2L) stop("generic message that no one will see.")
 
-    ret |>
-      dplyr::mutate(
-        group1_level =
-          dplyr::case_when(
-            .data$stat_name %in% "estimate1" ~ dplyr::first(group1_levels) |> list(),
-            .data$stat_name %in% "estimate2" ~ dplyr::last(group1_levels) |> list(),
-          )
-       )},
+      ret |>
+        dplyr::mutate(
+          group1_level =
+            dplyr::case_when(
+              .data$stat_name %in% "estimate1" ~ dplyr::first(group1_levels) |> list(),
+              .data$stat_name %in% "estimate2" ~ dplyr::last(group1_levels) |> list(),
+            )
+        )
+    },
     # in case of an error, simply return ARD without these levels
     error = function(e) dplyr::mutate(ret, group1_level = list(NULL))
   ) |>
@@ -133,8 +139,10 @@ ard_wilcoxtest <- function(data, by, variable, ...) {
       ),
     tidy_result_names = c("statistic", "p.value", "method", "alternative"),
     fun_args_to_record =
-      c("mu", "paired", "exact", "correct", "conf.int",
-        "conf.level", "tol.root", "digits.rank"),
+      c(
+        "mu", "paired", "exact", "correct", "conf.int",
+        "conf.level", "tol.root", "digits.rank"
+      ),
     formals = formals(asNamespace("stats")[["wilcox.test.default"]]),
     passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "wilcoxtest")
@@ -219,8 +227,10 @@ ard_fishertest <- function(data, by, variable, ...) {
     tidy_result_names =
       c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
     fun_args_to_record =
-      c("workspace", "hybrid", "hybridPars", "control", "or",
-        "conf.int", "conf.level", "simulate.p.value", "B"),
+      c(
+        "workspace", "hybrid", "hybridPars", "control", "or",
+        "conf.int", "conf.level", "simulate.p.value", "B"
+      ),
     formals = formals(stats::fisher.test),
     passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")
@@ -234,5 +244,3 @@ ard_fishertest <- function(data, by, variable, ...) {
         )
     )
 }
-
-
