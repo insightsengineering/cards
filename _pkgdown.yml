@@ -1,8 +1,7 @@
 url: https://insightsengineering.github.io/cards/
+
 template:
-  bootstrap: 5
-  params:
-    bootswatch: flatly
+  package: nesttemplate
 
 development:
   mode: auto

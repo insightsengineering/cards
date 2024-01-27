@@ -32,8 +32,9 @@ Suggests:
     spelling (>= 2.2.0),
     testthat (>= 3.2.0)
 Config/Needs/website: rmarkdown, jsonlite, yaml, plumber, survival,
-    ggsurvfit
+    ggsurvfit, insightsengineering/nesttemplate
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 LazyData: true
