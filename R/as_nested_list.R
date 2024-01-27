@@ -81,7 +81,7 @@ as_nested_list <- function(x) {
     unlist() %>%
     paste(collapse = "") %>%
     # 'lst_return' is the name of the nested list that will be converted to JSON
-    {paste0("lst_return", .)} # style: off
+    {paste0("lst_return", .)} # styler: off
 
   # creating final expression defining the results within the nested list
   expr(
