@@ -1,5 +1,18 @@
-# THIS SCRIPT MUST OPERATE AS A STANDALONE SCRIPT
-# DO NOT USE IMPORTED FUNCTIONS AND ONLY USE rlang AND cli NAMESPACING FOR CHECKS
+# DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
+# ---
+# repo: ddsjoberg/standalone
+# file: standalone-checks.R
+# last-updated: 2024-01-24
+# license: https://unlicense.org
+# imports: rlang, cli
+# ---
+#
+# This file provides a minimal shim to provide a purrr-like API on top of
+# base R functions. They are not drop-in replacements but allow a similar style
+# of programming.
+#
+# ## Changelog
+# nocov start
 
 
 #' Check Class
@@ -17,6 +30,7 @@
 #'   Default is `rlang::caller_arg(x)`
 #' @inheritParams cli::cli_abort
 #' @keywords internal
+#' @noRd
 check_class <- function(x, class, allow_null = FALSE,
                         arg_name = rlang::caller_arg(x), call = parent.frame()) {
   # include NULL class as acceptable if allow_null is TRUE
@@ -34,6 +48,7 @@ check_class <- function(x, class, allow_null = FALSE,
 #'
 #' @inheritParams check_class
 #' @keywords internal
+#' @noRd
 check_class_data_frame <- function(x, allow_null = FALSE,
                                    arg_name = rlang::caller_arg(x), call = parent.frame()) {
   check_class(
@@ -46,7 +61,8 @@ check_class_data_frame <- function(x, allow_null = FALSE,
 #'
 #' @inheritParams check_class
 #' @keywords internal
-check_not_missing <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
+#' @noRd
+check_not_missing <- function(x, arg_name = rlang::caller_arg(x), call = parent.frame()) {
   if (missing(x)) {
     cli::cli_abort("The {.arg {arg_name}} argument cannot be missing.", call = call)
   }
@@ -61,18 +77,23 @@ check_not_missing <- function(x, arg_name = caller_arg(x), call = parent.frame()
 #'   integer specifying the required length
 #' @inheritParams check_class
 #' @keywords internal
-#' @name check_length
-NULL
-
-#' @rdname check_length
-check_length <- function(x, length, arg_name = caller_arg(x), call = parent.frame()) {
+#' @noRd
+check_length <- function(x, length, arg_name = rlang::caller_arg(x), call = parent.frame()) {
   if (length(x) != length) {
     cli::cli_abort("The {.arg {arg_name}} argument must be length {.val {length}}.", call = call)
   }
   invisible()
 }
 
-#' @rdname check_length
-check_scalar <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
+#' Check is Scalar
+#'
+#' @param msg (`string`)\cr
+#'   string passed to `cli::cli_abort(message=)`
+#' @inheritParams check_class
+#' @keywords internal
+#' @noRd
+check_scalar <- function(x, arg_name = rlang::caller_arg(x), call = parent.frame()) {
   check_length(x = x, length = 1L, arg_name = arg_name, call = call)
 }
+
+# nocov end
