@@ -22,7 +22,7 @@ and may end with a percent symbol.
 If string is consistent, \code{TRUE} is returned. Otherwise an error.
 }
 \examples{
-cards:::.check_fmt_string("xx.x")  # TRUE
+cards:::.check_fmt_string("xx.x") # TRUE
 cards:::.check_fmt_string("xx.x\%") # TRUE
 }
 \keyword{internal}

@@ -23,9 +23,13 @@ ard_continuous(
   ADSL,
   by = ARM,
   variables = AGE,
-  statistics = ~list(
+  statistics = ~ list(
     mean = \(x) mean(x),
-    mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+    mean_warning = \(x) {
+      warning("warn1")
+      warning("warn2")
+      mean(x)
+    },
     err_fn = \(x) stop("'tis an error")
   )
 ) |>

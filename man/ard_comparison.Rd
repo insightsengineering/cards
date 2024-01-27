@@ -54,6 +54,6 @@ ADSL |>
 ADSL |>
   ard_chisqtest(by = "ARM", variable = "AGEGR1")
 
-ADSL[1:30,] |>
+ADSL[1:30, ] |>
   ard_fishertest(by = "ARM", variable = "AGEGR1")
 }
