@@ -63,5 +63,5 @@ ard_regression <- function(model, tidy_fun = NULL, ...) {
         )
     ) |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))}
+    {structure(., class = c("card", class(.)))} # styler: off
 }

@@ -75,7 +75,7 @@ test_that("ard_categorical() univariate & specified denomiator", {
       dplyr::filter(stat_name %in% "p") |>
       dplyr::pull(statistic) |>
       as.numeric(),
-      table(mtcars$am) |> prop.table() |> as.numeric() %>% `/`(100)
+      table(mtcars$am) |> prop.table() |> as.numeric() %>% `/`(100) # styler: off
   )
 
   expect_equal(

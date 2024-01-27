@@ -133,7 +133,7 @@ ard_hierarchical_count <- function(data, variables, by = NULL, fmt_fn = NULL,
     ) |>
     bind_ard() |>
     dplyr::mutate(context = "hierarchical_count") %>%
-    {structure(., class = unique(c("card", class(.))))}
+    {structure(., class = unique(c("card", class(.))))} # styler: off
 }
 
 # replace last strata group to the variable

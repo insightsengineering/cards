@@ -104,5 +104,5 @@ tidy_as_ard <- function(lst_tidy,
     !!!lst_ard_columns,
   ) |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))}
+    {structure(., class = c("card", class(.)))} # styler: off
 }

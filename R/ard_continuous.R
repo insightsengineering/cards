@@ -147,7 +147,7 @@ ard_continuous <- function(data,
   df_results |>
     dplyr::mutate(context = "continuous") |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))}
+    {structure(., class = c("card", class(.)))} # styler: off
 }
 
 
@@ -289,17 +289,19 @@ ard_continuous <- function(data,
             x[c("variable", "stat_name")] |>
             dplyr::filter(.data$variable %in% .env$variable) |>
             unique() %>%
-            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])}
+            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])} # styler: off
 
           compute_formula_selector(
             data = lst_stat_names,
             x = enlst_arg
           ) %>%
+            # styler: on
             {dplyr::tibble(
               variable = variable,
               stat_name = names(.),
               "{new_column}" := unname(.)
             )}
+            # styler: off
         }
       ) |>
       dplyr::bind_rows()

@@ -75,7 +75,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
           strsplit("xx.xx", split = ".", fixed = TRUE) |> # split string at decimal place
           unlist() %>%
           `[`(2) %>% # get the string after the period
-          {ifelse(is.na(.), 0L, nchar(.))}
+          {ifelse(is.na(.), 0L, nchar(.))} # styler: off
       )
     width <- nchar(x) - endsWith(x, "%")
 

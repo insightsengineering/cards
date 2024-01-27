@@ -162,7 +162,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() %>%
-    {structure(., class = unique(c("card", class(.))))}
+    {structure(., class = unique(c("card", class(.))))} # styler: off
 }
 
 
@@ -287,7 +287,7 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   df_original_types <-
     lapply(c(by, strata, variable), function(x) .unique_and_sorted(data[[x]])) |>
     stats::setNames(c(by, strata, variable)) %>%
-    {tidyr::expand_grid(!!!.)} |>
+    {tidyr::expand_grid(!!!.)} |> # styler: off
     dplyr::arrange(!!!syms(rev(...ard_tab_vars...)))
 
   # if all columns match, then replace the coerced character cols with their original type/class
