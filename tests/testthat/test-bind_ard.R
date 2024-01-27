@@ -22,11 +22,10 @@ test_that("ARD helpers messaging", {
   )
 })
 
-test_that("bind_ard() .order argument works",{
-
+test_that("bind_ard() .order argument works", {
   expect_snapshot(
-      bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = c("SEX","AGEGR1")),
+    bind_ard(
+      ard_categorical(ADSL, by = "ARM", variables = c("SEX", "AGEGR1")),
       ard_chisqtest(ADSL, by = "ARM", variable = "AGEGR1"),
       ard_chisqtest(ADSL, by = "ARM", variable = "SEX"),
       .order = TRUE
@@ -37,7 +36,7 @@ test_that("bind_ard() .order argument works",{
 
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = c("SEX","AGEGR1")),
+      ard_categorical(ADSL, by = "ARM", variables = c("SEX", "AGEGR1")),
       ard_chisqtest(ADSL, by = "ARM", variable = "AGEGR1"),
       ard_chisqtest(ADSL, by = "ARM", variable = "SEX"),
       .order = FALSE

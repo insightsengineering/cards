@@ -14,11 +14,11 @@ hook_output <- knitr::knit_hooks$get("output")
 knitr::knit_hooks$set(output = function(x, options) {
   lines <- options$output.lines
   if (is.null(lines)) {
-    return(hook_output(x, options))  # pass to default hook
+    return(hook_output(x, options)) # pass to default hook
   }
   x <- unlist(strsplit(x, "\n"))
   more <- "..."
-  if (length(lines)==1) {        # first n lines
+  if (length(lines) == 1) { # first n lines
     if (length(x) > lines) {
       # truncate the output, but add ....
       x <- c(head(x, lines), more)
@@ -46,7 +46,7 @@ ard <-
   bind_ard(
     ard_continuous(ADSL, by = "ARM", variables = "AGE"),
     ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
-  ) 
+  )
 
 ard
 ```
@@ -56,9 +56,9 @@ ard
 The `as_nested_list()` function prepares the ARD data frame to be converted to a YAML object.
 
 ```{r yaml, output.lines=15}
-ard |> 
-  as_nested_list() |> 
-  yaml::as.yaml() |> 
+ard |>
+  as_nested_list() |>
+  yaml::as.yaml() |>
   cat()
 ```
 
@@ -67,8 +67,8 @@ ard |>
 The `as_nested_list()` function prepares the ARD data frame to be converted to a JSON object.
 
 ```{r json, output.lines=15}
-ard |> 
-  as_nested_list() |> 
+ard |>
+  as_nested_list() |>
   jsonlite::toJSON(pretty = TRUE)
 ```
 
@@ -85,14 +85,14 @@ library(jsonlite)
 #* @get /nested_json
 #* @serializer unboxedJSON
 function() {
-  ard |> 
-  as_nested_list() |> 
-  jsonlite::toJSON(auto_unbox = TRUE)
+  ard |>
+    as_nested_list() |>
+    jsonlite::toJSON(auto_unbox = TRUE)
 }
 
 # ------------------------------------------------------------------------------
 library(plumber)
 # 'plumber.R' is the location of the files shown above
-pr("plumber.R") |> 
+pr("plumber.R") |>
   pr_run(port = 8000)
 ```

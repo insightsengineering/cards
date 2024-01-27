@@ -105,17 +105,16 @@ test_that("ard_continuous(fmt_fn) argument works", {
 
   ard_categorical(
     mtcars,
-    variables = c("am","vs"),
+    variables = c("am", "vs"),
     fmt_fn = list(
       am = list(p = function(x) round5(x * 100, digits = 3)),
       vs = list(p = function(x) round5(x * 100, digits = 1))
-      )
-    )|>
+    )
+  ) |>
     apply_statistic_fmt_fn() |>
     dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
-
 })
 
 
@@ -140,8 +139,10 @@ test_that("ard_categorical() with strata and by arguments", {
   # check that all combinations of AESOC and AELLT are NOT present
   expect_equal(
     card_ae_strata |>
-      dplyr::filter(group2_level %in% "EYE DISORDERS",
-                    group3_level %in% "NASAL MUCOSA BIOPSY") |>
+      dplyr::filter(
+        group2_level %in% "EYE DISORDERS",
+        group3_level %in% "NASAL MUCOSA BIOPSY"
+      ) |>
       nrow(),
     0L
   )
@@ -180,13 +181,13 @@ test_that("ard_categorical() with strata and by arguments", {
       dplyr::pull(statistic) |>
       getElement(1),
     (ADAE_small |>
-       dplyr::filter(
-         AESOC %in% "EYE DISORDERS",
-         AELLT %in% "EYES SWOLLEN",
-         TRTA %in% "Placebo",
-         AESEV %in% "MILD"
-       ) |>
-       nrow()) /
+      dplyr::filter(
+        AESOC %in% "EYE DISORDERS",
+        AELLT %in% "EYES SWOLLEN",
+        TRTA %in% "Placebo",
+        AESEV %in% "MILD"
+      ) |>
+      nrow()) /
       (ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow())
   )
 
@@ -211,42 +212,47 @@ test_that("ard_categorical() with strata and by arguments", {
       denominator = ADSL |> dplyr::filter(ARM %in% "Placebo")
     )
   )
-
 })
 
 test_that("ard_categorical(stat_labels) argument works", {
   # formula
   expect_snapshot(
-    ard_categorical(data = ADSL,
-                    by = "ARM",
-                    variables = c("AGEGR1","SEX"),
-                    stat_labels = everything() ~ list(c("n","p") ~ "n (pct)")) |>
+    ard_categorical(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGEGR1", "SEX"),
+      stat_labels = everything() ~ list(c("n", "p") ~ "n (pct)")
+    ) |>
       as.data.frame() |>
-      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::filter(stat_name %in% c("n", "p")) |>
       dplyr::select(stat_name, stat_label) |>
       unique()
   )
 
   # list
   expect_snapshot(
-    ard_categorical(data = ADSL,
-                    by = "ARM",
-                    variables = c("AGEGR1","SEX"),
-                    stat_labels = everything() ~ list(n = "num", p = "pct")) |>
+    ard_categorical(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGEGR1", "SEX"),
+      stat_labels = everything() ~ list(n = "num", p = "pct")
+    ) |>
       as.data.frame() |>
-      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::filter(stat_name %in% c("n", "p")) |>
       dplyr::select(stat_name, stat_label) |>
       unique()
   )
 
   # variable-specific
   expect_snapshot(
-    ard_categorical(data = ADSL,
-                    by = "ARM",
-                    variables = c("AGEGR1","SEX"),
-                    stat_labels = AGEGR1 ~ list(c("n","p") ~ "n (pct)")) |>
+    ard_categorical(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGEGR1", "SEX"),
+      stat_labels = AGEGR1 ~ list(c("n", "p") ~ "n (pct)")
+    ) |>
       as.data.frame() |>
-      dplyr::filter(stat_name %in% c("n","p")) |>
+      dplyr::filter(stat_name %in% c("n", "p")) |>
       dplyr::select(variable, stat_name, stat_label) |>
       unique()
   )
@@ -356,7 +362,7 @@ test_that("ard_categorical(denominator=integer()) works", {
   expect_equal(
     ard_categorical(ADSL, variables = AGEGR1, denominator = 1000) |>
       get_ard_statistics(variable_level %in% "<65", .attributes = NULL),
-    list(n = 33, N = 1000, p = 33/1000)
+    list(n = 33, N = 1000, p = 33 / 1000)
   )
 })
 
@@ -413,9 +419,16 @@ test_that("ard_categorical(statistics) works with custom fns", {
         ADSL,
         variables = AGEGR1,
         statistics =
-          ~categorical_variable_summary_fns(
-            other_stats = list(mode = function(x) table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1),
-                               length = function(x) length(x))
+          ~ categorical_variable_summary_fns(
+            other_stats = list(
+              mode = function(x) {
+                table(x) |>
+                  sort(decreasing = TRUE) |>
+                  names() |>
+                  getElement(1)
+              },
+              length = function(x) length(x)
+            )
           )
       )
   )
@@ -428,51 +441,64 @@ test_that("ard_categorical(statistics) works with custom fns", {
       ADSL,
       variables = AGEGR1,
       statistics =
-        ~categorical_variable_summary_fns(
+        ~ categorical_variable_summary_fns(
           summaries = list(),
-          other_stats = list(mode = function(x) table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1),
-                             length = function(x) length(x))
+          other_stats = list(
+            mode = function(x) {
+              table(x) |>
+                sort(decreasing = TRUE) |>
+                names() |>
+                getElement(1)
+            },
+            length = function(x) length(x)
+          )
         )
     )
   )
 })
 
 test_that("ard_categorical() and ARD column names", {
-  ard_colnames <- c("group1", "group1_level", "variable", "variable_level",
-                    "context", "stat_name", "stat_label", "statistic",
-                    "statistic_fmt_fn", "warning", "error")
+  ard_colnames <- c(
+    "group1", "group1_level", "variable", "variable_level",
+    "context", "stat_name", "stat_label", "statistic",
+    "statistic_fmt_fn", "warning", "error"
+  )
 
   # no errors when these variables are the summary vars
-  expect_error({
-    lapply(
-      ard_colnames,
-      function(var) {
-        df <- mtcars[c("am", "cyl")]
-        names(df) <- c("am", var)
-        ard_categorical(
-          data = df,
-          by = "am",
-          variables = all_of(var)
-        )
-      }
-    )},
+  expect_error(
+    {
+      lapply(
+        ard_colnames,
+        function(var) {
+          df <- mtcars[c("am", "cyl")]
+          names(df) <- c("am", var)
+          ard_categorical(
+            data = df,
+            by = "am",
+            variables = all_of(var)
+          )
+        }
+      )
+    },
     NA
   )
 
   # no errors when these vars are the by var
-  expect_error({
-    lapply(
-      ard_colnames,
-      function(byvar) {
-        df <- mtcars[c("am", "cyl")]
-        names(df) <- c(byvar, "cyl")
-        ard_continuous(
-          data = df,
-          by = all_of(byvar),
-          variables = "cyl"
-        )
-      }
-    )},
+  expect_error(
+    {
+      lapply(
+        ard_colnames,
+        function(byvar) {
+          df <- mtcars[c("am", "cyl")]
+          names(df) <- c(byvar, "cyl")
+          ard_continuous(
+            data = df,
+            by = all_of(byvar),
+            variables = "cyl"
+          )
+        }
+      )
+    },
     NA
   )
 })

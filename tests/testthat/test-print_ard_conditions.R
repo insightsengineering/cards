@@ -10,9 +10,13 @@ test_that("print_ard_conditions() works", {
     ard_continuous(
       ADSL,
       variables = AGE,
-      statistics = ~list(
+      statistics = ~ list(
         mean = \(x) mean(x),
-        mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+        mean_warning = \(x) {
+          warning("warn1")
+          warning("warn2")
+          mean(x)
+        },
         err_fn = \(x) stop("'tis an error")
       )
     ) |>
@@ -25,9 +29,13 @@ test_that("print_ard_conditions() works", {
       ADSL,
       variables = AGE,
       by = ARM,
-      statistics = ~list(
+      statistics = ~ list(
         mean = \(x) mean(x),
-        mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+        mean_warning = \(x) {
+          warning("warn1")
+          warning("warn2")
+          mean(x)
+        },
         err_fn = \(x) stop("'tis an error")
       )
     ) |>
