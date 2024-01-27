@@ -27,14 +27,18 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
   # remove columns -------------------------------------------------------------
   if (arg_match(columns) %in% "auto") {
     # remove warning and error columns if nothing to report
-    if ("error" %in% names(x_print) && every(x_print[["error"]], is.null))
+    if ("error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
       x_print[["error"]] <- NULL
-    if ("warning" %in% names(x_print) && every(x_print[["warning"]], is.null))
+    }
+    if ("warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
       x_print[["warning"]] <- NULL
-    if (ncol(x_print) > n_col)
-      x_print[["statistic_fmt_fn"]] <- NULL # remove this col if there are many cols
-    if (ncol(x_print) > n_col)
-      x_print[["context"]] <- NULL # remove this col if there are many cols
+    }
+    if (ncol(x_print) > n_col) {
+      x_print[["statistic_fmt_fn"]] <- NULL
+    } # remove this col if there are many cols
+    if (ncol(x_print) > n_col) {
+      x_print[["context"]] <- NULL
+    } # remove this col if there are many cols
   }
 
   # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ------
@@ -43,9 +47,11 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       x_print |>
         dplyr::mutate(
           across(
-            c(all_ard_groups(FALSE, TRUE),
+            c(
+              all_ard_groups(FALSE, TRUE),
               all_ard_variables(FALSE, TRUE),
-              any_of(c("context", "stat_label", "warning", "error"))),
+              any_of(c("context", "stat_label", "warning", "error"))
+            ),
             function(x) {
               lapply(
                 x,
@@ -65,8 +71,12 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     x_print$statistic <- lapply(
       x_print$statistic,
       function(x) {
-        if (isTRUE(is.double(x))) return(round5(x, digits = 3))
-        if (is_string(x) && nchar(x) > 9) return(paste0(substr(x, 1, 8), "\u2026"))
+        if (isTRUE(is.double(x))) {
+          return(round5(x, digits = 3))
+        }
+        if (is_string(x) && nchar(x) > 9) {
+          return(paste0(substr(x, 1, 8), "\u2026"))
+        }
         x
       }
     )
@@ -85,7 +95,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     )
   }
 
- # final printing --------------------------------------------------------------
+  # final printing --------------------------------------------------------------
   cli::cli_text(cli::col_grey("{{cards}} data frame: {nrow(x)} x {ncol(x)}"))
   print(x_print)
   if (nrow(x) > n) {

@@ -13,7 +13,7 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = ~continuous_variable_summary_fns("mean")
+      statistics = ~ continuous_variable_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )
@@ -31,26 +31,30 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = ~continuous_variable_summary_fns("mean")
+      statistics = ~ continuous_variable_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )
 
   # test a function using `data` and `data_full` arguments
-  expect_error({
-    grand_mean <- function(data, data_full, variable, ...) {
-      list(mean = mean(data[[variable]], na.rm = TRUE),
-           grand_mean = mean(data_full[[variable]], na.rm = TRUE))
-    }
-    ard_grand_mean <-
-      ard_complex(
-        ADSL,
-        by = "ARM",
-        variables = "AGE",
-        statistics = list(AGE = list(means = grand_mean))
-      ) |>
-      as.data.frame() |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)},
+  expect_error(
+    {
+      grand_mean <- function(data, data_full, variable, ...) {
+        list(
+          mean = mean(data[[variable]], na.rm = TRUE),
+          grand_mean = mean(data_full[[variable]], na.rm = TRUE)
+        )
+      }
+      ard_grand_mean <-
+        ard_complex(
+          ADSL,
+          by = "ARM",
+          variables = "AGE",
+          statistics = list(AGE = list(means = grand_mean))
+        ) |>
+        as.data.frame() |>
+        dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)
+    },
     NA
   )
   expect_equal(

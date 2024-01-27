@@ -62,8 +62,10 @@ my_ard_fishertest <- function(data, by, variable, ...) {
     tidy_result_names =
       c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
     fun_args_to_record =
-      c("workspace", "hybrid", "hybridPars", "control", "or",
-        "conf.int", "conf.level", "simulate.p.value", "B"),
+      c(
+        "workspace", "hybrid", "hybridPars", "control", "or",
+        "conf.int", "conf.level", "simulate.p.value", "B"
+      ),
     formals = formals(stats::fisher.test),
     passed_args = dots_list(...),
     lst_ard_columns = list(group1 = by, variable = variable, context = "fishertest")

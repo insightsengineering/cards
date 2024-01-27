@@ -6,16 +6,16 @@
 \usage{
 .check_no_ard_columns(
   x,
-  env = caller_env(),
+  call = parent.frame(),
   exceptions = "...ard_dummy_for_counting..."
 )
 }
 \arguments{
 \item{x}{data frame}
 
-\item{env}{environment for error messaging}
-
 \item{exceptions}{character string of column names to exclude from checks}
+
+\item{env}{environment for error messaging}
 }
 \value{
 invisible

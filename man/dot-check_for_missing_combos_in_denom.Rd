@@ -9,7 +9,7 @@
   denominator,
   by,
   strata,
-  env = caller_env()
+  call = parent.frame()
 )
 }
 \arguments{

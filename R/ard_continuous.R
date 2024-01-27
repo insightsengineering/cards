@@ -66,7 +66,7 @@ ard_continuous <- function(data,
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
-  process_selectors(data, variables = {{variables}}, by = {{by}}, strata = {{strata}})
+  process_selectors(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
 
   process_formula_selectors(
     data = data[variables],
@@ -77,19 +77,24 @@ ard_continuous <- function(data,
   fill_formula_selectors(
     data = data[variables],
     statistics = formals(cards::ard_continuous)[["statistics"]] |> eval(),
-    stat_labels =  formals(cards::ard_continuous)[["stat_labels"]] |> eval()
+    stat_labels = formals(cards::ard_continuous)[["stat_labels"]] |> eval()
   )
 
   check_list_elements(
     statistics = function(x) is.list(x) && is_named(x) && every(x, is.function),
     error_msg =
-      list(statistics =
-             c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
-               "i" = "Value must be a named list of functions."))
+      list(
+        statistics =
+          c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+            "i" = "Value must be a named list of functions."
+          )
+      )
   )
 
   # return empty tibble if no variables selected -------------------------------
-  if (is_empty(variables)) return(dplyr::tibble())
+  if (is_empty(variables)) {
+    return(dplyr::tibble())
+  }
 
   # calculate statistics -------------------------------------------------------
   df_nested <-
@@ -147,7 +152,7 @@ ard_continuous <- function(data,
   df_results |>
     dplyr::mutate(context = "continuous") |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))}
+    {structure(., class = c("card", class(.)))} # styler: off
 }
 
 
@@ -163,7 +168,7 @@ ard_continuous <- function(data,
 #'
 #' @return invisible
 #' @keywords internal
-.check_no_ard_columns <- function(x, env = caller_env(), exceptions = "...ard_dummy_for_counting...") {
+.check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
     colnames[startsWith(colnames, "...ard_") & endsWith(colnames, "...")] |>
@@ -171,7 +176,7 @@ ard_continuous <- function(data,
 
   if (!is_empty(ard_colnames)) {
     "Columns beginning with {.val '...ard_'} and ending with {.val '...'} are not allowed." |>
-      cli::cli_abort(call = env)
+      cli::cli_abort(call = call)
   }
 }
 
@@ -188,7 +193,6 @@ ard_continuous <- function(data,
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
                                     by, strata, data,
                                     new_col_name = "...ard_all_stats...") {
-
   df_nested[[new_col_name]] <-
     map(
       df_nested[["...ard_nested_data..."]],
@@ -289,17 +293,19 @@ ard_continuous <- function(data,
             x[c("variable", "stat_name")] |>
             dplyr::filter(.data$variable %in% .env$variable) |>
             unique() %>%
-            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])}
+            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])} # styler: off
 
           compute_formula_selector(
             data = lst_stat_names,
             x = enlst_arg
           ) %>%
+            # styler: off
             {dplyr::tibble(
               variable = variable,
               stat_name = names(.),
               "{new_column}" := unname(.)
             )}
+          # styler: on
         }
       ) |>
       dplyr::bind_rows()
@@ -308,7 +314,7 @@ ard_continuous <- function(data,
   }
 
   if (isTRUE(unlist)) {
-    x[[new_column]] <- lapply(x[[new_column]], function(x) x %||% NA) |>  unlist()
+    x[[new_column]] <- lapply(x[[new_column]], function(x) x %||% NA) |> unlist()
   }
 
   x
@@ -327,13 +333,18 @@ ard_continuous <- function(data,
         map2(
           .data$stat_name, .data$statistic_fmt_fn,
           function(stat_name, statistic_fmt_fn) {
-            if (!is_empty(statistic_fmt_fn)) return(statistic_fmt_fn)
-            if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) return(0L)
-            if (stat_name %in% c("p", "p_miss", "p_nonmiss")) return(label_cards(digits = 1, scale = 100))
+            if (!is_empty(statistic_fmt_fn)) {
+              return(statistic_fmt_fn)
+            }
+            if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) {
+              return(0L)
+            }
+            if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
+              return(label_cards(digits = 1, scale = 100))
+            }
 
             return(1L)
           }
         )
     )
 }
-

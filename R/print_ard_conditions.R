@@ -5,6 +5,9 @@
 #'
 #' @param x (`card`)\cr
 #'   an ARD data frame
+#' @param call (`environment`)\cr
+#'   if supplied, the calling function will be used in messaging to users.
+#'   Default is `NULL`
 #'
 #' @return NULL
 #' @export
@@ -14,34 +17,43 @@
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
-#'   statistics = ~list(
+#'   statistics = ~ list(
 #'     mean = \(x) mean(x),
-#'     mean_warning = \(x) {warning("warn1"); warning("warn2"); mean(x)},
+#'     mean_warning = \(x) {
+#'       warning("warn1")
+#'       warning("warn2")
+#'       mean(x)
+#'     },
 #'     err_fn = \(x) stop("'tis an error")
 #'   )
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x) {
+print_ard_conditions <- function(x, call = NULL) {
   check_class(x, class = "card")
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "error")
-  .cli_condition_messaging(x, msg_type = "warning")
+  .cli_condition_messaging(x, msg_type = "error", call = call)
+  .cli_condition_messaging(x, msg_type = "warning", call = call)
 
   invisible()
 }
 
 # this function prints either the warnings or errors saved in the ARD
-.cli_condition_messaging <- function(x, msg_type) {
+.cli_condition_messaging <- function(x, msg_type, call) {
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 
   # if no messages, quit the function early
-  if (nrow(ard_condition) == 0L) return(invisible())
+  if (nrow(ard_condition) == 0L) {
+    return(invisible())
+  }
 
   # choose the function for color prints for warnings/errors
   cli_color_fun <-
-    switch(msg_type, "warning" = cli::col_yellow, "error" = cli::col_red)
+    switch(msg_type,
+      "warning" = cli::col_yellow,
+      "error" = cli::col_red
+    )
 
   # create a data frame that is one row per message to print
   # also formats the text that will be printed
@@ -54,18 +66,18 @@ print_ard_conditions <- function(x) {
           # this column is the messaging for which groups/variable the message appears in
           cli_variable_msg =
             dplyr::select(.y, all_ard_variables(levels = FALSE)) |>
-            dplyr::mutate(across(where(is.list), unlist)) |>
-            dplyr::slice(1L) |>
-            as.list() |>
-            .cli_groups_and_variable() |>
-            list(),
+              dplyr::mutate(across(where(is.list), unlist)) |>
+              dplyr::slice(1L) |>
+              as.list() |>
+              .cli_groups_and_variable() |>
+              list(),
           cli_group_msg =
             dplyr::select(.y, all_ard_groups()) |>
-            dplyr::mutate(across(where(is.list), unlist)) |>
-            dplyr::slice(1L) |>
-            as.list() |>
-            .cli_groups_and_variable() |>
-            list(),
+              dplyr::mutate(across(where(is.list), unlist)) |>
+              dplyr::slice(1L) |>
+              as.list() |>
+              .cli_groups_and_variable() |>
+              list(),
           # character vector of all the stat_names the message applies to
           all_stat_names = list(.x$stat_name),
           # grabs the condition message and colors it with the cli color function
@@ -76,7 +88,12 @@ print_ard_conditions <- function(x) {
     dplyr::bind_rows()
 
   # and finally, print the messages
-  cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
+  if (!is.null(call)) {
+    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned during {.fun {error_call(call)}}:")
+  } else {
+    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
+  }
+
   for (i in seq_len(nrow(ard_msg))) {
     cli::cli_inform(c(
       glue::glue(
@@ -85,7 +102,10 @@ print_ard_conditions <- function(x) {
         "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
         "{ard_msg$cond_msg[[i]]}"
       ) |>
-        stats::setNames(switch(msg_type, "warning" = "!", "error" = "x"))
+        stats::setNames(switch(msg_type,
+          "warning" = "!",
+          "error" = "x"
+        ))
     ))
   }
 

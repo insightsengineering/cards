@@ -36,8 +36,10 @@
 #'
 #' # return the grand mean and the mean within the by group
 #' grand_mean <- function(data, data_full, variable, ...) {
-#'   list(mean = mean(data[[variable]], na.rm = TRUE),
-#'        grand_mean = mean(data_full[[variable]], na.rm = TRUE))
+#'   list(
+#'     mean = mean(data[[variable]], na.rm = TRUE),
+#'     grand_mean = mean(data_full[[variable]], na.rm = TRUE)
+#'   )
 #' }
 #'
 #' ard_complex(
@@ -78,14 +80,14 @@ ard_complex <- function(data,
   on.exit(options(cards.calculate_stats_as_ard.eval_fun = old_option), add = TRUE)
   options(
     cards.calculate_stats_as_ard.eval_fun =
-      # putting the expr in quotes to avoid note about global variables
+    # putting the expr in quotes to avoid note about global variables
       "do.call(fun, args = list(x = stats::na.omit(nested_data[[variable]]),
                                 data = tidyr::drop_na(nested_data, any_of(variable)),
                                 data_full = data,
                                 variable = variable,
                                 by = by,
                                 strata = strata))" |>
-      parse_expr()
+        parse_expr()
   )
 
   ard_continuous(
@@ -98,5 +100,4 @@ ard_complex <- function(data,
     stat_labels = stat_labels
   ) |>
     dplyr::mutate(context = "complex")
-
 }

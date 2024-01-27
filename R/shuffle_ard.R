@@ -1,4 +1,3 @@
-
 #' Shuffle ARD
 #'
 #' This function ingests an ARD object and shuffles the information to prepare for analysis. Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1 column, back fills missing grouping values from the variable levels where possible, and optionally trims statistics-level metadata.
@@ -16,10 +15,9 @@
 #'   ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
 #'   ard_categorical(ADSL, variables = "ARM")
 #' ) |>
-#' shuffle_ard()
+#'   shuffle_ard()
 #'
-shuffle_ard <- function(x, trim = TRUE){
-
+shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, class = "card")
 
   # make sure columns are in order & add index for retaining order
@@ -33,7 +31,9 @@ shuffle_ard <- function(x, trim = TRUE){
     dplyr::mutate(dplyr::across(any_of("stat_label"), ~ dplyr::coalesce(.x, stat_name)))
 
   # split up the data into data/variable info & cards info
-  vars_ard <- dat_cards |> dplyr::select(all_ard_groups(), all_ard_variables()) |> names()
+  vars_ard <- dat_cards |>
+    dplyr::select(all_ard_groups(), all_ard_variables()) |>
+    names()
   vars_protected <- setdiff(names(dat_cards), vars_ard)
 
   dat_cards_grps <- dat_cards |>
@@ -48,7 +48,7 @@ shuffle_ard <- function(x, trim = TRUE){
     dplyr::mutate(
       dplyr::across(
         where(.is_list_column_of_scalars),
-        ~lapply(., \(x) if (!is.null(x)) x else NA_character_) |> unlist()
+        ~ lapply(., \(x) if (!is.null(x)) x else NA_character_) |> unlist()
       )
     ) |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
@@ -63,17 +63,17 @@ shuffle_ard <- function(x, trim = TRUE){
   )
 
   # fill stat_label -> variable_level if exists
-  if ("stat_label" %in% names(dat_cards_out)){
+  if ("stat_label" %in% names(dat_cards_out)) {
     dat_cards_out <- dat_cards_out |>
-      dplyr::mutate(dplyr::across(any_of("variable_level"), ~dplyr::coalesce(.x, stat_label)))
+      dplyr::mutate(dplyr::across(any_of("variable_level"), ~ dplyr::coalesce(.x, stat_label)))
   }
 
   dat_cards_out <- dat_cards_out |>
-    dplyr::rename(any_of(c(label="variable_level"))) |>
-    dplyr::arrange(".cards_idx")   |>
+    dplyr::rename(any_of(c(label = "variable_level"))) |>
+    dplyr::arrange(".cards_idx") |>
     dplyr::select(-".cards_idx")
 
-  if (trim){
+  if (trim) {
     dat_cards_out |> .trim_ard()
   } else {
     dat_cards_out
@@ -91,7 +91,6 @@ shuffle_ard <- function(x, trim = TRUE){
 #' @return data frame
 #' @keywords internal
 .trim_ard <- function(x) {
-
   check_class_data_frame(x)
 
   # flatten ard table for easier viewing ---------------------------------------
@@ -101,9 +100,10 @@ shuffle_ard <- function(x, trim = TRUE){
     # filter to numeric statistic values
     dplyr::filter(map_lgl(.data$statistic, is.numeric)) |>
     # unlist the list-columns
-    dplyr::mutate(statistic = lapply(.data$statistic,
-                                           \(x) if (!is.null(x)) x else NA) |> unlist() |> unname()
-      ) |>
+    dplyr::mutate(statistic = lapply(
+      .data$statistic,
+      \(x) if (!is.null(x)) x else NA
+    ) |> unlist() |> unname()) |>
     # remove the formatting functions / warning / error
     dplyr::select(-where(is.list), -any_of("stat_label"))
 }
@@ -119,15 +119,13 @@ shuffle_ard <- function(x, trim = TRUE){
 #'
 #' @return data frame
 #' @keywords internal
-.detect_msgs <- function(x, ...){
-
+.detect_msgs <- function(x, ...) {
   dots <- rlang::dots_list(...)
 
-  lapply(dots, function(var){
-    if (any(!map_lgl(x[[var]], is.null))){
+  lapply(dots, function(var) {
+    if (any(!map_lgl(x[[var]], is.null))) {
       cli::cli_inform("{.val {var}} column contains messages that will be removed.")
     }
-
   })
 
   x
@@ -143,8 +141,7 @@ shuffle_ard <- function(x, trim = TRUE){
 #'
 #' @return data frame
 #' @keywords internal
-.check_var_nms <- function(x, vars_protected){
-
+.check_var_nms <- function(x, vars_protected) {
   # get all represented variable names from original data
   var_nms <- x |>
     dplyr::select(-ends_with("_level"), -".cards_idx") |>
@@ -158,21 +155,24 @@ shuffle_ard <- function(x, trim = TRUE){
     set_names(var_nms)
 
   # subset to only the ones needing recoding
-  var_nms_new <- var_nms_new[imap(var_nms_new,
-                                  function(x,y){
-                                    if (is.na(x)) FALSE else !x == y}
+  var_nms_new <- var_nms_new[imap(
+    var_nms_new,
+    function(x, y) {
+      if (is.na(x)) FALSE else !x == y
+    }
   ) |>
     unlist(use.names = FALSE)]
 
   # perform recodes if needed
-  if (length(var_nms_new)>0){
+  if (length(var_nms_new) > 0) {
     x |>
-      dplyr::mutate(dplyr::across(-c(ends_with("_level"), ".cards_idx"),
-                                  ~ dplyr::recode(.x, !!!var_nms_new)))
+      dplyr::mutate(dplyr::across(
+        -c(ends_with("_level"), ".cards_idx"),
+        ~ dplyr::recode(.x, !!!var_nms_new)
+      ))
   } else {
     x
   }
-
 }
 
 
@@ -185,41 +185,39 @@ shuffle_ard <- function(x, trim = TRUE){
 #' @param x data frame
 #' @return data frame
 #' @keywords internal
-.rnm_grp_vars <- function(x){
-
+.rnm_grp_vars <- function(x) {
   grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
   grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
 
-  if (length(grp_vars)==0){
+  if (length(grp_vars) == 0) {
     return(x)
   }
 
   # loop through each of the grouping variables
-  for (v in grp_vars){
-
+  for (v in grp_vars) {
     # rename as the variable level within the unique levels of the grouping variable
     x <- x |>
       dplyr::mutate(!!v := fct_inorder(.data[[v]])) |>
       dplyr::group_by(.data[[v]]) |>
-      dplyr::group_split()|>
-      map(function(dat){
-
+      dplyr::group_split() |>
+      map(function(dat) {
         v_lev <- paste0(v, "_level")
         v_new <- unique(dat[[v]]) |> as.character()
 
         # drop if no grouping values
-        if (is.na(v_new)){
+        if (is.na(v_new)) {
           dplyr::select(dat, -all_of(c(v_lev, v)))
         } else {
-
           # create _level var if it does not exist
-          if (is.null(dat[[v_lev]])){
+          if (is.null(dat[[v_lev]])) {
             dat <- dat |> dplyr::mutate(!!v_lev := NA_character_)
           }
 
           # fill any NA _level
-          v_new_fill <- make.unique(c(unique(dat[[v_lev]]),
-                                      paste("Overall", v_new))) |>
+          v_new_fill <- make.unique(c(
+            unique(dat[[v_lev]]),
+            paste("Overall", v_new)
+          )) |>
             dplyr::last()
 
           # rename _level var & drop source
@@ -246,21 +244,21 @@ shuffle_ard <- function(x, trim = TRUE){
 #' @param x data frame
 #' @return data frame
 #' @keywords internal
-.fill_grps_from_variables <- function(x){
-
+.fill_grps_from_variables <- function(x) {
   # within each variable, check if there is a match against one of the grouping cols
   # if the corresponding value in that grouping col is missing, backfill with the variable level
   x %>%
     dplyr::mutate(variable = fct_inorder(.data$variable)) |>
     dplyr::group_by(.data$variable) |>
     dplyr::group_split() |>
-    map(function(dat){
-      grp_match <- names(dat)[names(dat)==unique(dat$variable)]
-      if(length(grp_match)>0 && "variable_level" %in% names(dat)){
+    map(function(dat) {
+      grp_match <- names(dat)[names(dat) == unique(dat$variable)]
+      if (length(grp_match) > 0 && "variable_level" %in% names(dat)) {
         dat |>
           dplyr::mutate(!!grp_match := ifelse(is.na(.data[[grp_match]]),
-                                            .data$variable_level,
-                                            .data[[grp_match]]))
+            .data$variable_level,
+            .data[[grp_match]]
+          ))
       } else {
         dat
       }
@@ -272,4 +270,3 @@ shuffle_ard <- function(x, trim = TRUE){
 .is_list_column_of_scalars <- function(x) {
   is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
 }
-

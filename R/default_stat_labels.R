@@ -20,11 +20,9 @@ default_stat_labels <- function() {
     p75 = "75th Percentile",
     min = "Min",
     max = "Max",
-
     n = "n",
     N = "N",
     p = "%",
-
     N_obs = "Vector Length",
     N_miss = "N Missing",
     N_nonmiss = "N Non-missing",

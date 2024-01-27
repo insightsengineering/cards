@@ -69,5 +69,4 @@ test_that("ard_dichotomous() works", {
     ),
     error = TRUE
   )
-
 })

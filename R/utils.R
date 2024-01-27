@@ -30,10 +30,12 @@
 #' @param x object to check
 #' @keywords internal
 .is_named_list <- function(x, allow_df = FALSE) {
-  if (isFALSE(allow_df))
+  if (isFALSE(allow_df)) {
     return(is.list(x) && is_named(x) && !is.data.frame(x))
-  if (isTRUE(allow_df))
+  }
+  if (isTRUE(allow_df)) {
     return(is.list(x) && is_named(x))
+  }
 }
 
 #' A list_flatten()-like function
@@ -46,10 +48,12 @@
   ret <- list()
 
   for (i in seq_along(x)) {
-    if (.is_named_list(x[[i]])) ret <- append(ret, values = x[[i]])
-    else ret <- append(ret, values = x[i])
+    if (.is_named_list(x[[i]])) {
+      ret <- append(ret, values = x[[i]])
+    } else {
+      ret <- append(ret, values = x[i])
+    }
   }
 
   ret
 }
-

@@ -4,7 +4,7 @@
 \alias{alias_as_fmt_fn}
 \title{Convert Alias to Function}
 \usage{
-alias_as_fmt_fn(x, call = caller_env())
+alias_as_fmt_fn(x, call = parent.frame())
 }
 \arguments{
 \item{x}{a non-negative integer, string alias, or function}

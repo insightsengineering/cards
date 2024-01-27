@@ -18,8 +18,8 @@ test_that("ard_hierarchical() works without by variables", {
     dplyr::tibble(
       n =
         ADAE |>
-        dplyr::filter(AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
-        nrow(),
+          dplyr::filter(AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
+          nrow(),
       N = nrow(ADSL),
       p = n / N
     ) |>
@@ -46,8 +46,8 @@ test_that("ard_hierarchical() works with by variable", {
     dplyr::tibble(
       n =
         ADAE |>
-        dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
-        nrow(),
+          dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
+          nrow(),
       N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
       p = n / N
     ) |>
@@ -69,19 +69,23 @@ test_that("ard_hierarchical() works with by variable not present in 'denominator
 
   expect_equal(
     ard_heir_with_by |>
-      dplyr::filter(group1_level == "Placebo",
-                    group2_level == "MILD",
-                    group3_level == "CARDIAC DISORDERS",
-                    variable_level == "ATRIAL HYPERTROPHY") |>
+      dplyr::filter(
+        group1_level == "Placebo",
+        group2_level == "MILD",
+        group3_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL HYPERTROPHY"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     dplyr::tibble(
       n =
         ADAE |>
-        dplyr::filter(TRTA == "Placebo",
-                      AESEV == "MILD",
-                      AESOC == "CARDIAC DISORDERS",
-                      AETERM == "ATRIAL HYPERTROPHY") |>
-        nrow(),
+          dplyr::filter(
+            TRTA == "Placebo",
+            AESEV == "MILD",
+            AESOC == "CARDIAC DISORDERS",
+            AETERM == "ATRIAL HYPERTROPHY"
+          ) |>
+          nrow(),
       N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
       p = n / N
     ) |>
@@ -120,8 +124,8 @@ test_that("ard_hierarchical_count() works without by variables", {
     list(
       n =
         ADAE |>
-        dplyr::filter(AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
-        nrow()
+          dplyr::filter(AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL FIBRILLATION") |>
+          nrow()
     )
   )
 
@@ -132,8 +136,8 @@ test_that("ard_hierarchical_count() works without by variables", {
     list(
       n =
         ADAE |>
-        dplyr::filter(AESOC == "CARDIAC DISORDERS") |>
-        nrow()
+          dplyr::filter(AESOC == "CARDIAC DISORDERS") |>
+          nrow()
     )
   )
 })
@@ -151,15 +155,17 @@ test_that("ard_hierarchical_count() works with by variable", {
 
   expect_equal(
     ard_heir_with_by |>
-      dplyr::filter(group1_level == "Placebo",
-                    group2_level == "CARDIAC DISORDERS",
-                    variable_level == "ATRIAL HYPERTROPHY") |>
+      dplyr::filter(
+        group1_level == "Placebo",
+        group2_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL HYPERTROPHY"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     list(
       n =
         ADAE |>
-        dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL HYPERTROPHY") |>
-        nrow()
+          dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AETERM == "ATRIAL HYPERTROPHY") |>
+          nrow()
     )
   )
 })
@@ -177,19 +183,23 @@ test_that("ard_hierarchical_count() works with by variable not present in 'denom
 
   expect_equal(
     ard_heir_with_by |>
-      dplyr::filter(group1_level == "Placebo",
-                    group2_level == "MILD",
-                    group3_level == "CARDIAC DISORDERS",
-                    variable_level == "ATRIAL HYPERTROPHY") |>
+      dplyr::filter(
+        group1_level == "Placebo",
+        group2_level == "MILD",
+        group3_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL HYPERTROPHY"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     list(
       n =
         ADAE |>
-        dplyr::filter(TRTA == "Placebo",
-                      AESEV == "MILD",
-                      AESOC == "CARDIAC DISORDERS",
-                      AETERM == "ATRIAL HYPERTROPHY") |>
-        nrow()
+          dplyr::filter(
+            TRTA == "Placebo",
+            AESEV == "MILD",
+            AESOC == "CARDIAC DISORDERS",
+            AETERM == "ATRIAL HYPERTROPHY"
+          ) |>
+          nrow()
     )
   )
 })
