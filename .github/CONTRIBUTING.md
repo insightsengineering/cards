@@ -82,6 +82,11 @@ The {standalone} package can be installed from with
 remotes::install_github("ddsjoberg/standalone")
 ```
 
+## Scope
+
+The {cards} package exports basic functions for creating ARDs (such as, univariate continuous summaries, tabulations, etc.), and utilities for creating/working with ARDs.
+All new functions to create ARDs will live in the [{cardx}](https://github.com/insightsengineering/cardx) package.
+
 ## Code of Conduct
 
 Please note that the cards project is released with a
