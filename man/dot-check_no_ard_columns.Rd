@@ -13,9 +13,9 @@
 \arguments{
 \item{x}{data frame}
 
-\item{exceptions}{character string of column names to exclude from checks}
+\item{call}{frame for error messaging}
 
-\item{env}{environment for error messaging}
+\item{exceptions}{character string of column names to exclude from checks}
 }
 \value{
 invisible
