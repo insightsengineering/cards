@@ -39,3 +39,5 @@ str_extract <- function(string, pattern) {
 str_detect <- function(string, pattern) {
   grepl(pattern = pattern, x = string)
 }
+
+# nocov end
