@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.932622122403144" branch-rate="0" lines-covered="1661" lines-valid="1781" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-01-30 23:33:12.911239">
+<coverage line-rate="0.932659932659933" branch-rate="0" lines-covered="1662" lines-valid="1782" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-01-30 23:38:36.197107">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.932622122403144" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.932659932659933" branch-rate="0" complexity="0">
       <classes>
         <class name="apply_statistic_fmt_fn.R" filename="R/apply_statistic_fmt_fn.R" line-rate="0.96551724137931" branch-rate="0" complexity="0">
           <methods>
@@ -2699,6 +2699,18 @@
             <line number="49" hits="23" branch="false"/>
             <line number="50" hits="0" branch="false"/>
             <line number="52" hits="23" branch="false"/>
+          </lines>
+        </class>
+        <class name="import-standalone-stringr.R" filename="R/import-standalone-stringr.R" line-rate="1" branch-rate="0" complexity="0">
+          <methods>
+            <method name="str_detect" signature="" line-rate="1" branch-rate="0" complexity="0">
+              <lines>
+                <line number="47" hits="18" branch="false"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="47" hits="18" branch="false"/>
           </lines>
         </class>
         <class name="nest_for_ard.R" filename="R/nest_for_ard.R" line-rate="0.985507246376812" branch-rate="0" complexity="0">
