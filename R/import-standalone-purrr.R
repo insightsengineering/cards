@@ -169,7 +169,9 @@ every <- function(.x, .p, ...) {
   .p <- as_function(.p, env = global_env())
 
   for (i in seq_along(.x)) {
-    if (!rlang::is_true(.p(.x[[i]], ...))) return(FALSE)
+    if (!rlang::is_true(.p(.x[[i]], ...))) {
+      return(FALSE)
+    }
   }
   TRUE
 }
@@ -177,7 +179,9 @@ some <- function(.x, .p, ...) {
   .p <- as_function(.p, env = global_env())
 
   for (i in seq_along(.x)) {
-    if (rlang::is_true(.p(.x[[i]], ...))) return(TRUE)
+    if (rlang::is_true(.p(.x[[i]], ...))) {
+      return(TRUE)
+    }
   }
   FALSE
 }
