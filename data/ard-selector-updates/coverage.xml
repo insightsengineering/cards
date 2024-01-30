@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.932596685082873" branch-rate="0" lines-covered="1688" lines-valid="1810" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-01-30 23:33:42.602897">
+<coverage line-rate="0.932735426008969" branch-rate="0" lines-covered="1664" lines-valid="1784" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-01-30 23:59:08.296415">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.932596685082873" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.932735426008969" branch-rate="0" complexity="0">
       <classes>
         <class name="apply_statistic_fmt_fn.R" filename="R/apply_statistic_fmt_fn.R" line-rate="0.96551724137931" branch-rate="0" complexity="0">
           <methods>
@@ -2701,6 +2701,18 @@
             <line number="52" hits="23" branch="false"/>
           </lines>
         </class>
+        <class name="import-standalone-stringr.R" filename="R/import-standalone-stringr.R" line-rate="1" branch-rate="0" complexity="0">
+          <methods>
+            <method name="str_detect" signature="" line-rate="1" branch-rate="0" complexity="0">
+              <lines>
+                <line number="47" hits="18" branch="false"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="47" hits="18" branch="false"/>
+          </lines>
+        </class>
         <class name="nest_for_ard.R" filename="R/nest_for_ard.R" line-rate="0.985507246376812" branch-rate="0" complexity="0">
           <methods>
             <method name="nest_for_ard" signature="" line-rate="0.982758620689655" branch-rate="0" complexity="0">
@@ -3723,112 +3735,6 @@
             <line number="265" hits="4" branch="false"/>
             <line number="266" hits="4" branch="false"/>
             <line number="271" hits="14" branch="false"/>
-          </lines>
-        </class>
-        <class name="standalone-checks.R" filename="R/standalone-checks.R" line-rate="0.875" branch-rate="0" complexity="0">
-          <methods>
-            <method name="check_class" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="23" hits="348" branch="false"/>
-                <line number="24" hits="83" branch="false"/>
-                <line number="27" hits="265" branch="false"/>
-                <line number="28" hits="1" branch="false"/>
-                <line number="30" hits="264" branch="false"/>
-              </lines>
-            </method>
-            <method name="check_class_data_frame" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="39" hits="112" branch="false"/>
-                <line number="40" hits="112" branch="false"/>
-                <line number="41" hits="112" branch="false"/>
-                <line number="42" hits="112" branch="false"/>
-              </lines>
-            </method>
-            <method name="check_not_missing" signature="" line-rate="0.666666666666667" branch-rate="0" complexity="0">
-              <lines>
-                <line number="50" hits="233" branch="false"/>
-                <line number="51" hits="0" branch="false"/>
-                <line number="53" hits="233" branch="false"/>
-              </lines>
-            </method>
-            <method name="check_length" signature="" line-rate="0.666666666666667" branch-rate="0" complexity="0">
-              <lines>
-                <line number="69" hits="32" branch="false"/>
-                <line number="70" hits="0" branch="false"/>
-                <line number="72" hits="32" branch="false"/>
-              </lines>
-            </method>
-            <method name="check_scalar" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="77" hits="32" branch="false"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="23" hits="348" branch="false"/>
-            <line number="24" hits="83" branch="false"/>
-            <line number="27" hits="265" branch="false"/>
-            <line number="28" hits="1" branch="false"/>
-            <line number="30" hits="264" branch="false"/>
-            <line number="39" hits="112" branch="false"/>
-            <line number="40" hits="112" branch="false"/>
-            <line number="41" hits="112" branch="false"/>
-            <line number="42" hits="112" branch="false"/>
-            <line number="50" hits="233" branch="false"/>
-            <line number="51" hits="0" branch="false"/>
-            <line number="53" hits="233" branch="false"/>
-            <line number="69" hits="32" branch="false"/>
-            <line number="70" hits="0" branch="false"/>
-            <line number="72" hits="32" branch="false"/>
-            <line number="77" hits="32" branch="false"/>
-          </lines>
-        </class>
-        <class name="standalone-stringr.R" filename="R/standalone-stringr.R" line-rate="1" branch-rate="0" complexity="0">
-          <methods>
-            <method name="str_trim" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="5" hits="18" branch="false"/>
-                <line number="6" hits="18" branch="false"/>
-              </lines>
-            </method>
-            <method name="str_squish" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="10" hits="18" branch="false"/>
-                <line number="11" hits="18" branch="false"/>
-              </lines>
-            </method>
-            <method name="str_remove_all" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="15" hits="18" branch="false"/>
-              </lines>
-            </method>
-            <method name="str_extract" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="19" hits="18" branch="false"/>
-                <line number="20" hits="18" branch="false"/>
-                <line number="21" hits="18" branch="false"/>
-                <line number="22" hits="18" branch="false"/>
-                <line number="23" hits="18" branch="false"/>
-              </lines>
-            </method>
-            <method name="str_detect" signature="" line-rate="1" branch-rate="0" complexity="0">
-              <lines>
-                <line number="27" hits="18" branch="false"/>
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="18" branch="false"/>
-            <line number="6" hits="18" branch="false"/>
-            <line number="10" hits="18" branch="false"/>
-            <line number="11" hits="18" branch="false"/>
-            <line number="15" hits="18" branch="false"/>
-            <line number="19" hits="18" branch="false"/>
-            <line number="20" hits="18" branch="false"/>
-            <line number="21" hits="18" branch="false"/>
-            <line number="22" hits="18" branch="false"/>
-            <line number="23" hits="18" branch="false"/>
-            <line number="27" hits="18" branch="false"/>
           </lines>
         </class>
         <class name="summary_functions.R" filename="R/summary_functions.R" line-rate="1" branch-rate="0" complexity="0">
