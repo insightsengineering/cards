@@ -29,7 +29,7 @@ See guide on [how to create a great issue](https://code-review.tidyverse.org/iss
 
 *  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
 
-### Code style
+### Code Style
 
 *   New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
     You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.  
@@ -45,6 +45,47 @@ See guide on [how to create a great issue](https://code-review.tidyverse.org/iss
    Include `#' @keywords internal` to mark the function as internal.
    Any helper functions that appear in examples, will need to use the `cards:::` 
    prefix, e.g. `#' @example cards:::.helper_function()`
+
+### Error Handling
+
+We use the {cli} package to signal errors, warnings, and messages to users.
+For each call to `cli::cli_abort()`, the `call` argument must be used to correctly message to users the calling function.
+Any general function that can be re-used to check, for example, user-passed argument values, shall be placed in `R\import-standalone-checks.R`.
+The checks in this file are re-used among multiple projects.
+If you do need to modify this file, please review the section below about standalone scripts.
+
+### Package Dependencies
+
+Generally, no additional package dependencies may be added.
+If the code you add would be more readable using, for example, using a {tidyverse} function, 
+consider adding a shim for the function in one of the standalone scripts.
+See the section below about standalone scripts for details.
+
+### Standalone Scripts
+
+The package utilizes a few standalone scripts that are used across a few projects.
+Some of these scripts make available shims for common tidyverse functions, so you can use the function without depending on the package.
+The `"checks"` script is a series of functions to check the argument values supplied by users, and provides informative error messages when the values are not valid.
+Do not make changes to these files directly: rather, update these files in their source location.
+
+- `import-standalone-purrr.R`: https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R
+- `import-standalone-forcats.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R
+- `import-standalone-stringr.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R
+- `import-standalone-checks.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R
+
+After the update has been made, you can copy the file into the repo with 
+
+```r
+usethis::use_standalone("r-lib/rlang", file = "purrr")
+usethis::use_standalone("ddsjoberg/standalone", file = "forcats")
+usethis::use_standalone("ddsjoberg/standalone", file = "stringr")
+usethis::use_standalone("ddsjoberg/standalone", file = "checks")
+```
+
+## Scope
+
+The {cards} package exports basic functions for creating ARDs (such as, univariate continuous summaries, tabulations, etc.), and utilities for creating/working with ARDs.
+All new functions to create ARDs will live in the [{cardx}](https://github.com/insightsengineering/cardx) package.
 
 ## Code of Conduct
 
