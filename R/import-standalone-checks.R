@@ -114,7 +114,7 @@ check_scalar <- function(x, arg_name = rlang::caller_arg(x), call = parent.frame
 check_range <- function(x,
                         range,
                         include_bounds = c(FALSE, FALSE),
-                        arg_name = caller_arg(x),
+                        arg_name = rlang::caller_arg(x),
                         scalar = FALSE,
                         msg = paste(
                           "The {.arg {arg_name}} argument must be in the interval",
@@ -169,8 +169,8 @@ check_range <- function(x,
 #' @return invisible
 #' @keywords internal
 #' @noRd
-check_binary <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
-  if (!is.logical(x) && !(is_integerish(x) && is_empty(setdiff(x, c(0, 1, NA))))) {
+check_binary <- function(x, arg_name = rlang::caller_arg(x), call = parent.frame()) {
+  if (!is.logical(x) && !(rlang::is_integerish(x) && rlang::is_empty(setdiff(x, c(0, 1, NA))))) {
     paste(
       "Expecting column {.arg {arg_name}} to be either {.cls logical}",
       "or {.cls {c('numeric', 'integer')}} coded as {.val {c(0, 1)}}."
