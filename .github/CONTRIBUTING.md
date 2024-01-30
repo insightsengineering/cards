@@ -50,7 +50,8 @@ See guide on [how to create a great issue](https://code-review.tidyverse.org/iss
 
 We use the {cli} package to signal errors, warnings, and messages to users.
 For each call to `cli::cli_abort()`, the `call` argument must be used to correctly message to users the calling function.
-Any general function that can be re-used to check, for example, user-passed argument values, shall be placed in `R\standalone-checks.R`.
+Any general function that can be re-used to check, for example, user-passed argument values, shall be placed in `R\import-standalone-checks.R`.
+The checks in this file are re-used among multiple projects.
 If you do need to modify this file, please review the section below about standalone scripts.
 
 ### Package Dependencies
@@ -63,23 +64,22 @@ See the section below about standalone scripts for details.
 ### Standalone Scripts
 
 The package utilizes a few standalone scripts that are used across a few projects.
+Some of these scripts make available shims for common tidyverse functions, so you can use the function without depending on the package.
+The `"checks"` script is a series of functions to check the argument values supplied by users, and provides informative error messages when the values are not valid.
 Do not make changes to these files directly: rather, update these files in their source location.
 
-- `standalone-purrr.R`: https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R
-- `standalone-forcats.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R
-- `standalone-stringr.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R
-- `standalone-checks.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R
+- `import-standalone-purrr.R`: https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R
+- `import-standalone-forcats.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R
+- `import-standalone-stringr.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R
+- `import-standalone-checks.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R
 
 After the update has been made, you can copy the file into the repo with 
 
 ```r
-standalone::copy_standalone_script()
-```
-
-The {standalone} package can be installed from with
-
-```r
-remotes::install_github("ddsjoberg/standalone")
+usethis::use_standalone("r-lib/rlang", file = "purrr")
+usethis::use_standalone("ddsjoberg/standalone", file = "forcats")
+usethis::use_standalone("ddsjoberg/standalone", file = "stringr")
+usethis::use_standalone("ddsjoberg/standalone", file = "checks")
 ```
 
 ## Scope
