@@ -1,3 +1,7 @@
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R>
+# ----------------------------------------------------------------------
+#
 # DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
 # ---
 # file: standalone-stringr.R
@@ -36,8 +40,9 @@ str_extract <- function(string, pattern) {
   )
 }
 
+# nocov end
+
+
 str_detect <- function(string, pattern) {
   grepl(pattern = pattern, x = string)
 }
-
-# nocov end

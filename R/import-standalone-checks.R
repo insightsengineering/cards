@@ -1,15 +1,18 @@
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R>
+# ----------------------------------------------------------------------
+#
 # DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
 # ---
 # repo: ddsjoberg/standalone
 # file: standalone-checks.R
 # last-updated: 2024-01-24
 # license: https://unlicense.org
-# imports: rlang, cli
+# imports: [rlang, cli]
 # ---
 #
-# This file provides a minimal shim to provide a purrr-like API on top of
-# base R functions. They are not drop-in replacements but allow a similar style
-# of programming.
+# This file provides a minimal functions to check argument values and types
+# passed by users to functions in packages.
 #
 # ## Changelog
 # nocov start
@@ -177,6 +180,5 @@ check_binary <- function(x, arg_name = caller_arg(x), call = parent.frame()) {
 
   invisible()
 }
-
 
 # nocov end
