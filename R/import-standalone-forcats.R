@@ -1,3 +1,7 @@
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R>
+# ----------------------------------------------------------------------
+#
 # DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
 # ---
 # file: standalone-forcats.R
