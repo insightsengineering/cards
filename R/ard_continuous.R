@@ -81,13 +81,11 @@ ard_continuous <- function(data,
   )
 
   check_list_elements(
-    statistics = function(x) is.list(x) && is_named(x) && every(x, is.function),
+    x = statistics,
+    predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
     error_msg =
-      list(
-        statistics =
-          c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
-            "i" = "Value must be a named list of functions."
-          )
+      c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+        "i" = "Value must be a named list of functions."
       )
   )
 
@@ -152,7 +150,9 @@ ard_continuous <- function(data,
   df_results |>
     dplyr::mutate(context = "continuous") |>
     tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))} # styler: off
+    {
+      structure(., class = c("card", class(.)))
+    }
 }
 
 
@@ -163,7 +163,7 @@ ard_continuous <- function(data,
 #' they do not begin with `"...ard_"` and end with `"..."`
 #'
 #' @param x data frame
-#' @param env environment for error messaging
+#' @param call frame for error messaging
 #' @param exceptions character string of column names to exclude from checks
 #'
 #' @return invisible
@@ -293,19 +293,21 @@ ard_continuous <- function(data,
             x[c("variable", "stat_name")] |>
             dplyr::filter(.data$variable %in% .env$variable) |>
             unique() %>%
-            {stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])} # styler: off
+            {
+              stats::setNames(as.list(.[["stat_name"]]), .[["stat_name"]])
+            }
 
           compute_formula_selector(
             data = lst_stat_names,
             x = enlst_arg
           ) %>%
-            # styler: off
-            {dplyr::tibble(
-              variable = variable,
-              stat_name = names(.),
-              "{new_column}" := unname(.)
-            )}
-          # styler: on
+            {
+              dplyr::tibble(
+                variable = variable,
+                stat_name = names(.),
+                "{new_column}" := unname(.)
+              )
+            }
         }
       ) |>
       dplyr::bind_rows()
