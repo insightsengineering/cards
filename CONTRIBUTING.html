@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9014</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9015</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,13 +69,47 @@
 <li><p>For user-facing changes, add a bullet to the top of <code>NEWS.md</code> (i.e. just below the first header). Follow the style described in <a href="https://style.tidyverse.org/news.html" class="external-link uri">https://style.tidyverse.org/news.html</a>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="code-style">Code style<a class="anchor" aria-label="anchor" href="#code-style"></a></h3>
+<h3 id="code-style">Code Style<a class="anchor" aria-label="anchor" href="#code-style"></a></h3>
 <ul><li><p>New code should follow the tidyverse <a href="https://style.tidyverse.org" class="external-link">style guide</a>. You can use the <a href="https://CRAN.R-project.org/package=styler" class="external-link">styler</a> package to apply these styles, but please don’t restyle code that has nothing to do with your PR.</p></li>
 <li><p>We use <a href="https://cran.r-project.org/package=roxygen2" class="external-link">roxygen2</a>, with <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html" class="external-link">Markdown syntax</a>, for documentation.</p></li>
 <li><p>We use <a href="https://cran.r-project.org/package=testthat" class="external-link">testthat</a> for unit tests. Contributions with test cases included are easier to accept.</p></li>
 <li><p>All helper/non-exported function are named with a period prefix, e.g. <code>.helper_function()</code>.</p></li>
 <li><p>All helper/non-exported functions are documented with roxygen2 as indicated above. Include <code>#' @keywords internal</code> to mark the function as internal. Any helper functions that appear in examples, will need to use the <code>cards:::</code> prefix, e.g. <code>#' @example cards:::.helper_function()</code></p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a></h3>
+<p>We use the {cli} package to signal errors, warnings, and messages to users. For each call to <code><a href="https://cli.r-lib.org/reference/cli_abort.html" class="external-link">cli::cli_abort()</a></code>, the <code>call</code> argument must be used to correctly message to users the calling function. Any general function that can be re-used to check, for example, user-passed argument values, shall be placed in <code>R\import-standalone-checks.R</code>. The checks in this file are re-used among multiple projects. If you do need to modify this file, please review the section below about standalone scripts.</p>
+</div>
+<div class="section level3">
+<h3 id="package-dependencies">Package Dependencies<a class="anchor" aria-label="anchor" href="#package-dependencies"></a></h3>
+<p>Generally, no additional package dependencies may be added. If the code you add would be more readable using, for example, using a {tidyverse} function, consider adding a shim for the function in one of the standalone scripts. See the section below about standalone scripts for details.</p>
+</div>
+<div class="section level3">
+<h3 id="standalone-scripts">Standalone Scripts<a class="anchor" aria-label="anchor" href="#standalone-scripts"></a></h3>
+<p>The package utilizes a few standalone scripts that are used across a few projects. Some of these scripts make available shims for common tidyverse functions, so you can use the function without depending on the package. The <code>"checks"</code> script is a series of functions to check the argument values supplied by users, and provides informative error messages when the values are not valid. Do not make changes to these files directly: rather, update these files in their source location.</p>
+<ul><li>
+<code>import-standalone-purrr.R</code>: <a href="https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R" class="external-link uri">https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R</a>
+</li>
+<li>
+<code>import-standalone-forcats.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R</a>
+</li>
+<li>
+<code>import-standalone-stringr.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R</a>
+</li>
+<li>
+<code>import-standalone-checks.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R</a>
+</li>
+</ul><p>After the update has been made, you can copy the file into the repo with</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_standalone</span><span class="op">(</span><span class="st">"r-lib/rlang"</span>, file <span class="op">=</span> <span class="st">"purrr"</span><span class="op">)</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_standalone</span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"forcats"</span><span class="op">)</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_standalone</span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_standalone</span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"checks"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="scope">Scope<a class="anchor" aria-label="anchor" href="#scope"></a></h2>
+<p>The {cards} package exports basic functions for creating ARDs (such as, univariate continuous summaries, tabulations, etc.), and utilities for creating/working with ARDs. All new functions to create ARDs will live in the <a href="https://github.com/insightsengineering/cardx" class="external-link">{cardx}</a> package.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a></h2>
