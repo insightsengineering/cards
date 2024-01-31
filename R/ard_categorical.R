@@ -63,7 +63,13 @@
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
-ard_categorical <- function(data, variables, by = NULL, strata = NULL,
+#'
+#' # equivalent to above
+#' ADSL |> dplyr::group_by(ARM) |> ard_categorical(variables = "AGEGR1")
+ard_categorical <- function(data,
+                            variables,
+                            by = dplyr::group_vars(data),
+                            strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
@@ -76,6 +82,12 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
+  # notify user if default `by` results in grouped results
+  if (identical(call_match(defaults = TRUE)$by,
+                formals(cards::ard_categorical)[["by"]])
+      && dplyr::is_grouped_df(data)){
+    cli::cli_inform("Results will be grouped by {.val {by}}")
+  }
   data <- dplyr::ungroup(data)
   process_selectors(
     data,

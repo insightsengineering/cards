@@ -7,7 +7,7 @@
 ard_categorical(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   strata = NULL,
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
@@ -94,4 +94,7 @@ be used as the updated \code{"N"} in the calculations.
 
 \examples{
 ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+
+# equivalent to above
+ADSL |> dplyr::group_by(ARM) |> ard_categorical(variables = "AGEGR1")
 }

@@ -48,9 +48,12 @@
 #'
 #' @examples
 #' ard_continuous(ADSL, by = "ARM", variables = "AGE")
+#'
+#' # equivalent to above
+#' ADSL |> dplyr::group_by(ARM) |> ard_continuous(variables = "AGE")
 ard_continuous <- function(data,
                            variables,
-                           by = NULL,
+                           by = dplyr::group_vars(data),
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
                            fmt_fn = NULL,
@@ -65,6 +68,12 @@ ard_continuous <- function(data,
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
+  # notify user if default `by` results in grouped results
+  if (identical(call_match(defaults = TRUE)$by,
+                formals(cards::ard_continuous)[["by"]])
+      && dplyr::is_grouped_df(data)){
+    cli::cli_inform("Results will be grouped by {.val {by}}")
+  }
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
 
