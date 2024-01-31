@@ -12,8 +12,8 @@
 #'   named `"variable"` or `"variable_level"`.
 #'
 #' @param types (`character`)\cr
-#'   type of column to select. `"variables"` selects the columns variable name columns,
-#'   and `"levels"` selects the level columns. Default is `c("variables", "levels")`
+#'   type of column to select. `"names"` selects the columns variable name columns,
+#'   and `"levels"` selects the level columns. Default is `c("names", "levels")`
 #' @return tidyselect output
 #' @name selectors
 #'
@@ -26,7 +26,7 @@ NULL
 #' @export
 #' @rdname selectors
 all_ard_groups <- function(types = c("names", "levels")) {
-  types <- arg_match(types, values = c("variables", "levels"), multiple = TRUE)
+  types <- arg_match(types, values = c("names", "levels"), multiple = TRUE)
 
   if (setequal(types, c("names", "levels"))) {
     return(dplyr::matches("^group[0-9]+$|^group[0-9]+_level$"))

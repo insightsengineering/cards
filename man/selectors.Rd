@@ -12,8 +12,8 @@ all_ard_variables(types = c("names", "levels"))
 }
 \arguments{
 \item{types}{(\code{character})\cr
-type of column to select. \code{"variables"} selects the columns variable name columns,
-and \code{"levels"} selects the level columns. Default is \code{c("variables", "levels")}}
+type of column to select. \code{"names"} selects the columns variable name columns,
+and \code{"levels"} selects the level columns. Default is \code{c("names", "levels")}}
 }
 \value{
 tidyselect output
