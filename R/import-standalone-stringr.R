@@ -1,5 +1,22 @@
-# In the style of rlang's standalone-purrr.R, this file provides a minimal shim
-# to provide a stringr-like API on top of base R functions.
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R>
+# ----------------------------------------------------------------------
+#
+# DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
+# ---
+# file: standalone-stringr.R
+# last-updated: 2024-01-24
+# license: https://unlicense.org
+# imports:
+# ---
+#
+# This file provides a minimal shim to provide a stringr-like API on top of
+# base R functions. They are not drop-in replacements but allow a similar style
+# of programming.
+#
+# ## Changelog
+#
+# nocov start
 
 str_trim <- function(string, side = c("both", "left", "right")) {
   side <- rlang::arg_match(side)
@@ -22,6 +39,9 @@ str_extract <- function(string, pattern) {
     NA_character_
   )
 }
+
+# nocov end
+
 
 str_detect <- function(string, pattern) {
   grepl(pattern = pattern, x = string)
