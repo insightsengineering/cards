@@ -11,10 +11,9 @@
 #'   as `dplyr::select()`. Function selects variables columns, e.g. columns
 #'   named `"variable"` or `"variable_level"`.
 #'
-#' @param variables logical indicating whether to select the columns with the
-#' variable names. Default is `TRUE`
-#' @param levels logical indicating whether to select the columns with the
-#' variable levels. Default is `TRUE`
+#' @param types (`character`)\cr
+#'   type of column to select. `"names"` selects the columns variable name columns,
+#'   and `"levels"` selects the level columns. Default is `c("names", "levels")`
 #' @return tidyselect output
 #' @name selectors
 #'
@@ -26,28 +25,32 @@ NULL
 
 #' @export
 #' @rdname selectors
-all_ard_groups <- function(variables = TRUE, levels = TRUE) {
-  if (isTRUE(variables) && isTRUE(levels)) {
+all_ard_groups <- function(types = c("names", "levels")) {
+  types <- arg_match(types, values = c("names", "levels"), multiple = TRUE)
+
+  if (setequal(types, c("names", "levels"))) {
     return(dplyr::matches("^group[0-9]+$|^group[0-9]+_level$"))
   }
-  if (isTRUE(variables)) {
+  if (setequal(types, "names")) {
     return(dplyr::matches("^group[0-9]+$$"))
   }
-  if (isTRUE(levels)) {
+  if (setequal(types, "levels")) {
     return(dplyr::matches("^group[0-9]+_level$"))
   }
 }
 
 #' @export
 #' @rdname selectors
-all_ard_variables <- function(variables = TRUE, levels = TRUE) {
-  if (isTRUE(variables) && isTRUE(levels)) {
+all_ard_variables <- function(types = c("names", "levels")) {
+  types <- arg_match(types, values = c("names", "levels"), multiple = TRUE)
+
+  if (setequal(types, c("names", "levels"))) {
     return(dplyr::any_of(c("variable", "variable_level")))
   }
-  if (isTRUE(variables)) {
+  if (setequal(types, "names")) {
     return(dplyr::any_of("variable"))
   }
-  if (isTRUE(levels)) {
+  if (setequal(types, "levels")) {
     return(dplyr::any_of("variable_level"))
   }
 }

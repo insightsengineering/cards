@@ -48,8 +48,8 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
         dplyr::mutate(
           across(
             c(
-              all_ard_groups(FALSE, TRUE),
-              all_ard_variables(FALSE, TRUE),
+              all_ard_groups("levels"),
+              all_ard_variables("levels"),
               any_of(c("context", "stat_label", "warning", "error"))
             ),
             function(x) {

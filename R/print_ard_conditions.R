@@ -65,7 +65,7 @@ print_ard_conditions <- function(x, call = NULL) {
         dplyr::tibble(
           # this column is the messaging for which groups/variable the message appears in
           cli_variable_msg =
-            dplyr::select(.y, all_ard_variables(levels = FALSE)) |>
+            dplyr::select(.y, all_ard_variables("names")) |>
               dplyr::mutate(across(where(is.list), unlist)) |>
               dplyr::slice(1L) |>
               as.list() |>
