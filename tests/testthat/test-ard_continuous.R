@@ -217,12 +217,10 @@ test_that("ard_continuous() and ARD column names", {
 })
 
 
-test_that("ard_continuous() with grouped data",{
-
+test_that("ard_continuous() with grouped data", {
   expect_snapshot(
     ADSL |>
       dplyr::group_by(ARM) |>
       ard_continuous(variables = AGE)
   )
-
 })

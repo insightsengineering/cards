@@ -503,12 +503,10 @@ test_that("ard_categorical() and ARD column names", {
   )
 })
 
-test_that("ard_categorical() with grouped data",{
-
+test_that("ard_categorical() with grouped data", {
   expect_snapshot(
     ADSL |>
       dplyr::group_by(ARM) |>
       ard_categorical(variables = AGEGR1)
   )
-
 })

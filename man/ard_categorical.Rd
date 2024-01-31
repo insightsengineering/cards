@@ -96,5 +96,7 @@ be used as the updated \code{"N"} in the calculations.
 ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
 # equivalent to above
-ADSL |> dplyr::group_by(ARM) |> ard_categorical(variables = "AGEGR1")
+ADSL |>
+  dplyr::group_by(ARM) |>
+  ard_categorical(variables = "AGEGR1")
 }

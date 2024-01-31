@@ -68,5 +68,7 @@ Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 ard_continuous(ADSL, by = "ARM", variables = "AGE")
 
 # equivalent to above
-ADSL |> dplyr::group_by(ARM) |> ard_continuous(variables = "AGE")
+ADSL |>
+  dplyr::group_by(ARM) |>
+  ard_continuous(variables = "AGE")
 }
