@@ -25,13 +25,13 @@ NULL
 
 #' @export
 #' @rdname selectors
-all_ard_groups <- function(types = c("variables", "levels")) {
+all_ard_groups <- function(types = c("names", "levels")) {
   types <- arg_match(types, values = c("variables", "levels"), multiple = TRUE)
 
-  if (setequal(types, c("variables", "levels"))) {
+  if (setequal(types, c("names", "levels"))) {
     return(dplyr::matches("^group[0-9]+$|^group[0-9]+_level$"))
   }
-  if (setequal(types, "variables")) {
+  if (setequal(types, "names")) {
     return(dplyr::matches("^group[0-9]+$$"))
   }
   if (setequal(types, "levels")) {
@@ -41,13 +41,13 @@ all_ard_groups <- function(types = c("variables", "levels")) {
 
 #' @export
 #' @rdname selectors
-all_ard_variables <- function(types = c("variables", "levels")) {
-  types <- arg_match(types, values = c("variables", "levels"), multiple = TRUE)
+all_ard_variables <- function(types = c("names", "levels")) {
+  types <- arg_match(types, values = c("names", "levels"), multiple = TRUE)
 
-  if (setequal(types, c("variables", "levels"))) {
+  if (setequal(types, c("names", "levels"))) {
     return(dplyr::any_of(c("variable", "variable_level")))
   }
-  if (setequal(types, "variables")) {
+  if (setequal(types, "names")) {
     return(dplyr::any_of("variable"))
   }
   if (setequal(types, "levels")) {

@@ -6,9 +6,9 @@
 \alias{all_ard_variables}
 \title{ARD Selectors}
 \usage{
-all_ard_groups(types = c("variables", "levels"))
+all_ard_groups(types = c("names", "levels"))
 
-all_ard_variables(types = c("variables", "levels"))
+all_ard_variables(types = c("names", "levels"))
 }
 \arguments{
 \item{types}{(\code{character})\cr

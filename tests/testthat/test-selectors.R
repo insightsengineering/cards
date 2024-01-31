@@ -9,7 +9,7 @@ test_that("selectors work", {
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_groups("variables")) |>
+      dplyr::select(all_ard_groups("names")) |>
       names(),
     "group1"
   )
@@ -28,7 +28,7 @@ test_that("selectors work", {
   )
   expect_equal(
     ard_testing |>
-      dplyr::select(all_ard_variables("variables")) |>
+      dplyr::select(all_ard_variables("names")) |>
       names(),
     "variable"
   )
