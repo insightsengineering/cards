@@ -48,9 +48,14 @@
 #'
 #' @examples
 #' ard_continuous(ADSL, by = "ARM", variables = "AGE")
+#'
+#' # equivalent to above
+#' ADSL |>
+#'   dplyr::group_by(ARM) |>
+#'   ard_continuous(variables = "AGE")
 ard_continuous <- function(data,
                            variables,
-                           by = NULL,
+                           by = dplyr::group_vars(data),
                            strata = NULL,
                            statistics = everything() ~ continuous_variable_summary_fns(),
                            fmt_fn = NULL,
@@ -65,8 +70,12 @@ ard_continuous <- function(data,
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
+  process_selectors(data,
+    variables = {{ variables }},
+    by = {{ by }},
+    strata = {{ strata }}
+  )
   data <- dplyr::ungroup(data)
-  process_selectors(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
 
   process_formula_selectors(
     data = data[variables],

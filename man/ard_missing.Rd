@@ -7,7 +7,7 @@
 ard_missing(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   statistics = everything() ~ missing_variable_summary_fns(),
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
@@ -20,8 +20,8 @@ a data frame}
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries}
 
-\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-results are tabulated by \strong{all combinations} of the columns specified}
+\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr results are
+tabulated by \strong{all combinations} of the columns specified.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -56,4 +56,9 @@ Compute Analysis Results Data (ARD) for statistics about data missingness.
 }
 \examples{
 ard_missing(ADSL, by = "ARM", variables = "AGE")
+
+# equivalent to above
+ADSL |>
+  dplyr::group_by(ARM) |>
+  ard_missing(variables = "AGE")
 }
