@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9018</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9019</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_dichotomous</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">variables</span>,</span>
-<span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  values <span class="op">=</span> <span class="fu"><a href="maximum_variable_values.html">maximum_variable_values</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="va">variables</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  statistics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_variable_summary_fns</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -138,16 +138,42 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_dichotomous</span><span class="op">(</span><span class="va">mtcars</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6 x 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level   context stat_name stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      cyl              4 dichotom…         n          n        11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      cyl              4 dichotom…         N          N        32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      cyl              4 dichotom…         p          %     0.344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       am              1 dichotom…         n          n        13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       am              1 dichotom…         N          N        32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       am              1 dichotom…         p          %     0.406</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: statistic_fmt_fn, warning, error</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_dichotomous</span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="va">vs</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 12 x 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      vs            0      cyl              4         n          n         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      vs            0      cyl              4         N          N        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      vs            0      cyl              4         p          %     0.056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      vs            1      cyl              4         n          n        10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      vs            1      cyl              4         N          N        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      vs            1      cyl              4         p          %     0.714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      vs            0       am              1         n          n         6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      vs            0       am              1         N          N        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      vs            0       am              1         p          %     0.333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     vs            1       am              1         n          n         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     vs            1       am              1         N          N        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     vs            1       am              1         p          %       0.5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># equivalent to above</span></span></span>
+<span class="r-in"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">ard_dichotomous</span><span class="op">(</span>variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span><span class="op">)</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 12 x 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      vs            0      cyl              4         n          n         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      vs            0      cyl              4         N          N        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      vs            0      cyl              4         p          %     0.056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      vs            1      cyl              4         n          n        10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      vs            1      cyl              4         N          N        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      vs            1      cyl              4         p          %     0.714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      vs            0       am              1         n          n         6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      vs            0       am              1         N          N        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      vs            0       am              1         p          %     0.333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     vs            1       am              1         n          n         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     vs            1       am              1         N          N        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     vs            1       am              1         p          %       0.5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
