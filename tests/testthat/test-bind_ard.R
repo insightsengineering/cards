@@ -27,7 +27,8 @@ test_that("bind_ard() .order argument works", {
   expect_snapshot(
     bind_ard(
       ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
-        {dplyr::slice(., sample.int(nrow(.)))}, # randomly sort data
+        # randomly sort data
+        {dplyr::slice(., sample.int(nrow(.)))}, # styler: off
       .order = TRUE
     ) |>
       as.data.frame() |>
@@ -37,7 +38,8 @@ test_that("bind_ard() .order argument works", {
   expect_snapshot(
     bind_ard(
       ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
-        {dplyr::slice(., sample.int(nrow(.)))}, # randomly sort data
+        # randomly sort data
+        {dplyr::slice(., sample.int(nrow(.)))}, # styler: off
       .order = FALSE
     ) |>
       as.data.frame() |>
