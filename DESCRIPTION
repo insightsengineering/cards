@@ -27,10 +27,9 @@ Imports:
     tidyr (>= 1.3.0),
     tidyselect (>= 1.2.0)
 Suggests: 
-    broom (>= 1.0.5),
-    broom.helpers (>= 1.13.0),
     spelling (>= 2.2.0),
-    testthat (>= 3.2.0)
+    testthat (>= 3.2.0),
+    withr (>= 3.0.0)
 Config/Needs/website: rmarkdown, jsonlite, yaml, plumber, survival,
     ggsurvfit, insightsengineering/nesttemplate
 Config/testthat/edition: 3

@@ -8,11 +8,6 @@ test_that("print.card() works", {
   )
 
   expect_snapshot(
-    lm(AGE ~ ARM, data = ADSL) |>
-      ard_regression(add_estimate_to_reference_rows = TRUE)
-  )
-
-  expect_snapshot(
     ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ \(x) round(x, 3)))
   )
 })

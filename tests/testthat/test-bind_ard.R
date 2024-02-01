@@ -23,11 +23,11 @@ test_that("ARD helpers messaging", {
 })
 
 test_that("bind_ard() .order argument works", {
+  withr::local_seed(1123)
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = c("SEX", "AGEGR1")),
-      ard_chisqtest(ADSL, by = "ARM", variable = "AGEGR1"),
-      ard_chisqtest(ADSL, by = "ARM", variable = "SEX"),
+      ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
+        {dplyr::slice(., sample.int(nrow(.)))}, # randomly sort data
       .order = TRUE
     ) |>
       as.data.frame() |>
@@ -36,9 +36,8 @@ test_that("bind_ard() .order argument works", {
 
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = c("SEX", "AGEGR1")),
-      ard_chisqtest(ADSL, by = "ARM", variable = "AGEGR1"),
-      ard_chisqtest(ADSL, by = "ARM", variable = "SEX"),
+      ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
+        {dplyr::slice(., sample.int(nrow(.)))}, # randomly sort data
       .order = FALSE
     ) |>
       as.data.frame() |>

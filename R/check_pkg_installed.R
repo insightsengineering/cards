@@ -34,8 +34,8 @@
 #' `get_pkg_dependencies()`.
 #'
 #' @name check_pkg_installed
-#' @examplesIf interactive()
-#' check_pkg_installed("broom", return_lgl = TRUE)
+#' @examples
+#' is_pkg_installed("dplyr")
 #' get_pkg_dependencies()
 #' get_min_version_required("brms")
 NULL

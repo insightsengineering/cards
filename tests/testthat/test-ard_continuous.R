@@ -146,10 +146,9 @@ test_that("ard_continuous(stat_labels) argument works", {
 
   # statistics returns a named list of summaries
   conf_int <- function(x) {
-    t.test(x) |>
-      broom::tidy() |>
-      dplyr::select("conf.low", "conf.high") |>
-      as.list()
+    t.test(x)[["conf.int"]] |>
+      as.list() |>
+      rlang::set_names(c("conf.low", "conf.high"))
   }
   ard1 <-
     ard_continuous(

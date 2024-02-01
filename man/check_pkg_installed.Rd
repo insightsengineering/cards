@@ -63,9 +63,7 @@ of \code{pkg} required by \code{reference_pkg}, \code{NULL} if no minimum versio
 dependencies of all installed packages.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-check_pkg_installed("broom", return_lgl = TRUE)
+is_pkg_installed("dplyr")
 get_pkg_dependencies()
 get_min_version_required("brms")
-\dontshow{\}) # examplesIf}
 }

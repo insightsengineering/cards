@@ -32,18 +32,7 @@ ard <-
     ard_continuous(mtcars, variables = "mpg"),
     ard_continuous(mtcars, variables = "mpg", by = "cyl")
   )
-names(ard)
 
-tidy_ard_column_order(ard)
-
-# order rows
-dplyr::bind_rows(
-  ard_continuous(mtcars, variables = c("mpg", "disp"), by = "cyl"),
-  ard_ttest(mtcars, variable = "mpg", by = "cyl"),
-  ard_ttest(mtcars, variable = "disp", by = "cyl")
-) |>
+tidy_ard_column_order(ard) |>
   tidy_ard_row_order()
-
-NULL
-
 }
