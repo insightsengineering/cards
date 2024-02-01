@@ -75,8 +75,10 @@ test_that("ard_missing() with grouped data works", {
     ADSL |>
       dplyr::group_by(ARM) |>
       ard_missing(variables = "BMIBL"),
-    ard_missing(data = ADSL,
-                by = "ARM",
-                variables = "BMIBL")
+    ard_missing(
+      data = ADSL,
+      by = "ARM",
+      variables = "BMIBL"
+    )
   )
 })

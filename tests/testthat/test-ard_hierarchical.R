@@ -216,7 +216,6 @@ test_that("ard_hierarchical_count() works without any variables", {
 
 
 test_that("ard_hierarchical() and ard_hierarchical_count() with grouped data works", {
-
   expect_equal(
     ADAE |>
       dplyr::group_by(TRTA) |>
@@ -244,5 +243,4 @@ test_that("ard_hierarchical() and ard_hierarchical_count() with grouped data wor
       variables = c(AESOC, AETERM)
     )
   )
-
 })

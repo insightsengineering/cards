@@ -218,7 +218,6 @@ test_that("ard_continuous() and ARD column names", {
 
 
 test_that("ard_continuous() with grouped data works", {
-
   expect_equal(
     ADSL |>
       dplyr::group_by(ARM) |>

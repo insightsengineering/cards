@@ -73,15 +73,15 @@ test_that("ard_dichotomous() works", {
 
 
 test_that("ard_dichotomous() with grouped data works", {
-
   expect_equal(
     mtcars |>
       dplyr::group_by(vs) |>
       ard_dichotomous(variables = c(cyl, am), values = list(cyl = 4)),
-    ard_dichotomous(data = mtcars,
-                    by = vs,
-                    variables = c(cyl, am),
-                    values = list(cyl = 4))
+    ard_dichotomous(
+      data = mtcars,
+      by = vs,
+      variables = c(cyl, am),
+      values = list(cyl = 4)
+    )
   )
-
 })

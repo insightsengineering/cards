@@ -504,7 +504,6 @@ test_that("ard_categorical() and ARD column names", {
 })
 
 test_that("ard_categorical() with grouped data works", {
-
   expect_equal(
     ADSL |>
       dplyr::group_by(ARM) |>
