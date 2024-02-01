@@ -94,3 +94,22 @@ test_that("ard_complex() messaging", {
     )
   )
 })
+
+test_that("ard_complex() with grouped data works", {
+
+  expect_equal(
+    ADSL |>
+      dplyr::group_by(ARM) |>
+      ard_complex(
+        variables = c("AGE", "BMIBL"),
+        statistics = ~list(mean = \(x, ...) mean(x))
+      ),
+    ard_complex(
+      data = ADSL,
+      by = "ARM",
+      variables = c("AGE", "BMIBL"),
+      statistics = ~list(mean = \(x, ...) mean(x))
+    )
+  )
+})
+

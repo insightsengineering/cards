@@ -169,27 +169,3 @@
           getElement(names(sort(table(x), decreasing = TRUE)), 1)
         }, length = function(x) length(x))))
 
-# ard_categorical() with grouped data
-
-    Code
-      ard_categorical(dplyr::group_by(ADSL, ARM), variables = AGEGR1)
-    Message
-      Results will be grouped by "ARM"
-      {cards} data frame: 27 x 11
-    Output
-         group1 group1_level variable variable_level stat_name stat_label statistic
-      1     ARM      Placebo   AGEGR1          65-80         n          n        42
-      2     ARM      Placebo   AGEGR1          65-80         N          N        86
-      3     ARM      Placebo   AGEGR1          65-80         p          %     0.488
-      4     ARM    Xanomeli…   AGEGR1          65-80         n          n        55
-      5     ARM    Xanomeli…   AGEGR1          65-80         N          N        84
-      6     ARM    Xanomeli…   AGEGR1          65-80         p          %     0.655
-      7     ARM    Xanomeli…   AGEGR1          65-80         n          n        47
-      8     ARM    Xanomeli…   AGEGR1          65-80         N          N        84
-      9     ARM    Xanomeli…   AGEGR1          65-80         p          %      0.56
-      10    ARM      Placebo   AGEGR1            <65         n          n        14
-    Message
-      i 17 more rows
-      i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, statistic_fmt_fn, warning, error
-

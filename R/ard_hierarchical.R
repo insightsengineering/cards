@@ -13,7 +13,7 @@
 #'   variables to perform the nested/hierarchical tabulations within.
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform tabulations by. All combinations of the variables
-#'   specified here appear in results. Default is `NULL`
+#'   specified here appear in results. Default is `dplyr::group_vars(data)`.
 #' @inheritParams ard_categorical
 #'
 #' @return an ARD data frame
@@ -32,11 +32,27 @@
 #'   variables = c(AESOC, AETERM),
 #'   by = TRTA
 #' )
+#'
+#' # equivalent to above
+#' ADAE |>
+#'   dplyr::group_by(TRTA, AESEV) |>
+#'   ard_hierarchical(
+#'     variables = c(AESOC, AETERM),
+#'     denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#'   )
+#'
+#' ADAE |>
+#'   dplyr::group_by(TRTA) |>
+#'   ard_hierarchical_count(
+#'     variables = c(AESOC, AETERM)
+#'   )
 NULL
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical <- function(data, variables, by = NULL,
+ard_hierarchical <- function(data,
+                             variables,
+                             by = dplyr::group_vars(data),
                              statistics = everything() ~ categorical_variable_summary_fns(),
                              denominator = NULL, fmt_fn = NULL,
                              stat_labels = everything() ~ default_stat_labels()) {
@@ -51,6 +67,7 @@ ard_hierarchical <- function(data, variables, by = NULL,
     variables = {{ variables }},
     by = {{ by }}
   )
+  data <- dplyr::ungroup(data)
 
   # return empty tibble if no variables selected -------------------------------
   if (is_empty(variables)) {
@@ -96,7 +113,10 @@ ard_hierarchical <- function(data, variables, by = NULL,
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical_count <- function(data, variables, by = NULL, fmt_fn = NULL,
+ard_hierarchical_count <- function(data,
+                                   variables,
+                                   by = dplyr::group_vars(data),
+                                   fmt_fn = NULL,
                                    stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)

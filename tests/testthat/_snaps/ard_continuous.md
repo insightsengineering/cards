@@ -118,27 +118,3 @@
       1      AGE  conf.low         LB
       2      AGE conf.high         UB
 
-# ard_continuous() with grouped data
-
-    Code
-      ard_continuous(dplyr::group_by(ADSL, ARM), variables = AGE)
-    Message
-      Results will be grouped by "ARM"
-      {cards} data frame: 24 x 10
-    Output
-         group1 group1_level variable stat_name stat_label statistic
-      1     ARM      Placebo      AGE         N          N        86
-      2     ARM      Placebo      AGE      mean       Mean    75.209
-      3     ARM      Placebo      AGE        sd         SD      8.59
-      4     ARM      Placebo      AGE    median     Median        76
-      5     ARM      Placebo      AGE       p25  25th Per…        69
-      6     ARM      Placebo      AGE       p75  75th Per…        82
-      7     ARM      Placebo      AGE       min        Min        52
-      8     ARM      Placebo      AGE       max        Max        89
-      9     ARM    Xanomeli…      AGE         N          N        84
-      10    ARM    Xanomeli…      AGE      mean       Mean    74.381
-    Message
-      i 14 more rows
-      i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, statistic_fmt_fn, warning, error
-

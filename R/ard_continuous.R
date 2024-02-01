@@ -70,16 +70,12 @@ ard_continuous <- function(data,
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
-  # notify user if default `by` results in grouped results
-  if (identical(
-    call_match(defaults = TRUE)$by,
-    formals(cards::ard_continuous)[["by"]]
-  ) &&
-    dplyr::is_grouped_df(data)) {
-    cli::cli_inform("Results will be grouped by {.val {by}}")
-  }
+  process_selectors(data,
+                    variables = {{ variables }},
+                    by = {{ by }},
+                    strata = {{ strata }}
+                    )
   data <- dplyr::ungroup(data)
-  process_selectors(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
 
   process_formula_selectors(
     data = data[variables],
