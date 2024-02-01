@@ -22,11 +22,6 @@ reference:
       - ard_missing
       - ard_complex
 
-  - subtitle: "Model and Test Summaries"
-  -  contents:
-      - ard_comparison
-      - ard_regression
-
   - subtitle: "Misc."
   -  contents:
       - ard_attributes
