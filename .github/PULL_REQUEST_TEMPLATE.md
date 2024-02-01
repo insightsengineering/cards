@@ -1,7 +1,7 @@
 **What changes are proposed in this pull request?**
 * Style this entry in a way that can be copied directly into `NEWS.md`. (#<issue number>, @<username>)
 
-Provide more detial here as needed.
+Provide more detail here as needed.
 
 **Reference GitHub issue associated with pull request.** _e.g., 'closes #<issue number>'_
 
@@ -23,7 +23,6 @@ Reviewer Checklist (if item does not apply, mark is as complete)
 
 When the branch is ready to be merged:
 - [ ] Update `NEWS.md` with the changes from this pull request under the heading "`# cards (development version)`". If there is an issue associated with the pull request, reference it in parentheses at the end update (see `NEWS.md` for examples).
-- [ ] Increment the version number using `usethis::use_version(which = "dev")`
-- [ ] Run `usethis::use_spell_check()` again
+- [ ] **All** GitHub Action workflows pass with a :white_check_mark:
 - [ ] Approve Pull Request
 - [ ] Merge the PR. Please use "Squash and merge" or "Rebase and merge".
