@@ -69,3 +69,16 @@ test_that("ard_missing(stat_labels) argument works", {
       unique()
   )
 })
+
+test_that("ard_missing() with grouped data works", {
+  expect_equal(
+    ADSL |>
+      dplyr::group_by(ARM) |>
+      ard_missing(variables = "BMIBL"),
+    ard_missing(
+      data = ADSL,
+      by = "ARM",
+      variables = "BMIBL"
+    )
+  )
+})

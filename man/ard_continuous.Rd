@@ -7,7 +7,7 @@
 ard_continuous(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   strata = NULL,
   statistics = everything() ~ continuous_variable_summary_fns(),
   fmt_fn = NULL,
@@ -66,4 +66,9 @@ Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 }
 \examples{
 ard_continuous(ADSL, by = "ARM", variables = "AGE")
+
+# equivalent to above
+ADSL |>
+  dplyr::group_by(ARM) |>
+  ard_continuous(variables = "AGE")
 }

@@ -7,7 +7,7 @@
 ard_complex(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   strata = NULL,
   statistics,
   fmt_fn = NULL,
@@ -95,4 +95,12 @@ ard_complex(
   variables = "AGE",
   statistics = list(AGE = list(means = grand_mean))
 )
+
+# equivalent to above
+ADSL |>
+  dplyr::group_by(ARM) |>
+  ard_complex(
+    variables = "AGE",
+    statistics = list(AGE = list(means = grand_mean))
+  )
 }

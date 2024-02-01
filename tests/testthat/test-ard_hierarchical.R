@@ -213,3 +213,34 @@ test_that("ard_hierarchical_count() works without any variables", {
     )
   )
 })
+
+
+test_that("ard_hierarchical() and ard_hierarchical_count() with grouped data works", {
+  expect_equal(
+    ADAE |>
+      dplyr::group_by(TRTA) |>
+      ard_hierarchical(
+        variables = c(AESOC, AETERM),
+        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      ),
+    ard_hierarchical(
+      data = ADAE,
+      by = TRTA,
+      variables = c(AESOC, AETERM),
+      denominator = ADSL |> dplyr::rename(TRTA = ARM)
+    )
+  )
+
+  expect_equal(
+    ADAE |>
+      dplyr::group_by(TRTA) |>
+      ard_hierarchical_count(
+        variables = c(AESOC, AETERM)
+      ),
+    ard_hierarchical_count(
+      data = ADAE,
+      by = TRTA,
+      variables = c(AESOC, AETERM)
+    )
+  )
+})

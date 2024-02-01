@@ -63,7 +63,15 @@
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
-ard_categorical <- function(data, variables, by = NULL, strata = NULL,
+#'
+#' # equivalent to above
+#' ADSL |>
+#'   dplyr::group_by(ARM) |>
+#'   ard_categorical(variables = "AGEGR1")
+ard_categorical <- function(data,
+                            variables,
+                            by = dplyr::group_vars(data),
+                            strata = NULL,
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
@@ -76,13 +84,13 @@ ard_categorical <- function(data, variables, by = NULL, strata = NULL,
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
-  data <- dplyr::ungroup(data)
   process_selectors(
     data,
     variables = {{ variables }},
     by = {{ by }},
     strata = {{ strata }}
   )
+  data <- dplyr::ungroup(data)
 
   process_formula_selectors(
     data = data[variables],

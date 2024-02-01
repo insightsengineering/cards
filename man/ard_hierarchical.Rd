@@ -8,7 +8,7 @@
 ard_hierarchical(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
@@ -18,7 +18,7 @@ ard_hierarchical(
 ard_hierarchical_count(
   data,
   variables,
-  by = NULL,
+  by = dplyr::group_vars(data),
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
 )
@@ -32,7 +32,7 @@ variables to perform the nested/hierarchical tabulations within.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to perform tabulations by. All combinations of the variables
-specified here appear in results. Default is \code{NULL}}
+specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -84,4 +84,18 @@ ard_hierarchical_count(
   variables = c(AESOC, AETERM),
   by = TRTA
 )
+
+# equivalent to above
+ADAE |>
+  dplyr::group_by(TRTA, AESEV) |>
+  ard_hierarchical(
+    variables = c(AESOC, AETERM),
+    denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  )
+
+ADAE |>
+  dplyr::group_by(TRTA) |>
+  ard_hierarchical_count(
+    variables = c(AESOC, AETERM)
+  )
 }

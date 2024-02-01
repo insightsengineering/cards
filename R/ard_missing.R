@@ -3,17 +3,22 @@
 #' Compute Analysis Results Data (ARD) for statistics about data missingness.
 #'
 #' @inheritParams ard_continuous
-#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   results are tabulated by **all combinations** of the columns specified
+#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr results are
+#'   tabulated by **all combinations** of the columns specified.
 #'
 #' @return a data frame
 #' @export
 #'
 #' @examples
 #' ard_missing(ADSL, by = "ARM", variables = "AGE")
+#'
+#' # equivalent to above
+#' ADSL |>
+#'   dplyr::group_by(ARM) |>
+#'   ard_missing(variables = "AGE")
 ard_missing <- function(data,
                         variables,
-                        by = NULL,
+                        by = dplyr::group_vars(data),
                         statistics = everything() ~ missing_variable_summary_fns(),
                         fmt_fn = NULL,
                         stat_labels = everything() ~ default_stat_labels()) {

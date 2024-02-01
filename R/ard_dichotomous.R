@@ -11,8 +11,16 @@
 #' @export
 #'
 #' @examples
-#' ard_dichotomous(mtcars, variables = c(cyl, am), values = list(cyl = 4))
-ard_dichotomous <- function(data, variables, by = NULL, strata = NULL,
+#' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), values = list(cyl = 4))
+#'
+#' # equivalent to above
+#' mtcars |>
+#'   dplyr::group_by(vs) |>
+#'   ard_dichotomous(variables = c(cyl, am), values = list(cyl = 4))
+ard_dichotomous <- function(data,
+                            variables,
+                            by = dplyr::group_vars(data),
+                            strata = NULL,
                             values = maximum_variable_values(data[variables]),
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
