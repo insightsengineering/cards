@@ -32,5 +32,10 @@ Returns the statistics from an ARD as a named list.
 \examples{
 ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
-get_ard_statistics(ard, group1_level \%in\% "Placebo", variable_level \%in\% "65-80")
+get_ard_statistics(
+  ard,
+  group1_level \%in\% "Placebo",
+  variable_level \%in\% "65-80",
+  .attributes = "stat_label"
+)
 }

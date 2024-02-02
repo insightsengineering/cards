@@ -12,10 +12,12 @@
 #' @examples
 #' ard_missing(ADSL, by = "ARM", variables = "AGE")
 #'
-#' # equivalent to above
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_missing(variables = "AGE")
+#'   ard_missing(
+#'     variables = "AGE",
+#'     statistics = ~ missing_variable_summary_fns("N_miss")
+#'   )
 ard_missing <- function(data,
                         variables,
                         by = dplyr::group_vars(data),

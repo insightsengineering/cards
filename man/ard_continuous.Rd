@@ -67,8 +67,15 @@ Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 \examples{
 ard_continuous(ADSL, by = "ARM", variables = "AGE")
 
-# equivalent to above
+# if a single function returns a named list, the named
+# results will be placed in the resulting ARD
 ADSL |>
   dplyr::group_by(ARM) |>
-  ard_continuous(variables = "AGE")
+  ard_continuous(
+    variables = "AGE",
+    statistics =
+      ~ list(conf.int = \(x) t.test(x)[["conf.int"]] |>
+        as.list() |>
+        setNames(c("conf.low", "conf.high")))
+  )
 }
