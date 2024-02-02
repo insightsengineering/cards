@@ -52,15 +52,15 @@ my_ard_fishertest <- function(data, by, variable, ...) {
   # perform fisher test and format results -----------------------------------
   lst_tidy_fisher <-
     eval_capture_conditions(
-      stats::fisher.test(x = data[[variable]], y = data[[by]], ...) |>
-        broom::tidy()
+      # this manipulation is similar to `fisher.test(...) |> broom::tidy()`
+      stats::fisher.test(x = data[[variable]], y = data[[by]], ...)[c("p.value", "method")] |>
+        as.data.frame()
     )
 
   # build ARD ------------------------------------------------------------------
   tidy_as_ard(
     lst_tidy = lst_tidy_fisher,
-    tidy_result_names =
-      c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+    tidy_result_names = c("p.value", "method"),
     fun_args_to_record =
       c(
         "workspace", "hybrid", "hybridPars", "control", "or",

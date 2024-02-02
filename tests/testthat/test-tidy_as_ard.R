@@ -4,11 +4,12 @@ test_that("tidy_as_ard() works", {
     tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
-          stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]]) |>
-            broom::tidy()
+          # this mimics a tidier
+          stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")] |>
+            dplyr::as_tibble()
         ),
       tidy_result_names =
-        c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+        c("estimate", "p.value", "method"),
       fun_args_to_record =
         c(
           "workspace", "hybrid", "hybridPars", "control", "or",

@@ -47,29 +47,6 @@
 ---
 
     Code
-      ard_regression(lm(AGE ~ ARM, data = ADSL), add_estimate_to_reference_rows = TRUE)
-    Message
-      {cards} data frame: 43 x 7
-    Output
-         variable variable_level   context      stat_name stat_label statistic
-      1       ARM        Placebo regressi…           term       term ARMPlace…
-      2       ARM        Placebo regressi…      var_label      Label Descript…
-      3       ARM        Placebo regressi…      var_class      Class character
-      4       ARM        Placebo regressi…       var_type       Type categori…
-      5       ARM        Placebo regressi…    var_nlevels   N Levels         3
-      6       ARM        Placebo regressi…      contrasts  contrasts contr.tr…
-      7       ARM        Placebo regressi… contrasts_type  Contrast… treatment
-      8       ARM        Placebo regressi…  reference_row  referenc…      TRUE
-      9       ARM        Placebo regressi…          label  Level La…   Placebo
-      10      ARM        Placebo regressi…          n_obs     N Obs.        86
-    Message
-      i 33 more rows
-      i Use `print(n = ...)` to see more rows
-      i 1 more variable: statistic_fmt_fn
-
----
-
-    Code
       ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ function(x) round(
         x, 3)))
     Message

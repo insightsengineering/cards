@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-The package constructs Clinical Data Interchange Standards Consortium (CDISC) compliant Analysis Results Data objects. These objects are used and re-used to construct summary tables, visualizations, and written reports. The results may also be represented as JavaScript Object Notation (JSON) or Yet Another Markup Language (YAML) structures.
+Construct Clinical Data Interchange Standards Consortium (CDISC) compliant Analysis Results Data objects. These objects are used and re-used to construct summary tables, visualizations, and written reports. The results may also be represented as JavaScript Object Notation (JSON) or Yet Another Markup Language (YAML) structures.
 }
 \seealso{
 Useful links:

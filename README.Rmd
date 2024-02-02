@@ -67,12 +67,4 @@ library(cards)
 ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL"))
 
 ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
-
-ADSL |>
-  dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |> # only only two groups for a t-test
-  ard_ttest(by = "ARM", variable = "AGE")
-
-survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
-  ard_regression(add_estimate_to_reference_rows = TRUE) |>
-  dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value"))
 ```

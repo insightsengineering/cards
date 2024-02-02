@@ -1,24 +1,24 @@
 test_that("check_pkg_installed() works", {
-  # broom will always be installed with cards
+  # dplyr will always be installed with cards
   expect_error(
     check_pkg_installed("dplyr"),
     NA
   )
-  expect_true(is_pkg_installed("broom"))
+  expect_true(is_pkg_installed("dplyr"))
 
-  expect_false(is_pkg_installed("br000000m"))
+  expect_false(is_pkg_installed("dpl-eye-r"))
 
-  mv <- c(Suggests = "1.0.5")
+  mv <- c(Imports = "1.2.0")
   attr(mv, "compare") <- ">="
   expect_equal(
-    get_min_version_required("broom"),
+    get_min_version_required("tidyselect"),
     mv
   )
   expect_null(
     get_min_version_required("brms", reference_pkg = NULL)
   )
   expect_null(
-    get_min_version_required("broom", reference_pkg = NULL)
+    get_min_version_required("dplyr", reference_pkg = NULL)
   )
 
   expect_error(
