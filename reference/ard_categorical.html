@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9020</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9021</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,24 +174,23 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># equivalent to above</span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_categorical</span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 27 x 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level stat_name stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo   AGEGR1          65-80         n          n        42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo   AGEGR1          65-80         N          N        86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo   AGEGR1          65-80         p          %     0.488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM    Xanomeli…   AGEGR1          65-80         n          n        55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM    Xanomeli…   AGEGR1          65-80         N          N        84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…   AGEGR1          65-80         p          %     0.655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…   AGEGR1          65-80         n          n        47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…   AGEGR1          65-80         N          N        84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…   AGEGR1          65-80         p          %      0.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      Placebo   AGEGR1            &lt;65         n          n        14</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-in"><span>  <span class="fu">ard_categorical</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    variables <span class="op">=</span> <span class="st">"AGEGR1"</span>,</span></span>
+<span class="r-in"><span>    statistics <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_variable_summary_fns</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 9 x 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group1 group1_level variable variable_level stat_name stat_label statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM      Placebo   AGEGR1          65-80         n          n        42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM    Xanomeli…   AGEGR1          65-80         n          n        55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM    Xanomeli…   AGEGR1          65-80         n          n        47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM      Placebo   AGEGR1            &lt;65         n          n        14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    ARM    Xanomeli…   AGEGR1            &lt;65         n          n        11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM    Xanomeli…   AGEGR1            &lt;65         n          n         8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM      Placebo   AGEGR1            &gt;80         n          n        30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM    Xanomeli…   AGEGR1            &gt;80         n          n        18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    ARM    Xanomeli…   AGEGR1            &gt;80         n          n        29</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>

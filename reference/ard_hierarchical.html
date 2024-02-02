@@ -28,7 +28,7 @@ in AESOC, and also summarizes the counts of AESOC.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9020</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9021</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -195,72 +195,6 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AETERM</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">TRTA</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 795 x 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA    Xanomeli…  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA    Xanomeli…  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    GASTROIN…   AETERM      DIARRHOEA         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      DIARRHOEA         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      DIARRHOEA         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    SKIN AND…   AETERM       ERYTHEMA         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           n        23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           n        20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           n        10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           n        35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           n        33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n        10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           n         4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           n         7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          n        13</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">785 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># equivalent to above</span></span></span>
-<span class="r-in"><span><span class="va">ADAE</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">TRTA</span>, <span class="va">AESEV</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_hierarchical</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AETERM</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    denominator <span class="op">=</span> <span class="va">ADSL</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6534 x 15</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level group3 group3_level variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESEV         MILD  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESEV     MODERATE  AESOC    GENERAL …   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable_level stat_name stat_label statistic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       APPLICAT…         n          n         3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       APPLICAT…         N          N        86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       APPLICAT…         p          %     0.035</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       APPLICAT…         n          n        16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       APPLICAT…         N          N        84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       APPLICAT…         p          %      0.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       APPLICAT…         n          n         9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       APPLICAT…         N          N        84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       APPLICAT…         p          %     0.107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      APPLICAT…         n          n         0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">6524 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ADAE</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">TRTA</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">ard_hierarchical_count</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AETERM</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 795 x 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GENERAL …   AETERM      APPLICAT…         n</span>
