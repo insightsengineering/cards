@@ -166,7 +166,7 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(), strict = TRUE) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
-    return(x)
+    return(x[intersect(names(x), names(data))])
   }
 
   # if user passed a single formula, wrap it in a list
@@ -214,11 +214,10 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   # flatten the list to a top-level list only
   x <- .purrr_list_flatten(x)
 
-  # remove duplicates (keeping the last one)
-  x[names(x) |>
-    rev() |>
-    Negate(duplicated)() |>
-    rev()]
+  # remove duplicates (keeping the last one), and only keeping names in the data frame
+  x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
+
+  x[intersect(names(x), names(data))]
 }
 
 #' @name process_selectors
