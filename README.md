@@ -43,6 +43,22 @@ You can install the development version of cards from
 devtools::install_github("insightsengineering/cards")
 ```
 
+## Extensions <a href="https://insightsengineering.github.io/cardx/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="138" alt="cards website" /></a>
+
+The {cards} package exports three types of functions:
+
+1.  Functions to create basic ARD objects.
+
+2.  Utilities to create new ARD objects.
+
+3.  Functions to work with existing ARD objects.
+
+The [{cardx}](https://github.com/insightsengineering/cardx) R package is
+an extension to {cards} that utilizes the utilities from {cards} and
+exports functions for creating additional ARD objects––including
+functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression
+models, and more.
+
 ## Example
 
 ARD Examples
@@ -85,7 +101,7 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
 #> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
 
 ADSL |>
-  dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>  # only only two groups for a t-test
+  dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |> # only only two groups for a t-test
   ard_ttest(by = "ARM", variable = "AGE")
 #> {cards} data frame: 14 x 10
 #>    group1 group1_level variable   stat_name stat_label statistic
@@ -106,7 +122,7 @@ ADSL |>
 #> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
 
 survival::coxph(ggsurvfit::Surv_CNSR() ~ TRTP, data = ADTTE) |>
-  ard_regression(add_estimate_to_reference_rows = TRUE) |> 
+  ard_regression(add_estimate_to_reference_rows = TRUE) |>
   dplyr::filter(stat_name %in% c("estimate", "conf.low", "conf.high", "p.value"))
 #> {cards} data frame: 9 x 7
 #>   variable variable_level   context stat_name stat_label statistic
