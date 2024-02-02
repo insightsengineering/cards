@@ -413,3 +413,19 @@
       3 AGEGR1   continuous sd               NA
       4 AGEGR1   continuous median           NA
 
+# shuffle_ard fills missing group levels if the group is meaningful
+
+    Code
+      shuffle_ard(bind_ard(ard_continuous(ADSL, by = "ARM", variables = "AGE",
+        statistics = ~ continuous_variable_summary_fns("mean")), dplyr::tibble(
+        group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p",
+        statistic = list(0.05))))
+    Output
+      # A tibble: 4 x 5
+        ARM                  variable context    stat_name statistic
+        <chr>                <fct>    <chr>      <chr>         <dbl>
+      1 Placebo              AGE      continuous mean          75.2 
+      2 Xanomeline High Dose AGE      continuous mean          74.4 
+      3 Xanomeline Low Dose  AGE      continuous mean          75.7 
+      4 Overall ARM          AGE      <NA>       p              0.05
+
