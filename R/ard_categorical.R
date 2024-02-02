@@ -64,10 +64,12 @@
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
-#' # equivalent to above
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_categorical(variables = "AGEGR1")
+#'   ard_categorical(
+#'     variables = "AGEGR1",
+#'     statistics = everything() ~ categorical_variable_summary_fns("n")
+#'   )
 ard_categorical <- function(data,
                             variables,
                             by = dplyr::group_vars(data),

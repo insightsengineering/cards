@@ -89,14 +89,6 @@ grand_mean <- function(data, data_full, variable, ...) {
   )
 }
 
-ard_complex(
-  ADSL,
-  by = "ARM",
-  variables = "AGE",
-  statistics = list(AGE = list(means = grand_mean))
-)
-
-# equivalent to above
 ADSL |>
   dplyr::group_by(ARM) |>
   ard_complex(
