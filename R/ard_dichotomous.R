@@ -13,10 +13,13 @@
 #' @examples
 #' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), values = list(cyl = 4))
 #'
-#' # equivalent to above
 #' mtcars |>
 #'   dplyr::group_by(vs) |>
-#'   ard_dichotomous(variables = c(cyl, am), values = list(cyl = 4))
+#'   ard_dichotomous(
+#'     variables = c(cyl, am),
+#'     values = list(cyl = 4),
+#'     statistics = ~categorical_variable_summary_fns("p")
+#'   )
 ard_dichotomous <- function(data,
                             variables,
                             by = dplyr::group_vars(data),

@@ -57,8 +57,10 @@ Compute Analysis Results Data (ARD) for statistics about data missingness.
 \examples{
 ard_missing(ADSL, by = "ARM", variables = "AGE")
 
-# equivalent to above
 ADSL |>
   dplyr::group_by(ARM) |>
-  ard_missing(variables = "AGE")
+  ard_missing(
+    variables = "AGE",
+    statistics = ~missing_variable_summary_fns("N_miss")
+  )
 }
