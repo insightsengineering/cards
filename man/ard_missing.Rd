@@ -61,6 +61,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_missing(
     variables = "AGE",
-    statistics = ~missing_variable_summary_fns("N_miss")
+    statistics = ~ missing_variable_summary_fns("N_miss")
   )
 }

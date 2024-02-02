@@ -18,7 +18,7 @@
 #'   ard_dichotomous(
 #'     variables = c(cyl, am),
 #'     values = list(cyl = 4),
-#'     statistics = ~categorical_variable_summary_fns("p")
+#'     statistics = ~ categorical_variable_summary_fns("p")
 #'   )
 ard_dichotomous <- function(data,
                             variables,

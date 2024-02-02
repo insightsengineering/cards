@@ -56,7 +56,9 @@
 #'   ard_continuous(
 #'     variables = "AGE",
 #'     statistics =
-#'      ~list(conf.int = \(x) t.test(x)[["conf.int"]] |> as.list() |> setNames(c("conf.low", "conf.high")))
+#'       ~ list(conf.int = \(x) t.test(x)[["conf.int"]] |>
+#'         as.list() |>
+#'         setNames(c("conf.low", "conf.high")))
 #'   )
 ard_continuous <- function(data,
                            variables,
