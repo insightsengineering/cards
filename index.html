@@ -44,7 +44,7 @@
     
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9019</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9020</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,6 +110,18 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"insightsengineering/cards"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="extensions-">Extensions <a href="https://insightsengineering.github.io/cardx/" class="external-link"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="138" alt="cards website"></a>
+<a class="anchor" aria-label="anchor" href="#extensions-"></a>
+</h2>
+<p>The {cards} package exports three types of functions:</p>
+<ol style="list-style-type: decimal">
+<li><p>Functions to create basic ARD objects.</p></li>
+<li><p>Utilities to create new ARD objects.</p></li>
+<li><p>Functions to work with existing ARD objects.</p></li>
+</ol>
+<p>The <a href="https://github.com/insightsengineering/cardx" class="external-link">{cardx}</a> R package is an extension to {cards} that utilizes the utilities from {cards} and exports functions for creating additional ARD objects––including functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.</p>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>ARD Examples</p>
@@ -151,7 +163,7 @@
 <span><span class="co">#&gt; ℹ 4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 <span></span>
 <span><span class="va">ADSL</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># only only two groups for a t-test</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># only only two groups for a t-test</span></span>
 <span>  <span class="fu"><a href="reference/ard_comparison.html">ard_ttest</a></span><span class="op">(</span>by <span class="op">=</span> <span class="st">"ARM"</span>, variable <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {cards} data frame: 14 x 10</span></span>
 <span><span class="co">#&gt;    group1 group1_level variable   stat_name stat_label statistic</span></span>
@@ -172,7 +184,7 @@
 <span><span class="co">#&gt; ℹ 4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 <span></span>
 <span><span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu">ggsurvfit</span><span class="fu">::</span><span class="fu"><a href="http://www.danieldsjoberg.com/ggsurvfit/reference/Surv_CNSR.html" class="external-link">Surv_CNSR</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="va">TRTP</span>, data <span class="op">=</span> <span class="va">ADTTE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/ard_regression.html">ard_regression</a></span><span class="op">(</span>add_estimate_to_reference_rows <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">stat_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"estimate"</span>, <span class="st">"conf.low"</span>, <span class="st">"conf.high"</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {cards} data frame: 9 x 7</span></span>
 <span><span class="co">#&gt;   variable variable_level   context stat_name stat_label statistic</span></span>
