@@ -75,7 +75,6 @@ test_that("shuffle_ard notifies user about warnings/errors before dropping", {
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful", {
-
   # mix of missing/nonmissing group levels present before shuffle
   expect_snapshot(
     bind_ard(
