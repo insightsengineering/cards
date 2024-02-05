@@ -43,6 +43,12 @@ ard_dichotomous <- function(data,
   )
   .check_dichotomous_values(data, values)
 
+  # return empty tibble if no variables selected -------------------------------
+  if (is_empty(variables)) {
+    return(dplyr::tibble())
+  }
+
+  # calculate summary statistics -----------------------------------------------
   ard_categorical(
     data = data,
     variables = all_of(variables),
