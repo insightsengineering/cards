@@ -26,11 +26,11 @@ missing_variable_summary_fns(
 a character vector of results to include in output.
 \itemize{
 \item \code{categorical_variable_summary_fns()}: Select one or more from
-'n', 'p', 'N'.
+"n", "p", "N".
 \item \code{continuous_variable_summary_fns()}: Select one or more from
-'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
+"N", "mean", "sd", "median", "p25", "p75", "min", "max".
 \item \code{missing_variable_summary_fns()}: Select one or more from
-'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
+"N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss".
 }}
 
 \item{other_stats}{named list of other statistic functions to supplement the
