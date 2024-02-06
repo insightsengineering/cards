@@ -429,3 +429,16 @@
       3 Xanomeline Low Dose  AGE      continuous mean          75.7 
       4 Overall ARM          AGE      <NA>       p              0.05
 
+---
+
+    Code
+      shuffle_ard(bind_ard(ard_continuous(ADSL, variables = "AGE", statistics = ~
+        continuous_variable_summary_fns("mean")), dplyr::tibble(group1 = "ARM",
+        variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))))
+    Output
+      # A tibble: 2 x 5
+        ARM         variable context    stat_name statistic
+        <chr>       <fct>    <chr>      <chr>         <dbl>
+      1 Overall ARM AGE      <NA>       p              0.05
+      2 <NA>        AGE      continuous mean          75.1 
+

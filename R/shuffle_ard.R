@@ -206,7 +206,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 
         # drop if no grouping values
         if (is.na(v_new)) {
-          dplyr::select(dat, -all_of(c(v_lev, v)))
+          dplyr::select(dat, -any_of(c(v_lev, v)))
         } else {
           # create _level var if it does not exist
           if (is.null(dat[[v_lev]])) {

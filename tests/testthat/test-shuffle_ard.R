@@ -75,9 +75,19 @@ test_that("shuffle_ard notifies user about warnings/errors before dropping", {
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful", {
+  # mix of missing/nonmissing group levels present before shuffle
   expect_snapshot(
     bind_ard(
       ard_continuous(ADSL, by = "ARM", variables = "AGE", statistics = ~ continuous_variable_summary_fns("mean")),
+      dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))
+    ) |>
+      shuffle_ard()
+  )
+
+  # no group levels present before shuffle
+  expect_snapshot(
+    bind_ard(
+      ard_continuous(ADSL, variables = "AGE", statistics = ~ continuous_variable_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))
     ) |>
       shuffle_ard()
