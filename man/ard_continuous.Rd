@@ -22,13 +22,13 @@ a data frame}
 columns to include in summaries}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to by/stratified by for summary statistic
+columns to separate by/stratify by for summary statistic
 calculation. Arguments are similar, but with an important distinction:
 
-\code{by}: results are calculated by \strong{all combinations} of the columns specified,
+\code{by}: results are calculated for \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are calculated by \strong{all \emph{observed} combinations} of the
+\code{strata}: results are calculated for \strong{all \emph{observed} combinations} of the
 columns specified.
 
 Arguments may be used in conjunction with one another.}
@@ -59,7 +59,7 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
 Compute Analysis Results Data (ARD) for simple continuous summary statistics.

@@ -7,17 +7,16 @@
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to by/stratified by for summary statistic
+#'   columns to separate by/stratify by for summary statistic
 #'   calculation. Arguments are similar, but with an important distinction:
 #'
-#'   `by`: results are calculated by **all combinations** of the columns specified,
+#'   `by`: results are calculated for **all combinations** of the columns specified,
 #'      including unobserved combinations and unobserved factor levels.
 #'
-#'   `strata`: results are calculated by **all _observed_ combinations** of the
+#'   `strata`: results are calculated for **all _observed_ combinations** of the
 #'     columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.
-#'
 #' @param statistics ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
@@ -30,20 +29,18 @@
 #'   returns a named list of results is also acceptable, e.g.
 #'   `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
 #'   will be less clear in this setting.
-#'
 #' @param fmt_fn ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
-#'
 #' @param stat_labels ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
 #'   `everything() ~ list(mean ~ "Mean", sd ~ "SD")`.
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
