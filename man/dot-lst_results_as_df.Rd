@@ -7,17 +7,20 @@
 .lst_results_as_df(x, variable, fun_name)
 }
 \arguments{
-\item{x}{named list, the result from \code{eval_capture_conditions()}}
+\item{x}{(named \code{list})\cr
+the result from \code{eval_capture_conditions()}}
 
-\item{variable}{string, variable name of the results}
+\item{variable}{(\code{string})\cr
+variable name of the results}
 
-\item{fun_name}{string, name of function called to get results in \code{x}}
+\item{fun_name}{(\code{string})\cr
+name of function called to get results in \code{x}}
 }
 \value{
-data frame
+a data frame
 }
 \description{
-Function take the results from \code{eval_capture_conditions()}, which is a
+Function takes the results from \code{eval_capture_conditions()}, which is a
 named list, e.g. \code{list(result=, warning=, error=)}, and converts it to a data
 frame.
 }

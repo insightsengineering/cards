@@ -7,19 +7,23 @@
 .process_nested_list_as_df(x, arg, new_column, unlist = FALSE)
 }
 \arguments{
-\item{x}{result data frame}
+\item{x}{(\code{data.frame})\cr
+result data frame}
 
-\item{arg}{the nested list}
+\item{arg}{(\code{list})\cr
+the nested list}
 
-\item{new_column}{string, new column name}
+\item{new_column}{(\code{string} scalar)\cr
+new column name}
 
-\item{unlist}{logical, whether to fully unlist final results}
+\item{unlist}{(\code{logical})\cr
+whether to fully unlist final results}
 }
 \value{
 a data frame
 }
 \description{
-Some arguments, such as the \code{stat_label}, are passed as nested lists. This
-function properly unnests these lists and adds the to the results data frame.
+Some arguments, such as \code{stat_label}, are passed as nested lists. This
+function properly unnests these lists and adds them to the results data frame.
 }
 \keyword{internal}

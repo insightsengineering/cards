@@ -11,17 +11,20 @@
 )
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
-\item{call}{frame for error messaging}
+\item{call}{(\code{environment})\cr
+frame for error messaging}
 
-\item{exceptions}{character string of column names to exclude from checks}
+\item{exceptions}{(\code{string} scalar)\cr
+character string of column names to exclude from checks}
 }
 \value{
 invisible
 }
 \description{
 Checks that column names in a passed data frame are not protected, that is,
-they do not begin with \code{"...ard_"} and end with \code{"..."}
+they do not begin with \code{"...ard_"} and end with \code{"..."}.
 }
 \keyword{internal}

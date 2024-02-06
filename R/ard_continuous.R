@@ -171,11 +171,14 @@ ard_continuous <- function(data,
 #' Check Protected Column Names
 #'
 #' Checks that column names in a passed data frame are not protected, that is,
-#' they do not begin with `"...ard_"` and end with `"..."`
+#' they do not begin with `"...ard_"` and end with `"..."`.
 #'
-#' @param x data frame
-#' @param call frame for error messaging
-#' @param exceptions character string of column names to exclude from checks
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#' @param call (`environment`)\cr
+#'   frame for error messaging
+#' @param exceptions (`string` scalar)\cr
+#'   character string of column names to exclude from checks
 #'
 #' @return invisible
 #' @keywords internal
@@ -195,12 +198,15 @@ ard_continuous <- function(data,
 #'
 #' Calculate statistics and return in an ARD format
 #'
-#' @param df_nested a nested data frame
-#' @param variables character vector of variables
-#' @param statistics named list of statistical functions
+#' @param df_nested (`data.frame`)\cr
+#'   a nested data frame
+#' @param variables (`character`)\cr
+#'   character vector of variables
+#' @param statistics (named `list`)\cr
+#'   named list of statistical functions
 #'
+#' @return an ARD data frame of class 'card'
 #' @keywords internal
-#' @return data frame
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
                                     by, strata, data,
                                     new_col_name = "...ard_all_stats...") {
@@ -240,15 +246,18 @@ ard_continuous <- function(data,
 
 #' Prepare Results as Data Frame
 #'
-#' Function take the results from `eval_capture_conditions()`, which is a
+#' Function takes the results from `eval_capture_conditions()`, which is a
 #' named list, e.g. `list(result=, warning=, error=)`, and converts it to a data
 #' frame.
 #'
-#' @param x named list, the result from `eval_capture_conditions()`
-#' @param variable string, variable name of the results
-#' @param fun_name string, name of function called to get results in `x`
+#' @param x (named `list`)\cr
+#'   the result from `eval_capture_conditions()`
+#' @param variable (`string`)\cr
+#'   variable name of the results
+#' @param fun_name (`string`)\cr
+#'   name of function called to get results in `x`
 #'
-#' @return data frame
+#' @return a data frame
 #' @keywords internal
 .lst_results_as_df <- function(x, variable, fun_name) {
   # unnesting results if needed
@@ -278,13 +287,17 @@ ard_continuous <- function(data,
 
 #' Convert Nested Lists to Column
 #'
-#' Some arguments, such as the `stat_label`, are passed as nested lists. This
-#' function properly unnests these lists and adds the to the results data frame.
+#' Some arguments, such as `stat_label`, are passed as nested lists. This
+#' function properly unnests these lists and adds them to the results data frame.
 #'
-#' @param x result data frame
-#' @param arg the nested list
-#' @param new_column string, new column name
-#' @param unlist logical, whether to fully unlist final results
+#' @param x (`data.frame`)\cr
+#'   result data frame
+#' @param arg (`list`)\cr
+#'   the nested list
+#' @param new_column (`string` scalar)\cr
+#'   new column name
+#' @param unlist (`logical`)\cr
+#'   whether to fully unlist final results
 #'
 #' @return a data frame
 #' @keywords internal
@@ -333,10 +346,11 @@ ard_continuous <- function(data,
 
 #' Add Default Formatting Functions
 #'
-#' @param data frame with cards structure
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
+#' @return a data frame
 #' @keywords internal
-#' @return data frame
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(
