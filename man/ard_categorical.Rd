@@ -23,13 +23,13 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to by/stratified by for tabulation.
+columns to separate by/stratify by for tabulation.
 Arguments are similar, but with an important distinction:
 
-\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
+\code{by}: results are tabulated for \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
+\code{strata}: results are tabulated for \strong{all \emph{observed} combinations} of the
 columns specified.
 
 Arguments may be used in conjunction with one another.}
@@ -40,7 +40,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-\item{denominator}{(\code{data.frame}, \code{integer()})\cr
+\item{denominator}{(\code{data.frame}, \code{integer} scalar)\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
@@ -57,15 +57,15 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
 Compute Analysis Results Data (ARD) for categorical summary statistics.
 }
 \section{Denominators}{
 
-By default, the \code{ard_categorical()} function returns the statistics \code{"n"} and \code{"N"},
-where little \code{"n"} are the counts for the variable levels, and \code{"N"} is
+By default, the \code{ard_categorical()} function returns the statistics \code{"n"}, \code{"N"}, and
+\code{"p"}, where little \code{"n"} are the counts for the variable levels, and big \code{"N"} is
 the number of non-missing observations. The default calculation for the
 percentage is merely \code{p = n/N}.
 
@@ -76,14 +76,14 @@ denominator to the number of enrolled subjects.
 
 In such cases, use the \code{denominator} argument to specify a new definition
 of \code{"N"}, and subsequently \code{"p"}.
-The argument expects the following inputs:
+The argument expects one of the following inputs:
 \itemize{
 \item a data frame. Any columns in the data frame that overlap with the \code{by}/\code{strata}
 columns will be used to calculate the new \code{"N"}.
 \item an integer. This single integer will be used as the new \code{"N"}
-\item a string: one of \code{c("column", "row", "cell")}. \code{"column"} is equivalent
+\item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}. \code{"column"} is equivalent
 to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
-columns are are the 'top' of a cross table, and the variables are the rows.
+columns are the 'top' of a cross table, and the variables are the rows.
 \code{"cell"} gives percentages where the denominator is the number of non-missing
 rows in the source data frame.
 \item a structured data frame. The data frame will include columns from \code{by}/\code{strata}.

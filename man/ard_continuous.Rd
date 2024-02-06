@@ -19,7 +19,7 @@ ard_continuous(
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries}
+columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to separate by/stratify by for summary statistic

@@ -18,7 +18,7 @@ ard_missing(
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries}
+columns to include in summaries. Default is \code{everything()}.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr results are
 tabulated by \strong{all combinations} of the columns specified.}

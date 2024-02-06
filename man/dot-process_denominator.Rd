@@ -2,7 +2,7 @@
 % Please edit documentation in R/ard_categorical.R
 \name{.process_denominator}
 \alias{.process_denominator}
-\title{Process Denominator Argument}
+\title{Process \code{denominator} Argument}
 \usage{
 .process_denominator(
   data,
@@ -20,26 +20,27 @@ a data frame}
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}
 
-\item{denominator}{(\code{data.frame}, \code{integer()})\cr
+\item{denominator}{(\code{data.frame}, \code{integer} scalar)\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to by/stratified by for tabulation.
+columns to separate by/stratify by for tabulation.
 Arguments are similar, but with an important distinction:
 
-\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
+\code{by}: results are tabulated for \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
+\code{strata}: results are tabulated for \strong{all \emph{observed} combinations} of the
 columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{env}{env used in error reporting.}
+\item{call}{(\code{environment})\cr
+frame for error messaging}
 }
 \value{
-data frame
+a data frame
 }
 \description{
 Function takes the \code{ard_categorical(denominator)} argument and returns a

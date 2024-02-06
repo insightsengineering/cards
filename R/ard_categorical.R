@@ -3,21 +3,21 @@
 #' Compute Analysis Results Data (ARD) for categorical summary statistics.
 #'
 #' @param data (`data.frame`)\cr
-#' a data frame
+#'   a data frame
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to by/stratified by for tabulation.
+#'   columns to separate by/stratify by for tabulation.
 #'   Arguments are similar, but with an important distinction:
 #'
-#'   `by`: results are tabulated by **all combinations** of the columns specified,
+#'   `by`: results are tabulated for **all combinations** of the columns specified,
 #'      including unobserved combinations and unobserved factor levels.
 #'
-#'   `strata`: results are tabulated by **all _observed_ combinations** of the
+#'   `strata`: results are tabulated for **all _observed_ combinations** of the
 #'     columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Default is `everything()`.
-#' @param denominator (`data.frame`, `integer()`)\cr
+#' @param denominator (`data.frame`, `integer` scalar)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #' @param statistics ([`formula-list-selector`][syntax])\cr
@@ -33,8 +33,8 @@
 #' @inheritParams ard_continuous
 #'
 #' @section Denominators:
-#' By default, the `ard_categorical()` function returns the statistics `"n"` and `"N"`,
-#' where little `"n"` are the counts for the variable levels, and `"N"` is
+#' By default, the `ard_categorical()` function returns the statistics `"n"`, `"N"`, and
+#' `"p"`, where little `"n"` are the counts for the variable levels, and big `"N"` is
 #' the number of non-missing observations. The default calculation for the
 #' percentage is merely `p = n/N`.
 #'
@@ -45,20 +45,20 @@
 #'
 #' In such cases, use the `denominator` argument to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
-#' The argument expects the following inputs:
+#' The argument expects one of the following inputs:
 #' - a data frame. Any columns in the data frame that overlap with the `by`/`strata`
 #'   columns will be used to calculate the new `"N"`.
 #' - an integer. This single integer will be used as the new `"N"`
-#' - a string: one of `c("column", "row", "cell")`. `"column"` is equivalent
+#' - a string: one of `"column"`, `"row"`, or `"cell"`. `"column"` is equivalent
 #'   to `denominator=NULL`. `"row"` gives 'row' percentages where `by`/`strata`
-#'   columns are are the 'top' of a cross table, and the variables are the rows.
+#'   columns are the 'top' of a cross table, and the variables are the rows.
 #'   `"cell"` gives percentages where the denominator is the number of non-missing
 #'   rows in the source data frame.
 #' - a structured data frame. The data frame will include columns from `by`/`strata`.
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
 #'   be used as the updated `"N"` in the calculations.
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
@@ -184,6 +184,7 @@ ard_categorical <- function(data,
 #' argument, and returns the tabulations in an ARD structure.
 #'
 #' @inheritParams ard_categorical
+#' @return an ARD data frame of class 'card'
 #' @keywords internal
 .calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
   # extract the "tabulation" statistics.
@@ -282,10 +283,14 @@ ard_categorical <- function(data,
 #' column types to their original classes. For `strata` columns,
 #' only observed combinations are returned.
 #'
-#' @param data a data frame
-#' @param variable a string indicating a column in data
-#' @param by a character vector indicating columns in data
-#' @param strata a character vector indicating columns in data
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param variable (`string`)\cr
+#'   a string indicating a column in data
+#' @param by (`character`)\cr
+#'   a character vector indicating columns in data
+#' @param strata (`character`)\cr
+#'   a character vector indicating columns in data
 #'
 #' @keywords internal
 #' @return data frame
@@ -327,17 +332,18 @@ ard_categorical <- function(data,
 }
 
 
-#' Process Denominator Argument
+#' Process `denominator` Argument
 #'
 #' Function takes the `ard_categorical(denominator)` argument and returns a
 #' structured data frame that is merged with the count data and used as the
 #' denominator in percentage calculations.
 #'
 #' @inheritParams ard_categorical
-#' @param env env used in error reporting.
+#' @param call (`environment`)\cr
+#'   frame for error messaging
 #'
+#' @return a data frame
 #' @keywords internal
-#' @return data frame
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
@@ -473,17 +479,22 @@ ard_categorical <- function(data,
 
 
 
-#' Check for missing levels in `denominator`
+#' Check for Missing Levels in `denominator`
 #'
 #' When a user passes a data frame in the `denominator` argument, this function
 #' checks that the data frame contains all the same levels of the `by`
-#' and `strata` variables that appear in the `data`
+#' and `strata` variables that appear in `data`.
 #'
-#' @param data data frame
-#' @param denominator denominator data frame
-#' @param by character vector of by column names
-#' @param strata character vector of strata column names
-#' @param env environment for error messaging
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param denominator (`data.frame`)\cr
+#'   denominator data frame
+#' @param by (`character`)\cr
+#'   character vector of by column names
+#' @param strata (`character`)\cr
+#'   character vector of strata column names
+#' @param call (`environment`)\cr
+#'   frame for error messaging
 #'
 #' @return invisible
 #' @keywords internal

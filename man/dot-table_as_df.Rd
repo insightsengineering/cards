@@ -13,13 +13,17 @@
 )
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{variable}{a string indicating a column in data}
+\item{variable}{(\code{string})\cr
+a string indicating a column in data}
 
-\item{by}{a character vector indicating columns in data}
+\item{by}{(\code{character})\cr
+a character vector indicating columns in data}
 
-\item{strata}{a character vector indicating columns in data}
+\item{strata}{(\code{character})\cr
+a character vector indicating columns in data}
 }
 \value{
 data frame

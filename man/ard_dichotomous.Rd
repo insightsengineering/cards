@@ -24,13 +24,13 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to by/stratified by for tabulation.
+columns to separate by/stratify by for tabulation.
 Arguments are similar, but with an important distinction:
 
-\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
+\code{by}: results are tabulated for \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
+\code{strata}: results are tabulated for \strong{all \emph{observed} combinations} of the
 columns specified.
 
 Arguments may be used in conjunction with one another.}
@@ -45,7 +45,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
 
-\item{denominator}{(\code{data.frame}, \code{integer()})\cr
+\item{denominator}{(\code{data.frame}, \code{integer} scalar)\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
