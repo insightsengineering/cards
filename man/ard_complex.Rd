@@ -35,16 +35,16 @@ Arguments may be used in conjunction with one another.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 The form of the statistics argument is identical to \code{ard_continuous(statistics)}
-argument, except the summary function \emph{must} accept the following arguments.
+argument, except the summary function \emph{must} accept the following arguments:
 \itemize{
-\item \code{x} vector
-\item \code{data} the data frame that has been subset by the \code{by}/\code{strata} columns
+\item \code{x}: a vector
+\item \code{data}: the data frame that has been subset such that the \code{by}/\code{strata} columns
 and rows in which \code{"variable"} is \code{NA} have been removed.
-\item \code{data_full} the full data frame
-\item \code{by} character vector of the \code{by} variables
-\item \code{strata} character vector of the \code{strata} variables
+\item \code{data_full}: the full data frame
+\item \code{by}: character vector of the \code{by} variables
+\item \code{strata}: character vector of the \code{strata} variables
 It is unlikely any one function will need \emph{all} of the above elements,
-and it's recommended the function passed accepts \code{...} and any unused
+and it's recommended the function passed accepts \code{...} so that any unused
 arguments will be properly ignored. The \code{...} also allows this function
 to perhaps be updated in the future with more passed arguments. For example,
 if one needs a second variable from the data frame, the function inputs
@@ -64,11 +64,11 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
-Function is similar to \code{ard_continuous()}, but allows for more complex
+Function is similar to \code{\link[=ard_continuous]{ard_continuous()}}, but allows for more complex
 summaries. While \code{ard_continuous(statistics)} only allows for a univariable
 function, \code{ard_complex(statistics)} can handle more complex data summaries.
 }
@@ -81,7 +81,7 @@ ard_complex(
   statistics = list(AGE = list(mean = \(x, ...) mean(x)))
 )
 
-# return the grand mean and the mean within the by group
+# return the grand mean and the mean within the `by` group
 grand_mean <- function(data, data_full, variable, ...) {
   list(
     mean = mean(data[[variable]], na.rm = TRUE),
