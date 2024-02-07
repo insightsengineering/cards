@@ -11,7 +11,7 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param by,strata (`character`)\cr
-#'   columns to nest by/stratified by. Arguments are similar,
+#'   columns to nest by/stratify by. Arguments are similar,
 #'   but with an important distinction:
 #'
 #'   `by`: data frame is nested by **all combinations** of the columns specified,
@@ -21,17 +21,16 @@
 #'   columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.
-#'
 #' @param key (`string`)\cr
-#'   the name of the new column with the nested data frame. Default is `"data"`
-#' @param rename_columns (`logical` scalar)\cr
-#'   logical indicating whether to rename the by and strata variables.
-#'   Default is `TRUE`
-#' @param list_columns (`logical` scalar)\cr
+#'   the name of the new column with the nested data frame. Default is `"data"`.
+#' @param rename_columns (`logical`)\cr
+#'   logical indicating whether to rename the `by` and `strata` variables.
+#'   Default is `TRUE`.
+#' @param list_columns (`logical`)\cr
 #'   logical indicating whether to put levels of `by` and
-#'   `strata` columns in a list. Default is `TRUE`
+#'   `strata` columns in a list. Default is `TRUE`.
 #'
-#' @return a nested data frame
+#' @return a nested tibble
 #' @export
 #'
 #' @examples

@@ -27,7 +27,8 @@
 #'   variable_level %in% "65-80",
 #'   .attributes = "stat_label"
 #' )
-get_ard_statistics <- function(x, ...,
+get_ard_statistics <- function(x,
+                               ...,
                                .column = "statistic",
                                .attributes = NULL) {
   # subset the ARD
@@ -49,10 +50,18 @@ get_ard_statistics <- function(x, ...,
     stats::setNames(ard_subset[["stat_name"]])
 }
 
-.create_list_for_attributes <- function(ard_subset, attributes, i) {
-  ret <- list()
-  for (attr in seq_along(attributes)) {
-    ret <- c(ret, list(ard_subset[[attr]][[i]]))
-  }
-  stats::setNames(ret, nm = attributes)
-}
+#' #' Create List for Attributes
+#' #'
+#' #'
+#' #' @param ard_subset (`data.frame`)\cr
+#' #'   an ARD data frame of class 'card'
+#' #'
+#' #' @return a named list
+#' #' @keywords internal
+#' .create_list_for_attributes <- function(ard_subset, attributes, i) {
+#'   ret <- list()
+#'   for (attr in seq_along(attributes)) {
+#'     ret <- c(ret, list(ard_subset[[attr]][[i]]))
+#'   }
+#'   stats::setNames(ret, nm = attributes)
+#' }
