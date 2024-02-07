@@ -15,7 +15,7 @@
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to include
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
