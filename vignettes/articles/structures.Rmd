@@ -76,23 +76,48 @@ Use the `jsonlite::write_json()` function to convert to JSON and write to disk s
 
 ## REST API
 
-TODO: Update this section
+With the JSON format, ARDs can be made accessible via REST APIs. Using the {plumber} package, an API can be created in a `plumber.R` file.
 
 ```{r eval = FALSE}
+library(cards)
 library(plumber)
 library(jsonlite)
 
 #* @get /nested_json
 #* @serializer unboxedJSON
 function() {
+  ard <- bind_ard(
+    ard_continuous(ADSL, by = "ARM", variables = "AGE"),
+    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+  )
+
   ard |>
     as_nested_list() |>
-    jsonlite::toJSON(auto_unbox = TRUE)
+    toJSON()
 }
-
-# ------------------------------------------------------------------------------
-library(plumber)
-# 'plumber.R' is the location of the files shown above
-pr("plumber.R") |>
-  pr_run(port = 8000)
 ```
+
+The following code serves the API, making it available for testing. Note: "plumber.R" represents the path to the `plumber.R` file created above. 
+
+```{r eval = FALSE}
+library(plumber)
+
+pr("plumber.R") |>
+  pr_run(
+    host = "127.0.0.1",
+    port = 8000
+  )
+```
+
+Data is requested from a hosted API via the {httr} package and converted back to a nested list using {jsonlite}.
+
+```{r eval = FALSE}
+library(httr)
+library(jsonlite)
+
+GET("http://127.0.0.1:8000/nested_json") |>
+  content() |>
+  fromJSON()
+```
+
+
