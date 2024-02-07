@@ -100,7 +100,6 @@ function() {
 The following code serves the API, making it available for testing. Note: "plumber.R" represents the path to the `plumber.R` file created above. 
 
 ```{r eval = FALSE}
-# ------------------------------------------------------------------------------
 library(plumber)
  
 pr("plumber.R") |>
