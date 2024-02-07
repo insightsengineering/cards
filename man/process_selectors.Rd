@@ -10,7 +10,7 @@
 \usage{
 process_selectors(data, ..., env = caller_env())
 
-process_formula_selectors(data, ..., env = caller_env())
+process_formula_selectors(data, ..., env = caller_env(), include_env = FALSE)
 
 fill_formula_selectors(data, ..., env = caller_env())
 
@@ -19,7 +19,8 @@ compute_formula_selector(
   x,
   arg_name = caller_arg(x),
   env = caller_env(),
-  strict = TRUE
+  strict = TRUE,
+  include_env = FALSE
 )
 
 check_list_elements(
@@ -50,6 +51,10 @@ a function.
 \item{env}{(\code{environment})\cr
 env to save the results to. Default is the calling environment.}
 
+\item{include_env}{(\code{logical} scalar)\cr
+whether to include the environment from the formula object in the returned
+named list. Default is \code{FALSE}}
+
 \item{x}{\itemize{
 \item \code{compute_formula_selector()}: (\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, list of formulas, or a single formula that will be
@@ -64,7 +69,7 @@ in error messaging. Default is \code{caller_arg(x)}}
 
 \item{strict}{(\code{logical} scalar)\cr
 whether to throw an error if a variable doesn't exist in the reference data
-(passed to \code{tidyselect::eval_select})}
+(passed to \code{tidyselect::eval_select()})}
 
 \item{predicate}{a predicate function that returns \code{TRUE} or \code{FALSE}}
 
