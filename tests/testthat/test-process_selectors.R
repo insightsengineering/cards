@@ -33,7 +33,7 @@ test_that("process_formula_selectors() works", {
     list(variables = list(am = 1L)),
     ignore_attr = TRUE
   )
-  # styler: off
+  # styler: on
 
   # works with more than on argument
   # styler: off
@@ -57,10 +57,10 @@ test_that("compute_formula_selector() selects the last assignment when multiple 
   formula_selcect_test <- everything() ~ "THE DEFAULT"
   expect_error(
     lst_compute_test <-
-    compute_formula_selector(
-      data = mtcars[c("mpg", "hp")],
-      x = list(formula_selcect_test, mpg = "Special for MPG")
-    ),
+      compute_formula_selector(
+        data = mtcars[c("mpg", "hp")],
+        x = list(formula_selcect_test, mpg = "Special for MPG")
+      ),
     NA
   )
 
