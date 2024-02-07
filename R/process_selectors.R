@@ -202,7 +202,8 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       x[i] <-
         rep_len(
           list(
-            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment"))
+            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment")) |>
+              structure(.Environment = attr(x[[i]], ".Environment"))
           ),
           length.out = length(colnames)
         ) |>
@@ -214,9 +215,10 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   # flatten the list to a top-level list only
   x <- .purrr_list_flatten(x)
 
-  # remove duplicates (keeping the last one), and only keeping names in the data frame
+  # remove duplicates (keeping the last one)
   x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
 
+  # only keeping names in the data frame
   x[intersect(names(x), names(data))]
 }
 
