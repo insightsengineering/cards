@@ -8,10 +8,10 @@
 #'   columns to tabulate by/stratify by for tabulation.
 #'   Arguments are similar, but with an important distinction:
 #'
-#'   `by`: results are tabulated for **all combinations** of the columns specified,
+#'   `by`: results are tabulated by **all combinations** of the columns specified,
 #'      including unobserved combinations and unobserved factor levels.
 #'
-#'   `strata`: results are tabulated for **all _observed_ combinations** of the
+#'   `strata`: results are tabulated by **all _observed_ combinations** of the
 #'     columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.

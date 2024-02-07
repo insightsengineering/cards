@@ -1,12 +1,12 @@
 #' Missing ARD Statistics
 #'
-#' Compute Analysis Results Data (ARD) for statistics about data missingness.
+#' Compute Analysis Results Data (ARD) for statistics related to data missingness.
 #'
 #' @inheritParams ard_continuous
-#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr results are
-#'   tabulated by **all combinations** of the columns specified.
+#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   results are tabulated by **all combinations** of the columns specified.
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples

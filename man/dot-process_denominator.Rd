@@ -28,10 +28,10 @@ e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 columns to tabulate by/stratify by for tabulation.
 Arguments are similar, but with an important distinction:
 
-\code{by}: results are tabulated for \strong{all combinations} of the columns specified,
+\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are tabulated for \strong{all \emph{observed} combinations} of the
+\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
 columns specified.
 
 Arguments may be used in conjunction with one another.}
