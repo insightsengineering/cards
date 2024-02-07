@@ -62,7 +62,7 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
-a ARD data frame of class 'card'
+an ARD data frame of class 'card'
 }
 \description{
 Compute Analysis Results Data (ARD) for dichotomous summary statistics.

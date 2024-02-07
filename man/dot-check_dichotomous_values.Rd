@@ -7,14 +7,14 @@
 .check_dichotomous_values(data, values, call = parent.frame())
 }
 \arguments{
-\item{data}{(\code{data.frame})
+\item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{values}{(named \code{list})
+\item{values}{(named \code{list})\cr
 a named list}
 
-\item{call}{(\code{environment})
-an environment. Default is \code{parent.frame()}}
+\item{call}{(\code{environment})\cr
+an environment. Default is \code{parent.frame()}.}
 }
 \description{
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
