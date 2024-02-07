@@ -7,9 +7,11 @@
 alias_as_fmt_fn(x, call = parent.frame())
 }
 \arguments{
-\item{x}{a non-negative integer, string alias, or function}
+\item{x}{(\code{integer}, \code{string} scalar, or \code{function})\cr
+a non-negative integer, string alias, or function}
 
-\item{call}{call environment for error messaging}
+\item{call}{(\code{environment})\cr
+frame for error messaging}
 }
 \value{
 a function

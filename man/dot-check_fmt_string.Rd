@@ -7,12 +7,14 @@
 .check_fmt_string(x, call = caller_env())
 }
 \arguments{
-\item{x}{string to check}
+\item{x}{(\code{string} scalar)\cr
+string to check}
 
-\item{call}{calling environment. Default is \code{caller_env()}}
+\item{call}{(\code{environment})\cr
+frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}}
 }
 \value{
-logical
+a logical
 }
 \description{
 A function that checks a \strong{single} string for consistency.
