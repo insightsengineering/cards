@@ -89,8 +89,8 @@ function() {
   ard <- bind_ard(
     ard_continuous(ADSL, by = "ARM", variables = "AGE"),
     ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
-  )    
-  
+  )
+
   ard |>
     as_nested_list() |>
     toJSON()
@@ -101,10 +101,12 @@ The following code serves the API, making it available for testing. Note: "plumb
 
 ```{r eval = FALSE}
 library(plumber)
- 
+
 pr("plumber.R") |>
-  pr_run(host = "127.0.0.1",
-         port = 8000)
+  pr_run(
+    host = "127.0.0.1",
+    port = 8000
+  )
 ```
 
 Data is requested from a hosted API via the {httr} package and converted back to a nested list using {jsonlite}.
