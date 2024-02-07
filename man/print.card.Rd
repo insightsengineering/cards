@@ -20,7 +20,8 @@ string indicating whether to print a selected number of columns or all.}
 some columns are removed when there are more than a threshold of
 columns present. This argument sets that threshold. Default is \code{6L}.}
 
-\item{...}{not used}
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+not used}
 }
 \value{
 an ARD data frame of class 'card'

@@ -4,7 +4,8 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
-#' @param ... optional arguments indicating rows to subset of the ARD.
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#'   optional arguments indicating rows to subset of the ARD.
 #'   For example, to return only rows where the column `"AGEGR1"` is `"65-80"`,
 #'   pass `AGEGR1 %in% "65-80"`.
 #' @param .column (`string`)\cr

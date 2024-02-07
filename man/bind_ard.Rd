@@ -7,7 +7,8 @@
 bind_ard(..., .update = FALSE, .order = FALSE)
 }
 \arguments{
-\item{...}{ARDs to combine. Each argument can either be an ARD,
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+ARDs to combine. Each argument can either be an ARD,
 or a list of ARDs. Columns are matched by name, and any missing
 columns will be filled with \code{NA}.}
 

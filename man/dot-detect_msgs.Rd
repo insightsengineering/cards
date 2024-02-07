@@ -9,7 +9,8 @@
 \arguments{
 \item{x}{data frame}
 
-\item{...}{columns to search within}
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+columns to search within}
 }
 \value{
 data frame

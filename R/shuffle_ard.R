@@ -115,7 +115,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' before removal. Specifically used for detecting messages.
 #'
 #' @param x data frame
-#' @param ... columns to search within
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#'   columns to search within
 #'
 #' @return data frame
 #' @keywords internal

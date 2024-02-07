@@ -11,7 +11,8 @@
 #' @param n_col (`integer`)\cr
 #'   some columns are removed when there are more than a threshold of
 #'   columns present. This argument sets that threshold. Default is `6L`.
-#' @param ... not used
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#'   not used
 #'
 #' @return an ARD data frame of class 'card'
 #' @export

@@ -1,15 +1,15 @@
 #' Process tidyselectors
 #'
 #' @description
-#' Functions processes tidyselect arguments passed to functions in the cards package.
-#' The processed values saved to the calling environment, by default.
+#' Functions process `tidyselect` arguments passed to functions in the cards package.
+#' The processed values are saved to the calling environment, by default.
 #'
-#' - `process_selectors()`: the arguments will be processed with tidyselect and
+#' - `process_selectors()`: the arguments will be processed with `tidyselect` and
 #'   converted to a vector of character column names.
 #'
 #' - `process_formula_selectors()`: for arguments that expect named lists or
 #'   lists of formulas (where the LHS of the formula is a tidyselector). This
-#'   function processes these inputs and returns a named list. If an name is
+#'   function processes these inputs and returns a named list. If a name is
 #'   repeated, the last entry is kept.
 #'
 #' - `fill_formula_selectors()`: when users override the default argument values,
@@ -21,13 +21,13 @@
 #'   evaluate a single argument.
 #'
 #' - `check_list_elements()`: used to check the class/type/values of the list
-#'   elements, primarily those processed with `process_formula_selectors()`
+#'   elements, primarily those processed with `process_formula_selectors()`.
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
-#'   named arguments where the value of the argument is processed with tidyselect.
-#'   - `process_selectors()`: the values are tidyselect-compatible selectors
+#'   named arguments where the value of the argument is processed with `tidyselect`.
+#'   - `process_selectors()`: the values are `tidyselect`-compatible selectors
 #'   - `process_formula_selectors()`: the values are named lists, list of formulas
 #'     a combination of both, or a single formula. Users may pass `~value` as a
 #'     shortcut for `everything() ~ value`.
@@ -41,19 +41,20 @@
 #'  - `compute_formula_selector()`: ([`formula-list-selector`][syntax])\cr
 #'    a named list, list of formulas, or a single formula that will be
 #'    converted to a named list.
-#'  - `check_list_elements()`: (`named list`)\cr
+#'  - `check_list_elements()`: (named `list`)\cr
 #'    a named list
-#' @param predicate a predicate function that returns `TRUE` or `FALSE`
+#' @param predicate (`function`)\cr
+#'   a predicate function that returns `TRUE` or `FALSE`
 #' @param arg_name (`string`)\cr
-#'   a string with the argument named being processed. Used
-#'   in error messaging. Default is `caller_arg(x)`
+#'   the name of the argument being processed. Used
+#'   in error messaging. Default is `caller_arg(x)`.
 #' @param error_msg (`character`)\cr
 #'   a character vector that will
 #'   be used in error messaging when mis-specified arguments are passed. Elements
 #'   `"{arg_name}"` and `"{variable}"` are available using glue syntax for messaging.
-#' @param strict (`logical` scalar)\cr
+#' @param strict (`logical`)\cr
 #'   whether to throw an error if a variable doesn't exist in the reference data
-#'   (passed to `tidyselect::eval_select`)
+#'   (passed to [tidyselect::eval_select()])
 #'
 #' @name process_selectors
 #'
@@ -62,7 +63,6 @@
 #'
 #' process_selectors(ADSL, variables = starts_with("TRT"), env = example_env)
 #' get(x = "variables", envir = example_env)
-#'
 #'
 #' process_formula_selectors(
 #'   ADSL,

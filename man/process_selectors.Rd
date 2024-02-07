@@ -35,9 +35,9 @@ check_list_elements(
 a data frame}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
-named arguments where the value of the argument is processed with tidyselect.
+named arguments where the value of the argument is processed with \code{tidyselect}.
 \itemize{
-\item \code{process_selectors()}: the values are tidyselect-compatible selectors
+\item \code{process_selectors()}: the values are \code{tidyselect}-compatible selectors
 \item \code{process_formula_selectors()}: the values are named lists, list of formulas
 a combination of both, or a single formula. Users may pass \code{~value} as a
 shortcut for \code{everything() ~ value}.
@@ -54,19 +54,20 @@ env to save the results to. Default is the calling environment.}
 \item \code{compute_formula_selector()}: (\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, list of formulas, or a single formula that will be
 converted to a named list.
-\item \code{check_list_elements()}: (\verb{named list})\cr
+\item \code{check_list_elements()}: (named \code{list})\cr
 a named list
 }}
 
 \item{arg_name}{(\code{string})\cr
-a string with the argument named being processed. Used
-in error messaging. Default is \code{caller_arg(x)}}
+the name of the argument being processed. Used
+in error messaging. Default is \code{caller_arg(x)}.}
 
-\item{strict}{(\code{logical} scalar)\cr
+\item{strict}{(\code{logical})\cr
 whether to throw an error if a variable doesn't exist in the reference data
-(passed to \code{tidyselect::eval_select})}
+(passed to \code{\link[tidyselect:eval_select]{tidyselect::eval_select()}})}
 
-\item{predicate}{a predicate function that returns \code{TRUE} or \code{FALSE}}
+\item{predicate}{(\code{function})\cr
+a predicate function that returns \code{TRUE} or \code{FALSE}}
 
 \item{error_msg}{(\code{character})\cr
 a character vector that will
@@ -74,14 +75,14 @@ be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }
 \description{
-Functions processes tidyselect arguments passed to functions in the cards package.
-The processed values saved to the calling environment, by default.
+Functions process \code{tidyselect} arguments passed to functions in the cards package.
+The processed values are saved to the calling environment, by default.
 \itemize{
-\item \code{process_selectors()}: the arguments will be processed with tidyselect and
+\item \code{process_selectors()}: the arguments will be processed with \code{tidyselect} and
 converted to a vector of character column names.
 \item \code{process_formula_selectors()}: for arguments that expect named lists or
 lists of formulas (where the LHS of the formula is a tidyselector). This
-function processes these inputs and returns a named list. If an name is
+function processes these inputs and returns a named list. If a name is
 repeated, the last entry is kept.
 \item \code{fill_formula_selectors()}: when users override the default argument values,
 it can be important to ensure that each column from a data frame is assigned
@@ -90,7 +91,7 @@ value, and if not, fills the value in with the default value passed here.
 \item \code{compute_formula_selector()}: used in \code{process_formula_selectors()} to
 evaluate a single argument.
 \item \code{check_list_elements()}: used to check the class/type/values of the list
-elements, primarily those processed with \code{process_formula_selectors()}
+elements, primarily those processed with \code{process_formula_selectors()}.
 }
 }
 \examples{
@@ -98,7 +99,6 @@ example_env <- rlang::new_environment()
 
 process_selectors(ADSL, variables = starts_with("TRT"), env = example_env)
 get(x = "variables", envir = example_env)
-
 
 process_formula_selectors(
   ADSL,
