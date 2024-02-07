@@ -7,10 +7,11 @@
 .one_row_ard_to_nested_list(x)
 }
 \arguments{
-\item{x}{an ARD data frame with one row}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card' with one row}
 }
 \value{
-expression that represents an element of a nested list
+an expression that represents an element of a nested list
 }
 \description{
 Convert One Row to Nested List
