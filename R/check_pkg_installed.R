@@ -2,38 +2,36 @@
 #'
 #' @description
 #' - `check_pkg_installed()`: checks whether a package is installed and
-#' returns an error or `FALSE` if not available. If a package search is provided,
-#' the function will check whether a minimum version of a package is required.
+#'   returns an error or `FALSE` if not available. If a package search is provided,
+#'   the function will check whether a minimum version of a package is required.
 #'
 #' - `get_pkg_dependencies()` returns a tibble with all
-#' dependencies of a specific package.
+#'   dependencies of a specific package.
 #'
 #' - `get_min_version_required()` will return, if any, the minimum version
-#' of `pkg` required by `reference_pkg`, `NULL` if no minimum version required.
+#'   of `pkg` required by `reference_pkg`, `NULL` if no minimum version required.
 #'
 #' @param pkg (`string`)\cr
-#'   Package required
+#'   name of required package
 #' @param call (`environment`)\cr
-#'   The execution environment of a currently running function. Default is `parent.frame()`.
-#'   This is used to message user about the original function call the resulted
-#'   in the prompt to install new packages.
+#'   frame for error messaging. Default is [parent.frame()]. This is used to message user
+#'   about the original function call the resulted in the prompt to install new packages.
 #' @param reference_pkg (`string`)\cr
-#'   the package the function will search for a minimum required version from.
-#' @param remove_duplicates `(logical(1))`\cr
-#'   if several versions of a package are installed,
-#'   should only the first one be returned?
-#' @param lib.loc `(path)`
-#'   location of `R` library trees to search through, see
-#'   `utils::installed.packages()`.
+#'   name of the package the function will search for a minimum required version from.
+#' @param remove_duplicates (`logical` scalar)\cr
+#'   if several versions of a package are installed, should only the first one be returned?
+#' @param lib.loc (`path`)\cr
+#'   location of `R` library trees to search through, see [utils::installed.packages()].
+#'
 #' @details
 #' `get_all_pkg_dependencies()` may be used to get the list of
 #' dependencies of all installed packages.
 #'
-#' @return logical or error for `check_pkg_installed()`, `NULL` or character with
-#' the minimum version required for `get_min_version_required()`, a tibble for
-#' `get_pkg_dependencies()`.
-#'
+#' @return `check_pkg_installed()` returns a logical or error, `get_min_version_required()`
+#' returns `NULL` or a string with the minimum version required, `get_pkg_dependencies()`
+#' returns a tibble.
 #' @name check_pkg_installed
+#'
 #' @examples
 #' is_pkg_installed("dplyr")
 #' get_pkg_dependencies()

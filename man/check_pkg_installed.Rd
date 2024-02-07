@@ -24,28 +24,25 @@ get_min_version_required(pkg, reference_pkg = "cards")
 }
 \arguments{
 \item{pkg}{(\code{string})\cr
-Package required}
+name of required package}
 
 \item{reference_pkg}{(\code{string})\cr
-the package the function will search for a minimum required version from.}
+name of the package the function will search for a minimum required version from.}
 
 \item{call}{(\code{environment})\cr
-The execution environment of a currently running function. Default is \code{parent.frame()}.
-This is used to message user about the original function call the resulted
-in the prompt to install new packages.}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}. This is used to message user
+about the original function call the resulted in the prompt to install new packages.}
 
-\item{remove_duplicates}{\code{(logical(1))}\cr
-if several versions of a package are installed,
-should only the first one be returned?}
+\item{remove_duplicates}{(\code{logical} scalar)\cr
+if several versions of a package are installed, should only the first one be returned?}
 
-\item{lib.loc}{\code{(path)}
-location of \code{R} library trees to search through, see
-\code{utils::installed.packages()}.}
+\item{lib.loc}{(\code{path})\cr
+location of \code{R} library trees to search through, see \code{\link[utils:installed.packages]{utils::installed.packages()}}.}
 }
 \value{
-logical or error for \code{check_pkg_installed()}, \code{NULL} or character with
-the minimum version required for \code{get_min_version_required()}, a tibble for
-\code{get_pkg_dependencies()}.
+\code{check_pkg_installed()} returns a logical or error, \code{get_min_version_required()}
+returns \code{NULL} or a string with the minimum version required, \code{get_pkg_dependencies()}
+returns a tibble.
 }
 \description{
 \itemize{
