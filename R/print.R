@@ -2,15 +2,18 @@
 #'
 #' Print method for objects of class 'card'
 #'
-#' @param x object of class 'card'
-#' @param n integer specifying the number of rows to print
-#' @param columns string indicating whether to print a selected number of
-#' columns or all.
-#' @param n_col some columns are removed when there are more than a threshold
-#' of columns present. This argument sets that threshold. Default is `6L`
+#' @param x (`data.frame`)\cr
+#'   object of class 'card'
+#' @param n (`integer`)\cr
+#'   integer specifying the number of rows to print
+#' @param columns (`string`)\cr
+#'   string indicating whether to print a selected number of columns or all.
+#' @param n_col (`integer`)\cr
+#'   some columns are removed when there are more than a threshold of
+#'   columns present. This argument sets that threshold. Default is `6L`.
 #' @param ... not used
 #'
-#' @return data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples

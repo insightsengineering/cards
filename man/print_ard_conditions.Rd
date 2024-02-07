@@ -8,11 +8,11 @@ print_ard_conditions(x, call = NULL)
 }
 \arguments{
 \item{x}{(\code{card})\cr
-an ARD data frame}
+an ARD data frame of class 'card'}
 
 \item{call}{(\code{environment})\cr
 if supplied, the calling function will be used in messaging to users.
-Default is \code{NULL}}
+Default is \code{NULL}.}
 }
 \description{
 Function parses the errors and warnings observed while calculating the
