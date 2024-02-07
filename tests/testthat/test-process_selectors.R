@@ -28,7 +28,7 @@ test_that("process_formula_selectors() works", {
   # works with a single argument
   # styler: off
   expect_equal({
-    process_formula_selectors(mtcars, variables = starts_with("a") ~ 1L)
+    process_formula_selectors(mtcars, variables = starts_with("a") ~ 1L, include_env = TRUE)
     list(variables = variables)},
     list(variables = list(am = 1L)),
     ignore_attr = TRUE
@@ -38,7 +38,9 @@ test_that("process_formula_selectors() works", {
   # works with more than on argument
   # styler: off
   expect_equal({
-    process_formula_selectors(mtcars, variables = starts_with("a") ~ 1L, by = list(am = 1L))
+    process_formula_selectors(
+      mtcars, variables = starts_with("a") ~ 1L, by = list(am = 1L), include_env = TRUE
+    )
     list(variables = variables, by = by)},
     list(variables = list(am = 1L), by = list(am = 1L)),
     ignore_attr = TRUE
@@ -59,7 +61,8 @@ test_that("compute_formula_selector() selects the last assignment when multiple 
     lst_compute_test <-
       compute_formula_selector(
         data = mtcars[c("mpg", "hp")],
-        x = list(formula_selcect_test, mpg = "Special for MPG")
+        x = list(formula_selcect_test, mpg = "Special for MPG"),
+        include_env = TRUE
       ),
     NA
   )
