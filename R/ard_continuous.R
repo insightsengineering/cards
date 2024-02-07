@@ -7,7 +7,7 @@
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Default is `everything()`.
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to separate by/stratify by for summary statistic
+#'   columns to tabulate by/stratify by for summary statistic
 #'   calculation. Arguments are similar, but with an important distinction:
 #'
 #'   `by`: results are calculated for **all combinations** of the columns specified,

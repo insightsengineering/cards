@@ -7,13 +7,14 @@
 .rename_last_group_as_variable(df_result)
 }
 \arguments{
-\item{df_result}{an ARD data frame}
+\item{df_result}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
-an ARD data frame
+an ARD data frame of class 'card'
 }
 \description{
 In the \verb{ard_hierarchical*()} functions, the last grouping variable is
-renamed to variable and variable_level before returning
+renamed to variable and variable_level before being returned.
 }
 \keyword{internal}

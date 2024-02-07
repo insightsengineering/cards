@@ -22,7 +22,7 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to separate by/stratify by for summary statistic
+columns to tabulate by/stratify by for summary statistic
 calculation. Arguments are similar, but with an important distinction:
 
 \code{by}: results are calculated for \strong{all combinations} of the columns specified,

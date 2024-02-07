@@ -57,7 +57,7 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
-an ARD data frame
+an ARD data frame of class 'card'
 }
 \description{
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms

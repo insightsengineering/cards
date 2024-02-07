@@ -16,7 +16,7 @@
 #'   specified here appear in results. Default is `dplyr::group_vars(data)`.
 #' @inheritParams ard_categorical
 #'
-#' @return an ARD data frame
+#' @return an ARD data frame of class 'card'
 #' @name ard_hierarchical
 #'
 #' @examples
@@ -150,11 +150,12 @@ ard_hierarchical_count <- function(data,
 #' Rename Last Group to Variable
 #'
 #' In the `ard_hierarchical*()` functions, the last grouping variable is
-#' renamed to variable and variable_level before returning
+#' renamed to variable and variable_level before being returned.
 #'
-#' @param df_result an ARD data frame
+#' @param df_result (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
-#' @return an ARD data frame
+#' @return an ARD data frame of class 'card'
 #' @keywords internal
 .rename_last_group_as_variable <- function(df_result) {
   df_result <- dplyr::select(df_result, -all_ard_variables())
