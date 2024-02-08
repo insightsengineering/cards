@@ -1,18 +1,18 @@
-#' Build ARD from tidier
+#' Build ARD from Tidier
 #'
 #' @description
 #' Function converts a model's one-row tidy data frame into an ARD structure.
 #' The tidied data frame must have been constructed with
-#' `eval_capture_conditions()`.
+#' [eval_capture_conditions()].
 #'
 #' This function is primarily for developers and few consistency checks have
 #' been included.
 #'
 #' @param lst_tidy (named `list`)\cr
-#'   list of tidied results constructed with `eval_capture_conditions()`,
-#'   e.g. `eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())`
+#'   list of tidied results constructed with [eval_capture_conditions()],
+#'   e.g. `eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())`.
 #' @param tidy_result_names (`character`)\cr
-#'   character vector of column names expected from the
+#'   character vector of column names expected by the
 #'   tidier method. This is used to construct blank results in the event of an error.
 #' @param fun_args_to_record (`character`)\cr
 #'   character vector of function argument names that are added to the ARD.
@@ -24,7 +24,7 @@
 #' @param lst_ard_columns (named `list`)\cr
 #'   named list of values that will be added to the ARD data frame.
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
