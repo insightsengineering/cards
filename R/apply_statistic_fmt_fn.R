@@ -55,7 +55,7 @@ apply_statistic_fmt_fn <- function(x) {
 #' @param x (`integer`, `string` scalar, or `function`)\cr
 #'   a non-negative integer, string alias, or function
 #' @param call (`environment`)\cr
-#'   frame for error messaging
+#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a function
 #' @export
@@ -146,7 +146,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @param x (`string`)\cr
 #'   string to check
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [caller_env()]
+#'   frame for error messaging. Default is [caller_env()].
 #'
 #' @return a logical
 #' @keywords internal

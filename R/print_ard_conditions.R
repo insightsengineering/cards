@@ -6,8 +6,7 @@
 #' @param x (`card`)\cr
 #'   an ARD data frame of class 'card'
 #' @param call (`environment`)\cr
-#'   if supplied, the calling function will be used in messaging to users.
-#'   Default is `NULL`.
+#'   frame for error messaging. Default is `NULL`.
 #'
 #' @return NULL
 #' @export

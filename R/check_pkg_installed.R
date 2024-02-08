@@ -14,8 +14,7 @@
 #' @param pkg (`string`)\cr
 #'   name of required package
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()]. This is used to message user
-#'   about the original function call the resulted in the prompt to install new packages.
+#'   frame for error messaging. Default is [parent.frame()].
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
 #' @param remove_duplicates (`logical`)\cr

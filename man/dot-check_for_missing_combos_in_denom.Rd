@@ -26,7 +26,7 @@ character vector of by column names}
 character vector of strata column names}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
 invisible

@@ -340,7 +340,7 @@ ard_categorical <- function(data,
 #'
 #' @inheritParams ard_categorical
 #' @param call (`environment`)\cr
-#'   frame for error messaging
+#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a data frame
 #' @keywords internal
@@ -494,7 +494,7 @@ ard_categorical <- function(data,
 #' @param strata (`character`)\cr
 #'   character vector of strata column names
 #' @param call (`environment`)\cr
-#'   frame for error messaging
+#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return invisible
 #' @keywords internal

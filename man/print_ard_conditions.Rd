@@ -11,8 +11,7 @@ print_ard_conditions(x, call = NULL)
 an ARD data frame of class 'card'}
 
 \item{call}{(\code{environment})\cr
-if supplied, the calling function will be used in messaging to users.
-Default is \code{NULL}.}
+frame for error messaging. Default is \code{NULL}.}
 }
 \description{
 Function parses the errors and warnings observed while calculating the

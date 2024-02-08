@@ -37,7 +37,7 @@ columns specified.
 Arguments may be used in conjunction with one another.}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
 a data frame

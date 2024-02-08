@@ -115,7 +115,7 @@ maximum_variable_values <- function(data) {
 #' @param values (named `list`)\cr
 #'   a named list
 #' @param call (`environment`)\cr
-#'   an environment. Default is `parent.frame()`.
+#'   frame for error messaging. Default is `parent.frame()`.
 #'
 #' @return NULL
 #' @keywords internal

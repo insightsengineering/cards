@@ -11,7 +11,7 @@ alias_as_fmt_fn(x, call = parent.frame())
 a non-negative integer, string alias, or function}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
 a function

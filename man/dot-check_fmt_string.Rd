@@ -11,7 +11,7 @@
 string to check}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}}
+frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}.}
 }
 \value{
 a logical

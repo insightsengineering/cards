@@ -15,7 +15,7 @@
 a data frame}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 
 \item{exceptions}{(\code{string})\cr
 character string of column names to exclude from checks}

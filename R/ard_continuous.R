@@ -176,7 +176,7 @@ ard_continuous <- function(data,
 #' @param x (`data.frame`)\cr
 #'   a data frame
 #' @param call (`environment`)\cr
-#'   frame for error messaging
+#'   frame for error messaging. Default is [parent.frame()].
 #' @param exceptions (`string`)\cr
 #'   character string of column names to exclude from checks
 #'

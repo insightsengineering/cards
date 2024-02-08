@@ -30,8 +30,7 @@ name of required package}
 name of the package the function will search for a minimum required version from.}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}. This is used to message user
-about the original function call the resulted in the prompt to install new packages.}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 
 \item{remove_duplicates}{(\code{logical})\cr
 if several versions of a package are installed, should only the first one be returned?}

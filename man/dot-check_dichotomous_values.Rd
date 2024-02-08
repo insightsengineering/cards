@@ -14,7 +14,7 @@ a data frame}
 a named list}
 
 \item{call}{(\code{environment})\cr
-an environment. Default is \code{parent.frame()}.}
+frame for error messaging. Default is \code{parent.frame()}.}
 }
 \description{
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
