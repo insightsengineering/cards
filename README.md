@@ -58,10 +58,9 @@ The {cards} package exports three types of functions:
 3.  Functions to work with existing ARD objects.
 
 The [{cardx}](https://github.com/insightsengineering/cardx) R package is
-an extension to {cards} that utilizes the utilities from {cards} and
-exports functions for creating additional ARD objects––including
-functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression
-models, and more.
+an extension to {cards} that uses the utilities from {cards} and exports
+functions for creating additional ARD objects––including functions to
+summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.
 
 ## Example
 
