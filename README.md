@@ -43,7 +43,11 @@ You can install the development version of cards from
 devtools::install_github("insightsengineering/cards")
 ```
 
-## Extensions <a href="https://insightsengineering.github.io/cardx/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="138" alt="cards website" /></a>
+## Extensions
+
+[<img
+src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png"
+style="float: right" width="120" alt="cardx website" />](https://insightsengineering.github.io/cardx)
 
 The {cards} package exports three types of functions:
 
