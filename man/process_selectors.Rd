@@ -35,9 +35,9 @@ check_list_elements(
 a data frame}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
-named arguments where the value of the argument is processed with \code{tidyselect}.
+named arguments where the value of the argument is processed with tidyselect.
 \itemize{
-\item \code{process_selectors()}: the values are \code{tidyselect}-compatible selectors
+\item \code{process_selectors()}: the values are tidyselect-compatible selectors
 \item \code{process_formula_selectors()}: the values are named lists, list of formulas
 a combination of both, or a single formula. Users may pass \code{~value} as a
 shortcut for \code{everything() ~ value}.
@@ -75,10 +75,10 @@ be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }
 \description{
-Functions process \code{tidyselect} arguments passed to functions in the cards package.
+Functions process tidyselect arguments passed to functions in the cards package.
 The processed values are saved to the calling environment, by default.
 \itemize{
-\item \code{process_selectors()}: the arguments will be processed with \code{tidyselect} and
+\item \code{process_selectors()}: the arguments will be processed with tidyselect and
 converted to a vector of character column names.
 \item \code{process_formula_selectors()}: for arguments that expect named lists or
 lists of formulas (where the LHS of the formula is a tidyselector). This

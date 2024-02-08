@@ -21,10 +21,10 @@ tidyselect output
 \description{
 These selection helpers match variables according to a given pattern.
 \itemize{
-\item \code{all_ard_groups()}: Use this function in \code{dplyr} selecting environments, such
+\item \code{all_ard_groups()}: Use this function in dplyr selecting environments, such
 as \code{\link[dplyr:select]{dplyr::select()}}. Function selects grouping columns, e.g. columns
 named \code{"group##"} or \code{"group##_level"}.
-\item \code{all_ard_variables()}: Use this function in \code{dplyr} selecting environments, such
+\item \code{all_ard_variables()}: Use this function in dplyr selecting environments, such
 as \code{dplyr::select()}. Function selects variables columns, e.g. columns
 named \code{"variable"} or \code{"variable_level"}.
 }

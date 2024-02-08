@@ -7,7 +7,7 @@
 Selecting Syntax
 }
 \section{Selectors}{
-The \code{cards} package also utilizes selectors: selectors from the \code{tidyselect}
+The cards package also utilizes selectors: selectors from the tidyselect
 package and custom selectors. Review their help files for details.
 \itemize{
 \item \strong{tidy selectors}
@@ -34,7 +34,7 @@ name or a selector.
 }\if{html}{\out{</div>}}
 \item \strong{Named List}
 
-You may also pass a named list; however, the \code{tidyselect} selectors
+You may also pass a named list; however, the tidyselect selectors
 are not supported with this syntax.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistics = list(age = list(N = \\(x) length(x))))

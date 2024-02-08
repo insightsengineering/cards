@@ -21,18 +21,19 @@
 #' @param summaries (`character`)\cr
 #'   a character vector of results to include in output.
 #'
-#'   - `categorical_variable_summary_fns()`: Select one or more from
-#'     `r formals(categorical_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
-#'
 #'   - `continuous_variable_summary_fns()`: Select one or more from
 #'     `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'
+#'   - `categorical_variable_summary_fns()`: Select one or more from
+#'     `r formals(categorical_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #'
 #'   - `missing_variable_summary_fns()`: Select one or more from
 #'     `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
 #' @param other_stats (named `list`)\cr
 #'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
-#' @return named list of summary functions
+#' @return `continuous_variable_summary_fns` and `missing_variable_summary_fns` return a named list of summary
+#'   functions. `categorical_variable_summary_fns` returns a named list of summary statistics.
 #' @name summary_functions
 #'
 #' @examples

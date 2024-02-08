@@ -6,7 +6,7 @@
 #' @description
 #' # Selectors
 #'
-#' The `cards` package also utilizes selectors: selectors from the `tidyselect`
+#' The cards package also utilizes selectors: selectors from the tidyselect
 #' package and custom selectors. Review their help files for details.
 #'
 #' - **tidy selectors**
@@ -35,7 +35,7 @@
 #'
 #' 2. **Named List**
 #'
-#'     You may also pass a named list; however, the `tidyselect` selectors
+#'     You may also pass a named list; however, the tidyselect selectors
 #'     are not supported with this syntax.
 #'
 #'     ```r

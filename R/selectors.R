@@ -3,11 +3,11 @@
 #' @description
 #' These selection helpers match variables according to a given pattern.
 #'
-#' - `all_ard_groups()`: Use this function in `dplyr` selecting environments, such
+#' - `all_ard_groups()`: Use this function in dplyr selecting environments, such
 #'   as [dplyr::select()]. Function selects grouping columns, e.g. columns
 #'   named `"group##"` or `"group##_level"`.
 #'
-#' - `all_ard_variables()`: Use this function in `dplyr` selecting environments, such
+#' - `all_ard_variables()`: Use this function in dplyr selecting environments, such
 #'   as `dplyr::select()`. Function selects variables columns, e.g. columns
 #'   named `"variable"` or `"variable_level"`.
 #'

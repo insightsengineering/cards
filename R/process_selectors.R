@@ -1,10 +1,10 @@
 #' Process tidyselectors
 #'
 #' @description
-#' Functions process `tidyselect` arguments passed to functions in the cards package.
+#' Functions process tidyselect arguments passed to functions in the cards package.
 #' The processed values are saved to the calling environment, by default.
 #'
-#' - `process_selectors()`: the arguments will be processed with `tidyselect` and
+#' - `process_selectors()`: the arguments will be processed with tidyselect and
 #'   converted to a vector of character column names.
 #'
 #' - `process_formula_selectors()`: for arguments that expect named lists or
@@ -26,8 +26,8 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
-#'   named arguments where the value of the argument is processed with `tidyselect`.
-#'   - `process_selectors()`: the values are `tidyselect`-compatible selectors
+#'   named arguments where the value of the argument is processed with tidyselect.
+#'   - `process_selectors()`: the values are tidyselect-compatible selectors
 #'   - `process_formula_selectors()`: the values are named lists, list of formulas
 #'     a combination of both, or a single formula. Users may pass `~value` as a
 #'     shortcut for `everything() ~ value`.
