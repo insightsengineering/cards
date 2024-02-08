@@ -1,13 +1,17 @@
 #' Shuffle ARD
 #'
-#' This function ingests an ARD object and shuffles the information to prepare for analysis. Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1 column, back fills missing grouping values from the variable levels where possible, and optionally trims statistics-level metadata.
+#' This function ingests an ARD object and shuffles the information to prepare for analysis.
+#' Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1
+#' column, back fills missing grouping values from the variable levels where possible, and
+#' optionally trims statistics-level metadata.
 #'
 #' @param x (`data.frame`)\cr
-#'   an ARD data frame
-#' @param trim  (`logical(1)`)\cr
-#'   Boolean representing whether or not to trim away statistic-level metadata and filter only on numeric statistic values.
+#'   an ARD data frame of class 'card'
+#' @param trim (`logical`)\cr
+#'   logical representing whether or not to trim away statistic-level metadata and filter
+#'   only on numeric statistic values.
 #'
-#' @return data frame
+#' @return a tibble
 #' @export
 #'
 #' @examples
@@ -16,7 +20,6 @@
 #'   ard_categorical(ADSL, variables = "ARM")
 #' ) |>
 #'   shuffle_ard()
-#'
 shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, class = "card")
 
@@ -83,13 +86,18 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 #' Trim ARD
 #'
-#' This function ingests an ARD object and trims columns and rows for downstream use in displays. The resulting data frame contains only numeric results, no supplemental information about errors/warnings, and unnested list columns.
+#' This function ingests an ARD object and trims columns and rows for downstream use in
+#' displays. The resulting data frame contains only numeric results, no supplemental
+#' information about errors/warnings, and unnested list columns.
 #'
 #' @param x (`data.frame`)\cr
-#'   an ARD data frame
+#'   an ARD data frame of class 'card'
 #'
-#' @return data frame
+#' @return a data frame
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .trim_ard <- function(x) {
   check_class_data_frame(x)
 
@@ -109,17 +117,21 @@ shuffle_ard <- function(x, trim = TRUE) {
 }
 
 
-#' Detect columns for non-null contents
+#' Detect Columns with Non-Null Contents
 #'
 #' Function looks for non-null contents in requested columns and notifies user
 #' before removal. Specifically used for detecting messages.
 #'
-#' @param x data frame
+#' @param x (`data.frame`)\cr
+#'   a data frame
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   columns to search within
 #'
-#' @return data frame
+#' @return a data frame
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .detect_msgs <- function(x, ...) {
   dots <- rlang::dots_list(...)
 
@@ -132,16 +144,21 @@ shuffle_ard <- function(x, trim = TRUE) {
   x
 }
 
-#' Check variable names
+#' Check Variable Names
 #'
-#' Check variable names in a data frame against protected names and modifies
+#' Checks variable names in a data frame against protected names and modifies
 #' them if needed
 #'
-#' @param x data frame
-#' @param vars_protected character vector of protected names
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#' @param vars_protected (`character`)\cr
+#'   a character vector of protected names
 #'
 #' @return data frame
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .check_var_nms <- function(x, vars_protected) {
   # get all represented variable names from original data
   var_nms <- x |>
@@ -177,15 +194,20 @@ shuffle_ard <- function(x, trim = TRUE) {
 }
 
 
-#' Rename group variables
+#' Rename Group Variables
 #'
 #' This function combines each pair of `group` and `group_level` columns into a
 #' single column. The `group_level` column is renamed according to the value of
 #' the `group` column.
 #'
-#' @param x data frame
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#'
 #' @return data frame
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .rnm_grp_vars <- function(x) {
   grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
   grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
@@ -235,16 +257,21 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::relocate(all_ard_variables(), any_of(".cards_idx"), .after = last_col())
 }
 
-#' Back fill group variables
+#' Back Fill Group Variables
 #'
 #' This function back fills the values of group variables using
 #' variable/variable_levels. The back filling will occur if the value of the
 #' `variable` column matches the name of a grouping variable, and the grouping
-#' variable's value is NA.
+#' variable's value is `NA`.
 #'
-#' @param x data frame
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#'
 #' @return data frame
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .fill_grps_from_variables <- function(x) {
   # within each variable, check if there is a match against one of the grouping cols
   # if the corresponding value in that grouping col is missing, backfill with the variable level

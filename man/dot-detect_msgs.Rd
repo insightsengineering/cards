@@ -2,21 +2,25 @@
 % Please edit documentation in R/shuffle_ard.R
 \name{.detect_msgs}
 \alias{.detect_msgs}
-\title{Detect columns for non-null contents}
+\title{Detect Columns with Non-Null Contents}
 \usage{
 .detect_msgs(x, ...)
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 columns to search within}
 }
 \value{
-data frame
+a data frame
 }
 \description{
 Function looks for non-null contents in requested columns and notifies user
 before removal. Specifically used for detecting messages.
+}
+\examples{
+# example code
 }
 \keyword{internal}

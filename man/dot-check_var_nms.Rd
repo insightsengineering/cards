@@ -2,20 +2,25 @@
 % Please edit documentation in R/shuffle_ard.R
 \name{.check_var_nms}
 \alias{.check_var_nms}
-\title{Check variable names}
+\title{Check Variable Names}
 \usage{
 .check_var_nms(x, vars_protected)
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
-\item{vars_protected}{character vector of protected names}
+\item{vars_protected}{(\code{character})\cr
+a character vector of protected names}
 }
 \value{
 data frame
 }
 \description{
-Check variable names in a data frame against protected names and modifies
+Checks variable names in a data frame against protected names and modifies
 them if needed
+}
+\examples{
+# example code
 }
 \keyword{internal}
