@@ -3,17 +3,18 @@
 #' @description
 #' These selection helpers match variables according to a given pattern.
 #'
-#' - `all_ard_groups()`: Use this function in dplyr selecting environments, such
-#'   as `dplyr::select()`. Function selects grouping columns, e.g. columns
+#' - `all_ard_groups()`: Use this function in `dplyr` selecting environments, such
+#'   as [dplyr::select()]. Function selects grouping columns, e.g. columns
 #'   named `"group##"` or `"group##_level"`.
 #'
-#' - `all_ard_variables()`: Use this function in dplyr selecting environments, such
+#' - `all_ard_variables()`: Use this function in `dplyr` selecting environments, such
 #'   as `dplyr::select()`. Function selects variables columns, e.g. columns
 #'   named `"variable"` or `"variable_level"`.
 #'
 #' @param types (`character`)\cr
-#'   type of column to select. `"names"` selects the columns variable name columns,
-#'   and `"levels"` selects the level columns. Default is `c("names", "levels")`
+#'   type(s) of columns to select. `"names"` selects the columns variable name columns,
+#'   and `"levels"` selects the level columns. Default is `c("names", "levels")`.
+#'
 #' @return tidyselect output
 #' @name selectors
 #'
