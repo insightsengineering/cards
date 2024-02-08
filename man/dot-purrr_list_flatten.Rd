@@ -2,14 +2,21 @@
 % Please edit documentation in R/utils.R
 \name{.purrr_list_flatten}
 \alias{.purrr_list_flatten}
-\title{A list_flatten()-like function}
+\title{A list_flatten()-like Function}
 \usage{
 .purrr_list_flatten(x)
 }
 \arguments{
-\item{x}{a named list}
+\item{x}{(named \code{list})\cr
+a named list}
+}
+\value{
+a named list
 }
 \description{
 Function operates similarly to \code{purrr::list_flatten(x, name_spec = "{inner}")}
+}
+\examples{
+# example code
 }
 \keyword{internal}

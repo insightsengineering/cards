@@ -1,14 +1,18 @@
 #' ARD-flavor of unique()
 #'
-#' Essentially a wrapper for `unique(x) |> sort()` with NA levels removed.
-#' Expect in the case of factor and logical vectors.
+#' Essentially a wrapper for `unique(x) |> sort()` with `NA` levels removed.
 #' For factors, all levels are returned even if they are unobserved.
 #' Similarly, logical vectors always return `c(TRUE, FALSE)`, even if
 #' both levels are not observed.
 #'
-#' @param x a vector
+#' @param x (`any`)\cr
+#'   a vector
+#'
 #' @return a vector
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .unique_and_sorted <- function(x) {
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
@@ -23,12 +27,18 @@
 }
 
 
-#' Named list predicate
+#' Named List Predicate
 #'
-#' A predicate function whether input is a named list and _not_ a data frame.
+#' A predicate function to check whether input is a named list and _not_ a data frame.
 #'
-#' @param x object to check
+#' @param x (`any`)\cr
+#'   object to check
+#'
+#' @return a logical
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .is_named_list <- function(x, allow_df = FALSE) {
   if (isFALSE(allow_df)) {
     return(is.list(x) && is_named(x) && !is.data.frame(x))
@@ -38,12 +48,18 @@
   }
 }
 
-#' A list_flatten()-like function
+#' A list_flatten()-like Function
 #'
 #' Function operates similarly to `purrr::list_flatten(x, name_spec = "{inner}")`
 #'
-#' @param x a named list
+#' @param x (named `list`)\cr
+#'   a named list
+#'
+#' @return a named list
 #' @keywords internal
+#'
+#' @examples
+#' # example code
 .purrr_list_flatten <- function(x) {
   ret <- list()
 
