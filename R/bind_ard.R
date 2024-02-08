@@ -7,11 +7,11 @@
 #'   ARDs to combine. Each argument can either be an ARD,
 #'   or a list of ARDs. Columns are matched by name, and any missing
 #'   columns will be filled with `NA`.
-#' @param .update (`logical` scalar)\cr
+#' @param .update (`logical`)\cr
 #'   logical indicating whether to update duplicate ARD statistics.
 #'   Default is `FALSE`. If a statistic type is repeated and `.update=TRUE`,
 #'   the more recently added statistics will be retained, and the others omitted.
-#' @param .order (`logical` scalar)\cr
+#' @param .order (`logical`)\cr
 #'   logical indicating whether to order the rows of the stacked ARDs, allowing
 #'   statistics that share common group and variable values to appear in
 #'   consecutive rows. Default is `FALSE`. Ordering will be based on the order

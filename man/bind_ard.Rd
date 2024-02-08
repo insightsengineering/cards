@@ -12,12 +12,12 @@ ARDs to combine. Each argument can either be an ARD,
 or a list of ARDs. Columns are matched by name, and any missing
 columns will be filled with \code{NA}.}
 
-\item{.update}{(\code{logical} scalar)\cr
+\item{.update}{(\code{logical})\cr
 logical indicating whether to update duplicate ARD statistics.
 Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},
 the more recently added statistics will be retained, and the others omitted.}
 
-\item{.order}{(\code{logical} scalar)\cr
+\item{.order}{(\code{logical})\cr
 logical indicating whether to order the rows of the stacked ARDs, allowing
 statistics that share common group and variable values to appear in
 consecutive rows. Default is \code{FALSE}. Ordering will be based on the order

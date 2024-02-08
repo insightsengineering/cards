@@ -17,7 +17,7 @@
 #'   Arguments may be used in conjunction with one another.
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Default is `everything()`.
-#' @param denominator (`data.frame`, `integer` scalar)\cr
+#' @param denominator (`data.frame`, `integer`)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #' @param statistics ([`formula-list-selector`][syntax])\cr

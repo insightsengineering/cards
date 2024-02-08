@@ -33,7 +33,7 @@ name of the package the function will search for a minimum required version from
 frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}. This is used to message user
 about the original function call the resulted in the prompt to install new packages.}
 
-\item{remove_duplicates}{(\code{logical} scalar)\cr
+\item{remove_duplicates}{(\code{logical})\cr
 if several versions of a package are installed, should only the first one be returned?}
 
 \item{lib.loc}{(\code{path})\cr

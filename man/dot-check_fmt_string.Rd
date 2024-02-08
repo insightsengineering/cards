@@ -7,7 +7,7 @@
 .check_fmt_string(x, call = caller_env())
 }
 \arguments{
-\item{x}{(\code{string} scalar)\cr
+\item{x}{(\code{string})\cr
 string to check}
 
 \item{call}{(\code{environment})\cr

@@ -97,13 +97,13 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
 #'
 #' Returns a function with the requested rounding and scaling schema.
 #'
-#' @param digits (`integer` scalar)\cr
+#' @param digits (`integer`)\cr
 #'   a non-negative integer specifying the number of decimal places
 #'   round statistics to
-#' @param scale (`numeric` scalar)\cr
+#' @param scale (`numeric`)\cr
 #'   a scalar real number. Before rounding, the input will be scaled by
 #'   this quantity
-#' @param width (`integer` scalar)\cr
+#' @param width (`integer`)\cr
 #'   a non-negative integer specifying the minimum width of the
 #'   returned formatted values
 #'
@@ -143,7 +143,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' If string is consistent, `TRUE` is returned. Otherwise an error.
 #'
-#' @param x (`string` scalar)\cr
+#' @param x (`string`)\cr
 #'   string to check
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [caller_env()]

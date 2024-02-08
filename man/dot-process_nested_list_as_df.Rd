@@ -13,7 +13,7 @@ result data frame}
 \item{arg}{(\code{list})\cr
 the nested list}
 
-\item{new_column}{(\code{string} scalar)\cr
+\item{new_column}{(\code{string})\cr
 new column name}
 
 \item{unlist}{(\code{logical})\cr

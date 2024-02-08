@@ -17,7 +17,7 @@ a data frame}
 \item{call}{(\code{environment})\cr
 frame for error messaging}
 
-\item{exceptions}{(\code{string} scalar)\cr
+\item{exceptions}{(\code{string})\cr
 character string of column names to exclude from checks}
 }
 \value{

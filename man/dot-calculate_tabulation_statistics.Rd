@@ -33,7 +33,7 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{denominator}{(\code{data.frame}, \code{integer} scalar)\cr
+\item{denominator}{(\code{data.frame}, \code{integer})\cr
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 

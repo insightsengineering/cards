@@ -177,7 +177,7 @@ ard_continuous <- function(data,
 #'   a data frame
 #' @param call (`environment`)\cr
 #'   frame for error messaging
-#' @param exceptions (`string` scalar)\cr
+#' @param exceptions (`string`)\cr
 #'   character string of column names to exclude from checks
 #'
 #' @return invisible
@@ -294,7 +294,7 @@ ard_continuous <- function(data,
 #'   result data frame
 #' @param arg (`list`)\cr
 #'   the nested list
-#' @param new_column (`string` scalar)\cr
+#' @param new_column (`string`)\cr
 #'   new column name
 #' @param unlist (`logical`)\cr
 #'   whether to fully unlist final results

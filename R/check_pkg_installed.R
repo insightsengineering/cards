@@ -18,7 +18,7 @@
 #'   about the original function call the resulted in the prompt to install new packages.
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
-#' @param remove_duplicates (`logical` scalar)\cr
+#' @param remove_duplicates (`logical`)\cr
 #'   if several versions of a package are installed, should only the first one be returned?
 #' @param lib.loc (`path`)\cr
 #'   location of `R` library trees to search through, see [utils::installed.packages()].
