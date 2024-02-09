@@ -8,4 +8,14 @@ test_that("label_cards() works", {
     label_cards(digits = 2, width = 5)(9:10),
     c(" 9.00", "10.00")
   )
+
+  expect_equal(
+    label_cards()(NA),
+    NA_character_
+  )
+
+  expect_equal(
+    label_cards(width = 5)(c(NA, 1)),
+    c(NA_character_, "  1.0")
+  )
 })
