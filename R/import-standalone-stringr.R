@@ -46,6 +46,3 @@ str_detect <- function(string, pattern) {
 
 # nocov end
 # styler: on
-
-
-
