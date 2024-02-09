@@ -2,12 +2,11 @@
 # Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R>
 # ----------------------------------------------------------------------
 #
-# DO NOT MODIFY THIS FILE. INSTEAD MODIFY THE VERSION IN https://github.com/ddsjoberg/standalone/tree/main/R
 # ---
 # file: standalone-stringr.R
 # last-updated: 2024-01-24
 # license: https://unlicense.org
-# imports:
+# imports: rlang
 # ---
 #
 # This file provides a minimal shim to provide a stringr-like API on top of
@@ -17,6 +16,7 @@
 # ## Changelog
 #
 # nocov start
+# styler: off
 
 str_trim <- function(string, side = c("both", "left", "right")) {
   side <- rlang::arg_match(side)
@@ -40,9 +40,12 @@ str_extract <- function(string, pattern) {
   )
 }
 
-# nocov end
-
-
 str_detect <- function(string, pattern) {
   grepl(pattern = pattern, x = string)
 }
+
+# nocov end
+# styler: on
+
+
+
