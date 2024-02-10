@@ -9,6 +9,7 @@
   variable = NULL,
   by = NULL,
   strata = NULL,
+  useNA = c("no", "always"),
   count_column = "...ard_n..."
 )
 }

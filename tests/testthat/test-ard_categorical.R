@@ -283,6 +283,33 @@ test_that("ard_categorical(denominator='cell') works", {
       getElement(1),
     mtrx_percs["<65", "Placebo"]
   )
+
+  # works with an all missing variable
+  df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "cell"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 4L)
+  )
+
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      by = letters,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "cell"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 8L)
+  )
 })
 
 test_that("ard_categorical(denominator='row') works", {
@@ -347,6 +374,33 @@ test_that("ard_categorical(denominator='row') works", {
       dplyr::select(-statistic_fmt_fn, -warning, -error) |>
       as.data.frame()
   )
+
+  # works with an all missing variable
+  df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "row"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 4L)
+  )
+
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      by = letters,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "row"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 8L)
+  )
 })
 
 test_that("ard_categorical(denominator='column') works", {
@@ -355,6 +409,60 @@ test_that("ard_categorical(denominator='column') works", {
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic),
     ard_categorical(ADSL, variables = "AGEGR1", by = "ARM") |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)
+  )
+
+  # works with an all missing variable
+  df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "column"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 4L)
+  )
+
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      by = letters,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "column"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 8L)
+  )
+
+  # works with an all missing variable
+  df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "column"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 4L)
+  )
+
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variable  = all_na_lgl,
+      by = letters,
+      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      denominator = "column"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 8L)
   )
 })
 
@@ -409,6 +517,38 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
       variables = AGEGR1
     ) |>
       dplyr::select(-statistic_fmt_fn)
+  )
+})
+
+test_that("ard_categorical(denominator=<data frame without counts>) works", {
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(AGEGR1 = NA) |>
+      ard_categorical(
+        variables = AGEGR1,
+        statistics = ~categorical_variable_summary_fns(c("n", "p")),
+        denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
+      ) |>
+      dplyr::pull(statistic) |>
+      unlist() |>
+      unique(),
+    0L
+  )
+
+
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(AGEGR1 = NA) |>
+      ard_categorical(
+        variables = AGEGR1,
+        by = ARM,
+        statistics = ~categorical_variable_summary_fns(c("n", "p")),
+        denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
+      ) |>
+      dplyr::pull(statistic) |>
+      unlist() |>
+      unique(),
+    0L
   )
 })
 
