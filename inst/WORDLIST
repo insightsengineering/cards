@@ -20,6 +20,8 @@ env
 esult
 ets
 funder
+httr
+jsonlite
 mis
 nalysis
 nonmiss

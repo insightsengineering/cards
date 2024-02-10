@@ -55,6 +55,9 @@
 #' @param strict (`logical`)\cr
 #'   whether to throw an error if a variable doesn't exist in the reference data
 #'   (passed to [tidyselect::eval_select()])
+#' @param include_env (`logical` scalar)\cr
+#'   whether to include the environment from the formula object in the returned
+#'   named list. Default is `FALSE`
 #'
 #' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
 #' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
@@ -127,7 +130,7 @@ process_selectors <- function(data, ..., env = caller_env()) {
 
 #' @name process_selectors
 #' @export
-process_formula_selectors <- function(data, ..., env = caller_env()) {
+process_formula_selectors <- function(data, ..., env = caller_env(), include_env = FALSE) {
   # saved dots as named list
   dots <- dots_list(...)
 
@@ -137,7 +140,9 @@ process_formula_selectors <- function(data, ..., env = caller_env()) {
     ret[[i]] <-
       compute_formula_selector(
         data = data, x = dots[[i]],
-        arg_name = names(dots)[i], env = env
+        arg_name = names(dots)[i],
+        env = env,
+        include_env = include_env
       )
   }
 
@@ -177,7 +182,8 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 
 #' @name process_selectors
 #' @export
-compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(), strict = TRUE) {
+compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(),
+                                     strict = TRUE, include_env = FALSE) {
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
     return(x[intersect(names(x), names(data))])
@@ -216,7 +222,10 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       x[i] <-
         rep_len(
           list(
-            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment"))
+            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment")) |>
+              structure(
+                .Environment = switch(isTRUE(include_env), attr(x[[i]], ".Environment"))
+              )
           ),
           length.out = length(colnames)
         ) |>
@@ -228,9 +237,10 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   # flatten the list to a top-level list only
   x <- .purrr_list_flatten(x)
 
-  # remove duplicates (keeping the last one), and only keeping names in the data frame
+  # remove duplicates (keeping the last one)
   x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
 
+  # only keeping names in the data frame
   x[intersect(names(x), names(data))]
 }
 

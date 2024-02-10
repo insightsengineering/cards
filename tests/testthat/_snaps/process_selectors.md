@@ -19,8 +19,7 @@
 # compute_formula_selector() selects the last assignment when multiple appear
 
     Code
-      compute_formula_selector(data = mtcars[c("mpg", "hp")], x = list(everything() ~
-        "THE DEFAULT", mpg = "Special for MPG"))
+      lapply(lst_compute_test, function(x) structure(x, .Environment = NULL))
     Output
       $hp
       [1] "THE DEFAULT"
