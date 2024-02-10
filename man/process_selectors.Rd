@@ -69,11 +69,7 @@ in error messaging. Default is \code{caller_arg(x)}.}
 
 \item{strict}{(\code{logical})\cr
 whether to throw an error if a variable doesn't exist in the reference data
-<<<<<<< HEAD
 (passed to \code{\link[tidyselect:eval_select]{tidyselect::eval_select()}})}
-=======
-(passed to \code{tidyselect::eval_select()})}
->>>>>>> main
 
 \item{predicate}{(\code{function})\cr
 a predicate function that returns \code{TRUE} or \code{FALSE}}
