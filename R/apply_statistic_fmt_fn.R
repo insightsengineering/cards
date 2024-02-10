@@ -52,7 +52,7 @@ apply_statistic_fmt_fn <- function(x) {
 #' spaces that are added to the result.
 #' If the string ends in `"%"`, results are scaled by 100 before rounding.
 #'
-#' @param x (`integer`, `string` scalar, or `function`)\cr
+#' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].

@@ -51,7 +51,7 @@ a function.
 \item{env}{(\code{environment})\cr
 env to save the results to. Default is the calling environment.}
 
-\item{include_env}{(\code{logical} scalar)\cr
+\item{include_env}{(\code{logical})\cr
 whether to include the environment from the formula object in the returned
 named list. Default is \code{FALSE}}
 

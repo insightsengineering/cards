@@ -55,7 +55,7 @@
 #' @param strict (`logical`)\cr
 #'   whether to throw an error if a variable doesn't exist in the reference data
 #'   (passed to [tidyselect::eval_select()])
-#' @param include_env (`logical` scalar)\cr
+#' @param include_env (`logical`)\cr
 #'   whether to include the environment from the formula object in the returned
 #'   named list. Default is `FALSE`
 #'

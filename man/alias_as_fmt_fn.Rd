@@ -7,7 +7,7 @@
 alias_as_fmt_fn(x, call = parent.frame())
 }
 \arguments{
-\item{x}{(\code{integer}, \code{string} scalar, or \code{function})\cr
+\item{x}{(\code{integer}, \code{string}, or \code{function})\cr
 a non-negative integer, string alias, or function}
 
 \item{call}{(\code{environment})\cr
