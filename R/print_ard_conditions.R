@@ -15,16 +15,7 @@
 #' ard_continuous(
 #'   ADSL,
 #'   by = ARM,
-#'   variables = AGE,
-#'   statistics = ~ list(
-#'     mean = \(x) mean(x),
-#'     mean_warning = \(x) {
-#'       warning("warn1")
-#'       warning("warn2")
-#'       mean(x)
-#'     },
-#'     err_fn = \(x) stop("'tis an error")
-#'   )
+#'   variables = AGE
 #' ) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x, call = NULL) {
@@ -53,11 +44,7 @@ print_ard_conditions <- function(x, call = NULL) {
 #' ard <- ard_continuous(
 #'   ADSL,
 #'   by = ARM,
-#'   variables = AGE,
-#'   statistics = ~ list(
-#'     mean = \(x) mean(x),
-#'     err_fn = \(x) stop("'tis an error")
-#'   )
+#'   variables = AGE
 #' )
 #'
 #' cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())

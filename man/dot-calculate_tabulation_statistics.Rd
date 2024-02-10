@@ -58,7 +58,7 @@ cards:::.calculate_tabulation_statistics(
   by = NULL,
   strata = NULL,
   denominator = "cell",
-  statistics = list(ARM = list(tabulation=c("N")))
+  statistics = list(ARM = list(tabulation = c("N")))
 )
 }
 \keyword{internal}

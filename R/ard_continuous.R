@@ -184,7 +184,7 @@ ard_continuous <- function(data,
 #' @keywords internal
 #'
 #' @examples
-#' data <- data.frame("...ard_x..." = 1)
+#' data <- data.frame("ard_x" = 1)
 #'
 #' cards:::.check_no_ard_columns(data)
 .check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {

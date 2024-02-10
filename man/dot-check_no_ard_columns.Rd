@@ -28,7 +28,7 @@ Checks that column names in a passed data frame are not protected, that is,
 they do not begin with \code{"...ard_"} and end with \code{"..."}.
 }
 \examples{
-data <- data.frame("...ard_x..." = 1)
+data <- data.frame("ard_x" = 1)
 
 cards:::.check_no_ard_columns(data)
 }

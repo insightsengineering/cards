@@ -26,11 +26,7 @@ Print Condition Messages Saved in an ARD
 ard <- ard_continuous(
   ADSL,
   by = ARM,
-  variables = AGE,
-  statistics = ~ list(
-    mean = \(x) mean(x),
-    err_fn = \(x) stop("'tis an error")
-  )
+  variables = AGE
 )
 
 cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())

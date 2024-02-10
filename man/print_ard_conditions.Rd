@@ -24,16 +24,7 @@ statistics requested in the ARD and prints them to the console as messages.
 ard_continuous(
   ADSL,
   by = ARM,
-  variables = AGE,
-  statistics = ~ list(
-    mean = \(x) mean(x),
-    mean_warning = \(x) {
-      warning("warn1")
-      warning("warn2")
-      mean(x)
-    },
-    err_fn = \(x) stop("'tis an error")
-  )
+  variables = AGE
 ) |>
   print_ard_conditions()
 }

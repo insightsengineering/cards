@@ -23,6 +23,6 @@ returns invisible if check is successful, throws an error message if not.
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
 }
 \examples{
-cards:::.check_dichotomous_values(mtcars, list(cyl = 2))
+cards:::.check_dichotomous_values(mtcars, list(cyl = 4))
 }
 \keyword{internal}

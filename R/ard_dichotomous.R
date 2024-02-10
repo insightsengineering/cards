@@ -121,7 +121,7 @@ maximum_variable_values <- function(data) {
 #' @keywords internal
 #'
 #' @examples
-#' cards:::.check_dichotomous_values(mtcars, list(cyl = 2))
+#' cards:::.check_dichotomous_values(mtcars, list(cyl = 4))
 .check_dichotomous_values <- function(data, values, call = parent.frame()) {
   imap(
     values,
