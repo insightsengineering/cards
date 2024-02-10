@@ -7,12 +7,19 @@
 .default_fmt_fn(x)
 }
 \arguments{
-\item{data}{frame with cards structure}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
-data frame
+a data frame
 }
 \description{
 Add Default Formatting Functions
+}
+\examples{
+ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+  dplyr::mutate(statistic_fmt_fn = NA)
+
+cards:::.default_fmt_fn(ard)
 }
 \keyword{internal}

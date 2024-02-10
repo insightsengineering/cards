@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_as_ard.R
 \name{tidy_as_ard}
 \alias{tidy_as_ard}
-\title{Build ARD from tidier}
+\title{Build ARD from Tidier}
 \usage{
 tidy_as_ard(
   lst_tidy,
@@ -15,11 +15,11 @@ tidy_as_ard(
 }
 \arguments{
 \item{lst_tidy}{(named \code{list})\cr
-list of tidied results constructed with \code{eval_capture_conditions()},
-e.g. \code{eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())}}
+list of tidied results constructed with \code{\link[=eval_capture_conditions]{eval_capture_conditions()}},
+e.g. \code{eval_capture_conditions(t.test(mtcars$mpg ~ mtcars$am) |> broom::tidy())}.}
 
 \item{tidy_result_names}{(\code{character})\cr
-character vector of column names expected from the
+character vector of column names expected by the
 tidier method. This is used to construct blank results in the event of an error.}
 
 \item{fun_args_to_record}{(\code{character})\cr
@@ -36,12 +36,12 @@ named list of additional arguments passed to the modeling function.}
 named list of values that will be added to the ARD data frame.}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
 Function converts a model's one-row tidy data frame into an ARD structure.
 The tidied data frame must have been constructed with
-\code{eval_capture_conditions()}.
+\code{\link[=eval_capture_conditions]{eval_capture_conditions()}}.
 
 This function is primarily for developers and few consistency checks have
 been included.

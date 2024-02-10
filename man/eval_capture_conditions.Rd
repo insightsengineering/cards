@@ -30,7 +30,7 @@ If there is an error, the result element will be \code{NULL}.
 
 Messages are neither saved nor printed to the console.
 
-Evaluation is done via \code{eval_tidy()}.
+Evaluation is done via \code{\link[=eval_tidy]{eval_tidy()}}.
 }
 \examples{
 # function executes without error or warning

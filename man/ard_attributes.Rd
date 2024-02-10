@@ -18,7 +18,7 @@ named list of variable labels, e.g. \code{list(cyl = "No. Cylinders")}.
 Default is \code{NULL}}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
 Add variable attributes to an ARD data frame.

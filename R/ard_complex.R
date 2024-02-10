@@ -1,28 +1,28 @@
 #' Complex ARD Summaries
 #'
 #' `r lifecycle::badge('experimental')`\cr
-#' Function is similar to `ard_continuous()`, but allows for more complex
+#' Function is similar to [ard_continuous()], but allows for more complex
 #' summaries. While `ard_continuous(statistics)` only allows for a univariable
 #' function, `ard_complex(statistics)` can handle more complex data summaries.
 #'
 #' @inheritParams ard_continuous
 #' @param statistics ([`formula-list-selector`][syntax])\cr
 #'   The form of the statistics argument is identical to `ard_continuous(statistics)`
-#'   argument, except the summary function _must_ accept the following arguments.
-#'   - `x` vector
-#'   - `data` the data frame that has been subset by the `by`/`strata` columns
+#'   argument, except the summary function _must_ accept the following arguments:
+#'   - `x`: a vector
+#'   - `data`: the data frame that has been subset such that the `by`/`strata` columns
 #'       and rows in which `"variable"` is `NA` have been removed.
-#'   - `data_full` the full data frame
-#'   - `by` character vector of the `by` variables
-#'   - `strata` character vector of the `strata` variables
+#'   - `data_full`: the full data frame
+#'   - `by`: character vector of the `by` variables
+#'   - `strata`: character vector of the `strata` variables
 #'   It is unlikely any one function will need _all_ of the above elements,
-#'   and it's recommended the function passed accepts `...` and any unused
+#'   and it's recommended the function passed accepts `...` so that any unused
 #'   arguments will be properly ignored. The `...` also allows this function
 #'   to perhaps be updated in the future with more passed arguments. For example,
 #'   if one needs a second variable from the data frame, the function inputs
 #'   may look like: `foo(x, data, ...)`
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
@@ -34,7 +34,7 @@
 #'   statistics = list(AGE = list(mean = \(x, ...) mean(x)))
 #' )
 #'
-#' # return the grand mean and the mean within the by group
+#' # return the grand mean and the mean within the `by` group
 #' grand_mean <- function(data, data_full, variable, ...) {
 #'   list(
 #'     mean = mean(data[[variable]], na.rm = TRUE),

@@ -2,12 +2,13 @@
 % Please edit documentation in R/shuffle_ard.R
 \name{.rnm_grp_vars}
 \alias{.rnm_grp_vars}
-\title{Rename group variables}
+\title{Rename Group Variables}
 \usage{
 .rnm_grp_vars(x)
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 }
 \value{
 data frame
@@ -16,5 +17,10 @@ data frame
 This function combines each pair of \code{group} and \code{group_level} columns into a
 single column. The \code{group_level} column is renamed according to the value of
 the \code{group} column.
+}
+\examples{
+data <- data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
+
+cards:::.rnm_grp_vars(data)
 }
 \keyword{internal}

@@ -15,16 +15,36 @@
 )
 }
 \arguments{
-\item{df_nested}{a nested data frame}
+\item{df_nested}{(\code{data.frame})\cr
+a nested data frame}
 
-\item{variables}{character vector of variables}
+\item{variables}{(\code{character})\cr
+character vector of variables}
 
-\item{statistics}{named list of statistical functions}
+\item{statistics}{(named \code{list})\cr
+named list of statistical functions}
 }
 \value{
-data frame
+an ARD data frame of class 'card'
 }
 \description{
 Calculate statistics and return in an ARD format
+}
+\examples{
+data_nested <- ADSL |>
+  nest_for_ard(
+    by = "ARM",
+    strata = NULL,
+    key = "...ard_nested_data..."
+  )
+
+cards:::.calculate_stats_as_ard(
+  df_nested = data_nested,
+  variables = "AGE",
+  statistics = list(mean = "mean"),
+  by = "ARM",
+  strata = NULL,
+  data = ADSL
+)
 }
 \keyword{internal}

@@ -12,11 +12,11 @@ package and custom selectors. Review their help files for details.
 \itemize{
 \item \strong{tidy selectors}
 
-\code{everything()}, \code{all_of()}, \code{any_of()}, \code{starts_with()}, \code{ends_with()},
-\code{contains()}, \code{matches()}, \code{num_range()}, \code{last_col()}
+\code{\link[=everything]{everything()}}, \code{\link[=all_of]{all_of()}}, \code{\link[=any_of]{any_of()}}, \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, \code{\link[=last_col]{last_col()}}
 \item \strong{cards selectors}
 
-\code{all_ard_groups()}, \code{all_ard_variables()}
+\code{\link[=all_ard_groups]{all_ard_groups()}}, \code{\link[=all_ard_variables]{all_ard_variables()}}
 }
 }
 
@@ -41,7 +41,7 @@ are not supported with this syntax.
 }\if{html}{\out{</div>}}
 \item \strong{Hybrid Named List/List of Formulas}
 
-Pass a combination of formulas and named elements
+You can pass a combination of formulas and named elements.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistics = list(age = list(N = \\(x) length(x)), starts_with("a") ~ list(mean = mean)))
 }\if{html}{\out{</div>}}

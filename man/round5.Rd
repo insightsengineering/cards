@@ -7,12 +7,14 @@
 round5(x, digits = 0)
 }
 \arguments{
-\item{x}{a numeric vector}
+\item{x}{(\code{numeric})\cr
+a numeric vector}
 
-\item{digits}{integer indicating the number of decimal places}
+\item{digits}{(\code{integer})\cr
+integer indicating the number of decimal places}
 }
 \value{
-numeric vector
+a numeric vector
 }
 \description{
 Rounds the values in its first argument to the specified number of
