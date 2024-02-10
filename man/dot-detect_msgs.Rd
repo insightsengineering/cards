@@ -21,6 +21,21 @@ Function looks for non-null contents in requested columns and notifies user
 before removal. Specifically used for detecting messages.
 }
 \examples{
-# example code
+ard <- ard_continuous(
+  ADSL,
+  by = ARM,
+  variables = AGE,
+  statistics = ~ list(
+    mean = \(x) mean(x),
+    mean_warning = \(x) {
+      warning("warn1")
+      warning("warn2")
+      mean(x)
+    },
+    err_fn = \(x) stop("'tis an error")
+  )
+)
+
+cards:::.detect_msgs(ard, "warning", "error")
 }
 \keyword{internal}

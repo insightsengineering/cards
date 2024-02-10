@@ -115,10 +115,13 @@ maximum_variable_values <- function(data) {
 #' @param values (named `list`)\cr
 #'   a named list
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is `parent.frame()`.
+#'   frame for error messaging. Default is [parent.frame()].
 #'
-#' @return NULL
+#' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
+#'
+#' @examples
+#' cards:::.check_dichotomous_values(mtcars, list(cyl = 2))
 .check_dichotomous_values <- function(data, values, call = parent.frame()) {
   imap(
     values,

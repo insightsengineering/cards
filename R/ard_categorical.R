@@ -186,6 +186,16 @@ ard_categorical <- function(data,
 #' @inheritParams ard_categorical
 #' @return an ARD data frame of class 'card'
 #' @keywords internal
+#'
+#' @examples
+#' cards:::.calculate_tabulation_statistics(
+#'   ADSL,
+#'   variables = "ARM",
+#'   by = NULL,
+#'   strata = NULL,
+#'   denominator = "cell",
+#'   statistics = list(ARM = list(tabulation=c("N")))
+#' )
 .calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
@@ -277,8 +287,8 @@ ard_categorical <- function(data,
 
 #' Results from `table()` as Data Frame
 #'
-#' Takes the results from `table()` and returns them as a data frame.
-#' After the `table()` results are made into a data frame, all the variables
+#' Takes the results from [table()] and returns them as a data frame.
+#' After the [table()] results are made into a data frame, all the variables
 #' are made into character columns, and the function also restores the
 #' column types to their original classes. For `strata` columns,
 #' only observed combinations are returned.
@@ -294,6 +304,9 @@ ard_categorical <- function(data,
 #'
 #' @keywords internal
 #' @return data frame
+#'
+#' @examples
+#' cards:::.table_as_df(ADSL, variable = "ARM", by = "AGEGR1", strata = NULL)
 .table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL, count_column = "...ard_n...") {
   # tabulate results and save in data frame
   ...ard_tab_vars... <- c(by, strata, variable)
@@ -496,8 +509,11 @@ ard_categorical <- function(data,
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
 #'
-#' @return invisible
+#' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
+#'
+#' @examples
+#' cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
 .check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
   by_vars_to_check <-
     c(by, strata) |>

@@ -29,10 +29,13 @@ a character vector indicating columns in data}
 data frame
 }
 \description{
-Takes the results from \code{table()} and returns them as a data frame.
-After the \code{table()} results are made into a data frame, all the variables
+Takes the results from \code{\link[=table]{table()}} and returns them as a data frame.
+After the \code{\link[=table]{table()}} results are made into a data frame, all the variables
 are made into character columns, and the function also restores the
 column types to their original classes. For \code{strata} columns,
 only observed combinations are returned.
+}
+\examples{
+# example code
 }
 \keyword{internal}

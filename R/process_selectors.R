@@ -56,6 +56,9 @@
 #'   whether to throw an error if a variable doesn't exist in the reference data
 #'   (passed to [tidyselect::eval_select()])
 #'
+#' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
+#' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
+#' named list.
 #' @name process_selectors
 #'
 #' @examples
@@ -64,12 +67,23 @@
 #' process_selectors(ADSL, variables = starts_with("TRT"), env = example_env)
 #' get(x = "variables", envir = example_env)
 #'
+#' fill_formula_selectors(ADSL, env = example_env)
+#'
 #' process_formula_selectors(
 #'   ADSL,
 #'   statistics = list(starts_with("TRT") ~ mean, TRTSDT = min),
 #'   env = example_env
 #' )
 #' get(x = "statistics", envir = example_env)
+#'
+#' check_list_elements(
+#'   get(x = "statistics", envir = example_env),
+#'   predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
+#'   error_msg = c(
+#'     "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+#'     "i" = "Value must be a named list of functions."
+#'   )
+#' )
 #'
 #' # process one list
 #' compute_formula_selector(ADSL, x = starts_with("U") ~ 1L)

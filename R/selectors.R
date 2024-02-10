@@ -21,7 +21,8 @@
 #' @examples
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
-#' get_ard_statistics(ard, group1_level %in% "Placebo", variable_level %in% "65-80")
+#' ard |> dplyr::select(all_ard_groups())
+#' ard |> dplyr::select(all_ard_variables())
 NULL
 
 #' @export

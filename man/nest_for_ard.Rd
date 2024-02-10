@@ -44,7 +44,7 @@ logical indicating whether to put levels of \code{by} and
 a nested tibble
 }
 \description{
-This function is similar to \code{tidyr::nest()}, except that it retains
+This function is similar to \code{\link[tidyr:nest]{tidyr::nest()}}, except that it retains
 rows for unobserved combinations (and unobserved factor levels) of by
 variables, and unobserved combinations of stratifying variables.
 

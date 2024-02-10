@@ -37,8 +37,8 @@ a character vector of results to include in output.
 named list of other statistic functions to supplement the pre-programmed functions.}
 }
 \value{
-\code{continuous_variable_summary_fns} and \code{missing_variable_summary_fns} return a named list of summary
-functions. \code{categorical_variable_summary_fns} returns a named list of summary statistics.
+\code{continuous_variable_summary_fns()} and \code{missing_variable_summary_fns()} return a named list of summary
+functions, \code{categorical_variable_summary_fns()} returns a named list of summary statistics.
 }
 \description{
 \itemize{

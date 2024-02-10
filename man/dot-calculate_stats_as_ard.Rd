@@ -30,4 +30,7 @@ an ARD data frame of class 'card'
 \description{
 Calculate statistics and return in an ARD format
 }
+\examples{
+# example code
+}
 \keyword{internal}

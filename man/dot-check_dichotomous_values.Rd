@@ -14,9 +14,12 @@ a data frame}
 a named list}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{parent.frame()}.}
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \description{
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
+}
+\examples{
+cards:::.check_dichotomous_values(mtcars, list(cyl = 2))
 }
 \keyword{internal}

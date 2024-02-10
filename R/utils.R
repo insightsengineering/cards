@@ -12,7 +12,11 @@
 #' @keywords internal
 #'
 #' @examples
-#' # example code
+#' cards:::.unique_and_sorted(factor(letters[c(5, 5:1)], levels = letters))
+#'
+#' cards:::.unique_and_sorted(c(FALSE, TRUE, TRUE, FALSE))
+#'
+#' cards:::.unique_and_sorted(c(5, 5:1))
 .unique_and_sorted <- function(x) {
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
@@ -38,7 +42,7 @@
 #' @keywords internal
 #'
 #' @examples
-#' # example code
+#' cards:::.is_named_list(list(a = 1:3))
 .is_named_list <- function(x, allow_df = FALSE) {
   if (isFALSE(allow_df)) {
     return(is.list(x) && is_named(x) && !is.data.frame(x))
@@ -50,7 +54,7 @@
 
 #' A list_flatten()-like Function
 #'
-#' Function operates similarly to `purrr::list_flatten(x, name_spec = "{inner}")`
+#' Function operates similarly to `purrr::list_flatten(x, name_spec = "{inner}")`.
 #'
 #' @param x (named `list`)\cr
 #'   a named list
@@ -59,7 +63,9 @@
 #' @keywords internal
 #'
 #' @examples
-#' # example code
+#' x <- list(a = 1, b = list(b1 = 2, b2 = 3), c = list(c1 = 4, c2 = list(c2a = 5)))
+#'
+#' cards:::.purrr_list_flatten(x)
 .purrr_list_flatten <- function(x) {
   ret <- list()
 

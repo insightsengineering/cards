@@ -51,18 +51,26 @@ get_ard_statistics <- function(x,
     stats::setNames(ard_subset[["stat_name"]])
 }
 
-#' #' Create List for Attributes
-#' #'
-#' #'
-#' #' @param ard_subset (`data.frame`)\cr
-#' #'   an ARD data frame of class 'card'
-#' #'
-#' #' @return a named list
-#' #' @keywords internal
-#' .create_list_for_attributes <- function(ard_subset, attributes, i) {
-#'   ret <- list()
-#'   for (attr in seq_along(attributes)) {
-#'     ret <- c(ret, list(ard_subset[[attr]][[i]]))
-#'   }
-#'   stats::setNames(ret, nm = attributes)
-#' }
+#' Create List for Attributes
+#'
+#' @param ard_subset (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
+#' @param attributes (`character`)\cr
+#'   a character vector of attribute names
+#' @param i (`integer`)\cr
+#'   a row index number
+#'
+#' @return a named list
+#' @keywords internal
+#'
+#' @examples
+#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#'
+#' cards:::.create_list_for_attributes(ard, c("group1", "group1_level"), 1)
+.create_list_for_attributes <- function(ard_subset, attributes, i) {
+  ret <- list()
+  for (attr in seq_along(attributes)) {
+    ret <- c(ret, list(ard_subset[[attr]][[i]]))
+  }
+  stats::setNames(ret, nm = attributes)
+}

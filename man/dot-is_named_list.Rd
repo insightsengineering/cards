@@ -17,6 +17,6 @@ a logical
 A predicate function to check whether input is a named list and \emph{not} a data frame.
 }
 \examples{
-# example code
+cards:::.is_named_list(list(a = 1:3))
 }
 \keyword{internal}

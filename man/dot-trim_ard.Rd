@@ -8,10 +8,10 @@
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
-an ARD data frame of class 'card'}
+a data frame}
 }
 \value{
-a data frame
+a tibble
 }
 \description{
 This function ingests an ARD object and trims columns and rows for downstream use in
@@ -19,6 +19,12 @@ displays. The resulting data frame contains only numeric results, no supplementa
 information about errors/warnings, and unnested list columns.
 }
 \examples{
-# example code
+ard <- bind_ard(
+  ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+  ard_categorical(ADSL, variables = "ARM")
+) |>
+  shuffle_ard(trim = FALSE)
+
+ard |> cards:::.trim_ard()
 }
 \keyword{internal}

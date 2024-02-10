@@ -74,6 +74,11 @@ a character vector that will
 be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
 }
+\value{
+\code{process_selectors()}, \code{fill_formula_selectors()}, and \code{check_list_elements()}
+return NULL, \code{process_formula_selectors()} and \code{compute_formula_selector()} return a
+named list.
+}
 \description{
 Functions process tidyselect arguments passed to functions in the cards package.
 The processed values are saved to the calling environment, by default.
@@ -100,12 +105,23 @@ example_env <- rlang::new_environment()
 process_selectors(ADSL, variables = starts_with("TRT"), env = example_env)
 get(x = "variables", envir = example_env)
 
+fill_formula_selectors(ADSL, env = example_env)
+
 process_formula_selectors(
   ADSL,
   statistics = list(starts_with("TRT") ~ mean, TRTSDT = min),
   env = example_env
 )
 get(x = "statistics", envir = example_env)
+
+check_list_elements(
+  get(x = "statistics", envir = example_env),
+  predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
+  error_msg = c(
+    "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
+    "i" = "Value must be a named list of functions."
+  )
+)
 
 # process one list
 compute_formula_selector(ADSL, x = starts_with("U") ~ 1L)

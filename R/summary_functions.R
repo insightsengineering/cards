@@ -32,8 +32,8 @@
 #' @param other_stats (named `list`)\cr
 #'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
-#' @return `continuous_variable_summary_fns` and `missing_variable_summary_fns` return a named list of summary
-#'   functions. `categorical_variable_summary_fns` returns a named list of summary statistics.
+#' @return `continuous_variable_summary_fns()` and `missing_variable_summary_fns()` return a named list of summary
+#' functions, `categorical_variable_summary_fns()` returns a named list of summary statistics.
 #' @name summary_functions
 #'
 #' @examples

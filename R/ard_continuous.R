@@ -180,8 +180,13 @@ ard_continuous <- function(data,
 #' @param exceptions (`string`)\cr
 #'   character string of column names to exclude from checks
 #'
-#' @return invisible
+#' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
+#'
+#' @examples
+#' data <- data.frame("...ard_x..." = 1)
+#'
+#' cards:::.check_no_ard_columns(data)
 .check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
@@ -207,6 +212,23 @@ ard_continuous <- function(data,
 #'
 #' @return an ARD data frame of class 'card'
 #' @keywords internal
+#'
+#' @examples
+#' data_nested <- ADSL |>
+#'   nest_for_ard(
+#'     by = "ARM",
+#'     strata = NULL,
+#'     key = "...ard_nested_data..."
+#'   )
+#'
+#' cards:::.calculate_stats_as_ard(
+#'   df_nested = data_nested,
+#'   variables = "AGE",
+#'   statistics = list(mean = "mean"),
+#'   by = "ARM",
+#'   strata = NULL,
+#'   data = ADSL
+#' )
 .calculate_stats_as_ard <- function(df_nested, variables, statistics,
                                     by, strata, data,
                                     new_col_name = "...ard_all_stats...") {
@@ -246,12 +268,12 @@ ard_continuous <- function(data,
 
 #' Prepare Results as Data Frame
 #'
-#' Function takes the results from `eval_capture_conditions()`, which is a
+#' Function takes the results from [eval_capture_conditions()], which is a
 #' named list, e.g. `list(result=, warning=, error=)`, and converts it to a data
 #' frame.
 #'
 #' @param x (named `list`)\cr
-#'   the result from `eval_capture_conditions()`
+#'   the result from [eval_capture_conditions()]
 #' @param variable (`string`)\cr
 #'   variable name of the results
 #' @param fun_name (`string`)\cr
@@ -259,6 +281,15 @@ ard_continuous <- function(data,
 #'
 #' @return a data frame
 #' @keywords internal
+#'
+#' @examples
+#' msgs <- eval_capture_conditions({
+#'   warning("Warning 1")
+#'   warning("Warning 2")
+#'   letters[1:2]
+#' })
+#'
+#' cards:::.lst_results_as_df(msgs, "result", "mean")
 .lst_results_as_df <- function(x, variable, fun_name) {
   # unnesting results if needed
   if (.is_named_list(x$result, allow_df = TRUE)) {
@@ -301,6 +332,11 @@ ard_continuous <- function(data,
 #'
 #' @return a data frame
 #' @keywords internal
+#'
+#' @examples
+#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#'
+#' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
   # add statistic_fmt_fn column if not already present
   if (!new_column %in% names(x)) {
@@ -351,6 +387,12 @@ ard_continuous <- function(data,
 #'
 #' @return a data frame
 #' @keywords internal
+#'
+#' @examples
+#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+#'   dplyr::mutate(statistic_fmt_fn = NA)
+#'
+#' cards:::.default_fmt_fn(ard)
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(

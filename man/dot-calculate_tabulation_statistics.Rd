@@ -51,4 +51,7 @@ Function takes the summary instructions from the
 \code{statistics = list(variable_name = list(tabulation=c("n", "N", "p")))}
 argument, and returns the tabulations in an ARD structure.
 }
+\examples{
+# example code
+}
 \keyword{internal}

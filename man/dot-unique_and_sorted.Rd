@@ -20,6 +20,10 @@ Similarly, logical vectors always return \code{c(TRUE, FALSE)}, even if
 both levels are not observed.
 }
 \examples{
-# example code
+cards:::.unique_and_sorted(factor(letters[c(5, 5:1)], levels = letters))
+
+cards:::.unique_and_sorted(c(FALSE, TRUE, TRUE, FALSE))
+
+cards:::.unique_and_sorted(c(5, 5:1))
 }
 \keyword{internal}

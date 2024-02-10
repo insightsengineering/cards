@@ -3,12 +3,12 @@
 #' Function parses the errors and warnings observed while calculating the
 #' statistics requested in the ARD and prints them to the console as messages.
 #'
-#' @param x (`card`)\cr
+#' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is `NULL`.
 #'
-#' @return NULL
+#' @return returns invisible if check is successful, throws all condition messages if not.
 #' @export
 #'
 #' @examples
@@ -37,7 +37,30 @@ print_ard_conditions <- function(x, call = NULL) {
   invisible()
 }
 
-# this function prints either the warnings or errors saved in the ARD
+#' Print Condition Messages Saved in an ARD
+#'
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
+#' @param msg_type (`string`)\cr
+#'   message type. Options are `"warning"` and `"error"`.
+#' @param call (`environment`)\cr
+#'   frame for error messaging
+#'
+#' @return returns invisible if check is successful, throws warning/error messages if not.
+#' @keywords internal
+#'
+#' @examples
+#' ard <- ard_continuous(
+#'   ADSL,
+#'   by = ARM,
+#'   variables = AGE,
+#'   statistics = ~ list(
+#'     mean = \(x) mean(x),
+#'     err_fn = \(x) stop("'tis an error")
+#'   )
+#' )
+#'
+#' cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
 .cli_condition_messaging <- function(x, msg_type, call) {
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
@@ -111,6 +134,35 @@ print_ard_conditions <- function(x, call = NULL) {
   invisible()
 }
 
+#' Locate Condition Messages in an ARD
+#'
+#' Prints a string of all `group##`/`group##_level` column values and
+#' `variable` column values where condition messages occur, formatted
+#' using glue syntax.
+#'
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
+#'
+#' @return a string
+#' @keywords internal
+#'
+#' @examples
+#' ard <- ard_continuous(
+#'   ADSL,
+#'   by = ARM,
+#'   variables = AGE,
+#'   statistics = ~ list(
+#'     mean = \(x) mean(x),
+#'     mean_warning = \(x) {
+#'       warning("warn1")
+#'       warning("warn2")
+#'       mean(x)
+#'     },
+#'     err_fn = \(x) stop("'tis an error")
+#'   )
+#' )
+#'
+#' cards:::.cli_groups_and_variable(ard)
 .cli_groups_and_variable <- function(x) {
   names <- names(x)
 

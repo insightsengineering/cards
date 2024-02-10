@@ -16,4 +16,7 @@ a data frame
 \description{
 Add Default Formatting Functions
 }
+\examples{
+# example code
+}
 \keyword{internal}

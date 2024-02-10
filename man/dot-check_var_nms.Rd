@@ -14,7 +14,7 @@ a data frame}
 a character vector of protected names}
 }
 \value{
-data frame
+a data frame
 }
 \description{
 Checks variable names in a data frame against protected names and modifies

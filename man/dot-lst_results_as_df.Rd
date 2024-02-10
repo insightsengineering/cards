@@ -24,4 +24,7 @@ Function takes the results from \code{eval_capture_conditions()}, which is a
 named list, e.g. \code{list(result=, warning=, error=)}, and converts it to a data
 frame.
 }
+\examples{
+# example code
+}
 \keyword{internal}

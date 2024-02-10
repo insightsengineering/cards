@@ -36,4 +36,7 @@ When a user passes a data frame in the \code{denominator} argument, this functio
 checks that the data frame contains all the same levels of the \code{by}
 and \code{strata} variables that appear in \code{data}.
 }
+\examples{
+# example code
+}
 \keyword{internal}

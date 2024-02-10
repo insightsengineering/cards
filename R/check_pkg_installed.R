@@ -32,8 +32,14 @@
 #' @name check_pkg_installed
 #'
 #' @examples
+#' check_pkg_installed("dplyr")
+#'
 #' is_pkg_installed("dplyr")
+#'
 #' get_pkg_dependencies()
+#'
+#' get_all_pkg_dependencies()
+#'
 #' get_min_version_required("brms")
 NULL
 

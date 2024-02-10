@@ -26,4 +26,7 @@ a data frame
 Some arguments, such as \code{stat_label}, are passed as nested lists. This
 function properly unnests these lists and adds them to the results data frame.
 }
+\examples{
+# example code
+}
 \keyword{internal}

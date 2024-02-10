@@ -14,9 +14,11 @@ a named list}
 a named list
 }
 \description{
-Function operates similarly to \code{purrr::list_flatten(x, name_spec = "{inner}")}
+Function operates similarly to \code{purrr::list_flatten(x, name_spec = "{inner}")}.
 }
 \examples{
-# example code
+x <- list(a = 1, b = list(b1 = 2, b2 = 3), c = list(c1 = 4, c2 = list(c2a = 5)))
+
+cards:::.purrr_list_flatten(x)
 }
 \keyword{internal}

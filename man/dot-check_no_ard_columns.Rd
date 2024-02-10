@@ -27,4 +27,7 @@ invisible
 Checks that column names in a passed data frame are not protected, that is,
 they do not begin with \code{"...ard_"} and end with \code{"..."}.
 }
+\examples{
+# example code
+}
 \keyword{internal}
