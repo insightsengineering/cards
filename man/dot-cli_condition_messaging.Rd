@@ -16,6 +16,9 @@ message type. Options are \code{"warning"} and \code{"error"}.}
 \item{call}{(\code{environment})\cr
 frame for error messaging}
 }
+\value{
+returns invisible if check is successful, throws warning/error messages if not.
+}
 \description{
 Print Condition Messages Saved in an ARD
 }

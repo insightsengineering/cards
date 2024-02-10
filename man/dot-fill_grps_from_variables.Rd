@@ -20,6 +20,13 @@ variable/variable_levels. The back filling will occur if the value of the
 variable's value is \code{NA}.
 }
 \examples{
-# example code
+data <- data.frame(
+  variable = c(rep("A", 3), rep("B", 2)),
+  variable_level = 1:5,
+  A = rep(NA, 5),
+  B = rep(NA, 5)
+)
+
+cards:::.fill_grps_from_variables(data)
 }
 \keyword{internal}

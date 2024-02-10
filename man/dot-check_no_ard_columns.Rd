@@ -21,13 +21,15 @@ frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}
 character string of column names to exclude from checks}
 }
 \value{
-invisible
+returns invisible if check is successful, throws an error message if not.
 }
 \description{
 Checks that column names in a passed data frame are not protected, that is,
 they do not begin with \code{"...ard_"} and end with \code{"..."}.
 }
 \examples{
-# example code
+data <- data.frame("...ard_x..." = 1)
+
+cards:::.check_no_ard_columns(data)
 }
 \keyword{internal}

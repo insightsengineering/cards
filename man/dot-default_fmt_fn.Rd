@@ -17,6 +17,9 @@ a data frame
 Add Default Formatting Functions
 }
 \examples{
-# example code
+ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+  dplyr::mutate(statistic_fmt_fn = NA)
+
+cards:::.default_fmt_fn(ard)
 }
 \keyword{internal}

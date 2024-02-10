@@ -19,6 +19,8 @@ single column. The \code{group_level} column is renamed according to the value o
 the \code{group} column.
 }
 \examples{
-# example code
+data = data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
+
+cards:::.rnm_grp_vars(data)
 }
 \keyword{internal}

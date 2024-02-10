@@ -16,6 +16,9 @@ a named list}
 \item{call}{(\code{environment})\cr
 frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
+\value{
+returns invisible if check is successful, throws an error message if not.
+}
 \description{
 Check the validity of the values passed in \code{ard_dichotomous(values)}.
 }

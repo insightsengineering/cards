@@ -36,6 +36,6 @@ column types to their original classes. For \code{strata} columns,
 only observed combinations are returned.
 }
 \examples{
-# example code
+cards:::.table_as_df(ADSL, variable = "ARM", by = "AGEGR1", strata = NULL)
 }
 \keyword{internal}

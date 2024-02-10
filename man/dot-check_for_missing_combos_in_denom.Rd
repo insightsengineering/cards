@@ -29,7 +29,7 @@ character vector of strata column names}
 frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
-invisible
+returns invisible if check is successful, throws an error message if not.
 }
 \description{
 When a user passes a data frame in the \code{denominator} argument, this function
@@ -37,6 +37,6 @@ checks that the data frame contains all the same levels of the \code{by}
 and \code{strata} variables that appear in \code{data}.
 }
 \examples{
-# example code
+cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
 }
 \keyword{internal}

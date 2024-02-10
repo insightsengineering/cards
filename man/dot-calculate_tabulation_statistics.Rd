@@ -52,6 +52,13 @@ Function takes the summary instructions from the
 argument, and returns the tabulations in an ARD structure.
 }
 \examples{
-# example code
+cards:::.calculate_tabulation_statistics(
+  ADSL,
+  variables = "ARM",
+  by = NULL,
+  strata = NULL,
+  denominator = "cell",
+  statistics = list(ARM = list(tabulation=c("N")))
+)
 }
 \keyword{internal}

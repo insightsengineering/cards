@@ -31,6 +31,20 @@ an ARD data frame of class 'card'
 Calculate statistics and return in an ARD format
 }
 \examples{
-# example code
+data_nested <- ADSL |>
+  nest_for_ard(
+    by = "ARM",
+    strata = NULL,
+    key = "...ard_nested_data..."
+  )
+
+cards:::.calculate_stats_as_ard(
+  df_nested = data_nested,
+  variables = "AGE",
+  statistics = list(mean = "mean"),
+  by = "ARM",
+  strata = NULL,
+  data = ADSL
+)
 }
 \keyword{internal}

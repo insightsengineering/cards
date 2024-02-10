@@ -13,6 +13,9 @@ an ARD data frame of class 'card'}
 \item{call}{(\code{environment})\cr
 frame for error messaging. Default is \code{NULL}.}
 }
+\value{
+returns invisible if check is successful, throws all condition messages if not.
+}
 \description{
 Function parses the errors and warnings observed while calculating the
 statistics requested in the ARD and prints them to the console as messages.
