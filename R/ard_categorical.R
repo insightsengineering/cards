@@ -194,7 +194,7 @@ ard_categorical <- function(data,
 #'   by = NULL,
 #'   strata = NULL,
 #'   denominator = "cell",
-#'   statistics = list(ARM = list(tabulation=c("N")))
+#'   statistics = list(ARM = list(tabulation = c("N")))
 #' )
 .calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
   # extract the "tabulation" statistics.

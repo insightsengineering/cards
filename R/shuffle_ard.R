@@ -230,7 +230,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @keywords internal
 #'
 #' @examples
-#' data = data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
+#' data <- data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
 #'
 #' cards:::.rnm_grp_vars(data)
 .rnm_grp_vars <- function(x) {
