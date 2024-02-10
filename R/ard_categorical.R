@@ -282,7 +282,8 @@ ard_categorical <- function(data,
       if (all(is.na(data[[x]])) && !inherits(data[[x]], c("logical", "factor"))) {
         cli::cli_abort(
           c("Column {.val {x}} is all missing and cannot by tabulated.",
-            i = "Only columns of class {.cls logical} and {.cls factor} can be tabulated when all values are missing."),
+            i = "Only columns of class {.cls logical} and {.cls factor} can be tabulated when all values are missing."
+          ),
           call = call
         )
       }
@@ -306,7 +307,7 @@ ard_categorical <- function(data,
 #' @keywords internal
 #' @return data frame
 .table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL,
-                         useNA = c("no", "always"),  count_column = "...ard_n...") {
+                         useNA = c("no", "always"), count_column = "...ard_n...") {
   useNA <- match.arg(useNA)
   # tabulate results and save in data frame
   ...ard_tab_vars... <- c(by, strata, variable)
@@ -321,8 +322,7 @@ ard_categorical <- function(data,
     lapply(
       c(by, strata, variable),
       function(x) {
-        switch(
-          useNA,
+        switch(useNA,
           "no" = .unique_and_sorted(data[[x]]),
           "always" = .unique_and_sorted(data[[x]]) |> c(NA)
         )
@@ -336,7 +336,7 @@ ard_categorical <- function(data,
   all_cols_equal <-
     every(
       c(by, strata, variable),
-      ~all(
+      ~ all(
         df_table[[.x]] == df_original_types[[.x]] | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
       )
     )

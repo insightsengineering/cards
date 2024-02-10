@@ -130,9 +130,13 @@ maximum_variable_values <- function(data) {
       if (length(value) != 1L || !value %in% accepted_values) {
         message <- "Error in argument {.arg values} for variable {.val {column}}."
         cli::cli_abort(
-          if (length(value) != 1L) c(message, "i" = "The value must be one of {.val {accepted_values}}.")
-          else c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}."),
-          call = call)
+          if (length(value) != 1L) {
+            c(message, "i" = "The value must be one of {.val {accepted_values}}.")
+          } else {
+            c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}.")
+          },
+          call = call
+        )
       }
     }
   ) |>

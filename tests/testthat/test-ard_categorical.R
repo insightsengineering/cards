@@ -289,8 +289,8 @@ test_that("ard_categorical(denominator='cell') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      variable = all_na_lgl,
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "cell"
     ) |>
       dplyr::pull(statistic) |>
@@ -301,9 +301,9 @@ test_that("ard_categorical(denominator='cell') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
+      variable = all_na_lgl,
       by = letters,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "cell"
     ) |>
       dplyr::pull(statistic) |>
@@ -380,8 +380,8 @@ test_that("ard_categorical(denominator='row') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      variable = all_na_lgl,
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "row"
     ) |>
       dplyr::pull(statistic) |>
@@ -392,9 +392,9 @@ test_that("ard_categorical(denominator='row') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
+      variable = all_na_lgl,
       by = letters,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "row"
     ) |>
       dplyr::pull(statistic) |>
@@ -416,8 +416,8 @@ test_that("ard_categorical(denominator='column') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      variable = all_na_lgl,
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
       dplyr::pull(statistic) |>
@@ -428,9 +428,9 @@ test_that("ard_categorical(denominator='column') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
+      variable = all_na_lgl,
       by = letters,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
       dplyr::pull(statistic) |>
@@ -443,8 +443,8 @@ test_that("ard_categorical(denominator='column') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      variable = all_na_lgl,
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
       dplyr::pull(statistic) |>
@@ -455,9 +455,9 @@ test_that("ard_categorical(denominator='column') works", {
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable  = all_na_lgl,
+      variable = all_na_lgl,
       by = letters,
-      statistics = ~categorical_variable_summary_fns(c("n", "N")),
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
       dplyr::pull(statistic) |>
@@ -526,7 +526,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
       dplyr::mutate(AGEGR1 = NA) |>
       ard_categorical(
         variables = AGEGR1,
-        statistics = ~categorical_variable_summary_fns(c("n", "p")),
+        statistics = ~ categorical_variable_summary_fns(c("n", "p")),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
       dplyr::pull(statistic) |>
@@ -542,7 +542,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
       ard_categorical(
         variables = AGEGR1,
         by = ARM,
-        statistics = ~categorical_variable_summary_fns(c("n", "p")),
+        statistics = ~ categorical_variable_summary_fns(c("n", "p")),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
       dplyr::pull(statistic) |>

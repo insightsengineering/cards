@@ -210,7 +210,9 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
           list(
             eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment")) |>
               structure(
-                .Environment = switch(isTRUE(include_env), attr(x[[i]], ".Environment"))
+                .Environment = switch(isTRUE(include_env),
+                  attr(x[[i]], ".Environment")
+                )
               )
           ),
           length.out = length(colnames)
