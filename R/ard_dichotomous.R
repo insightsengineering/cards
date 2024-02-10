@@ -7,7 +7,7 @@
 #'   named list of dichotomous values to tabulate. Default is `maximum_variable_values(data)`,
 #'   which returns the largest/last value after a sort.
 #'
-#' @return a ARD data frame of class 'card'
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
@@ -76,17 +76,14 @@ ard_dichotomous <- function(data,
 #' For each column in the passed data frame, the function returns a named list
 #' with the value being the largest/last element after a sort.
 #' For factors, the last level is returned, and for logical vectors `TRUE` is returned.
-#' This is used
-#' as the default value in `ard_dichotomous(values)` if not specified by
+#' This is used as the default value in `ard_dichotomous(values)` if not specified by
 #' the user.
 #'
-#' @param data (`data.frame`)
+#' @param data (`data.frame`)\cr
 #'   a data frame
 #'
-#' @return named list
+#' @return a named list
 #' @export
-#' @name maximum_variable_values
-#' @rdname maximum_variable_values
 #'
 #' @examples
 #' ADSL[c("AGEGR1", "BMIBLGR1")] |> maximum_variable_values()
@@ -113,15 +110,18 @@ maximum_variable_values <- function(data) {
 #'
 #' Check the validity of the values passed in `ard_dichotomous(values)`.
 #'
-#' @param data (`data.frame`)
+#' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param values (named `list`)
+#' @param values (named `list`)\cr
 #'   a named list
-#' @param call (`environment`)
-#'   an environment. Default is `parent.frame()`
+#' @param call (`environment`)\cr
+#'   frame for error messaging. Default is [parent.frame()].
 #'
-#' @return NULL
+#' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
+#'
+#' @examples
+#' cards:::.check_dichotomous_values(mtcars, list(cyl = 4))
 .check_dichotomous_values <- function(data, values, call = parent.frame()) {
   imap(
     values,

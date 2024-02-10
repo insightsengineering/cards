@@ -7,12 +7,14 @@
 print_ard_conditions(x, call = NULL)
 }
 \arguments{
-\item{x}{(\code{card})\cr
-an ARD data frame}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 
 \item{call}{(\code{environment})\cr
-if supplied, the calling function will be used in messaging to users.
-Default is \code{NULL}}
+frame for error messaging. Default is \code{NULL}.}
+}
+\value{
+returns invisible if check is successful, throws all condition messages if not.
 }
 \description{
 Function parses the errors and warnings observed while calculating the
@@ -22,16 +24,7 @@ statistics requested in the ARD and prints them to the console as messages.
 ard_continuous(
   ADSL,
   by = ARM,
-  variables = AGE,
-  statistics = ~ list(
-    mean = \(x) mean(x),
-    mean_warning = \(x) {
-      warning("warn1")
-      warning("warn2")
-      mean(x)
-    },
-    err_fn = \(x) stop("'tis an error")
-  )
+  variables = AGE
 ) |>
   print_ard_conditions()
 }

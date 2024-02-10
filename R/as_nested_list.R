@@ -1,7 +1,7 @@
 #' ARD as Nested List
 #'
 #' `r lifecycle::badge('experimental')`\cr
-#' Convert ARDs to Nested Lists
+#' Convert ARDs to nested lists.
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
@@ -41,9 +41,10 @@ as_nested_list <- function(x) {
 
 #' Convert One Row to Nested List
 #'
-#' @param x an ARD data frame with one row
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card' with one row
 #'
-#' @return expression that represents an element of a nested list
+#' @return an expression that represents an element of a nested list
 #' @keywords internal
 #'
 #' @examples

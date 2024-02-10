@@ -7,10 +7,11 @@
 check_ard_structure(x)
 }
 \arguments{
-\item{x}{an ARD data frame}
+\item{x}{(\code{data.frame})\cr
+an ARD data frame of class 'card'}
 }
 \value{
-an ARD data frame
+an ARD data frame of class 'card' (invisible)
 }
 \description{
 Function tests the structure and returns notes when object does not

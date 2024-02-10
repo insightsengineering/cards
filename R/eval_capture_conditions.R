@@ -8,7 +8,7 @@
 #'
 #' Messages are neither saved nor printed to the console.
 #'
-#' Evaluation is done via `eval_tidy()`.
+#' Evaluation is done via [eval_tidy()].
 #'
 #' @inheritParams rlang::eval_tidy
 #' @return a named list

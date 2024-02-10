@@ -9,30 +9,31 @@
 #'   which matches
 #'   [SAS's default value](https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html).
 #'
-#' - `categorical_variable_summary_fns()` summary functions for categorical
-#'   variables. Options are `c("n", "N", "p")`. If a user requests, for example,
-#'   only `"p"`, the function will return `n` and `N` as well, since they are
-#'   needed to calculate `"p"`.
+#' - `categorical_variable_summary_fns()` returns a named list of summary statistics for
+#'   categorical variables. Options are `"n"`, `"N"`, and `"p"`. If a user requests, for
+#'   example, only `"p"`, the function will return `"n"` and `"N"` as well, since they are
+#'   needed to calculate `"p"`. These statistics will be stored as a vector within the
+#'   `tabulation` list element.
 #'
-#' - `missing_variable_summary_fns()` summary functions suitable for variable-level
-#'   summaries, such as number and rate of missing data.
+#' - `missing_variable_summary_fns()` returns a named list of summary functions suitable
+#'   for variable-level summaries, such as number and rate of missing data.
 #'
 #' @param summaries (`character`)\cr
 #'   a character vector of results to include in output.
 #'
-#'   - `categorical_variable_summary_fns()`: Select one or more from
-#'     `r formals(categorical_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
-#'
 #'   - `continuous_variable_summary_fns()`: Select one or more from
-#'     `r formals(continuous_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'     `r eval(formals(continuous_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
+#'
+#'   - `categorical_variable_summary_fns()`: Select one or more from
+#'     `r eval(formals(categorical_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #'
 #'   - `missing_variable_summary_fns()`: Select one or more from
-#'     `r formals(missing_variable_summary_fns)[["summaries"]] |> eval()  %>% {paste(shQuote(.), collapse = ", ")}`.
+#'     `r eval(formals(missing_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
+#' @param other_stats (named `list`)\cr
+#'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
-#' @param other_stats named list of other statistic functions to supplement the
-#' pre-programmed functions.
-#'
-#' @return named list of summary functions
+#' @return `continuous_variable_summary_fns()` and `missing_variable_summary_fns()` return a named list of summary
+#' functions, `categorical_variable_summary_fns()` returns a named list of summary statistics.
 #' @name summary_functions
 #'
 #' @examples
@@ -60,24 +61,6 @@ NULL
 
 #' @rdname summary_functions
 #' @export
-categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
-  # check inputs ---------------------------------------------------------------
-  if (!is_empty(summaries)) {
-    summaries <-
-      arg_match(summaries, values = c("n", "p", "N"), multiple = TRUE)
-  }
-  check_class(x = other_stats, "list", allow_null = TRUE)
-
-  # combine tabulation and other stats -----------------------------------------
-  lst_all_stats <-
-    list(tabulation = summaries) |>
-    c(other_stats)
-
-  lst_all_stats
-}
-
-#' @rdname summary_functions
-#' @export
 continuous_variable_summary_fns <- function(summaries = c(
                                               "N", "mean", "sd", "median",
                                               "p25", "p75", "min", "max"
@@ -102,6 +85,24 @@ continuous_variable_summary_fns <- function(summaries = c(
   # return list of functions ---------------------------------------------------
   list_fns[summaries] |>
     c(other_stats)
+}
+
+#' @rdname summary_functions
+#' @export
+categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
+  # check inputs ---------------------------------------------------------------
+  if (!is_empty(summaries)) {
+    summaries <-
+      arg_match(summaries, values = c("n", "p", "N"), multiple = TRUE)
+  }
+  check_class(x = other_stats, "list", allow_null = TRUE)
+
+  # combine tabulation and other stats -----------------------------------------
+  lst_all_stats <-
+    list(tabulation = summaries) |>
+    c(other_stats)
+
+  lst_all_stats
 }
 
 #' @rdname summary_functions

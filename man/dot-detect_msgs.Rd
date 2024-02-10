@@ -2,20 +2,40 @@
 % Please edit documentation in R/shuffle_ard.R
 \name{.detect_msgs}
 \alias{.detect_msgs}
-\title{Detect columns for non-null contents}
+\title{Detect Columns with Non-Null Contents}
 \usage{
 .detect_msgs(x, ...)
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
-\item{...}{columns to search within}
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+columns to search within}
 }
 \value{
-data frame
+a data frame
 }
 \description{
 Function looks for non-null contents in requested columns and notifies user
 before removal. Specifically used for detecting messages.
+}
+\examples{
+ard <- ard_continuous(
+  ADSL,
+  by = ARM,
+  variables = AGE,
+  statistics = ~ list(
+    mean = \(x) mean(x),
+    mean_warning = \(x) {
+      warning("warn1")
+      warning("warn2")
+      mean(x)
+    },
+    err_fn = \(x) stop("'tis an error")
+  )
+)
+
+cards:::.detect_msgs(ard, "warning", "error")
 }
 \keyword{internal}

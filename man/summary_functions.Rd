@@ -2,18 +2,18 @@
 % Please edit documentation in R/summary_functions.R
 \name{summary_functions}
 \alias{summary_functions}
-\alias{categorical_variable_summary_fns}
 \alias{continuous_variable_summary_fns}
+\alias{categorical_variable_summary_fns}
 \alias{missing_variable_summary_fns}
 \title{Summary Functions}
 \usage{
-categorical_variable_summary_fns(
-  summaries = c("n", "p", "N"),
+continuous_variable_summary_fns(
+  summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max"),
   other_stats = NULL
 )
 
-continuous_variable_summary_fns(
-  summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max"),
+categorical_variable_summary_fns(
+  summaries = c("n", "p", "N"),
   other_stats = NULL
 )
 
@@ -25,19 +25,20 @@ missing_variable_summary_fns(
 \item{summaries}{(\code{character})\cr
 a character vector of results to include in output.
 \itemize{
-\item \code{categorical_variable_summary_fns()}: Select one or more from
-'n', 'p', 'N'.
 \item \code{continuous_variable_summary_fns()}: Select one or more from
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
+\item \code{categorical_variable_summary_fns()}: Select one or more from
+'n', 'p', 'N'.
 \item \code{missing_variable_summary_fns()}: Select one or more from
 'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
 }}
 
-\item{other_stats}{named list of other statistic functions to supplement the
-pre-programmed functions.}
+\item{other_stats}{(named \code{list})\cr
+named list of other statistic functions to supplement the pre-programmed functions.}
 }
 \value{
-named list of summary functions
+\code{continuous_variable_summary_fns()} and \code{missing_variable_summary_fns()} return a named list of summary
+functions, \code{categorical_variable_summary_fns()} returns a named list of summary statistics.
 }
 \description{
 \itemize{
@@ -48,12 +49,13 @@ return \code{NA} instead of \code{Inf} when an empty vector is passed.
 Statistics \code{"p25"} and \code{"p75"} are calculated with \code{quantile(type = 2)},
 which matches
 \href{https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html}{SAS's default value}.
-\item \code{categorical_variable_summary_fns()} summary functions for categorical
-variables. Options are \code{c("n", "N", "p")}. If a user requests, for example,
-only \code{"p"}, the function will return \code{n} and \code{N} as well, since they are
-needed to calculate \code{"p"}.
-\item \code{missing_variable_summary_fns()} summary functions suitable for variable-level
-summaries, such as number and rate of missing data.
+\item \code{categorical_variable_summary_fns()} returns a named list of summary statistics for
+categorical variables. Options are \code{"n"}, \code{"N"}, and \code{"p"}. If a user requests, for
+example, only \code{"p"}, the function will return \code{"n"} and \code{"N"} as well, since they are
+needed to calculate \code{"p"}. These statistics will be stored as a vector within the
+\code{tabulation} list element.
+\item \code{missing_variable_summary_fns()} returns a named list of summary functions suitable
+for variable-level summaries, such as number and rate of missing data.
 }
 }
 \examples{

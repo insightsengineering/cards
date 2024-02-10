@@ -2,8 +2,8 @@
 #'
 #' @name syntax
 #' @keywords internal
-#' @description
 #'
+#' @description
 #' # Selectors
 #'
 #' The cards package also utilizes selectors: selectors from the tidyselect
@@ -11,12 +11,12 @@
 #'
 #' - **tidy selectors**
 #'
-#'     `everything()`, `all_of()`, `any_of()`, `starts_with()`, `ends_with()`,
-#'     `contains()`, `matches()`, `num_range()`, `last_col()`
+#'     [everything()], [all_of()], [any_of()], [starts_with()], [ends_with()],
+#'     [contains()], [matches()], [num_range()], [last_col()]
 #'
 #' - **cards selectors**
 #'
-#'     `all_ard_groups()`, `all_ard_variables()`
+#'     [all_ard_groups()], [all_ard_variables()]
 #'
 #' # Formula and List Selectors
 #'
@@ -33,7 +33,7 @@
 #'     ard_continuous(statistics = list(age ~ list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
 #'     ```
 #'
-#' 1. **Named List**
+#' 2. **Named List**
 #'
 #'     You may also pass a named list; however, the tidyselect selectors
 #'     are not supported with this syntax.
@@ -42,14 +42,15 @@
 #'     ard_continuous(statistics = list(age = list(N = \(x) length(x))))
 #'     ```
 #'
-#' 1. **Hybrid Named List/List of Formulas**
+#' 3. **Hybrid Named List/List of Formulas**
 #'
-#'     Pass a combination of formulas and named elements
+#'     You can pass a combination of formulas and named elements.
 #'
 #'     ```r
 #'     ard_continuous(statistics = list(age = list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
 #'     ```
-#' 1. **Shortcuts**
+#'
+#' 4. **Shortcuts**
 #'
 #'     You can pass a single formula, which is equivalent to passing the formula
 #'     in a list.
@@ -57,6 +58,7 @@
 #'     ```r
 #'     ard_continuous(statistics = starts_with("a") ~ list(mean = mean)
 #'     ```
+#'
 #'     As a shortcut to select all variables, you can omit the LHS of the formula.
 #'     The two calls below are equivalent.
 #'
@@ -65,7 +67,7 @@
 #'     ard_continuous(statistics = everything() ~ list(N = \(x) length(x)))
 #'     ```
 #'
-#' 1. **Combination Selectors**
+#' 5. **Combination Selectors**
 #'
 #'     Selectors can be combined using the `c()` function.
 #'
