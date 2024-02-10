@@ -126,22 +126,13 @@ maximum_variable_values <- function(data) {
   imap(
     values,
     function(value, column) {
-      if (length(value) != 1L || is_empty(value) || is.na(value) || is.nan(value) || is.infinite(value)) {
-        cli::cli_abort(c(
-          "Error in argument {.arg values} for variable {.val {column}}.",
-          "i" = "The length of the value must be one and not one of {.val {c(NA, NaN, Inf)}}."
-        ), call = call)
-      }
-      if (inherits(data[[column]], "factor") && !value %in% levels(data[[column]])) {
-        cli::cli_abort(c(
-          "Error in argument {.arg values} for variable {.val {column}}.",
-          "i" = "A value of {.val {value}} was passed, but must be one of {.val {levels(data[[column]])}}."
-        ), call = call)
-      } else if (!value %in% data[[column]]) {
-        cli::cli_abort(c(
-          "Error in argument {.arg values} for variable {.val {column}}.",
-          "i" = "A value of {.val {value}} was passed, but must be one of {.val {unique(data[[column]]) |> na.omit() |> sort()}}."
-        ), call = call)
+      accepted_values <- .unique_and_sorted(data[[column]])
+      if (length(value) != 1L || !value %in% accepted_values) {
+        message <- "Error in argument {.arg values} for variable {.val {column}}."
+        cli::cli_abort(
+          if (length(value) != 1L) c(message, "i" = "The value must be one of {.val {accepted_values}}.")
+          else c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}."),
+          call = call)
       }
     }
   ) |>

@@ -93,6 +93,7 @@ ard_categorical <- function(data,
     strata = {{ strata }}
   )
   data <- dplyr::ungroup(data)
+  .check_whether_na_counts(data[variables])
 
   process_formula_selectors(
     data = data[variables],
@@ -272,6 +273,21 @@ ard_categorical <- function(data,
       warning = list(NULL),
       error = list(NULL)
     )
+}
+
+.check_whether_na_counts <- function(data, call = parent.frame()) {
+  walk(
+    names(data),
+    function(x) {
+      if (all(is.na(data[[x]])) && !inherits(data[[x]], c("logical", "factor"))) {
+        cli::cli_abort(
+          c("Column {.val {x}} is all missing and cannot by tabulated.",
+            i = "Only columns of class {.cls logical} and {.cls factor} can be tabulated when all values are missing."),
+          call = call
+        )
+      }
+    }
+  )
 }
 
 #' Results from `table()` as Data Frame

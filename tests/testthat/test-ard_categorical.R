@@ -651,3 +651,13 @@ test_that("ard_categorical() with grouped data works", {
     ard_categorical(data = ADSL, by = "ARM", variables = "AGEGR1")
   )
 })
+
+
+test_that("ard_categorical() and all NA columns", {
+  expect_snapshot(
+    error = TRUE,
+    ADSL |>
+      dplyr::mutate(AGEGR1 = NA_character_) |>
+      ard_categorical(variables = AGEGR1)
+  )
+})
