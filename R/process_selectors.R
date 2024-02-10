@@ -81,7 +81,7 @@
 #'
 #' check_list_elements(
 #'   get(x = "statistics", envir = example_env),
-#'   predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
+#'   predicate = function(x) !is.null(x),
 #'   error_msg = c(
 #'     "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
 #'     "i" = "Value must be a named list of functions."
