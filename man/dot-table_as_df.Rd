@@ -25,6 +25,9 @@ a character vector indicating columns in data}
 
 \item{strata}{(\code{character})\cr
 a character vector indicating columns in data}
+
+\item{useNA}{(\code{string})\cr
+one of \code{"no"} and \code{"always"}. Will be passed to \code{table(useNA)}.}
 }
 \value{
 data frame
