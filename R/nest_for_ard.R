@@ -1,7 +1,7 @@
 #' ARD Nesting
 #'
 #' @description
-#' This function is similar to `tidyr::nest()`, except that it retains
+#' This function is similar to [tidyr::nest()], except that it retains
 #' rows for unobserved combinations (and unobserved factor levels) of by
 #' variables, and unobserved combinations of stratifying variables.
 #'
@@ -11,7 +11,7 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param by,strata (`character`)\cr
-#'   columns to nest by/stratified by. Arguments are similar,
+#'   columns to nest by/stratify by. Arguments are similar,
 #'   but with an important distinction:
 #'
 #'   `by`: data frame is nested by **all combinations** of the columns specified,
@@ -21,17 +21,16 @@
 #'   columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.
-#'
 #' @param key (`string`)\cr
-#'   the name of the new column with the nested data frame. Default is `"data"`
-#' @param rename_columns (`logical` scalar)\cr
-#'   logical indicating whether to rename the by and strata variables.
-#'   Default is `TRUE`
-#' @param list_columns (`logical` scalar)\cr
+#'   the name of the new column with the nested data frame. Default is `"data"`.
+#' @param rename_columns (`logical`)\cr
+#'   logical indicating whether to rename the `by` and `strata` variables.
+#'   Default is `TRUE`.
+#' @param list_columns (`logical`)\cr
 #'   logical indicating whether to put levels of `by` and
-#'   `strata` columns in a list. Default is `TRUE`
+#'   `strata` columns in a list. Default is `TRUE`.
 #'
-#' @return a nested data frame
+#' @return a nested tibble
 #' @export
 #'
 #' @examples
@@ -135,7 +134,36 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   df_return |> dplyr::as_tibble()
 }
 
-
+#' Rename ARD Columns
+#'
+#' If `variable` is provided, adds the standard `variable` column to `x`. If `by`/`strata` are
+#' provided, adds the standard `group##` column(s) to `x` and renames the provided columns to
+#' `group##_level` in `x`, where `##` is determined by the column's position in `c(by, strata)`.
+#'
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#' @param variable (`character`)\cr
+#'   name of `variable` column in `x`. Default is `NULL`.
+#' @param by (`character`)\cr
+#'   character vector of names of `by` columns in `x`. Default is `NULL`.
+#' @param strata (`character`)\cr
+#'   character vector of names of `strata` columns in `x`. Default is `NULL`.
+#'
+#' @return a tibble
+#' @keywords internal
+#'
+#' @examples
+#' ard <- nest_for_ard(
+#'   data =
+#'     ADAE |>
+#'       dplyr::left_join(ADSL[c("USUBJID", "ARM")], by = "USUBJID") |>
+#'       dplyr::filter(AOCCSFL %in% "Y"),
+#'   by = "ARM",
+#'   strata = "AESOC",
+#'   rename_columns = FALSE
+#' )
+#'
+#' cards:::.rename_ard_columns(ard, by = "ARM", strata = "AESOC")
 .rename_ard_columns <- function(x, variable = NULL, by = NULL, strata = NULL) {
   if (!is_empty(variable)) {
     x <-

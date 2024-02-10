@@ -1,15 +1,13 @@
-#' Defaults for statistical arguments
+#' Defaults for Statistical Arguments
 #'
-#' @description
 #' Returns a named list of statistics labels
 #'
 #' @return named list of values
+#' @export
 #'
 #' @examples
 #' # stat labels
 #' default_stat_labels()
-#'
-#' @export
 default_stat_labels <- function() {
   list(
     mean = "Mean",

@@ -7,20 +7,24 @@
 \method{print}{card}(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
 }
 \arguments{
-\item{x}{object of class 'card'}
+\item{x}{(\code{data.frame})\cr
+object of class 'card'}
 
-\item{n}{integer specifying the number of rows to print}
+\item{n}{(\code{integer})\cr
+integer specifying the number of rows to print}
 
-\item{columns}{string indicating whether to print a selected number of
-columns or all.}
+\item{columns}{(\code{string})\cr
+string indicating whether to print a selected number of columns or all.}
 
-\item{n_col}{some columns are removed when there are more than a threshold
-of columns present. This argument sets that threshold. Default is \code{6L}}
+\item{n_col}{(\code{integer})\cr
+some columns are removed when there are more than a threshold of
+columns present. This argument sets that threshold. Default is \code{6L}.}
 
-\item{...}{not used}
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+not used}
 }
 \value{
-data frame
+an ARD data frame of class 'card'
 }
 \description{
 Print method for objects of class 'card'

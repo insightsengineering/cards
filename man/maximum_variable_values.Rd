@@ -7,18 +7,17 @@
 maximum_variable_values(data)
 }
 \arguments{
-\item{data}{(\code{data.frame})
+\item{data}{(\code{data.frame})\cr
 a data frame}
 }
 \value{
-named list
+a named list
 }
 \description{
 For each column in the passed data frame, the function returns a named list
 with the value being the largest/last element after a sort.
 For factors, the last level is returned, and for logical vectors \code{TRUE} is returned.
-This is used
-as the default value in \code{ard_dichotomous(values)} if not specified by
+This is used as the default value in \code{ard_dichotomous(values)} if not specified by
 the user.
 }
 \examples{

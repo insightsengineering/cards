@@ -12,20 +12,20 @@ tidy_ard_row_order(x)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
-a ARD data frame of class 'card'}
+an ARD data frame of class 'card'}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
-ARD functions for relocating columns and rows to the standard order
+ARD functions for relocating columns and rows to the standard order.
 \itemize{
-\item \code{tidy_ard_column_order()} relocates columns of the ARD to the standard order
-\item \code{tidy_ard_row_order()} orders rows of ARD according to variables, groups, and strata, while retaining the order of the input ARD
+\item \code{tidy_ard_column_order()} relocates columns of the ARD to the standard order.
+\item \code{tidy_ard_row_order()} orders rows of ARD according to variables, groups, and
+strata, while retaining the order of the input ARD.
 }
 }
 \examples{
-
 # order columns
 ard <-
   dplyr::bind_rows(

@@ -1,20 +1,20 @@
 #' Standard Order of ARD
 #'
 #' @description
-#' ARD functions for relocating columns and rows to the standard order
+#' ARD functions for relocating columns and rows to the standard order.
 #'
-#' - `tidy_ard_column_order()` relocates columns of the ARD to the standard order
+#' - `tidy_ard_column_order()` relocates columns of the ARD to the standard order.
 #'
-#' - `tidy_ard_row_order()` orders rows of ARD according to variables, groups, and strata, while retaining the order of the input ARD
+#' - `tidy_ard_row_order()` orders rows of ARD according to variables, groups, and
+#'   strata, while retaining the order of the input ARD.
 #'
 #' @param x (`data.frame`)\cr
-#'   a ARD data frame of class 'card'
+#'   an ARD data frame of class 'card'
 #'
-#' @return a data frame
+#' @return an ARD data frame of class 'card'
 #' @name tidy_ard_order
 #'
 #' @examples
-#'
 #' # order columns
 #' ard <-
 #'   dplyr::bind_rows(

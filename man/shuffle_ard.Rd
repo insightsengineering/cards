@@ -8,16 +8,20 @@ shuffle_ard(x, trim = TRUE)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
-an ARD data frame}
+an ARD data frame of class 'card'}
 
-\item{trim}{(\code{logical(1)})\cr
-Boolean representing whether or not to trim away statistic-level metadata and filter only on numeric statistic values.}
+\item{trim}{(\code{logical})\cr
+logical representing whether or not to trim away statistic-level metadata and filter
+only on numeric statistic values.}
 }
 \value{
-data frame
+a tibble
 }
 \description{
-This function ingests an ARD object and shuffles the information to prepare for analysis. Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1 column, back fills missing grouping values from the variable levels where possible, and optionally trims statistics-level metadata.
+This function ingests an ARD object and shuffles the information to prepare for analysis.
+Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1
+column, back fills missing grouping values from the variable levels where possible, and
+optionally trims statistics-level metadata.
 }
 \examples{
 bind_ard(
@@ -25,5 +29,4 @@ bind_ard(
   ard_categorical(ADSL, variables = "ARM")
 ) |>
   shuffle_ard()
-
 }

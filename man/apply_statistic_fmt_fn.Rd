@@ -11,11 +11,11 @@ apply_statistic_fmt_fn(x)
 an ARD data frame of class 'card'}
 }
 \value{
-an ARD data frame
+an ARD data frame of class 'card'
 }
 \description{
 Apply the formatting functions to each of the raw statistics.
-Function aliases are converted to functions using \code{alias_as_fmt_fn()}.
+Function aliases are converted to functions using \code{\link[=alias_as_fmt_fn]{alias_as_fmt_fn()}}.
 }
 \examples{
 ard_continuous(ADSL, variables = "AGE") |>
