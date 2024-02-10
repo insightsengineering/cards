@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9030</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,16 +77,16 @@ a data frame</p></dd>
 
 <dt>variables</dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to include in summaries</p></dd>
+columns to include in summaries. Default is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>by, strata</dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to by/stratified by for summary statistic
+columns to tabulate by/stratify by for summary statistic
 calculation. Arguments are similar, but with an important distinction:</p>
-<p><code>by</code>: results are calculated by <strong>all combinations</strong> of the columns specified,
+<p><code>by</code>: results are calculated for <strong>all combinations</strong> of the columns specified,
 including unobserved combinations and unobserved factor levels.</p>
-<p><code>strata</code>: results are calculated by <strong>all <em>observed</em> combinations</strong> of the
+<p><code>strata</code>: results are calculated for <strong>all <em>observed</em> combinations</strong> of the
 columns specified.</p>
 <p>Arguments may be used in conjunction with one another.</p></dd>
 
@@ -125,7 +125,7 @@ statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a data frame</p>
+<p>an ARD data frame of class 'card'</p>
     </div>
 
     <div class="section level2">

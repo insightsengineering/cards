@@ -26,7 +26,7 @@ named "variable" or "variable_level".
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9030</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,8 +87,8 @@ named <code>"variable"</code> or <code>"variable_level"</code>.</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>types</dt>
 <dd><p>(<code>character</code>)<br>
-type of column to select. <code>"names"</code> selects the columns variable name columns,
-and <code>"levels"</code> selects the level columns. Default is <code>c("names", "levels")</code></p></dd>
+type(s) of columns to select. <code>"names"</code> selects the columns variable name columns,
+and <code>"levels"</code> selects the level columns. Default is <code>c("names", "levels")</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -102,16 +102,36 @@ and <code>"levels"</code> selects the level columns. Default is <code>c("names",
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ard</span> <span class="op">&lt;-</span> <span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="get_ard_statistics.html">get_ard_statistics</a></span><span class="op">(</span><span class="va">ard</span>, <span class="va">group1_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"Placebo"</span>, <span class="va">variable_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"65-80"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4883721</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">all_ard_groups</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 27 x 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      Placebo</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-in"><span><span class="va">ard</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">all_ard_variables</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 27 x 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable variable_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    AGEGR1          65-80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   AGEGR1            &lt;65</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

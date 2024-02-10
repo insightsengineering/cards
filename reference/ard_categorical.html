@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9030</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@ columns to include in summaries. Default is <code><a href="https://tidyselect.r-
 
 <dt>by, strata</dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to by/stratified by for tabulation.
+columns to tabulate by/stratify by for tabulation.
 Arguments are similar, but with an important distinction:</p>
 <p><code>by</code>: results are tabulated by <strong>all combinations</strong> of the columns specified,
 including unobserved combinations and unobserved factor levels.</p>
@@ -101,7 +101,7 @@ e.g. <code>list(mpg = categorical_variable_summary_fns())</code>.</p></dd>
 
 
 <dt>denominator</dt>
-<dd><p>(<code>data.frame</code>, <code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer()</a></code>)<br>
+<dd><p>(<code>data.frame</code>, <code>integer</code>)<br>
 Specify this <em>optional</em> argument to change the denominator,
 e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
 
@@ -126,14 +126,14 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a data frame</p>
+<p>an ARD data frame of class 'card'</p>
     </div>
     <div class="section level2">
     <h2 id="denominators">Denominators<a class="anchor" aria-label="anchor" href="#denominators"></a></h2>
     
 
-<p>By default, the <code>ard_categorical()</code> function returns the statistics <code>"n"</code> and <code>"N"</code>,
-where little <code>"n"</code> are the counts for the variable levels, and <code>"N"</code> is
+<p>By default, the <code>ard_categorical()</code> function returns the statistics <code>"n"</code>, <code>"N"</code>, and
+<code>"p"</code>, where little <code>"n"</code> are the counts for the variable levels, and big <code>"N"</code> is
 the number of non-missing observations. The default calculation for the
 percentage is merely <code>p = n/N</code>.</p>
 <p>However, it is sometimes necessary to provide a different <code>"N"</code> to use
@@ -142,12 +142,12 @@ of the rates of various observed adverse events, you may need to update the
 denominator to the number of enrolled subjects.</p>
 <p>In such cases, use the <code>denominator</code> argument to specify a new definition
 of <code>"N"</code>, and subsequently <code>"p"</code>.
-The argument expects the following inputs:</p><ul><li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
+The argument expects one of the following inputs:</p><ul><li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
 columns will be used to calculate the new <code>"N"</code>.</p></li>
 <li><p>an integer. This single integer will be used as the new <code>"N"</code></p></li>
-<li><p>a string: one of <code>c("column", "row", "cell")</code>. <code>"column"</code> is equivalent
+<li><p>a string: one of <code>"column"</code>, <code>"row"</code>, or <code>"cell"</code>. <code>"column"</code> is equivalent
 to <code>denominator=NULL</code>. <code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code>
-columns are are the 'top' of a cross table, and the variables are the rows.
+columns are the 'top' of a cross table, and the variables are the rows.
 <code>"cell"</code> gives percentages where the denominator is the number of non-missing
 rows in the source data frame.</p></li>
 <li><p>a structured data frame. The data frame will include columns from <code>by</code>/<code>strata</code>.

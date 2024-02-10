@@ -16,7 +16,7 @@ function, ard_complex(statistics) can handle more complex data summaries."><meta
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9030</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,16 +86,16 @@ a data frame</p></dd>
 
 <dt>variables</dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to include in summaries</p></dd>
+columns to include in summaries. Default is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>by, strata</dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to by/stratified by for summary statistic
+columns to tabulate by/stratify by for summary statistic
 calculation. Arguments are similar, but with an important distinction:</p>
-<p><code>by</code>: results are calculated by <strong>all combinations</strong> of the columns specified,
+<p><code>by</code>: results are calculated for <strong>all combinations</strong> of the columns specified,
 including unobserved combinations and unobserved factor levels.</p>
-<p><code>strata</code>: results are calculated by <strong>all <em>observed</em> combinations</strong> of the
+<p><code>strata</code>: results are calculated for <strong>all <em>observed</em> combinations</strong> of the
 columns specified.</p>
 <p>Arguments may be used in conjunction with one another.</p></dd>
 
@@ -103,14 +103,14 @@ columns specified.</p>
 <dt>statistics</dt>
 <dd><p>(<code><a href="syntax.html">formula-list-selector</a></code>)<br>
 The form of the statistics argument is identical to <code>ard_continuous(statistics)</code>
-argument, except the summary function <em>must</em> accept the following arguments.</p><ul><li><p><code>x</code> vector</p></li>
-<li><p><code>data</code> the data frame that has been subset by the <code>by</code>/<code>strata</code> columns
+argument, except the summary function <em>must</em> accept the following arguments:</p><ul><li><p><code>x</code>: a vector</p></li>
+<li><p><code>data</code>: the data frame that has been subset such that the <code>by</code>/<code>strata</code> columns
 and rows in which <code>"variable"</code> is <code>NA</code> have been removed.</p></li>
-<li><p><code>data_full</code> the full data frame</p></li>
-<li><p><code>by</code> character vector of the <code>by</code> variables</p></li>
-<li><p><code>strata</code> character vector of the <code>strata</code> variables
+<li><p><code>data_full</code>: the full data frame</p></li>
+<li><p><code>by</code>: character vector of the <code>by</code> variables</p></li>
+<li><p><code>strata</code>: character vector of the <code>strata</code> variables
 It is unlikely any one function will need <em>all</em> of the above elements,
-and it's recommended the function passed accepts <code>...</code> and any unused
+and it's recommended the function passed accepts <code>...</code> so that any unused
 arguments will be properly ignored. The <code>...</code> also allows this function
 to perhaps be updated in the future with more passed arguments. For example,
 if one needs a second variable from the data frame, the function inputs
@@ -138,7 +138,7 @@ statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a data frame</p>
+<p>an ARD data frame of class 'card'</p>
     </div>
 
     <div class="section level2">
@@ -157,7 +157,7 @@ statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM    Xanomeli…      AGE      mean       Mean    75.667</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># return the grand mean and the mean within the by group</span></span></span>
+<span class="r-in"><span><span class="co"># return the grand mean and the mean within the `by` group</span></span></span>
 <span class="r-in"><span><span class="va">grand_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">data_full</span>, <span class="va">variable</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="va">variable</span><span class="op">]</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span></span>

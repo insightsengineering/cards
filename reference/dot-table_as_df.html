@@ -18,7 +18,7 @@ only observed combinations are returned."><meta property="og:image" content="htt
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9030</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,19 +81,23 @@ only observed combinations are returned.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>a data frame</p></dd>
+<dd><p>(<code>data.frame</code>)<br>
+a data frame</p></dd>
 
 
 <dt>variable</dt>
-<dd><p>a string indicating a column in data</p></dd>
+<dd><p>(<code>string</code>)<br>
+a string indicating a column in data</p></dd>
 
 
 <dt>by</dt>
-<dd><p>a character vector indicating columns in data</p></dd>
+<dd><p>(<code>character</code>)<br>
+a character vector indicating columns in data</p></dd>
 
 
 <dt>strata</dt>
-<dd><p>a character vector indicating columns in data</p></dd>
+<dd><p>(<code>character</code>)<br>
+a character vector indicating columns in data</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -103,6 +107,23 @@ only observed combinations are returned.</p>
 <p>data frame</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">cards</span><span class="fu">:::</span><span class="fu">.table_as_df</span><span class="op">(</span><span class="va">ADSL</span>, variable <span class="op">=</span> <span class="st">"ARM"</span>, by <span class="op">=</span> <span class="st">"AGEGR1"</span>, strata <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AGEGR1 ARM                  ...ard_n...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 65-80  Placebo                       42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> &lt;65    Placebo                       14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> &gt;80    Placebo                       30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 65-80  Xanomeline High Dose          55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> &lt;65    Xanomeline High Dose          11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> &gt;80    Xanomeline High Dose          18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 65-80  Xanomeline Low Dose           47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> &lt;65    Xanomeline Low Dose            8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> &gt;80    Xanomeline Low Dose           29</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
