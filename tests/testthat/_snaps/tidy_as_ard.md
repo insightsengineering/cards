@@ -96,3 +96,40 @@
       14 Planned unit testing error!
       15 Planned unit testing error!
 
+---
+
+    Code
+      as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(dplyr::as_tibble(
+        stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate",
+          "p.value", "method")])), tidy_result_names = c("estimate", "p.value",
+        "conf.low", "conf.high", "method", "alternative"), formals = formals(stats::fisher.test),
+      passed_args = list(), lst_ard_columns = list(context = "fishertest", group1 = "am",
+        variable = "vs")))
+    Output
+        group1 variable    context stat_name                          statistic
+      1     am       vs fishertest  estimate                           1.956055
+      2     am       vs fishertest   p.value                          0.4726974
+      3     am       vs fishertest    method Fisher's Exact Test for Count Data
+        statistic_fmt_fn warning error
+      1                1    NULL  NULL
+      2                1    NULL  NULL
+      3             NULL    NULL  NULL
+
+---
+
+    Code
+      as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(dplyr::as_tibble(
+        stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate",
+          "p.value", "method")])), tidy_result_names = c("estimate", "p.value",
+        "conf.low", "conf.high", "method", "alternative"), passed_args = list(),
+      lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")))
+    Output
+        group1 variable    context stat_name                          statistic
+      1     am       vs fishertest  estimate                           1.956055
+      2     am       vs fishertest   p.value                          0.4726974
+      3     am       vs fishertest    method Fisher's Exact Test for Count Data
+        statistic_fmt_fn warning error
+      1                1    NULL  NULL
+      2                1    NULL  NULL
+      3             NULL    NULL  NULL
+
