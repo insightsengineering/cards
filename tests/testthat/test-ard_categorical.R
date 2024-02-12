@@ -47,6 +47,21 @@ test_that("ard_categorical() univariate", {
     ) |>
       dplyr::select(stat_name, stat_label, statistic)
   )
+
+  expect_equal(
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
+      by = vs,
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic),
+    ard_categorical(
+      mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
+      by = vs,
+      variables = cyl
+    ) |>
+      dplyr::select(stat_name, stat_label, statistic)
+  )
 })
 
 test_that("ard_categorical() univariate & specified denomiator", {
@@ -285,30 +300,35 @@ test_that("ard_categorical(denominator='cell') works", {
   )
 
   # works with an all missing variable
-  df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
+  df_missing <-
+    dplyr::tibble(
+      all_na_lgl = c(NA, NA),
+      all_na_fct = factor(all_na_lgl, levels = letters[1:2]),
+      letters = letters[1:2]
+    )
   expect_equal(
     ard_categorical(
       data = df_missing,
-      variable = all_na_lgl,
-      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
-      denominator = "cell"
-    ) |>
-      dplyr::pull(statistic) |>
-      unlist(),
-    rep_len(0L, length.out = 4L)
-  )
-
-  expect_equal(
-    ard_categorical(
-      data = df_missing,
-      variable = all_na_lgl,
-      by = letters,
+      variables = c(all_na_lgl, all_na_fct),
       statistics = ~ categorical_variable_summary_fns(c("n", "N")),
       denominator = "cell"
     ) |>
       dplyr::pull(statistic) |>
       unlist(),
     rep_len(0L, length.out = 8L)
+  )
+
+  expect_equal(
+    ard_categorical(
+      data = df_missing,
+      variables = c(all_na_lgl, all_na_fct),
+      by = letters,
+      statistics = ~ categorical_variable_summary_fns(c("n", "N")),
+      denominator = "cell"
+    ) |>
+      dplyr::pull(statistic) |>
+      unlist(),
+    rep_len(0L, length.out = 16L)
   )
 })
 

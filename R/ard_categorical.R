@@ -341,12 +341,7 @@ ard_categorical <- function(data,
   df_original_types <-
     lapply(
       c(by, strata, variable),
-      function(x) {
-        switch(useNA,
-          "no" = .unique_and_sorted(data[[x]]),
-          "always" = .unique_and_sorted(data[[x]]) |> c(NA)
-        )
-      }
+      function(x) .unique_and_sorted(data[[x]], useNA = useNA)
     ) |>
     stats::setNames(c(by, strata, variable)) %>%
     {tidyr::expand_grid(!!!.)} |> # styler: off
