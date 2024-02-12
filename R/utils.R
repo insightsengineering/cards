@@ -18,6 +18,7 @@
 #'
 #' cards:::.unique_and_sorted(c(5, 5:1))
 .unique_and_sorted <- function(x, useNA = c("no", "always")) {
+  # styler: off
   useNA <- match.arg(useNA)
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
@@ -37,6 +38,7 @@
   # otherwise, return a simple unique and sort of the vector
   if (useNA == "no") return(unique(x) |> sort())
   else return(unique(x) |> sort() |> c(NA))
+  # styler: on
 }
 
 
