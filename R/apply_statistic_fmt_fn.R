@@ -1,12 +1,12 @@
 #' Apply Formatting Functions
 #'
 #' Apply the formatting functions to each of the raw statistics.
-#' Function aliases are converted to functions using `alias_as_fmt_fn()`.
+#' Function aliases are converted to functions using [alias_as_fmt_fn()].
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
 #'
-#' @return an ARD data frame
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
@@ -52,8 +52,10 @@ apply_statistic_fmt_fn <- function(x) {
 #' spaces that are added to the result.
 #' If the string ends in `"%"`, results are scaled by 100 before rounding.
 #'
-#' @param x a non-negative integer, string alias, or function
-#' @param call call environment for error messaging
+#' @param x (`integer`, `string`, or `function`)\cr
+#'   a non-negative integer, string alias, or function
+#' @param call (`environment`)\cr
+#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a function
 #' @export
@@ -95,11 +97,14 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
 #'
 #' Returns a function with the requested rounding and scaling schema.
 #'
-#' @param digits a non-negative integer specifying the number of decimal places
+#' @param digits (`integer`)\cr
+#'   a non-negative integer specifying the number of decimal places
 #'   round statistics to
-#' @param scale a scalar real number.
-#'   Before rounding, the input will be scaled by this quantity.
-#' @param width a non-negative integer specifying the minimum width of the
+#' @param scale (`numeric`)\cr
+#'   a scalar real number. Before rounding, the input will be scaled by
+#'   this quantity
+#' @param width (`integer`)\cr
+#'   a non-negative integer specifying the minimum width of the
 #'   returned formatted values
 #'
 #' @return a function
@@ -138,11 +143,12 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' If string is consistent, `TRUE` is returned. Otherwise an error.
 #'
+#' @param x (`string`)\cr
+#'   string to check
+#' @param call (`environment`)\cr
+#'   frame for error messaging. Default is [caller_env()].
 #'
-#' @param x string to check
-#' @param call calling environment. Default is `caller_env()`
-#'
-#' @return logical
+#' @return a logical
 #' @keywords internal
 #'
 #' @examples

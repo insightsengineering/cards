@@ -7,22 +7,24 @@
 bind_ard(..., .update = FALSE, .order = FALSE)
 }
 \arguments{
-\item{...}{ARDs to combine. Each argument can either be an ARD,
+\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+ARDs to combine. Each argument can either be an ARD,
 or a list of ARDs. Columns are matched by name, and any missing
-columns will be filled with \code{NA.}}
+columns will be filled with \code{NA}.}
 
-\item{.update}{(\code{logical} scalar)\cr
+\item{.update}{(\code{logical})\cr
 logical indicating whether to update duplicate ARD statistics.
 Default is \code{FALSE}. If a statistic type is repeated and \code{.update=TRUE},
 the more recently added statistics will be retained, and the others omitted.}
 
-\item{.order}{(\code{logical} scalar)\cr logical indicating whether to order the
-rows of the stacked ARDs, allowing statistics that share common group and
-variable values to appear in consecutive rows. Default is \code{FALSE}. Ordering
-will be based on the order of the group/variable values prior to stacking.}
+\item{.order}{(\code{logical})\cr
+logical indicating whether to order the rows of the stacked ARDs, allowing
+statistics that share common group and variable values to appear in
+consecutive rows. Default is \code{FALSE}. Ordering will be based on the order
+of the group/variable values prior to stacking.}
 }
 \value{
-a transformed ARD
+a transformed ARD data frame of class 'card'
 }
 \description{
 Wrapper for \code{dplyr::bind_rows()} with additional checks

@@ -18,10 +18,10 @@ ard_missing(
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries}
+columns to include in summaries. Default is \code{everything()}.}
 
-\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr results are
-tabulated by \strong{all combinations} of the columns specified.}
+\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+results are tabulated by \strong{all combinations} of the columns specified.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -49,10 +49,10 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
 }
 \value{
-a data frame
+an ARD data frame of class 'card'
 }
 \description{
-Compute Analysis Results Data (ARD) for statistics about data missingness.
+Compute Analysis Results Data (ARD) for statistics related to data missingness.
 }
 \examples{
 ard_missing(ADSL, by = "ARM", variables = "AGE")

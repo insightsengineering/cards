@@ -7,13 +7,16 @@
 label_cards(digits = 1, scale = 1, width = NULL)
 }
 \arguments{
-\item{digits}{a non-negative integer specifying the number of decimal places
+\item{digits}{(\code{integer})\cr
+a non-negative integer specifying the number of decimal places
 round statistics to}
 
-\item{scale}{a scalar real number.
-Before rounding, the input will be scaled by this quantity.}
+\item{scale}{(\code{numeric})\cr
+a scalar real number. Before rounding, the input will be scaled by
+this quantity}
 
-\item{width}{a non-negative integer specifying the minimum width of the
+\item{width}{(\code{integer})\cr
+a non-negative integer specifying the minimum width of the
 returned formatted values}
 }
 \value{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ard_categorical.R
 \name{.check_for_missing_combos_in_denom}
 \alias{.check_for_missing_combos_in_denom}
-\title{Check for missing levels in \code{denominator}}
+\title{Check for Missing Levels in \code{denominator}}
 \usage{
 .check_for_missing_combos_in_denom(
   data,
@@ -13,22 +13,30 @@
 )
 }
 \arguments{
-\item{data}{data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{denominator}{denominator data frame}
+\item{denominator}{(\code{data.frame})\cr
+denominator data frame}
 
-\item{by}{character vector of by column names}
+\item{by}{(\code{character})\cr
+character vector of by column names}
 
-\item{strata}{character vector of strata column names}
+\item{strata}{(\code{character})\cr
+character vector of strata column names}
 
-\item{env}{environment for error messaging}
+\item{call}{(\code{environment})\cr
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
-invisible
+returns invisible if check is successful, throws an error message if not.
 }
 \description{
 When a user passes a data frame in the \code{denominator} argument, this function
 checks that the data frame contains all the same levels of the \code{by}
-and \code{strata} variables that appear in the \code{data}
+and \code{strata} variables that appear in \code{data}.
+}
+\examples{
+cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
 }
 \keyword{internal}

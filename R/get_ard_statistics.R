@@ -4,7 +4,8 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
-#' @param ... optional arguments indicating rows to subset of the ARD.
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#'   optional arguments indicating rows to subset of the ARD.
 #'   For example, to return only rows where the column `"AGEGR1"` is `"65-80"`,
 #'   pass `AGEGR1 %in% "65-80"`.
 #' @param .column (`string`)\cr
@@ -27,7 +28,8 @@
 #'   variable_level %in% "65-80",
 #'   .attributes = "stat_label"
 #' )
-get_ard_statistics <- function(x, ...,
+get_ard_statistics <- function(x,
+                               ...,
                                .column = "statistic",
                                .attributes = NULL) {
   # subset the ARD
@@ -49,6 +51,22 @@ get_ard_statistics <- function(x, ...,
     stats::setNames(ard_subset[["stat_name"]])
 }
 
+#' Create List for Attributes
+#'
+#' @param ard_subset (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
+#' @param attributes (`character`)\cr
+#'   a character vector of attribute names
+#' @param i (`integer`)\cr
+#'   a row index number
+#'
+#' @return a named list
+#' @keywords internal
+#'
+#' @examples
+#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#'
+#' cards:::.create_list_for_attributes(ard, c("group1", "group1_level"), 1)
 .create_list_for_attributes <- function(ard_subset, attributes, i) {
   ret <- list()
   for (attr in seq_along(attributes)) {

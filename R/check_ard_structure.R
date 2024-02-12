@@ -3,9 +3,10 @@
 #' Function tests the structure and returns notes when object does not
 #' conform to expected structure.
 #'
-#' @param x an ARD data frame
+#' @param x (`data.frame`)\cr
+#'   an ARD data frame of class 'card'
 #'
-#' @return an ARD data frame
+#' @return an ARD data frame of class 'card' (invisible)
 #' @export
 #'
 #' @examples

@@ -15,7 +15,7 @@ a nested list
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
-Convert ARDs to Nested Lists
+Convert ARDs to nested lists.
 }
 \examples{
 ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>

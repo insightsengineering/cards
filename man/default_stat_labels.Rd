@@ -2,7 +2,7 @@
 % Please edit documentation in R/default_stat_labels.R
 \name{default_stat_labels}
 \alias{default_stat_labels}
-\title{Defaults for statistical arguments}
+\title{Defaults for Statistical Arguments}
 \usage{
 default_stat_labels()
 }
@@ -15,5 +15,4 @@ Returns a named list of statistics labels
 \examples{
 # stat labels
 default_stat_labels()
-
 }

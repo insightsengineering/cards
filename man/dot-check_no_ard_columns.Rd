@@ -11,17 +11,25 @@
 )
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
-\item{call}{frame for error messaging}
+\item{call}{(\code{environment})\cr
+frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 
-\item{exceptions}{character string of column names to exclude from checks}
+\item{exceptions}{(\code{string})\cr
+character string of column names to exclude from checks}
 }
 \value{
-invisible
+returns invisible if check is successful, throws an error message if not.
 }
 \description{
 Checks that column names in a passed data frame are not protected, that is,
-they do not begin with \code{"...ard_"} and end with \code{"..."}
+they do not begin with \code{"...ard_"} and end with \code{"..."}.
+}
+\examples{
+data <- data.frame("ard_x" = 1)
+
+cards:::.check_no_ard_columns(data)
 }
 \keyword{internal}

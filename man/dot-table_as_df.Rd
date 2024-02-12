@@ -13,22 +13,29 @@
 )
 }
 \arguments{
-\item{data}{a data frame}
+\item{data}{(\code{data.frame})\cr
+a data frame}
 
-\item{variable}{a string indicating a column in data}
+\item{variable}{(\code{string})\cr
+a string indicating a column in data}
 
-\item{by}{a character vector indicating columns in data}
+\item{by}{(\code{character})\cr
+a character vector indicating columns in data}
 
-\item{strata}{a character vector indicating columns in data}
+\item{strata}{(\code{character})\cr
+a character vector indicating columns in data}
 }
 \value{
 data frame
 }
 \description{
-Takes the results from \code{table()} and returns them as a data frame.
-After the \code{table()} results are made into a data frame, all the variables
+Takes the results from \code{\link[=table]{table()}} and returns them as a data frame.
+After the \code{\link[=table]{table()}} results are made into a data frame, all the variables
 are made into character columns, and the function also restores the
 column types to their original classes. For \code{strata} columns,
 only observed combinations are returned.
+}
+\examples{
+cards:::.table_as_df(ADSL, variable = "ARM", by = "AGEGR1", strata = NULL)
 }
 \keyword{internal}

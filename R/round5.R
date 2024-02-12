@@ -8,10 +8,12 @@
 #' @details
 #' Function inspired by `janitor::round_half_up()`.
 #'
-#' @param x a numeric vector
-#' @param digits integer indicating the number of decimal places
+#' @param x (`numeric`)\cr
+#'   a numeric vector
+#' @param digits (`integer`)\cr
+#'   integer indicating the number of decimal places
 #'
-#' @return numeric vector
+#' @return a numeric vector
 #' @export
 #'
 #' @examples

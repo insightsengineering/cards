@@ -43,7 +43,11 @@ You can install the development version of cards from
 devtools::install_github("insightsengineering/cards")
 ```
 
-## Extensions <a href="https://insightsengineering.github.io/cardx/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="138" alt="cards website" /></a>
+## Extensions
+
+[<img
+src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png"
+style="float: right" width="120" alt="cardx website" />](https://insightsengineering.github.io/cardx)
 
 The {cards} package exports three types of functions:
 
@@ -54,10 +58,9 @@ The {cards} package exports three types of functions:
 3.  Functions to work with existing ARD objects.
 
 The [{cardx}](https://github.com/insightsengineering/cardx) R package is
-an extension to {cards} that utilizes the utilities from {cards} and
-exports functions for creating additional ARD objects––including
-functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression
-models, and more.
+an extension to {cards} that uses the utilities from {cards} and exports
+functions for creating additional ARD objects––including functions to
+summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.
 
 ## Example
 
