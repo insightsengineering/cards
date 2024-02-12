@@ -137,6 +137,8 @@ ard_continuous <- function(data,
     dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
     tidyr::unnest(cols = "...ard_all_stats...")
 
+  # is this a duplication?
+
   # add default function labels and formatters
   df_results <-
     df_nested |>
