@@ -169,3 +169,12 @@
           getElement(names(sort(table(x), decreasing = TRUE)), 1)
         }, length = function(x) length(x))))
 
+# ard_categorical() and all NA columns
+
+    Code
+      ard_categorical(dplyr::mutate(ADSL, AGEGR1 = NA_character_), variables = AGEGR1)
+    Condition
+      Error in `ard_categorical()`:
+      ! Column "AGEGR1" is all missing and cannot by tabulated.
+      i Only columns of class <logical> and <factor> can be tabulated when all values are missing.
+

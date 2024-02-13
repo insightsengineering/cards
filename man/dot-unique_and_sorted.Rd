@@ -4,7 +4,7 @@
 \alias{.unique_and_sorted}
 \title{ARD-flavor of unique()}
 \usage{
-.unique_and_sorted(x)
+.unique_and_sorted(x, useNA = c("no", "always"))
 }
 \arguments{
 \item{x}{(\code{any})\cr

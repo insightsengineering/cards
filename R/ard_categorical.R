@@ -93,6 +93,7 @@ ard_categorical <- function(data,
     strata = {{ strata }}
   )
   data <- dplyr::ungroup(data)
+  .check_whether_na_counts(data[variables])
 
   process_formula_selectors(
     data = data[variables],
@@ -285,6 +286,22 @@ ard_categorical <- function(data,
     )
 }
 
+.check_whether_na_counts <- function(data, call = parent.frame()) {
+  walk(
+    names(data),
+    function(x) {
+      if (all(is.na(data[[x]])) && !inherits(data[[x]], c("logical", "factor"))) {
+        cli::cli_abort(
+          c("Column {.val {x}} is all missing and cannot by tabulated.",
+            i = "Only columns of class {.cls logical} and {.cls factor} can be tabulated when all values are missing."
+          ),
+          call = call
+        )
+      }
+    }
+  )
+}
+
 #' Results from `table()` as Data Frame
 #'
 #' Takes the results from [table()] and returns them as a data frame.
@@ -301,31 +318,43 @@ ard_categorical <- function(data,
 #'   a character vector indicating columns in data
 #' @param strata (`character`)\cr
 #'   a character vector indicating columns in data
+#' @param useNA (`string`)\cr
+#'   one of `"no"` and `"always"`. Will be passed to `table(useNA)`.
 #'
 #' @keywords internal
 #' @return data frame
 #'
 #' @examples
 #' cards:::.table_as_df(ADSL, variable = "ARM", by = "AGEGR1", strata = NULL)
-.table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL, count_column = "...ard_n...") {
+.table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL,
+                         useNA = c("no", "always"), count_column = "...ard_n...") {
+  useNA <- match.arg(useNA)
   # tabulate results and save in data frame
   ...ard_tab_vars... <- c(by, strata, variable)
   df_table <-
     data[...ard_tab_vars...] |>
     dplyr::mutate(across(where(is.logical), ~ factor(., levels = c("FALSE", "TRUE")))) |>
-    with(inject(table(!!!syms(...ard_tab_vars...)))) |>
+    with(inject(table(!!!syms(...ard_tab_vars...), useNA = !!useNA))) |>
     dplyr::as_tibble(n = count_column)
 
   # construct a matching data frame with the variables in their original type/class
   df_original_types <-
-    lapply(c(by, strata, variable), function(x) .unique_and_sorted(data[[x]])) |>
+    lapply(
+      c(by, strata, variable),
+      function(x) .unique_and_sorted(data[[x]], useNA = useNA)
+    ) |>
     stats::setNames(c(by, strata, variable)) %>%
     {tidyr::expand_grid(!!!.)} |> # styler: off
     dplyr::arrange(!!!syms(rev(...ard_tab_vars...)))
 
   # if all columns match, then replace the coerced character cols with their original type/class
   all_cols_equal <-
-    every(c(by, strata, variable), ~ all(df_table[[.x]] == df_original_types[[.x]]))
+    every(
+      c(by, strata, variable),
+      ~ all(
+        df_table[[.x]] == df_original_types[[.x]] | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
+      )
+    )
   if (isTRUE(all_cols_equal)) {
     df_table <-
       dplyr::bind_cols(df_original_types, df_table[count_column], .name_repair = "minimal")
@@ -380,11 +409,18 @@ ard_categorical <- function(data,
         variables,
         function(variable) {
           .table_as_df(
-            tidyr::drop_na(data, all_of(c(by, strata, variable))),
+            data,
+            variable = variable,
             by = by,
             strata = strata,
-            count_column = "...ard_N..."
-          )
+            count_column = "...ard_N...",
+            useNA = "always"
+          ) |>
+            tidyr::drop_na(all_of(c(by, strata, variable))) |>
+            dplyr::summarise(
+              .by = all_of(c(by, strata)),
+              ...ard_N... = sum(.data$...ard_N...)
+            )
         }
       ) |>
       stats::setNames(variables)
@@ -411,11 +447,13 @@ ard_categorical <- function(data,
         variables,
         list(
           .table_as_df(
-            tidyr::drop_na(denominator, any_of(c(by, strata))),
+            denominator,
             by = intersect(by, names(denominator)),
             strata = intersect(strata, names(denominator)),
-            count_column = "...ard_N..."
-          )
+            count_column = "...ard_N...",
+            useNA = "always"
+          ) |>
+            tidyr::drop_na(any_of(c(by, strata)))
         )
       )
   }
@@ -440,10 +478,18 @@ ard_categorical <- function(data,
         variables,
         function(variable) {
           .table_as_df(
-            tidyr::drop_na(data, all_of(c(by, strata, variable))),
+            data,
             variable = variable,
-            count_column = "...ard_N..."
-          )
+            by = by,
+            strata = strata,
+            count_column = "...ard_N...",
+            useNA = "always"
+          ) |>
+            tidyr::drop_na(all_of(c(by, strata, variable))) |>
+            dplyr::summarise(
+              .by = all_of(variable),
+              ...ard_N... = sum(.data$...ard_N...)
+            )
         }
       ) |>
       stats::setNames(variables)
