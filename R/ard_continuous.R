@@ -128,6 +128,14 @@ ard_continuous <- function(data,
       data = data
     )
 
+  df_var_type <- data |>
+    dplyr::select(variables) %>%
+    purrr::map_df(., class) %>%
+    tidyr::pivot_longer(.,
+                        cols = everything(),
+                        names_to = "variable",
+                        values_to = "var_type")
+
   # unnest results
   df_results <-
     df_nested |>
@@ -138,7 +146,8 @@ ard_continuous <- function(data,
   df_results <-
     df_nested |>
     dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
-    tidyr::unnest(cols = "...ard_all_stats...")
+    tidyr::unnest(cols = "...ard_all_stats...") %>%
+    dplyr::left_join(., df_var_type, by = "variable")
 
   # final processing of fmt_fn -------------------------------------------------
   df_results <-
@@ -147,7 +156,20 @@ ard_continuous <- function(data,
       arg = fmt_fn,
       new_column = "statistic_fmt_fn"
     ) |>
-    .default_fmt_fn()
+    .default_fmt_fn() |>
+    dplyr::mutate(
+      statistic =
+        map2(
+          statistic, var_type,
+          function(x, y) {
+            if(y %in% c("Date", "POSIXct", "POSIXt")) {
+              x <- as.character(as.Date(unlist(x)))
+            }
+            return(x)
+          }
+        )
+      ) |>
+     dplyr::select(-var_type)
 
   # final processing of stat labels --------------------------------------------
   df_results <-
@@ -418,4 +440,3 @@ ard_continuous <- function(data,
         )
     )
 }
-
