@@ -128,14 +128,6 @@ ard_continuous <- function(data,
       data = data
     )
 
-  df_var_type <- data |>
-    dplyr::select(variables) %>%
-    purrr::map_df(., class) %>%
-    tidyr::pivot_longer(.,
-                        cols = everything(),
-                        names_to = "variable",
-                        values_to = "var_type")
-
   # unnest results
   df_results <-
     df_nested |>
