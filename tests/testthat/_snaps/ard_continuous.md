@@ -118,3 +118,16 @@
       1      AGE  conf.low         LB
       2      AGE conf.high         UB
 
+# ard_continuous() with dates works and displays as expected
+
+    Code
+      ard_date
+    Message
+      {cards} data frame: 2 x 8
+    Output
+        variable   context stat_name stat_label  statistic statistic_fmt_fn
+      1 DISONSDT continuo…       min        Min 1998-06-13             <fn>
+      2 DISONSDT continuo…       max        Max 2013-09-16             <fn>
+    Message
+      i 2 more variables: warning, error
+
