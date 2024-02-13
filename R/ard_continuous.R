@@ -142,13 +142,6 @@ ard_continuous <- function(data,
     dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
     tidyr::unnest(cols = "...ard_all_stats...")
 
-  # unnest results
-  df_results <-
-    df_nested |>
-    dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
-    tidyr::unnest(cols = "...ard_all_stats...") %>%
-    dplyr::left_join(., df_var_type, by = "variable")
-
   # final processing of fmt_fn -------------------------------------------------
   df_results <-
     .process_nested_list_as_df(
@@ -156,20 +149,7 @@ ard_continuous <- function(data,
       arg = fmt_fn,
       new_column = "statistic_fmt_fn"
     ) |>
-    .default_fmt_fn() |>
-    dplyr::mutate(
-      statistic =
-        map2(
-          statistic, var_type,
-          function(x, y) {
-            if(y %in% c("Date", "POSIXct", "POSIXt")) {
-              x <- as.character(as.Date(unlist(x)))
-            }
-            return(x)
-          }
-        )
-      ) |>
-     dplyr::select(-var_type)
+    .default_fmt_fn()
 
   # final processing of stat labels --------------------------------------------
   df_results <-
@@ -431,10 +411,6 @@ ard_continuous <- function(data,
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))
             }
-            if (inherits(statistic, c("Date", "POSIXct", "POSIXt"))) {
-              return(as.character)
-            }
-
             return(1L)
           }
         )

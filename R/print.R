@@ -75,6 +75,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     x_print$statistic <- lapply(
       x_print$statistic,
       function(x) {
+        if (inherits(x, c("Date", "POSIXct", "POSIXt"))) {
+          return(format(x))
+        }
         if (isTRUE(is.double(x))) {
           return(round5(x, digits = 3))
         }
