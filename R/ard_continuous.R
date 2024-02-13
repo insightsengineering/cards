@@ -397,13 +397,16 @@ ard_continuous <- function(data,
             if (!is_empty(statistic_fmt_fn)) {
               return(statistic_fmt_fn)
             }
-            if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) {
-              return(0L)
-            }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))
             }
-            return(1L)
+            if (is.integer(statistic)) {
+              return(0L)
+            }
+            if (is.numeric(statistic)) {
+              return(1L)
+            }
+            return(as.character)
           }
         )
     )
