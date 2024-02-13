@@ -17,17 +17,28 @@
 #' cards:::.unique_and_sorted(c(FALSE, TRUE, TRUE, FALSE))
 #'
 #' cards:::.unique_and_sorted(c(5, 5:1))
-.unique_and_sorted <- function(x) {
+.unique_and_sorted <- function(x, useNA = c("no", "always")) {
+  # styler: off
+  useNA <- match.arg(useNA)
   # if a factor return a factor that includes the same levels (including unobserved levels)
   if (inherits(x, "factor")) {
-    return(factor(levels(x), levels = levels(x)))
+    return(
+      factor(
+        if (useNA == "no") levels(x)
+        else c(levels(x), NA_character_),
+        levels = levels(x)
+      )
+    )
   }
   if (inherits(x, "logical")) {
-    return(c(TRUE, FALSE))
+    if (useNA == "no") return(c(TRUE, FALSE))
+    else return(c(TRUE, FALSE, NA))
   }
 
   # otherwise, return a simple unique and sort of the vector
-  unique(x) |> sort()
+  if (useNA == "no") return(unique(x) |> sort())
+  else return(unique(x) |> sort() |> c(NA))
+  # styler: on
 }
 
 

@@ -28,7 +28,7 @@
     Condition
       Error in `ard_dichotomous()`:
       ! Error in argument `values` for variable "cyl".
-      i The length of the value must be one and not one of NA, NaN, and Inf.
+      i The value must be one of 4, 6, and 8.
 
 ---
 
@@ -37,7 +37,7 @@
     Condition
       Error in `ard_dichotomous()`:
       ! Error in argument `values` for variable "Species".
-      i A value of "not_a_species" was passed, but must be one of "setosa", "versicolor", and "virginica".
+      i A value of "not_a_species" was passed, but must be one of setosa, versicolor, and virginica.
 
 ---
 
