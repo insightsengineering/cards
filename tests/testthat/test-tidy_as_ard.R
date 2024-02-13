@@ -57,7 +57,8 @@ test_that("tidy_as_ard() works", {
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     ) |>
-      as.data.frame()
+      as.data.frame() |>
+      dplyr::select(c(group1, variable, statistic))
   )
 
   # function works when `formals` argument is not passed.
@@ -73,6 +74,7 @@ test_that("tidy_as_ard() works", {
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     ) |>
-      as.data.frame()
+      as.data.frame() |>
+      dplyr::select(c(group1, variable, statistic))
   )
 })
