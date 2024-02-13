@@ -123,11 +123,12 @@
     Code
       ard_date
     Message
-      {cards} data frame: 2 x 8
+      {cards} data frame: 3 x 8
     Output
         variable   context stat_name stat_label  statistic statistic_fmt_fn
       1 DISONSDT continuo…       min        Min 1998-06-13             <fn>
       2 DISONSDT continuo…       max        Max 2013-09-16             <fn>
+      3 DISONSDT continuo…        sd         SD    878.558                1
     Message
       i 2 more variables: warning, error
 
