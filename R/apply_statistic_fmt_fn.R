@@ -117,13 +117,19 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
 label_cards <- function(digits = 1, scale = 1, width = NULL) {
   function(x) {
     # round and scale vector
-    res <- format(round5(x * scale, digits = digits), nsmall = digits)
+    res <-
+      ifelse(
+        is.na(x),
+        NA_character_,
+        format(round5(x * scale, digits = digits), nsmall = digits) |> str_trim()
+      )
+
 
     # if width provided, pad formatted result
     if (!is.null(width)) {
       res <-
         ifelse(
-          nchar(res) >= width,
+          nchar(res) >= width | is.na(res),
           res,
           paste0(strrep(" ", width - nchar(res)), res)
         )
