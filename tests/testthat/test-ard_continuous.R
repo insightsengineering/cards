@@ -236,7 +236,7 @@ test_that("ard_continuous() with dates works and displays as expected", {
   expect_equal(ard_date$statistic[[1]], as.Date("1998-06-13"))
 })
 
-test_that("ard_continuous() with empty/missing dates works", {
+test_that("ard_continuous() with empty/missing dates works, and preserves Date class", {
   empty_date <- data.frame(dt = as.Date(NA)) |>
     ard_continuous(
       variables = dt,

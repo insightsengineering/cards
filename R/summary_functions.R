@@ -79,11 +79,15 @@ continuous_variable_summary_fns <- function(summaries = c(
       p25 = function(x) stats::quantile(x, probs = 0.25, na.rm = TRUE, type = 2) |> unname(),
       p75 = function(x) stats::quantile(x, probs = 0.75, na.rm = TRUE, type = 2) |> unname(),
       min = function(x) {
-        if (length(x) == 0L) return(structure(NA, class = class(x)))
+        if (length(x) == 0L) {
+          return(structure(NA, class = class(x)))
+        }
         min(x, na.rm = TRUE)
       },
       max = function(x) {
-        if (length(x) == 0L) return(structure(NA, class = class(x)))
+        if (length(x) == 0L) {
+          return(structure(NA, class = class(x)))
+        }
         max(x, na.rm = TRUE)
       }
     )
