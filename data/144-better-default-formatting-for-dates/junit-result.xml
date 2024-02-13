@@ -1,356 +1,356 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="ard_attributes" timestamp="2024-02-13T17:56:17Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.689">
-    <testcase time="0.689" classname="character(0)" name="ard_attributes_works">
+  <testsuite name="ard_attributes" timestamp="2024-02-13T19:15:52Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.64">
+    <testcase time="0.64" classname="character(0)" name="ard_attributes_works">
       <skipped message="Reason: On CRAN ('test-ard_attributes.R:2:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.254">
-    <testcase time="0.253" classname="character(0)" name="apply_statistic_fmt_fn_works"/>
+  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.225">
+    <testcase time="0.224" classname="character(0)" name="apply_statistic_fmt_fn_works"/>
     <testcase time="0.00100000000000011" classname="character(0)" name="apply_statistic_fmt_fn_works"/>
   </testsuite>
-  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.018">
-    <testcase time="0.018" classname="character(0)" name="apply_statistic_fmt_fn_works_with_integer_specification"/>
+  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.014">
+    <testcase time="0.014" classname="character(0)" name="apply_statistic_fmt_fn_works_with_integer_specification"/>
   </testsuite>
-  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.002">
+  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.002">
     <testcase time="0.002" classname="character(0)" name="apply_statistic_fmt_fn_works_with_xx_specification"/>
     <testcase time="0" classname="character(0)" name="apply_statistic_fmt_fn_works_with_xx_specification"/>
   </testsuite>
-  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.002">
-    <testcase time="0.002" classname="character(0)" name="apply_statistic_fmt_fn_error_messaging">
+  <testsuite name="apply_statistic_fmt_fn" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.001">
+    <testcase time="0.00099999999999989" classname="character(0)" name="apply_statistic_fmt_fn_error_messaging">
       <skipped message="Reason: On CRAN ('test-apply_statistic_fmt_fn.R:76:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_complex" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="5" skipped="0" failures="0" errors="0" time="0.694">
-    <testcase time="0.692" classname="character(0)" name="ard_complex_works"/>
+  <testsuite name="ard_complex" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="5" skipped="0" failures="0" errors="0" time="0.678">
+    <testcase time="0.676" classname="character(0)" name="ard_complex_works"/>
+    <testcase time="0.00099999999999989" classname="character(0)" name="ard_complex_works"/>
     <testcase time="0" classname="character(0)" name="ard_complex_works"/>
     <testcase time="0.00099999999999989" classname="character(0)" name="ard_complex_works"/>
     <testcase time="0" classname="character(0)" name="ard_complex_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_complex_works"/>
   </testsuite>
-  <testsuite name="ard_complex" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.00099999999999989" classname="character(0)" name="ard_complex_messaging">
+  <testsuite name="ard_complex" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+    <testcase time="0.00200000000000022" classname="character(0)" name="ard_complex_messaging">
       <skipped message="Reason: On CRAN ('test-ard_complex.R:87:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_complex" timestamp="2024-02-13T17:56:18Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.011">
-    <testcase time="0.0110000000000001" classname="character(0)" name="ard_complex_with_grouped_data_works"/>
+  <testsuite name="ard_complex" timestamp="2024-02-13T19:15:53Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_complex_with_grouped_data_works"/>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="2.399">
-    <testcase time="2.399" classname="character(0)" name="ard_continuous_works"/>
-    <testcase time="0" classname="character(0)" name="ard_continuous_works">
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="2.377">
+    <testcase time="2.376" classname="character(0)" name="ard_continuous_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_continuous_works">
       <skipped message="Reason: On CRAN ('test-ard_continuous.R:7:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.01">
-    <testcase time="0.0100000000000007" classname="character(0)" name="ard_continuous_fmt_fn_argument_works">
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_continuous_fmt_fn_argument_works">
       <skipped message="Reason: On CRAN ('test-ard_continuous.R:35:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.017">
-    <testcase time="0.0169999999999995" classname="character(0)" name="ard_continuous_messaging">
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.017">
+    <testcase time="0.0170000000000003" classname="character(0)" name="ard_continuous_messaging">
       <skipped message="Reason: On CRAN ('test-ard_continuous.R:86:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.013">
-    <testcase time="0.0129999999999999" classname="character(0)" name="ard_continuous_stat_labels_argument_works">
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.012">
+    <testcase time="0.0119999999999996" classname="character(0)" name="ard_continuous_stat_labels_argument_works">
       <skipped message="Reason: On CRAN ('test-ard_continuous.R:106:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.01">
-    <testcase time="0.0100000000000007" classname="character(0)" name="ard_continuous_and_ARD_column_names"/>
-    <testcase time="0" classname="character(0)" name="ard_continuous_and_ARD_column_names"/>
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.00900000000000034" classname="character(0)" name="ard_continuous_and_ARD_column_names"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_continuous_and_ARD_column_names"/>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.002">
-    <testcase time="0.00199999999999978" classname="character(0)" name="ard_continuous_with_grouped_data_works"/>
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.001">
+    <testcase time="0.000999999999999446" classname="character(0)" name="ard_continuous_with_grouped_data_works"/>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_continuous_with_dates_works_and_displays_as_expected">
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+    <testcase time="0.00199999999999978" classname="character(0)" name="ard_continuous_with_dates_works_and_displays_as_expected">
       <skipped message="Reason: On CRAN ('test-ard_continuous.R:234:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_continuous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.01">
-    <testcase time="0.00999999999999979" classname="character(0)" name="ard_continuous_with_empty_missing_dates_works_and_preserves_Date_class"/>
+  <testsuite name="ard_continuous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.009">
+    <testcase time="0.00900000000000034" classname="character(0)" name="ard_continuous_with_empty_missing_dates_works_and_preserves_Date_class"/>
   </testsuite>
-  <testsuite name="ard_dichotomous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="0.497">
-    <testcase time="0.496" classname="character(0)" name="ard_dichotomous_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_dichotomous_works">
+  <testsuite name="ard_dichotomous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="0.489">
+    <testcase time="0.488" classname="character(0)" name="ard_dichotomous_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="ard_dichotomous_works">
       <skipped message="Reason: On CRAN ('test-ard_dichotomous.R:11:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_dichotomous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.012">
-    <testcase time="0.0119999999999996" classname="character(0)" name="ard_dichotomous_works">
+  <testsuite name="ard_dichotomous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.013">
+    <testcase time="0.0129999999999999" classname="character(0)" name="ard_dichotomous_works">
       <skipped message="Reason: On CRAN ('test-ard_dichotomous.R:46:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_dichotomous" timestamp="2024-02-13T17:56:21Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.01">
-    <testcase time="0.0100000000000007" classname="character(0)" name="ard_dichotomous_with_grouped_data_works"/>
+  <testsuite name="ard_dichotomous" timestamp="2024-02-13T19:15:56Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.009">
+    <testcase time="0.00900000000000034" classname="character(0)" name="ard_dichotomous_with_grouped_data_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="0.264">
-    <testcase time="0.263" classname="character(0)" name="ard_categorical_univariate"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="0.201">
+    <testcase time="0.2" classname="character(0)" name="ard_categorical_univariate"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_univariate">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:6:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="0.011">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="0.01">
     <testcase time="0.0100000000000007" classname="character(0)" name="ard_categorical_univariate_specified_denomiator"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_univariate_specified_denomiator">
+    <testcase time="0" classname="character(0)" name="ard_categorical_univariate_specified_denomiator">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:77:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.012">
-    <testcase time="0.0120000000000005" classname="character(0)" name="ard_continuous_fmt_fn_argument_works">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.012">
+    <testcase time="0.0119999999999996" classname="character(0)" name="ard_continuous_fmt_fn_argument_works">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:103:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="6" skipped="1" failures="0" errors="0" time="0.012">
-    <testcase time="0.00899999999999945" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="6" skipped="1" failures="0" errors="0" time="0.012">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments">
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments"/>
+    <testcase time="0" classname="character(0)" name="ard_categorical_with_strata_and_by_arguments">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:221:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.01">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.01">
     <testcase time="0.00999999999999979" classname="character(0)" name="ard_categorical_stat_labels_argument_works">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:234:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="5" skipped="0" failures="0" errors="0" time="0.011">
-    <testcase time="0.00900000000000034" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="5" skipped="0" failures="0" errors="0" time="0.011">
+    <testcase time="0.00899999999999945" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_cell_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="7" skipped="1" failures="0" errors="0" time="0.004">
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_row_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_row_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="7" skipped="1" failures="0" errors="0" time="0.005">
+    <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_denominator_row_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_row_works"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_denominator_row_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_row_works"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_row_works"/>
-    <testcase time="0" classname="character(0)" name="ard_categorical_denominator_row_works">
+    <testcase time="0" classname="character(0)" name="ard_categorical_denominator_row_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_row_works">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:391:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="5" skipped="0" failures="0" errors="0" time="0.014">
-    <testcase time="0.0119999999999996" classname="character(0)" name="ard_categorical_denominator_column_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_column_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="5" skipped="0" failures="0" errors="0" time="0.013">
+    <testcase time="0.0110000000000001" classname="character(0)" name="ard_categorical_denominator_column_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_denominator_column_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_column_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_column_works"/>
     <testcase time="0" classname="character(0)" name="ard_categorical_denominator_column_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_denominator_column_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.002">
-    <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_denominator_integer_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.001">
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_integer_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.002">
-    <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_denominator_data_frame_with_counts_works">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.001">
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_data_frame_with_counts_works">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:498:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.013">
-    <testcase time="0.0129999999999999" classname="character(0)" name="ard_categorical_denominator_data_frame_without_counts_works"/>
-    <testcase time="0" classname="character(0)" name="ard_categorical_denominator_data_frame_without_counts_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.011">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_categorical_denominator_data_frame_without_counts_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_denominator_data_frame_without_counts_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
     <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_statistics_works_with_custom_fns">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:576:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.016">
-    <testcase time="0.0150000000000006" classname="character(0)" name="ard_categorical_and_ARD_column_names"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_categorical_and_ARD_column_names"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.011">
+    <testcase time="0.0110000000000001" classname="character(0)" name="ard_categorical_and_ARD_column_names"/>
+    <testcase time="0" classname="character(0)" name="ard_categorical_and_ARD_column_names"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.002">
-    <testcase time="0.00200000000000067" classname="character(0)" name="ard_categorical_with_grouped_data_works"/>
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.002">
+    <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_with_grouped_data_works"/>
   </testsuite>
-  <testsuite name="ard_categorical" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.002">
-    <testcase time="0.00199999999999978" classname="character(0)" name="ard_categorical_and_all_NA_columns">
+  <testsuite name="ard_categorical" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.001">
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_categorical_and_all_NA_columns">
       <skipped message="Reason: On CRAN ('test-ard_categorical.R:677:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_missing" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="0.378">
-    <testcase time="0.378" classname="character(0)" name="ard_missing_works"/>
-    <testcase time="0" classname="character(0)" name="ard_missing_works">
+  <testsuite name="ard_missing" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="0.334">
+    <testcase time="0.332999999999999" classname="character(0)" name="ard_missing_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="ard_missing_works">
       <skipped message="Reason: On CRAN ('test-ard_missing.R:7:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_missing" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.018">
+  <testsuite name="ard_missing" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.018">
     <testcase time="0.0179999999999998" classname="character(0)" name="ard_missing_stat_labels_argument_works">
       <skipped message="Reason: On CRAN ('test-ard_missing.R:31:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_missing" timestamp="2024-02-13T17:56:22Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.017">
+  <testsuite name="ard_missing" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.017">
     <testcase time="0.0170000000000003" classname="character(0)" name="ard_missing_with_grouped_data_works"/>
   </testsuite>
-  <testsuite name="as_nested_list" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.451">
-    <testcase time="0.451" classname="character(0)" name="as_nested_list_works">
+  <testsuite name="as_nested_list" timestamp="2024-02-13T19:15:57Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.436">
+    <testcase time="0.436" classname="character(0)" name="as_nested_list_works">
       <skipped message="Reason: On CRAN ('test-as_nested_list.R:2:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="bind_ard" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.365">
-    <testcase time="0.365" classname="character(0)" name="bind_ard_works"/>
+  <testsuite name="bind_ard" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.366">
+    <testcase time="0.366" classname="character(0)" name="bind_ard_works"/>
   </testsuite>
-  <testsuite name="bind_ard" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.002">
-    <testcase time="0.00199999999999978" classname="character(0)" name="ARD_helpers_messaging">
+  <testsuite name="bind_ard" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.003">
+    <testcase time="0.00300000000000011" classname="character(0)" name="ARD_helpers_messaging">
       <skipped message="Reason: On CRAN ('test-bind_ard.R:14:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="bind_ard" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.019">
-    <testcase time="0.0190000000000001" classname="character(0)" name="bind_ard_.order_argument_works">
+  <testsuite name="bind_ard" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.018">
+    <testcase time="0.0179999999999998" classname="character(0)" name="bind_ard_.order_argument_works">
       <skipped message="Reason: On CRAN ('test-bind_ard.R:27:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="check_ard_structure" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.148">
-    <testcase time="0.148" classname="character(0)" name="check_ard_structure_works">
+  <testsuite name="check_ard_structure" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.147">
+    <testcase time="0.147" classname="character(0)" name="check_ard_structure_works">
       <skipped message="Reason: On CRAN ('test-check_ard_structure.R:2:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="check_pkg_installed" timestamp="2024-02-13T17:56:23Z" hostname="2cf9f02b4227" tests="15" skipped="0" failures="0" errors="0" time="0.34">
-    <testcase time="0.333" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
+  <testsuite name="check_pkg_installed" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="15" skipped="0" failures="0" errors="0" time="0.325">
+    <testcase time="0.313" classname="character(0)" name="check_pkg_installed_works"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
+    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
     <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
     <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0.00100000000000033" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0" classname="character(0)" name="check_pkg_installed_works"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="check_pkg_installed_works"/>
   </testsuite>
-  <testsuite name="eval_capture_conditions" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.043">
-    <testcase time="0.0430000000000001" classname="character(0)" name="eval_capture_conditions_works">
+  <testsuite name="eval_capture_conditions" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.043">
+    <testcase time="0.0429999999999993" classname="character(0)" name="eval_capture_conditions_works">
       <skipped message="Reason: On CRAN ('test-eval_capture_conditions.R:3:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="get_ard_statistics" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.117">
-    <testcase time="0.117" classname="character(0)" name="get_ard_statistics_works">
+  <testsuite name="get_ard_statistics" timestamp="2024-02-13T19:15:58Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.123">
+    <testcase time="0.123" classname="character(0)" name="get_ard_statistics_works">
       <skipped message="Reason: On CRAN ('test-get_ard_statistics.R:4:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="nest_for_ard" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="3" skipped="0" failures="0" errors="0" time="0.159">
-    <testcase time="0.158" classname="character(0)" name="nest_for_ard_works"/>
+  <testsuite name="nest_for_ard" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="3" skipped="0" failures="0" errors="0" time="0.176">
+    <testcase time="0.174" classname="character(0)" name="nest_for_ard_works"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="nest_for_ard_works"/>
-    <testcase time="0" classname="character(0)" name="nest_for_ard_works"/>
+    <testcase time="0.00100000000000033" classname="character(0)" name="nest_for_ard_works"/>
   </testsuite>
-  <testsuite name="print" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.176">
-    <testcase time="0.176" classname="character(0)" name="print.card_works">
+  <testsuite name="print" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.168">
+    <testcase time="0.168" classname="character(0)" name="print.card_works">
       <skipped message="Reason: On CRAN ('test-print.R:2:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="print_ard_conditions" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.098">
-    <testcase time="0.0980000000000008" classname="character(0)" name="print_ard_conditions_works">
+  <testsuite name="print_ard_conditions" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.107">
+    <testcase time="0.107" classname="character(0)" name="print_ard_conditions_works">
       <skipped message="Reason: On CRAN ('test-print_ard_conditions.R:3:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="process_selectors" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="3" skipped="1" failures="0" errors="0" time="0.229">
-    <testcase time="0.228" classname="character(0)" name="process_selectors_works"/>
-    <testcase time="0" classname="character(0)" name="process_selectors_works"/>
+  <testsuite name="process_selectors" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="3" skipped="1" failures="0" errors="0" time="0.23">
+    <testcase time="0.227999999999999" classname="character(0)" name="process_selectors_works"/>
+    <testcase time="0.00100000000000122" classname="character(0)" name="process_selectors_works"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="process_selectors_works">
       <skipped message="Reason: On CRAN ('test-process_selectors.R:21:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="process_selectors" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.01">
-    <testcase time="0.0100000000000016" classname="character(0)" name="process_formula_selectors_works"/>
-    <testcase time="0" classname="character(0)" name="process_formula_selectors_works"/>
+  <testsuite name="process_selectors" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.019">
+    <testcase time="0.0180000000000007" classname="character(0)" name="process_formula_selectors_works"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="process_formula_selectors_works"/>
   </testsuite>
-  <testsuite name="process_selectors" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.000999999999999446" classname="character(0)" name="process_formula_selectors_error_messaging">
+  <testsuite name="process_selectors" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+    <testcase time="0.00200000000000067" classname="character(0)" name="process_formula_selectors_error_messaging">
       <skipped message="Reason: On CRAN ('test-process_selectors.R:52:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="process_selectors" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="3" skipped="1" failures="0" errors="0" time="0.01">
+  <testsuite name="process_selectors" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="3" skipped="1" failures="0" errors="0" time="0.011">
     <testcase time="0.00999999999999979" classname="character(0)" name="compute_formula_selector_selects_the_last_assignment_when_multiple_appear"/>
     <testcase time="0" classname="character(0)" name="compute_formula_selector_selects_the_last_assignment_when_multiple_appear"/>
-    <testcase time="0" classname="character(0)" name="compute_formula_selector_selects_the_last_assignment_when_multiple_appear">
+    <testcase time="0.000999999999999446" classname="character(0)" name="compute_formula_selector_selects_the_last_assignment_when_multiple_appear">
       <skipped message="Reason: On CRAN ('test-process_selectors.R:80:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="round5" timestamp="2024-02-13T17:56:24Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.074">
-    <testcase time="0.0739999999999998" classname="character(0)" name="round5_works">
+  <testsuite name="round5" timestamp="2024-02-13T19:15:59Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.107">
+    <testcase time="0.107000000000001" classname="character(0)" name="round5_works">
       <skipped message="Reason: On CRAN ('test-round5.R:2:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="selectors" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="7" skipped="0" failures="0" errors="0" time="1.253">
-    <testcase time="1.25" classname="character(0)" name="selectors_work"/>
+  <testsuite name="selectors" timestamp="2024-02-13T19:16:00Z" hostname="03cc75473d52" tests="7" skipped="0" failures="0" errors="0" time="1.227">
+    <testcase time="1.221" classname="character(0)" name="selectors_work"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="selectors_work"/>
-    <testcase time="0" classname="character(0)" name="selectors_work"/>
     <testcase time="0.000999999999999446" classname="character(0)" name="selectors_work"/>
-    <testcase time="0" classname="character(0)" name="selectors_work"/>
     <testcase time="0.00100000000000122" classname="character(0)" name="selectors_work"/>
-    <testcase time="0" classname="character(0)" name="selectors_work"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="selectors_work"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="selectors_work"/>
+    <testcase time="0.00100000000000122" classname="character(0)" name="selectors_work"/>
   </testsuite>
-  <testsuite name="shuffle_ard" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.578">
-    <testcase time="0.577999999999999" classname="character(0)" name="shuffle_trim_works">
+  <testsuite name="shuffle_ard" timestamp="2024-02-13T19:16:01Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.545">
+    <testcase time="0.545" classname="character(0)" name="shuffle_trim_works">
       <skipped message="Reason: On CRAN ('test-shuffle_ard.R:9:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="shuffle_ard" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="1" skipped="0" failures="0" errors="0" time="0.01">
+  <testsuite name="shuffle_ard" timestamp="2024-02-13T19:16:01Z" hostname="03cc75473d52" tests="1" skipped="0" failures="0" errors="0" time="0.01">
     <testcase time="0.00999999999999979" classname="character(0)" name="shuffle_ard_handles_protected_names"/>
   </testsuite>
-  <testsuite name="shuffle_ard" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.000999999999999446" classname="character(0)" name="shuffle_ard_notifies_user_about_warnings_errors_before_dropping">
+  <testsuite name="shuffle_ard" timestamp="2024-02-13T19:16:01Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.004">
+    <testcase time="0.00399999999999956" classname="character(0)" name="shuffle_ard_notifies_user_about_warnings_errors_before_dropping">
       <skipped message="Reason: On CRAN ('test-shuffle_ard.R:68:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="shuffle_ard" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.014">
-    <testcase time="0.0140000000000011" classname="character(0)" name="shuffle_ard_fills_missing_group_levels_if_the_group_is_meaningful">
+  <testsuite name="shuffle_ard" timestamp="2024-02-13T19:16:01Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999979" classname="character(0)" name="shuffle_ard_fills_missing_group_levels_if_the_group_is_meaningful">
       <skipped message="Reason: On CRAN ('test-shuffle_ard.R:79:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="tidy_as_ard" timestamp="2024-02-13T17:56:26Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.109">
-    <testcase time="0.109" classname="character(0)" name="tidy_as_ard_works">
+  <testsuite name="tidy_as_ard" timestamp="2024-02-13T19:16:01Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.107">
+    <testcase time="0.107000000000001" classname="character(0)" name="tidy_as_ard_works">
       <skipped message="Reason: On CRAN ('test-tidy_as_ard.R:3:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="1.295">
-    <testcase time="1.295" classname="character(0)" name="ard_hierarchical_works_without_by_variables"/>
-    <testcase time="0" classname="character(0)" name="ard_hierarchical_works_without_by_variables">
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="1.508">
+    <testcase time="1.507" classname="character(0)" name="ard_hierarchical_works_without_by_variables"/>
+    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_works_without_by_variables">
       <skipped message="Reason: On CRAN ('test-ard_hierarchical.R:12:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.014">
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.013">
     <testcase time="0.0129999999999999" classname="character(0)" name="ard_hierarchical_works_with_by_variable"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_works_with_by_variable"/>
+    <testcase time="0" classname="character(0)" name="ard_hierarchical_works_with_by_variable"/>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.002">
-    <testcase time="0.00100000000000122" classname="character(0)" name="ard_hierarchical_works_with_by_variable_not_present_in_denominator_"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_works_with_by_variable_not_present_in_denominator_"/>
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.002">
+    <testcase time="0.00200000000000067" classname="character(0)" name="ard_hierarchical_works_with_by_variable_not_present_in_denominator_"/>
+    <testcase time="0" classname="character(0)" name="ard_hierarchical_works_with_by_variable_not_present_in_denominator_"/>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_works_without_any_variables">
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+    <testcase time="0.00199999999999889" classname="character(0)" name="ard_hierarchical_works_without_any_variables">
       <skipped message="Reason: On CRAN ('test-ard_hierarchical.R:97:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="1" failures="0" errors="0" time="0.011">
-    <testcase time="0.011000000000001" classname="character(0)" name="ard_hierarchical_count_works_without_by_variables"/>
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="1" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_hierarchical_count_works_without_by_variables"/>
     <testcase time="0" classname="character(0)" name="ard_hierarchical_count_works_without_by_variables">
       <skipped message="Reason: On CRAN ('test-ard_hierarchical.R:118:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.011">
-    <testcase time="0.00999999999999979" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable"/>
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable"/>
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.0100000000000016" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable"/>
+    <testcase time="0" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable"/>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.002">
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable_not_present_in_denominator_"/>
-    <testcase time="0.00100000000000122" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable_not_present_in_denominator_"/>
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.002">
+    <testcase time="0.00199999999999889" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable_not_present_in_denominator_"/>
+    <testcase time="0" classname="character(0)" name="ard_hierarchical_count_works_with_by_variable_not_present_in_denominator_"/>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="1" skipped="1" failures="0" errors="0" time="0.001">
-    <testcase time="0.000999999999999446" classname="character(0)" name="ard_hierarchical_count_works_without_any_variables">
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="1" skipped="1" failures="0" errors="0" time="0.002">
+    <testcase time="0.00200000000000067" classname="character(0)" name="ard_hierarchical_count_works_without_any_variables">
       <skipped message="Reason: On CRAN ('test-ard_hierarchical.R:208:3')"/>
     </testcase>
   </testsuite>
-  <testsuite name="ard_hierarchical" timestamp="2024-02-13T17:56:28Z" hostname="2cf9f02b4227" tests="2" skipped="0" failures="0" errors="0" time="0.011">
-    <testcase time="0.0109999999999992" classname="character(0)" name="ard_hierarchical_and_ard_hierarchical_count_with_grouped_data_works"/>
+  <testsuite name="ard_hierarchical" timestamp="2024-02-13T19:16:03Z" hostname="03cc75473d52" tests="2" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.00999999999999979" classname="character(0)" name="ard_hierarchical_and_ard_hierarchical_count_with_grouped_data_works"/>
     <testcase time="0" classname="character(0)" name="ard_hierarchical_and_ard_hierarchical_count_with_grouped_data_works"/>
   </testsuite>
 </testsuites>
