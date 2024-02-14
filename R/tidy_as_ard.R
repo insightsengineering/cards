@@ -56,7 +56,7 @@
 #' my_ard_fishertest(mtcars, by = "am", variable = "vs")
 tidy_as_ard <- function(lst_tidy,
                         tidy_result_names,
-                        fun_args_to_record,
+                        fun_args_to_record = character(0L),
                         formals = list(),
                         passed_args = list(),
                         lst_ard_columns) {
