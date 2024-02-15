@@ -12,7 +12,7 @@
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
 #' @param .compute_by_ns (`logical`)\cr
-#'   logical indicating whether to compute big Ns for the `by` variable
+#'   logical indicating whether to compute big N's for the `by` variable
 #'   Default is `TRUE`.
 #' @param .compute_missing (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_missing()` for all

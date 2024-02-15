@@ -26,7 +26,7 @@ columns to tabulate by in the series of ARD function calls}
 Series of ARD function calls to be run and stacked}
 
 \item{.compute_by_ns}{(\code{logical})\cr
-logical indicating whether to compute big Ns for the \code{by} variable
+logical indicating whether to compute big N's for the \code{by} variable
 Default is \code{TRUE}.}
 
 \item{.compute_missing}{(\code{logical})\cr
