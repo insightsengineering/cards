@@ -21,6 +21,7 @@ reference:
       - ard_dichotomous
       - ard_missing
       - ard_complex
+      - ard_stack
 
   - subtitle: "Misc."
   -  contents:
