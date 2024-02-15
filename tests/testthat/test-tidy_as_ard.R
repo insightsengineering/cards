@@ -22,7 +22,7 @@ test_that("tidy_as_ard() works", {
       as.data.frame()
   )
 
-  # function works when proimary stats function errors
+  # function works when primary stats function errors
   expect_snapshot(
     tidy_as_ard(
       lst_tidy =
@@ -41,5 +41,40 @@ test_that("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     ) |>
       as.data.frame()
+  )
+
+  # function works when `fun_args_to_record` argument is not passed.
+  expect_snapshot(
+    tidy_as_ard(
+      lst_tidy =
+        eval_capture_conditions(
+          stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")] |>
+            dplyr::as_tibble()
+        ),
+      tidy_result_names =
+        c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+      formals = formals(stats::fisher.test),
+      passed_args = list(),
+      lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
+    ) |>
+      as.data.frame() |>
+      dplyr::select(c(group1, variable, statistic))
+  )
+
+  # function works when `formals` argument is not passed.
+  expect_snapshot(
+    tidy_as_ard(
+      lst_tidy =
+        eval_capture_conditions(
+          stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")] |>
+            dplyr::as_tibble()
+        ),
+      tidy_result_names =
+        c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
+      passed_args = list(),
+      lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
+    ) |>
+      as.data.frame() |>
+      dplyr::select(c(group1, variable, statistic))
   )
 })
