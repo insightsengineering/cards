@@ -81,8 +81,8 @@ ard_categorical <- function(data,
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(x = data)
-  check_class(x = stat_labels, class = c("list", "formula"), allow_null = TRUE)
+  check_data_frame(x = data)
+  check_class(x = stat_labels, cls = c("list", "formula"), allow_empty = TRUE)
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------

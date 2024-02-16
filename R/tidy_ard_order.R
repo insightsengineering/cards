@@ -50,7 +50,7 @@ tidy_ard_column_order <- function(x) {
 #' @rdname tidy_ard_order
 #' @export
 tidy_ard_row_order <- function(x) {
-  check_class(x, class = "card")
+  check_class(x, cls = "card")
 
   # get columns that dictate ordering
   cols <- x |>

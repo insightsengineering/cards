@@ -4,7 +4,7 @@
       bind_ard(ard, ard, .update = letters)
     Condition
       Error in `bind_ard()`:
-      ! The `.update` argument must be class <logical>.
+      ! The `.update` argument must be class <logical>, not a character vector.
 
 ---
 

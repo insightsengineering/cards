@@ -21,7 +21,7 @@
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
-  check_class(x = x, class = "card")
+  check_class(x = x, cls = "card")
 
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
@@ -105,7 +105,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' ard |> cards:::.trim_ard()
 .trim_ard <- function(x) {
-  check_class_data_frame(x)
+  check_data_frame(x)
 
   # flatten ard table for easier viewing ---------------------------------------
   x |>

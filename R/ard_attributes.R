@@ -27,7 +27,7 @@ ard_attributes <- function(data, variables = everything(), label = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(x = data)
+  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   data <- dplyr::ungroup(data)
