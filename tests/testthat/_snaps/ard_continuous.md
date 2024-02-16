@@ -61,7 +61,7 @@
       ard_continuous(letters, variables = "mpg")
     Condition
       Error in `ard_continuous()`:
-      ! The `data` argument must be class <data.frame>.
+      ! The `data` argument must be class <data.frame>, not a character vector.
 
 ---
 
