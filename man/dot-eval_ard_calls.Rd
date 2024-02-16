@@ -23,7 +23,7 @@ list of ARD data frames of class 'card'
 Evaluate the \verb{ard_*()} function calls
 }
 \examples{
-.eval_ard_calls(
+cards:::.eval_ard_calls(
   data = ADSL,
   by = "ARM",
   ard_categorical(variables = "AGEGR1"),

@@ -136,7 +136,7 @@ ard_stack <- function(data,
 #' @keywords internal
 #'
 #' @examples
-#' .eval_ard_calls(
+#' cards:::.eval_ard_calls(
 #'   data = ADSL,
 #'   by = "ARM",
 #'   ard_categorical(variables = "AGEGR1"),
