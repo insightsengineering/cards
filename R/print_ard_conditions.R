@@ -19,7 +19,7 @@
 #' ) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x, call = NULL) {
-  check_class(x, class = "card")
+  check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
   .cli_condition_messaging(x, msg_type = "error", call = call)
