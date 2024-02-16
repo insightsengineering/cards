@@ -51,7 +51,6 @@ ard_stack <- function(data,
                       .missing = FALSE,
                       .attributes = FALSE,
                       .shuffle = FALSE) {
-
   # process arguments ----------------------------------------------------------
   process_selectors(
     data,
@@ -71,9 +70,11 @@ ard_stack <- function(data,
   ard_list <- .eval_ard_calls(data, by, ...)
 
   # add overall
-  if (isTRUE(.overall)){
-    ard_list <- c(ard_list,
-                  .eval_ard_calls(data, by = character(0), ...))
+  if (isTRUE(.overall)) {
+    ard_list <- c(
+      ard_list,
+      .eval_ard_calls(data, by = character(0), ...)
+    )
   }
 
   # compute Ns by group / combine main calls
@@ -141,8 +142,7 @@ ard_stack <- function(data,
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE")
 #' )
-.eval_ard_calls <- function(data, by, ...){
-
+.eval_ard_calls <- function(data, by, ...) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
 

@@ -106,7 +106,6 @@ test_that("ard_stack() adding overalls", {
       .order = TRUE
     )
   )
-
 })
 
 
@@ -124,7 +123,7 @@ test_that("ard_stack() adding missing/attributes", {
   )
 
   expect_equal(
-    ard_test ,
+    ard_test,
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
