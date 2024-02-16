@@ -61,18 +61,13 @@ ard_stack <- function(data,
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
-  check_class_data_frame(x = data)
+  check_data_frame(x = data)
 
-  check_class(.compute_by_ns, "logical")
-  check_scalar(.compute_by_ns)
-  check_class(.compute_missing, "logical")
-  check_scalar(.compute_missing)
-  check_class(.add_attributes, "logical")
-  check_scalar(.add_attributes)
-  check_class(.shuffle, "logical")
-  check_scalar(.shuffle)
-  check_class(.trim, "logical")
-  check_scalar(.trim)
+  check_scalar_logical(.compute_by_ns)
+  check_scalar_logical(.compute_missing)
+  check_scalar_logical(.add_attributes)
+  check_scalar_logical(.shuffle)
+  check_scalar_logical(.trim)
 
   # evaluate the dots using common `data` and `by`
   ard_list <- lapply(
