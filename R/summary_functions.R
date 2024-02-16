@@ -105,7 +105,7 @@ categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other
     summaries <-
       arg_match(summaries, values = c("n", "p", "N"), multiple = TRUE)
   }
-  check_class(x = other_stats, "list", allow_null = TRUE)
+  check_class(x = other_stats, cls = "list", allow_empty = TRUE)
 
   # combine tabulation and other stats -----------------------------------------
   lst_all_stats <-
