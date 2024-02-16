@@ -26,10 +26,8 @@
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .update = FALSE, .order = FALSE) {
   # check inputs ---------------------------------------------------------------
-  check_class(.update, cls = "logical")
-  check_scalar(.update)
-  check_class(.order, cls = "logical")
-  check_scalar(.order)
+  check_scalar_logical(.update)
+  check_scalar_logical(.order)
 
   # stack ARDs -----------------------------------------------------------------
   data <- dplyr::bind_rows(...)
