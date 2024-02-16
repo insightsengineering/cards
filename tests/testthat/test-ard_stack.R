@@ -33,6 +33,21 @@ test_that("ard_stack() works", {
     ignore_function_env = TRUE
   )
 
+  # check equivalency tidyselect
+  mtcars2 <- mtcars
+  by <- "cyl"
+  var_cont <- "mpg"
+  var_cat <- "vs"
+  expect_equal(
+    ard1,
+    ard_stack(
+      data = mtcars2,
+      by = all_of(by),
+      ard_continuous(variables = all_of(var_cont)),
+      ard_dichotomous(variables = all_of(var_cat))
+    )
+  )
+
   # without by variable
   expect_error(
     ard2 <- ard_stack(
@@ -54,6 +69,16 @@ test_that("ard_stack() works", {
     ignore_function_env = TRUE
   )
 
+
+  expect_equal(
+    ard2,
+    ard_stack(
+      data = mtcars2,
+      by = NULL,
+      ard_continuous(variables = all_of(var_cont)),
+      ard_dichotomous(variables = all_of(var_cat))
+    )
+  )
 })
 
 test_that("ard_stack() adding missing/attributes", {
