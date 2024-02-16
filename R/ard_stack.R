@@ -11,21 +11,15 @@
 #'   columns to tabulate by in the series of ARD function calls
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
-#' @param .compute_by_ns (`logical`)\cr
-#'   logical indicating whether to compute big N's for the `by` variable
-#'   Default is `TRUE`.
-#' @param .compute_missing (`logical`)\cr
+#' @param .missing (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_missing()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
-#' @param .add_attributes (`logical`)\cr
+#' @param .attributes (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
 #' @param .shuffle (`logical`)\cr
 #'   logical indicating whether to perform `shuffle_ard()` on the final result.
 #'   Default is `FALSE`.
-#' @param .trim (`logical`)\cr
-#'   logical indicating whether to set `trim = TRUE` in the call to `shuffle_ard()`.
-#'   Default is `TRUE`. Will be ignored if `.shuffle = FALSE`.
 #'
 #' @return  a transformed ARD data frame (of class 'card' if `.shuffle = FALSE`)
 #'
@@ -50,11 +44,9 @@
 ard_stack <- function(data,
                       by = NULL,
                       ...,
-                      .compute_by_ns = TRUE,
-                      .compute_missing = FALSE,
-                      .add_attributes = FALSE,
-                      .shuffle = FALSE,
-                      .trim = TRUE) {
+                      .missing = FALSE,
+                      .attributes = FALSE,
+                      .shuffle = FALSE) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
   by <- enquo(by)
@@ -63,11 +55,9 @@ ard_stack <- function(data,
   check_not_missing(data)
   check_data_frame(x = data)
 
-  check_scalar_logical(.compute_by_ns)
-  check_scalar_logical(.compute_missing)
-  check_scalar_logical(.add_attributes)
+  check_scalar_logical(.missing)
+  check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
-  check_scalar_logical(.trim)
 
   # evaluate the dots using common `data` and `by`
   ard_list <- lapply(
@@ -81,7 +71,7 @@ ard_stack <- function(data,
   )
 
   # compute Ns by group / combine main calls
-  if (isTRUE(.compute_by_ns) && !quo_is_null(by)) {
+  if (!quo_is_null(by)) {
     ard_full <- bind_ard(
       ard_list,
       ard_categorical(
@@ -98,7 +88,7 @@ ard_stack <- function(data,
   variables <- unique(ard_full$variable)
 
   # missingness
-  if (isTRUE(.compute_missing)) {
+  if (isTRUE(.missing)) {
     ard_full <- bind_ard(
       ard_full,
       ard_missing(data = data, variables = variables)
@@ -106,7 +96,7 @@ ard_stack <- function(data,
   }
 
   # attributes
-  if (isTRUE(.add_attributes)) {
+  if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
       ard_attributes(data = data, variables = variables)
@@ -118,7 +108,7 @@ ard_stack <- function(data,
 
   # shuffle
   if (isTRUE(.shuffle)) {
-    return(shuffle_ard(ard_full, trim = .trim))
+    return(shuffle_ard(ard_full))
   }
 
   ard_full

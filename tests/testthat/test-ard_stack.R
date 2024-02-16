@@ -54,27 +54,6 @@ test_that("ard_stack() works", {
     ignore_function_env = TRUE
   )
 
-  # with by variable but no extra by variable big Ns
-  expect_error(
-    ard3 <- ard_stack(
-      data = mtcars,
-      by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
-      .compute_by_ns = FALSE
-    ),
-    NA
-  )
-
-  expect_equal(
-    ard3,
-    bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      .order = TRUE
-    ),
-    ignore_function_env = TRUE
-  )
 })
 
 test_that("ard_stack() adding missing/attributes", {
@@ -84,8 +63,8 @@ test_that("ard_stack() adding missing/attributes", {
       by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs"),
-      .compute_missing = TRUE,
-      .add_attributes = TRUE
+      .missing = TRUE,
+      .attributes = TRUE
     ),
     NA
   )

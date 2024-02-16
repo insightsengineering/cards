@@ -8,11 +8,9 @@ ard_stack(
   data,
   by = NULL,
   ...,
-  .compute_by_ns = TRUE,
-  .compute_missing = FALSE,
-  .add_attributes = FALSE,
-  .shuffle = FALSE,
-  .trim = TRUE
+  .missing = FALSE,
+  .attributes = FALSE,
+  .shuffle = FALSE
 )
 }
 \arguments{
@@ -25,25 +23,17 @@ columns to tabulate by in the series of ARD function calls}
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 Series of ARD function calls to be run and stacked}
 
-\item{.compute_by_ns}{(\code{logical})\cr
-logical indicating whether to compute big N's for the \code{by} variable
-Default is \code{TRUE}.}
-
-\item{.compute_missing}{(\code{logical})\cr
+\item{.missing}{(\code{logical})\cr
 logical indicating whether to include the results of \code{ard_missing()} for all
 variables represented in the ARD. Default is \code{FALSE}.}
 
-\item{.add_attributes}{(\code{logical})\cr
+\item{.attributes}{(\code{logical})\cr
 logical indicating whether to include the results of \code{ard_attributes()} for all
 variables represented in the ARD. Default is \code{FALSE}.}
 
 \item{.shuffle}{(\code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
-
-\item{.trim}{(\code{logical})\cr
-logical indicating whether to set \code{trim = TRUE} in the call to \code{shuffle_ard()}.
-Default is \code{TRUE}. Will be ignored if \code{.shuffle = FALSE}.}
 }
 \value{
 a transformed ARD data frame (of class 'card' if \code{.shuffle = FALSE})
