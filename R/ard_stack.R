@@ -49,7 +49,12 @@ ard_stack <- function(data,
                       .shuffle = FALSE) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
-  by <- enquo(by)
+
+  # process arguments ----------------------------------------------------------
+  process_selectors(
+    data,
+    by = {{ by }}
+  )
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -71,12 +76,12 @@ ard_stack <- function(data,
   )
 
   # compute Ns by group / combine main calls
-  if (!quo_is_null(by)) {
+  if (!is_empty(by)) {
     ard_full <- bind_ard(
       ard_list,
       ard_categorical(
         data = data,
-        variables = {{ by }},
+        variables = by,
         statistics = everything() ~ categorical_variable_summary_fns("N")
       )
     )
