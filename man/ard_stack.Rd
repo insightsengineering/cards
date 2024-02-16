@@ -8,6 +8,7 @@ ard_stack(
   data,
   by = NULL,
   ...,
+  .overall = FALSE,
   .missing = FALSE,
   .attributes = FALSE,
   .shuffle = FALSE
@@ -22,6 +23,10 @@ columns to tabulate by in the series of ARD function calls}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 Series of ARD function calls to be run and stacked}
+
+\item{.overall}{(\code{logical})\cr logical indicating whether overall statistics
+should be calculated (i.e. re-run all \verb{ard_*()} calls with \code{by=NULL}).
+Default is \code{FALSE}.}
 
 \item{.missing}{(\code{logical})\cr
 logical indicating whether to include the results of \code{ard_missing()} for all

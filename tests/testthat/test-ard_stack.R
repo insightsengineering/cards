@@ -81,6 +81,35 @@ test_that("ard_stack() works", {
   )
 })
 
+test_that("ard_stack() adding overalls", {
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .overall = TRUE
+    ),
+    NA
+  )
+
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_categorical(data = mtcars, variables = "cyl", statistics = everything() ~ categorical_variable_summary_fns("N")),
+      ard_continuous(data = mtcars, variables = "mpg"),
+      ard_dichotomous(data = mtcars, variables = "vs"),
+      .update = TRUE,
+      .order = TRUE
+    )
+  )
+
+})
+
+
 test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
@@ -95,8 +124,7 @@ test_that("ard_stack() adding missing/attributes", {
   )
 
   expect_equal(
-    ard_test |>
-      dplyr::select(-statistic_fmt_fn),
+    ard_test ,
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
@@ -105,8 +133,7 @@ test_that("ard_stack() adding missing/attributes", {
       ard_attributes(data = mtcars, variables = c("cyl", "mpg", "vs")),
       .update = TRUE,
       .order = TRUE
-    ) |>
-      dplyr::select(-statistic_fmt_fn)
+    )
   )
 })
 

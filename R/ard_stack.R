@@ -11,6 +11,9 @@
 #'   columns to tabulate by in the series of ARD function calls
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
+#' @param .overall (`logical`)\cr logical indicating whether overall statistics
+#'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
+#'   Default is `FALSE`.
 #' @param .missing (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_missing()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
@@ -44,11 +47,10 @@
 ard_stack <- function(data,
                       by = NULL,
                       ...,
+                      .overall = FALSE,
                       .missing = FALSE,
                       .attributes = FALSE,
                       .shuffle = FALSE) {
-  # capture quosures -----------------------------------------------------------
-  dots <- enquos(...)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -60,20 +62,19 @@ ard_stack <- function(data,
   check_not_missing(data)
   check_data_frame(x = data)
 
+  check_scalar_logical(.overall)
   check_scalar_logical(.missing)
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
 
   # evaluate the dots using common `data` and `by`
-  ard_list <- lapply(
-    dots,
-    function(x) {
-      x_rhs <- f_rhs(x)
-      x_fn <- call_name(x_rhs)
-      x_args <- call_args(x_rhs)
-      do.call(x_fn, c(list(data = data, by = by), x_args), envir = attr(x, ".Environment"))
-    }
-  )
+  ard_list <- .eval_ard_calls(data, by, ...)
+
+  # add overall
+  if (isTRUE(.overall)){
+    ard_list <- c(ard_list,
+                  .eval_ard_calls(data, by = character(0), ...))
+  }
 
   # compute Ns by group / combine main calls
   if (!is_empty(by)) {
@@ -117,4 +118,44 @@ ard_stack <- function(data,
   }
 
   ard_full
+}
+
+
+
+#' Evaluate the `ard_*()` function calls
+#'
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to tabulate by in the series of ARD function calls
+#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#'   Series of ARD function calls to be run and stacked
+#'
+#' @return list of ARD data frames of class 'card'
+#' @keywords internal
+#'
+#' @examples
+#' .eval_ard_calls(
+#'   data = ADSL,
+#'   by = "ARM",
+#'   ard_categorical(variables = "AGEGR1"),
+#'   ard_continuous(variables = "AGE")
+#' )
+.eval_ard_calls <- function(data, by, ...){
+
+  # capture quosures -----------------------------------------------------------
+  dots <- enquos(...)
+
+
+  # run the ARD calls -------------------------------------------------------
+  lapply(
+    dots,
+    function(x) {
+      x_rhs <- f_rhs(x)
+      x_fn <- call_name(x_rhs)
+      x_args <- call_args(x_rhs)
+
+      do.call(x_fn, c(list(data = data, by = by), x_args), envir = attr(x, ".Environment"))
+    }
+  )
 }
