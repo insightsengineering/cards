@@ -16,7 +16,7 @@ test_that("print.card() works", {
     ard_continuous(
       data = data.frame(x = seq(as.Date("2000-01-01"), length.out = 10L, by = "day")),
       variables = x,
-      statistics = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+      statistic = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
     ) |>
       dplyr::select(-statistic_fmt_fn)
   )
@@ -28,7 +28,7 @@ test_that("print.card() works", {
       ard_continuous(
         mtcars,
         variables = mpg,
-        statistics =
+        statistic =
           ~ continuous_variable_summary_fns(
             "mean",
             other_stats = list(vcov = \(x) lm(mpg ~ am, mtcars) |> vcov())

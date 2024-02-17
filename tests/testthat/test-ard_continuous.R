@@ -229,7 +229,7 @@ test_that("ard_continuous() with dates works and displays as expected", {
   ard_date <- ADSL |>
     ard_continuous(
       variables = DISONSDT,
-      statistics = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+      statistic = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
     )
   expect_snapshot(ard_date)
 
