@@ -138,7 +138,7 @@ print_ard_conditions <- function(x, call = NULL) {
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
-#'   statistics = ~ list(
+#'   statistic = ~ list(
 #'     mean = \(x) mean(x),
 #'     mean_warning = \(x) {
 #'       warning("warn1")

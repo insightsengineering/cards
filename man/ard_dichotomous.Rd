@@ -10,7 +10,7 @@ ard_dichotomous(
   by = dplyr::group_vars(data),
   strata = NULL,
   value = maximum_variable_value(data[variables]),
-  statistics = everything() ~ categorical_variable_summary_fns(),
+  statistic = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
@@ -39,7 +39,7 @@ Arguments may be used in conjunction with one another.}
 named list of dichotomous values to tabulate. Default is \code{maximum_variable_value(data)},
 which returns the largest/last value after a sort.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -75,6 +75,6 @@ mtcars |>
   ard_dichotomous(
     variables = c(cyl, am),
     value = list(cyl = 4),
-    statistics = ~ categorical_variable_summary_fns("p")
+    statistic = ~ categorical_variable_summary_fns("p")
   )
 }

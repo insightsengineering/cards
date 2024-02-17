@@ -7,7 +7,7 @@
 .calculate_stats_as_ard(
   df_nested,
   variables,
-  statistics,
+  statistic,
   by,
   strata,
   data,
@@ -21,7 +21,7 @@ a nested data frame}
 \item{variables}{(\code{character})\cr
 character vector of variables}
 
-\item{statistics}{(named \code{list})\cr
+\item{statistic}{(named \code{list})\cr
 named list of statistical functions}
 }
 \value{
@@ -41,7 +41,7 @@ data_nested <- ADSL |>
 cards:::.calculate_stats_as_ard(
   df_nested = data_nested,
   variables = "AGE",
-  statistics = list(mean = "mean"),
+  statistic = list(mean = "mean"),
   by = "ARM",
   strata = NULL,
   data = ADSL

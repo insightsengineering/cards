@@ -18,14 +18,14 @@
 #'   ard_dichotomous(
 #'     variables = c(cyl, am),
 #'     value = list(cyl = 4),
-#'     statistics = ~ categorical_variable_summary_fns("p")
+#'     statistic = ~ categorical_variable_summary_fns("p")
 #'   )
 ard_dichotomous <- function(data,
                             variables,
                             by = dplyr::group_vars(data),
                             strata = NULL,
                             value = maximum_variable_value(data[variables]),
-                            statistics = everything() ~ categorical_variable_summary_fns(),
+                            statistic = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
                             stat_labels = everything() ~ default_stat_labels()) {
@@ -54,7 +54,7 @@ ard_dichotomous <- function(data,
     variables = all_of(variables),
     by = {{ by }},
     strata = {{ strata }},
-    statistics = statistics,
+    statistic = statistic,
     denominator = denominator,
     fmt_fn = fmt_fn,
     stat_labels = stat_labels

@@ -47,7 +47,7 @@ test_that("selectors work", {
       ard_categorical(
         variables = "vs...2",
         by = starts_with("am"),
-        statistics = ~ categorical_variable_summary_fns("n")
+        statistic = ~ categorical_variable_summary_fns("n")
       ) |>
       dplyr::select(all_ard_groups()) |>
       names() |>

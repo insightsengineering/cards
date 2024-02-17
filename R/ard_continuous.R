@@ -17,7 +17,7 @@
 #'     columns specified.
 #'
 #'   Arguments may be used in conjunction with one another.
-#' @param statistics ([`formula-list-selector`][syntax])\cr
+#' @param statistic ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
@@ -52,7 +52,7 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_continuous(
 #'     variables = "AGE",
-#'     statistics =
+#'     statistic =
 #'       ~ list(conf.int = \(x) t.test(x)[["conf.int"]] |>
 #'         as.list() |>
 #'         setNames(c("conf.low", "conf.high")))
@@ -61,14 +61,14 @@ ard_continuous <- function(data,
                            variables,
                            by = dplyr::group_vars(data),
                            strata = NULL,
-                           statistics = everything() ~ continuous_variable_summary_fns(),
+                           statistic = everything() ~ continuous_variable_summary_fns(),
                            fmt_fn = NULL,
                            stat_labels = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
   check_data_frame(x = data)
-  check_class(x = statistics, cls = c("list", "formula"), allow_empty = TRUE)
+  check_class(x = statistic, cls = c("list", "formula"), allow_empty = TRUE)
   check_class(x = stat_labels, cls = c("list", "formula"), allow_empty = TRUE)
   check_class(x = fmt_fn, cls = c("list", "formula"), allow_empty = TRUE)
   .check_no_ard_columns(data)
@@ -83,18 +83,18 @@ ard_continuous <- function(data,
 
   process_formula_selectors(
     data = data[variables],
-    statistics = statistics,
+    statistic = statistic,
     fmt_fn = fmt_fn,
     stat_labels = stat_labels
   )
   fill_formula_selectors(
     data = data[variables],
-    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval(),
+    statistic = formals(cards::ard_continuous)[["statistic"]] |> eval(),
     stat_labels = formals(cards::ard_continuous)[["stat_labels"]] |> eval()
   )
 
   check_list_elements(
-    x = statistics,
+    x = statistic,
     predicate = function(x) is.list(x) && is_named(x) && every(x, is.function),
     error_msg =
       c("Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
@@ -121,7 +121,7 @@ ard_continuous <- function(data,
     .calculate_stats_as_ard(
       df_nested = df_nested,
       variables = variables,
-      statistics = statistics,
+      statistic = statistic,
       new_col_name = "...ard_all_stats...",
       by = by,
       strata = strata,
@@ -207,7 +207,7 @@ ard_continuous <- function(data,
 #'   a nested data frame
 #' @param variables (`character`)\cr
 #'   character vector of variables
-#' @param statistics (named `list`)\cr
+#' @param statistic (named `list`)\cr
 #'   named list of statistical functions
 #'
 #' @return an ARD data frame of class 'card'
@@ -224,12 +224,12 @@ ard_continuous <- function(data,
 #' cards:::.calculate_stats_as_ard(
 #'   df_nested = data_nested,
 #'   variables = "AGE",
-#'   statistics = list(mean = "mean"),
+#'   statistic = list(mean = "mean"),
 #'   by = "ARM",
 #'   strata = NULL,
 #'   data = ADSL
 #' )
-.calculate_stats_as_ard <- function(df_nested, variables, statistics,
+.calculate_stats_as_ard <- function(df_nested, variables, statistic,
                                     by, strata, data,
                                     new_col_name = "...ard_all_stats...") {
   df_nested[[new_col_name]] <-
@@ -240,7 +240,7 @@ ard_continuous <- function(data,
           variables,
           function(variable) {
             map2(
-              statistics[[variable]], names(statistics[[variable]]),
+              statistic[[variable]], names(statistic[[variable]]),
               function(fun, fun_name) {
                 .lst_results_as_df(
                   x = # calculate results, and place in tibble
