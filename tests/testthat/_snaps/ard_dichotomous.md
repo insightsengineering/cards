@@ -24,27 +24,27 @@
 ---
 
     Code
-      ard_dichotomous(mtcars, variables = c("cyl", "am", "gear"), values = list(cyl = letters))
+      ard_dichotomous(mtcars, variables = c("cyl", "am", "gear"), value = list(cyl = letters))
     Condition
       Error in `ard_dichotomous()`:
-      ! Error in argument `values` for variable "cyl".
+      ! Error in argument `value` for variable "cyl".
       i The value must be one of 4, 6, and 8.
 
 ---
 
     Code
-      ard_dichotomous(iris, variables = everything(), values = list(Species = "not_a_species"))
+      ard_dichotomous(iris, variables = everything(), value = list(Species = "not_a_species"))
     Condition
       Error in `ard_dichotomous()`:
-      ! Error in argument `values` for variable "Species".
+      ! Error in argument `value` for variable "Species".
       i A value of "not_a_species" was passed, but must be one of setosa, versicolor, and virginica.
 
 ---
 
     Code
-      ard_dichotomous(mtcars, variables = c("cyl", "am", "gear"), values = list(cyl = 100))
+      ard_dichotomous(mtcars, variables = c("cyl", "am", "gear"), value = list(cyl = 100))
     Condition
       Error in `ard_dichotomous()`:
-      ! Error in argument `values` for variable "cyl".
+      ! Error in argument `value` for variable "cyl".
       i A value of 100 was passed, but must be one of 4, 6, and 8.
 

@@ -3,28 +3,28 @@
 #' Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 #'
 #' @inheritParams ard_categorical
-#' @param values (named `list`)\cr
-#'   named list of dichotomous values to tabulate. Default is `maximum_variable_values(data)`,
+#' @param value (named `list`)\cr
+#'   named list of dichotomous values to tabulate. Default is `maximum_variable_value(data)`,
 #'   which returns the largest/last value after a sort.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
-#' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), values = list(cyl = 4))
+#' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), value = list(cyl = 4))
 #'
 #' mtcars |>
 #'   dplyr::group_by(vs) |>
 #'   ard_dichotomous(
 #'     variables = c(cyl, am),
-#'     values = list(cyl = 4),
+#'     value = list(cyl = 4),
 #'     statistics = ~ categorical_variable_summary_fns("p")
 #'   )
 ard_dichotomous <- function(data,
                             variables,
                             by = dplyr::group_vars(data),
                             strata = NULL,
-                            values = maximum_variable_values(data[variables]),
+                            value = maximum_variable_value(data[variables]),
                             statistics = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
@@ -36,12 +36,12 @@ ard_dichotomous <- function(data,
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})
-  process_formula_selectors(data[variables], values = values)
+  process_formula_selectors(data[variables], value = value)
   fill_formula_selectors(
     data = data[variables],
-    values = formals(cards::ard_dichotomous)[["values"]] |> eval()
+    value = formals(cards::ard_dichotomous)[["value"]] |> eval()
   )
-  .check_dichotomous_values(data, values)
+  .check_dichotomous_value(data, value)
 
   # return empty tibble if no variables selected -------------------------------
   if (is_empty(variables)) {
@@ -63,7 +63,7 @@ ard_dichotomous <- function(data,
       pmap(
         list(.data$variable, .data$variable_level),
         function(variable, variable_level) {
-          variable_level %in% .env$values[[variable]]
+          variable_level %in% .env$value[[variable]]
         }
       ) |>
         unlist()
@@ -76,7 +76,7 @@ ard_dichotomous <- function(data,
 #' For each column in the passed data frame, the function returns a named list
 #' with the value being the largest/last element after a sort.
 #' For factors, the last level is returned, and for logical vectors `TRUE` is returned.
-#' This is used as the default value in `ard_dichotomous(values)` if not specified by
+#' This is used as the default value in `ard_dichotomous(value)` if not specified by
 #' the user.
 #'
 #' @param data (`data.frame`)\cr
@@ -86,8 +86,8 @@ ard_dichotomous <- function(data,
 #' @export
 #'
 #' @examples
-#' ADSL[c("AGEGR1", "BMIBLGR1")] |> maximum_variable_values()
-maximum_variable_values <- function(data) {
+#' ADSL[c("AGEGR1", "BMIBLGR1")] |> maximum_variable_value()
+maximum_variable_value <- function(data) {
   data |>
     lapply(
       function(x) {
@@ -108,11 +108,11 @@ maximum_variable_values <- function(data) {
 
 #' Perform Value Checks
 #'
-#' Check the validity of the values passed in `ard_dichotomous(values)`.
+#' Check the validity of the values passed in `ard_dichotomous(value)`.
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param values (named `list`)\cr
+#' @param value (named `list`)\cr
 #'   a named list
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
@@ -121,14 +121,14 @@ maximum_variable_values <- function(data) {
 #' @keywords internal
 #'
 #' @examples
-#' cards:::.check_dichotomous_values(mtcars, list(cyl = 4))
-.check_dichotomous_values <- function(data, values, call = parent.frame()) {
+#' cards:::.check_dichotomous_value(mtcars, list(cyl = 4))
+.check_dichotomous_value <- function(data, value, call = parent.frame()) {
   imap(
-    values,
+    value,
     function(value, column) {
       accepted_values <- .unique_and_sorted(data[[column]])
       if (length(value) != 1L || !value %in% accepted_values) {
-        message <- "Error in argument {.arg values} for variable {.val {column}}."
+        message <- "Error in argument {.arg value} for variable {.val {column}}."
         cli::cli_abort(
           if (length(value) != 1L) {
             c(message, "i" = "The value must be one of {.val {accepted_values}}.")

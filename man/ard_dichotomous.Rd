@@ -9,7 +9,7 @@ ard_dichotomous(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  values = maximum_variable_values(data[variables]),
+  value = maximum_variable_value(data[variables]),
   statistics = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
@@ -35,8 +35,8 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{values}{(named \code{list})\cr
-named list of dichotomous values to tabulate. Default is \code{maximum_variable_values(data)},
+\item{value}{(named \code{list})\cr
+named list of dichotomous values to tabulate. Default is \code{maximum_variable_value(data)},
 which returns the largest/last value after a sort.}
 
 \item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
@@ -68,13 +68,13 @@ an ARD data frame of class 'card'
 Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 }
 \examples{
-ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), values = list(cyl = 4))
+ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), value = list(cyl = 4))
 
 mtcars |>
   dplyr::group_by(vs) |>
   ard_dichotomous(
     variables = c(cyl, am),
-    values = list(cyl = 4),
+    value = list(cyl = 4),
     statistics = ~ categorical_variable_summary_fns("p")
   )
 }
