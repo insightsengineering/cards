@@ -77,8 +77,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       function(x) {
         if (isTRUE(is.numeric(x))) {
           res <- round5(x, digits = 3)
-        }
-        else {
+        } else {
           res <- as.character(x)
         }
 
