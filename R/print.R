@@ -75,13 +75,16 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     x_print$statistic <- lapply(
       x_print$statistic,
       function(x) {
-        if (isTRUE(is.double(x))) {
-          return(round5(x, digits = 3))
+        if (isTRUE(is.numeric(x))) {
+          res <- round5(x, digits = 3)
+        } else {
+          res <- as.character(x)
         }
-        if (is_string(x) && nchar(x) > 9) {
-          return(paste0(substr(x, 1, 8), "\u2026"))
+
+        if (is_string(res) && nchar(res) > 9) {
+          res <- paste0(substr(res, 1, 8), "\u2026")
         }
-        x
+        res
       }
     )
   }

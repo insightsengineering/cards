@@ -224,3 +224,23 @@ test_that("ard_continuous() with grouped data works", {
     ard_continuous(data = ADSL, by = ARM, variables = AGE)
   )
 })
+
+test_that("ard_continuous() with dates works and displays as expected", {
+  ard_date <- ADSL |>
+    ard_continuous(
+      variables = DISONSDT,
+      statistics = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+    )
+  expect_snapshot(ard_date)
+
+  expect_equal(ard_date$statistic[[1]], as.Date("1998-06-13"))
+})
+
+test_that("ard_continuous() with empty/missing dates works, and preserves Date class", {
+  empty_date <- data.frame(dt = as.Date(NA)) |>
+    ard_continuous(
+      variables = dt,
+      statistic = ~ continuous_variable_summary_fns(c("min"))
+    )
+  expect_equal(inherits(empty_date$statistic[[1]], "Date"), TRUE)
+})
