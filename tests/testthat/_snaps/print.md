@@ -64,3 +64,41 @@
     Message
       i 2 more variables: warning, error
 
+---
+
+    Code
+      ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"), length.out = 10L,
+      by = "day")), variables = x, statistics = ~ continuous_variable_summary_fns(c(
+        "min", "max", "sd")))
+    Message
+      {cards} data frame: 3 x 8
+    Output
+        variable   context stat_name stat_label statistic statistic_fmt_fn
+      1        x continuo…       min        Min 2000-01-…             <fn>
+      2        x continuo…       max        Max 2000-01-…             <fn>
+      3        x continuo…        sd         SD     3.028                1
+    Message
+      i 2 more variables: warning, error
+
+---
+
+    Code
+      bind_ard(ard_attributes(mtcars, variables = mpg), ard_continuous(mtcars,
+        variables = mpg, statistics = ~ continuous_variable_summary_fns("mean",
+          other_stats = list(vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
+    Message
+      {cards} data frame: 4 x 8
+    Output
+        variable   context stat_name stat_label                    statistic
+      1      mpg attribut…     label  Variable…                          mpg
+      2      mpg attribut…     class  Variable…                      numeric
+      3      mpg continuo…      mean       Mean                       20.091
+      4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113
+        statistic_fmt_fn
+      1             NULL
+      2             NULL
+      3                1
+      4                1
+    Message
+      i 2 more variables: warning, error
+
