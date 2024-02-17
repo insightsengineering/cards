@@ -134,12 +134,6 @@ ard_continuous <- function(data,
     dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
     tidyr::unnest(cols = "...ard_all_stats...")
 
-  # add default function labels and formatters
-  df_results <-
-    df_nested |>
-    dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
-    tidyr::unnest(cols = "...ard_all_stats...")
-
   # final processing of fmt_fn -------------------------------------------------
   df_results <-
     .process_nested_list_as_df(
@@ -397,20 +391,22 @@ ard_continuous <- function(data,
   x |>
     dplyr::mutate(
       statistic_fmt_fn =
-        map2(
-          .data$stat_name, .data$statistic_fmt_fn,
-          function(stat_name, statistic_fmt_fn) {
+        pmap(
+          list(.data$stat_name, .data$statistic, .data$statistic_fmt_fn),
+          function(stat_name, statistic, statistic_fmt_fn) {
             if (!is_empty(statistic_fmt_fn)) {
               return(statistic_fmt_fn)
-            }
-            if (stat_name %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss")) {
-              return(0L)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))
             }
-
-            return(1L)
+            if (is.integer(statistic)) {
+              return(0L)
+            }
+            if (is.numeric(statistic)) {
+              return(1L)
+            }
+            return(as.character)
           }
         )
     )
