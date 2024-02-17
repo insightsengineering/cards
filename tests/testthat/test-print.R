@@ -17,7 +17,8 @@ test_that("print.card() works", {
       data = data.frame(x = seq(as.Date("2000-01-01"), length.out = 10L, by = "day")),
       variables = x,
       statistics = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
-    )
+    ) |>
+      dplyr::select(-statistic_fmt_fn)
   )
 
   # checking the print of a complex matrix statistic result

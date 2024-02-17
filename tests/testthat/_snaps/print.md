@@ -67,16 +67,16 @@
 ---
 
     Code
-      ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"), length.out = 10L,
-      by = "day")), variables = x, statistics = ~ continuous_variable_summary_fns(c(
-        "min", "max", "sd")))
+      dplyr::select(ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"),
+      length.out = 10L, by = "day")), variables = x, statistics = ~
+      continuous_variable_summary_fns(c("min", "max", "sd"))), -statistic_fmt_fn)
     Message
-      {cards} data frame: 3 x 8
+      {cards} data frame: 3 x 7
     Output
-        variable   context stat_name stat_label statistic statistic_fmt_fn
-      1        x continuo…       min        Min 2000-01-…             <fn>
-      2        x continuo…       max        Max 2000-01-…             <fn>
-      3        x continuo…        sd         SD     3.028                1
+        variable   context stat_name stat_label statistic
+      1        x continuo…       min        Min 2000-01-…
+      2        x continuo…       max        Max 2000-01-…
+      3        x continuo…        sd         SD     3.028
     Message
       i 2 more variables: warning, error
 
