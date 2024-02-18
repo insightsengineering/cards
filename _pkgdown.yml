@@ -45,6 +45,7 @@ reference:
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
+      - replace_null_statistic
   - subtitle: "Data Summary Functions"
     contents:
       - continuous_variable_summary_fns
