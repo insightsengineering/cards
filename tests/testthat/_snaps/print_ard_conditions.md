@@ -6,7 +6,7 @@
 ---
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistics = ~ list(
+      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
         mean = function(x) mean(x), mean_warning = function(x) {
           warning("warn1")
           warning("warn2")
@@ -22,8 +22,8 @@
 ---
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, by = ARM,
-        statistics = ~ list(mean = function(x) mean(x), mean_warning = function(x) {
+      print_ard_conditions(ard_continuous(ADSL, variables = AGE, by = ARM, statistic = ~
+         list(mean = function(x) mean(x), mean_warning = function(x) {
           warning("warn1")
           warning("warn2")
           mean(x)
@@ -54,7 +54,7 @@
 
     Code
       tbl_summary <- (function() {
-        ard <- ard_continuous(ADSL, variables = AGE, statistics = ~ list(err_fn = function(
+        ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ list(err_fn = function(
           x) stop("'tis an error")))
         print_ard_conditions(ard, call = current_env())
       })

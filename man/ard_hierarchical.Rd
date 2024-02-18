@@ -9,7 +9,7 @@ ard_hierarchical(
   data,
   variables,
   by = dplyr::group_vars(data),
-  statistics = everything() ~ categorical_variable_summary_fns(),
+  statistic = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
@@ -34,7 +34,7 @@ variables to perform the nested/hierarchical tabulations within.}
 variables to perform tabulations by. All combinations of the variables
 specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),

@@ -6,14 +6,14 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = list(AGE = list(mean = \(x, ...) mean(x)))
+      statistic = list(AGE = list(mean = \(x, ...) mean(x)))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic),
     ard_continuous(
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = ~ continuous_variable_summary_fns("mean")
+      statistic = ~ continuous_variable_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )
@@ -24,14 +24,14 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = list(AGE = list(mean = \(data, variable, ...) mean(data[[variable]])))
+      statistic = list(AGE = list(mean = \(data, variable, ...) mean(data[[variable]])))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic),
     ard_continuous(
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistics = ~ continuous_variable_summary_fns("mean")
+      statistic = ~ continuous_variable_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )
@@ -50,7 +50,7 @@ test_that("ard_complex() works", {
           ADSL,
           by = "ARM",
           variables = "AGE",
-          statistics = list(AGE = list(means = grand_mean))
+          statistic = list(AGE = list(means = grand_mean))
         ) |>
         as.data.frame() |>
         dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)
@@ -90,7 +90,7 @@ test_that("ard_complex() messaging", {
       ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      statistics = list(AGE = list(mean = \(x, ...) mean(x)))
+      statistic = list(AGE = list(mean = \(x, ...) mean(x)))
     )
   )
 })
@@ -101,13 +101,13 @@ test_that("ard_complex() with grouped data works", {
       dplyr::group_by(ARM) |>
       ard_complex(
         variables = c("AGE", "BMIBL"),
-        statistics = ~ list(mean = \(x, ...) mean(x))
+        statistic = ~ list(mean = \(x, ...) mean(x))
       ),
     ard_complex(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      statistics = ~ list(mean = \(x, ...) mean(x))
+      statistic = ~ list(mean = \(x, ...) mean(x))
     )
   )
 })

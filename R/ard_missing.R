@@ -16,12 +16,12 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_missing(
 #'     variables = "AGE",
-#'     statistics = ~ missing_variable_summary_fns("N_miss")
+#'     statistic = ~ missing_variable_summary_fns("N_miss")
 #'   )
 ard_missing <- function(data,
                         variables,
                         by = dplyr::group_vars(data),
-                        statistics = everything() ~ missing_variable_summary_fns(),
+                        statistic = everything() ~ missing_variable_summary_fns(),
                         fmt_fn = NULL,
                         stat_labels = everything() ~ default_stat_labels()) {
   # process variable inputs ----------------------------------------------------
@@ -38,7 +38,7 @@ ard_missing <- function(data,
     data = data,
     variables = all_of(variables),
     by = {{ by }},
-    statistics = statistics,
+    statistic = statistic,
     fmt_fn = fmt_fn,
     stat_labels = stat_labels
   ) |>

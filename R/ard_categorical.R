@@ -20,7 +20,7 @@
 #' @param denominator (`data.frame`, `integer`)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
-#' @param statistics ([`formula-list-selector`][syntax])\cr
+#' @param statistic ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
@@ -68,13 +68,13 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_categorical(
 #'     variables = "AGEGR1",
-#'     statistics = everything() ~ categorical_variable_summary_fns("n")
+#'     statistic = everything() ~ categorical_variable_summary_fns("n")
 #'   )
 ard_categorical <- function(data,
                             variables,
                             by = dplyr::group_vars(data),
                             strata = NULL,
-                            statistics = everything() ~ categorical_variable_summary_fns(),
+                            statistic = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
                             stat_labels = everything() ~ default_stat_labels()) {
@@ -97,13 +97,13 @@ ard_categorical <- function(data,
 
   process_formula_selectors(
     data = data[variables],
-    statistics = statistics,
+    statistic = statistic,
     stat_labels = stat_labels,
     fmt_fn = fmt_fn
   )
   fill_formula_selectors(
     data = data[variables],
-    statistics = formals(cards::ard_continuous)[["statistics"]] |> eval()
+    statistic = formals(cards::ard_continuous)[["statistic"]] |> eval()
   )
 
   # return empty tibble if no variables selected -------------------------------
@@ -114,7 +114,7 @@ ard_categorical <- function(data,
   # calculating summary stats --------------------------------------------------
   # first calculate non-tabulation statistics
   statistics_non_tabulation <-
-    lapply(statistics, function(x) utils::modifyList(x, list(tabulation = NULL))) |>
+    lapply(statistic, function(x) utils::modifyList(x, list(tabulation = NULL))) |>
     compact()
 
   if (is_empty(statistics_non_tabulation)) {
@@ -126,7 +126,7 @@ ard_categorical <- function(data,
         variables = all_of(variables),
         by = all_of(by),
         strata = all_of(strata),
-        statistics = statistics_non_tabulation,
+        statistic = statistics_non_tabulation,
         fmt_fn = NULL,
         stat_labels = NULL
       ) |>
@@ -141,7 +141,7 @@ ard_categorical <- function(data,
       by = by,
       strata = strata,
       denominator = denominator,
-      statistics = statistics
+      statistic = statistic
     )
 
 
@@ -181,7 +181,7 @@ ard_categorical <- function(data,
 #' Calculate Tabulation Statistics
 #'
 #' Function takes the summary instructions from the
-#' `statistics = list(variable_name = list(tabulation=c("n", "N", "p")))`
+#' `statistic = list(variable_name = list(tabulation=c("n", "N", "p")))`
 #' argument, and returns the tabulations in an ARD structure.
 #'
 #' @inheritParams ard_categorical
@@ -195,12 +195,12 @@ ard_categorical <- function(data,
 #'   by = NULL,
 #'   strata = NULL,
 #'   denominator = "cell",
-#'   statistics = list(ARM = list(tabulation = c("N")))
+#'   statistic = list(ARM = list(tabulation = c("N")))
 #' )
-.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistics, call = parent.frame()) {
+.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistic, call = parent.frame()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
-    lapply(statistics, function(x) x["tabulation"] |> compact()) |> compact()
+    lapply(statistic, function(x) x["tabulation"] |> compact()) |> compact()
 
   if (is_empty(statistics_tabulation)) {
     return(dplyr::tibble())

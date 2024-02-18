@@ -49,7 +49,7 @@ reference:
   - subtitle: "Data Summary Functions"
     contents:
       - continuous_variable_summary_fns
-      - maximum_variable_values
+      - maximum_variable_value
   - subtitle: "Misc."
     contents:
       - selectors

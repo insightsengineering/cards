@@ -4,7 +4,7 @@ test_that("ard_dichotomous() works", {
       ard_dichotomous(
         mtcars |> dplyr::mutate(gear = factor(gear), am = as.logical(am)),
         variables = c("cyl", "am", "gear"),
-        values = list(cyl = 4)
+        value = list(cyl = 4)
       ),
     NA
   )
@@ -47,7 +47,7 @@ test_that("ard_dichotomous() works", {
     ard_dichotomous(
       mtcars,
       variables = c("cyl", "am", "gear"),
-      values = list(cyl = letters)
+      value = list(cyl = letters)
     ),
     error = TRUE
   )
@@ -56,7 +56,7 @@ test_that("ard_dichotomous() works", {
     ard_dichotomous(
       iris,
       variables = everything(),
-      values = list(Species = "not_a_species")
+      value = list(Species = "not_a_species")
     ),
     error = TRUE
   )
@@ -65,7 +65,7 @@ test_that("ard_dichotomous() works", {
     ard_dichotomous(
       mtcars,
       variables = c("cyl", "am", "gear"),
-      values = list(cyl = 100)
+      value = list(cyl = 100)
     ),
     error = TRUE
   )
@@ -76,12 +76,12 @@ test_that("ard_dichotomous() with grouped data works", {
   expect_equal(
     mtcars |>
       dplyr::group_by(vs) |>
-      ard_dichotomous(variables = c(cyl, am), values = list(cyl = 4)),
+      ard_dichotomous(variables = c(cyl, am), value = list(cyl = 4)),
     ard_dichotomous(
       data = mtcars,
       by = vs,
       variables = c(cyl, am),
-      values = list(cyl = 4)
+      value = list(cyl = 4)
     )
   )
 })

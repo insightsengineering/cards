@@ -10,7 +10,7 @@ test_that("print_ard_conditions() works", {
     ard_continuous(
       ADSL,
       variables = AGE,
-      statistics = ~ list(
+      statistic = ~ list(
         mean = \(x) mean(x),
         mean_warning = \(x) {
           warning("warn1")
@@ -29,7 +29,7 @@ test_that("print_ard_conditions() works", {
       ADSL,
       variables = AGE,
       by = ARM,
-      statistics = ~ list(
+      statistic = ~ list(
         mean = \(x) mean(x),
         mean_warning = \(x) {
           warning("warn1")
@@ -55,7 +55,7 @@ test_that("print_ard_conditions() works", {
       ard <- ard_continuous(
         ADSL,
         variables = AGE,
-        statistics = ~ list(err_fn = \(x) stop("'tis an error"))
+        statistic = ~ list(err_fn = \(x) stop("'tis an error"))
       )
 
       print_ard_conditions(ard, call = current_env())

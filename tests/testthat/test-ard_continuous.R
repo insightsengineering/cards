@@ -35,7 +35,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = "AGE",
-    statistics = list(AGE = continuous_variable_summary_fns(c("N", "mean", "median"))),
+    statistic = list(AGE = continuous_variable_summary_fns(c("N", "mean", "median"))),
     fmt_fn =
       list(
         AGE =
@@ -54,7 +54,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistics = ~ continuous_variable_summary_fns("mean"),
+    statistic = ~ continuous_variable_summary_fns("mean"),
     fmt_fn =
       list(
         AGE =
@@ -72,7 +72,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistics = ~ continuous_variable_summary_fns(c("mean", "sd")),
+    statistic = ~ continuous_variable_summary_fns(c("mean", "sd")),
     fmt_fn = ~ list(~ function(x) round(x, 4))
   ) |>
     apply_statistic_fmt_fn() |>
@@ -82,9 +82,9 @@ test_that("ard_continuous(fmt_fn) argument works", {
 })
 
 test_that("ard_continuous() messaging", {
-  # proper error message when statistics argument mis-specified
+  # proper error message when statistic argument mis-specified
   expect_snapshot(
-    ard_continuous(mtcars, variables = "mpg", statistics = ~ list(mean = "this is a string")),
+    ard_continuous(mtcars, variables = "mpg", statistic = ~ list(mean = "this is a string")),
     error = TRUE
   )
 
@@ -154,7 +154,7 @@ test_that("ard_continuous(stat_labels) argument works", {
     ard_continuous(
       ADSL,
       variables = "AGE",
-      statistics = ~ list(conf.int = conf_int),
+      statistic = ~ list(conf.int = conf_int),
       stat_labels = ~ list(conf.low = "LB", conf.high = "UB")
     ) |>
     dplyr::select(variable, stat_name, stat_label) |>
@@ -165,7 +165,7 @@ test_that("ard_continuous(stat_labels) argument works", {
   ard2 <- ard_continuous(
     ADSL,
     variables = "AGE",
-    statistics = ~ list(conf.int = conf_int),
+    statistic = ~ list(conf.int = conf_int),
     stat_labels = ~ list("conf.low" ~ "LB", "conf.high" ~ "UB")
   ) |>
     dplyr::select(variable, stat_name, stat_label) |>
@@ -229,7 +229,7 @@ test_that("ard_continuous() with dates works and displays as expected", {
   ard_date <- ADSL |>
     ard_continuous(
       variables = DISONSDT,
-      statistics = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+      statistic = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
     )
   expect_snapshot(ard_date)
 
