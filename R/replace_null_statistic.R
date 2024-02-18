@@ -27,7 +27,7 @@
 #'   replace_null_statistic(rows = !is.null(error))
 replace_null_statistic <- function(x, value = NA, rows = TRUE) {
   # check inputs ---------------------------------------------------------------
-  cards:::check_class(x, "card")
+  check_class(x, "card")
 
   # replace NULL values --------------------------------------------------------
   x |>
