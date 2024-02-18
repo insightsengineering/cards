@@ -8,7 +8,7 @@ ard_missing(
   data,
   variables,
   by = dplyr::group_vars(data),
-  statistics = everything() ~ missing_variable_summary_fns(),
+  statistic = everything() ~ missing_variable_summary_fns(),
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
 )
@@ -23,7 +23,7 @@ columns to include in summaries. Default is \code{everything()}.}
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 results are tabulated by \strong{all combinations} of the columns specified.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -61,6 +61,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_missing(
     variables = "AGE",
-    statistics = ~ missing_variable_summary_fns("N_miss")
+    statistic = ~ missing_variable_summary_fns("N_miss")
   )
 }

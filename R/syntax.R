@@ -30,7 +30,7 @@
 #'     name or a selector.
 #'
 #'     ```r
-#'     ard_continuous(statistics = list(age ~ list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
+#'     ard_continuous(statistic = list(age ~ list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
 #'     ```
 #'
 #' 2. **Named List**
@@ -39,7 +39,7 @@
 #'     are not supported with this syntax.
 #'
 #'     ```r
-#'     ard_continuous(statistics = list(age = list(N = \(x) length(x))))
+#'     ard_continuous(statistic = list(age = list(N = \(x) length(x))))
 #'     ```
 #'
 #' 3. **Hybrid Named List/List of Formulas**
@@ -47,7 +47,7 @@
 #'     You can pass a combination of formulas and named elements.
 #'
 #'     ```r
-#'     ard_continuous(statistics = list(age = list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
+#'     ard_continuous(statistic = list(age = list(N = \(x) length(x)), starts_with("a") ~ list(mean = mean)))
 #'     ```
 #'
 #' 4. **Shortcuts**
@@ -56,15 +56,15 @@
 #'     in a list.
 #'
 #'     ```r
-#'     ard_continuous(statistics = starts_with("a") ~ list(mean = mean)
+#'     ard_continuous(statistic = starts_with("a") ~ list(mean = mean)
 #'     ```
 #'
 #'     As a shortcut to select all variables, you can omit the LHS of the formula.
 #'     The two calls below are equivalent.
 #'
 #'     ```r
-#'     ard_continuous(statistics = ~list(N = \(x) length(x)))
-#'     ard_continuous(statistics = everything() ~ list(N = \(x) length(x)))
+#'     ard_continuous(statistic = ~list(N = \(x) length(x)))
+#'     ard_continuous(statistic = everything() ~ list(N = \(x) length(x)))
 #'     ```
 #'
 #' 5. **Combination Selectors**
@@ -72,6 +72,6 @@
 #'     Selectors can be combined using the `c()` function.
 #'
 #'     ```r
-#'     ard_continuous(statistics = c(everything(), -age) ~ list(N = \(x) length(x)))
+#'     ard_continuous(statistic = c(everything(), -age) ~ list(N = \(x) length(x)))
 #'     ```
 NULL

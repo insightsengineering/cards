@@ -417,9 +417,8 @@
 
     Code
       shuffle_ard(bind_ard(ard_continuous(ADSL, by = "ARM", variables = "AGE",
-        statistics = ~ continuous_variable_summary_fns("mean")), dplyr::tibble(
-        group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p",
-        statistic = list(0.05))))
+        statistic = ~ continuous_variable_summary_fns("mean")), dplyr::tibble(group1 = "ARM",
+        variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))))
     Output
       # A tibble: 4 x 5
         ARM                  variable context    stat_name statistic
@@ -432,7 +431,7 @@
 ---
 
     Code
-      shuffle_ard(bind_ard(ard_continuous(ADSL, variables = "AGE", statistics = ~
+      shuffle_ard(bind_ard(ard_continuous(ADSL, variables = "AGE", statistic = ~
         continuous_variable_summary_fns("mean")), dplyr::tibble(group1 = "ARM",
         variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))))
     Output

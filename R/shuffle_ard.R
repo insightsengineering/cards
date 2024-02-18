@@ -142,7 +142,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
-#'   statistics = ~ list(
+#'   statistic = ~ list(
 #'     mean = \(x) mean(x),
 #'     mean_warning = \(x) {
 #'       warning("warn1")

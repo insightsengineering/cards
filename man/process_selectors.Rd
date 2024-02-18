@@ -114,13 +114,13 @@ fill_formula_selectors(ADSL, env = example_env)
 
 process_formula_selectors(
   ADSL,
-  statistics = list(starts_with("TRT") ~ mean, TRTSDT = min),
+  statistic = list(starts_with("TRT") ~ mean, TRTSDT = min),
   env = example_env
 )
-get(x = "statistics", envir = example_env)
+get(x = "statistic", envir = example_env)
 
 check_list_elements(
-  get(x = "statistics", envir = example_env),
+  get(x = "statistic", envir = example_env),
   predicate = function(x) !is.null(x),
   error_msg = c(
     "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",

@@ -161,10 +161,10 @@
       Error in `ard_categorical()`:
       ! The following `by/strata` combinations are missing from the `denominator` data frame: ARM (Xanomeline High Dose) and ARM (Xanomeline Low Dose).
 
-# ard_categorical(statistics) works with custom fns
+# ard_categorical(statistic) works with custom fns
 
     Code
-      ard_custom_fns <- ard_categorical(ADSL, variables = AGEGR1, statistics = ~
+      ard_custom_fns <- ard_categorical(ADSL, variables = AGEGR1, statistic = ~
         categorical_variable_summary_fns(other_stats = list(mode = function(x) {
           getElement(names(sort(table(x), decreasing = TRUE)), 1)
         }, length = function(x) length(x))))

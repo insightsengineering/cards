@@ -9,7 +9,7 @@ ard_categorical(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  statistics = everything() ~ categorical_variable_summary_fns(),
+  statistic = everything() ~ categorical_variable_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
   stat_labels = everything() ~ default_stat_labels()
@@ -34,7 +34,7 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -99,6 +99,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_categorical(
     variables = "AGEGR1",
-    statistics = everything() ~ categorical_variable_summary_fns("n")
+    statistic = everything() ~ categorical_variable_summary_fns("n")
   )
 }
