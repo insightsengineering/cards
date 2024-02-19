@@ -1,7 +1,16 @@
-url: https://insightsengineering.github.io/cards/
+---
+url: https://insightsengineering.github.io/cards
 
 template:
   package: nesttemplate
+
+# navbar:
+#   structure:
+#     left: [intro, reference, articles, tutorials, news, reports]
+#     right: [search, github]
+#     github:
+#       icon: fa-github
+#       href: https://github.com/insightsengineering/cards
 
 development:
   mode: auto
