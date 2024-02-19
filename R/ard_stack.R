@@ -83,7 +83,7 @@ ard_stack <- function(data,
       ard_list,
       ard_categorical(
         data = data,
-        variables = by,
+        variables = all_of(by),
         statistic = everything() ~ categorical_variable_summary_fns("N")
       )
     )
@@ -98,7 +98,7 @@ ard_stack <- function(data,
   if (isTRUE(.missing)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_missing(data = data, variables = variables)
+      ard_missing(data = data, variables = all_of(variables))
     )
   }
 
@@ -106,7 +106,7 @@ ard_stack <- function(data,
   if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_attributes(data = data, variables = variables)
+      ard_attributes(data = data, variables = all_of(variables))
     )
   }
 
