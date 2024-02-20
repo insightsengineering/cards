@@ -93,3 +93,20 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
       shuffle_ard()
   )
 })
+
+test_that("shuffle_ard doesn't trim off NULL/NA values", {
+  # mix of char NA, NULL values
+  res <- suppressMessages(
+    data.frame(x = rep_len(NA_character_, 10)) |>
+      ard_continuous(
+        variables = x,
+        statistic = ~ continuous_variable_summary_fns(c("median", "p25", "p75"))
+      ) |>
+      shuffle_ard() |>
+      dplyr::pull(statistic)
+  )
+
+  # check that all rows present and result is a numeric vector
+  expect_length(res, 3)
+  expect_equal(class(res), "numeric")
+})
