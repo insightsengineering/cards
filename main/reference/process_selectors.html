@@ -44,7 +44,7 @@ elements, primarily those processed with process_formula_selectors().
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9042</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9043</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,12 +64,6 @@ elements, primarily those processed with process_formula_selectors().
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -113,7 +107,13 @@ elements, primarily those processed with <code>process_formula_selectors()</code
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">process_selectors</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">process_formula_selectors</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>, include_env <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">process_formula_selectors</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  include_env <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  allow_empty <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">fill_formula_selectors</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span>, env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -123,7 +123,8 @@ elements, primarily those processed with <code>process_formula_selectors()</code
 <span>  arg_name <span class="op">=</span> <span class="fu">caller_arg</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  strict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_env <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  include_env <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  allow_empty <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">check_list_elements</span><span class="op">(</span></span>
@@ -164,6 +165,12 @@ env to save the results to. Default is the calling environment.</p></dd>
 <dd><p>(<code>logical</code>)<br>
 whether to include the environment from the formula object in the returned
 named list. Default is <code>FALSE</code></p></dd>
+
+
+<dt>allow_empty</dt>
+<dd><p>(<code>logical</code>)<br>
+Logical indicating whether empty result is acceptable while process
+formula-list selectors. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>x</dt>
@@ -229,37 +236,37 @@ named list.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01PN</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRT01AN</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTEDT</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTDUR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, ...) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> UseMethod("mean")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55df9a2e2dc8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5587362fadc8&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:base&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TRTSDT</span>
