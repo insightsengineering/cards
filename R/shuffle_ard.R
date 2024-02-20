@@ -113,11 +113,14 @@ shuffle_ard <- function(x, trim = TRUE) {
     # detect any warning/error messages and notify user
     .detect_msgs("warning", "error") |>
     # filter to numeric statistic values
-    dplyr::filter(map_lgl(.data$statistic, is.numeric)) |>
+    dplyr::filter(map_lgl(
+      .data$statistic,
+      \(x) is.numeric(x) || is.na(x) || is.null(x)
+    )) |>
     # unlist the list-columns
     dplyr::mutate(statistic = lapply(
       .data$statistic,
-      \(x) if (!is.null(x)) x else NA
+      \(x) if (!is.null(x) && !is.na(x)) x else NA_real_
     ) |> unlist() |> unname()) |>
     # remove the formatting functions / warning / error
     dplyr::select(-where(is.list), -any_of("stat_label"))
