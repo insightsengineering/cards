@@ -60,11 +60,10 @@ ard_complex <- function(data,
   check_not_missing(variables)
   check_not_missing(statistic)
   check_data_frame(x = data)
-  check_class(x = statistic, cls = c("list", "formula"), allow_empty = FALSE)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})
-  process_formula_selectors(data[variables], statistic = statistic)
+  process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
   missing_statistics_vars <- setdiff(variables, names(statistic))
   if (!is_empty(missing_statistics_vars)) {

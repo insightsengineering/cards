@@ -58,6 +58,9 @@
 #' @param include_env (`logical`)\cr
 #'   whether to include the environment from the formula object in the returned
 #'   named list. Default is `FALSE`
+#' @param allow_empty (`logical`)\cr
+#'   Logical indicating whether empty result is acceptable while process
+#'   formula-list selectors. Default is `TRUE`.
 #'
 #' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
 #' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
@@ -130,7 +133,8 @@ process_selectors <- function(data, ..., env = caller_env()) {
 
 #' @name process_selectors
 #' @export
-process_formula_selectors <- function(data, ..., env = caller_env(), include_env = FALSE) {
+process_formula_selectors <- function(data, ..., env = caller_env(),
+                                      include_env = FALSE, allow_empty = TRUE) {
   # saved dots as named list
   dots <- dots_list(...)
 
@@ -183,7 +187,10 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 #' @name process_selectors
 #' @export
 compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(),
-                                     strict = TRUE, include_env = FALSE) {
+                                     strict = TRUE, include_env = FALSE, allow_empty = TRUE) {
+  # check inputs ---------------------------------------------------------------
+  check_formula_list_selector(x, arg_name = arg_name, allow_empty = allow_empty, call = env)
+
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
     return(x[intersect(names(x), names(data))])
@@ -193,13 +200,6 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   if (inherits(x, "formula")) x <- list(x)
 
   for (i in seq_along(x)) {
-    # first check the class of the list element
-    if (!.is_named_list(x[i]) && !inherits(x[[i]], "formula")) {
-      c("The {.arg {arg_name}} argument must be a named list, list of formulas, or a single formula.",
-        "i" = "Review {.help [?syntax](cards::syntax)} for examples and details."
-      ) |>
-        cli::cli_abort(call = env)
-    }
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
       lhs_expr <- f_lhs(x[[i]])

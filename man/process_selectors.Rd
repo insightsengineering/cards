@@ -10,7 +10,13 @@
 \usage{
 process_selectors(data, ..., env = caller_env())
 
-process_formula_selectors(data, ..., env = caller_env(), include_env = FALSE)
+process_formula_selectors(
+  data,
+  ...,
+  env = caller_env(),
+  include_env = FALSE,
+  allow_empty = TRUE
+)
 
 fill_formula_selectors(data, ..., env = caller_env())
 
@@ -20,7 +26,8 @@ compute_formula_selector(
   arg_name = caller_arg(x),
   env = caller_env(),
   strict = TRUE,
-  include_env = FALSE
+  include_env = FALSE,
+  allow_empty = TRUE
 )
 
 check_list_elements(
@@ -54,6 +61,10 @@ env to save the results to. Default is the calling environment.}
 \item{include_env}{(\code{logical})\cr
 whether to include the environment from the formula object in the returned
 named list. Default is \code{FALSE}}
+
+\item{allow_empty}{(\code{logical})\cr
+Logical indicating whether empty result is acceptable while process
+formula-list selectors. Default is \code{TRUE}.}
 
 \item{x}{\itemize{
 \item \code{compute_formula_selector()}: (\code{\link[=syntax]{formula-list-selector}})\cr
