@@ -13,7 +13,7 @@
       process_formula_selectors(mtcars, variables = list(letters))
     Condition
       Error:
-      ! The `variables` argument must be a named list, list of formulas, or a single formula.
+      ! The `variables` argument must be a named list, list of formulas, a single formula, or empty.
       i Review ?syntax (`?cards::syntax()`) for examples and details.
 
 # compute_formula_selector() selects the last assignment when multiple appear
