@@ -6,6 +6,7 @@
 \alias{fill_formula_selectors}
 \alias{compute_formula_selector}
 \alias{check_list_elements}
+\alias{cards_select}
 \title{Process tidyselectors}
 \usage{
 process_selectors(data, ..., env = caller_env())
@@ -37,6 +38,8 @@ check_list_elements(
   env = rlang::caller_env(),
   arg_name = rlang::caller_arg(x)
 )
+
+cards_select(expr, data, ..., arg_name = NULL, .call = parent.frame())
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -89,6 +92,12 @@ a predicate function that returns \code{TRUE} or \code{FALSE}}
 a character vector that will
 be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
+
+\item{expr}{(\code{expression})\cr
+Defused R code describing a selection according to the tidyselect syntax.}
+
+\item{.call}{(\code{environment})\cr
+calling environment used for error messaging.}
 }
 \value{
 \code{process_selectors()}, \code{fill_formula_selectors()}, and \code{check_list_elements()}
@@ -113,6 +122,8 @@ value, and if not, fills the value in with the default value passed here.
 evaluate a single argument.
 \item \code{check_list_elements()}: used to check the class/type/values of the list
 elements, primarily those processed with \code{process_formula_selectors()}.
+\item \code{cards_select()}: wraps \code{tidyselect::eval_select() |> names()}, and returns
+better contextual messaging when errors occur.
 }
 }
 \examples{
