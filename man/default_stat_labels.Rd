@@ -7,7 +7,7 @@
 default_stat_labels()
 }
 \value{
-named list of values
+named list
 }
 \description{
 Returns a named list of statistics labels

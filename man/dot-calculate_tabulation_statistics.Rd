@@ -10,7 +10,7 @@
   by,
   strata,
   denominator,
-  statistics,
+  statistic,
   call = parent.frame()
 )
 }
@@ -37,18 +37,18 @@ Arguments may be used in conjunction with one another.}
 Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
+e.g. \code{list(mpg = categorical_summary_fns())}.}
 }
 \value{
 an ARD data frame of class 'card'
 }
 \description{
 Function takes the summary instructions from the
-\code{statistics = list(variable_name = list(tabulation=c("n", "N", "p")))}
+\code{statistic = list(variable_name = list(tabulation=c("n", "N", "p")))}
 argument, and returns the tabulations in an ARD structure.
 }
 \examples{
@@ -58,7 +58,7 @@ cards:::.calculate_tabulation_statistics(
   by = NULL,
   strata = NULL,
   denominator = "cell",
-  statistics = list(ARM = list(tabulation = c("N")))
+  statistic = list(ARM = list(tabulation = c("N")))
 )
 }
 \keyword{internal}

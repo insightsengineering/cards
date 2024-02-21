@@ -6,11 +6,18 @@
 \alias{fill_formula_selectors}
 \alias{compute_formula_selector}
 \alias{check_list_elements}
+\alias{cards_select}
 \title{Process tidyselectors}
 \usage{
 process_selectors(data, ..., env = caller_env())
 
-process_formula_selectors(data, ..., env = caller_env(), include_env = FALSE)
+process_formula_selectors(
+  data,
+  ...,
+  env = caller_env(),
+  include_env = FALSE,
+  allow_empty = TRUE
+)
 
 fill_formula_selectors(data, ..., env = caller_env())
 
@@ -20,7 +27,8 @@ compute_formula_selector(
   arg_name = caller_arg(x),
   env = caller_env(),
   strict = TRUE,
-  include_env = FALSE
+  include_env = FALSE,
+  allow_empty = TRUE
 )
 
 check_list_elements(
@@ -30,6 +38,8 @@ check_list_elements(
   env = rlang::caller_env(),
   arg_name = rlang::caller_arg(x)
 )
+
+cards_select(expr, data, ..., arg_name = NULL, .call = parent.frame())
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -55,6 +65,10 @@ env to save the results to. Default is the calling environment.}
 whether to include the environment from the formula object in the returned
 named list. Default is \code{FALSE}}
 
+\item{allow_empty}{(\code{logical})\cr
+Logical indicating whether empty result is acceptable while process
+formula-list selectors. Default is \code{TRUE}.}
+
 \item{x}{\itemize{
 \item \code{compute_formula_selector()}: (\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, list of formulas, or a single formula that will be
@@ -78,10 +92,16 @@ a predicate function that returns \code{TRUE} or \code{FALSE}}
 a character vector that will
 be used in error messaging when mis-specified arguments are passed. Elements
 \code{"{arg_name}"} and \code{"{variable}"} are available using glue syntax for messaging.}
+
+\item{expr}{(\code{expression})\cr
+Defused R code describing a selection according to the tidyselect syntax.}
+
+\item{.call}{(\code{environment})\cr
+calling environment used for error messaging.}
 }
 \value{
-\code{process_selectors()}, \code{fill_formula_selectors()}, and \code{check_list_elements()}
-return NULL, \code{process_formula_selectors()} and \code{compute_formula_selector()} return a
+\code{process_selectors()}, \code{fill_formula_selectors()}, \code{process_formula_selectors()}
+and \code{check_list_elements()} return NULL. \code{compute_formula_selector()} returns a
 named list.
 }
 \description{
@@ -102,6 +122,8 @@ value, and if not, fills the value in with the default value passed here.
 evaluate a single argument.
 \item \code{check_list_elements()}: used to check the class/type/values of the list
 elements, primarily those processed with \code{process_formula_selectors()}.
+\item \code{cards_select()}: wraps \code{tidyselect::eval_select() |> names()}, and returns
+better contextual messaging when errors occur.
 }
 }
 \examples{
@@ -114,13 +136,13 @@ fill_formula_selectors(ADSL, env = example_env)
 
 process_formula_selectors(
   ADSL,
-  statistics = list(starts_with("TRT") ~ mean, TRTSDT = min),
+  statistic = list(starts_with("TRT") ~ mean, TRTSDT = min),
   env = example_env
 )
-get(x = "statistics", envir = example_env)
+get(x = "statistic", envir = example_env)
 
 check_list_elements(
-  get(x = "statistics", envir = example_env),
+  get(x = "statistic", envir = example_env),
   predicate = function(x) !is.null(x),
   error_msg = c(
     "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",

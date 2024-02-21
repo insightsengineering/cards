@@ -1,7 +1,16 @@
-url: https://insightsengineering.github.io/cards/
+---
+url: https://insightsengineering.github.io/cards
 
 template:
   package: nesttemplate
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+    github:
+      icon: fa-github
+      href: https://github.com/insightsengineering/cards
 
 development:
   mode: auto
@@ -21,6 +30,7 @@ reference:
       - ard_dichotomous
       - ard_missing
       - ard_complex
+      - ard_stack
 
   - subtitle: "Misc."
   -  contents:
@@ -32,7 +42,7 @@ reference:
     contents:
       - bind_ard
       - tidy_ard_column_order
-      - apply_statistic_fmt_fn
+      - apply_fmt_fn
       - process_selectors
       - tidy_as_ard
       - nest_for_ard
@@ -45,10 +55,11 @@ reference:
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
+      - replace_null_statistic
   - subtitle: "Data Summary Functions"
     contents:
-      - continuous_variable_summary_fns
-      - maximum_variable_values
+      - continuous_summary_fns
+      - maximum_variable_value
   - subtitle: "Misc."
     contents:
       - selectors

@@ -11,19 +11,19 @@
 #'
 #' @examples
 #' ard_continuous(ADSL, variables = "AGE") |>
-#'   apply_statistic_fmt_fn()
-apply_statistic_fmt_fn <- function(x) {
+#'   apply_fmt_fn()
+apply_fmt_fn <- function(x) {
   if (!inherits(x, "card")) {
     cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."))
   }
 
   x |>
     dplyr::mutate(
-      .after = "statistic",
-      statistic_fmt =
+      .after = "stat",
+      stat_fmt =
         map2(
-          .data$statistic,
-          .data$statistic_fmt_fn,
+          .data$stat,
+          .data$fmt_fn,
           function(x, fn) {
             if (!is.null(fn)) {
               do.call(alias_as_fmt_fn(fn), args = list(x))
@@ -117,13 +117,19 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
 label_cards <- function(digits = 1, scale = 1, width = NULL) {
   function(x) {
     # round and scale vector
-    res <- format(round5(x * scale, digits = digits), nsmall = digits)
+    res <-
+      ifelse(
+        is.na(x),
+        NA_character_,
+        format(round5(x * scale, digits = digits), nsmall = digits) |> str_trim()
+      )
+
 
     # if width provided, pad formatted result
     if (!is.null(width)) {
       res <-
         ifelse(
-          nchar(res) >= width,
+          nchar(res) >= width | is.na(res),
           res,
           paste0(strrep(" ", width - nchar(res)), res)
         )

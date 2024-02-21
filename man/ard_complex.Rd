@@ -9,9 +9,9 @@ ard_complex(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  statistics,
+  statistic,
   fmt_fn = NULL,
-  stat_labels = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels()
 )
 }
 \arguments{
@@ -33,8 +33,8 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
-The form of the statistics argument is identical to \code{ard_continuous(statistics)}
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
+The form of the statistics argument is identical to \code{ard_continuous(statistic)}
 argument, except the summary function \emph{must} accept the following arguments:
 \itemize{
 \item \code{x}: a vector
@@ -57,7 +57,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-\item{stat_labels}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{stat_label}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
@@ -69,8 +69,8 @@ an ARD data frame of class 'card'
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Function is similar to \code{\link[=ard_continuous]{ard_continuous()}}, but allows for more complex
-summaries. While \code{ard_continuous(statistics)} only allows for a univariable
-function, \code{ard_complex(statistics)} can handle more complex data summaries.
+summaries. While \code{ard_continuous(statistic)} only allows for a univariable
+function, \code{ard_complex(statistic)} can handle more complex data summaries.
 }
 \examples{
 # example how to mimic behavior of `ard_continuous()`
@@ -78,7 +78,7 @@ ard_complex(
   ADSL,
   by = "ARM",
   variables = "AGE",
-  statistics = list(AGE = list(mean = \(x, ...) mean(x)))
+  statistic = list(AGE = list(mean = \(x, ...) mean(x)))
 )
 
 # return the grand mean and the mean within the `by` group
@@ -93,6 +93,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_complex(
     variables = "AGE",
-    statistics = list(AGE = list(means = grand_mean))
+    statistic = list(AGE = list(means = grand_mean))
   )
 }

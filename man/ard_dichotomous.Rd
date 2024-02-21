@@ -9,11 +9,11 @@ ard_dichotomous(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  values = maximum_variable_values(data[variables]),
-  statistics = everything() ~ categorical_variable_summary_fns(),
+  value = maximum_variable_value(data[variables]),
+  statistic = everything() ~ categorical_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
-  stat_labels = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels()
 )
 }
 \arguments{
@@ -35,15 +35,15 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{values}{(named \code{list})\cr
-named list of dichotomous values to tabulate. Default is \code{maximum_variable_values(data)},
+\item{value}{(named \code{list})\cr
+named list of dichotomous values to tabulate. Default is \code{maximum_variable_value(data)},
 which returns the largest/last value after a sort.}
 
-\item{statistics}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
+e.g. \code{list(mpg = categorical_summary_fns())}.}
 
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
 Specify this \emph{optional} argument to change the denominator,
@@ -55,7 +55,7 @@ or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character))}.}
 
-\item{stat_labels}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{stat_label}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
@@ -68,13 +68,13 @@ an ARD data frame of class 'card'
 Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 }
 \examples{
-ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), values = list(cyl = 4))
+ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), value = list(cyl = 4))
 
 mtcars |>
   dplyr::group_by(vs) |>
   ard_dichotomous(
     variables = c(cyl, am),
-    values = list(cyl = 4),
-    statistics = ~ categorical_variable_summary_fns("p")
+    value = list(cyl = 4),
+    statistic = ~ categorical_summary_fns("p")
   )
 }

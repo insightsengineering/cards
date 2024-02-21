@@ -4,7 +4,7 @@
       bind_ard(ard, ard, .update = letters)
     Condition
       Error in `bind_ard()`:
-      ! The `.update` argument must be class <logical>.
+      ! The `.update` argument must be a scalar with class <logical>, not a character vector.
 
 ---
 
@@ -20,7 +20,7 @@
       dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM",
         variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
-      }, .order = TRUE)), -c(context, statistic_fmt_fn, warning, error))
+      }, .order = TRUE)), -c(context, fmt_fn, warning, error))
     Output
          group1         group1_level variable variable_level stat_name stat_label
       1     ARM  Xanomeline Low Dose      SEX              M         n          n
@@ -41,7 +41,7 @@
       16    ARM              Placebo      SEX              F         N          N
       17    ARM              Placebo      SEX              F         p          %
       18    ARM              Placebo      SEX              M         n          n
-         statistic
+              stat
       1         34
       2  0.4047619
       3  0.5952381
@@ -67,7 +67,7 @@
       dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM",
         variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
-      }, .order = FALSE)), -c(context, statistic_fmt_fn, warning, error))
+      }, .order = FALSE)), -c(context, fmt_fn, warning, error))
     Output
          group1         group1_level variable variable_level stat_name stat_label
       1     ARM              Placebo      SEX              F         p          %
@@ -88,7 +88,7 @@
       16    ARM Xanomeline High Dose      SEX              M         n          n
       17    ARM  Xanomeline Low Dose      SEX              M         N          N
       18    ARM  Xanomeline Low Dose      SEX              M         n          n
-         statistic
+              stat
       1  0.6162791
       2         84
       3         40

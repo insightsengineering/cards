@@ -24,7 +24,7 @@ consecutive rows. Default is \code{FALSE}. Ordering will be based on the order
 of the group/variable values prior to stacking.}
 }
 \value{
-a transformed ARD data frame of class 'card'
+an ARD data frame of class 'card'
 }
 \description{
 Wrapper for \code{dplyr::bind_rows()} with additional checks

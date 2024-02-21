@@ -2,7 +2,7 @@
 #'
 #' Returns a named list of statistics labels
 #'
-#' @return named list of values
+#' @return named list
 #' @export
 #'
 #' @examples

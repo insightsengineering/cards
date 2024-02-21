@@ -14,7 +14,7 @@
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   not used
 #'
-#' @return an ARD data frame of class 'card'
+#' @return an ARD data frame of class 'card' (invisibly)
 #' @export
 #'
 #' @examples
@@ -38,7 +38,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       x_print[["warning"]] <- NULL
     }
     if (ncol(x_print) > n_col) {
-      x_print[["statistic_fmt_fn"]] <- NULL
+      x_print[["fmt_fn"]] <- NULL
     } # remove this col if there are many cols
     if (ncol(x_print) > n_col) {
       x_print[["context"]] <- NULL
@@ -71,25 +71,28 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     )
 
   # for the statistics, round to 3 decimal places ------------------------------
-  if ("statistic" %in% names(x_print)) {
-    x_print$statistic <- lapply(
-      x_print$statistic,
+  if ("stat" %in% names(x_print)) {
+    x_print$stat <- lapply(
+      x_print$stat,
       function(x) {
-        if (isTRUE(is.double(x))) {
-          return(round5(x, digits = 3))
+        if (isTRUE(is.numeric(x))) {
+          res <- round5(x, digits = 3)
+        } else {
+          res <- as.character(x)
         }
-        if (is_string(x) && nchar(x) > 9) {
-          return(paste0(substr(x, 1, 8), "\u2026"))
+
+        if (is_string(res) && nchar(res) > 9) {
+          res <- paste0(substr(res, 1, 8), "\u2026")
         }
-        x
+        res
       }
     )
   }
 
   # for the formatting function column, abbreviate the print of proper functions
-  if ("statistic_fmt_fn" %in% names(x_print)) {
-    x_print$statistic_fmt_fn <- lapply(
-      x_print$statistic_fmt_fn,
+  if ("fmt_fn" %in% names(x_print)) {
+    x_print$fmt_fn <- lapply(
+      x_print$fmt_fn,
       function(x) {
         if (isTRUE(is.function(x))) {
           return("<fn>")

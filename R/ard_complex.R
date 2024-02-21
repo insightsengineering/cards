@@ -2,12 +2,12 @@
 #'
 #' `r lifecycle::badge('experimental')`\cr
 #' Function is similar to [ard_continuous()], but allows for more complex
-#' summaries. While `ard_continuous(statistics)` only allows for a univariable
-#' function, `ard_complex(statistics)` can handle more complex data summaries.
+#' summaries. While `ard_continuous(statistic)` only allows for a univariable
+#' function, `ard_complex(statistic)` can handle more complex data summaries.
 #'
 #' @inheritParams ard_continuous
-#' @param statistics ([`formula-list-selector`][syntax])\cr
-#'   The form of the statistics argument is identical to `ard_continuous(statistics)`
+#' @param statistic ([`formula-list-selector`][syntax])\cr
+#'   The form of the statistics argument is identical to `ard_continuous(statistic)`
 #'   argument, except the summary function _must_ accept the following arguments:
 #'   - `x`: a vector
 #'   - `data`: the data frame that has been subset such that the `by`/`strata` columns
@@ -31,7 +31,7 @@
 #'   ADSL,
 #'   by = "ARM",
 #'   variables = "AGE",
-#'   statistics = list(AGE = list(mean = \(x, ...) mean(x)))
+#'   statistic = list(AGE = list(mean = \(x, ...) mean(x)))
 #' )
 #'
 #' # return the grand mean and the mean within the `by` group
@@ -46,29 +46,28 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_complex(
 #'     variables = "AGE",
-#'     statistics = list(AGE = list(means = grand_mean))
+#'     statistic = list(AGE = list(means = grand_mean))
 #'   )
 ard_complex <- function(data,
                         variables,
                         by = dplyr::group_vars(data),
                         strata = NULL,
-                        statistics,
+                        statistic,
                         fmt_fn = NULL,
-                        stat_labels = everything() ~ default_stat_labels()) {
+                        stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_not_missing(statistics)
-  check_class_data_frame(x = data)
-  check_class(x = statistics, class = c("list", "formula"), allow_null = FALSE)
+  check_not_missing(statistic)
+  check_data_frame(x = data)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})
-  process_formula_selectors(data[variables], statistics = statistics)
+  process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
-  missing_statistics_vars <- setdiff(variables, names(statistics))
+  missing_statistics_vars <- setdiff(variables, names(statistic))
   if (!is_empty(missing_statistics_vars)) {
-    "The following columns do not have {.arg statistics} defined: {.val {missing_statistics_vars}}." |>
+    "The following columns do not have {.arg statistic} defined: {.val {missing_statistics_vars}}." |>
       cli::cli_abort()
   }
 
@@ -95,9 +94,9 @@ ard_complex <- function(data,
     variables = all_of(variables),
     by = {{ by }},
     strata = {{ strata }},
-    statistics = statistics,
+    statistic = statistic,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   ) |>
     dplyr::mutate(context = "complex")
 }

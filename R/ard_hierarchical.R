@@ -39,13 +39,13 @@ NULL
 ard_hierarchical <- function(data,
                              variables,
                              by = dplyr::group_vars(data),
-                             statistics = everything() ~ categorical_variable_summary_fns(),
+                             statistic = everything() ~ categorical_summary_fns(),
                              denominator = NULL, fmt_fn = NULL,
-                             stat_labels = everything() ~ default_stat_labels()) {
+                             stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(x = data)
+  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -83,10 +83,10 @@ ard_hierarchical <- function(data,
       variables = "...ard_dummy_for_counting...",
       by = all_of(by),
       strata = all_of(variables),
-      statistics = statistics,
+      statistic = statistic,
       denominator = denominator,
       fmt_fn = fmt_fn,
-      stat_labels = stat_labels
+      stat_label = stat_label
     )
 
   # renaming columns -----------------------------------------------------------
@@ -103,11 +103,11 @@ ard_hierarchical_count <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
                                    fmt_fn = NULL,
-                                   stat_labels = everything() ~ default_stat_labels()) {
+                                   stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  check_class_data_frame(x = data)
+  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -134,9 +134,9 @@ ard_hierarchical_count <- function(data,
           variables = "...ard_dummy_for_counting...",
           by = all_of(by),
           strata = all_of(variables[seq_len(i)]),
-          statistics = everything() ~ categorical_variable_summary_fns("n"),
+          statistic = everything() ~ categorical_summary_fns("n"),
           fmt_fn = fmt_fn,
-          stat_labels = stat_labels
+          stat_label = stat_label
         ) |>
           .rename_last_group_as_variable()
       }

@@ -25,7 +25,7 @@ ard <- ard_continuous(
   ADSL,
   by = ARM,
   variables = AGE,
-  statistics = ~ list(
+  statistic = ~ list(
     mean = \(x) mean(x),
     mean_warning = \(x) {
       warning("warn1")

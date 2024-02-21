@@ -23,6 +23,9 @@
 #' - `check_list_elements()`: used to check the class/type/values of the list
 #'   elements, primarily those processed with `process_formula_selectors()`.
 #'
+#' - `cards_select()`: wraps `tidyselect::eval_select() |> names()`, and returns
+#'   better contextual messaging when errors occur.
+#'
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
@@ -58,9 +61,16 @@
 #' @param include_env (`logical`)\cr
 #'   whether to include the environment from the formula object in the returned
 #'   named list. Default is `FALSE`
+#' @param allow_empty (`logical`)\cr
+#'   Logical indicating whether empty result is acceptable while process
+#'   formula-list selectors. Default is `TRUE`.
+#' @param .call (`environment`)\cr
+#'   calling environment used for error messaging.
+#' @param expr (`expression`)\cr
+#'   Defused R code describing a selection according to the tidyselect syntax.
 #'
-#' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
-#' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
+#' @return `process_selectors()`, `fill_formula_selectors()`, `process_formula_selectors()`
+#' and `check_list_elements()` return NULL. `compute_formula_selector()` returns a
 #' named list.
 #' @name process_selectors
 #'
@@ -74,13 +84,13 @@
 #'
 #' process_formula_selectors(
 #'   ADSL,
-#'   statistics = list(starts_with("TRT") ~ mean, TRTSDT = min),
+#'   statistic = list(starts_with("TRT") ~ mean, TRTSDT = min),
 #'   env = example_env
 #' )
-#' get(x = "statistics", envir = example_env)
+#' get(x = "statistic", envir = example_env)
 #'
 #' check_list_elements(
-#'   get(x = "statistics", envir = example_env),
+#'   get(x = "statistic", envir = example_env),
 #'   predicate = function(x) !is.null(x),
 #'   error_msg = c(
 #'     "Error in the argument {.arg {arg_name}} for variable {.val {variable}}.",
@@ -104,20 +114,13 @@ process_selectors <- function(data, ..., env = caller_env()) {
       dots,
       function(x, arg_name) {
         processed_value <-
-          eval_capture_conditions({
-            tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
-          })
-        if (!is.null(processed_value[["result"]])) {
-          return(processed_value[["result"]])
-        }
-
-        cli::cli_abort(
-          c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
-            "i" = "{processed_value[['error']]}"
-          ),
-          class = "process_selectors_error",
-          call = env
-        )
+          cards_select(
+            expr = x,
+            data = data,
+            allow_rename = FALSE,
+            arg_name = arg_name,
+            .call = env
+          )
       }
     )
 
@@ -130,7 +133,8 @@ process_selectors <- function(data, ..., env = caller_env()) {
 
 #' @name process_selectors
 #' @export
-process_formula_selectors <- function(data, ..., env = caller_env(), include_env = FALSE) {
+process_formula_selectors <- function(data, ..., env = caller_env(),
+                                      include_env = FALSE, allow_empty = TRUE) {
   # saved dots as named list
   dots <- dots_list(...)
 
@@ -183,7 +187,10 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 #' @name process_selectors
 #' @export
 compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(),
-                                     strict = TRUE, include_env = FALSE) {
+                                     strict = TRUE, include_env = FALSE, allow_empty = TRUE) {
+  # check inputs ---------------------------------------------------------------
+  check_formula_list_selector(x, arg_name = arg_name, allow_empty = allow_empty, call = env)
+
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
     return(x[intersect(names(x), names(data))])
@@ -193,25 +200,20 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   if (inherits(x, "formula")) x <- list(x)
 
   for (i in seq_along(x)) {
-    # first check the class of the list element
-    if (!.is_named_list(x[i]) && !inherits(x[[i]], "formula")) {
-      c("The {.arg {arg_name}} argument must be a named list, list of formulas, or a single formula.",
-        "i" = "Review {.help [?syntax](cards::syntax)} for examples and details."
-      ) |>
-        cli::cli_abort(call = env)
-    }
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
       lhs_expr <- f_lhs(x[[i]])
 
       if (!is.null(data)) {
-        lhs_expr <- tidyselect::eval_select(
+        lhs_expr <- cards_select(
           # if nothing found on LHS of formula, using `everything()`
-          f_lhs(x[[i]]) %||% dplyr::everything(),
+          expr = f_lhs(x[[i]]) %||% dplyr::everything(),
           data = data,
-          strict = strict
-        ) |>
-          names()
+          strict = strict,
+          allow_rename = FALSE,
+          arg_name = arg_name,
+          .call = env
+        )
       }
 
       colnames <-
@@ -266,4 +268,27 @@ check_list_elements <- function(x,
   )
 
   invisible()
+}
+
+#' @name process_selectors
+#' @export
+cards_select <- function(expr, data, ...,
+                         arg_name = NULL,
+                         .call = parent.frame()) {
+  tryCatch(
+    tidyselect::eval_select(expr = expr, data = data, ...) |> names(),
+    error = function(e) {
+      cli::cli_abort(
+        message =
+          c(
+            "!" = switch(!is.null(arg_name),
+              "Error processing {.arg {arg_name}} argument."
+            ),
+            "!" = cli::ansi_strip(conditionMessage(e)),
+            i = "Select among columns {.val {names(data)}}"
+          ),
+        call = .call
+      )
+    }
+  )
 }

@@ -21,7 +21,8 @@
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
-  check_class(x = x, class = "card")
+  check_class(x = x, cls = "card")
+  check_scalar_logical(trim)
 
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
@@ -105,18 +106,21 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' ard |> cards:::.trim_ard()
 .trim_ard <- function(x) {
-  check_class_data_frame(x)
+  check_data_frame(x)
 
   # flatten ard table for easier viewing ---------------------------------------
   x |>
     # detect any warning/error messages and notify user
     .detect_msgs("warning", "error") |>
     # filter to numeric statistic values
-    dplyr::filter(map_lgl(.data$statistic, is.numeric)) |>
+    dplyr::filter(map_lgl(
+      .data$stat,
+      \(x) is.null(x) || (length(x) == 1L && (is.numeric(x) || is.na(x)))
+    )) |>
     # unlist the list-columns
-    dplyr::mutate(statistic = lapply(
-      .data$statistic,
-      \(x) if (!is.null(x)) x else NA
+    dplyr::mutate(stat = lapply(
+      .data$stat,
+      \(x) if (!is.null(x) && !is.na(x)) x else NA_real_
     ) |> unlist() |> unname()) |>
     # remove the formatting functions / warning / error
     dplyr::select(-where(is.list), -any_of("stat_label"))
@@ -141,7 +145,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
-#'   statistics = ~ list(
+#'   statistic = ~ list(
 #'     mean = \(x) mean(x),
 #'     mean_warning = \(x) {
 #'       warning("warn1")

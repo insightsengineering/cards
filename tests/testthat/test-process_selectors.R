@@ -53,6 +53,11 @@ test_that("process_formula_selectors() error messaging", {
     process_formula_selectors(mtcars, variables = list(letters)),
     error = TRUE
   )
+
+  expect_snapshot(
+    process_formula_selectors(mtcars, variables = list(not_a_column ~ letters)),
+    error = TRUE
+  )
 })
 
 test_that("compute_formula_selector() selects the last assignment when multiple appear", {

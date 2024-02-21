@@ -39,7 +39,7 @@ tidy_ard_column_order <- function(x) {
     all_ard_variables(),
     any_of(c(
       "context",
-      "stat_name", "stat_label", "statistic", "statistic_fmt", "statistic_fmt_fn",
+      "stat_name", "stat_label", "stat", "stat_fmt", "fmt_fn",
       "warning", "error"
     )),
     dplyr::everything()
@@ -50,7 +50,7 @@ tidy_ard_column_order <- function(x) {
 #' @rdname tidy_ard_order
 #' @export
 tidy_ard_row_order <- function(x) {
-  check_class(x, class = "card")
+  check_class(x, cls = "card")
 
   # get columns that dictate ordering
   cols <- x |>

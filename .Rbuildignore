@@ -11,3 +11,4 @@
 ^data-raw$
 ^vignettes/articles$
 ^\.DS_Store$
+^cran-comments\.md$

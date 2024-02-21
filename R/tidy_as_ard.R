@@ -56,7 +56,7 @@
 #' my_ard_fishertest(mtcars, by = "am", variable = "vs")
 tidy_as_ard <- function(lst_tidy,
                         tidy_result_names,
-                        fun_args_to_record,
+                        fun_args_to_record = character(0L),
                         formals = list(),
                         passed_args = list(),
                         lst_ard_columns) {
@@ -99,8 +99,8 @@ tidy_as_ard <- function(lst_tidy,
   # add results to tibble ------------------------------------------------------
   dplyr::tibble(
     stat_name = names(lst_all_results),
-    statistic = lst_all_results,
-    statistic_fmt_fn = lapply(.data$statistic, function(x) {
+    stat = lst_all_results,
+    fmt_fn = lapply(.data$stat, function(x) {
       switch(is.numeric(x),
         1L
       )
