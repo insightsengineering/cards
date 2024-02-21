@@ -2,7 +2,7 @@ ard_fmt_checks <-
   ard_continuous(
     data = mtcars,
     variables = mpg,
-    statistic = ~ continuous_variable_summary_fns(c("mean", "sd"))
+    statistic = ~ continuous_summary_fns(c("mean", "sd"))
   )
 
 

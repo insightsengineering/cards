@@ -35,7 +35,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = "AGE",
-    statistic = list(AGE = continuous_variable_summary_fns(c("N", "mean", "median"))),
+    statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
     fmt_fn =
       list(
         AGE =
@@ -54,7 +54,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistic = ~ continuous_variable_summary_fns("mean"),
+    statistic = ~ continuous_summary_fns("mean"),
     fmt_fn =
       list(
         AGE =
@@ -72,7 +72,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistic = ~ continuous_variable_summary_fns(c("mean", "sd")),
+    statistic = ~ continuous_summary_fns(c("mean", "sd")),
     fmt_fn = ~ list(~ function(x) round(x, 4))
   ) |>
     apply_statistic_fmt_fn() |>
@@ -229,7 +229,7 @@ test_that("ard_continuous() with dates works and displays as expected", {
   ard_date <- ADSL |>
     ard_continuous(
       variables = DISONSDT,
-      statistic = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+      statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
     )
   expect_snapshot(ard_date)
 
@@ -240,7 +240,7 @@ test_that("ard_continuous() with empty/missing dates works, and preserves Date c
   empty_date <- data.frame(dt = as.Date(NA)) |>
     ard_continuous(
       variables = dt,
-      statistic = ~ continuous_variable_summary_fns(c("min"))
+      statistic = ~ continuous_summary_fns(c("min"))
     )
   expect_equal(inherits(empty_date$statistic[[1]], "Date"), TRUE)
 })

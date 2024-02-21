@@ -78,7 +78,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   # mix of missing/nonmissing group levels present before shuffle
   expect_snapshot(
     bind_ard(
-      ard_continuous(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_variable_summary_fns("mean")),
+      ard_continuous(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))
     ) |>
       shuffle_ard()
@@ -87,7 +87,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   # no group levels present before shuffle
   expect_snapshot(
     bind_ard(
-      ard_continuous(ADSL, variables = "AGE", statistic = ~ continuous_variable_summary_fns("mean")),
+      ard_continuous(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", statistic = list(0.05))
     ) |>
       shuffle_ard()
@@ -100,7 +100,7 @@ test_that("shuffle_ard doesn't trim off NULL/NA values", {
     data.frame(x = rep_len(NA_character_, 10)) |>
       ard_continuous(
         variables = x,
-        statistic = ~ continuous_variable_summary_fns(c("median", "p25", "p75"))
+        statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
       ) |>
       shuffle_ard() |>
       dplyr::pull(statistic)

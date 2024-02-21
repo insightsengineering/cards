@@ -69,7 +69,7 @@
     Code
       dplyr::select(ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"),
       length.out = 10L, by = "day")), variables = x, statistic = ~
-      continuous_variable_summary_fns(c("min", "max", "sd"))), -statistic_fmt_fn)
+      continuous_summary_fns(c("min", "max", "sd"))), -statistic_fmt_fn)
     Message
       {cards} data frame: 3 x 7
     Output
@@ -84,8 +84,8 @@
 
     Code
       bind_ard(ard_attributes(mtcars, variables = mpg), ard_continuous(mtcars,
-        variables = mpg, statistic = ~ continuous_variable_summary_fns("mean",
-          other_stats = list(vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
+        variables = mpg, statistic = ~ continuous_summary_fns("mean", other_stats = list(
+          vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
     Message
       {cards} data frame: 4 x 8
     Output

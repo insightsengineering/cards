@@ -22,7 +22,7 @@
 #' data.frame(x = rep_len(NA_character_, 10)) |>
 #'   ard_continuous(
 #'     variables = x,
-#'     statistic = ~ continuous_variable_summary_fns(c("median", "p25", "p75"))
+#'     statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
 #'   ) |>
 #'   replace_null_statistic(rows = !is.null(error))
 replace_null_statistic <- function(x, value = NA, rows = TRUE) {

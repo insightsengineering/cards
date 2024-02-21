@@ -9,7 +9,7 @@ ard_continuous(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  statistic = everything() ~ continuous_variable_summary_fns(),
+  statistic = everything() ~ continuous_summary_fns(),
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels()
 )

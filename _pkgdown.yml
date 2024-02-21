@@ -58,7 +58,7 @@ reference:
       - replace_null_statistic
   - subtitle: "Data Summary Functions"
     contents:
-      - continuous_variable_summary_fns
+      - continuous_summary_fns
       - maximum_variable_value
   - subtitle: "Misc."
     contents:

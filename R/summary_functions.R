@@ -1,7 +1,7 @@
 #' Summary Functions
 #'
 #' @description
-#' - `continuous_variable_summary_fns()` returns a named list of summary functions
+#' - `continuous_summary_fns()` returns a named list of summary functions
 #'   for continuous variables. Some functions include slight modifications to
 #'   their base equivalents. For example, the `min()` and `max()` functions
 #'   return `NA` instead of `Inf` when an empty vector is passed.
@@ -21,8 +21,8 @@
 #' @param summaries (`character`)\cr
 #'   a character vector of results to include in output.
 #'
-#'   - `continuous_variable_summary_fns()`: Select one or more from
-#'     `r eval(formals(continuous_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
+#'   - `continuous_summary_fns()`: Select one or more from
+#'     `r eval(formals(continuous_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #'
 #'   - `categorical_variable_summary_fns()`: Select one or more from
 #'     `r eval(formals(categorical_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
@@ -32,7 +32,7 @@
 #' @param other_stats (named `list`)\cr
 #'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
-#' @return `continuous_variable_summary_fns()` and `missing_summary_fns()` return a named list of summary
+#' @return `continuous_summary_fns()` and `missing_summary_fns()` return a named list of summary
 #' functions, `categorical_variable_summary_fns()` returns a named list of summary statistics.
 #' @name summary_functions
 #'
@@ -41,7 +41,7 @@
 #' ard_continuous(
 #'   ADSL,
 #'   variables = "AGE",
-#'   statistic = ~ continuous_variable_summary_fns(c("N", "median"))
+#'   statistic = ~ continuous_summary_fns(c("N", "median"))
 #' )
 #'
 #' # categorical variable summaries
@@ -61,7 +61,7 @@ NULL
 
 #' @rdname summary_functions
 #' @export
-continuous_variable_summary_fns <- function(summaries = c(
+continuous_summary_fns <- function(summaries = c(
                                               "N", "mean", "sd", "median",
                                               "p25", "p75", "min", "max"
                                             ),

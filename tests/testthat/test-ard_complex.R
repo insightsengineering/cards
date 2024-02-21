@@ -13,7 +13,7 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistic = ~ continuous_variable_summary_fns("mean")
+      statistic = ~ continuous_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )
@@ -31,7 +31,7 @@ test_that("ard_complex() works", {
       ADSL,
       by = "ARM",
       variables = "AGE",
-      statistic = ~ continuous_variable_summary_fns("mean")
+      statistic = ~ continuous_summary_fns("mean")
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
   )

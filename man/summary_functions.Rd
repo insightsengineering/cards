@@ -2,12 +2,12 @@
 % Please edit documentation in R/summary_functions.R
 \name{summary_functions}
 \alias{summary_functions}
-\alias{continuous_variable_summary_fns}
+\alias{continuous_summary_fns}
 \alias{categorical_variable_summary_fns}
 \alias{missing_summary_fns}
 \title{Summary Functions}
 \usage{
-continuous_variable_summary_fns(
+continuous_summary_fns(
   summaries = c("N", "mean", "sd", "median", "p25", "p75", "min", "max"),
   other_stats = NULL
 )
@@ -25,7 +25,7 @@ missing_summary_fns(
 \item{summaries}{(\code{character})\cr
 a character vector of results to include in output.
 \itemize{
-\item \code{continuous_variable_summary_fns()}: Select one or more from
+\item \code{continuous_summary_fns()}: Select one or more from
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
 \item \code{categorical_variable_summary_fns()}: Select one or more from
 'n', 'p', 'N'.
@@ -37,12 +37,12 @@ a character vector of results to include in output.
 named list of other statistic functions to supplement the pre-programmed functions.}
 }
 \value{
-\code{continuous_variable_summary_fns()} and \code{missing_summary_fns()} return a named list of summary
+\code{continuous_summary_fns()} and \code{missing_summary_fns()} return a named list of summary
 functions, \code{categorical_variable_summary_fns()} returns a named list of summary statistics.
 }
 \description{
 \itemize{
-\item \code{continuous_variable_summary_fns()} returns a named list of summary functions
+\item \code{continuous_summary_fns()} returns a named list of summary functions
 for continuous variables. Some functions include slight modifications to
 their base equivalents. For example, the \code{min()} and \code{max()} functions
 return \code{NA} instead of \code{Inf} when an empty vector is passed.
@@ -63,7 +63,7 @@ for variable-level summaries, such as number and rate of missing data.
 ard_continuous(
   ADSL,
   variables = "AGE",
-  statistic = ~ continuous_variable_summary_fns(c("N", "median"))
+  statistic = ~ continuous_summary_fns(c("N", "median"))
 )
 
 # categorical variable summaries
