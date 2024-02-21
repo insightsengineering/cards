@@ -19,7 +19,7 @@ as_nested_list <- function(x) {
   }
 
   # format/round the statistics, if not already done ---------------------------
-  if (!"statistic_fmt" %in% names(x)) {
+  if (!"stat_fmt" %in% names(x)) {
     x <- apply_fmt_fn(x)
   }
 
@@ -67,7 +67,7 @@ as_nested_list <- function(x) {
     dplyr::select(., all_of(colnames(.) |> sort())) %>% # styler: off
     dplyr::select(
       any_of(c("variable", "variable_level")), starts_with("group"),
-      "stat_name", "statistic", "statistic_fmt", "warning", "error", "context" # TODO: we could apply a formatting function and add that here
+      "stat_name", "statistic", "stat_fmt", "warning", "error", "context" # TODO: we could apply a formatting function and add that here
     ) |>
     # drop columns that are NA
     dplyr::select(-(where(function(x) all(is.na(x))) & (starts_with("group") | any_of("variable_level"))))
@@ -89,7 +89,7 @@ as_nested_list <- function(x) {
     !!parse_expr(chr_nested_list_specification) <-
       !!dplyr::select(
         df_preparation,
-        any_of(c("statistic", "statistic_fmt", "warning", "error", "context"))
+        any_of(c("statistic", "stat_fmt", "warning", "error", "context"))
       ) |>
         # this essentially flattens the nested list one level, while maintaining the names
         imap(function(x, y) x[[1]])

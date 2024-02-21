@@ -19,15 +19,15 @@
         fmt_fn = list(am = list(p = function(x) as.character(round5(x * 100, digits = 3)),
         N = function(x) format(round5(x, digits = 2), nsmall = 2), N_obs = function(x)
           format(round5(x, digits = 2), nsmall = 2))))), variable, variable_level,
-      stat_name, statistic, statistic_fmt))
+      stat_name, statistic, stat_fmt))
     Output
-        variable variable_level stat_name statistic statistic_fmt
-      1       am              0         n        19            19
-      2       am              0         N        32         32.00
-      3       am              0         p   0.59375        59.375
-      4       am              1         n        13            13
-      5       am              1         N        32         32.00
-      6       am              1         p   0.40625        40.625
+        variable variable_level stat_name statistic stat_fmt
+      1       am              0         n        19       19
+      2       am              0         N        32    32.00
+      3       am              0         p   0.59375   59.375
+      4       am              1         n        13       13
+      5       am              1         N        32    32.00
+      6       am              1         p   0.40625   40.625
 
 ---
 
@@ -35,21 +35,21 @@
       as.data.frame(dplyr::select(apply_fmt_fn(ard_categorical(mtcars, variables = c(
         "am", "vs"), fmt_fn = list(am = list(p = function(x) round5(x * 100, digits = 3)),
       vs = list(p = function(x) round5(x * 100, digits = 1))))), variable,
-      variable_level, stat_name, statistic, statistic_fmt))
+      variable_level, stat_name, statistic, stat_fmt))
     Output
-         variable variable_level stat_name statistic statistic_fmt
-      1        am              0         n        19            19
-      2        am              0         N        32            32
-      3        am              0         p   0.59375        59.375
-      4        am              1         n        13            13
-      5        am              1         N        32            32
-      6        am              1         p   0.40625        40.625
-      7        vs              0         n        18            18
-      8        vs              0         N        32            32
-      9        vs              0         p    0.5625          56.3
-      10       vs              1         n        14            14
-      11       vs              1         N        32            32
-      12       vs              1         p    0.4375          43.8
+         variable variable_level stat_name statistic stat_fmt
+      1        am              0         n        19       19
+      2        am              0         N        32       32
+      3        am              0         p   0.59375   59.375
+      4        am              1         n        13       13
+      5        am              1         N        32       32
+      6        am              1         p   0.40625   40.625
+      7        vs              0         n        18       18
+      8        vs              0         N        32       32
+      9        vs              0         p    0.5625     56.3
+      10       vs              1         n        14       14
+      11       vs              1         N        32       32
+      12       vs              1         p    0.4375     43.8
 
 # ard_categorical() with strata and by arguments
 
@@ -122,25 +122,25 @@
       16    ARM Xanomeline High Dose   AGEGR1            >80 categorical         N
       17    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         n
       18    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         N
-         stat_label statistic statistic_fmt
-      1           n        42         42.00
-      2           N       144           144
-      3           n        55         55.00
-      4           N       144           144
-      5           n        47         47.00
-      6           N       144           144
-      7           n        14         14.00
-      8           N        33            33
-      9           n        11         11.00
-      10          N        33            33
-      11          n         8          8.00
-      12          N        33            33
-      13          n        30         30.00
-      14          N        77            77
-      15          n        18         18.00
-      16          N        77            77
-      17          n        29         29.00
-      18          N        77            77
+         stat_label statistic stat_fmt
+      1           n        42    42.00
+      2           N       144      144
+      3           n        55    55.00
+      4           N       144      144
+      5           n        47    47.00
+      6           N       144      144
+      7           n        14    14.00
+      8           N        33       33
+      9           n        11    11.00
+      10          N        33       33
+      11          n         8     8.00
+      12          N        33       33
+      13          n        30    30.00
+      14          N        77       77
+      15          n        18    18.00
+      16          N        77       77
+      17          n        29    29.00
+      18          N        77       77
 
 # ard_categorical(denominator=<data frame with counts>) works
 

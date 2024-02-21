@@ -10,7 +10,7 @@ test_that("apply_fmt_fn() works", {
   expect_equal(
     ard_fmt_checks |>
       apply_fmt_fn() |>
-      dplyr::pull(statistic_fmt) |>
+      dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.1", "6.0")
   )
@@ -22,7 +22,7 @@ test_that("apply_fmt_fn() works", {
         fmt_fn = list(NULL, 2)
       ) |>
       apply_fmt_fn() |>
-      dplyr::pull(statistic_fmt),
+      dplyr::pull(stat_fmt),
     list(NULL, "6.03")
   )
 })
@@ -34,7 +34,7 @@ test_that("apply_fmt_fn() works with integer specification", {
         fmt_fn = list(2, 2)
       ) |>
       apply_fmt_fn() |>
-      dplyr::pull(statistic_fmt) |>
+      dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.09", "6.03")
   )
@@ -47,7 +47,7 @@ test_that("apply_fmt_fn() works with xx specification", {
         fmt_fn = list("xx.xx", "xx.xx")
       ) |>
       apply_fmt_fn() |>
-      dplyr::pull(statistic_fmt) |>
+      dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.09", " 6.03")
   )
@@ -65,7 +65,7 @@ test_that("apply_fmt_fn() works with xx specification", {
       )
     ) |>
       apply_fmt_fn() |>
-      dplyr::pull(statistic_fmt) |>
+      dplyr::pull(stat_fmt) |>
       unlist() |>
       unname(),
     c("19", "32", "59.38", "13", "32", "40.63")

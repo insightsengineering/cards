@@ -114,7 +114,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
       )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
+    dplyr::select(variable, variable_level, stat_name, statistic, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
@@ -127,7 +127,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
     )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
+    dplyr::select(variable, variable_level, stat_name, statistic, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 })
