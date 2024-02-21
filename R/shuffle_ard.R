@@ -115,7 +115,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     # filter to numeric statistic values
     dplyr::filter(map_lgl(
       .data$statistic,
-      \(x) is.numeric(x) || is.na(x) || is.null(x)
+      \(x) is.null(x) || (length(x) == 1L && (is.numeric(x) || is.na(x)))
     )) |>
     # unlist the list-columns
     dplyr::mutate(statistic = lapply(
