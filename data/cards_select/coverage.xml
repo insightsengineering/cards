@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.936873156342183" branch-rate="0" lines-covered="1588" lines-valid="1695" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-02-21 02:16:54.295329">
+<coverage line-rate="0.937021777516186" branch-rate="0" lines-covered="1592" lines-valid="1699" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-02-21 02:20:41.455696">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.936873156342183" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.937021777516186" branch-rate="0" complexity="0">
       <classes>
         <class name="apply_statistic_fmt_fn.R" filename="R/apply_statistic_fmt_fn.R" line-rate="0.968253968253968" branch-rate="0" complexity="0">
           <methods>
@@ -3020,8 +3020,12 @@
                 <line number="298" hits="1" branch="false"/>
                 <line number="299" hits="1" branch="false"/>
                 <line number="300" hits="1" branch="false"/>
-                <line number="301" hits="856" branch="false"/>
-                <line number="302" hits="856" branch="false"/>
+                <line number="301" hits="1" branch="false"/>
+                <line number="302" hits="1" branch="false"/>
+                <line number="303" hits="1" branch="false"/>
+                <line number="304" hits="1" branch="false"/>
+                <line number="305" hits="856" branch="false"/>
+                <line number="306" hits="856" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -3129,8 +3133,12 @@
             <line number="298" hits="1" branch="false"/>
             <line number="299" hits="1" branch="false"/>
             <line number="300" hits="1" branch="false"/>
-            <line number="301" hits="856" branch="false"/>
-            <line number="302" hits="856" branch="false"/>
+            <line number="301" hits="1" branch="false"/>
+            <line number="302" hits="1" branch="false"/>
+            <line number="303" hits="1" branch="false"/>
+            <line number="304" hits="1" branch="false"/>
+            <line number="305" hits="856" branch="false"/>
+            <line number="306" hits="856" branch="false"/>
           </lines>
         </class>
         <class name="replace_null_statistic.R" filename="R/replace_null_statistic.R" line-rate="1" branch-rate="0" complexity="0">
