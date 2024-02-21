@@ -110,3 +110,19 @@ test_that("shuffle_ard doesn't trim off NULL/NA values", {
   expect_length(res, 3)
   expect_equal(class(res), "numeric")
 })
+
+test_that("shuffle_ard trims statistics with length > 1", {
+  expect_equal(
+    ard_continuous(
+      ADSL,
+      variables = AGE,
+      statistic = list(AGE = list(
+        long_result = \(x) 1:3,
+        long_list_result = \(x) list(1:3)
+      ))
+    ) |>
+      shuffle_ard() |>
+      nrow(),
+    0L
+  )
+})
