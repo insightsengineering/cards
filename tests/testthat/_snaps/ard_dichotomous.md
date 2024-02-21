@@ -8,18 +8,18 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(ard_dich, -c(statistic_fmt_fn, warning, error)))
+      as.data.frame(dplyr::select(ard_dich, -c(fmt_fn, warning, error)))
     Output
-        variable variable_level     context stat_name stat_label statistic
-      1      cyl              4 dichotomous         n          n        11
-      2      cyl              4 dichotomous         N          N        32
-      3      cyl              4 dichotomous         p          %   0.34375
-      4       am           TRUE dichotomous         n          n        13
-      5       am           TRUE dichotomous         N          N        32
-      6       am           TRUE dichotomous         p          %   0.40625
-      7     gear              3 dichotomous         n          n         5
-      8     gear              3 dichotomous         N          N        32
-      9     gear              3 dichotomous         p          %   0.15625
+        variable variable_level     context stat_name stat_label    stat
+      1      cyl              4 dichotomous         n          n      11
+      2      cyl              4 dichotomous         N          N      32
+      3      cyl              4 dichotomous         p          % 0.34375
+      4       am           TRUE dichotomous         n          n      13
+      5       am           TRUE dichotomous         N          N      32
+      6       am           TRUE dichotomous         p          % 0.40625
+      7     gear              3 dichotomous         n          n       5
+      8     gear              3 dichotomous         N          N      32
+      9     gear              3 dichotomous         p          % 0.15625
 
 ---
 

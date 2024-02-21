@@ -54,7 +54,7 @@ ard_complex <- function(data,
                         strata = NULL,
                         statistic,
                         fmt_fn = NULL,
-                        stat_labels = everything() ~ default_stat_labels()) {
+                        stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -96,7 +96,7 @@ ard_complex <- function(data,
     strata = {{ strata }},
     statistic = statistic,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   ) |>
     dplyr::mutate(context = "complex")
 }

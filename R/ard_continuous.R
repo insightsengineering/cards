@@ -34,7 +34,7 @@
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
-#' @param stat_labels ([`formula-list-selector`][syntax])\cr
+#' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
@@ -61,9 +61,9 @@ ard_continuous <- function(data,
                            variables,
                            by = dplyr::group_vars(data),
                            strata = NULL,
-                           statistic = everything() ~ continuous_variable_summary_fns(),
+                           statistic = everything() ~ continuous_summary_fns(),
                            fmt_fn = NULL,
-                           stat_labels = everything() ~ default_stat_labels()) {
+                           stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -82,12 +82,12 @@ ard_continuous <- function(data,
     data = data[variables],
     statistic = statistic,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   )
   fill_formula_selectors(
     data = data[variables],
     statistic = formals(cards::ard_continuous)[["statistic"]] |> eval(),
-    stat_labels = formals(cards::ard_continuous)[["stat_labels"]] |> eval()
+    stat_label = formals(cards::ard_continuous)[["stat_label"]] |> eval()
   )
 
   check_list_elements(
@@ -136,7 +136,7 @@ ard_continuous <- function(data,
     .process_nested_list_as_df(
       x = df_results,
       arg = fmt_fn,
-      new_column = "statistic_fmt_fn"
+      new_column = "fmt_fn"
     ) |>
     .default_fmt_fn()
 
@@ -144,7 +144,7 @@ ard_continuous <- function(data,
   df_results <-
     .process_nested_list_as_df(
       x = df_results,
-      arg = stat_labels,
+      arg = stat_label,
       new_column = "stat_label",
       unlist = TRUE
     ) |>
@@ -303,7 +303,7 @@ ard_continuous <- function(data,
 
   df_ard |>
     dplyr::mutate(variable = .env$variable) |>
-    dplyr::rename(statistic = "result")
+    dplyr::rename(stat = "result")
 }
 
 
@@ -329,7 +329,7 @@ ard_continuous <- function(data,
 #'
 #' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
-  # add statistic_fmt_fn column if not already present
+  # add fmt_fn column if not already present
   if (!new_column %in% names(x)) {
     x[[new_column]] <- list(NULL)
   }
@@ -381,26 +381,26 @@ ard_continuous <- function(data,
 #'
 #' @examples
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-#'   dplyr::mutate(statistic_fmt_fn = NA)
+#'   dplyr::mutate(fmt_fn = NA)
 #'
 #' cards:::.default_fmt_fn(ard)
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(
-      statistic_fmt_fn =
+      fmt_fn =
         pmap(
-          list(.data$stat_name, .data$statistic, .data$statistic_fmt_fn),
-          function(stat_name, statistic, statistic_fmt_fn) {
-            if (!is_empty(statistic_fmt_fn)) {
-              return(statistic_fmt_fn)
+          list(.data$stat_name, .data$stat, .data$fmt_fn),
+          function(stat_name, stat, fmt_fn) {
+            if (!is_empty(fmt_fn)) {
+              return(fmt_fn)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))
             }
-            if (is.integer(statistic)) {
+            if (is.integer(stat)) {
               return(0L)
             }
-            if (is.numeric(statistic)) {
+            if (is.numeric(stat)) {
               return(1L)
             }
             return(as.character)

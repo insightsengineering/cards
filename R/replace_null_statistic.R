@@ -22,7 +22,7 @@
 #' data.frame(x = rep_len(NA_character_, 10)) |>
 #'   ard_continuous(
 #'     variables = x,
-#'     statistic = ~ continuous_variable_summary_fns(c("median", "p25", "p75"))
+#'     statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
 #'   ) |>
 #'   replace_null_statistic(rows = !is.null(error))
 replace_null_statistic <- function(x, value = NA, rows = TRUE) {
@@ -35,8 +35,8 @@ replace_null_statistic <- function(x, value = NA, rows = TRUE) {
     dplyr::mutate(
       # styler: off
       statistic =
-        if (is.null(.data$statistic) && {{ rows }}) list(.env$value)
-        else list(.data$statistic)
+        if (is.null(.data$stat) && {{ rows }}) list(.env$value)
+        else list(.data$stat)
       # styler: on
     ) |>
     # restore previous grouping structure and original class of x

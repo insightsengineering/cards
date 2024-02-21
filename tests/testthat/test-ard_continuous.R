@@ -35,7 +35,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = "AGE",
-    statistic = list(AGE = continuous_variable_summary_fns(c("N", "mean", "median"))),
+    statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
     fmt_fn =
       list(
         AGE =
@@ -46,15 +46,15 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_statistic_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
+    apply_fmt_fn() |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistic = ~ continuous_variable_summary_fns("mean"),
+    statistic = ~ continuous_summary_fns("mean"),
     fmt_fn =
       list(
         AGE =
@@ -63,8 +63,8 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_statistic_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
+    apply_fmt_fn() |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
@@ -72,11 +72,11 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_continuous(
     ADSL,
     variables = c("AGE", "BMIBL"),
-    statistic = ~ continuous_variable_summary_fns(c("mean", "sd")),
+    statistic = ~ continuous_summary_fns(c("mean", "sd")),
     fmt_fn = ~ list(~ function(x) round(x, 4))
   ) |>
-    apply_statistic_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
+    apply_fmt_fn() |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 })
@@ -101,14 +101,14 @@ test_that("ard_continuous() messaging", {
   )
 })
 
-test_that("ard_continuous(stat_labels) argument works", {
+test_that("ard_continuous(stat_label) argument works", {
   # formula
   expect_snapshot(
     ard_continuous(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = everything() ~ list(c("min", "max") ~ "min - max")
+      stat_label = everything() ~ list(c("min", "max") ~ "min - max")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -122,7 +122,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")
+      stat_label = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -136,7 +136,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")
+      stat_label = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")
     ) |>
       as.data.frame() |>
       dplyr::filter(stat_name %in% c("p25", "p75")) |>
@@ -155,7 +155,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       ADSL,
       variables = "AGE",
       statistic = ~ list(conf.int = conf_int),
-      stat_labels = ~ list(conf.low = "LB", conf.high = "UB")
+      stat_label = ~ list(conf.low = "LB", conf.high = "UB")
     ) |>
     dplyr::select(variable, stat_name, stat_label) |>
     as.data.frame()
@@ -166,7 +166,7 @@ test_that("ard_continuous(stat_labels) argument works", {
     ADSL,
     variables = "AGE",
     statistic = ~ list(conf.int = conf_int),
-    stat_labels = ~ list("conf.low" ~ "LB", "conf.high" ~ "UB")
+    stat_label = ~ list("conf.low" ~ "LB", "conf.high" ~ "UB")
   ) |>
     dplyr::select(variable, stat_name, stat_label) |>
     as.data.frame()
@@ -178,7 +178,7 @@ test_that("ard_continuous() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
     "context", "stat_name", "stat_label", "statistic",
-    "statistic_fmt_fn", "warning", "error"
+    "fmt_fn", "warning", "error"
   )
 
   # no errors when these variables are the summary vars
@@ -229,18 +229,18 @@ test_that("ard_continuous() with dates works and displays as expected", {
   ard_date <- ADSL |>
     ard_continuous(
       variables = DISONSDT,
-      statistic = ~ continuous_variable_summary_fns(c("min", "max", "sd"))
+      statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
     )
   expect_snapshot(ard_date)
 
-  expect_equal(ard_date$statistic[[1]], as.Date("1998-06-13"))
+  expect_equal(ard_date$stat[[1]], as.Date("1998-06-13"))
 })
 
 test_that("ard_continuous() with empty/missing dates works, and preserves Date class", {
   empty_date <- data.frame(dt = as.Date(NA)) |>
     ard_continuous(
       variables = dt,
-      statistic = ~ continuous_variable_summary_fns(c("min"))
+      statistic = ~ continuous_summary_fns(c("min"))
     )
-  expect_equal(inherits(empty_date$statistic[[1]], "Date"), TRUE)
+  expect_equal(inherits(empty_date$stat[[1]], "Date"), TRUE)
 })

@@ -45,7 +45,7 @@ ard_attributes <- function(data, variables = everything(), label = NULL) {
         dplyr::tibble(
           variable = .env$x,
           stat_name = names(attr),
-          statistic = unname(attr)
+          stat = unname(attr)
         )
       }
     ) |>

@@ -1,7 +1,7 @@
 # ard_missing() works
 
     Code
-      as.data.frame(dplyr::select(ard, -"statistic_fmt_fn"))
+      as.data.frame(dplyr::select(ard, -"fmt_fn"))
     Output
          group1         group1_level variable context stat_name    stat_label
       1     ARM              Placebo    BMIBL missing     N_obs Vector Length
@@ -19,7 +19,7 @@
       13    ARM  Xanomeline Low Dose    BMIBL missing N_nonmiss N Non-missing
       14    ARM  Xanomeline Low Dose    BMIBL missing    p_miss     % Missing
       15    ARM  Xanomeline Low Dose    BMIBL missing p_nonmiss % Non-missing
-          statistic warning error
+               stat warning error
       1          86    NULL  NULL
       2           0    NULL  NULL
       3          86    NULL  NULL
@@ -36,11 +36,11 @@
       14 0.01190476    NULL  NULL
       15  0.9880952    NULL  NULL
 
-# ard_missing(stat_labels) argument works
+# ard_missing(stat_label) argument works
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(c("N_obs",
+        variables = c("AGE", "BMIBL"), stat_label = everything() ~ list(c("N_obs",
           "N_miss") ~ "N, miss"))), stat_name, stat_label), stat_name %in% c("N_obs",
         "N_miss")))
     Output
@@ -52,7 +52,7 @@
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(p_miss = "% miss",
+        variables = c("AGEGR1", "SEX"), stat_label = everything() ~ list(p_miss = "% miss",
           p_nonmiss = "% non miss"))), stat_name, stat_label), stat_name %in% c(
         "p_miss", "p_nonmiss")))
     Output
@@ -64,7 +64,7 @@
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(N_obs = "Number of Obs"))),
+        variables = c("AGE", "BMIBL"), stat_label = AGE ~ list(N_obs = "Number of Obs"))),
       variable, stat_name, stat_label), stat_name == "N_obs"))
     Output
         variable stat_name    stat_label

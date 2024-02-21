@@ -42,7 +42,7 @@ reference:
     contents:
       - bind_ard
       - tidy_ard_column_order
-      - apply_statistic_fmt_fn
+      - apply_fmt_fn
       - process_selectors
       - tidy_as_ard
       - nest_for_ard
@@ -58,7 +58,7 @@ reference:
       - replace_null_statistic
   - subtitle: "Data Summary Functions"
     contents:
-      - continuous_variable_summary_fns
+      - continuous_summary_fns
       - maximum_variable_value
   - subtitle: "Misc."
     contents:

@@ -4,7 +4,7 @@
 \alias{get_ard_statistics}
 \title{ARD Statistics as List}
 \usage{
-get_ard_statistics(x, ..., .column = "statistic", .attributes = NULL)
+get_ard_statistics(x, ..., .column = "stat", .attributes = NULL)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
