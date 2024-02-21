@@ -121,20 +121,6 @@ process_selectors <- function(data, ..., env = caller_env()) {
             arg_name = arg_name,
             .call = env
           )
-        #   eval_capture_conditions({
-        #     tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
-        #   })
-        # if (!is.null(processed_value[["result"]])) {
-        #   return(processed_value[["result"]])
-        # }
-        #
-        # cli::cli_abort(
-        #   c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
-        #     "i" = "{processed_value[['error']]}"
-        #   ),
-        #   class = "process_selectors_error",
-        #   call = env
-        # )
       }
     )
 
@@ -224,6 +210,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
           expr = f_lhs(x[[i]]) %||% dplyr::everything(),
           data = data,
           strict = strict,
+          allow_rename = FALSE,
           arg_name = arg_name,
           .call = env
         )
