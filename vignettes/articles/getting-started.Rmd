@@ -22,26 +22,26 @@ library(cards)
 
 ```{r, echo=FALSE, message=FALSE}
 gtsummary::theme_gtsummary_compact()
-ADSL |> 
-  dplyr::select(ARM, AGE, AGEGR1, SEX) |> 
+ADSL |>
+  dplyr::select(ARM, AGE, AGEGR1, SEX) |>
   dplyr::mutate(
     ARM = factor(ARM, levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose")),
     AGEGR1 = factor(AGEGR1, levels = c("<65", "65-80", ">80"))
-    ) |> 
+  ) |>
   gtsummary::tbl_summary(
     by = ARM,
     type = AGE ~ "continuous2",
     statistic = AGE ~ c("{median} ({p25}, {p75})", "{mean} ({sd})", "{min} - {max}"),
-    value = SEX ~ "F", 
+    value = SEX ~ "F",
     label = list(SEX = "Female", AGEGR1 = "Age Group"),
     digits = gtsummary::all_categorical() ~ 0L
-  ) |> 
-  gtsummary::add_stat_label() |> 
-  gtsummary::bold_labels() |> 
-  gtsummary::modify_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |> 
-  gtsummary::modify_column_alignment(columns = -label, "right") |> 
-  gtsummary::as_gt() |> 
-  gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |> 
+  ) |>
+  gtsummary::add_stat_label() |>
+  gtsummary::bold_labels() |>
+  gtsummary::modify_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |>
+  gtsummary::modify_column_alignment(columns = -label, "right") |>
+  gtsummary::as_gt() |>
+  gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
   gt::opt_table_font(stack = "monospace-code")
 ```
 
@@ -54,10 +54,10 @@ To get a continuous variable summary, we will use the `ard_continuous()` functio
 ```{r}
 df_continuous_ard <-
   ard_continuous(
-    ADSL, 
+    ADSL,
     by = ARM,
-    variables = AGE, 
-    statistic = ~continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+    variables = AGE,
+    statistic = ~ continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
   )
 df_continuous_ard |> head(5)
 ```
@@ -67,9 +67,9 @@ df_continuous_ard |> head(5)
 To get the categorical variable summary, we will use the `ard_categorical()` function.
 
 ```{r}
-df_categoircal_ard <- 
+df_categoircal_ard <-
   ard_categorical(
-    ADSL, 
+    ADSL,
     by = ARM,
     variables = AGEGR1
   )
@@ -84,9 +84,9 @@ In this case, we want to show the Female (`"F"`) level of the `SEX` variable and
 ```{r}
 df_dichotomous_ard <-
   ard_dichotomous(
-    ADSL, 
+    ADSL,
     by = ARM,
-    variables = SEX, 
+    variables = SEX,
     value = list(SEX = "F")
   )
 df_dichotomous_ard |> head(5)
@@ -113,11 +113,11 @@ Moreover, we will also be returned the univariate tabulation of the `by` variabl
 
 ```{r}
 ard_stack(
-  data = ADSL, 
+  data = ADSL,
   by = ARM,
   ard_continuous(
-    variables = AGE, 
-    statistic = ~continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+    variables = AGE,
+    statistic = ~ continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
   ),
   ard_categorical(variables = AGEGR1),
   ard_dichotomous(variables = SEX, value = list(SEX = "F"))
