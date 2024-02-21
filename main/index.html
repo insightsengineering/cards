@@ -44,7 +44,7 @@
     
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9048</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9049</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,12 +65,6 @@
 <li class="nav-item">
   <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -98,7 +92,6 @@
 </div>
 <!-- badges: start -->
 
-<p>This package is in a <strong>preliminary state</strong>, and <strong>breaking changes</strong> will be made <strong>without notice or deprecation</strong>.</p>
 <p>The <a href="https://www.cdisc.org/standards/foundational/analysis-results-standards" class="external-link">CDISC Analysis Results Standard</a> aims to facilitate automation, reproducibility, reusability, and traceability of analysis results data (ARD). The {cards} package creates these <strong>C</strong>DISC <strong>A</strong>nalysis <strong>R</strong>esult <strong>D</strong>ata <strong>S</strong>ets.</p>
 <p>Use cases:</p>
 <ol style="list-style-type: decimal">
@@ -110,60 +103,63 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of cards from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install cards from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"cards"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of cards from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"insightsengineering/cards"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="extensions">Extensions<a class="anchor" aria-label="anchor" href="#extensions"></a>
 </h2>
-<p><a href="https://insightsengineering.github.io/cardx" class="external-link"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" style="float: right" width="120" alt="cardx website"></a></p>
+<p><a href="https://insightsengineering.github.io/cardx/" class="external-link"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" style="float: right" width="120" alt="cardx website"></a></p>
 <p>The {cards} package exports three types of functions:</p>
 <ol style="list-style-type: decimal">
 <li><p>Functions to create basic ARD objects.</p></li>
 <li><p>Utilities to create new ARD objects.</p></li>
 <li><p>Functions to work with existing ARD objects.</p></li>
 </ol>
-<p>The <a href="https://github.com/insightsengineering/cardx" class="external-link">{cardx}</a> R package is an extension to {cards} that uses the utilities from {cards} and exports functions for creating additional ARD objects––including functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.</p>
+<p>The <a href="https://github.com/insightsengineering/cardx/" class="external-link">{cardx}</a> R package is an extension to {cards} that uses the utilities from {cards} and exports functions for creating additional ARD objects––including functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>ARD Examples</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cards" class="external-link">cards</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="st">"BMIBL"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {cards} data frame: 48 x 10</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label statistic</span></span>
-<span><span class="co">#&gt; 1     ARM      Placebo      AGE         N          N        86</span></span>
-<span><span class="co">#&gt; 2     ARM      Placebo      AGE      mean       Mean    75.209</span></span>
-<span><span class="co">#&gt; 3     ARM      Placebo      AGE        sd         SD      8.59</span></span>
-<span><span class="co">#&gt; 4     ARM      Placebo      AGE    median     Median        76</span></span>
-<span><span class="co">#&gt; 5     ARM      Placebo      AGE       p25  25th Per…        69</span></span>
-<span><span class="co">#&gt; 6     ARM      Placebo      AGE       p75  75th Per…        82</span></span>
-<span><span class="co">#&gt; 7     ARM      Placebo      AGE       min        Min        52</span></span>
-<span><span class="co">#&gt; 8     ARM      Placebo      AGE       max        Max        89</span></span>
-<span><span class="co">#&gt; 9     ARM      Placebo    BMIBL         N          N        86</span></span>
-<span><span class="co">#&gt; 10    ARM      Placebo    BMIBL      mean       Mean    23.636</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label   stat</span></span>
+<span><span class="co">#&gt; 1     ARM      Placebo      AGE         N          N     86</span></span>
+<span><span class="co">#&gt; 2     ARM      Placebo      AGE      mean       Mean 75.209</span></span>
+<span><span class="co">#&gt; 3     ARM      Placebo      AGE        sd         SD   8.59</span></span>
+<span><span class="co">#&gt; 4     ARM      Placebo      AGE    median     Median     76</span></span>
+<span><span class="co">#&gt; 5     ARM      Placebo      AGE       p25  25th Per…     69</span></span>
+<span><span class="co">#&gt; 6     ARM      Placebo      AGE       p75  75th Per…     82</span></span>
+<span><span class="co">#&gt; 7     ARM      Placebo      AGE       min        Min     52</span></span>
+<span><span class="co">#&gt; 8     ARM      Placebo      AGE       max        Max     89</span></span>
+<span><span class="co">#&gt; 9     ARM      Placebo    BMIBL         N          N     86</span></span>
+<span><span class="co">#&gt; 10    ARM      Placebo    BMIBL      mean       Mean 23.636</span></span>
 <span><span class="co">#&gt; ℹ 38 more rows</span></span>
 <span><span class="co">#&gt; ℹ Use `print(n = ...)` to see more rows</span></span>
 <span><span class="co">#&gt; ℹ 4 more variables: context, fmt_fn, warning, error</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/ard_categorical.html">ard_categorical</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGEGR1"</span>, <span class="st">"SEX"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {cards} data frame: 45 x 11</span></span>
-<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label statistic</span></span>
-<span><span class="co">#&gt; 1     ARM      Placebo   AGEGR1            &lt;65         n          n        14</span></span>
-<span><span class="co">#&gt; 2     ARM      Placebo   AGEGR1            &lt;65         N          N        86</span></span>
-<span><span class="co">#&gt; 3     ARM      Placebo   AGEGR1            &lt;65         p          %     0.163</span></span>
-<span><span class="co">#&gt; 4     ARM    Xanomeli…   AGEGR1            &lt;65         n          n        11</span></span>
-<span><span class="co">#&gt; 5     ARM    Xanomeli…   AGEGR1            &lt;65         N          N        84</span></span>
-<span><span class="co">#&gt; 6     ARM    Xanomeli…   AGEGR1            &lt;65         p          %     0.131</span></span>
-<span><span class="co">#&gt; 7     ARM    Xanomeli…   AGEGR1            &lt;65         n          n         8</span></span>
-<span><span class="co">#&gt; 8     ARM    Xanomeli…   AGEGR1            &lt;65         N          N        84</span></span>
-<span><span class="co">#&gt; 9     ARM    Xanomeli…   AGEGR1            &lt;65         p          %     0.095</span></span>
-<span><span class="co">#&gt; 10    ARM      Placebo   AGEGR1            &gt;80         n          n        30</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label  stat</span></span>
+<span><span class="co">#&gt; 1     ARM      Placebo   AGEGR1            &lt;65         n          n    14</span></span>
+<span><span class="co">#&gt; 2     ARM      Placebo   AGEGR1            &lt;65         N          N    86</span></span>
+<span><span class="co">#&gt; 3     ARM      Placebo   AGEGR1            &lt;65         p          % 0.163</span></span>
+<span><span class="co">#&gt; 4     ARM    Xanomeli…   AGEGR1            &lt;65         n          n    11</span></span>
+<span><span class="co">#&gt; 5     ARM    Xanomeli…   AGEGR1            &lt;65         N          N    84</span></span>
+<span><span class="co">#&gt; 6     ARM    Xanomeli…   AGEGR1            &lt;65         p          % 0.131</span></span>
+<span><span class="co">#&gt; 7     ARM    Xanomeli…   AGEGR1            &lt;65         n          n     8</span></span>
+<span><span class="co">#&gt; 8     ARM    Xanomeli…   AGEGR1            &lt;65         N          N    84</span></span>
+<span><span class="co">#&gt; 9     ARM    Xanomeli…   AGEGR1            &lt;65         p          % 0.095</span></span>
+<span><span class="co">#&gt; 10    ARM      Placebo   AGEGR1            &gt;80         n          n    30</span></span>
 <span><span class="co">#&gt; ℹ 35 more rows</span></span>
 <span><span class="co">#&gt; ℹ Use `print(n = ...)` to see more rows</span></span>
 <span><span class="co">#&gt; ℹ 4 more variables: context, fmt_fn, warning, error</span></span></code></pre></div>
