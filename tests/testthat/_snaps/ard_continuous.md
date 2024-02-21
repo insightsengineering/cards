@@ -12,13 +12,13 @@
         statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
         fmt_fn = list(AGE = list(mean = function(x) as.character(round5(x, digits = 3)),
         N = function(x) format(round5(x, digits = 2), nsmall = 2), N_obs = function(x)
-          format(round5(x, digits = 2), nsmall = 2))))), variable, stat_name,
-      statistic, stat_fmt))
+          format(round5(x, digits = 2), nsmall = 2))))), variable, stat_name, stat,
+      stat_fmt))
     Output
-        variable stat_name statistic stat_fmt
-      1      AGE         N       254   254.00
-      2      AGE      mean  75.08661   75.087
-      3      AGE    median        77     77.0
+        variable stat_name     stat stat_fmt
+      1      AGE         N      254   254.00
+      2      AGE      mean 75.08661   75.087
+      3      AGE    median       77     77.0
 
 ---
 
@@ -26,25 +26,25 @@
       as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
         "AGE", "BMIBL"), statistic = ~ continuous_summary_fns("mean"), fmt_fn = list(
         AGE = list(mean = function(x) as.character(round5(x, digits = 3)))))),
-      variable, stat_name, statistic, stat_fmt))
+      variable, stat_name, stat, stat_fmt))
     Output
-        variable stat_name statistic stat_fmt
-      1      AGE      mean  75.08661   75.087
-      2    BMIBL      mean  24.67233     24.7
+        variable stat_name     stat stat_fmt
+      1      AGE      mean 75.08661   75.087
+      2    BMIBL      mean 24.67233     24.7
 
 ---
 
     Code
       as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
         "AGE", "BMIBL"), statistic = ~ continuous_summary_fns(c("mean", "sd")),
-      fmt_fn = ~ list(~ function(x) round(x, 4)))), variable, stat_name, statistic,
+      fmt_fn = ~ list(~ function(x) round(x, 4)))), variable, stat_name, stat,
       stat_fmt))
     Output
-        variable stat_name statistic stat_fmt
-      1      AGE      mean  75.08661  75.0866
-      2      AGE        sd  8.246234   8.2462
-      3    BMIBL      mean  24.67233  24.6723
-      4    BMIBL        sd  4.092185   4.0922
+        variable stat_name     stat stat_fmt
+      1      AGE      mean 75.08661  75.0866
+      2      AGE        sd 8.246234   8.2462
+      3    BMIBL      mean 24.67233  24.6723
+      4    BMIBL        sd 4.092185   4.0922
 
 # ard_continuous() messaging
 
@@ -125,7 +125,7 @@
     Message
       {cards} data frame: 3 x 8
     Output
-        variable   context stat_name stat_label statistic fmt_fn
+        variable   context stat_name stat_label      stat fmt_fn
       1 DISONSDT continuo…       min        Min 1998-06-…   <fn>
       2 DISONSDT continuo…       max        Max 2013-09-…   <fn>
       3 DISONSDT continuo…        sd         SD   878.558      1

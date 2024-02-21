@@ -41,7 +41,7 @@
       16    ARM              Placebo      SEX              F         N          N
       17    ARM              Placebo      SEX              F         p          %
       18    ARM              Placebo      SEX              M         n          n
-         statistic
+              stat
       1         34
       2  0.4047619
       3  0.5952381
@@ -88,7 +88,7 @@
       16    ARM Xanomeline High Dose      SEX              M         n          n
       17    ARM  Xanomeline Low Dose      SEX              M         N          N
       18    ARM  Xanomeline Low Dose      SEX              M         n          n
-         statistic
+              stat
       1  0.6162791
       2         84
       3         40

@@ -35,8 +35,8 @@ replace_null_statistic <- function(x, value = NA, rows = TRUE) {
     dplyr::mutate(
       # styler: off
       statistic =
-        if (is.null(.data$statistic) && {{ rows }}) list(.env$value)
-        else list(.data$statistic)
+        if (is.null(.data$stat) && {{ rows }}) list(.env$value)
+        else list(.data$stat)
       # styler: on
     ) |>
     # restore previous grouping structure and original class of x

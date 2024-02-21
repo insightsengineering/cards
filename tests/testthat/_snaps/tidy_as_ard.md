@@ -22,7 +22,7 @@
       10     am       vs fishertest       conf.level
       11     am       vs fishertest simulate.p.value
       12     am       vs fishertest                B
-                                     statistic fmt_fn warning error
+                                          stat fmt_fn warning error
       1                               1.956055      1    NULL  NULL
       2                              0.4726974      1    NULL  NULL
       3     Fisher's Exact Test for Count Data   NULL    NULL  NULL
@@ -63,7 +63,7 @@
       13     am       vs fishertest       conf.level
       14     am       vs fishertest simulate.p.value
       15     am       vs fishertest                B
-                                     statistic fmt_fn warning
+                                          stat fmt_fn warning
       1                                   NULL   NULL    NULL
       2                                   NULL   NULL    NULL
       3                                   NULL   NULL    NULL
@@ -104,9 +104,9 @@
           "estimate", "p.value", "method")])), tidy_result_names = c("estimate",
         "p.value", "conf.low", "conf.high", "method", "alternative"), formals = formals(
         stats::fisher.test), passed_args = list(), lst_ard_columns = list(context = "fishertest",
-        group1 = "am", variable = "vs"))), c(group1, variable, statistic))
+        group1 = "am", variable = "vs"))), c(group1, variable, stat))
     Output
-        group1 variable                          statistic
+        group1 variable                               stat
       1     am       vs                           1.956055
       2     am       vs                          0.4726974
       3     am       vs Fisher's Exact Test for Count Data
@@ -119,9 +119,9 @@
           "estimate", "p.value", "method")])), tidy_result_names = c("estimate",
         "p.value", "conf.low", "conf.high", "method", "alternative"), passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs"))),
-      c(group1, variable, statistic))
+      c(group1, variable, stat))
     Output
-        group1 variable                          statistic
+        group1 variable                               stat
       1     am       vs                           1.956055
       2     am       vs                          0.4726974
       3     am       vs Fisher's Exact Test for Count Data

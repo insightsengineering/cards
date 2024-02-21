@@ -266,7 +266,7 @@ ard_categorical <- function(data,
           tidyr::pivot_longer(
             cols = any_of(c("...ard_n...", "...ard_N...", "...ard_p...")),
             names_to = "stat_name",
-            values_to = "statistic"
+            values_to = "stat"
           ) |>
           dplyr::mutate(
             stat_name =

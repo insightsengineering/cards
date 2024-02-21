@@ -100,7 +100,7 @@ test_that("apply_fmt_fn() error messaging", {
   expect_snapshot(
     ard_fmt_checks |>
       dplyr::mutate(
-        statistic = lapply(statistic, function(x) x * 1000),
+        stat = lapply(stat, function(x) x * 1000),
         fmt_fn = list("xx", "xx")
       ) |>
       apply_fmt_fn() |>

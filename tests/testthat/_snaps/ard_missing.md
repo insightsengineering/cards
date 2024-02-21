@@ -19,7 +19,7 @@
       13    ARM  Xanomeline Low Dose    BMIBL missing N_nonmiss N Non-missing
       14    ARM  Xanomeline Low Dose    BMIBL missing    p_miss     % Missing
       15    ARM  Xanomeline Low Dose    BMIBL missing p_nonmiss % Non-missing
-          statistic warning error
+               stat warning error
       1          86    NULL  NULL
       2           0    NULL  NULL
       3          86    NULL  NULL

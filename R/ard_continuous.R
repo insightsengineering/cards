@@ -303,7 +303,7 @@ ard_continuous <- function(data,
 
   df_ard |>
     dplyr::mutate(variable = .env$variable) |>
-    dplyr::rename(statistic = "result")
+    dplyr::rename(stat = "result")
 }
 
 
@@ -389,18 +389,18 @@ ard_continuous <- function(data,
     dplyr::mutate(
       fmt_fn =
         pmap(
-          list(.data$stat_name, .data$statistic, .data$fmt_fn),
-          function(stat_name, statistic, fmt_fn) {
+          list(.data$stat_name, .data$stat, .data$fmt_fn),
+          function(stat_name, stat, fmt_fn) {
             if (!is_empty(fmt_fn)) {
               return(fmt_fn)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))
             }
-            if (is.integer(statistic)) {
+            if (is.integer(stat)) {
               return(0L)
             }
-            if (is.numeric(statistic)) {
+            if (is.numeric(stat)) {
               return(1L)
             }
             return(as.character)

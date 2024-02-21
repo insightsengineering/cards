@@ -14,15 +14,15 @@ test_that("ard_missing() works", {
   expect_equal(
     ard |>
       dplyr::filter(stat_name %in% "p_miss") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     ADSL |>
       dplyr::mutate(BMIBL = is.na(BMIBL)) |>
       dplyr::summarise(
         .by = ARM,
-        statistic = mean(BMIBL)
+        stat = mean(BMIBL)
       ) |>
-      dplyr::pull(statistic)
+      dplyr::pull(stat)
   )
 })
 

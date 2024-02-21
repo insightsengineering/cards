@@ -8,7 +8,7 @@ test_that("ard_categorical() univariate", {
   expect_equal(
     ard_cat_uni |>
       dplyr::filter(stat_name %in% "n") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       as.integer(),
     table(mtcars$am) |> as.integer()
   )
@@ -16,13 +16,13 @@ test_that("ard_categorical() univariate", {
   expect_equal(
     ard_cat_uni |>
       dplyr::filter(stat_name %in% "p") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       as.numeric(),
     table(mtcars$am) |> prop.table() |> as.numeric()
   )
 
   expect_equal(
-    dplyr::filter(ard_cat_uni, stat_name %in% "N")$statistic[[1]],
+    dplyr::filter(ard_cat_uni, stat_name %in% "N")$stat[[1]],
     sum(!is.na(mtcars$am))
   )
 
@@ -40,12 +40,12 @@ test_that("ard_categorical() univariate", {
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
       variables = cyl
     ) |>
-      dplyr::select(stat_name, stat_label, statistic),
+      dplyr::select(stat_name, stat_label, stat),
     ard_categorical(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
       variables = cyl
     ) |>
-      dplyr::select(stat_name, stat_label, statistic)
+      dplyr::select(stat_name, stat_label, stat)
   )
 
   expect_equal(
@@ -54,13 +54,13 @@ test_that("ard_categorical() univariate", {
       by = vs,
       variables = cyl
     ) |>
-      dplyr::select(stat_name, stat_label, statistic),
+      dplyr::select(stat_name, stat_label, stat),
     ard_categorical(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
       by = vs,
       variables = cyl
     ) |>
-      dplyr::select(stat_name, stat_label, statistic)
+      dplyr::select(stat_name, stat_label, stat)
   )
 })
 
@@ -80,7 +80,7 @@ test_that("ard_categorical() univariate & specified denomiator", {
   expect_equal(
     ard_cat_new_denom |>
       dplyr::filter(stat_name %in% "n") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       as.integer(),
     table(mtcars$am) |> as.integer()
   )
@@ -88,13 +88,13 @@ test_that("ard_categorical() univariate & specified denomiator", {
   expect_equal(
     ard_cat_new_denom |>
       dplyr::filter(stat_name %in% "p") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       as.numeric(),
       table(mtcars$am) |> prop.table() |> as.numeric() %>% `/`(100) # styler: off
   )
 
   expect_equal(
-    dplyr::filter(ard_cat_new_denom, stat_name %in% "N")$statistic[[1]],
+    dplyr::filter(ard_cat_new_denom, stat_name %in% "N")$stat[[1]],
     sum(!is.na(mtcars$am)) * 100L
   )
 })
@@ -114,7 +114,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
       )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, variable_level, stat_name, statistic, stat_fmt) |>
+    dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
@@ -127,7 +127,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
     )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, variable_level, stat_name, statistic, stat_fmt) |>
+    dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 })
@@ -172,7 +172,7 @@ test_that("ard_categorical() with strata and by arguments", {
         variable_level %in% "MILD",
         stat_name %in% "n"
       ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       getElement(1),
     ADAE_small |>
       dplyr::filter(
@@ -193,7 +193,7 @@ test_that("ard_categorical() with strata and by arguments", {
         variable_level %in% "MILD",
         stat_name %in% "p"
       ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       getElement(1),
     (ADAE_small |>
       dplyr::filter(
@@ -212,7 +212,7 @@ test_that("ard_categorical() with strata and by arguments", {
         group1_level %in% "Placebo",
         stat_name %in% "N"
       ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       getElement(1),
     ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow()
   )
@@ -286,7 +286,7 @@ test_that("ard_categorical(denominator='cell') works", {
   expect_equal(
     ard_crosstab |>
       dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "n") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       getElement(1),
     mtrx_conts["<65", "Placebo"]
   )
@@ -294,7 +294,7 @@ test_that("ard_categorical(denominator='cell') works", {
   expect_equal(
     ard_crosstab |>
       dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "p") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       getElement(1),
     mtrx_percs["<65", "Placebo"]
   )
@@ -313,7 +313,7 @@ test_that("ard_categorical(denominator='cell') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "cell"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 8L)
   )
@@ -326,7 +326,7 @@ test_that("ard_categorical(denominator='cell') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "cell"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 16L)
   )
@@ -345,7 +345,7 @@ test_that("ard_categorical(denominator='row') works", {
     xtab_count[rownames(xtab_count) %in% "<65", colnames(xtab_count) %in% "Placebo"],
     ard_crosstab_row |>
       dplyr::filter(variable_level %in% "<65", group1_level %in% "Placebo", stat_name %in% "n") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
@@ -353,7 +353,7 @@ test_that("ard_categorical(denominator='row') works", {
     xtab_percent[rownames(xtab_percent) %in% "<65", colnames(xtab_percent) %in% "Placebo"],
     ard_crosstab_row |>
       dplyr::filter(variable_level %in% "<65", group1_level %in% "Placebo", stat_name %in% "p") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
@@ -362,7 +362,7 @@ test_that("ard_categorical(denominator='row') works", {
     xtab_count[rownames(xtab_count) %in% ">80", colnames(xtab_count) %in% "Xanomeline Low Dose"],
     ard_crosstab_row |>
       dplyr::filter(variable_level %in% ">80", group1_level %in% "Xanomeline Low Dose", stat_name %in% "n") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
@@ -370,7 +370,7 @@ test_that("ard_categorical(denominator='row') works", {
     xtab_percent[rownames(xtab_percent) %in% ">80", colnames(xtab_percent) %in% "Xanomeline Low Dose"],
     ard_crosstab_row |>
       dplyr::filter(variable_level %in% ">80", group1_level %in% "Xanomeline Low Dose", stat_name %in% "p") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
@@ -404,7 +404,7 @@ test_that("ard_categorical(denominator='row') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "row"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 4L)
   )
@@ -417,7 +417,7 @@ test_that("ard_categorical(denominator='row') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "row"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 8L)
   )
@@ -426,9 +426,9 @@ test_that("ard_categorical(denominator='row') works", {
 test_that("ard_categorical(denominator='column') works", {
   expect_equal(
     ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "column") |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic),
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat),
     ard_categorical(ADSL, variables = "AGEGR1", by = "ARM") |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat)
   )
 
   # works with an all missing variable
@@ -440,7 +440,7 @@ test_that("ard_categorical(denominator='column') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 4L)
   )
@@ -453,7 +453,7 @@ test_that("ard_categorical(denominator='column') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 8L)
   )
@@ -467,7 +467,7 @@ test_that("ard_categorical(denominator='column') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 4L)
   )
@@ -480,7 +480,7 @@ test_that("ard_categorical(denominator='column') works", {
       statistic = ~ categorical_summary_fns(c("n", "N")),
       denominator = "column"
     ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist(),
     rep_len(0L, length.out = 8L)
   )
@@ -549,7 +549,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
         statistic = ~ categorical_summary_fns(c("n", "p")),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist() |>
       unique(),
     0L
@@ -565,7 +565,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
         statistic = ~ categorical_summary_fns(c("n", "p")),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unlist() |>
       unique(),
     0L
@@ -620,7 +620,7 @@ test_that("ard_categorical(statistic) works with custom fns", {
 test_that("ard_categorical() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
-    "context", "stat_name", "stat_label", "statistic",
+    "context", "stat_name", "stat_label", "stat",
     "fmt_fn", "warning", "error"
   )
 

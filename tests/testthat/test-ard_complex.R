@@ -8,14 +8,14 @@ test_that("ard_complex() works", {
       variables = "AGE",
       statistic = list(AGE = list(mean = \(x, ...) mean(x)))
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), statistic),
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat),
     ard_continuous(
       ADSL,
       by = "ARM",
       variables = "AGE",
       statistic = ~ continuous_summary_fns("mean")
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat)
   )
 
   # using the `data` and `variable` args in the mean function
@@ -26,14 +26,14 @@ test_that("ard_complex() works", {
       variables = "AGE",
       statistic = list(AGE = list(mean = \(data, variable, ...) mean(data[[variable]])))
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), statistic),
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat),
     ard_continuous(
       ADSL,
       by = "ARM",
       variables = "AGE",
       statistic = ~ continuous_summary_fns("mean")
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), statistic)
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat)
   )
 
   # test a function using `data` and `data_full` arguments
@@ -53,14 +53,14 @@ test_that("ard_complex() works", {
           statistic = list(AGE = list(means = grand_mean))
         ) |>
         as.data.frame() |>
-        dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, statistic)
+        dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat)
     },
     NA
   )
   expect_equal(
     ard_grand_mean |>
       dplyr::filter(stat_name %in% "grand_mean") |>
-      dplyr::pull(statistic) |>
+      dplyr::pull(stat) |>
       unique() |>
       getElement(1L),
     mean(ADSL$AGE)
@@ -69,12 +69,12 @@ test_that("ard_complex() works", {
     ard_grand_mean |>
       as.data.frame() |>
       dplyr::filter(stat_name %in% "mean") |>
-      dplyr::mutate(across(c(group1_level, statistic), unlist)) |>
-      dplyr::select(group1_level, statistic),
+      dplyr::mutate(across(c(group1_level, stat), unlist)) |>
+      dplyr::select(group1_level, stat),
     ADSL |>
       dplyr::summarise(
         .by = "ARM",
-        statistic = mean(AGE)
+        stat = mean(AGE)
       ) |>
       dplyr::rename(group1_level = ARM) |>
       as.data.frame(),

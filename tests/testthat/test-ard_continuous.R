@@ -47,7 +47,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
       )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, stat_fmt) |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
@@ -64,7 +64,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
       )
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, stat_fmt) |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
@@ -76,7 +76,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
     fmt_fn = ~ list(~ function(x) round(x, 4))
   ) |>
     apply_fmt_fn() |>
-    dplyr::select(variable, stat_name, statistic, stat_fmt) |>
+    dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 })
@@ -233,7 +233,7 @@ test_that("ard_continuous() with dates works and displays as expected", {
     )
   expect_snapshot(ard_date)
 
-  expect_equal(ard_date$statistic[[1]], as.Date("1998-06-13"))
+  expect_equal(ard_date$stat[[1]], as.Date("1998-06-13"))
 })
 
 test_that("ard_continuous() with empty/missing dates works, and preserves Date class", {
@@ -242,5 +242,5 @@ test_that("ard_continuous() with empty/missing dates works, and preserves Date c
       variables = dt,
       statistic = ~ continuous_summary_fns(c("min"))
     )
-  expect_equal(inherits(empty_date$statistic[[1]], "Date"), TRUE)
+  expect_equal(inherits(empty_date$stat[[1]], "Date"), TRUE)
 })

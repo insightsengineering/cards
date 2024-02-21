@@ -71,9 +71,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     )
 
   # for the statistics, round to 3 decimal places ------------------------------
-  if ("statistic" %in% names(x_print)) {
-    x_print$statistic <- lapply(
-      x_print$statistic,
+  if ("stat" %in% names(x_print)) {
+    x_print$stat <- lapply(
+      x_print$stat,
       function(x) {
         if (isTRUE(is.numeric(x))) {
           res <- round5(x, digits = 3)

@@ -29,12 +29,12 @@
 ---
 
     Code
-      as.data.frame(apply_fmt_fn(dplyr::mutate(ard_fmt_checks, statistic = lapply(
-        statistic, function(x) x * 1000), fmt_fn = list("xx", "xx"))))
+      as.data.frame(apply_fmt_fn(dplyr::mutate(ard_fmt_checks, stat = lapply(stat,
+        function(x) x * 1000), fmt_fn = list("xx", "xx"))))
     Output
-        variable    context stat_name stat_label statistic stat_fmt fmt_fn warning
-      1      mpg continuous      mean       Mean  20090.62    20091     xx    NULL
-      2      mpg continuous        sd         SD  6026.948     6027     xx    NULL
+        variable    context stat_name stat_label     stat stat_fmt fmt_fn warning
+      1      mpg continuous      mean       Mean 20090.62    20091     xx    NULL
+      2      mpg continuous        sd         SD 6026.948     6027     xx    NULL
         error
       1  NULL
       2  NULL

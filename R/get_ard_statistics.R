@@ -30,7 +30,7 @@
 #' )
 get_ard_statistics <- function(x,
                                ...,
-                               .column = "statistic",
+                               .column = "stat",
                                .attributes = NULL) {
   # subset the ARD
   ard_subset <- dplyr::filter(x, ...)

@@ -99,8 +99,8 @@ tidy_as_ard <- function(lst_tidy,
   # add results to tibble ------------------------------------------------------
   dplyr::tibble(
     stat_name = names(lst_all_results),
-    statistic = lst_all_results,
-    fmt_fn = lapply(.data$statistic, function(x) {
+    stat = lst_all_results,
+    fmt_fn = lapply(.data$stat, function(x) {
       switch(is.numeric(x),
         1L
       )
