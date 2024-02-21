@@ -293,9 +293,13 @@ cards_select <- function(expr, data, ...,
     error = function(e) {
       cli::cli_abort(
         message =
-          c("!" = switch(!is.null(arg_name), "Error processing {.arg {arg_name}} argument."),
-            "!" = cli::ansi_strip(conditionMessage(e)) ,
-            i = "Select among columns {.val {names(data)}}"),
+          c(
+            "!" = switch(!is.null(arg_name),
+              "Error processing {.arg {arg_name}} argument."
+            ),
+            "!" = cli::ansi_strip(conditionMessage(e)),
+            i = "Select among columns {.val {names(data)}}"
+          ),
         call = .call
       )
     }
