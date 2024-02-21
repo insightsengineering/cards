@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9046</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9048</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,12 +55,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -110,20 +104,20 @@ formats.</p>
 <span></span>
 <span><span class="va">ard</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 51 x 11</span></span></span>
-<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label statistic</span></span>
-<span><span class="co">#&gt; 1     ARM      Placebo      AGE                        N          N        86</span></span>
-<span><span class="co">#&gt; 2     ARM      Placebo      AGE                     mean       Mean    75.209</span></span>
-<span><span class="co">#&gt; 3     ARM      Placebo      AGE                       sd         SD      8.59</span></span>
-<span><span class="co">#&gt; 4     ARM      Placebo      AGE                   median     Median        76</span></span>
-<span><span class="co">#&gt; 5     ARM      Placebo      AGE                      p25  25th Per…        69</span></span>
-<span><span class="co">#&gt; 6     ARM      Placebo      AGE                      p75  75th Per…        82</span></span>
-<span><span class="co">#&gt; 7     ARM      Placebo      AGE                      min        Min        52</span></span>
-<span><span class="co">#&gt; 8     ARM      Placebo      AGE                      max        Max        89</span></span>
-<span><span class="co">#&gt; 9     ARM    Xanomeli…      AGE                        N          N        84</span></span>
-<span><span class="co">#&gt; 10    ARM    Xanomeli…      AGE                     mean       Mean    74.381</span></span>
+<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label   stat</span></span>
+<span><span class="co">#&gt; 1     ARM      Placebo      AGE                        N          N     86</span></span>
+<span><span class="co">#&gt; 2     ARM      Placebo      AGE                     mean       Mean 75.209</span></span>
+<span><span class="co">#&gt; 3     ARM      Placebo      AGE                       sd         SD   8.59</span></span>
+<span><span class="co">#&gt; 4     ARM      Placebo      AGE                   median     Median     76</span></span>
+<span><span class="co">#&gt; 5     ARM      Placebo      AGE                      p25  25th Per…     69</span></span>
+<span><span class="co">#&gt; 6     ARM      Placebo      AGE                      p75  75th Per…     82</span></span>
+<span><span class="co">#&gt; 7     ARM      Placebo      AGE                      min        Min     52</span></span>
+<span><span class="co">#&gt; 8     ARM      Placebo      AGE                      max        Max     89</span></span>
+<span><span class="co">#&gt; 9     ARM    Xanomeli…      AGE                        N          N     84</span></span>
+<span><span class="co">#&gt; 10    ARM    Xanomeli…      AGE                     mean       Mean 74.381</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">41 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, statistic_fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 <div class="section level2">
 <h2 id="yaml">YAML<a class="anchor" aria-label="anchor" href="#yaml"></a>
 </h2>
@@ -142,13 +136,13 @@ frame to be converted to a YAML object.</p>
 <span><span class="co">#&gt;           Placebo:</span></span>
 <span><span class="co">#&gt;             stat_name:</span></span>
 <span><span class="co">#&gt;               'N':</span></span>
-<span><span class="co">#&gt;                 statistic: 86</span></span>
-<span><span class="co">#&gt;                 statistic_fmt: '86'</span></span>
+<span><span class="co">#&gt;                 stat: 86</span></span>
+<span><span class="co">#&gt;                 stat_fmt: '86'</span></span>
 <span><span class="co">#&gt;                 warning: ~</span></span>
 <span><span class="co">#&gt;                 error: ~</span></span>
 <span><span class="co">#&gt;                 context: continuous</span></span>
 <span><span class="co">#&gt;               mean:</span></span>
-<span><span class="co">#&gt;                 statistic: 75.2093023</span></span>
+<span><span class="co">#&gt;                 stat: 75.2093023</span></span>
 <span><span class="va">...</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -169,8 +163,8 @@ frame to be converted to a JSON object.</p>
 <span><span class="co">#&gt;             "Placebo": {</span></span>
 <span><span class="co">#&gt;               "stat_name": {</span></span>
 <span><span class="co">#&gt;                 "N": {</span></span>
-<span><span class="co">#&gt;                   "statistic": [86],</span></span>
-<span><span class="co">#&gt;                   "statistic_fmt": ["86"],</span></span>
+<span><span class="co">#&gt;                   "stat": [86],</span></span>
+<span><span class="co">#&gt;                   "stat_fmt": ["86"],</span></span>
 <span><span class="co">#&gt;                   "warning": {},</span></span>
 <span><span class="co">#&gt;                   "error": {},</span></span>
 <span><span class="co">#&gt;                   "context": ["continuous"]</span></span>
