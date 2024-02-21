@@ -14,7 +14,7 @@
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   not used
 #'
-#' @return an ARD data frame of class 'card'
+#' @return an ARD data frame of class 'card' (invisibly)
 #' @export
 #'
 #' @examples

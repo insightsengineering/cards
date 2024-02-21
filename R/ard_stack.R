@@ -28,7 +28,6 @@
 #'
 #' @export
 #' @examples
-#'
 #' ard_stack(
 #'   data = ADSL,
 #'   by = "ARM",

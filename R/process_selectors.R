@@ -69,8 +69,8 @@
 #' @param expr (`expression`)\cr
 #'   Defused R code describing a selection according to the tidyselect syntax.
 #'
-#' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
-#' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
+#' @return `process_selectors()`, `fill_formula_selectors()`, `process_formula_selectors()`
+#' and `check_list_elements()` return NULL. `compute_formula_selector()` returns a
 #' named list.
 #' @name process_selectors
 #'

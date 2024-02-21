@@ -100,8 +100,8 @@ Defused R code describing a selection according to the tidyselect syntax.}
 calling environment used for error messaging.}
 }
 \value{
-\code{process_selectors()}, \code{fill_formula_selectors()}, and \code{check_list_elements()}
-return NULL, \code{process_formula_selectors()} and \code{compute_formula_selector()} return a
+\code{process_selectors()}, \code{fill_formula_selectors()}, \code{process_formula_selectors()}
+and \code{check_list_elements()} return NULL. \code{compute_formula_selector()} returns a
 named list.
 }
 \description{

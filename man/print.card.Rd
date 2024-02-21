@@ -24,7 +24,7 @@ columns present. This argument sets that threshold. Default is \code{6L}.}
 not used}
 }
 \value{
-an ARD data frame of class 'card'
+an ARD data frame of class 'card' (invisibly)
 }
 \description{
 Print method for objects of class 'card'

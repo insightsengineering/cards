@@ -50,7 +50,6 @@ big N's, missingness, attributes) and/or tidy for use in displays with
 \code{shuffle_ard()}.
 }
 \examples{
-
 ard_stack(
   data = ADSL,
   by = "ARM",

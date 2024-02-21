@@ -17,7 +17,7 @@
 #'   consecutive rows. Default is `FALSE`. Ordering will be based on the order
 #'   of the group/variable values prior to stacking.
 #'
-#' @return a transformed ARD data frame of class 'card'
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples

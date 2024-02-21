@@ -21,8 +21,6 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-This package is in a **preliminary state**, and **breaking changes** will be made **without notice or deprecation**.
-
 The [CDISC Analysis Results Standard](https://www.cdisc.org/standards/foundational/analysis-results-standards) aims to facilitate automation, reproducibility, reusability, and traceability of analysis results data (ARD).
 The {cards} package creates these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
 
@@ -38,6 +36,12 @@ Use cases:
 
 ## Installation
 
+Install cards from CRAN with:
+
+```r
+install.packages("cards")
+```
+
 You can install the development version of cards from [GitHub](https://github.com/) with:
 
 ``` r
@@ -47,7 +51,7 @@ devtools::install_github("insightsengineering/cards")
 
 ## Extensions
 
-[![cardx website](https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png){style="float: right" width="120"}](https://insightsengineering.github.io/cardx)
+[![cardx website](https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png){style="float: right" width="120"}](https://insightsengineering.github.io/cardx/)
 
 The {cards} package exports three types of functions:
 
@@ -57,7 +61,7 @@ The {cards} package exports three types of functions:
 
 3.  Functions to work with existing ARD objects.
 
-The [{cardx}](https://github.com/insightsengineering/cardx) R package is an extension to {cards} that uses the utilities from {cards} and exports functions for creating additional ARD objects–--including functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.
+The [{cardx}](https://github.com/insightsengineering/cardx/) R package is an extension to {cards} that uses the utilities from {cards} and exports functions for creating additional ARD objects–--including functions to summarize t-tests, Wilcoxon Rank-Sum tests, regression models, and more.
 
 ## Example
 
