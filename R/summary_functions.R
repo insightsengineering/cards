@@ -62,10 +62,10 @@ NULL
 #' @rdname summary_functions
 #' @export
 continuous_summary_fns <- function(summaries = c(
-                                              "N", "mean", "sd", "median",
-                                              "p25", "p75", "min", "max"
-                                            ),
-                                            other_stats = NULL) {
+                                     "N", "mean", "sd", "median",
+                                     "p25", "p75", "min", "max"
+                                   ),
+                                   other_stats = NULL) {
   # process the selection of the summary stats to include ----------------------
   summaries <- arg_match(summaries, multiple = TRUE)
 
