@@ -24,7 +24,7 @@
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
-#'   e.g. `list(mpg = categorical_variable_summary_fns())`.
+#'   e.g. `list(mpg = categorical_summary_fns())`.
 #' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
@@ -68,13 +68,13 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_categorical(
 #'     variables = "AGEGR1",
-#'     statistic = everything() ~ categorical_variable_summary_fns("n")
+#'     statistic = everything() ~ categorical_summary_fns("n")
 #'   )
 ard_categorical <- function(data,
                             variables,
                             by = dplyr::group_vars(data),
                             strata = NULL,
-                            statistic = everything() ~ categorical_variable_summary_fns(),
+                            statistic = everything() ~ categorical_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
                             stat_label = everything() ~ default_stat_labels()) {

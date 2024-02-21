@@ -3,7 +3,7 @@
 \name{summary_functions}
 \alias{summary_functions}
 \alias{continuous_summary_fns}
-\alias{categorical_variable_summary_fns}
+\alias{categorical_summary_fns}
 \alias{missing_summary_fns}
 \title{Summary Functions}
 \usage{
@@ -12,10 +12,7 @@ continuous_summary_fns(
   other_stats = NULL
 )
 
-categorical_variable_summary_fns(
-  summaries = c("n", "p", "N"),
-  other_stats = NULL
-)
+categorical_summary_fns(summaries = c("n", "p", "N"), other_stats = NULL)
 
 missing_summary_fns(
   summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")
@@ -27,7 +24,7 @@ a character vector of results to include in output.
 \itemize{
 \item \code{continuous_summary_fns()}: Select one or more from
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
-\item \code{categorical_variable_summary_fns()}: Select one or more from
+\item \code{categorical_summary_fns()}: Select one or more from
 'n', 'p', 'N'.
 \item \code{missing_summary_fns()}: Select one or more from
 'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
@@ -38,7 +35,7 @@ named list of other statistic functions to supplement the pre-programmed functio
 }
 \value{
 \code{continuous_summary_fns()} and \code{missing_summary_fns()} return a named list of summary
-functions, \code{categorical_variable_summary_fns()} returns a named list of summary statistics.
+functions, \code{categorical_summary_fns()} returns a named list of summary statistics.
 }
 \description{
 \itemize{
@@ -49,7 +46,7 @@ return \code{NA} instead of \code{Inf} when an empty vector is passed.
 Statistics \code{"p25"} and \code{"p75"} are calculated with \code{quantile(type = 2)},
 which matches
 \href{https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html}{SAS's default value}.
-\item \code{categorical_variable_summary_fns()} returns a named list of summary statistics for
+\item \code{categorical_summary_fns()} returns a named list of summary statistics for
 categorical variables. Options are \code{"n"}, \code{"N"}, and \code{"p"}. If a user requests, for
 example, only \code{"p"}, the function will return \code{"n"} and \code{"N"} as well, since they are
 needed to calculate \code{"p"}. These statistics will be stored as a vector within the
@@ -70,7 +67,7 @@ ard_continuous(
 ard_categorical(
   ADSL,
   variables = "AGEGR1",
-  statistic = ~ categorical_variable_summary_fns(c("n", "N"))
+  statistic = ~ categorical_summary_fns(c("n", "N"))
 )
 
 # summary for rates of missing data

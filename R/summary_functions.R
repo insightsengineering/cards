@@ -9,7 +9,7 @@
 #'   which matches
 #'   [SAS's default value](https://psiaims.github.io/CAMIS/Comp/r-sas-summary-stats.html).
 #'
-#' - `categorical_variable_summary_fns()` returns a named list of summary statistics for
+#' - `categorical_summary_fns()` returns a named list of summary statistics for
 #'   categorical variables. Options are `"n"`, `"N"`, and `"p"`. If a user requests, for
 #'   example, only `"p"`, the function will return `"n"` and `"N"` as well, since they are
 #'   needed to calculate `"p"`. These statistics will be stored as a vector within the
@@ -24,8 +24,8 @@
 #'   - `continuous_summary_fns()`: Select one or more from
 #'     `r eval(formals(continuous_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #'
-#'   - `categorical_variable_summary_fns()`: Select one or more from
-#'     `r eval(formals(categorical_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
+#'   - `categorical_summary_fns()`: Select one or more from
+#'     `r eval(formals(categorical_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #'
 #'   - `missing_summary_fns()`: Select one or more from
 #'     `r eval(formals(missing_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
@@ -33,7 +33,7 @@
 #'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
 #' @return `continuous_summary_fns()` and `missing_summary_fns()` return a named list of summary
-#' functions, `categorical_variable_summary_fns()` returns a named list of summary statistics.
+#' functions, `categorical_summary_fns()` returns a named list of summary statistics.
 #' @name summary_functions
 #'
 #' @examples
@@ -48,7 +48,7 @@
 #' ard_categorical(
 #'   ADSL,
 #'   variables = "AGEGR1",
-#'   statistic = ~ categorical_variable_summary_fns(c("n", "N"))
+#'   statistic = ~ categorical_summary_fns(c("n", "N"))
 #' )
 #'
 #' # summary for rates of missing data
@@ -99,7 +99,7 @@ continuous_summary_fns <- function(summaries = c(
 
 #' @rdname summary_functions
 #' @export
-categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
+categorical_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
   # check inputs ---------------------------------------------------------------
   if (!is_empty(summaries)) {
     summaries <-

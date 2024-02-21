@@ -41,7 +41,7 @@ e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
+e.g. \code{list(mpg = categorical_summary_fns())}.}
 }
 \value{
 an ARD data frame of class 'card'

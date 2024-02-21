@@ -9,7 +9,7 @@ ard_categorical(
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
-  statistic = everything() ~ categorical_variable_summary_fns(),
+  statistic = everything() ~ categorical_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels()
@@ -38,7 +38,7 @@ Arguments may be used in conjunction with one another.}
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
-e.g. \code{list(mpg = categorical_variable_summary_fns())}.}
+e.g. \code{list(mpg = categorical_summary_fns())}.}
 
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
 Specify this \emph{optional} argument to change the denominator,
@@ -99,6 +99,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_categorical(
     variables = "AGEGR1",
-    statistic = everything() ~ categorical_variable_summary_fns("n")
+    statistic = everything() ~ categorical_summary_fns("n")
   )
 }
