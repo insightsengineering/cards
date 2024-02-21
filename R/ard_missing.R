@@ -23,7 +23,7 @@ ard_missing <- function(data,
                         by = dplyr::group_vars(data),
                         statistic = everything() ~ missing_variable_summary_fns(),
                         fmt_fn = NULL,
-                        stat_labels = everything() ~ default_stat_labels()) {
+                        stat_label = everything() ~ default_stat_labels()) {
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})
 
@@ -40,7 +40,7 @@ ard_missing <- function(data,
     by = {{ by }},
     statistic = statistic,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   ) |>
     dplyr::mutate(
       context = "missing"

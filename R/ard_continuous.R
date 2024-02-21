@@ -34,7 +34,7 @@
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
-#' @param stat_labels ([`formula-list-selector`][syntax])\cr
+#' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
@@ -63,7 +63,7 @@ ard_continuous <- function(data,
                            strata = NULL,
                            statistic = everything() ~ continuous_variable_summary_fns(),
                            fmt_fn = NULL,
-                           stat_labels = everything() ~ default_stat_labels()) {
+                           stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -82,12 +82,12 @@ ard_continuous <- function(data,
     data = data[variables],
     statistic = statistic,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   )
   fill_formula_selectors(
     data = data[variables],
     statistic = formals(cards::ard_continuous)[["statistic"]] |> eval(),
-    stat_labels = formals(cards::ard_continuous)[["stat_labels"]] |> eval()
+    stat_label = formals(cards::ard_continuous)[["stat_label"]] |> eval()
   )
 
   check_list_elements(
@@ -144,7 +144,7 @@ ard_continuous <- function(data,
   df_results <-
     .process_nested_list_as_df(
       x = df_results,
-      arg = stat_labels,
+      arg = stat_label,
       new_column = "stat_label",
       unlist = TRUE
     ) |>

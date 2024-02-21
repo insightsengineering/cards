@@ -36,11 +36,11 @@
       14 0.01190476    NULL  NULL
       15  0.9880952    NULL  NULL
 
-# ard_missing(stat_labels) argument works
+# ard_missing(stat_label) argument works
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(c("N_obs",
+        variables = c("AGE", "BMIBL"), stat_label = everything() ~ list(c("N_obs",
           "N_miss") ~ "N, miss"))), stat_name, stat_label), stat_name %in% c("N_obs",
         "N_miss")))
     Output
@@ -52,7 +52,7 @@
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(p_miss = "% miss",
+        variables = c("AGEGR1", "SEX"), stat_label = everything() ~ list(p_miss = "% miss",
           p_nonmiss = "% non miss"))), stat_name, stat_label), stat_name %in% c(
         "p_miss", "p_nonmiss")))
     Output
@@ -64,7 +64,7 @@
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_missing(data = ADSL, by = "ARM",
-        variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(N_obs = "Number of Obs"))),
+        variables = c("AGE", "BMIBL"), stat_label = AGE ~ list(N_obs = "Number of Obs"))),
       variable, stat_name, stat_label), stat_name == "N_obs"))
     Output
         variable stat_name    stat_label

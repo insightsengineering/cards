@@ -71,12 +71,12 @@
       Error in `ard_continuous()`:
       ! The `variables` argument cannot be missing.
 
-# ard_continuous(stat_labels) argument works
+# ard_continuous(stat_label) argument works
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_continuous(data = ADSL,
-        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(
-          c("min", "max") ~ "min - max"))), stat_name, stat_label), stat_name %in% c(
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_label = everything() ~ list(c(
+          "min", "max") ~ "min - max"))), stat_name, stat_label), stat_name %in% c(
         "min", "max")))
     Output
         stat_name stat_label
@@ -87,7 +87,7 @@
 
     Code
       unique(dplyr::filter(dplyr::select(as.data.frame(ard_continuous(data = ADSL,
-        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = everything() ~ list(
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_label = everything() ~ list(
           p25 = "25th %ile", p75 = "75th %ile"))), stat_name, stat_label),
       stat_name %in% c("p25", "p75")))
     Output
@@ -99,7 +99,7 @@
 
     Code
       unique(dplyr::select(dplyr::filter(as.data.frame(ard_continuous(data = ADSL,
-        by = "ARM", variables = c("AGE", "BMIBL"), stat_labels = AGE ~ list(p25 = "25th %ile",
+        by = "ARM", variables = c("AGE", "BMIBL"), stat_label = AGE ~ list(p25 = "25th %ile",
           p75 = "75th %ile"))), stat_name %in% c("p25", "p75")), variable, stat_name,
       stat_label))
     Output

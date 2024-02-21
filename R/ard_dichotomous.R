@@ -28,7 +28,7 @@ ard_dichotomous <- function(data,
                             statistic = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
-                            stat_labels = everything() ~ default_stat_labels()) {
+                            stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -57,7 +57,7 @@ ard_dichotomous <- function(data,
     statistic = statistic,
     denominator = denominator,
     fmt_fn = fmt_fn,
-    stat_labels = stat_labels
+    stat_label = stat_label
   ) |>
     dplyr::filter(
       pmap(

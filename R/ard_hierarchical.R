@@ -41,7 +41,7 @@ ard_hierarchical <- function(data,
                              by = dplyr::group_vars(data),
                              statistic = everything() ~ categorical_variable_summary_fns(),
                              denominator = NULL, fmt_fn = NULL,
-                             stat_labels = everything() ~ default_stat_labels()) {
+                             stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -86,7 +86,7 @@ ard_hierarchical <- function(data,
       statistic = statistic,
       denominator = denominator,
       fmt_fn = fmt_fn,
-      stat_labels = stat_labels
+      stat_label = stat_label
     )
 
   # renaming columns -----------------------------------------------------------
@@ -103,7 +103,7 @@ ard_hierarchical_count <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
                                    fmt_fn = NULL,
-                                   stat_labels = everything() ~ default_stat_labels()) {
+                                   stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -136,7 +136,7 @@ ard_hierarchical_count <- function(data,
           strata = all_of(variables[seq_len(i)]),
           statistic = everything() ~ categorical_variable_summary_fns("n"),
           fmt_fn = fmt_fn,
-          stat_labels = stat_labels
+          stat_label = stat_label
         ) |>
           .rename_last_group_as_variable()
       }

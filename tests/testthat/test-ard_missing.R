@@ -26,14 +26,14 @@ test_that("ard_missing() works", {
   )
 })
 
-test_that("ard_missing(stat_labels) argument works", {
+test_that("ard_missing(stat_label) argument works", {
   # formula
   expect_snapshot(
     ard_missing(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = everything() ~ list(c("N_obs", "N_miss") ~ "N, miss")
+      stat_label = everything() ~ list(c("N_obs", "N_miss") ~ "N, miss")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -47,7 +47,7 @@ test_that("ard_missing(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGEGR1", "SEX"),
-      stat_labels = everything() ~ list(p_miss = "% miss", p_nonmiss = "% non miss")
+      stat_label = everything() ~ list(p_miss = "% miss", p_nonmiss = "% non miss")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -61,7 +61,7 @@ test_that("ard_missing(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = AGE ~ list(N_obs = "Number of Obs")
+      stat_label = AGE ~ list(N_obs = "Number of Obs")
     ) |>
       as.data.frame() |>
       dplyr::select(variable, stat_name, stat_label) |>

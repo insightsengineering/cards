@@ -25,7 +25,7 @@
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
 #'   e.g. `list(mpg = categorical_variable_summary_fns())`.
-#' @param stat_labels ([`formula-list-selector`][syntax])\cr
+#' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
@@ -77,7 +77,7 @@ ard_categorical <- function(data,
                             statistic = everything() ~ categorical_variable_summary_fns(),
                             denominator = NULL,
                             fmt_fn = NULL,
-                            stat_labels = everything() ~ default_stat_labels()) {
+                            stat_label = everything() ~ default_stat_labels()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -97,7 +97,7 @@ ard_categorical <- function(data,
   process_formula_selectors(
     data = data[variables],
     statistic = statistic,
-    stat_labels = stat_labels,
+    stat_label = stat_label,
     fmt_fn = fmt_fn
   )
   fill_formula_selectors(
@@ -127,7 +127,7 @@ ard_categorical <- function(data,
         strata = all_of(strata),
         statistic = statistics_non_tabulation,
         fmt_fn = NULL,
-        stat_labels = NULL
+        stat_label = NULL
       ) |>
       dplyr::select(-c("stat_label", "statistic_fmt_fn"))
   }
@@ -157,7 +157,7 @@ ard_categorical <- function(data,
   df_result_final <-
     .process_nested_list_as_df(
       x = df_result_final,
-      arg = stat_labels,
+      arg = stat_label,
       new_column = "stat_label",
       unlist = TRUE
     ) |>

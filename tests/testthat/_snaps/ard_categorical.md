@@ -60,11 +60,11 @@
       Error in `ard_categorical()`:
       ! The following `by/strata` combinations are missing from the `denominator` data frame: ARM (Xanomeline High Dose) and ARM (Xanomeline Low Dose).
 
-# ard_categorical(stat_labels) argument works
+# ard_categorical(stat_label) argument works
 
     Code
       unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
-        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_label = everything() ~ list(
           c("n", "p") ~ "n (pct)"))), stat_name %in% c("n", "p")), stat_name,
       stat_label))
     Output
@@ -76,7 +76,7 @@
 
     Code
       unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
-        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = everything() ~ list(
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_label = everything() ~ list(
           n = "num", p = "pct"))), stat_name %in% c("n", "p")), stat_name, stat_label))
     Output
         stat_name stat_label
@@ -87,7 +87,7 @@
 
     Code
       unique(dplyr::select(dplyr::filter(as.data.frame(ard_categorical(data = ADSL,
-        by = "ARM", variables = c("AGEGR1", "SEX"), stat_labels = AGEGR1 ~ list(c("n",
+        by = "ARM", variables = c("AGEGR1", "SEX"), stat_label = AGEGR1 ~ list(c("n",
           "p") ~ "n (pct)"))), stat_name %in% c("n", "p")), variable, stat_name,
       stat_label))
     Output

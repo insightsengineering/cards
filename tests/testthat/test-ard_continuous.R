@@ -101,14 +101,14 @@ test_that("ard_continuous() messaging", {
   )
 })
 
-test_that("ard_continuous(stat_labels) argument works", {
+test_that("ard_continuous(stat_label) argument works", {
   # formula
   expect_snapshot(
     ard_continuous(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = everything() ~ list(c("min", "max") ~ "min - max")
+      stat_label = everything() ~ list(c("min", "max") ~ "min - max")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -122,7 +122,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")
+      stat_label = everything() ~ list(p25 = "25th %ile", p75 = "75th %ile")
     ) |>
       as.data.frame() |>
       dplyr::select(stat_name, stat_label) |>
@@ -136,7 +136,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
-      stat_labels = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")
+      stat_label = AGE ~ list(p25 = "25th %ile", p75 = "75th %ile")
     ) |>
       as.data.frame() |>
       dplyr::filter(stat_name %in% c("p25", "p75")) |>
@@ -155,7 +155,7 @@ test_that("ard_continuous(stat_labels) argument works", {
       ADSL,
       variables = "AGE",
       statistic = ~ list(conf.int = conf_int),
-      stat_labels = ~ list(conf.low = "LB", conf.high = "UB")
+      stat_label = ~ list(conf.low = "LB", conf.high = "UB")
     ) |>
     dplyr::select(variable, stat_name, stat_label) |>
     as.data.frame()
@@ -166,7 +166,7 @@ test_that("ard_continuous(stat_labels) argument works", {
     ADSL,
     variables = "AGE",
     statistic = ~ list(conf.int = conf_int),
-    stat_labels = ~ list("conf.low" ~ "LB", "conf.high" ~ "UB")
+    stat_label = ~ list("conf.low" ~ "LB", "conf.high" ~ "UB")
   ) |>
     dplyr::select(variable, stat_name, stat_label) |>
     as.data.frame()
