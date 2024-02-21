@@ -23,6 +23,9 @@
 #' - `check_list_elements()`: used to check the class/type/values of the list
 #'   elements, primarily those processed with `process_formula_selectors()`.
 #'
+#' - `cards_select()`: wraps `tidyselect::eval_select() |> names()`, and returns
+#'   better contextual messaging when errors occur.
+#'
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
@@ -61,6 +64,10 @@
 #' @param allow_empty (`logical`)\cr
 #'   Logical indicating whether empty result is acceptable while process
 #'   formula-list selectors. Default is `TRUE`.
+#' @param .call (`environment`)\cr
+#'   calling environment used for error messaging.
+#' @param expr (`expression`)\cr
+#'   Defused R code describing a selection according to the tidyselect syntax.
 #'
 #' @return `process_selectors()`, `fill_formula_selectors()`, and `check_list_elements()`
 #' return NULL, `process_formula_selectors()` and `compute_formula_selector()` return a
@@ -107,20 +114,13 @@ process_selectors <- function(data, ..., env = caller_env()) {
       dots,
       function(x, arg_name) {
         processed_value <-
-          eval_capture_conditions({
-            tidyselect::eval_select(x, data = data, allow_rename = FALSE) |> names()
-          })
-        if (!is.null(processed_value[["result"]])) {
-          return(processed_value[["result"]])
-        }
-
-        cli::cli_abort(
-          c("There was an error selecting the {.arg {arg_name}} argument. See message below:",
-            "i" = "{processed_value[['error']]}"
-          ),
-          class = "process_selectors_error",
-          call = env
-        )
+          cards_select(
+            expr = x,
+            data = data,
+            allow_rename = FALSE,
+            arg_name = arg_name,
+            .call = env
+          )
       }
     )
 
@@ -205,13 +205,15 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       lhs_expr <- f_lhs(x[[i]])
 
       if (!is.null(data)) {
-        lhs_expr <- tidyselect::eval_select(
+        lhs_expr <- cards_select(
           # if nothing found on LHS of formula, using `everything()`
-          f_lhs(x[[i]]) %||% dplyr::everything(),
+          expr = f_lhs(x[[i]]) %||% dplyr::everything(),
           data = data,
-          strict = strict
-        ) |>
-          names()
+          strict = strict,
+          allow_rename = FALSE,
+          arg_name = arg_name,
+          .call = env
+        )
       }
 
       colnames <-
@@ -266,4 +268,27 @@ check_list_elements <- function(x,
   )
 
   invisible()
+}
+
+#' @name process_selectors
+#' @export
+cards_select <- function(expr, data, ...,
+                         arg_name = NULL,
+                         .call = parent.frame()) {
+  tryCatch(
+    tidyselect::eval_select(expr = expr, data = data, ...) |> names(),
+    error = function(e) {
+      cli::cli_abort(
+        message =
+          c(
+            "!" = switch(!is.null(arg_name),
+              "Error processing {.arg {arg_name}} argument."
+            ),
+            "!" = cli::ansi_strip(conditionMessage(e)),
+            i = "Select among columns {.val {names(data)}}"
+          ),
+        call = .call
+      )
+    }
+  )
 }
