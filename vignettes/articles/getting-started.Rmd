@@ -47,6 +47,8 @@ ADSL |>
 
 The table above has three types of data summaries: a **continuous** variable summary for `AGE`, a **categorical** variable summary for `AGEGR1`, and a **dichotomous** variable summary for `SEX`.
 
+#### Continuous Summaries
+
 To get a continuous variable summary, we will use the `ard_continuous()` function from the **{cards}** package.
 
 ```{r}
@@ -55,10 +57,12 @@ df_continuous_ard <-
     ADSL, 
     by = ARM,
     variables = AGE, 
-    statistics = ~continuous_variable_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+    statistic = ~continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
   )
-df_continuous_ard
+df_continuous_ard |> head(5)
 ```
+
+#### Categorical Summaries
 
 To get the categorical variable summary, we will use the `ard_categorical()` function.
 
@@ -69,8 +73,10 @@ df_categoircal_ard <-
     by = ARM,
     variables = AGEGR1
   )
-df_categoircal_ard
+df_categoircal_ard |> head(5)
 ```
+
+#### Dichotomous Summaries
 
 To get the dichotomous variable summary, we will use `ard_dichotomous()`.
 In this case, we want to show the Female (`"F"`) level of the `SEX` variable and specify this with the `values` argument.
@@ -81,10 +87,12 @@ df_dichotomous_ard <-
     ADSL, 
     by = ARM,
     variables = SEX, 
-    values = list(SEX = "F")
+    value = list(SEX = "F")
   )
-df_dichotomous_ard
+df_dichotomous_ard |> head(5)
 ```
+
+#### Combine Results
 
 As a last step, you can combine all of these objects into a single object using `bind_ard()`, which is similar to `dplyr::bind_rows()` and includes additional structural checks for our results.
 
@@ -96,3 +104,26 @@ bind_ard(
 )
 ```
 
+#### Shortcut
+
+The `ard_stack()` function provides a shortcut to perform the calculations above in a single step.
+
+In the example below, the `data` and `by` arguments are passed to each subsequent `ard_*()` function call.
+Moreover, we will also be returned the univariate tabulation of the `by` variable, which would be used to add counts to the header row of the table.
+
+```{r}
+ard_stack(
+  data = ADSL, 
+  by = ARM,
+  ard_continuous(
+    variables = AGE, 
+    statistic = ~continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+  ),
+  ard_categorical(variables = AGEGR1),
+  ard_dichotomous(variables = SEX, value = list(SEX = "F"))
+)
+```
+
+### Adverse Events
+
+_Example Coming Soon!_
