@@ -15,7 +15,7 @@
 #'   needed to calculate `"p"`. These statistics will be stored as a vector within the
 #'   `tabulation` list element.
 #'
-#' - `missing_variable_summary_fns()` returns a named list of summary functions suitable
+#' - `missing_summary_fns()` returns a named list of summary functions suitable
 #'   for variable-level summaries, such as number and rate of missing data.
 #'
 #' @param summaries (`character`)\cr
@@ -27,12 +27,12 @@
 #'   - `categorical_variable_summary_fns()`: Select one or more from
 #'     `r eval(formals(categorical_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #'
-#'   - `missing_variable_summary_fns()`: Select one or more from
-#'     `r eval(formals(missing_variable_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
+#'   - `missing_summary_fns()`: Select one or more from
+#'     `r eval(formals(missing_summary_fns)$summaries) %>% {paste(shQuote(., "sh"), collapse = ", ")}`.
 #' @param other_stats (named `list`)\cr
 #'   named list of other statistic functions to supplement the pre-programmed functions.
 #'
-#' @return `continuous_variable_summary_fns()` and `missing_variable_summary_fns()` return a named list of summary
+#' @return `continuous_variable_summary_fns()` and `missing_summary_fns()` return a named list of summary
 #' functions, `categorical_variable_summary_fns()` returns a named list of summary statistics.
 #' @name summary_functions
 #'
@@ -55,7 +55,7 @@
 #' ard_missing(
 #'   ADSL,
 #'   variables = c("AGE", "AGEGR1"),
-#'   statistic = ~ missing_variable_summary_fns()
+#'   statistic = ~ missing_summary_fns()
 #' )
 NULL
 
@@ -117,7 +117,7 @@ categorical_variable_summary_fns <- function(summaries = c("n", "p", "N"), other
 
 #' @rdname summary_functions
 #' @export
-missing_variable_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
+missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
   summaries <- arg_match(summaries, multiple = TRUE)
 
   list(

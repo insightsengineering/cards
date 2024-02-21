@@ -4,7 +4,7 @@
 \alias{summary_functions}
 \alias{continuous_variable_summary_fns}
 \alias{categorical_variable_summary_fns}
-\alias{missing_variable_summary_fns}
+\alias{missing_summary_fns}
 \title{Summary Functions}
 \usage{
 continuous_variable_summary_fns(
@@ -17,7 +17,7 @@ categorical_variable_summary_fns(
   other_stats = NULL
 )
 
-missing_variable_summary_fns(
+missing_summary_fns(
   summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")
 )
 }
@@ -29,7 +29,7 @@ a character vector of results to include in output.
 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
 \item \code{categorical_variable_summary_fns()}: Select one or more from
 'n', 'p', 'N'.
-\item \code{missing_variable_summary_fns()}: Select one or more from
+\item \code{missing_summary_fns()}: Select one or more from
 'N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'.
 }}
 
@@ -37,7 +37,7 @@ a character vector of results to include in output.
 named list of other statistic functions to supplement the pre-programmed functions.}
 }
 \value{
-\code{continuous_variable_summary_fns()} and \code{missing_variable_summary_fns()} return a named list of summary
+\code{continuous_variable_summary_fns()} and \code{missing_summary_fns()} return a named list of summary
 functions, \code{categorical_variable_summary_fns()} returns a named list of summary statistics.
 }
 \description{
@@ -54,7 +54,7 @@ categorical variables. Options are \code{"n"}, \code{"N"}, and \code{"p"}. If a 
 example, only \code{"p"}, the function will return \code{"n"} and \code{"N"} as well, since they are
 needed to calculate \code{"p"}. These statistics will be stored as a vector within the
 \code{tabulation} list element.
-\item \code{missing_variable_summary_fns()} returns a named list of summary functions suitable
+\item \code{missing_summary_fns()} returns a named list of summary functions suitable
 for variable-level summaries, such as number and rate of missing data.
 }
 }
@@ -77,6 +77,6 @@ ard_categorical(
 ard_missing(
   ADSL,
   variables = c("AGE", "AGEGR1"),
-  statistic = ~ missing_variable_summary_fns()
+  statistic = ~ missing_summary_fns()
 )
 }
