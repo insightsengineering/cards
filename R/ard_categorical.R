@@ -129,7 +129,7 @@ ard_categorical <- function(data,
         fmt_fn = NULL,
         stat_label = NULL
       ) |>
-      dplyr::select(-c("stat_label", "statistic_fmt_fn"))
+      dplyr::select(-c("stat_label", "fmt_fn"))
   }
 
   # calculate tabulation statistics
@@ -149,7 +149,7 @@ ard_categorical <- function(data,
     dplyr::bind_rows(df_result_tabulation, df_result_non_tabulation) |>
     .process_nested_list_as_df(
       arg = fmt_fn,
-      new_column = "statistic_fmt_fn"
+      new_column = "fmt_fn"
     ) |>
     .default_fmt_fn()
 

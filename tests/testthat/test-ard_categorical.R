@@ -113,7 +113,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_statistic_fmt_fn() |>
+    apply_fmt_fn() |>
     dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -126,7 +126,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
       vs = list(p = function(x) round5(x * 100, digits = 1))
     )
   ) |>
-    apply_statistic_fmt_fn() |>
+    apply_fmt_fn() |>
     dplyr::select(variable, variable_level, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -390,8 +390,8 @@ test_that("ard_categorical(denominator='row') works", {
 
   expect_snapshot(
     ard_with_args |>
-      apply_statistic_fmt_fn() |>
-      dplyr::select(-statistic_fmt_fn, -warning, -error) |>
+      apply_fmt_fn() |>
+      dplyr::select(-fmt_fn, -warning, -error) |>
       as.data.frame()
   )
 
@@ -530,13 +530,13 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
           ...ard_N... = c(86, 84, 84)
         )
     ) |>
-      dplyr::select(-statistic_fmt_fn),
+      dplyr::select(-fmt_fn),
     ard_categorical(
       ADSL,
       by = ARM,
       variables = AGEGR1
     ) |>
-      dplyr::select(-statistic_fmt_fn)
+      dplyr::select(-fmt_fn)
   )
 })
 
@@ -621,7 +621,7 @@ test_that("ard_categorical() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
     "context", "stat_name", "stat_label", "statistic",
-    "statistic_fmt_fn", "warning", "error"
+    "fmt_fn", "warning", "error"
   )
 
   # no errors when these variables are the summary vars

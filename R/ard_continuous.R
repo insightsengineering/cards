@@ -136,7 +136,7 @@ ard_continuous <- function(data,
     .process_nested_list_as_df(
       x = df_results,
       arg = fmt_fn,
-      new_column = "statistic_fmt_fn"
+      new_column = "fmt_fn"
     ) |>
     .default_fmt_fn()
 
@@ -329,7 +329,7 @@ ard_continuous <- function(data,
 #'
 #' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
-  # add statistic_fmt_fn column if not already present
+  # add fmt_fn column if not already present
   if (!new_column %in% names(x)) {
     x[[new_column]] <- list(NULL)
   }
@@ -381,18 +381,18 @@ ard_continuous <- function(data,
 #'
 #' @examples
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-#'   dplyr::mutate(statistic_fmt_fn = NA)
+#'   dplyr::mutate(fmt_fn = NA)
 #'
 #' cards:::.default_fmt_fn(ard)
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(
-      statistic_fmt_fn =
+      fmt_fn =
         pmap(
-          list(.data$stat_name, .data$statistic, .data$statistic_fmt_fn),
-          function(stat_name, statistic, statistic_fmt_fn) {
-            if (!is_empty(statistic_fmt_fn)) {
-              return(statistic_fmt_fn)
+          list(.data$stat_name, .data$statistic, .data$fmt_fn),
+          function(stat_name, statistic, fmt_fn) {
+            if (!is_empty(fmt_fn)) {
+              return(fmt_fn)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_cards(digits = 1, scale = 100))

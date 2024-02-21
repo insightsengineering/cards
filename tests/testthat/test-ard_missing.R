@@ -6,7 +6,7 @@ test_that("ard_missing() works", {
 
   expect_snapshot(
     ard |>
-      dplyr::select(-"statistic_fmt_fn") |>
+      dplyr::select(-"fmt_fn") |>
       as.data.frame()
   )
 

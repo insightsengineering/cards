@@ -1,7 +1,7 @@
 # ard_missing() works
 
     Code
-      as.data.frame(dplyr::select(ard, -"statistic_fmt_fn"))
+      as.data.frame(dplyr::select(ard, -"fmt_fn"))
     Output
          group1         group1_level variable context stat_name    stat_label
       1     ARM              Placebo    BMIBL missing     N_obs Vector Length

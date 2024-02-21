@@ -20,7 +20,7 @@
       dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM",
         variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
-      }, .order = TRUE)), -c(context, statistic_fmt_fn, warning, error))
+      }, .order = TRUE)), -c(context, fmt_fn, warning, error))
     Output
          group1         group1_level variable variable_level stat_name stat_label
       1     ARM  Xanomeline Low Dose      SEX              M         n          n
@@ -67,7 +67,7 @@
       dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM",
         variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
-      }, .order = FALSE)), -c(context, statistic_fmt_fn, warning, error))
+      }, .order = FALSE)), -c(context, fmt_fn, warning, error))
     Output
          group1         group1_level variable variable_level stat_name stat_label
       1     ARM              Placebo      SEX              F         p          %

@@ -8,12 +8,12 @@
 # ard_continuous(fmt_fn) argument works
 
     Code
-      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_continuous(ADSL,
-        variables = "AGE", statistic = list(AGE = continuous_summary_fns(c("N",
-          "mean", "median"))), fmt_fn = list(AGE = list(mean = function(x)
-          as.character(round5(x, digits = 3)), N = function(x) format(round5(x,
-          digits = 2), nsmall = 2), N_obs = function(x) format(round5(x, digits = 2),
-        nsmall = 2))))), variable, stat_name, statistic, statistic_fmt))
+      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = "AGE",
+        statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
+        fmt_fn = list(AGE = list(mean = function(x) as.character(round5(x, digits = 3)),
+        N = function(x) format(round5(x, digits = 2), nsmall = 2), N_obs = function(x)
+          format(round5(x, digits = 2), nsmall = 2))))), variable, stat_name,
+      statistic, statistic_fmt))
     Output
         variable stat_name statistic statistic_fmt
       1      AGE         N       254        254.00
@@ -23,9 +23,9 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_continuous(ADSL,
-        variables = c("AGE", "BMIBL"), statistic = ~ continuous_summary_fns("mean"),
-        fmt_fn = list(AGE = list(mean = function(x) as.character(round5(x, digits = 3)))))),
+      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
+        "AGE", "BMIBL"), statistic = ~ continuous_summary_fns("mean"), fmt_fn = list(
+        AGE = list(mean = function(x) as.character(round5(x, digits = 3)))))),
       variable, stat_name, statistic, statistic_fmt))
     Output
         variable stat_name statistic statistic_fmt
@@ -35,10 +35,10 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(apply_statistic_fmt_fn(ard_continuous(ADSL,
-        variables = c("AGE", "BMIBL"), statistic = ~ continuous_summary_fns(c("mean",
-          "sd")), fmt_fn = ~ list(~ function(x) round(x, 4)))), variable, stat_name,
-      statistic, statistic_fmt))
+      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
+        "AGE", "BMIBL"), statistic = ~ continuous_summary_fns(c("mean", "sd")),
+      fmt_fn = ~ list(~ function(x) round(x, 4)))), variable, stat_name, statistic,
+      statistic_fmt))
     Output
         variable stat_name statistic statistic_fmt
       1      AGE      mean  75.08661       75.0866
@@ -125,10 +125,10 @@
     Message
       {cards} data frame: 3 x 8
     Output
-        variable   context stat_name stat_label statistic statistic_fmt_fn
-      1 DISONSDT continuo…       min        Min 1998-06-…             <fn>
-      2 DISONSDT continuo…       max        Max 2013-09-…             <fn>
-      3 DISONSDT continuo…        sd         SD   878.558                1
+        variable   context stat_name stat_label statistic fmt_fn
+      1 DISONSDT continuo…       min        Min 1998-06-…   <fn>
+      2 DISONSDT continuo…       max        Max 2013-09-…   <fn>
+      3 DISONSDT continuo…        sd         SD   878.558      1
     Message
       i 2 more variables: warning, error
 

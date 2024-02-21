@@ -28,7 +28,7 @@ check_ard_structure <- function(x) {
   missing_variables <-
     c(
       "variable", "stat_name", "stat_label", "statistic",
-      "statistic_fmt_fn", "warning", "error"
+      "fmt_fn", "warning", "error"
     ) |>
     setdiff(names(x))
   if (!is_empty(missing_variables)) {
@@ -39,7 +39,7 @@ check_ard_structure <- function(x) {
   expected_lst_columns <-
     dplyr::select(
       x, all_ard_groups(), all_ard_variables(),
-      any_of(c("statistic", "statistic_fmt_fn", "warning", "error"))
+      any_of(c("statistic", "fmt_fn", "warning", "error"))
     ) |>
     # remove group## and variable columns
     dplyr::select(-matches("^group[0-9]$"), -"variable") |>

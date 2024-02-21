@@ -84,7 +84,7 @@ ard_continuous(ADSL, by = "ARM", variables = c("AGE", "BMIBL"))
 #> 10    ARM      Placebo    BMIBL      mean       Mean    23.636
 #> ℹ 38 more rows
 #> ℹ Use `print(n = ...)` to see more rows
-#> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
+#> ℹ 4 more variables: context, fmt_fn, warning, error
 
 ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
 #> {cards} data frame: 45 x 11
@@ -101,5 +101,5 @@ ard_categorical(ADSL, by = "ARM", variables = c("AGEGR1", "SEX"))
 #> 10    ARM      Placebo   AGEGR1            >80         n          n        30
 #> ℹ 35 more rows
 #> ℹ Use `print(n = ...)` to see more rows
-#> ℹ 4 more variables: context, statistic_fmt_fn, warning, error
+#> ℹ 4 more variables: context, fmt_fn, warning, error
 ```

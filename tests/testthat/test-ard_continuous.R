@@ -46,7 +46,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_statistic_fmt_fn() |>
+    apply_fmt_fn() |>
     dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -63,7 +63,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_statistic_fmt_fn() |>
+    apply_fmt_fn() |>
     dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -75,7 +75,7 @@ test_that("ard_continuous(fmt_fn) argument works", {
     statistic = ~ continuous_summary_fns(c("mean", "sd")),
     fmt_fn = ~ list(~ function(x) round(x, 4))
   ) |>
-    apply_statistic_fmt_fn() |>
+    apply_fmt_fn() |>
     dplyr::select(variable, stat_name, statistic, statistic_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -178,7 +178,7 @@ test_that("ard_continuous() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
     "context", "stat_name", "stat_label", "statistic",
-    "statistic_fmt_fn", "warning", "error"
+    "fmt_fn", "warning", "error"
   )
 
   # no errors when these variables are the summary vars

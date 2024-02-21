@@ -42,7 +42,7 @@ reference:
     contents:
       - bind_ard
       - tidy_ard_column_order
-      - apply_statistic_fmt_fn
+      - apply_fmt_fn
       - process_selectors
       - tidy_as_ard
       - nest_for_ard

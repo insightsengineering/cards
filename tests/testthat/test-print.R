@@ -18,7 +18,7 @@ test_that("print.card() works", {
       variables = x,
       statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
     ) |>
-      dplyr::select(-statistic_fmt_fn)
+      dplyr::select(-fmt_fn)
   )
 
   # checking the print of a complex matrix statistic result

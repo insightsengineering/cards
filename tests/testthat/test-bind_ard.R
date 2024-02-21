@@ -32,7 +32,7 @@ test_that("bind_ard() .order argument works", {
       .order = TRUE
     ) |>
       as.data.frame() |>
-      dplyr::select(-c(context, statistic_fmt_fn, warning, error))
+      dplyr::select(-c(context, fmt_fn, warning, error))
   )
 
   expect_snapshot(
@@ -43,6 +43,6 @@ test_that("bind_ard() .order argument works", {
       .order = FALSE
     ) |>
       as.data.frame() |>
-      dplyr::select(-c(context, statistic_fmt_fn, warning, error))
+      dplyr::select(-c(context, fmt_fn, warning, error))
   )
 })
