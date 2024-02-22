@@ -34,7 +34,7 @@ replace_null_statistic <- function(x, value = NA, rows = TRUE) {
     dplyr::rowwise() |>
     dplyr::mutate(
       # styler: off
-      statistic =
+      stat =
         if (is.null(.data$stat) && {{ rows }}) list(.env$value)
         else list(.data$stat)
       # styler: on

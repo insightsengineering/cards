@@ -12,7 +12,7 @@ test_that("replace_null_statistic() works", {
 
   # all results should now be NA_character
   expect_equal(
-    ard_with_missing_stats$statistic |> unlist() |> unique(),
+    ard_with_missing_stats$stat |> unlist() |> unique(),
     NA_character_
   )
 })
