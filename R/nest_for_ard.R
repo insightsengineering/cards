@@ -164,6 +164,7 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
 #' )
 #'
 #' cards:::.rename_ard_columns(ard, by = "ARM", strata = "AESOC")
+#' @noRd
 .rename_ard_columns <- function(x, variable = NULL, by = NULL, strata = NULL) {
   if (!is_empty(variable)) {
     x <-
