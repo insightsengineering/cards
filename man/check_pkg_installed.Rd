@@ -4,7 +4,6 @@
 \alias{check_pkg_installed}
 \alias{is_pkg_installed}
 \alias{get_pkg_dependencies}
-\alias{get_all_pkg_dependencies}
 \alias{get_min_version_required}
 \title{Check Package Installation}
 \usage{
@@ -12,15 +11,9 @@ check_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
 
 is_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
 
-get_pkg_dependencies(reference_pkg = "cards")
+get_pkg_dependencies(reference_pkg = "cards", lib.loc = NULL)
 
-get_all_pkg_dependencies(
-  reference_pkg = "cards",
-  remove_duplicates = FALSE,
-  lib.loc = NULL
-)
-
-get_min_version_required(pkg, reference_pkg = "cards")
+get_min_version_required(pkg, reference_pkg = "cards", lib.loc = NULL)
 }
 \arguments{
 \item{pkg}{(\code{string})\cr
@@ -32,11 +25,8 @@ name of the package the function will search for a minimum required version from
 \item{call}{(\code{environment})\cr
 frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 
-\item{remove_duplicates}{(\code{logical})\cr
-if several versions of a package are installed, should only the first one be returned?}
-
 \item{lib.loc}{(\code{path})\cr
-location of \code{R} library trees to search through, see \code{\link[utils:installed.packages]{utils::installed.packages()}}.}
+location of \code{R} library trees to search through, see \code{\link[utils:packageDescription]{utils::packageDescription()}}.}
 }
 \value{
 \code{check_pkg_installed()} returns a logical or error, \code{get_min_version_required()}
@@ -54,10 +44,6 @@ dependencies of a specific package.
 of \code{pkg} required by \code{reference_pkg}, \code{NULL} if no minimum version required.
 }
 }
-\details{
-\code{get_all_pkg_dependencies()} may be used to get the list of
-dependencies of all installed packages.
-}
 \examples{
 check_pkg_installed("dplyr")
 
@@ -65,7 +51,5 @@ is_pkg_installed("dplyr")
 
 get_pkg_dependencies()
 
-get_all_pkg_dependencies()
-
-get_min_version_required("brms")
+get_min_version_required("dplyr")
 }
