@@ -196,6 +196,7 @@ ard_categorical <- function(data,
 #'   denominator = "cell",
 #'   statistic = list(ARM = list(tabulation = c("N")))
 #' )
+#' @noRd
 .calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistic, call = parent.frame()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
@@ -325,6 +326,7 @@ ard_categorical <- function(data,
 #'
 #' @examples
 #' cards:::.table_as_df(ADSL, variable = "ARM", by = "AGEGR1", strata = NULL)
+#' @noRd
 .table_as_df <- function(data, variable = NULL, by = NULL, strata = NULL,
                          useNA = c("no", "always"), count_column = "...ard_n...") {
   useNA <- match.arg(useNA)
@@ -388,6 +390,7 @@ ard_categorical <- function(data,
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
+#' @noRd
 .process_denominator <- function(data, variables, denominator, by, strata, call = parent.frame()) {
   if (is_empty(variables)) {
     return(list())
@@ -559,6 +562,7 @@ ard_categorical <- function(data,
 #'
 #' @examples
 #' cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
+#' @noRd
 .check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
   by_vars_to_check <-
     c(by, strata) |>

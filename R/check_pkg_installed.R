@@ -17,14 +17,8 @@
 #'   frame for error messaging. Default is [parent.frame()].
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
-#' @param remove_duplicates (`logical`)\cr
-#'   if several versions of a package are installed, should only the first one be returned?
 #' @param lib.loc (`path`)\cr
-#'   location of `R` library trees to search through, see [utils::installed.packages()].
-#'
-#' @details
-#' `get_all_pkg_dependencies()` may be used to get the list of
-#' dependencies of all installed packages.
+#'   location of `R` library trees to search through, see [utils::packageDescription()].
 #'
 #' @return `check_pkg_installed()` returns a logical or error, `get_min_version_required()`
 #' returns `NULL` or a string with the minimum version required, `get_pkg_dependencies()`
@@ -38,9 +32,7 @@
 #'
 #' get_pkg_dependencies()
 #'
-#' get_all_pkg_dependencies()
-#'
-#' get_min_version_required("brms")
+#' get_min_version_required("dplyr")
 NULL
 
 #' @rdname check_pkg_installed
@@ -89,11 +81,11 @@ is_pkg_installed <- function(pkg,
 
 #' @rdname check_pkg_installed
 #' @export
-get_pkg_dependencies <- function(reference_pkg = "cards") {
+get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL) {
   if (is.null(reference_pkg)) {
     return(NULL)
   }
-  description <- utils::packageDescription(reference_pkg) |> suppressWarnings()
+  description <- utils::packageDescription(reference_pkg, lib.loc = lib.loc) |> suppressWarnings()
   if (identical(description, NA)) {
     return(NULL)
   }
@@ -131,59 +123,11 @@ get_pkg_dependencies <- function(reference_pkg = "cards") {
 
 #' @rdname check_pkg_installed
 #' @export
-get_all_pkg_dependencies <- function(
-    reference_pkg = "cards",
-    remove_duplicates = FALSE,
-    lib.loc = NULL) {
-  deps <-
-    utils::installed.packages(lib.loc = lib.loc) |>
-    dplyr::as_tibble() |>
-    dplyr::select(
-      any_of(c(
-        "Package", "Version", "LibPath", "Imports", "Depends",
-        "Suggests", "Enhances", "LinkingTo"
-      ))
-    ) |>
-    dplyr::rename(
-      reference_pkg = "Package",
-      reference_pkg_version = "Version",
-      lib_path = "LibPath"
-    )
-
-  if (!is.null(reference_pkg)) {
-    deps <- deps |> dplyr::filter(.data$reference_pkg %in% .env$reference_pkg)
-  }
-  if (remove_duplicates) {
-    deps <- deps |> dplyr::distinct("reference_pkg", .keep_all = TRUE)
-  }
-
-  deps |>
-    tidyr::pivot_longer(
-      -dplyr::all_of(c("reference_pkg", "reference_pkg_version", "lib_path")),
-      values_to = "pkg",
-      names_to = "dependency_type",
-    ) |>
-    tidyr::separate_rows("pkg", sep = ",") |>
-    dplyr::mutate(pkg = str_squish(.data$pkg)) |>
-    dplyr::filter(!is.na(.data$pkg)) |>
-    tidyr::separate(
-      .data$pkg,
-      into = c("pkg", "version"),
-      sep = " ", extra = "merge", fill = "right"
-    ) |>
-    dplyr::mutate(
-      compare = .data$version |> str_extract(pattern = "[>=<]+"),
-      version = .data$version |> str_remove_all(pattern = "[\\(\\) >=<]")
-    )
-}
-
-#' @rdname check_pkg_installed
-#' @export
-get_min_version_required <- function(pkg, reference_pkg = "cards") {
+get_min_version_required <- function(pkg, reference_pkg = "cards", lib.loc = NULL) {
   if (is.null(reference_pkg)) {
     return(NULL)
   }
-  res <- get_pkg_dependencies(reference_pkg) |>
+  res <- get_pkg_dependencies(reference_pkg, lib.loc = lib.loc) |>
     dplyr::filter(.data$pkg == .env$pkg & !is.na(.data$version))
   if (nrow(res) == 0) {
     return(NULL)

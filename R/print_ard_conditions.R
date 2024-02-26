@@ -48,6 +48,7 @@ print_ard_conditions <- function(x, call = NULL) {
 #' )
 #'
 #' cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
+#' @noRd
 .cli_condition_messaging <- function(x, msg_type, call) {
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
@@ -150,6 +151,7 @@ print_ard_conditions <- function(x, call = NULL) {
 #' )
 #'
 #' cards:::.cli_groups_and_variable(ard)
+#' @noRd
 .cli_groups_and_variable <- function(x) {
   names <- names(x)
 
