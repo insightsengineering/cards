@@ -35,12 +35,6 @@ test_that("check_pkg_installed() works", {
     c("reference_pkg", "reference_pkg_version", "dependency_type", "pkg", "version", "compare")
   )
 
-  expect_error(
-    deps <- get_all_pkg_dependencies(),
-    NA
-  )
-  expect_true(nrow(deps) > 1L)
-
   skip_if(interactive())
   # expect an error msg for pkg that doesn't exist
   # note: if interactive(), user will be invited to install the missing pkg

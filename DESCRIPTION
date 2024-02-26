@@ -1,6 +1,6 @@
 Package: cards
 Title: Analysis Results Data
-Version: 0.0.0.9053
+Version: 0.1.0.9000
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018")),
@@ -10,9 +10,8 @@ Authors@R: c(
 Description: Construct Clinical Data Interchange Standards Consortium
     (CDISC) compliant Analysis Results Data objects. These objects are
     used and re-used to construct summary tables, visualizations, and
-    written reports. The results may also be represented as JavaScript
-    Object Notation (JSON) or Yet Another Markup Language (YAML)
-    structures.
+    written reports. The package also exports utilities for working with
+    these objects and creating new Analysis Results Data objects.
 License: Apache License 2.0
 URL: https://github.com/insightsengineering/cards,
     https://insightsengineering.github.io/cards/
