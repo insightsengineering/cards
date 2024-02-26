@@ -289,11 +289,8 @@ test_that("ard_continuous() works with non-syntactic names", {
     dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE, `Arm Var` = ARM) |>
     ard_continuous(
       variables = c("BMI base", `Age`),
-      statistic = ~list("mean lbl" = `mean error`),
-      stat_label = everything()~list(`mean lbl`="Test lbl")
+      statistic = ~ list("mean lbl" = `mean error`),
+      stat_label = everything() ~ list(`mean lbl` = "Test lbl")
     ) |>
-  as.data.frame()
-)
-
-
+    as.data.frame())
 })
