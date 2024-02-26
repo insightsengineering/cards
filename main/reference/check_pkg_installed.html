@@ -30,7 +30,7 @@ of pkg required by reference_pkg, NULL if no minimum version required.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9051</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,12 +51,6 @@ of pkg required by reference_pkg, NULL if no minimum version required.
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -95,15 +89,9 @@ of <code>pkg</code> required by <code>reference_pkg</code>, <code>NULL</code> if
 <span></span>
 <span><span class="fu">is_pkg_installed</span><span class="op">(</span><span class="va">pkg</span>, reference_pkg <span class="op">=</span> <span class="st">"cards"</span>, call <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_pkg_dependencies</span><span class="op">(</span>reference_pkg <span class="op">=</span> <span class="st">"cards"</span><span class="op">)</span></span>
+<span><span class="fu">get_pkg_dependencies</span><span class="op">(</span>reference_pkg <span class="op">=</span> <span class="st">"cards"</span>, lib.loc <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">get_all_pkg_dependencies</span><span class="op">(</span></span>
-<span>  reference_pkg <span class="op">=</span> <span class="st">"cards"</span>,</span>
-<span>  remove_duplicates <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  lib.loc <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">get_min_version_required</span><span class="op">(</span><span class="va">pkg</span>, reference_pkg <span class="op">=</span> <span class="st">"cards"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">get_min_version_required</span><span class="op">(</span><span class="va">pkg</span>, reference_pkg <span class="op">=</span> <span class="st">"cards"</span>, lib.loc <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -123,14 +111,9 @@ name of the package the function will search for a minimum required version from
 frame for error messaging. Default is <code><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame()</a></code>.</p></dd>
 
 
-<dt>remove_duplicates</dt>
-<dd><p>(<code>logical</code>)<br>
-if several versions of a package are installed, should only the first one be returned?</p></dd>
-
-
 <dt>lib.loc</dt>
 <dd><p>(<code>path</code>)<br>
-location of <code>R</code> library trees to search through, see <code><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">utils::installed.packages()</a></code>.</p></dd>
+location of <code>R</code> library trees to search through, see <code><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">utils::packageDescription()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -145,11 +128,6 @@ location of <code>R</code> library trees to search through, see <code><a href="h
 
 <p>returns a tibble.</p>
     </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>get_all_pkg_dependencies()</code> may be used to get the list of
-dependencies of all installed packages.</p>
-    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -162,35 +140,22 @@ dependencies of all installed packages.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    reference_pkg reference_pkg_version dependency_type pkg       version compare</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cards         0.0.0.9051            Imports         cli       3.6.1   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> cards         0.0.0.9051            Imports         dplyr     1.1.2   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> cards         0.0.0.9051            Imports         glue      1.6.2   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> cards         0.0.0.9051            Imports         rlang     1.1.1   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> cards         0.0.0.9051            Imports         tidyr     1.3.0   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> cards         0.0.0.9051            Imports         tidysele… 1.2.0   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> cards         0.0.0.9051            Depends         R         4.1     &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> cards         0.0.0.9051            Suggests        spelling  2.2.0   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> cards         0.0.0.9051            Suggests        testthat  3.2.0   &gt;=     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> cards         0.0.0.9051            Suggests        withr     3.0.0   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cards         0.1.0                 Imports         cli       3.6.1   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> cards         0.1.0                 Imports         dplyr     1.1.2   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> cards         0.1.0                 Imports         glue      1.6.2   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> cards         0.1.0                 Imports         rlang     1.1.1   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> cards         0.1.0                 Imports         tidyr     1.3.0   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> cards         0.1.0                 Imports         tidysele… 1.2.0   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> cards         0.1.0                 Depends         R         4.1     &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> cards         0.1.0                 Suggests        spelling  2.2.0   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> cards         0.1.0                 Suggests        testthat  3.2.0   &gt;=     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> cards         0.1.0                 Suggests        withr     3.0.0   &gt;=     </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">get_all_pkg_dependencies</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    reference_pkg reference_pkg_version lib_path    dependency_type pkg   version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> cards         0.0.0.9051            /usr/local… Imports         cli   3.6.1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> cards         0.0.0.9051            /usr/local… Imports         dplyr 1.1.2  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> cards         0.0.0.9051            /usr/local… Imports         glue  1.6.2  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> cards         0.0.0.9051            /usr/local… Imports         rlang 1.1.1  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> cards         0.0.0.9051            /usr/local… Imports         tidyr 1.3.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> cards         0.0.0.9051            /usr/local… Imports         tidy… 1.2.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> cards         0.0.0.9051            /usr/local… Depends         R     4.1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> cards         0.0.0.9051            /usr/local… Suggests        spel… 2.2.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> cards         0.0.0.9051            /usr/local… Suggests        test… 3.2.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> cards         0.0.0.9051            /usr/local… Suggests        withr 3.0.0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: compare &lt;chr&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">get_min_version_required</span><span class="op">(</span><span class="st">"brms"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span><span class="fu">get_min_version_required</span><span class="op">(</span><span class="st">"dplyr"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Imports </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "1.1.2" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"compare")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&gt;="</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
