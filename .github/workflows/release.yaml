@@ -8,15 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build package 🎁
-    needs: release
-    uses: insightsengineering/r.pkg.template/.github/workflows/build-check-install.yaml@main
-    secrets:
-      REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
-    with:
-      skip-r-cmd-check: true
-      skip-r-cmd-install: true
   docs:
     name: Pkgdown Docs 📚
     needs: release
@@ -53,6 +44,7 @@ jobs:
         checking examples .* NOTE
         checking Rd line widths .* NOTE
         checking top-level files .* NOTE
+      skip-r-cmd-install: true
   coverage:
     name: Coverage 📔
     needs: [release, docs]
