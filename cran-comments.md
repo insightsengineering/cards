@@ -14,10 +14,13 @@
 
 ## Additional Comments
 
-* This is a new release.
+* This is a re-submission of a new release.
 
+* Thank you for the review comments.
+  - Unexported functions no longer have examples.
+  - The `installed.packages()` function has been removed/replaced.
+  - References to software names and APIs in the DESCRIPTION have been removed to highlight other package functionality, therefore, no need to quote them.
+  
 * There are no additional references describing the methods in this package.
-
-* I have created documentation Rd files for many non-exported functions and included examples for these unexported functions. This is a collaborative project, and the documentation is incredibly helpful to on-board new collaborators and help them understand the internal workings of the package. I've read through the R Packages manual and I do not believe there is a specific rule against this, but have heard reports of comments requesting that they are removed. If I can keep the documentation as it is, I would be much appreciative. Thank you!
 
 * Thank you for your time!
