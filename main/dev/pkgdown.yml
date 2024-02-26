@@ -1,0 +1,11 @@
+pandoc: 3.1.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  getting-started: getting-started.html
+  structures: structures.html
+last_built: 2024-02-26T20:28Z
+urls:
+  reference: https://insightsengineering.github.io/cards/reference
+  article: https://insightsengineering.github.io/cards/articles
+
