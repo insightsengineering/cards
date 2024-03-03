@@ -11,13 +11,22 @@ check_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
 
 is_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
 
-get_pkg_dependencies(reference_pkg = "cards", lib.loc = NULL)
+get_pkg_dependencies(
+  reference_pkg = "cards",
+  lib.loc = NULL,
+  call = parent.frame()
+)
 
-get_min_version_required(pkg, reference_pkg = "cards", lib.loc = NULL)
+get_min_version_required(
+  pkg,
+  reference_pkg = "cards",
+  lib.loc = NULL,
+  call = parent.frame()
+)
 }
 \arguments{
-\item{pkg}{(\code{string})\cr
-name of required package}
+\item{pkg}{(\code{character})\cr
+vector of package names to check.}
 
 \item{reference_pkg}{(\code{string})\cr
 name of the package the function will search for a minimum required version from.}
@@ -29,19 +38,23 @@ frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}
 location of \code{R} library trees to search through, see \code{\link[utils:packageDescription]{utils::packageDescription()}}.}
 }
 \value{
-\code{check_pkg_installed()} returns a logical or error, \code{get_min_version_required()}
-returns \code{NULL} or a string with the minimum version required, \code{get_pkg_dependencies()}
-returns a tibble.
+\code{is_pkg_installed()} and \code{check_pkg_installed()} returns a logical or error,
+\code{get_min_version_required()} returns a data frame with the minimum version required,
+\code{get_pkg_dependencies()} returns a tibble.
 }
 \description{
 \itemize{
 \item \code{check_pkg_installed()}: checks whether a package is installed and
-returns an error or \code{FALSE} if not available. If a package search is provided,
-the function will check whether a minimum version of a package is required.
+returns an error if not available, or interactively asks user to install
+missing dependency. If a package search is provided,
+the function will check whether a minimum version of a package is required and installed.
+\item \code{is_pkg_installed()}: checks whether a package is installed and
+returns \code{TRUE} or \code{FALSE} depending on availability. If a package search is provided,
+the function will check whether a minimum version of a package is required and installed.
 \item \code{get_pkg_dependencies()} returns a tibble with all
 dependencies of a specific package.
 \item \code{get_min_version_required()} will return, if any, the minimum version
-of \code{pkg} required by \code{reference_pkg}, \code{NULL} if no minimum version required.
+of \code{pkg} required by \code{reference_pkg}.
 }
 }
 \examples{
