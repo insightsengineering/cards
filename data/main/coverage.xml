@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.936298076923077" branch-rate="0" lines-covered="1558" lines-valid="1664" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-02-26 21:09:28.511212">
+<coverage line-rate="0.936298076923077" branch-rate="0" lines-covered="1558" lines-valid="1664" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-03-03 05:36:28.724885">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -2273,16 +2273,16 @@
                 <line number="50" hits="1120" branch="false"/>
                 <line number="51" hits="1120" branch="false"/>
                 <line number="52" hits="1120" branch="false"/>
-                <line number="54" hits="3" branch="false"/>
+                <line number="53" hits="3" branch="false"/>
+                <line number="55" hits="3" branch="false"/>
                 <line number="56" hits="3" branch="false"/>
-                <line number="57" hits="3" branch="false"/>
+                <line number="57" hits="1120" branch="false"/>
                 <line number="58" hits="1120" branch="false"/>
                 <line number="59" hits="1120" branch="false"/>
-                <line number="60" hits="1120" branch="false"/>
-                <line number="62" hits="4" branch="false"/>
-                <line number="63" hits="1120" branch="false"/>
-                <line number="64" hits="1120" branch="false"/>
-                <line number="67" hits="1120" branch="false"/>
+                <line number="60" hits="4" branch="false"/>
+                <line number="61" hits="1120" branch="false"/>
+                <line number="62" hits="1120" branch="false"/>
+                <line number="65" hits="1120" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -2295,16 +2295,16 @@
             <line number="50" hits="1120" branch="false"/>
             <line number="51" hits="1120" branch="false"/>
             <line number="52" hits="1120" branch="false"/>
-            <line number="54" hits="3" branch="false"/>
+            <line number="53" hits="3" branch="false"/>
+            <line number="55" hits="3" branch="false"/>
             <line number="56" hits="3" branch="false"/>
-            <line number="57" hits="3" branch="false"/>
+            <line number="57" hits="1120" branch="false"/>
             <line number="58" hits="1120" branch="false"/>
             <line number="59" hits="1120" branch="false"/>
-            <line number="60" hits="1120" branch="false"/>
-            <line number="62" hits="4" branch="false"/>
-            <line number="63" hits="1120" branch="false"/>
-            <line number="64" hits="1120" branch="false"/>
-            <line number="67" hits="1120" branch="false"/>
+            <line number="60" hits="4" branch="false"/>
+            <line number="61" hits="1120" branch="false"/>
+            <line number="62" hits="1120" branch="false"/>
+            <line number="65" hits="1120" branch="false"/>
           </lines>
         </class>
         <class name="get_ard_statistics.R" filename="R/get_ard_statistics.R" line-rate="0.933333333333333" branch-rate="0" complexity="0">
