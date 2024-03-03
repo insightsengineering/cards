@@ -67,7 +67,7 @@ check_pkg_installed <- function(pkg,
         version = version,
         compare = compare,
         reason = switch(!is.null(fn),
-                        glue::glue("for `{fn}`")
+          glue::glue("for `{fn}`")
         )
       )
     }
