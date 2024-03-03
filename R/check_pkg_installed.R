@@ -14,11 +14,10 @@
 #'   dependencies of a specific package.
 #'
 #' - `get_min_version_required()` will return, if any, the minimum version
-#'   of `pkg` required by `reference_pkg`, `NULL` if no minimum version required.
+#'   of `pkg` required by `reference_pkg`.
 #'
-#' @param pkg (`string`)\cr
-#'   name of required package. For `check_pkg_installed()` and `is_pkg_installed()`,
-#'   the value can be a character vector of package names.
+#' @param pkg (`character`)\cr
+#'   vector of package names to check.
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
 #' @param reference_pkg (`string`)\cr
@@ -26,9 +25,9 @@
 #' @param lib.loc (`path`)\cr
 #'   location of `R` library trees to search through, see [utils::packageDescription()].
 #'
-#' @return `check_pkg_installed()` returns a logical or error, `get_min_version_required()`
-#' returns `NULL` or a string with the minimum version required, `get_pkg_dependencies()`
-#' returns a tibble.
+#' @return `is_pkg_installed()` and `check_pkg_installed()` returns a logical or error,
+#' `get_min_version_required()` returns a data frame with the minimum version required,
+#' `get_pkg_dependencies()` returns a tibble.
 #' @name check_pkg_installed
 #'
 #' @examples
@@ -51,29 +50,24 @@ check_pkg_installed <- function(pkg,
   check_class(pkg, cls = "character")
   check_string(reference_pkg, allow_empty = TRUE)
 
-  # check if min version is required -------------------------------------------
-  version <- lapply(pkg, function(x) get_min_version_required(x, reference_pkg))
-  compare <- lapply(version, function(x) attr(x, "compare"))
+  # get min version data -------------------------------------------------------
+  df_pkg_min_version <-
+    get_min_version_required(pkg = pkg, reference_pkg = reference_pkg, call = call)
 
   # get fn name from which the function was called -----------------------------
   fn <- error_call(call)
 
   # prompt user to install package ---------------------------------------------
-  pmap(
-    list(pkg, version, compare),
-    function(pkg, version, compare) {
-      rlang::check_installed(
-        pkg = pkg,
-        version = version,
-        compare = compare,
-        reason = switch(!is.null(fn),
-          glue::glue("for `{fn}`")
-        )
-      )
-    }
-  )
-
-  invisible()
+  rlang::check_installed(
+    pkg = df_pkg_min_version$pkg,
+    version = df_pkg_min_version$version,
+    compare = df_pkg_min_version$compare,
+    reason = switch(!is.null(fn),
+      glue::glue("for `{fn}`")
+    )
+  ) |>
+    # this can be removed after this issue is resolved https://github.com/r-lib/rlang/issues/1694
+    suppressWarnings()
 }
 
 
@@ -87,32 +81,32 @@ is_pkg_installed <- function(pkg,
   check_class(pkg, cls = "character")
   check_string(reference_pkg, allow_empty = TRUE)
 
-  # check if min version is required -------------------------------------------
-  version <- lapply(pkg, function(x) get_min_version_required(x, reference_pkg))
-  compare <- lapply(version, function(x) attr(x, "compare"))
+  # get min version data -------------------------------------------------------
+  df_pkg_min_version <-
+    get_min_version_required(pkg = pkg, reference_pkg = reference_pkg, call = call)
 
   # check installation TRUE/FALSE ----------------------------------------------
-  lgl_installed <-
-    pmap(
-      list(pkg, version, compare),
-      function(pkg, version, compare) {
-        rlang::is_installed(pkg = pkg, version = version, compare = compare)
-      }
-    ) |>
-    unlist()
-
-  return(all(lgl_installed))
+  rlang::is_installed(
+    pkg = df_pkg_min_version$pkg,
+    version = df_pkg_min_version$version,
+    compare = df_pkg_min_version$compare
+  ) |>
+    # this can be removed after this issue is resolved https://github.com/r-lib/rlang/issues/1694
+    suppressWarnings()
 }
 
 #' @rdname check_pkg_installed
 #' @export
-get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL) {
-  if (is.null(reference_pkg)) {
-    return(NULL)
+get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = parent.frame()) {
+  check_string(reference_pkg, allow_empty = TRUE, call = call)
+
+  if (is_empty(reference_pkg)) {
+    return(.empty_pkg_deps_df())
   }
+
   description <- utils::packageDescription(reference_pkg, lib.loc = lib.loc) |> suppressWarnings()
   if (identical(description, NA)) {
-    return(NULL)
+    return(.empty_pkg_deps_df())
   }
   description |>
     unclass() |>
@@ -146,19 +140,42 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL) {
     )
 }
 
+.empty_pkg_deps_df <- function() {
+  dplyr::tibble(
+    reference_pkg = character(0L), reference_pkg_version = character(0L),
+    dependency_type = character(0L), pkg = character(0L),
+    version = character(0L), compare = character(0L)
+  )
+}
+
 #' @rdname check_pkg_installed
 #' @export
-get_min_version_required <- function(pkg, reference_pkg = "cards", lib.loc = NULL) {
-  if (is.null(reference_pkg)) {
-    return(NULL)
+get_min_version_required <- function(pkg, reference_pkg = "cards",
+                                     lib.loc = NULL, call = parent.frame()) {
+  check_not_missing(pkg, call = call)
+  check_class(pkg, cls = "character", call = call)
+  check_string(reference_pkg, allow_empty = TRUE, call = call)
+
+  # if no package reference, return a df with just the pkg names
+  if (is_empty(reference_pkg)) {
+    return(
+      .empty_pkg_deps_df() |>
+        dplyr::full_join(
+          dplyr::tibble(pkg = pkg),
+          by = "pkg"
+        )
+    )
   }
-  res <- get_pkg_dependencies(reference_pkg, lib.loc = lib.loc) |>
-    dplyr::filter(.data$pkg == .env$pkg & !is.na(.data$version))
-  if (nrow(res) == 0) {
-    return(NULL)
-  }
-  version <- res[["version"]]
-  attr(version, "compare") <- res[["compare"]]
-  names(version) <- res[["dependency_type"]]
-  version
+
+  # get the package_ref deps and subset on requested pkgs, also supplement df with pkgs
+  # that may not be proper deps of the reference package (these pkgs don't have min versions)
+  res <-
+    get_pkg_dependencies(reference_pkg, lib.loc = lib.loc) |>
+    dplyr::filter(.data$pkg %in% .env$pkg) |>
+    dplyr::full_join(
+      dplyr::tibble(pkg = pkg),
+      by = "pkg"
+    )
+
+  res
 }
