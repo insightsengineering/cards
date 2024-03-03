@@ -2,8 +2,13 @@
 #'
 #' @description
 #' - `check_pkg_installed()`: checks whether a package is installed and
-#'   returns an error or `FALSE` if not available. If a package search is provided,
-#'   the function will check whether a minimum version of a package is required.
+#'   returns an error if not available, or interactively asks user to install
+#'   missing dependency. If a package search is provided,
+#'   the function will check whether a minimum version of a package is required and installed.
+#'
+#' - `is_pkg_installed()`: checks whether a package is installed and
+#'   returns `TRUE` or `FALSE` depending on availability. If a package search is provided,
+#'   the function will check whether a minimum version of a package is required and installed.
 #'
 #' - `get_pkg_dependencies()` returns a tibble with all
 #'   dependencies of a specific package.
@@ -12,7 +17,8 @@
 #'   of `pkg` required by `reference_pkg`, `NULL` if no minimum version required.
 #'
 #' @param pkg (`string`)\cr
-#'   name of required package
+#'   name of required package. For `check_pkg_installed()` and `is_pkg_installed()`,
+#'   the value can be a character vector of package names.
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
 #' @param reference_pkg (`string`)\cr
@@ -40,22 +46,33 @@ NULL
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
                                 call = parent.frame()) {
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(pkg)
+  check_class(pkg, cls = "character")
+  check_string(reference_pkg, allow_empty = TRUE)
+
   # check if min version is required -------------------------------------------
-  version <- get_min_version_required(pkg, reference_pkg)
-  compare <- attr(version, "compare")
+  version <- lapply(pkg, function(x) get_min_version_required(x, reference_pkg))
+  compare <- lapply(version, function(x) attr(x, "compare"))
 
   # get fn name from which the function was called -----------------------------
   fn <- error_call(call)
 
   # prompt user to install package ---------------------------------------------
-  rlang::check_installed(
-    pkg = pkg,
-    version = version,
-    compare = compare,
-    reason = switch(!is.null(fn),
-      glue::glue("for `{fn}`")
-    )
+  pmap(
+    list(pkg, version, compare),
+    function(pkg, version, compare) {
+      rlang::check_installed(
+        pkg = pkg,
+        version = version,
+        compare = compare,
+        reason = switch(!is.null(fn),
+                        glue::glue("for `{fn}`")
+        )
+      )
+    }
   )
+
   invisible()
 }
 
@@ -65,18 +82,26 @@ check_pkg_installed <- function(pkg,
 is_pkg_installed <- function(pkg,
                              reference_pkg = "cards",
                              call = parent.frame()) {
-  # check if min version is required -------------------------------------------
-  version <- get_min_version_required(pkg, reference_pkg)
-  compare <- attr(version, "compare")
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(pkg)
+  check_class(pkg, cls = "character")
+  check_string(reference_pkg, allow_empty = TRUE)
 
-  # get fn name from which the function was called -----------------------------
-  fn <- tryCatch(
-    paste0(as_label(evalq(sys.call(1L), envir = call)[[1]]), "()"),
-    error = function(e) NULL
-  )
+  # check if min version is required -------------------------------------------
+  version <- lapply(pkg, function(x) get_min_version_required(x, reference_pkg))
+  compare <- lapply(version, function(x) attr(x, "compare"))
 
   # check installation TRUE/FALSE ----------------------------------------------
-  return(rlang::is_installed(pkg = pkg, version = version, compare = compare))
+  lgl_installed <-
+    pmap(
+      list(pkg, version, compare),
+      function(pkg, version, compare) {
+        rlang::is_installed(pkg = pkg, version = version, compare = compare)
+      }
+    ) |>
+    unlist()
+
+  return(all(lgl_installed))
 }
 
 #' @rdname check_pkg_installed

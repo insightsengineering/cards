@@ -1,12 +1,16 @@
 test_that("check_pkg_installed() works", {
   # dplyr will always be installed with cards
-  expect_error(
-    check_pkg_installed("dplyr"),
-    NA
-  )
+  expect_error(check_pkg_installed("dplyr"), NA)
   expect_true(is_pkg_installed("dplyr"))
+  # recheck, but with two pkgs always installed
+  expect_error(check_pkg_installed(c("dplyr", "tidyr")), NA)
+  expect_true(is_pkg_installed(c("dplyr", "tidyr")))
 
+  # check a package this does not exist
   expect_false(is_pkg_installed("dpl-eye-r"))
+  # recheck with one pkg that is installed and another not
+  expect_false(is_pkg_installed(c("dpl-eye-r", "tidyr")))
+
 
   mv <- c(Imports = "1.2.0")
   attr(mv, "compare") <- ">="

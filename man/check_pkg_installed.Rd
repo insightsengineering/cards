@@ -17,7 +17,8 @@ get_min_version_required(pkg, reference_pkg = "cards", lib.loc = NULL)
 }
 \arguments{
 \item{pkg}{(\code{string})\cr
-name of required package}
+name of required package. For \code{check_pkg_installed()} and \code{is_pkg_installed()},
+the value can be a character vector of package names.}
 
 \item{reference_pkg}{(\code{string})\cr
 name of the package the function will search for a minimum required version from.}
@@ -36,8 +37,12 @@ returns a tibble.
 \description{
 \itemize{
 \item \code{check_pkg_installed()}: checks whether a package is installed and
-returns an error or \code{FALSE} if not available. If a package search is provided,
-the function will check whether a minimum version of a package is required.
+returns an error if not available, or interactively asks user to install
+missing dependency. If a package search is provided,
+the function will check whether a minimum version of a package is required and installed.
+\item \code{is_pkg_installed()}: checks whether a package is installed and
+returns \code{TRUE} or \code{FALSE} depending on availability. If a package search is provided,
+the function will check whether a minimum version of a package is required and installed.
 \item \code{get_pkg_dependencies()} returns a tibble with all
 dependencies of a specific package.
 \item \code{get_min_version_required()} will return, if any, the minimum version
