@@ -1,24 +1,41 @@
 test_that("check_pkg_installed() works", {
   # dplyr will always be installed with cards
-  expect_error(
-    check_pkg_installed("dplyr"),
-    NA
-  )
+  expect_error(check_pkg_installed("dplyr"), NA)
   expect_true(is_pkg_installed("dplyr"))
+  # recheck, but with two pkgs always installed
+  expect_error(check_pkg_installed(c("dplyr", "tidyr")), NA)
+  expect_true(is_pkg_installed(c("dplyr", "tidyr")))
 
+  # check a package this does not exist
   expect_false(is_pkg_installed("dpl-eye-r"))
+  # recheck with one pkg that is installed and another not
+  expect_false(is_pkg_installed(c("dpl-eye-r", "tidyr")))
 
-  mv <- c(Imports = "1.2.0")
-  attr(mv, "compare") <- ">="
   expect_equal(
-    get_min_version_required("tidyselect"),
-    mv
+    get_min_version_required("tidyselect") |>
+      dplyr::select(dependency_type, pkg, version, compare),
+    dplyr::tibble(
+      dependency_type = "Imports",
+      pkg = "tidyselect",
+      version = "1.2.0",
+      compare = ">="
+    )
   )
-  expect_null(
-    get_min_version_required("brms", reference_pkg = NULL)
+  expect_equal(
+    get_min_version_required("brms", reference_pkg = NULL),
+    dplyr::tibble(
+      reference_pkg = NA_character_, reference_pkg_version = NA_character_,
+      dependency_type = NA_character_, pkg = "brms", version = NA_character_,
+      compare = NA_character_
+    )
   )
-  expect_null(
-    get_min_version_required("dplyr", reference_pkg = NULL)
+  expect_equal(
+    get_min_version_required("dplyr", reference_pkg = NULL),
+    dplyr::tibble(
+      reference_pkg = NA_character_, reference_pkg_version = NA_character_,
+      dependency_type = NA_character_, pkg = "dplyr", version = NA_character_,
+      compare = NA_character_
+    )
   )
 
   expect_error(
@@ -46,11 +63,11 @@ test_that("check_pkg_installed() works", {
   )
 
   expect_equal(
-    get_pkg_dependencies(NULL),
-    NULL
+    get_pkg_dependencies(NULL) |> nrow(),
+    0L
   )
   expect_equal(
-    get_pkg_dependencies("br000000m"),
-    NULL
+    get_pkg_dependencies("br000000m") |> nrow(),
+    0L
   )
 })

@@ -50,7 +50,6 @@ eval_capture_conditions <- function(expr, data = NULL, env = caller_env()) {
           suppressMessages(eval_tidy({{ expr }}, data = data, env = env))
       },
       warning = function(w) {
-        # TODO: update this `<<-`: I don't think CRAN likes the super assignment
         lst_result[["warning"]] <<-
           # using `c()` to capture all warnings
           c(lst_result[["warning"]], conditionMessage(w))
@@ -58,7 +57,6 @@ eval_capture_conditions <- function(expr, data = NULL, env = caller_env()) {
       }
     ),
     error = function(e) {
-      # TODO: update this `<<-`: I don't think CRAN likes the super assignment
       lst_result[["error"]] <<- conditionMessage(e)
     }
   )
