@@ -15,6 +15,7 @@ SDTM
 YAML
 ata
 cardx
+cli
 dplyr
 env
 esult
