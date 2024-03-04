@@ -132,3 +132,17 @@
     Message
       i 2 more variables: warning, error
 
+# ard_continuous() works with non-syntactic names
+
+    Code
+      as.data.frame(ard_continuous(dplyr::mutate(ADSL, `BMI base` = BMIBL, Age = AGE,
+        `Arm Var` = ARM), variables = c("BMI base", Age), statistic = ~ list(
+        `mean lbl` = `mean error`), stat_label = everything() ~ list(`mean lbl` = "Test lbl")))
+    Output
+        variable    context stat_name stat_label stat                     fmt_fn
+      1 BMI base continuous  mean lbl   Test lbl NULL .Primitive("as.character")
+      2      Age continuous  mean lbl   Test lbl NULL .Primitive("as.character")
+        warning                                    error
+      1    NULL There was an error calculating the mean.
+      2    NULL There was an error calculating the mean.
+

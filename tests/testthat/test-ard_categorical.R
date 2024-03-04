@@ -681,3 +681,46 @@ test_that("ard_categorical() and all NA columns", {
       ard_categorical(variables = AGEGR1)
   )
 })
+
+test_that("ard_categorical() can handle non-syntactic column names", {
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`Age Group` = AGEGR1) |>
+      ard_categorical(variables = `Age Group`) |>
+      dplyr::select(stat),
+    ADSL |>
+      ard_categorical(variables = AGEGR1) |>
+      dplyr::select(stat)
+  )
+
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`Age Group` = AGEGR1) |>
+      ard_categorical(variables = "Age Group") |>
+      dplyr::select(stat, error),
+    ADSL |>
+      ard_categorical(variables = AGEGR1) |>
+      dplyr::select(stat, error)
+  )
+
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`Arm Var` = ARM, `Age Group` = AGEGR1) |>
+      ard_categorical(by = `Arm Var`, variables = "Age Group") |>
+      dplyr::select(stat, error),
+    ADSL |>
+      ard_categorical(by = ARM, variables = AGEGR1) |>
+      dplyr::select(stat, error)
+  )
+
+
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`Arm Var` = ARM, `Age Group` = AGEGR1) |>
+      ard_categorical(strata = "Arm Var", variables = `Age Group`) |>
+      dplyr::select(stat, error),
+    ADSL |>
+      ard_categorical(strata = ARM, variables = AGEGR1) |>
+      dplyr::select(stat, error)
+  )
+})

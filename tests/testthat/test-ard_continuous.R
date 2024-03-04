@@ -244,3 +244,53 @@ test_that("ard_continuous() with empty/missing dates works, and preserves Date c
     )
   expect_equal(inherits(empty_date$stat[[1]], "Date"), TRUE)
 })
+
+
+test_that("ard_continuous() works with non-syntactic names", {
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE) |>
+      ard_continuous(
+        variables = `BMI base`,
+        statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
+      ) |>
+      dplyr::select(stat, error),
+    ADSL |>
+      ard_continuous(
+        variables = BMIBL,
+        statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
+      ) |>
+      dplyr::select(stat, error)
+  )
+
+  expect_equal(
+    ADSL |>
+      dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE) |>
+      ard_continuous(
+        variables = "BMI base",
+        statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
+      ) |>
+      dplyr::select(stat, error),
+    ADSL |>
+      ard_continuous(
+        variables = BMIBL,
+        statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
+      ) |>
+      dplyr::select(stat, error)
+  )
+
+
+  `mean error` <- function(x) {
+    stop("There was an error calculating the mean.")
+    mean(x)
+  }
+
+  expect_snapshot(ADSL |>
+    dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE, `Arm Var` = ARM) |>
+    ard_continuous(
+      variables = c("BMI base", `Age`),
+      statistic = ~ list("mean lbl" = `mean error`),
+      stat_label = everything() ~ list(`mean lbl` = "Test lbl")
+    ) |>
+    as.data.frame())
+})
