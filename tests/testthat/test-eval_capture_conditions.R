@@ -25,8 +25,8 @@ test_that("eval_capture_conditions() works", {
   # capture multiple warning
   expect_snapshot({
     two_warn_foo <- function() {
-      cli::cli_warn("BIG WARNING1")
-      cli::cli_warn("BIG WARNING2")
+      cli::cli_warn("{.emph BIG} WARNING1")
+      cli::cli_warn("{.emph BIG} WARNING2")
       TRUE
     }
     eval_capture_conditions(expr(two_warn_foo()))
