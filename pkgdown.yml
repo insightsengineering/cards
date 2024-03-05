@@ -4,8 +4,8 @@ pkgdown_sha: ~
 articles:
   getting-started: getting-started.html
   structures: structures.html
-last_built: 2024-02-26T21:14Z
+last_built: 2024-03-05T16:40Z
 urls:
-  reference: https://insightsengineering.github.io/cards/latest-tag/reference
-  article: https://insightsengineering.github.io/cards/latest-tag/articles
+  reference: https://insightsengineering.github.io/cards/main/reference
+  article: https://insightsengineering.github.io/cards/main/articles
 
