@@ -12,9 +12,9 @@ navbar:
       icon: fa-github
       href: https://github.com/insightsengineering/cards
 
-development:
-  mode: auto
-  version_label: default
+# development:
+#   mode: auto
+#   version_label: default
 
 authors:
   Daniel D. Sjoberg:
