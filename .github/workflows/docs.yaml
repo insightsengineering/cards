@@ -40,4 +40,4 @@ jobs:
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
     with:
-      default-landing-page: main
+      default-landing-page: latest-tag
