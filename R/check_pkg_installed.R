@@ -54,17 +54,12 @@ check_pkg_installed <- function(pkg,
   df_pkg_min_version <-
     get_min_version_required(pkg = pkg, reference_pkg = reference_pkg, call = call)
 
-  # get fn name from which the function was called -----------------------------
-  fn <- error_call(call)
-
   # prompt user to install package ---------------------------------------------
   rlang::check_installed(
     pkg = df_pkg_min_version$pkg,
     version = df_pkg_min_version$version,
     compare = df_pkg_min_version$compare,
-    reason = switch(!is.null(fn),
-      glue::glue("for `{fn}`")
-    )
+    call = call
   ) |>
     # this can be removed after this issue is resolved https://github.com/r-lib/rlang/issues/1694
     suppressWarnings()
