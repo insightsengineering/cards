@@ -55,11 +55,13 @@ test_that("check_pkg_installed() works", {
   skip_if(interactive())
   # expect an error msg for pkg that doesn't exist
   # note: if interactive(), user will be invited to install the missing pkg
-  expect_snapshot({
-    user_facing_fn <- function() {
-      check_pkg_installed(c("br000000m", "br1111111m"))
-    }
-    user_facing_fn()},
+  expect_snapshot(
+    {
+      user_facing_fn <- function() {
+        check_pkg_installed(c("br000000m", "br1111111m"))
+      }
+      user_facing_fn()
+    },
     error = TRUE
   )
   expect_error(
