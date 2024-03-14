@@ -141,7 +141,6 @@ ard_stack <- function(data,
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE")
 #' )
-#' @noRd
 .eval_ard_calls <- function(data, by, ...) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
