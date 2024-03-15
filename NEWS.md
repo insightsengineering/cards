@@ -1,4 +1,4 @@
-# cards 0.1.0.9007
+# cards 0.1.0.9008
 
 * Improved messaging in `check_pkg_installed()` that incorporates the calling function name in the case of an error. (#205)
 
