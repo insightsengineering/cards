@@ -105,7 +105,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   shuffle_ard(trim = FALSE)
 #'
 #' ard |> cards:::.trim_ard()
-#' @noRd
 .trim_ard <- function(x) {
   check_data_frame(x)
 
@@ -158,7 +157,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' )
 #'
 #' cards:::.detect_msgs(ard, "warning", "error")
-#' @noRd
 .detect_msgs <- function(x, ...) {
   dots <- rlang::dots_list(...)
 
@@ -188,7 +186,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' data <- data.frame(a = "x", b = "y", c = "z", .cards_idx = 1)
 #'
 #' cards:::.check_var_nms(data, vars_protected = c("x", "z"))
-#' @noRd
 .check_var_nms <- function(x, vars_protected) {
   # get all represented variable names from original data
   var_nms <- x |>
@@ -240,7 +237,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' data <- data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
 #'
 #' cards:::.rnm_grp_vars(data)
-#' @noRd
 .rnm_grp_vars <- function(x) {
   grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
   grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
@@ -312,7 +308,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' )
 #'
 #' cards:::.fill_grps_from_variables(data)
-#' @noRd
 .fill_grps_from_variables <- function(x) {
   # within each variable, check if there is a match against one of the grouping cols
   # if the corresponding value in that grouping col is missing, backfill with the variable level
@@ -348,7 +343,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @examples
 #' cards:::.is_list_column_of_scalars(as.list(1:5))
-#' @noRd
 .is_list_column_of_scalars <- function(x) {
   is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
 }

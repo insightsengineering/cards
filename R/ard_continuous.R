@@ -178,7 +178,6 @@ ard_continuous <- function(data,
 #' data <- data.frame("ard_x" = 1)
 #'
 #' cards:::.check_no_ard_columns(data)
-#' @noRd
 .check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
@@ -221,7 +220,6 @@ ard_continuous <- function(data,
 #'   strata = NULL,
 #'   data = ADSL
 #' )
-#' @noRd
 .calculate_stats_as_ard <- function(df_nested, variables, statistic,
                                     by, strata, data,
                                     new_col_name = "...ard_all_stats...") {
@@ -283,7 +281,6 @@ ard_continuous <- function(data,
 #' })
 #'
 #' cards:::.lst_results_as_df(msgs, "result", "mean")
-#' @noRd
 .lst_results_as_df <- function(x, variable, fun_name) {
   # unnesting results if needed
   if (.is_named_list(x$result, allow_df = TRUE)) {
@@ -331,7 +328,6 @@ ard_continuous <- function(data,
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
-#' @noRd
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
   # add fmt_fn column if not already present
   if (!new_column %in% names(x)) {
@@ -388,7 +384,6 @@ ard_continuous <- function(data,
 #'   dplyr::mutate(fmt_fn = NA)
 #'
 #' cards:::.default_fmt_fn(ard)
-#' @noRd
 .default_fmt_fn <- function(x) {
   x |>
     dplyr::mutate(

@@ -52,7 +52,6 @@ as_nested_list <- function(x) {
 #'   dplyr::filter(dplyr::row_number() %in% 1L) |>
 #'   apply_fmt_fn() |>
 #'   cards:::.one_row_ard_to_nested_list()
-#' @noRd
 .one_row_ard_to_nested_list <- function(x) {
   df_preparation <-
     x |>

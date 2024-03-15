@@ -17,7 +17,6 @@
 #' cards:::.unique_and_sorted(c(FALSE, TRUE, TRUE, FALSE))
 #'
 #' cards:::.unique_and_sorted(c(5, 5:1))
-#' @noRd
 .unique_and_sorted <- function(x, useNA = c("no", "always")) {
   # styler: off
   useNA <- match.arg(useNA)
@@ -55,7 +54,6 @@
 #'
 #' @examples
 #' cards:::.is_named_list(list(a = 1:3))
-#' @noRd
 .is_named_list <- function(x, allow_df = FALSE) {
   if (isFALSE(allow_df)) {
     return(is.list(x) && is_named(x) && !is.data.frame(x))
@@ -79,7 +77,6 @@
 #' x <- list(a = 1, b = list(b1 = 2, b2 = 3), c = list(c1 = 4, c2 = list(c2a = 5)))
 #'
 #' cards:::.purrr_list_flatten(x)
-#' @noRd
 .purrr_list_flatten <- function(x) {
   ret <- list()
 
