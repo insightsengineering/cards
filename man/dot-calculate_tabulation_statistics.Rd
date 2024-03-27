@@ -11,7 +11,7 @@
   strata,
   denominator,
   statistic,
-  call = parent.frame()
+  call = get_cli_abort_call()
 )
 }
 \arguments{

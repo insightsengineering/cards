@@ -274,7 +274,7 @@ check_list_elements <- function(x,
 #' @export
 cards_select <- function(expr, data, ...,
                          arg_name = NULL,
-                         .call = parent.frame()) {
+                         .call = get_cli_abort_call()) {
   tryCatch(
     tidyselect::eval_select(expr = expr, data = data, ...) |> names(),
     error = function(e) {

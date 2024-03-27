@@ -19,7 +19,7 @@
 #' @param pkg (`character`)\cr
 #'   vector of package names to check.
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
 #' @param lib.loc (`path`)\cr
@@ -44,7 +44,7 @@ NULL
 #' @export
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
-                                call = parent.frame()) {
+                                call = get_cli_abort_call()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(pkg)
   check_class(pkg, cls = "character")
@@ -70,7 +70,7 @@ check_pkg_installed <- function(pkg,
 #' @export
 is_pkg_installed <- function(pkg,
                              reference_pkg = "cards",
-                             call = parent.frame()) {
+                             call = get_cli_abort_call()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(pkg)
   check_class(pkg, cls = "character")
@@ -92,7 +92,7 @@ is_pkg_installed <- function(pkg,
 
 #' @rdname check_pkg_installed
 #' @export
-get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = parent.frame()) {
+get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = get_cli_abort_call()) {
   check_string(reference_pkg, allow_empty = TRUE, call = call)
 
   if (is_empty(reference_pkg)) {
@@ -146,7 +146,7 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call =
 #' @rdname check_pkg_installed
 #' @export
 get_min_version_required <- function(pkg, reference_pkg = "cards",
-                                     lib.loc = NULL, call = parent.frame()) {
+                                     lib.loc = NULL, call = get_cli_abort_call()) {
   check_not_missing(pkg, call = call)
   check_class(pkg, cls = "character", call = call)
   check_string(reference_pkg, allow_empty = TRUE, call = call)

@@ -9,7 +9,7 @@
   denominator,
   by,
   strata,
-  call = parent.frame()
+  call = get_cli_abort_call()
 )
 }
 \arguments{
@@ -26,7 +26,7 @@ character vector of by column names}
 character vector of strata column names}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
+frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 returns invisible if check is successful, throws an error message if not.

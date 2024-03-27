@@ -196,7 +196,13 @@ ard_categorical <- function(data,
 #'   denominator = "cell",
 #'   statistic = list(ARM = list(tabulation = c("N")))
 #' )
-.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistic, call = parent.frame()) {
+.calculate_tabulation_statistics <- function(data,
+                                             variables,
+                                             by,
+                                             strata,
+                                             denominator,
+                                             statistic,
+                                             call = get_cli_abort_call()) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
     lapply(statistic, function(x) x["tabulation"] |> compact()) |> compact()
@@ -285,7 +291,7 @@ ard_categorical <- function(data,
     )
 }
 
-.check_whether_na_counts <- function(data, call = parent.frame()) {
+.check_whether_na_counts <- function(data, call = get_cli_abort_call()) {
   walk(
     names(data),
     function(x) {
@@ -381,14 +387,14 @@ ard_categorical <- function(data,
 #'
 #' @inheritParams ard_categorical
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return a data frame
 #' @keywords internal
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
-.process_denominator <- function(data, variables, denominator, by, strata, call = parent.frame()) {
+.process_denominator <- function(data, variables, denominator, by, strata, call = get_cli_abort_call()) {
   if (is_empty(variables)) {
     return(list())
   }
@@ -552,14 +558,14 @@ ard_categorical <- function(data,
 #' @param strata (`character`)\cr
 #'   character vector of strata column names
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
 #'
 #' @examples
 #' cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
-.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
+.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = get_cli_abort_call()) {
   by_vars_to_check <-
     c(by, strata) |>
     intersect(names(data)) |>

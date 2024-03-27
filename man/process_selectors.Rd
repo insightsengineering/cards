@@ -39,7 +39,7 @@ check_list_elements(
   arg_name = rlang::caller_arg(x)
 )
 
-cards_select(expr, data, ..., arg_name = NULL, .call = parent.frame())
+cards_select(expr, data, ..., arg_name = NULL, .call = get_cli_abort_call())
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr

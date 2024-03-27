@@ -167,7 +167,7 @@ ard_continuous <- function(data,
 #' @param x (`data.frame`)\cr
 #'   a data frame
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #' @param exceptions (`string`)\cr
 #'   character string of column names to exclude from checks
 #'
@@ -178,7 +178,7 @@ ard_continuous <- function(data,
 #' data <- data.frame("ard_x" = 1)
 #'
 #' cards:::.check_no_ard_columns(data)
-.check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
+.check_no_ard_columns <- function(x, call = get_cli_abort_call(), exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
     colnames[startsWith(colnames, "...ard_") & endsWith(colnames, "...")] |>

@@ -4,7 +4,7 @@
 \alias{.check_dichotomous_value}
 \title{Perform Value Checks}
 \usage{
-.check_dichotomous_value(data, value, call = parent.frame())
+.check_dichotomous_value(data, value, call = get_cli_abort_call())
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -14,7 +14,7 @@ a data frame}
 a named list}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
+frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 returns invisible if check is successful, throws an error message if not.

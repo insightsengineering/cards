@@ -6,7 +6,7 @@
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is `NULL`.
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return returns invisible if check is successful, throws all condition messages if not.
 #' @export
@@ -18,7 +18,7 @@
 #'   variables = AGE
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x, call = NULL) {
+print_ard_conditions <- function(x, call = get_cli_abort_call()) {
   check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
@@ -47,8 +47,8 @@ print_ard_conditions <- function(x, call = NULL) {
 #'   variables = AGE
 #' )
 #'
-#' cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
-.cli_condition_messaging <- function(x, msg_type, call) {
+#' cards:::.cli_condition_messaging(ard, msg_type = "error", call = get_cli_abort_call())
+.cli_condition_messaging <- function(x, msg_type, call = get_cli_abort_call()) {
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 

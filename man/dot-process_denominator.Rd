@@ -10,7 +10,7 @@
   denominator,
   by,
   strata,
-  call = parent.frame()
+  call = get_cli_abort_call()
 )
 }
 \arguments{
@@ -37,7 +37,7 @@ columns specified.
 Arguments may be used in conjunction with one another.}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
+frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 a data frame

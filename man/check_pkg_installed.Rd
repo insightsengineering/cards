@@ -7,21 +7,21 @@
 \alias{get_min_version_required}
 \title{Check Package Installation}
 \usage{
-check_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
+check_pkg_installed(pkg, reference_pkg = "cards", call = get_cli_abort_call())
 
-is_pkg_installed(pkg, reference_pkg = "cards", call = parent.frame())
+is_pkg_installed(pkg, reference_pkg = "cards", call = get_cli_abort_call())
 
 get_pkg_dependencies(
   reference_pkg = "cards",
   lib.loc = NULL,
-  call = parent.frame()
+  call = get_cli_abort_call()
 )
 
 get_min_version_required(
   pkg,
   reference_pkg = "cards",
   lib.loc = NULL,
-  call = parent.frame()
+  call = get_cli_abort_call()
 )
 }
 \arguments{
@@ -32,7 +32,7 @@ vector of package names to check.}
 name of the package the function will search for a minimum required version from.}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
+frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 
 \item{lib.loc}{(\code{path})\cr
 location of \code{R} library trees to search through, see \code{\link[utils:packageDescription]{utils::packageDescription()}}.}

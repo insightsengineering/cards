@@ -4,7 +4,7 @@
 \alias{.cli_condition_messaging}
 \title{Print Condition Messages Saved in an ARD}
 \usage{
-.cli_condition_messaging(x, msg_type, call)
+.cli_condition_messaging(x, msg_type, call = get_cli_abort_call())
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
@@ -29,6 +29,6 @@ ard <- ard_continuous(
   variables = AGE
 )
 
-cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
+cards:::.cli_condition_messaging(ard, msg_type = "error", call = get_cli_abort_call())
 }
 \keyword{internal}

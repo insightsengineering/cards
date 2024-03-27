@@ -55,7 +55,7 @@ apply_fmt_fn <- function(x) {
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return a function
 #' @export
@@ -63,7 +63,7 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, call = parent.frame()) {
+alias_as_fmt_fn <- function(x, call = get_cli_abort_call()) {
   if (is.function(x)) {
     return(x)
   }
@@ -152,7 +152,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @param x (`string`)\cr
 #'   string to check
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [caller_env()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return a logical
 #' @keywords internal
@@ -160,7 +160,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = caller_env()) {
+.check_fmt_string <- function(x, call = get_cli_abort_call()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
