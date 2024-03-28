@@ -13,6 +13,8 @@
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   apply_fmt_fn()
 apply_fmt_fn <- function(x) {
+  set_cli_abort_call()
+
   if (!inherits(x, "card")) {
     cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."))
   }
@@ -64,6 +66,8 @@ apply_fmt_fn <- function(x) {
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
 alias_as_fmt_fn <- function(x, call = get_cli_abort_call()) {
+  set_cli_abort_call()
+
   if (is.function(x)) {
     return(x)
   }

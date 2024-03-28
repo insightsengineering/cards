@@ -26,6 +26,8 @@
 #'   ) |>
 #'   replace_null_statistic(rows = !is.null(error))
 replace_null_statistic <- function(x, value = NA, rows = TRUE) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_class(x, "card")
 

@@ -13,7 +13,7 @@
     Condition
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
-      Caused by error:
+      Caused by error in `apply_fmt_fn()`:
       ! The format "xoxo" is not valid.
 
 ---
@@ -23,7 +23,7 @@
     Condition
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
-      Caused by error:
+      Caused by error in `apply_fmt_fn()`:
       ! Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
 
 ---

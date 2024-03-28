@@ -105,6 +105,8 @@ NULL
 #' @name process_selectors
 #' @export
 process_selectors <- function(data, ..., env = caller_env()) {
+  set_cli_abort_call()
+
   # saved dots as named list of quos
   dots <- enquos(...)
 
@@ -135,6 +137,8 @@ process_selectors <- function(data, ..., env = caller_env()) {
 #' @export
 process_formula_selectors <- function(data, ..., env = caller_env(),
                                       include_env = FALSE, allow_empty = TRUE) {
+  set_cli_abort_call()
+
   # saved dots as named list
   dots <- dots_list(...)
 
@@ -159,6 +163,8 @@ process_formula_selectors <- function(data, ..., env = caller_env(),
 #' @name process_selectors
 #' @export
 fill_formula_selectors <- function(data, ..., env = caller_env()) {
+  set_cli_abort_call()
+
   dots <- dots_list(...)
   ret <- rep_named(names(dots), list(NULL))
   data_names <- names(data)
@@ -188,6 +194,8 @@ fill_formula_selectors <- function(data, ..., env = caller_env()) {
 #' @export
 compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = caller_env(),
                                      strict = TRUE, include_env = FALSE, allow_empty = TRUE) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_formula_list_selector(x, arg_name = arg_name, allow_empty = allow_empty, call = env)
 
@@ -255,6 +263,8 @@ check_list_elements <- function(x,
                                 error_msg = NULL,
                                 env = rlang::caller_env(),
                                 arg_name = rlang::caller_arg(x)) {
+  set_cli_abort_call()
+
   imap(
     x,
     function(lst_element, variable) {
@@ -275,6 +285,8 @@ check_list_elements <- function(x,
 cards_select <- function(expr, data, ...,
                          arg_name = NULL,
                          .call = get_cli_abort_call()) {
+  set_cli_abort_call()
+
   tryCatch(
     tidyselect::eval_select(expr = expr, data = data, ...) |> names(),
     error = function(e) {

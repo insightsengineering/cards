@@ -21,6 +21,8 @@
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
 print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
+  set_cli_abort_call()
+
   # convert to a data frame so the list columns print the values in the list ---
   x_print <- as.data.frame(x)
 

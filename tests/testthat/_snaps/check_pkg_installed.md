@@ -6,6 +6,6 @@
       })
       user_facing_fn()
     Condition
-      Error in `user_facing_fn()`:
+      Error in `check_pkg_installed()`:
       ! The packages "br000000m" and "br1111111m" are required.
 

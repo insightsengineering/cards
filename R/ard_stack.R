@@ -50,6 +50,8 @@ ard_stack <- function(data,
                       .missing = FALSE,
                       .attributes = FALSE,
                       .shuffle = FALSE) {
+  set_cli_abort_call()
+
   # process arguments ----------------------------------------------------------
   process_selectors(
     data,

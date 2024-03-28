@@ -36,6 +36,8 @@
 #'   letters[1:2]
 #' })
 eval_capture_conditions <- function(expr, data = NULL, env = caller_env()) {
+  set_cli_abort_call()
+
   # IF WE EVER NEED TO REWORK/DEBUG REVIEW THE ADVANCED R CONDITIONS CHAPTER
   # https://adv-r.hadley.nz/conditions.html#conditions
 

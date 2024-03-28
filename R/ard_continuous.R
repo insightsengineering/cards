@@ -64,6 +64,8 @@ ard_continuous <- function(data,
                            statistic = everything() ~ continuous_summary_fns(),
                            fmt_fn = NULL,
                            stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)

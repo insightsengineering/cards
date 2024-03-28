@@ -25,6 +25,8 @@
 #'
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .update = FALSE, .order = FALSE) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_scalar_logical(.update)
   check_scalar_logical(.order)

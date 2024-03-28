@@ -19,6 +19,8 @@
 #' ) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x, call = get_cli_abort_call()) {
+  set_cli_abort_call()
+
   check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
