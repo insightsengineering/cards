@@ -5,7 +5,7 @@
 # ---
 # repo: ddsjoberg/standalone
 # file: standalone-checks.R
-# last-updated: 2024-01-24
+# last-updated: 2024-03-28
 # license: https://unlicense.org
 # imports: [rlang, cli]
 # ---
