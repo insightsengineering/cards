@@ -21,7 +21,8 @@
 set_cli_abort_call <- function(env = rlang::caller_env()) {
   if (getOption("cli_abort_call") |> is.null()) {
     options(cli_abort_call = env)
-    withr::defer(expr = options(cli_abort_call = NULL), envir = env)
+    set_call <- as.call(list(function() options(cli_abort_call = NULL)))
+    do.call(on.exit, list(expr = set_call, after = FALSE), envir = env)
   }
   invisible()
 }
