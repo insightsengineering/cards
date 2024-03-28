@@ -156,7 +156,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @param x (`string`)\cr
 #'   string to check
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [get_cli_abort_call()].
+#'   frame for error messaging. Default is [caller_env()].
 #'
 #' @return a logical
 #' @keywords internal
@@ -164,7 +164,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = get_cli_abort_call()) {
+.check_fmt_string <- function(x, call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent

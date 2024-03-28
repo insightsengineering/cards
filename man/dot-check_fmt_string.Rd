@@ -4,14 +4,14 @@
 \alias{.check_fmt_string}
 \title{Check 'xx' Format Structure}
 \usage{
-.check_fmt_string(x, call = get_cli_abort_call())
+.check_fmt_string(x, call = caller_env())
 }
 \arguments{
 \item{x}{(\code{string})\cr
 string to check}
 
 \item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
+frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}.}
 }
 \value{
 a logical
