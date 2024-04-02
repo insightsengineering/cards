@@ -26,6 +26,6 @@ ard <- ard_continuous(
   variables = AGE
 )
 
-cards:::.cli_condition_messaging(ard, msg_type = "error", call = get_cli_abort_call())
+cards:::.cli_condition_messaging(ard, msg_type = "error")
 }
 \keyword{internal}

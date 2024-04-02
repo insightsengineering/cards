@@ -45,7 +45,7 @@ print_ard_conditions <- function(x) {
 #'   variables = AGE
 #' )
 #'
-#' cards:::.cli_condition_messaging(ard, msg_type = "error", call = get_cli_abort_call())
+#' cards:::.cli_condition_messaging(ard, msg_type = "error")
 .cli_condition_messaging <- function(x, msg_type) {
   set_cli_abort_call()
 
