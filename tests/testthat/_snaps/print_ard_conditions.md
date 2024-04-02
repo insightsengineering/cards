@@ -54,9 +54,10 @@
 
     Code
       tbl_summary <- (function() {
+        set_cli_abort_call()
         ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ list(err_fn = function(
           x) stop("'tis an error")))
-        print_ard_conditions(ard, call = current_env())
+        print_ard_conditions(ard)
       })
       tbl_summary()
     Message

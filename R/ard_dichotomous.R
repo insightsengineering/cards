@@ -116,15 +116,13 @@ maximum_variable_value <- function(data) {
 #'   a data frame
 #' @param value (named `list`)\cr
 #'   a named list
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
 #'
 #' @examples
 #' cards:::.check_dichotomous_value(mtcars, list(cyl = 4))
-.check_dichotomous_value <- function(data, value, call = get_cli_abort_call()) {
+.check_dichotomous_value <- function(data, value) {
   imap(
     value,
     function(value, column) {
@@ -137,7 +135,7 @@ maximum_variable_value <- function(data) {
           } else {
             c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}.")
           },
-          call = call
+          call = get_cli_abort_call()
         )
       }
     }

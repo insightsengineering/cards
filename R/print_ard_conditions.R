@@ -18,14 +18,14 @@
 #'   variables = AGE
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x, call = get_cli_abort_call()) {
+print_ard_conditions <- function(x) {
   set_cli_abort_call()
 
   check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "error", call = call)
-  .cli_condition_messaging(x, msg_type = "warning", call = call)
+  .cli_condition_messaging(x, msg_type = "error")
+  .cli_condition_messaging(x, msg_type = "warning")
 
   invisible()
 }
@@ -50,7 +50,9 @@ print_ard_conditions <- function(x, call = get_cli_abort_call()) {
 #' )
 #'
 #' cards:::.cli_condition_messaging(ard, msg_type = "error", call = get_cli_abort_call())
-.cli_condition_messaging <- function(x, msg_type, call = get_cli_abort_call()) {
+.cli_condition_messaging <- function(x, msg_type) {
+  set_cli_abort_call()
+
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 
@@ -99,6 +101,7 @@ print_ard_conditions <- function(x, call = get_cli_abort_call()) {
     dplyr::bind_rows()
 
   # and finally, print the messages
+  call <- get_cli_abort_call()
   if (!is.null(call)) {
     cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned during {.fun {error_call(call)}}:")
   } else {
