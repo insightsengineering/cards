@@ -10,8 +10,7 @@
   by,
   strata,
   denominator,
-  statistic,
-  call = get_cli_abort_call()
+  statistic
 )
 }
 \arguments{

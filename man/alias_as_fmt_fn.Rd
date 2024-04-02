@@ -4,14 +4,11 @@
 \alias{alias_as_fmt_fn}
 \title{Convert Alias to Function}
 \usage{
-alias_as_fmt_fn(x, call = get_cli_abort_call())
+alias_as_fmt_fn(x)
 }
 \arguments{
 \item{x}{(\code{integer}, \code{string}, or \code{function})\cr
 a non-negative integer, string alias, or function}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 a function

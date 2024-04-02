@@ -5,8 +5,6 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [get_cli_abort_call()].
 #'
 #' @return returns invisible if check is successful, throws all condition messages if not.
 #' @export
@@ -36,8 +34,6 @@ print_ard_conditions <- function(x) {
 #'   an ARD data frame of class 'card'
 #' @param msg_type (`string`)\cr
 #'   message type. Options are `"warning"` and `"error"`.
-#' @param call (`environment`)\cr
-#'   frame for error messaging
 #'
 #' @return returns invisible if check is successful, throws warning/error messages if not.
 #' @keywords internal

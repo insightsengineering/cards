@@ -4,14 +4,7 @@
 \alias{.process_denominator}
 \title{Process \code{denominator} Argument}
 \usage{
-.process_denominator(
-  data,
-  variables,
-  denominator,
-  by,
-  strata,
-  call = get_cli_abort_call()
-)
+.process_denominator(data, variables, denominator, by, strata)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -35,9 +28,6 @@ including unobserved combinations and unobserved factor levels.
 columns specified.
 
 Arguments may be used in conjunction with one another.}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 a data frame

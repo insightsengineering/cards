@@ -4,18 +4,11 @@
 \alias{.check_no_ard_columns}
 \title{Check Protected Column Names}
 \usage{
-.check_no_ard_columns(
-  x,
-  call = get_cli_abort_call(),
-  exceptions = "...ard_dummy_for_counting..."
-)
+.check_no_ard_columns(x, exceptions = "...ard_dummy_for_counting...")
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 a data frame}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 
 \item{exceptions}{(\code{string})\cr
 character string of column names to exclude from checks}

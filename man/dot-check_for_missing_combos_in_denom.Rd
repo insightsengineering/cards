@@ -4,13 +4,7 @@
 \alias{.check_for_missing_combos_in_denom}
 \title{Check for Missing Levels in \code{denominator}}
 \usage{
-.check_for_missing_combos_in_denom(
-  data,
-  denominator,
-  by,
-  strata,
-  call = get_cli_abort_call()
-)
+.check_for_missing_combos_in_denom(data, denominator, by, strata)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -24,9 +18,6 @@ character vector of by column names}
 
 \item{strata}{(\code{character})\cr
 character vector of strata column names}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 returns invisible if check is successful, throws an error message if not.

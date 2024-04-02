@@ -4,14 +4,11 @@
 \alias{print_ard_conditions}
 \title{Print ARD Condition Messages}
 \usage{
-print_ard_conditions(x, call = get_cli_abort_call())
+print_ard_conditions(x)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 an ARD data frame of class 'card'}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=get_cli_abort_call]{get_cli_abort_call()}}.}
 }
 \value{
 returns invisible if check is successful, throws all condition messages if not.
