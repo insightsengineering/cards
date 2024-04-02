@@ -1,9 +1,13 @@
 #' Stack ARDs
 #'
+#' @description
 #' Stack multiple ARD calls sharing common input `data` and `by` variables.
-#' Optionally incorporate additional information on represented variables (i.e.
-#' big N's, missingness, attributes) and/or tidy for use in displays with
-#' `shuffle_ard()`.
+#' Optionally incorporate additional information on represented variables, e.g.
+#' overall calculations, rates of missingness, attributes, or transform results
+#' with `shuffle_ard()`.
+#'
+#' If the `ard_stack(by)` argument is specified, a univariate tabulation of the
+#' by variable will also be returned.
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
