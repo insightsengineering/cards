@@ -15,7 +15,7 @@ test_that("ard_stack() works", {
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl", statistic = everything() ~ categorical_summary_fns("N")),
+      ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ),
     ignore_function_env = TRUE
@@ -99,7 +99,7 @@ test_that("ard_stack() adding overalls", {
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl", statistic = everything() ~ categorical_summary_fns("N")),
+      ard_categorical(data = mtcars, variables = "cyl"),
       ard_continuous(data = mtcars, variables = "mpg"),
       ard_dichotomous(data = mtcars, variables = "vs"),
       .update = TRUE,
@@ -127,7 +127,7 @@ test_that("ard_stack() adding missing/attributes", {
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl", statistic = everything() ~ categorical_summary_fns("N")),
+      ard_categorical(data = mtcars, variables = "cyl"),
       ard_missing(data = mtcars, variables = c("cyl", "mpg", "vs")),
       ard_attributes(data = mtcars, variables = c("cyl", "mpg", "vs")),
       .update = TRUE,
@@ -154,9 +154,10 @@ test_that("ard_stack() .shuffle argument", {
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl", statistic = everything() ~ categorical_summary_fns("N")),
+      ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ) |>
       shuffle_ard()
   )
 })
+

@@ -82,8 +82,7 @@ ard_stack <- function(data,
       ard_list,
       ard_categorical(
         data = data,
-        variables = all_of(by),
-        statistic = everything() ~ categorical_summary_fns("N")
+        variables = all_of(by)
       )
     )
   } else {
