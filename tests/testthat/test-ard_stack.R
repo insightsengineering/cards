@@ -160,4 +160,3 @@ test_that("ard_stack() .shuffle argument", {
       shuffle_ard()
   )
 })
-
