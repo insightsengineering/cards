@@ -1,5 +1,7 @@
 # cards 0.1.0.9008
 
+* Updated `ard_stack()` to return `n`, `p`, and `N` for the `by` variable when specified. Previously, it only returned `N` which is the same for all levels of the by variable. (#219)
+
 * Improved messaging in `check_pkg_installed()` that incorporates the calling function name in the case of an error. (#205)
 
 * Styling from the {cli} package are now removed from errors and warnings when they are captured with `eval_capture_conditions()`. Styling is removed with `cli::ansi_strip()`. (#129)

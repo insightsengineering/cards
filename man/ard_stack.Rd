@@ -45,9 +45,12 @@ a transformed ARD data frame (of class 'card' if \code{.shuffle = FALSE})
 }
 \description{
 Stack multiple ARD calls sharing common input \code{data} and \code{by} variables.
-Optionally incorporate additional information on represented variables (i.e.
-big N's, missingness, attributes) and/or tidy for use in displays with
-\code{shuffle_ard()}.
+Optionally incorporate additional information on represented variables, e.g.
+overall calculations, rates of missingness, attributes, or transform results
+with \code{shuffle_ard()}.
+
+If the \code{ard_stack(by)} argument is specified, a univariate tabulation of the
+by variable will also be returned.
 }
 \examples{
 ard_stack(
