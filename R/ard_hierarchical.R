@@ -161,7 +161,6 @@ ard_hierarchical_count <- function(data,
 #' data <- data.frame(x = 1, y = 2, group1 = 3, group2 = 4)
 #'
 #' cards:::.rename_last_group_as_variable(data)
-#' @noRd
 .rename_last_group_as_variable <- function(df_result) {
   df_result <- dplyr::select(df_result, -all_ard_variables())
 

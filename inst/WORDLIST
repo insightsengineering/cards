@@ -10,12 +10,14 @@ JSON
 Lifecycle
 ORCID
 Pre
+Rua
 SAS's
 SDTM
 YAML
 ata
 cardx
 cli
+de
 dplyr
 env
 esult
@@ -36,3 +38,6 @@ tidyselect
 tidyselector
 tidyselectors
 univariable
+unlist
+unnested
+unnests

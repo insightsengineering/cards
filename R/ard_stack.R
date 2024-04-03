@@ -1,9 +1,13 @@
 #' Stack ARDs
 #'
+#' @description
 #' Stack multiple ARD calls sharing common input `data` and `by` variables.
-#' Optionally incorporate additional information on represented variables (i.e.
-#' big N's, missingness, attributes) and/or tidy for use in displays with
-#' `shuffle_ard()`.
+#' Optionally incorporate additional information on represented variables, e.g.
+#' overall calculations, rates of missingness, attributes, or transform results
+#' with `shuffle_ard()`.
+#'
+#' If the `ard_stack(by)` argument is specified, a univariate tabulation of the
+#' by variable will also be returned.
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
@@ -82,8 +86,7 @@ ard_stack <- function(data,
       ard_list,
       ard_categorical(
         data = data,
-        variables = all_of(by),
-        statistic = everything() ~ categorical_summary_fns("N")
+        variables = all_of(by)
       )
     )
   } else {
@@ -141,7 +144,6 @@ ard_stack <- function(data,
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE")
 #' )
-#' @noRd
 .eval_ard_calls <- function(data, by, ...) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
