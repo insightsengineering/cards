@@ -63,7 +63,7 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, call = parent.frame()) {
+alias_as_fmt_fn <- function(x, arg = rlang::caller_arg(x), call = parent.frame()) {
   if (is.function(x)) {
     return(x)
   }
@@ -89,7 +89,11 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
 
-  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = call)
+  cli::cli_abort(
+    paste("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+          "Problem occurred for variable: {.arg {arg}} whose value is {.val {x}}", sep = "\n"),
+    call = call
+  )
 }
 
 
@@ -160,7 +164,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = caller_env()) {
+.check_fmt_string <- function(x, arg = rlang::caller_arg(x), call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
@@ -169,7 +173,13 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
       (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
-    cli::cli_abort("The format {.val {x}} is not valid.", call = call)
+    cli::cli_abort(
+      paste("The format of {.arg {arg}} {.val {x}} is not valid.",
+            "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
+            sep = "\n"
+      ),
+      call = call
+    )
   }
   fmt_is_good
 }
