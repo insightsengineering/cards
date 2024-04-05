@@ -164,7 +164,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, arg = rlang::caller_arg(x), call = caller_env()) {
+.check_fmt_string <- function(x, call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
@@ -174,7 +174,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
-      paste("The format of {.arg {arg}} {.val {x}} is not valid.",
+      paste("The format {.val {x}} is not valid.",
             "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
             sep = "\n"
       ),

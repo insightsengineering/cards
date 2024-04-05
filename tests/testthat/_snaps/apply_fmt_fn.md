@@ -14,7 +14,7 @@
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
       Caused by error:
-      ! The format "xoxo" is not valid.
+      ! The format "xoxo" is not valid. String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
 
 ---
 
@@ -24,7 +24,7 @@
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
       Caused by error:
-      ! Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
+      ! Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x". Problem occurred for variable: `fn` whose value is -1
 
 ---
 
