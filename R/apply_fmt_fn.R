@@ -71,7 +71,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x, call = call)
+    .check_fmt_string(x, call = call) # .check_fmt_string() does have different messaging than the cli_abort() below was that intended?
     # scale by 100 if it's a percentage
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
@@ -176,7 +176,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
-      paste("The format {.val {x}} is not valid.",
+      paste("The format {.val {x}} for `fmt_fn` is not valid.",
             "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
             sep = "\n"
       ),
