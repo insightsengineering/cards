@@ -63,7 +63,7 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, arg = rlang::caller_arg(x), call = parent.frame()) {
+alias_as_fmt_fn <- function(x, call = parent.frame()) {
   if (is.function(x)) {
     return(x)
   }
@@ -90,8 +90,10 @@ alias_as_fmt_fn <- function(x, arg = rlang::caller_arg(x), call = parent.frame()
   }
 
   cli::cli_abort(
-    paste("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-          "Problem occurred for variable: {.arg {arg}} whose value is {.val {x}}", sep = "\n"),
+    paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to `stat`.",
+          "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+          sep = "\n"
+    ),
     call = call
   )
 }

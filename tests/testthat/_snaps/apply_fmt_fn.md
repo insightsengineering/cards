@@ -24,7 +24,7 @@
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
       Caused by error:
-      ! Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x". Problem occurred for variable: `fn` whose value is -1
+      ! The value -1 supplied for `fmt_fn` cannot be applied to `stat`. Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
 
 ---
 
