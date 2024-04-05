@@ -33,7 +33,7 @@
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
-#'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character))`.
+#'   e.g. `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character()))`.
 #' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
