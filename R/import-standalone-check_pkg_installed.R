@@ -1,3 +1,22 @@
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R>
+# ----------------------------------------------------------------------
+#
+# ---
+# repo: ddsjoberg/standalone
+# file: standalone-check_pkg_installed.R
+# last-updated: 2024-04-05
+# license: https://unlicense.org
+# dependencies: standalone-cli_call_env.R
+# imports: [rlang, dplyr, tidyr]
+# ---
+#
+# This file provides functions to check package installation.
+#
+# ## Changelog
+# nocov start
+# styler: off
+
 #' Check Package Installation
 #'
 #' @description
@@ -66,7 +85,6 @@ check_pkg_installed <- function(pkg,
     # this can be removed after this issue is resolved https://github.com/r-lib/rlang/issues/1694
     suppressWarnings()
 }
-
 
 #' @rdname check_pkg_installed
 #' @export
@@ -182,3 +200,6 @@ get_min_version_required <- function(pkg, reference_pkg = "cards",
 
   res
 }
+
+# nocov end
+# styler: on
