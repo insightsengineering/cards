@@ -366,8 +366,7 @@ ard_categorical <- function(data,
       df_original_strata <- dplyr::distinct(data[strata]) |>
         map(as.character) |>
         dplyr::bind_cols()
-    }
-    else {
+    } else {
       df_original_strata <- dplyr::distinct(data[strata])
     }
 
