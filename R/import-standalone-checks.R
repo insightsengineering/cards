@@ -5,7 +5,7 @@
 # ---
 # repo: ddsjoberg/standalone
 # file: standalone-checks.R
-# last-updated: 2024-04-05
+# last-updated: 2024-04-10
 # license: https://unlicense.org
 # dependencies: standalone-cli_call_env.R
 # imports: [rlang, cli]

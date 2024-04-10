@@ -5,7 +5,7 @@
 # ---
 # repo: ddsjoberg/standalone
 # file: standalone-cli_call_env.R
-# last-updated: 2024-04-05
+# last-updated: 2024-04-10
 # license: https://unlicense.org
 # imports: [rlang, cli]
 # ---
@@ -28,7 +28,8 @@
 #' @seealso [get_cli_abort_call()]
 #'
 #' @keywords internal
-set_cli_abort_call <- function(env = caller_env()) {
+#' @noRd
+set_cli_abort_call <- function(env = rlang::caller_env()) {
   if (getOption("cli_abort_call") |> is.null()) {
     options(cli_abort_call = env)
     set_call <- as.call(list(function() options(cli_abort_call = NULL)))
@@ -39,9 +40,11 @@ set_cli_abort_call <- function(env = caller_env()) {
 
 #' Get Call Environment for [cli::cli_abort()]
 #'
+#' @inheritParams set_cli_abort_call
 #' @seealso [set_cli_abort_call()]
 #'
 #' @keywords internal
+#' @noRd
 get_cli_abort_call <- function() {
   getOption("cli_abort_call", default = parent.frame())
 }
