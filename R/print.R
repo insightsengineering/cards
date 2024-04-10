@@ -33,18 +33,21 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
   # remove columns -------------------------------------------------------------
   if (arg_match(columns) %in% "auto") {
     # remove warning and error columns if nothing to report
-    if (ncol(x_print) > n_col && "error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
-      x_print[["error"]] <- NULL
-    }
     if (ncol(x_print) > n_col && "warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
       x_print[["warning"]] <- NULL
     }
+    if (ncol(x_print) > n_col && "error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
+      x_print[["error"]] <- NULL
+    }
+
+    # remove 'fmt_fn' col if there are many cols
     if (ncol(x_print) > n_col) {
       x_print[["fmt_fn"]] <- NULL
-    } # remove this col if there are many cols
+    }
+    # remove 'context' col if there are many cols
     if (ncol(x_print) > n_col) {
       x_print[["context"]] <- NULL
-    } # remove this col if there are many cols
+    }
   }
 
   # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ------
