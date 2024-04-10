@@ -19,7 +19,10 @@ string indicating whether to print a selected number of columns or all.}
 \item{n_col}{(\code{integer})\cr
 some columns are removed when there are more than a threshold of
 columns present. This argument sets that threshold. This is only used
-when \code{columns='auto'} and default is \code{6L}.}
+when \code{columns='auto'} and default is \code{6L}.
+Columns \code{'error'}, \code{'warning'}, \code{'context'}, and \code{'fmt_fn'} \emph{may} be removed
+from the print. All other columns will be printed, even if more than \code{n_col}
+columns are present.}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 not used}

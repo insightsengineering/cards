@@ -13,6 +13,9 @@
 #'   some columns are removed when there are more than a threshold of
 #'   columns present. This argument sets that threshold. This is only used
 #'   when `columns='auto'` and default is `6L`.
+#'   Columns `'error'`, `'warning'`, `'context'`, and `'fmt_fn'` *may* be removed
+#'   from the print. All other columns will be printed, even if more than `n_col`
+#'   columns are present.
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   not used
 #'
