@@ -1,4 +1,4 @@
-# cards 0.1.0.9010
+# cards 0.1.0.9011
 
 * Updated `ard_stack()` to return `n`, `p`, and `N` for the `by` variable when specified. Previously, it only returned `N` which is the same for all levels of the by variable. (#219)
 
