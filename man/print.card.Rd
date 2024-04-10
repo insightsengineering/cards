@@ -18,7 +18,8 @@ string indicating whether to print a selected number of columns or all.}
 
 \item{n_col}{(\code{integer})\cr
 some columns are removed when there are more than a threshold of
-columns present. This argument sets that threshold. Default is \code{6L}.}
+columns present. This argument sets that threshold. This is only used
+when \code{columns='auto'} and default is \code{6L}.}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
 not used}
@@ -27,6 +28,7 @@ not used}
 an ARD data frame of class 'card' (invisibly)
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Print method for objects of class 'card'
 }
 \examples{

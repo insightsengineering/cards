@@ -1,5 +1,6 @@
 #' Print
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Print method for objects of class 'card'
 #'
 #' @param x (`data.frame`)\cr
@@ -10,7 +11,8 @@
 #'   string indicating whether to print a selected number of columns or all.
 #' @param n_col (`integer`)\cr
 #'   some columns are removed when there are more than a threshold of
-#'   columns present. This argument sets that threshold. Default is `6L`.
+#'   columns present. This argument sets that threshold. This is only used
+#'   when `columns='auto'` and default is `6L`.
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   not used
 #'
@@ -31,10 +33,10 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
   # remove columns -------------------------------------------------------------
   if (arg_match(columns) %in% "auto") {
     # remove warning and error columns if nothing to report
-    if ("error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
+    if (ncol(x_print) > n_col && "error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
       x_print[["error"]] <- NULL
     }
-    if ("warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
+    if (ncol(x_print) > n_col && "warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
       x_print[["warning"]] <- NULL
     }
     if (ncol(x_print) > n_col) {
