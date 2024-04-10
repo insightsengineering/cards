@@ -364,8 +364,7 @@ ard_categorical <- function(data,
     # if we were not able to maintain the original type, convert strata to character
     if (!isTRUE(all_cols_equal)) {
       df_original_strata <- dplyr::distinct(data[strata]) |>
-        map(as.character) |>
-        dplyr::bind_cols()
+        apply(MARGIN = 2, FUN = as.character)
     } else {
       df_original_strata <- dplyr::distinct(data[strata])
     }
