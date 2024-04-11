@@ -12,7 +12,7 @@ string to check}
 
 \item{stat}{the statistic that is to be formatted}
 
-\item{stat_name}{the name of the statististic that is to be formatted}
+\item{stat_name}{the name of the statistic that is to be formatted}
 
 \item{call}{(\code{environment})\cr
 frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}.}
