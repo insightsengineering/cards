@@ -57,8 +57,8 @@ apply_fmt_fn <- function(x) {
 #'
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
-#' @param stat the statistic that is to be formatted
-#' @param stat_name the name of the statistic that is to be formatted
+#' @param stat (`numeric`)\cr the value of the statistic that is to be formatted
+#' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
 #'
