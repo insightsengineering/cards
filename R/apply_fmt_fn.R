@@ -71,8 +71,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x, call = call) # .check_fmt_string() does have different messaging than the cli_abort() below was that intended?
-    # scale by 100 if it's a percentage
+    .check_fmt_string(x, call = call)
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
       ifelse(
