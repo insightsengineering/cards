@@ -73,12 +73,12 @@
     Message
       {cards} data frame: 3 x 7
     Output
-        variable   context stat_name stat_label      stat
-      1        x continuo…       min        Min 2000-01-…
-      2        x continuo…       max        Max 2000-01-…
-      3        x continuo…        sd         SD     3.028
+        variable   context stat_name stat_label      stat error
+      1        x continuo…       min        Min 2000-01-…      
+      2        x continuo…       max        Max 2000-01-…      
+      3        x continuo…        sd         SD     3.028      
     Message
-      i 2 more variables: warning, error
+      i 1 more variable: warning
 
 ---
 
