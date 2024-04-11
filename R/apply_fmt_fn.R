@@ -93,8 +93,8 @@ alias_as_fmt_fn <- function(x, stat, stat_name, call = parent.frame()) {
 
   cli::cli_abort(
     paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to the value {.val {stat}} for the statistic {.val {stat_name}} .",
-          "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-          sep = "\n"
+      "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+      sep = "\n"
     ),
     call = call
   )
@@ -179,8 +179,8 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
       paste("The format {.val {x}} for `fmt_fn` is not valid for the value {.val {stat}} for the statistic {.val {stat_name}}.",
-            "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
-            sep = "\n"
+        "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
+        sep = "\n"
       ),
       call = call
     )
