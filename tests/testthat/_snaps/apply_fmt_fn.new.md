@@ -12,9 +12,9 @@
       apply_fmt_fn(dplyr::mutate(ard_fmt_checks, fmt_fn = list("xoxo", "xoxo")))
     Condition
       Error in `dplyr::mutate()`:
-      i In argument: `stat_fmt = map2(...)`.
+      i In argument: `stat_fmt = pmap(...)`.
       Caused by error:
-      ! The format "xoxo" for `fmt_fn` is not valid. String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
+      ! The format "xoxo" for `fmt_fn` is not valid for the value 20.090625 for the statistic "mean" String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
 
 ---
 
@@ -22,9 +22,9 @@
       apply_fmt_fn(dplyr::mutate(ard_fmt_checks, fmt_fn = list(1L, -1L)))
     Condition
       Error in `dplyr::mutate()`:
-      i In argument: `stat_fmt = map2(...)`.
+      i In argument: `stat_fmt = pmap(...)`.
       Caused by error:
-      ! The value -1 supplied for `fmt_fn` cannot be applied to `stat`. Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
+      ! The value -1 supplied for `fmt_fn` cannot be applied to the value 6.0269480520891 for the statistic "sd" . Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
 
 ---
 

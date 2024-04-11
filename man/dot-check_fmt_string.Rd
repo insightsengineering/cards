@@ -4,7 +4,7 @@
 \alias{.check_fmt_string}
 \title{Check 'xx' Format Structure}
 \usage{
-.check_fmt_string(x, call = caller_env())
+.check_fmt_string(x, stat, stat_name, call = caller_env())
 }
 \arguments{
 \item{x}{(\code{string})\cr

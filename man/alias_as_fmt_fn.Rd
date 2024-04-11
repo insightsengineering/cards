@@ -4,7 +4,7 @@
 \alias{alias_as_fmt_fn}
 \title{Convert Alias to Function}
 \usage{
-alias_as_fmt_fn(x, call = parent.frame())
+alias_as_fmt_fn(x, stat, stat_name, call = parent.frame())
 }
 \arguments{
 \item{x}{(\code{integer}, \code{string}, or \code{function})\cr

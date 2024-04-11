@@ -21,12 +21,15 @@ apply_fmt_fn <- function(x) {
     dplyr::mutate(
       .after = "stat",
       stat_fmt =
-        map2(
-          .data$stat,
-          .data$fmt_fn,
-          function(x, fn) {
+        pmap(
+          list(
+            .data$stat,
+            .data$stat_name,
+            .data$fmt_fn
+          ),
+          function(stat, stat_name, fn) {
             if (!is.null(fn)) {
-              do.call(alias_as_fmt_fn(fn), args = list(x))
+              do.call(alias_as_fmt_fn(fn, stat, stat_name), args = list(stat))
             } else {
               NULL
             }
@@ -63,7 +66,7 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, call = parent.frame()) {
+alias_as_fmt_fn <- function(x, stat, stat_name, call = parent.frame()) {
   if (is.function(x)) {
     return(x)
   }
@@ -71,7 +74,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x, call = call)
+    .check_fmt_string(x, stat, stat_name, call = call)
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
       ifelse(
@@ -89,7 +92,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
   }
 
   cli::cli_abort(
-    paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to `stat`.",
+    paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to the value {.val {stat}} for the statistic {.val {stat_name}} .",
           "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
           sep = "\n"
     ),
@@ -165,7 +168,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = caller_env()) {
+.check_fmt_string <- function(x, stat, stat_name, call = caller_env()) {
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
@@ -175,7 +178,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
-      paste("The format {.val {x}} for `fmt_fn` is not valid.",
+      paste("The format {.val {x}} for `fmt_fn` is not valid for the value {.val {stat}} for the statistic {.val {stat_name}}.dev",
             "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
             sep = "\n"
       ),
