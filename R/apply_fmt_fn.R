@@ -162,8 +162,8 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' @param x (`string`)\cr
 #'   string to check
-#' @param stat the statistic that is to be formatted
-#' @param stat_name the name of the statistic that is to be formatted
+#' @param stat (`numeric`)\cr the value of the statistic that is to be formatted
+#' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [caller_env()].
 #'
