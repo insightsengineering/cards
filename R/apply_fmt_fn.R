@@ -178,7 +178,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
-      paste("The format {.val {x}} for `fmt_fn` is not valid for the value {.val {stat}} for the statistic {.val {stat_name}}.dev",
+      paste("The format {.val {x}} for `fmt_fn` is not valid for the value {.val {stat}} for the statistic {.val {stat_name}}.",
             "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
             sep = "\n"
       ),
