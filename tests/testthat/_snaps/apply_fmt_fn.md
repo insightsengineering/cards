@@ -14,7 +14,7 @@
       Error in `dplyr::mutate()`:
       i In argument: `stat_fmt = map2(...)`.
       Caused by error:
-      ! The format "xoxo" is not valid. String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
+      ! The format "xoxo" for `fmt_fn` is not valid. String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
 
 ---
 
