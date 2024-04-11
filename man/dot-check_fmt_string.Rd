@@ -4,15 +4,15 @@
 \alias{.check_fmt_string}
 \title{Check 'xx' Format Structure}
 \usage{
-.check_fmt_string(x, stat, stat_name, call = caller_env())
+.check_fmt_string(x, variable, stat_name, call = caller_env())
 }
 \arguments{
 \item{x}{(\code{string})\cr
 string to check}
 
-\item{stat}{the statistic that is to be formatted}
+\item{variable}{(\code{character})\cr the variable whose statistic is to be formatted}
 
-\item{stat_name}{the name of the statistic that is to be formatted}
+\item{stat_name}{(\code{character})\cr the name of the statistic that is to be formatted}
 
 \item{call}{(\code{environment})\cr
 frame for error messaging. Default is \code{\link[=caller_env]{caller_env()}}.}
