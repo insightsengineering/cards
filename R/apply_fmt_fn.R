@@ -57,6 +57,8 @@ apply_fmt_fn <- function(x) {
 #'
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
+#' @param stat the statistic that is to be formatted
+#' @param stat_name the name of the statististic that is to be formatted
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [parent.frame()].
 #'
@@ -90,7 +92,8 @@ alias_as_fmt_fn <- function(x, stat, stat_name, call = parent.frame()) {
 
     return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
-
+  stat = stat
+  stat_name = stat_name
   cli::cli_abort(
     paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to the value {.val {stat}} for the statistic {.val {stat_name}} .",
       "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
@@ -159,6 +162,8 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' @param x (`string`)\cr
 #'   string to check
+#' @param stat the statistic that is to be formatted
+#' @param stat_name the name of the statististic that is to be formatted
 #' @param call (`environment`)\cr
 #'   frame for error messaging. Default is [caller_env()].
 #'
