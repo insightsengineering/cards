@@ -90,7 +90,7 @@ test_that("ard_categorical() univariate & specified denomiator", {
       dplyr::filter(stat_name %in% "p") |>
       dplyr::pull(stat) |>
       as.numeric(),
-      table(mtcars$am) |> prop.table() |> as.numeric() %>% `/`(100) # styler: off
+    table(mtcars$am) |> prop.table() |> as.numeric() %>% `/`(100) # styler: off
   )
 
   expect_equal(
@@ -722,5 +722,25 @@ test_that("ard_categorical() can handle non-syntactic column names", {
     ADSL |>
       ard_categorical(strata = ARM, variables = AGEGR1) |>
       dplyr::select(stat, error)
+  )
+})
+
+test_that("ard_categorical(strata) returns results in proper order", {
+  expect_equal(
+    ard_categorical(
+      ADAE |>
+        dplyr::arrange(AESEV != "SEVERE") |> # put SEVERE at the top
+        dplyr::mutate(AESEV = factor(AESEV, levels = c("MILD", "MODERATE", "SEVERE"))) |>
+        dplyr::mutate(ANY_AE = 1L),
+      by = TRTA,
+      strata = AESEV,
+      variables = ANY_AE,
+      denominator = ADSL |> dplyr::rename(TRTA = ARM)
+    ) |>
+      dplyr::select(group2_level) |>
+      unlist() |>
+      unique() |>
+      as.character(),
+    c("MILD", "MODERATE", "SEVERE")
   )
 })
