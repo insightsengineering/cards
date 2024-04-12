@@ -361,10 +361,18 @@ ard_categorical <- function(data,
 
   # if strata is present, remove unobserved rows
   if (!is_empty(strata)) {
+    # if we were not able to maintain the original type, convert strata to character
+    if (!isTRUE(all_cols_equal)) {
+      df_original_strata <- dplyr::distinct(data[strata]) |>
+        apply(MARGIN = 2, FUN = as.character)
+    } else {
+      df_original_strata <- dplyr::distinct(data[strata])
+    }
+
     df_table <-
-      dplyr::left_join(
-        dplyr::distinct(data[strata]),
+      dplyr::right_join(
         df_table,
+        df_original_strata,
         by = strata
       )
   }
