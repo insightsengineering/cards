@@ -35,7 +35,6 @@ check_list_elements(
   x,
   predicate,
   error_msg = NULL,
-  env = rlang::caller_env(),
   arg_name = rlang::caller_arg(x)
 )
 

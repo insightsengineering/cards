@@ -261,7 +261,6 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
 check_list_elements <- function(x,
                                 predicate,
                                 error_msg = NULL,
-                                env = rlang::caller_env(),
                                 arg_name = rlang::caller_arg(x)) {
   set_cli_abort_call()
 
@@ -272,7 +271,7 @@ check_list_elements <- function(x,
         msg <-
           error_msg %||%
           "The value for argument {.arg {arg_name}} and variable {.val {variable}} is not the expected type."
-        cli::cli_abort(message = msg, call = env)
+        cli::cli_abort(message = msg, call = get_cli_abort_call())
       }
     }
   )
