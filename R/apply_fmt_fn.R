@@ -17,7 +17,8 @@ apply_fmt_fn <- function(x) {
 
   if (!inherits(x, "card")) {
     cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."),
-                   call = get_cli_abort_call())
+      call = get_cli_abort_call()
+    )
   }
 
   x |>
