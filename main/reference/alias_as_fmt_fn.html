@@ -26,7 +26,7 @@ If the string ends in "%", results are scaled by 100 before rounding.'><meta pro
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9013</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@ If the string ends in <code>"%"</code>, results are scaled by 100 before roundin
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">alias_as_fmt_fn</span><span class="op">(</span><span class="va">x</span>, call <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">alias_as_fmt_fn</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,11 +90,6 @@ If the string ends in <code>"%"</code>, results are scaled by 100 before roundin
     <dl><dt>x</dt>
 <dd><p>(<code>integer</code>, <code>string</code>, or <code>function</code>)<br>
 a non-negative integer, string alias, or function</p></dd>
-
-
-<dt>call</dt>
-<dd><p>(<code>environment</code>)<br>
-frame for error messaging. Default is <code><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +125,7 @@ frame for error messaging. Default is <code><a href="https://rdrr.io/r/base/sys.
 <span class="r-out co"><span class="r-pr">#&gt;</span>     # return final formatted vector</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     res</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564e25e2f930&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x557de5af9180&gt;</span>
 <span class="r-in"><span><span class="fu">alias_as_fmt_fn</span><span class="op">(</span><span class="st">"xx.x"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function(x) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     # round and scale vector</span>
@@ -155,7 +150,7 @@ frame for error messaging. Default is <code><a href="https://rdrr.io/r/base/sys.
 <span class="r-out co"><span class="r-pr">#&gt;</span>     # return final formatted vector</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     res</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x564e23a9a8d8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x557de49cc470&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
