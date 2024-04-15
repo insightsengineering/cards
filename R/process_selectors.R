@@ -64,8 +64,6 @@
 #' @param allow_empty (`logical`)\cr
 #'   Logical indicating whether empty result is acceptable while process
 #'   formula-list selectors. Default is `TRUE`.
-#' @param .call (`environment`)\cr
-#'   calling environment used for error messaging.
 #' @param expr (`expression`)\cr
 #'   Defused R code describing a selection according to the tidyselect syntax.
 #'
@@ -120,8 +118,7 @@ process_selectors <- function(data, ..., env = caller_env()) {
             expr = x,
             data = data,
             allow_rename = FALSE,
-            arg_name = arg_name,
-            .call = env
+            arg_name = arg_name
           )
       }
     )
@@ -219,8 +216,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
           data = data,
           strict = strict,
           allow_rename = FALSE,
-          arg_name = arg_name,
-          .call = env
+          arg_name = arg_name
         )
       }
 
@@ -282,8 +278,7 @@ check_list_elements <- function(x,
 #' @name process_selectors
 #' @export
 cards_select <- function(expr, data, ...,
-                         arg_name = NULL,
-                         .call = get_cli_abort_call()) {
+                         arg_name = NULL) {
   set_cli_abort_call()
 
   tryCatch(
@@ -298,7 +293,7 @@ cards_select <- function(expr, data, ...,
             "!" = cli::ansi_strip(conditionMessage(e)),
             i = "Select among columns {.val {names(data)}}"
           ),
-        call = .call
+        call = get_cli_abort_call()
       )
     }
   )

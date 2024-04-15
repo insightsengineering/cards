@@ -38,7 +38,7 @@ check_list_elements(
   arg_name = rlang::caller_arg(x)
 )
 
-cards_select(expr, data, ..., arg_name = NULL, .call = get_cli_abort_call())
+cards_select(expr, data, ..., arg_name = NULL)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -94,9 +94,6 @@ be used in error messaging when mis-specified arguments are passed. Elements
 
 \item{expr}{(\code{expression})\cr
 Defused R code describing a selection according to the tidyselect syntax.}
-
-\item{.call}{(\code{environment})\cr
-calling environment used for error messaging.}
 }
 \value{
 \code{process_selectors()}, \code{fill_formula_selectors()}, \code{process_formula_selectors()}
