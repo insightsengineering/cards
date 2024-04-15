@@ -16,9 +16,7 @@ as_nested_list <- function(x) {
   set_cli_abort_call()
 
   # check in inputs ------------------------------------------------------------
-  if (!inherits(x, "card")) {
-    cli::cli_abort("Argument {.code x} must be class {.cls card}.")
-  }
+  check_class(x, cls = "card")
 
   # format/round the statistics, if not already done ---------------------------
   if (!"stat_fmt" %in% names(x)) {
