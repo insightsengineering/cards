@@ -13,8 +13,12 @@
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   apply_fmt_fn()
 apply_fmt_fn <- function(x) {
+  set_cli_abort_call()
+
   if (!inherits(x, "card")) {
-    cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."))
+    cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."),
+      call = get_cli_abort_call()
+    )
   }
 
   x |>
@@ -54,8 +58,6 @@ apply_fmt_fn <- function(x) {
 #'
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a function
 #' @export
@@ -63,7 +65,9 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, call = parent.frame()) {
+alias_as_fmt_fn <- function(x) {
+  set_cli_abort_call()
+
   if (is.function(x)) {
     return(x)
   }
@@ -71,7 +75,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x, call = call)
+    .check_fmt_string(x)
     # scale by 100 if it's a percentage
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
@@ -89,7 +93,7 @@ alias_as_fmt_fn <- function(x, call = parent.frame()) {
     return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
 
-  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = call)
+  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = get_cli_abort_call())
 }
 
 
@@ -151,8 +155,6 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' @param x (`string`)\cr
 #'   string to check
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [caller_env()].
 #'
 #' @return a logical
 #' @keywords internal
@@ -160,7 +162,9 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x, call = caller_env()) {
+.check_fmt_string <- function(x) {
+  set_cli_abort_call()
+
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
@@ -169,7 +173,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
       (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
-    cli::cli_abort("The format {.val {x}} is not valid.", call = call)
+    cli::cli_abort("The format {.val {x}} is not valid.", call = get_cli_abort_call())
   }
   fmt_is_good
 }

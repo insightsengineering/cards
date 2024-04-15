@@ -29,6 +29,8 @@ NULL
 #' @rdname tidy_ard_order
 #' @export
 tidy_ard_column_order <- function(x) {
+  set_cli_abort_call()
+
   group_cols <- dplyr::select(x, all_ard_groups()) |>
     names() |>
     sort()
@@ -50,6 +52,8 @@ tidy_ard_column_order <- function(x) {
 #' @rdname tidy_ard_order
 #' @export
 tidy_ard_row_order <- function(x) {
+  set_cli_abort_call()
+
   check_class(x, cls = "card")
 
   # get columns that dictate ordering

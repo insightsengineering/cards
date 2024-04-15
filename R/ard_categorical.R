@@ -78,6 +78,8 @@ ard_categorical <- function(data,
                             denominator = NULL,
                             fmt_fn = NULL,
                             stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -196,7 +198,12 @@ ard_categorical <- function(data,
 #'   denominator = "cell",
 #'   statistic = list(ARM = list(tabulation = c("N")))
 #' )
-.calculate_tabulation_statistics <- function(data, variables, by, strata, denominator, statistic, call = parent.frame()) {
+.calculate_tabulation_statistics <- function(data,
+                                             variables,
+                                             by,
+                                             strata,
+                                             denominator,
+                                             statistic) {
   # extract the "tabulation" statistics.
   statistics_tabulation <-
     lapply(statistic, function(x) x["tabulation"] |> compact()) |> compact()
@@ -224,8 +231,7 @@ ard_categorical <- function(data,
           names(),
       denominator = denominator,
       by = by,
-      strata = strata,
-      call = call
+      strata = strata
     )
 
   # perform other counts
@@ -285,7 +291,7 @@ ard_categorical <- function(data,
     )
 }
 
-.check_whether_na_counts <- function(data, call = parent.frame()) {
+.check_whether_na_counts <- function(data) {
   walk(
     names(data),
     function(x) {
@@ -294,7 +300,7 @@ ard_categorical <- function(data,
           c("Column {.val {x}} is all missing and cannot by tabulated.",
             i = "Only columns of class {.cls logical} and {.cls factor} can be tabulated when all values are missing."
           ),
-          call = call
+          call = get_cli_abort_call()
         )
       }
     }
@@ -388,15 +394,13 @@ ard_categorical <- function(data,
 #' denominator in percentage calculations.
 #'
 #' @inheritParams ard_categorical
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a data frame
 #' @keywords internal
 #'
 #' @examples
 #' cards:::.process_denominator(mtcars, denominator = 1000, variables = "cyl", by = "gear")
-.process_denominator <- function(data, variables, denominator, by, strata, call = parent.frame()) {
+.process_denominator <- function(data, variables, denominator, by, strata) {
   if (is_empty(variables)) {
     return(list())
   }
@@ -446,7 +450,7 @@ ard_categorical <- function(data,
   else if (is.data.frame(denominator) && !"...ard_N..." %in% names(denominator)) {
     .check_for_missing_combos_in_denom(
       data,
-      denominator = denominator, by = by, strata = strata, call = call
+      denominator = denominator, by = by, strata = strata
     )
 
     lst_denominator <-
@@ -520,11 +524,11 @@ ard_categorical <- function(data,
         "Specified counts in column {.val '...ard_N...'} are not unique in",
         "the {.arg denominator} argument across the {.arg by} and {.arg strata} columns."
       ) |>
-        cli::cli_abort(call = call)
+        cli::cli_abort(call = get_cli_abort_call())
     }
     .check_for_missing_combos_in_denom(
       data,
-      denominator = denominator, by = by, strata = strata, call = call
+      denominator = denominator, by = by, strata = strata
     )
 
     # making the by/strata columns character to merge them with the count data frames
@@ -537,7 +541,7 @@ ard_categorical <- function(data,
     lst_denominator <-
       rep_named(variables, list(df_denom))
   } else {
-    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = call)
+    cli::cli_abort("The {.arg denominator} argument has been mis-specified.", call = get_cli_abort_call())
   }
 
   lst_denominator
@@ -559,15 +563,13 @@ ard_categorical <- function(data,
 #'   character vector of by column names
 #' @param strata (`character`)\cr
 #'   character vector of strata column names
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return returns invisible if check is successful, throws an error message if not.
 #' @keywords internal
 #'
 #' @examples
 #' cards:::.check_for_missing_combos_in_denom(ADSL, denominator = "col", by = "ARM", strata = "AGEGR1")
-.check_for_missing_combos_in_denom <- function(data, denominator, by, strata, call = parent.frame()) {
+.check_for_missing_combos_in_denom <- function(data, denominator, by, strata) {
   by_vars_to_check <-
     c(by, strata) |>
     intersect(names(data)) |>
@@ -601,6 +603,6 @@ ard_categorical <- function(data,
       "The following {.arg by/strata} combinations are missing from the",
       "{.arg denominator} data frame: {.val {missing_combos}}."
     ) |>
-      cli::cli_abort(call = call)
+      cli::cli_abort(call = get_cli_abort_call())
   }
 }

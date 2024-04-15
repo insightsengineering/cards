@@ -25,6 +25,8 @@
 #'
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .update = FALSE, .order = FALSE) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_scalar_logical(.update)
   check_scalar_logical(.order)
@@ -46,7 +48,9 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
         dplyr::row_number() == dplyr::n()
       )
   } else if (any(dupes) && isFALSE(.update)) {
-    cli::cli_abort(c("!" = "{sum(dupes)} duplicate observation{?/s} found."))
+    cli::cli_abort(c("!" = "{sum(dupes)} duplicate observation{?/s} found."),
+      call = get_cli_abort_call()
+    )
   }
 
 

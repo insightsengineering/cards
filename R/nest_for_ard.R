@@ -44,6 +44,8 @@
 #' )
 nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
                          rename_columns = TRUE, list_columns = TRUE) {
+  set_cli_abort_call()
+
   # if no by/stratifying variables, simply return the data frame
   if (is_empty(by) && is_empty(strata)) {
     return((dplyr::tibble("{key}" := list(data))))

@@ -66,7 +66,6 @@ reference:
       - eval_capture_conditions
       - print_ard_conditions
       - round5
-      - check_pkg_installed
       - print.card
 
   - title: "Data"

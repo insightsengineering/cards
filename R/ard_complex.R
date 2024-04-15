@@ -55,6 +55,8 @@ ard_complex <- function(data,
                         statistic,
                         fmt_fn = NULL,
                         stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -68,7 +70,7 @@ ard_complex <- function(data,
   missing_statistics_vars <- setdiff(variables, names(statistic))
   if (!is_empty(missing_statistics_vars)) {
     "The following columns do not have {.arg statistic} defined: {.val {missing_statistics_vars}}." |>
-      cli::cli_abort()
+      cli::cli_abort(call = get_cli_abort_call())
   }
 
   # calculate statistics -------------------------------------------------------

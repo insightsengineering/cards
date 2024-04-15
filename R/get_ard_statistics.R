@@ -32,6 +32,8 @@ get_ard_statistics <- function(x,
                                ...,
                                .column = "stat",
                                .attributes = NULL) {
+  set_cli_abort_call()
+
   # subset the ARD
   ard_subset <- dplyr::filter(x, ...)
 

@@ -24,6 +24,8 @@
 #'
 #' ard_attributes(df, variables = everything())
 ard_attributes <- function(data, variables = everything(), label = NULL) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)

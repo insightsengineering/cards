@@ -1,3 +1,22 @@
+# Standalone file: do not edit by hand
+# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R>
+# ----------------------------------------------------------------------
+#
+# ---
+# repo: ddsjoberg/standalone
+# file: standalone-check_pkg_installed.R
+# last-updated: 2024-04-15
+# license: https://unlicense.org
+# dependencies: standalone-cli_call_env.R
+# imports: [rlang, dplyr, tidyr]
+# ---
+#
+# This file provides functions to check package installation.
+#
+# ## Changelog
+# nocov start
+# styler: off
+
 #' Check Package Installation
 #'
 #' @description
@@ -19,7 +38,7 @@
 #' @param pkg (`character`)\cr
 #'   vector of package names to check.
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
+#'   frame for error messaging. Default is [get_cli_abort_call()].
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
 #' @param lib.loc (`path`)\cr
@@ -28,7 +47,6 @@
 #' @return `is_pkg_installed()` and `check_pkg_installed()` returns a logical or error,
 #' `get_min_version_required()` returns a data frame with the minimum version required,
 #' `get_pkg_dependencies()` returns a tibble.
-#' @name check_pkg_installed
 #'
 #' @examples
 #' check_pkg_installed("dplyr")
@@ -38,13 +56,17 @@
 #' get_pkg_dependencies()
 #'
 #' get_min_version_required("dplyr")
+#'
+#' @name check_pkg_installed
+#' @noRd
 NULL
 
-#' @rdname check_pkg_installed
-#' @export
+#' @inheritParams check_pkg_installed
+#' @keywords internal
+#' @noRd
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
-                                call = parent.frame()) {
+                                call = get_cli_abort_call()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(pkg)
   check_class(pkg, cls = "character")
@@ -65,12 +87,12 @@ check_pkg_installed <- function(pkg,
     suppressWarnings()
 }
 
-
-#' @rdname check_pkg_installed
-#' @export
+#' @inheritParams check_pkg_installed
+#' @keywords internal
+#' @noRd
 is_pkg_installed <- function(pkg,
                              reference_pkg = "cards",
-                             call = parent.frame()) {
+                             call = get_cli_abort_call()) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(pkg)
   check_class(pkg, cls = "character")
@@ -90,12 +112,13 @@ is_pkg_installed <- function(pkg,
     suppressWarnings()
 }
 
-#' @rdname check_pkg_installed
-#' @export
-get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = parent.frame()) {
+#' @inheritParams check_pkg_installed
+#' @keywords internal
+#' @noRd
+get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = get_cli_abort_call()) {
   check_string(reference_pkg, allow_empty = TRUE, call = call)
 
-  if (is_empty(reference_pkg)) {
+  if (rlang::is_empty(reference_pkg)) {
     return(.empty_pkg_deps_df())
   }
 
@@ -107,7 +130,7 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call =
     unclass() |>
     dplyr::as_tibble() |>
     dplyr::select(
-      any_of(c(
+      dplyr::any_of(c(
         "Package", "Version", "Imports", "Depends",
         "Suggests", "Enhances", "LinkingTo"
       ))
@@ -143,16 +166,17 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call =
   )
 }
 
-#' @rdname check_pkg_installed
-#' @export
+#' @inheritParams check_pkg_installed
+#' @keywords internal
+#' @noRd
 get_min_version_required <- function(pkg, reference_pkg = "cards",
-                                     lib.loc = NULL, call = parent.frame()) {
+                                     lib.loc = NULL, call = get_cli_abort_call()) {
   check_not_missing(pkg, call = call)
   check_class(pkg, cls = "character", call = call)
   check_string(reference_pkg, allow_empty = TRUE, call = call)
 
   # if no package reference, return a df with just the pkg names
-  if (is_empty(reference_pkg)) {
+  if (rlang::is_empty(reference_pkg)) {
     return(
       .empty_pkg_deps_df() |>
         dplyr::full_join(
@@ -174,3 +198,6 @@ get_min_version_required <- function(pkg, reference_pkg = "cards",
 
   res
 }
+
+# nocov end
+# styler: on

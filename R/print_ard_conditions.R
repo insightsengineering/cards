@@ -5,8 +5,6 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is `NULL`.
 #'
 #' @return returns invisible if check is successful, throws all condition messages if not.
 #' @export
@@ -18,12 +16,14 @@
 #'   variables = AGE
 #' ) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x, call = NULL) {
+print_ard_conditions <- function(x) {
+  set_cli_abort_call()
+
   check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "error", call = call)
-  .cli_condition_messaging(x, msg_type = "warning", call = call)
+  .cli_condition_messaging(x, msg_type = "error")
+  .cli_condition_messaging(x, msg_type = "warning")
 
   invisible()
 }
@@ -34,8 +34,6 @@ print_ard_conditions <- function(x, call = NULL) {
 #'   an ARD data frame of class 'card'
 #' @param msg_type (`string`)\cr
 #'   message type. Options are `"warning"` and `"error"`.
-#' @param call (`environment`)\cr
-#'   frame for error messaging
 #'
 #' @return returns invisible if check is successful, throws warning/error messages if not.
 #' @keywords internal
@@ -47,8 +45,10 @@ print_ard_conditions <- function(x, call = NULL) {
 #'   variables = AGE
 #' )
 #'
-#' cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
-.cli_condition_messaging <- function(x, msg_type, call) {
+#' cards:::.cli_condition_messaging(ard, msg_type = "error")
+.cli_condition_messaging <- function(x, msg_type) {
+  set_cli_abort_call()
+
   # filter the ARD for the rows with messages to print
   ard_condition <- x |> dplyr::filter(!map_lgl(.data[[msg_type]], is.null))
 
@@ -97,11 +97,10 @@ print_ard_conditions <- function(x, call = NULL) {
     dplyr::bind_rows()
 
   # and finally, print the messages
-  if (!is.null(call)) {
-    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned during {.fun {error_call(call)}}:")
-  } else {
-    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
-  }
+  cli::cli_inform(
+    "The following {cli_color_fun(paste0(msg_type, 's'))} were returned during
+       {.fun {error_call(get_cli_abort_call()) |> as.list() |> getElement(1L)}}:"
+  )
 
   for (i in seq_len(nrow(ard_msg))) {
     cli::cli_inform(c(

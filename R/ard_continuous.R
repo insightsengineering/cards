@@ -64,6 +64,8 @@ ard_continuous <- function(data,
                            statistic = everything() ~ continuous_summary_fns(),
                            fmt_fn = NULL,
                            stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -166,8 +168,6 @@ ard_continuous <- function(data,
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
 #' @param exceptions (`string`)\cr
 #'   character string of column names to exclude from checks
 #'
@@ -178,7 +178,7 @@ ard_continuous <- function(data,
 #' data <- data.frame("ard_x" = 1)
 #'
 #' cards:::.check_no_ard_columns(data)
-.check_no_ard_columns <- function(x, call = parent.frame(), exceptions = "...ard_dummy_for_counting...") {
+.check_no_ard_columns <- function(x, exceptions = "...ard_dummy_for_counting...") {
   colnames <- names(x)
   ard_colnames <-
     colnames[startsWith(colnames, "...ard_") & endsWith(colnames, "...")] |>
@@ -186,7 +186,7 @@ ard_continuous <- function(data,
 
   if (!is_empty(ard_colnames)) {
     "Columns beginning with {.val '...ard_'} and ending with {.val '...'} are not allowed." |>
-      cli::cli_abort(call = call)
+      cli::cli_abort(call = get_cli_abort_call())
   }
 }
 

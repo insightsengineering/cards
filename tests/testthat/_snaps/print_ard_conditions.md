@@ -13,9 +13,9 @@
           mean(x)
         }, err_fn = function(x) stop("'tis an error"))))
     Message
-      The following errors were returned while calculating statistics:
+      The following errors were returned during `print_ard_conditions()`:
       x For variable `AGE` and "err_fn" statistic: 'tis an error
-      The following warnings were returned while calculating statistics:
+      The following warnings were returned during `print_ard_conditions()`:
       ! For variable `AGE` and "mean_warning" statistic: warn1
       ! For variable `AGE` and "mean_warning" statistic: warn2
 
@@ -29,11 +29,11 @@
           mean(x)
         }, err_fn = function(x) stop("'tis an error"))))
     Message
-      The following errors were returned while calculating statistics:
+      The following errors were returned during `print_ard_conditions()`:
       x For variable `AGE` (`ARM = "Placebo"`) and "err_fn" statistic: 'tis an error
       x For variable `AGE` (`ARM = "Xanomeline High Dose"`) and "err_fn" statistic: 'tis an error
       x For variable `AGE` (`ARM = "Xanomeline Low Dose"`) and "err_fn" statistic: 'tis an error
-      The following warnings were returned while calculating statistics:
+      The following warnings were returned during `print_ard_conditions()`:
       ! For variable `AGE` (`ARM = "Placebo"`) and "mean_warning" statistic: warn1
       ! For variable `AGE` (`ARM = "Placebo"`) and "mean_warning" statistic: warn2
       ! For variable `AGE` (`ARM = "Xanomeline High Dose"`) and "mean_warning" statistic: warn1
@@ -47,16 +47,17 @@
       print_ard_conditions(dplyr::mutate(ard_continuous(ADSL, variables = AGE),
       error = list("repeated error")))
     Message
-      The following errors were returned while calculating statistics:
+      The following errors were returned during `print_ard_conditions()`:
       x For variable `AGE` and "N", "mean", "sd", "median", "p25", "p75", "min", and "max" statistics: repeated error
 
 ---
 
     Code
       tbl_summary <- (function() {
+        set_cli_abort_call()
         ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ list(err_fn = function(
           x) stop("'tis an error")))
-        print_ard_conditions(ard, call = current_env())
+        print_ard_conditions(ard)
       })
       tbl_summary()
     Message
