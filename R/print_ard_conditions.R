@@ -97,12 +97,10 @@ print_ard_conditions <- function(x) {
     dplyr::bind_rows()
 
   # and finally, print the messages
-  call <- get_cli_abort_call()
-  if (!is.null(call)) {
-    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned during {.fun {error_call(call)}}:")
-  } else {
-    cli::cli_inform("The following {cli_color_fun(paste0(msg_type, 's'))} were returned while calculating statistics:")
-  }
+  cli::cli_inform(
+    "The following {cli_color_fun(paste0(msg_type, 's'))} were returned during
+       {.fun {error_call(get_cli_abort_call()) |> as.list() |> getElement(1L)}}:"
+  )
 
   for (i in seq_len(nrow(ard_msg))) {
     cli::cli_inform(c(
