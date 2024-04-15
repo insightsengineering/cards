@@ -2,10 +2,6 @@
 # Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R>
 # ----------------------------------------------------------------------
 #
-# Standalone file: do not edit by hand
-# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R>
-# ----------------------------------------------------------------------
-#
 # ---
 # repo: ddsjoberg/standalone
 # file: standalone-check_pkg_installed.R
