@@ -18,9 +18,9 @@ test_that("process_selectors() works", {
   )
 
   # proper error messaging
-  expect_snapshot(
-    error = TRUE,
-    process_selectors(mtcars, variables = not_a_column)
+  expect_error(
+    process_selectors(mtcars, variables = not_a_column),
+    "Select among*"
   )
 })
 
@@ -54,9 +54,9 @@ test_that("process_formula_selectors() error messaging", {
     error = TRUE
   )
 
-  expect_snapshot(
+  expect_error(
     process_formula_selectors(mtcars, variables = list(not_a_column ~ letters)),
-    error = TRUE
+    "Select among*"
   )
 })
 
