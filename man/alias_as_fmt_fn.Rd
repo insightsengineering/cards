@@ -13,9 +13,6 @@ a non-negative integer, string alias, or function}
 \item{variable}{(\code{character})\cr the variable whose statistic is to be formatted}
 
 \item{stat_name}{(\code{character})\cr the name of the statistic that is to be formatted}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 }
 \value{
 a function

@@ -65,8 +65,6 @@ apply_fmt_fn <- function(x) {
 #'   a non-negative integer, string alias, or function
 #' @param variable (`character`)\cr the variable whose statistic is to be formatted
 #' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [parent.frame()].
 #'
 #' @return a function
 #' @export
@@ -171,8 +169,6 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'   string to check
 #' @param variable (`character`)\cr the variable whose statistic is to be formatted
 #' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
-#' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [caller_env()].
 #'
 #' @return a logical
 #' @keywords internal
