@@ -13,11 +13,12 @@
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   apply_fmt_fn()
 apply_fmt_fn <- function(x) {
+
   set_cli_abort_call()
 
   if (!inherits(x, "card")) {
     cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."),
-      call = get_cli_abort_call()
+                   call = get_cli_abort_call()
     )
   }
 
@@ -73,9 +74,9 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x) {
+alias_as_fmt_fn <- function(x, variable, stat_name) {
   set_cli_abort_call()
-  
+
   if (is.function(x)) {
     return(x)
   }
@@ -83,8 +84,7 @@ alias_as_fmt_fn <- function(x) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x)
-    # scale by 100 if it's a percentage
+    .check_fmt_string(x, variable, stat_name, call = call)
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
       ifelse(
@@ -103,10 +103,10 @@ alias_as_fmt_fn <- function(x) {
 
   cli::cli_abort(
     paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to the statistic {.val {stat_name}} for the variable {.val {variable}}.",
-      "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-      sep = "\n"
+          "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+          sep = "\n"
     ),
-    call = get_cli_abort_call(
+    call = get_cli_abort_call()
   )
 }
 
@@ -182,18 +182,19 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' cards:::.check_fmt_string("xx.x%") # TRUE
 .check_fmt_string <- function(x, variable, stat_name) {
   set_cli_abort_call()
+
   # perform checks on the string
   fmt_is_good <-
     grepl("^x[x.%]+$", x = x) && # string begins with 'x', and consists of only x, period, or percent
-      sum(unlist(gregexpr("\\.", x)) != -1) %in% c(0L, 1L) && # a period appears 0 or 1 times
-      sum(unlist(gregexpr("%", x)) != -1) %in% c(0L, 1L) && # a percent appears 0 or 1 times
-      (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
+    sum(unlist(gregexpr("\\.", x)) != -1) %in% c(0L, 1L) && # a period appears 0 or 1 times
+    sum(unlist(gregexpr("%", x)) != -1) %in% c(0L, 1L) && # a percent appears 0 or 1 times
+    (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
       paste("The format {.val {x}} for `fmt_fn` is not valid for the variable {.val {variable}} for the statistic {.val {stat_name}}.",
-        "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
-        sep = "\n"
+            "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
+            sep = "\n"
       ),
       call = get_cli_abort_call()
     )
