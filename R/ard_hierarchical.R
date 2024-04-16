@@ -14,6 +14,10 @@
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform tabulations by. All combinations of the variables
 #'   specified here appear in results. Default is `dplyr::group_vars(data)`.
+#' @param id (([`tidy-select`][dplyr::dplyr_tidy_select])\cr)
+#'   an optional argument used to assert there are no duplicates with in the
+#'   column(s) passed here. For example, if `id=USUBJID` is passed, we will
+#'   add a check there are no duplicates in `data['USUBJID']`.
 #' @inheritParams ard_categorical
 #'
 #' @return an ARD data frame of class 'card'
@@ -41,7 +45,8 @@ ard_hierarchical <- function(data,
                              by = dplyr::group_vars(data),
                              statistic = everything() ~ categorical_summary_fns(),
                              denominator = NULL, fmt_fn = NULL,
-                             stat_label = everything() ~ default_stat_labels()) {
+                             stat_label = everything() ~ default_stat_labels(),
+                             id = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -53,9 +58,17 @@ ard_hierarchical <- function(data,
   process_selectors(
     data,
     variables = {{ variables }},
-    by = {{ by }}
+    by = {{ by }},
+    id = {{ id }}
   )
   data <- dplyr::ungroup(data)
+
+  if (!is_empty(id) && anyDuplicated(data[id]) > 0L) {
+    cli::cli_warn(c(
+      "Duplicate rows found in data for the {.val {id}} column{?s}.",
+      "i" = "Percentages/Denominators are not correct."
+    ))
+  }
 
   # return empty tibble if no variables selected -------------------------------
   if (is_empty(variables)) {
