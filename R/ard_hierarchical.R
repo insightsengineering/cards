@@ -42,6 +42,8 @@ ard_hierarchical <- function(data,
                              statistic = everything() ~ categorical_summary_fns(),
                              denominator = NULL, fmt_fn = NULL,
                              stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -104,6 +106,8 @@ ard_hierarchical_count <- function(data,
                                    by = dplyr::group_vars(data),
                                    fmt_fn = NULL,
                                    stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)

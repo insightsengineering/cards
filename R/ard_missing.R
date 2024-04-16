@@ -24,6 +24,8 @@ ard_missing <- function(data,
                         statistic = everything() ~ missing_summary_fns(),
                         fmt_fn = NULL,
                         stat_label = everything() ~ default_stat_labels()) {
+  set_cli_abort_call()
+
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})
 

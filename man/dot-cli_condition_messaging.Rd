@@ -4,7 +4,7 @@
 \alias{.cli_condition_messaging}
 \title{Print Condition Messages Saved in an ARD}
 \usage{
-.cli_condition_messaging(x, msg_type, call)
+.cli_condition_messaging(x, msg_type)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
@@ -12,9 +12,6 @@ an ARD data frame of class 'card'}
 
 \item{msg_type}{(\code{string})\cr
 message type. Options are \code{"warning"} and \code{"error"}.}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging}
 }
 \value{
 returns invisible if check is successful, throws warning/error messages if not.
@@ -29,6 +26,6 @@ ard <- ard_continuous(
   variables = AGE
 )
 
-cards:::.cli_condition_messaging(ard, msg_type = "error", call = parent.frame())
+cards:::.cli_condition_messaging(ard, msg_type = "error")
 }
 \keyword{internal}

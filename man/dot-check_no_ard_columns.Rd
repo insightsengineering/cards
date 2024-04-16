@@ -4,18 +4,11 @@
 \alias{.check_no_ard_columns}
 \title{Check Protected Column Names}
 \usage{
-.check_no_ard_columns(
-  x,
-  call = parent.frame(),
-  exceptions = "...ard_dummy_for_counting..."
-)
+.check_no_ard_columns(x, exceptions = "...ard_dummy_for_counting...")
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 a data frame}
-
-\item{call}{(\code{environment})\cr
-frame for error messaging. Default is \code{\link[=parent.frame]{parent.frame()}}.}
 
 \item{exceptions}{(\code{string})\cr
 character string of column names to exclude from checks}
