@@ -21,7 +21,7 @@
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" column.
-      i Percentages produced will not be correct.
+      i Percentages/Denominators are not correct.
     Message
       {cards} data frame: 1 x 15
     Output
@@ -41,7 +41,7 @@
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" and "SITEID" columns.
-      i Percentages produced will not be correct.
+      i Percentages/Denominators are not correct.
     Message
       {cards} data frame: 1 x 15
     Output

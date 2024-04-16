@@ -66,7 +66,7 @@ ard_hierarchical <- function(data,
   if (!is_empty(id) && anyDuplicated(data[id]) > 0L) {
     cli::cli_warn(c(
       "Duplicate rows found in data for the {.val {id}} column{?s}.",
-      "i" = "Percentages produced will not be correct."
+      "i" = "Percentages/Denominators are not correct."
     ))
   }
 
