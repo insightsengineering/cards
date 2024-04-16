@@ -84,7 +84,7 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x, variable, stat_name, call = call)
+    .check_fmt_string(x, variable, stat_name)
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
       ifelse(
