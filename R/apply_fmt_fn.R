@@ -15,22 +15,22 @@
 apply_fmt_fn <- function(x) {
   set_cli_abort_call()
 
-  if (!inherits(x, "card")) {
-    cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."),
-      call = get_cli_abort_call()
-    )
-  }
+  check_class(x, cls = "card")
 
   x |>
     dplyr::mutate(
       .after = "stat",
       stat_fmt =
-        map2(
-          .data$stat,
-          .data$fmt_fn,
-          function(x, fn) {
+        pmap(
+          list(
+            .data$stat,
+            .data$variable,
+            .data$stat_name,
+            .data$fmt_fn
+          ),
+          function(stat, variable, stat_name, fn) {
             if (!is.null(fn)) {
-              do.call(alias_as_fmt_fn(fn), args = list(x))
+              do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat))
             } else {
               NULL
             }
@@ -58,6 +58,8 @@ apply_fmt_fn <- function(x) {
 #'
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
+#' @param variable (`character`)\cr the variable whose statistic is to be formatted
+#' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
 #'
 #' @return a function
 #' @export
@@ -65,7 +67,7 @@ apply_fmt_fn <- function(x) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x) {
+alias_as_fmt_fn <- function(x, variable, stat_name) {
   set_cli_abort_call()
 
   if (is.function(x)) {
@@ -75,8 +77,7 @@ alias_as_fmt_fn <- function(x) {
     return(label_cards(digits = as.integer(x)))
   }
   if (is_string(x)) {
-    .check_fmt_string(x)
-    # scale by 100 if it's a percentage
+    .check_fmt_string(x, variable, stat_name)
     scale <- ifelse(endsWith(x, "%"), 100, 1)
     decimal_n <-
       ifelse(
@@ -93,7 +94,14 @@ alias_as_fmt_fn <- function(x) {
     return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
 
-  cli::cli_abort("Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.", call = get_cli_abort_call())
+  cli::cli_abort(
+    message =
+      "The value {.val {x}} supplied for `fmt_fn` cannot be applied to the
+       statistic {.val {stat_name}} for the variable {.val {variable}}.
+       Formatting functions/aliases must be a function,
+       a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+    call = get_cli_abort_call()
+  )
 }
 
 
@@ -155,6 +163,8 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #'
 #' @param x (`string`)\cr
 #'   string to check
+#' @param variable (`character`)\cr the variable whose statistic is to be formatted
+#' @param stat_name (`character`)\cr the name of the statistic that is to be formatted
 #'
 #' @return a logical
 #' @keywords internal
@@ -162,7 +172,7 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 #' @examples
 #' cards:::.check_fmt_string("xx.x") # TRUE
 #' cards:::.check_fmt_string("xx.x%") # TRUE
-.check_fmt_string <- function(x) {
+.check_fmt_string <- function(x, variable, stat_name) {
   set_cli_abort_call()
 
   # perform checks on the string
@@ -173,7 +183,14 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
       (sum(unlist(gregexpr("%", x)) != -1) %in% 0L || grepl(pattern = "%$", x = x)) # if there is a % it appears at the end
 
   if (isFALSE(fmt_is_good)) {
-    cli::cli_abort("The format {.val {x}} is not valid.", call = get_cli_abort_call())
+    cli::cli_abort(
+      message =
+        "The format {.val {x}} for `fmt_fn` is not valid for the
+         variable {.val {variable}} for the statistic {.val {stat_name}}.
+         String must begin with 'x' and only consist of x's, a single period or
+         none, and may end with a percent symbol.",
+      call = get_cli_abort_call()
+    )
   }
   fmt_is_good
 }

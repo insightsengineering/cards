@@ -4,11 +4,15 @@
 \alias{.check_fmt_string}
 \title{Check 'xx' Format Structure}
 \usage{
-.check_fmt_string(x)
+.check_fmt_string(x, variable, stat_name)
 }
 \arguments{
 \item{x}{(\code{string})\cr
 string to check}
+
+\item{variable}{(\code{character})\cr the variable whose statistic is to be formatted}
+
+\item{stat_name}{(\code{character})\cr the name of the statistic that is to be formatted}
 }
 \value{
 a logical

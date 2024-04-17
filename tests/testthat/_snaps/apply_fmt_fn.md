@@ -4,7 +4,7 @@
       apply_fmt_fn(letters)
     Condition
       Error in `apply_fmt_fn()`:
-      i Argument `x` must be class <card>.
+      ! The `x` argument must be class <card>, not a character vector.
 
 ---
 
@@ -12,19 +12,19 @@
       apply_fmt_fn(dplyr::mutate(ard_fmt_checks, fmt_fn = list("xoxo", "xoxo")))
     Condition
       Error in `dplyr::mutate()`:
-      i In argument: `stat_fmt = map2(...)`.
+      i In argument: `stat_fmt = pmap(...)`.
       Caused by error in `apply_fmt_fn()`:
-      ! The format "xoxo" is not valid.
+      ! The format "xoxo" for `fmt_fn` is not valid for the variable "mpg" for the statistic "mean". String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.
 
 ---
 
     Code
-      apply_fmt_fn(dplyr::mutate(ard_fmt_checks, fmt_fn = list(-1L, -1L)))
+      apply_fmt_fn(dplyr::mutate(ard_fmt_checks, fmt_fn = list(1L, -1L)))
     Condition
       Error in `dplyr::mutate()`:
-      i In argument: `stat_fmt = map2(...)`.
+      i In argument: `stat_fmt = pmap(...)`.
       Caused by error in `apply_fmt_fn()`:
-      ! Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
+      ! The value -1 supplied for `fmt_fn` cannot be applied to the statistic "sd" for the variable "mpg". Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
 
 ---
 
