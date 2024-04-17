@@ -4,7 +4,7 @@
       apply_fmt_fn(letters)
     Condition
       Error in `apply_fmt_fn()`:
-      i Argument `x` must be class <card>.
+      ! The `x` argument must be class <card>, not a character vector.
 
 ---
 

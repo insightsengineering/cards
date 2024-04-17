@@ -15,11 +15,7 @@
 apply_fmt_fn <- function(x) {
   set_cli_abort_call()
 
-  if (!inherits(x, "card")) {
-    cli::cli_abort(c("i" = "Argument {.code x} must be class {.cls card}."),
-      call = get_cli_abort_call()
-    )
-  }
+  check_class(x, cls = "card")
 
   x |>
     dplyr::mutate(
@@ -99,10 +95,11 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
   }
 
   cli::cli_abort(
-    paste("The value {.val {x}} supplied for `fmt_fn` cannot be applied to the statistic {.val {stat_name}} for the variable {.val {variable}}.",
-      "Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-      sep = "\n"
-    ),
+    message =
+      "The value {.val {x}} supplied for `fmt_fn` cannot be applied to the
+       statistic {.val {stat_name}} for the variable {.val {variable}}.
+       Formatting functions/aliases must be a function,
+       a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
     call = get_cli_abort_call()
   )
 }
@@ -187,10 +184,11 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
 
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
-      paste("The format {.val {x}} for `fmt_fn` is not valid for the variable {.val {variable}} for the statistic {.val {stat_name}}.",
-        "String must begin with 'x' and only consist of x's, a single period or none, and may end with a percent symbol.",
-        sep = "\n"
-      ),
+      message =
+        "The format {.val {x}} for `fmt_fn` is not valid for the
+         variable {.val {variable}} for the statistic {.val {stat_name}}.
+         String must begin with 'x' and only consist of x's, a single period or
+         none, and may end with a percent symbol.",
       call = get_cli_abort_call()
     )
   }
