@@ -21,6 +21,8 @@
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
+  set_cli_abort_call()
+
   check_class(x = x, cls = "card")
   check_scalar_logical(trim)
 

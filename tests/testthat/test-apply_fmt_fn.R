@@ -90,7 +90,7 @@ test_that("apply_fmt_fn() error messaging", {
   expect_snapshot(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list(-1L, -1L)
+        fmt_fn = list(1L, -1L)
       ) |>
       apply_fmt_fn(),
     error = TRUE

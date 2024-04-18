@@ -60,6 +60,8 @@ tidy_as_ard <- function(lst_tidy,
                         formals = list(),
                         passed_args = list(),
                         lst_ard_columns) {
+  set_cli_abort_call()
+
   # used argument values -------------------------------------------------------
   lst_used_fun_args <-
     tryCatch(

@@ -103,7 +103,30 @@ test_that("ard_hierarchical() works without any variables", {
   )
 })
 
+test_that("ard_hierarchical(id) argument works", {
+  expect_snapshot(
+    ard_hierarchical(
+      data = ADAE,
+      variables = c(AESOC, AETERM),
+      by = c(TRTA, AESEV),
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = USUBJID
+    ) |>
+      head(1L)
+  )
 
+  # testing pluralization works in warning message
+  expect_snapshot(
+    ard_hierarchical(
+      data = ADAE,
+      variables = c(AESOC, AETERM),
+      by = c(TRTA, AESEV),
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = c(USUBJID, SITEID)
+    ) |>
+      head(1L)
+  )
+})
 
 # ard_hierarchical_count() -----------------------------------------------------
 test_that("ard_hierarchical_count() works without by variables", {

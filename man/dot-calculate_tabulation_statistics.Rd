@@ -10,8 +10,7 @@
   by,
   strata,
   denominator,
-  statistic,
-  call = parent.frame()
+  statistic
 )
 }
 \arguments{

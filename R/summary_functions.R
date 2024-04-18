@@ -66,6 +66,8 @@ continuous_summary_fns <- function(summaries = c(
                                      "p25", "p75", "min", "max"
                                    ),
                                    other_stats = NULL) {
+  set_cli_abort_call()
+
   # process the selection of the summary stats to include ----------------------
   summaries <- arg_match(summaries, multiple = TRUE)
 
@@ -100,6 +102,8 @@ continuous_summary_fns <- function(summaries = c(
 #' @rdname summary_functions
 #' @export
 categorical_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = NULL) {
+  set_cli_abort_call()
+
   # check inputs ---------------------------------------------------------------
   if (!is_empty(summaries)) {
     summaries <-
@@ -118,6 +122,8 @@ categorical_summary_fns <- function(summaries = c("n", "p", "N"), other_stats = 
 #' @rdname summary_functions
 #' @export
 missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
+  set_cli_abort_call()
+
   summaries <- arg_match(summaries, multiple = TRUE)
 
   list(

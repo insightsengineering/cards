@@ -14,6 +14,8 @@
 #'   dplyr::select(-warning, -error) |>
 #'   check_ard_structure()
 check_ard_structure <- function(x) {
+  set_cli_abort_call()
+
   # check class ----------------------------------------------------------------
   if (!inherits(x, "card")) {
     cli::cli_inform("Object is not of class {.cls card}.")

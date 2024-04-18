@@ -58,6 +58,7 @@ test_that("check_pkg_installed() works", {
   expect_snapshot(
     {
       user_facing_fn <- function() {
+        set_cli_abort_call()
         check_pkg_installed(c("br000000m", "br1111111m"))
       }
       user_facing_fn()

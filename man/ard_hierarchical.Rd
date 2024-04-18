@@ -12,7 +12,8 @@ ard_hierarchical(
   statistic = everything() ~ categorical_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  id = NULL
 )
 
 ard_hierarchical_count(
@@ -55,6 +56,11 @@ a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
+
+\item{id}{((\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr)
+an optional argument used to assert there are no duplicates with in the
+column(s) passed here. For example, if \code{id=USUBJID} is passed, we will
+add a check there are no duplicates in \code{data['USUBJID']}.}
 }
 \value{
 an ARD data frame of class 'card'
