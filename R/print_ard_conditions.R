@@ -10,6 +10,8 @@
 #' @export
 #'
 #' @examples
+#' ADSL$AGE[1] <- "not_a_number"
+#'
 #' ard_continuous(
 #'   ADSL,
 #'   by = ARM,

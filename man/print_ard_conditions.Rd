@@ -18,6 +18,8 @@ Function parses the errors and warnings observed while calculating the
 statistics requested in the ARD and prints them to the console as messages.
 }
 \examples{
+ADSL$AGE[1] <- "not_a_number"
+
 ard_continuous(
   ADSL,
   by = ARM,
