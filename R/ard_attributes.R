@@ -23,26 +23,34 @@
 #' attr(df$var1, "label") <- "Lowercase Letters"
 #'
 #' ard_attributes(df, variables = everything())
-ard_attributes <- function(data, variables = everything(), label = NULL) {
+# ard_attributes <- function(data, variables = everything(), label = NULL) {
+#
+# }
+
+ard_attributes <- function(x, ...){
+  UseMethod("ard_attributes")
+}
+
+ard_attributes.data.frame <- function(x, ...){
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
+  check_not_missing(x)
   check_not_missing(variables)
-  check_data_frame(x = data)
+  check_data_frame(x)
 
   # process arguments ----------------------------------------------------------
-  data <- dplyr::ungroup(data)
+  data <- dplyr::ungroup(x)
   process_selectors(data, variables = {{ variables }})
 
   variables |>
     lapply(
-      FUN = function(x) {
-        attr <- attributes(data[[x]])
+      FUN = function(y) {
+        attr <- attributes(data[[y]])
         # add/update variable label
-        attr[["label"]] <- label[[x]] %||% attr[["label"]] %||% x
+        attr[["label"]] <- label[[y]] %||% attr[["label"]] %||% x
         # attributes() doesn't always return class, adding it if not already present
-        attr[["class"]] <- attr[["class"]] %||% class(data[[x]])
+        attr[["class"]] <- attr[["class"]] %||% class(data[[y]])
 
         dplyr::tibble(
           variable = .env$x,
