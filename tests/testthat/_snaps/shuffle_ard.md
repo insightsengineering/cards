@@ -398,7 +398,7 @@
     Output
       # A tibble: 4 x 4
         variable context    stat_name  stat
-        <fct>    <chr>      <chr>     <dbl>
+        <chr>    <chr>      <chr>     <dbl>
       1 AGEGR1   continuous N           254
       2 AGEGR1   continuous mean         NA
       3 AGEGR1   continuous sd           NA
@@ -413,7 +413,7 @@
     Output
       # A tibble: 4 x 5
         ARM                  variable context    stat_name  stat
-        <chr>                <fct>    <chr>      <chr>     <dbl>
+        <chr>                <chr>    <chr>      <chr>     <dbl>
       1 Placebo              AGE      continuous mean      75.2 
       2 Xanomeline High Dose AGE      continuous mean      74.4 
       3 Xanomeline Low Dose  AGE      continuous mean      75.7 
@@ -428,7 +428,7 @@
     Output
       # A tibble: 2 x 5
         ARM         variable context    stat_name  stat
-        <chr>       <fct>    <chr>      <chr>     <dbl>
+        <chr>       <chr>    <chr>      <chr>     <dbl>
       1 Overall ARM AGE      <NA>       p          0.05
       2 <NA>        AGE      continuous mean      75.1 
 

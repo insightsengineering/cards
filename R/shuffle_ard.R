@@ -54,7 +54,8 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::mutate(
       dplyr::across(
         where(.is_list_column_of_scalars),
-        ~ lapply(., \(x) if (!is.null(x)) x else NA_character_) |> unlist()
+         ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_) |>
+          unlist()
       )
     ) |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
@@ -329,7 +330,8 @@ shuffle_ard <- function(x, trim = TRUE) {
         dat
       }
     }) |>
-    dplyr::bind_rows()
+    dplyr::bind_rows() |>
+    dplyr::mutate(variable = as.character(.data$variable))
 }
 
 #' List Column as a Vector Predicate
