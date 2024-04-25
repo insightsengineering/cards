@@ -79,7 +79,15 @@ ard_stack <- function(data,
     ard_list <- c(
       ard_list,
       .eval_ard_calls(data, by = character(0), ...)
-    )
+    ) |>
+      bind_ard()
+
+    # fill group variables just for shuffling
+    if (isTRUE(.shuffle)) {
+      # fill group variables just for shuffling
+      ard_list <- ard_list |>
+        tidyr::fill(all_ard_groups(types = "names"), .direction = "downup")
+    }
   }
 
   # compute Ns by group / combine main calls

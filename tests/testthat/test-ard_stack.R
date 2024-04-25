@@ -160,3 +160,33 @@ test_that("ard_stack() .shuffle argument", {
       shuffle_ard()
   )
 })
+
+
+
+test_that("ard_stack() .shuffle + .overall", {
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .shuffle = TRUE,
+      .overall = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_continuous(data = mtcars, variables = "mpg"),
+      ard_dichotomous(data = mtcars, variables = "vs"),
+      ard_categorical(data = mtcars, variables = "cyl"),
+      .order = TRUE
+    ) |>
+      shuffle_ard() |>
+      dplyr::mutate(cyl = ifelse(is.na(cyl), "Overall cyl", cyl))
+  )
+})
