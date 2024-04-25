@@ -54,7 +54,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::mutate(
       dplyr::across(
         where(.is_list_column_of_scalars),
-         ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_) |>
+        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_) |>
           unlist()
       )
     ) |>

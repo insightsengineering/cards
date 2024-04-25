@@ -127,8 +127,7 @@ test_that("shuffle_ard trims statistics with length > 1", {
   )
 })
 
-test_that("shuffle_ard coerces all factor groups/variables to character",{
-
+test_that("shuffle_ard coerces all factor groups/variables to character", {
   adsl_ <- ADSL |>
     dplyr::mutate(RACE = factor(RACE))
 
@@ -144,10 +143,11 @@ test_that("shuffle_ard coerces all factor groups/variables to character",{
     sapply(class)
 
   # all are character
-  expect_true(all(res_classes=="character"))
+  expect_true(all(res_classes == "character"))
 
   # correct coersion
-  expect_equal(sort(unique(res$label)),
-               sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC))))
-
+  expect_equal(
+    sort(unique(res$label)),
+    sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC)))
+  )
 })
