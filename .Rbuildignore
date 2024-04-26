@@ -13,3 +13,5 @@
 ^\.DS_Store$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^revdeprefs\.yaml$
+^revdep$
