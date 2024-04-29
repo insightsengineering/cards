@@ -16,3 +16,4 @@
 ^.revdeprefs\.yaml$
 ^revdep$
 ^\.covrignore$
+^\.gitlab-ci\.yml$
