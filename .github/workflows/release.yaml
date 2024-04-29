@@ -27,8 +27,8 @@ jobs:
     uses: insightsengineering/r.pkg.template/.github/workflows/release.yaml@main
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
-  r-cmd:
-    name: R CMD Check 🧬
+  build:
+    name: Build package and reports 🎁
     needs: [release, docs]
     uses: insightsengineering/r.pkg.template/.github/workflows/build-check-install.yaml@main
     secrets:
