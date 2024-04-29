@@ -16,7 +16,6 @@
 #'   variables to include
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
 #'
 #' @examples
 #' df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
@@ -31,7 +30,18 @@ ard_attributes <- function(x, ...){
   UseMethod("ard_attributes")
 }
 
-ard_attributes.data.frame <- function(x, ...){
+#' Title
+#'
+#' @param x
+#' @param test
+#'
+#' @return
+#' @exportS3Method ard_attributes data.frame
+#'
+#' @examples
+ard_attributes.data.frame <- function(x,
+                                      variables = everything(),
+                                      label = NULL){
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -53,7 +63,7 @@ ard_attributes.data.frame <- function(x, ...){
         attr[["class"]] <- attr[["class"]] %||% class(data[[y]])
 
         dplyr::tibble(
-          variable = .env$x,
+          variable = .env$y,
           stat_name = names(attr),
           stat = unname(attr)
         )
