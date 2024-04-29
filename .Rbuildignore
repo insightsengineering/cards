@@ -13,3 +13,4 @@
 ^\.DS_Store$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^\.gitlab-ci\.yml$
