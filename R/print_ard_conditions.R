@@ -10,12 +10,10 @@
 #' @export
 #'
 #' @examples
-#' ADSL$AGE[1] <- "not_a_number"
-#'
+#' # passing a character variable for numeric summary
 #' ard_continuous(
 #'   ADSL,
-#'   by = ARM,
-#'   variables = AGE
+#'   variables = AGEGR1
 #' ) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x) {
