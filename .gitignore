@@ -1,3 +1,5 @@
 .Rproj.user
 docs
 .DS_Store
+tests/testthat/_snaps/**/*.new.md
+tests/testthat/_snaps/**/*.new.svg
