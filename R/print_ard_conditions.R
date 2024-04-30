@@ -10,11 +10,8 @@
 #' @export
 #'
 #' @examples
-#' ard_continuous(
-#'   ADSL,
-#'   by = ARM,
-#'   variables = AGE
-#' ) |>
+#' # passing a character variable for numeric summary
+#' ard_continuous(ADSL, variables = AGEGR1) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x) {
   set_cli_abort_call()
