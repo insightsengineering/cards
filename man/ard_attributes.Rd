@@ -2,12 +2,18 @@
 % Please edit documentation in R/ard_attributes.R
 \name{ard_attributes}
 \alias{ard_attributes}
-\title{ARD Attributes}
+\alias{ard_attributes.data.frame}
+\alias{ard_attributes.default}
+\title{Add variable attributes to an ARD object}
 \usage{
-ard_attributes(data, variables = everything(), label = NULL)
+ard_attributes(x, ...)
+
+\method{ard_attributes}{data.frame}(x, variables = everything(), label = NULL)
+
+\method{ard_attributes}{default}(x)
 }
 \arguments{
-\item{data}{(\code{data.frame})\cr
+\item{x}{(\code{data.frame})\cr
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
@@ -21,6 +27,11 @@ Default is \code{NULL}}
 an ARD data frame of class 'card'
 }
 \description{
+ard_attributes S3 generic providing methods for the following classes:
+\itemize{
+\item \code{data.frame}: Adds variable attributes to an ARD data frame.
+}
+
 Add variable attributes to an ARD data frame.
 \itemize{
 \item The \code{label} attribute will be added for all columns, and when no label
@@ -35,4 +46,5 @@ df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
 attr(df$var1, "label") <- "Lowercase Letters"
 
 ard_attributes(df, variables = everything())
+
 }
