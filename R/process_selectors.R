@@ -286,18 +286,23 @@ cards_select <- function(expr, data, ...,
     tidyselect::eval_select(expr = expr, data = data, ...) |> names(),
     error = function(e) {
       # This check for `vars()` usage can be removed after Jan 1, 2025
-      if(tryCatch(identical(eval(as.list(enexpr)[[1]]), dplyr::vars), error = \(x) FALSE)) {
+      if (tryCatch(identical(eval(as.list(enexpr)[[1]]), dplyr::vars), error = \(x) FALSE)) {
         cli::cli_abort(
           c("Use of {.fun dplyr::vars} in selecting environments is deprecated.",
-            i  = "Use {.fun c} instead. See {.help dplyr::dplyr_tidy_select} for details."),
+            i = "Use {.fun c} instead. See {.help dplyr::dplyr_tidy_select} for details."
+          ),
           call = get_cli_abort_call(),
           class = "deprecated"
         )
       }
       cli::cli_abort(
-        message = c(switch(!is.null(arg_name), "Error processing {.arg {arg_name}} argument."),
-                     "!" = cli::ansi_strip(conditionMessage(e)),
-                     i = "Select among columns {.val {names(data)}}"),
+        message = c(
+          switch(!is.null(arg_name),
+            "Error processing {.arg {arg_name}} argument."
+          ),
+          "!" = cli::ansi_strip(conditionMessage(e)),
+          i = "Select among columns {.val {names(data)}}"
+        ),
         call = get_cli_abort_call()
       )
     }
