@@ -19,9 +19,6 @@ statistics requested in the ARD and prints them to the console as messages.
 }
 \examples{
 # passing a character variable for numeric summary
-ard_continuous(
-  ADSL,
-  variables = AGEGR1
-) |>
+ard_continuous(ADSL, variables = AGEGR1) |>
   print_ard_conditions()
 }
