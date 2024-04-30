@@ -6,14 +6,14 @@
 \alias{ard_attributes.default}
 \title{Add variable attributes to an ARD object}
 \usage{
-ard_attributes(x, ...)
+ard_attributes(data, ...)
 
-\method{ard_attributes}{data.frame}(x, variables = everything(), label = NULL)
+\method{ard_attributes}{data.frame}(data, variables = everything(), label = NULL)
 
-\method{ard_attributes}{default}(x)
+\method{ard_attributes}{default}(data)
 }
 \arguments{
-\item{x}{(\code{data.frame})\cr
+\item{data}{(\code{data.frame})\cr
 a data frame}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr

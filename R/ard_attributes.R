@@ -12,7 +12,7 @@
 #' - The `class` attribute will also be returned for all columns.
 #' - Any other attribute returned by `attributes()` will also be added, e.g. factor levels.
 #'
-#' @param x (`data.frame`)\cr
+#' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to include
@@ -30,25 +30,25 @@
 #'
 #' @export
 #'
-ard_attributes <- function(x, ...) {
+ard_attributes <- function(data, ...) {
   UseMethod("ard_attributes")
 }
 
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.data.frame <- function(x,
+ard_attributes.data.frame <- function(data,
                                       variables = everything(),
                                       label = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(x)
+  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x)
+  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
-  data <- dplyr::ungroup(x)
+  data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{ variables }})
 
   variables |>
@@ -81,6 +81,6 @@ ard_attributes.data.frame <- function(x,
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.default <- function(x) {
-  stop("There is no method for object of class: ", paste(class(x), collapse = ", "))
+ard_attributes.default <- function(data) {
+  stop("There is no method for object of class: ", paste(class(data), collapse = ", "))
 }
