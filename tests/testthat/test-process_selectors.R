@@ -9,13 +9,13 @@ test_that("process_selectors() works", {
   )
 
   # works with more than on argument
+  # styler: off
   expect_equal(
-    {
-      process_selectors(mtcars, variables = starts_with("a"), by = "am")
-      list(variables = variables, by = by)
-    },
+    {process_selectors(mtcars, variables = starts_with("a"), by = "am")
+      list(variables = variables, by = by)},
     list(variables = "am", by = "am")
   )
+  # styler: on
 
   # proper error messaging
   expect_error(
@@ -110,5 +110,13 @@ test_that("compute_formula_selector() selects the last assignment when multiple 
       x = list(not_present = "Special for MPG")
     ),
     list(NAME = NULL) |> compact()
+  )
+})
+
+# This check for `vars()` usage can be removed after Jan 1, 2025
+test_that("cards_select() deprecation error with vars()", {
+  expect_error(
+    cards_select(vars(mpg), data = mtcars),
+    class = "deprecated"
   )
 })
