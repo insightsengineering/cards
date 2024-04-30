@@ -16,6 +16,8 @@ ard_attributes(data, ...)
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
+\item{...}{Arguments passed to other methods}
+
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to include}
 
@@ -30,15 +32,6 @@ an ARD data frame of class 'card'
 ard_attributes S3 generic providing methods for the following classes:
 \itemize{
 \item \code{data.frame}: Adds variable attributes to an ARD data frame.
-}
-
-Add variable attributes to an ARD data frame.
-\itemize{
-\item The \code{label} attribute will be added for all columns, and when no label
-is specified and no label has been set for a column using the \verb{label=} argument,
-the column name will be placed in the label statistic.
-\item The \code{class} attribute will also be returned for all columns.
-\item Any other attribute returned by \code{attributes()} will also be added, e.g. factor levels.
 }
 }
 \examples{
