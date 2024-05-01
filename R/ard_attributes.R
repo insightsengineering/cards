@@ -85,5 +85,5 @@ ard_attributes.data.frame <- function(data,
 #' @rdname ard_attributes
 #' @export
 ard_attributes.default <- function(data, ...) {
-  stop("There is no method for object of class: ", paste(class(data), collapse = ", "))
+  cli::cli_abort("There is no default method for objects of class {.cls class(x)}.", call = get_cli_abort_call())
 }
