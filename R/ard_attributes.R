@@ -1,7 +1,7 @@
 #' Add variable attributes to an ARD object
 #'
 #' @description
-#' ard_attributes S3 generic providing methods for the following classes:
+#' S3 generic providing methods for the following classes:
 #'
 #' * `data.frame`: Adds variable attributes to an ARD data frame.
 #'
@@ -41,7 +41,8 @@ ard_attributes <- function(data, ...) {
 #' @export
 ard_attributes.data.frame <- function(data,
                                       variables = everything(),
-                                      label = NULL) {
+                                      label = NULL,
+                                      ...) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -83,6 +84,6 @@ ard_attributes.data.frame <- function(data,
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.default <- function(data) {
+ard_attributes.default <- function(data, ...) {
   stop("There is no method for object of class: ", paste(class(data), collapse = ", "))
 }

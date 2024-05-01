@@ -8,9 +8,9 @@
 \usage{
 ard_attributes(data, ...)
 
-\method{ard_attributes}{data.frame}(data, variables = everything(), label = NULL)
+\method{ard_attributes}{data.frame}(data, variables = everything(), label = NULL, ...)
 
-\method{ard_attributes}{default}(data)
+\method{ard_attributes}{default}(data, ...)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
@@ -29,7 +29,7 @@ Default is \code{NULL}}
 an ARD data frame of class 'card'
 }
 \description{
-ard_attributes S3 generic providing methods for the following classes:
+S3 generic providing methods for the following classes:
 \itemize{
 \item \code{data.frame}: Adds variable attributes to an ARD data frame.
 }
