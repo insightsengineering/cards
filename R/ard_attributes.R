@@ -1,4 +1,4 @@
-#' Add variable attributes to an ARD object
+#' ARD Attributes
 #'
 #' @description
 #' S3 generic providing methods for the following classes:
