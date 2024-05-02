@@ -13,7 +13,8 @@ ard_attributes(x, ...)
 \method{ard_attributes}{default}(x, ...)
 }
 \arguments{
-\item{x}{The R object you want to add variable attributes to}
+\item{x}{(\code{data.frame})\cr
+a data frame}
 
 \item{...}{Arguments passed to other methods}
 
@@ -28,11 +29,6 @@ Default is \code{NULL}}
 an ARD data frame of class 'card'
 }
 \description{
-S3 generic providing methods for the following classes:
-\itemize{
-\item \code{data.frame}: Adds variable attributes to an ARD data frame.
-}
-
 Add variable attributes to an ARD data frame.
 \itemize{
 \item The \code{label} attribute will be added for all columns, and when no label

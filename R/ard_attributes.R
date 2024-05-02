@@ -1,10 +1,6 @@
 #' ARD Attributes
 #'
 #' @description
-#' S3 generic providing methods for the following classes:
-#'
-#' * `data.frame`: Adds variable attributes to an ARD data frame.
-#'
 #' Add variable attributes to an ARD data frame.
 #' - The `label` attribute will be added for all columns, and when no label
 #'   is specified and no label has been set for a column using the `label=` argument,
@@ -13,7 +9,8 @@
 #' - Any other attribute returned by `attributes()` will also be added, e.g. factor levels.
 #'
 #' @rdname ard_attributes
-#' @param x The R object you want to add variable attributes to
+#' @param x (`data.frame`)\cr
+#'   a data frame
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to include
 #' @param label (named `list`)\cr
@@ -36,7 +33,6 @@ NULL
 ard_attributes <- function(x, ...) {
   UseMethod("ard_attributes")
 }
-
 
 #' @rdname ard_attributes
 #' @export
@@ -80,11 +76,12 @@ ard_attributes.data.frame <- function(x,
       ),
       context = "attributes"
     ) %>%
-    {structure(., class = c("card", class(.)))} # styler: off
+    structure(., class = c("card", class(.)))
 }
 
 #' @rdname ard_attributes
 #' @export
 ard_attributes.default <- function(x, ...) {
-  cli::cli_abort("There is no default method for objects of class {.cls {class(x)}}.", call = get_cli_abort_call())
+  set_cli_abort_call()
+  cli::cli_abort("There is no method for objects of class {.cls {class(x)}}.", call = get_cli_abort_call())
 }

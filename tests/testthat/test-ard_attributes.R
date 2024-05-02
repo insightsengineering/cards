@@ -11,6 +11,6 @@ test_that("ard_attributes() works", {
 test_that("ard_attributes() errors when there is no dataframe", {
   expect_error(
     ard_attributes("test"),
-    "There is no default method for objects of class <character>."
+    "There is no method for objects of class <character>."
   )
 })
