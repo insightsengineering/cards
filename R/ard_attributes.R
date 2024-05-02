@@ -5,25 +5,6 @@
 #'
 #' * `data.frame`: Adds variable attributes to an ARD data frame.
 #'
-#' @param data (`data.frame`)\cr
-#'   a data frame
-#' @param ... Arguments passed to other methods
-#'
-#' @return an ARD data frame of class 'card'
-#'
-#' @examples
-#' df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
-#' attr(df$var1, "label") <- "Lowercase Letters"
-#'
-#' ard_attributes(df, variables = everything())
-#'
-#' @export
-#'
-ard_attributes <- function(data, ...) {
-  UseMethod("ard_attributes")
-}
-
-
 #' Add variable attributes to an ARD data frame.
 #' - The `label` attribute will be added for all columns, and when no label
 #'   is specified and no label has been set for a column using the `label=` argument,
@@ -32,26 +13,46 @@ ard_attributes <- function(data, ...) {
 #' - Any other attribute returned by `attributes()` will also be added, e.g. factor levels.
 #'
 #' @rdname ard_attributes
+#' @param x The R object you want to add variable attributes to
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to include
 #' @param label (named `list`)\cr
 #'   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
 #'   Default is `NULL`
+#' @param ... Arguments passed to other methods
 #'
+#' @return an ARD data frame of class 'card'
+#' @name ard_attributes
+#'
+#' @examples
+#' df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
+#' attr(df$var1, "label") <- "Lowercase Letters"
+#'
+#' ard_attributes(df, variables = everything())
+NULL
+
+#' @rdname ard_attributes
 #' @export
-ard_attributes.data.frame <- function(data,
+ard_attributes <- function(x, ...) {
+  UseMethod("ard_attributes")
+}
+
+
+#' @rdname ard_attributes
+#' @export
+ard_attributes.data.frame <- function(x,
                                       variables = everything(),
                                       label = NULL,
                                       ...) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
+  check_not_missing(x)
   check_not_missing(variables)
-  check_data_frame(x = data)
+  check_dots_empty()
 
   # process arguments ----------------------------------------------------------
-  data <- dplyr::ungroup(data)
+  data <- dplyr::ungroup(x)
   process_selectors(data, variables = {{ variables }})
 
   variables |>
@@ -84,6 +85,6 @@ ard_attributes.data.frame <- function(data,
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.default <- function(data, ...) {
-  cli::cli_abort("There is no default method for objects of class {.cls class(x)}.", call = get_cli_abort_call())
+ard_attributes.default <- function(x, ...) {
+  cli::cli_abort("There is no default method for objects of class {.cls {class(x)}}.", call = get_cli_abort_call())
 }
