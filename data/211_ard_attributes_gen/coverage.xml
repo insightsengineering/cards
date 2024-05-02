@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.925748502994012" branch-rate="0" lines-covered="1546" lines-valid="1670" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-05-01 14:34:46.645538">
+<coverage line-rate="0.925748502994012" branch-rate="0" lines-covered="1546" lines-valid="1670" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-05-02 14:58:58.24109">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -199,24 +199,23 @@
           <methods>
             <method name="ard_attributes" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="23" hits="4" branch="false"/>
+                <line number="37" hits="4" branch="false"/>
               </lines>
             </method>
             <method name="ard_attributes.data.frame" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="46" hits="3" branch="false"/>
-                <line number="49" hits="3" branch="false"/>
+                <line number="47" hits="3" branch="false"/>
                 <line number="50" hits="3" branch="false"/>
                 <line number="51" hits="3" branch="false"/>
-                <line number="54" hits="3" branch="false"/>
+                <line number="52" hits="3" branch="false"/>
                 <line number="55" hits="3" branch="false"/>
-                <line number="57" hits="3" branch="false"/>
+                <line number="56" hits="3" branch="false"/>
                 <line number="58" hits="3" branch="false"/>
                 <line number="59" hits="3" branch="false"/>
                 <line number="60" hits="3" branch="false"/>
-                <line number="62" hits="3" branch="false"/>
-                <line number="64" hits="3" branch="false"/>
-                <line number="66" hits="3" branch="false"/>
+                <line number="61" hits="3" branch="false"/>
+                <line number="63" hits="3" branch="false"/>
+                <line number="65" hits="3" branch="false"/>
                 <line number="67" hits="3" branch="false"/>
                 <line number="68" hits="3" branch="false"/>
                 <line number="69" hits="3" branch="false"/>
@@ -233,29 +232,29 @@
                 <line number="80" hits="3" branch="false"/>
                 <line number="81" hits="3" branch="false"/>
                 <line number="82" hits="3" branch="false"/>
+                <line number="83" hits="3" branch="false"/>
               </lines>
             </method>
             <method name="ard_attributes.default" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="88" hits="1" branch="false"/>
+                <line number="89" hits="1" branch="false"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="23" hits="4" branch="false"/>
-            <line number="46" hits="3" branch="false"/>
-            <line number="49" hits="3" branch="false"/>
+            <line number="37" hits="4" branch="false"/>
+            <line number="47" hits="3" branch="false"/>
             <line number="50" hits="3" branch="false"/>
             <line number="51" hits="3" branch="false"/>
-            <line number="54" hits="3" branch="false"/>
+            <line number="52" hits="3" branch="false"/>
             <line number="55" hits="3" branch="false"/>
-            <line number="57" hits="3" branch="false"/>
+            <line number="56" hits="3" branch="false"/>
             <line number="58" hits="3" branch="false"/>
             <line number="59" hits="3" branch="false"/>
             <line number="60" hits="3" branch="false"/>
-            <line number="62" hits="3" branch="false"/>
-            <line number="64" hits="3" branch="false"/>
-            <line number="66" hits="3" branch="false"/>
+            <line number="61" hits="3" branch="false"/>
+            <line number="63" hits="3" branch="false"/>
+            <line number="65" hits="3" branch="false"/>
             <line number="67" hits="3" branch="false"/>
             <line number="68" hits="3" branch="false"/>
             <line number="69" hits="3" branch="false"/>
@@ -272,7 +271,8 @@
             <line number="80" hits="3" branch="false"/>
             <line number="81" hits="3" branch="false"/>
             <line number="82" hits="3" branch="false"/>
-            <line number="88" hits="1" branch="false"/>
+            <line number="83" hits="3" branch="false"/>
+            <line number="89" hits="1" branch="false"/>
           </lines>
         </class>
         <class name="ard_categorical.R" filename="R/ard_categorical.R" line-rate="0.951008645533141" branch-rate="0" complexity="0">
