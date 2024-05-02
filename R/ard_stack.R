@@ -110,7 +110,7 @@ ard_stack <- function(data,
   if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_attributes(data = data, variables = all_of(variables))
+      ard_attributes(data, variables = all_of(variables))
     )
   }
 
