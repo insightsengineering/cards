@@ -2,13 +2,21 @@
 % Please edit documentation in R/ard_attributes.R
 \name{ard_attributes}
 \alias{ard_attributes}
+\alias{ard_attributes.data.frame}
+\alias{ard_attributes.default}
 \title{ARD Attributes}
 \usage{
-ard_attributes(data, variables = everything(), label = NULL)
+ard_attributes(x, ...)
+
+\method{ard_attributes}{data.frame}(x, variables = everything(), label = NULL, ...)
+
+\method{ard_attributes}{default}(x, ...)
 }
 \arguments{
-\item{data}{(\code{data.frame})\cr
+\item{x}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to other methods}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to include}
