@@ -1,4 +1,4 @@
-# cards 0.1.0.9021
+# cards 0.1.0.9022
 
 * Added the optional `ard_heirarchicial(id)` argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (#214)
 
