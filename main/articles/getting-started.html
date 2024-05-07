@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9022</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,14 +56,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -647,13 +639,13 @@ package.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="va">df_continuous_ard</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 5 x 10</span></span></span>
-<span><span class="co">#&gt;   group1 group1_level variable stat_name stat_label   stat</span></span>
-<span><span class="co">#&gt; 1    ARM      Placebo      AGE    median     Median     76</span></span>
-<span><span class="co">#&gt; 2    ARM      Placebo      AGE       p25  25th Per…     69</span></span>
-<span><span class="co">#&gt; 3    ARM      Placebo      AGE       p75  75th Per…     82</span></span>
-<span><span class="co">#&gt; 4    ARM      Placebo      AGE      mean       Mean 75.209</span></span>
-<span><span class="co">#&gt; 5    ARM      Placebo      AGE        sd         SD   8.59</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   group1 group1_level variable stat_name       stat_label   stat</span></span>
+<span><span class="co">#&gt; 1    ARM      Placebo      AGE    median           Median     76</span></span>
+<span><span class="co">#&gt; 2    ARM      Placebo      AGE       p25 25th Per&lt;U+2026&gt;     69</span></span>
+<span><span class="co">#&gt; 3    ARM      Placebo      AGE       p75 75th Per&lt;U+2026&gt;     82</span></span>
+<span><span class="co">#&gt; 4    ARM      Placebo      AGE      mean             Mean 75.209</span></span>
+<span><span class="co">#&gt; 5    ARM      Placebo      AGE        sd               SD   8.59</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="categorical-summaries">Categorical Summaries<a class="anchor" aria-label="anchor" href="#categorical-summaries"></a>
@@ -669,13 +661,13 @@ package.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="va">df_categorical_ard</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 5 x 11</span></span></span>
-<span><span class="co">#&gt;   group1 group1_level variable variable_level stat_name stat_label  stat</span></span>
-<span><span class="co">#&gt; 1    ARM      Placebo   AGEGR1            &lt;65         n          n    14</span></span>
-<span><span class="co">#&gt; 2    ARM      Placebo   AGEGR1            &lt;65         N          N    86</span></span>
-<span><span class="co">#&gt; 3    ARM      Placebo   AGEGR1            &lt;65         p          % 0.163</span></span>
-<span><span class="co">#&gt; 4    ARM    Xanomeli…   AGEGR1            &lt;65         n          n    11</span></span>
-<span><span class="co">#&gt; 5    ARM    Xanomeli…   AGEGR1            &lt;65         N          N    84</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   group1     group1_level variable variable_level stat_name stat_label  stat</span></span>
+<span><span class="co">#&gt; 1    ARM          Placebo   AGEGR1          65-80         n          n    42</span></span>
+<span><span class="co">#&gt; 2    ARM          Placebo   AGEGR1          65-80         N          N    86</span></span>
+<span><span class="co">#&gt; 3    ARM          Placebo   AGEGR1          65-80         p          % 0.488</span></span>
+<span><span class="co">#&gt; 4    ARM Xanomeli&lt;U+2026&gt;   AGEGR1          65-80         n          n    55</span></span>
+<span><span class="co">#&gt; 5    ARM Xanomeli&lt;U+2026&gt;   AGEGR1          65-80         N          N    84</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="dichotomous-summaries">Dichotomous Summaries<a class="anchor" aria-label="anchor" href="#dichotomous-summaries"></a>
@@ -694,13 +686,13 @@ this with the <code>values</code> argument.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="va">df_dichotomous_ard</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 5 x 11</span></span></span>
-<span><span class="co">#&gt;   group1 group1_level variable variable_level stat_name stat_label  stat</span></span>
-<span><span class="co">#&gt; 1    ARM      Placebo      SEX              F         n          n    53</span></span>
-<span><span class="co">#&gt; 2    ARM      Placebo      SEX              F         N          N    86</span></span>
-<span><span class="co">#&gt; 3    ARM      Placebo      SEX              F         p          % 0.616</span></span>
-<span><span class="co">#&gt; 4    ARM    Xanomeli…      SEX              F         n          n    40</span></span>
-<span><span class="co">#&gt; 5    ARM    Xanomeli…      SEX              F         N          N    84</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   group1     group1_level variable variable_level stat_name stat_label  stat</span></span>
+<span><span class="co">#&gt; 1    ARM          Placebo      SEX              F         n          n    53</span></span>
+<span><span class="co">#&gt; 2    ARM          Placebo      SEX              F         N          N    86</span></span>
+<span><span class="co">#&gt; 3    ARM          Placebo      SEX              F         p          % 0.616</span></span>
+<span><span class="co">#&gt; 4    ARM Xanomeli&lt;U+2026&gt;      SEX              F         n          n    40</span></span>
+<span><span class="co">#&gt; 5    ARM Xanomeli&lt;U+2026&gt;      SEX              F         N          N    84</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="combine-results">Combine Results<a class="anchor" aria-label="anchor" href="#combine-results"></a>
@@ -716,20 +708,31 @@ checks for our results.</p>
 <span>  <span class="va">df_dichotomous_ard</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 57 x 11</span></span></span>
-<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label   stat</span></span>
-<span><span class="co">#&gt; 1     ARM      Placebo      AGE                   median     Median     76</span></span>
-<span><span class="co">#&gt; 2     ARM      Placebo      AGE                      p25  25th Per…     69</span></span>
-<span><span class="co">#&gt; 3     ARM      Placebo      AGE                      p75  75th Per…     82</span></span>
-<span><span class="co">#&gt; 4     ARM      Placebo      AGE                     mean       Mean 75.209</span></span>
-<span><span class="co">#&gt; 5     ARM      Placebo      AGE                       sd         SD   8.59</span></span>
-<span><span class="co">#&gt; 6     ARM      Placebo      AGE                      min        Min     52</span></span>
-<span><span class="co">#&gt; 7     ARM      Placebo      AGE                      max        Max     89</span></span>
-<span><span class="co">#&gt; 8     ARM    Xanomeli…      AGE                   median     Median     76</span></span>
-<span><span class="co">#&gt; 9     ARM    Xanomeli…      AGE                      p25  25th Per…   70.5</span></span>
-<span><span class="co">#&gt; 10    ARM    Xanomeli…      AGE                      p75  75th Per…     80</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">47 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    group1     group1_level variable variable_level stat_name       stat_label</span></span>
+<span><span class="co">#&gt; 1     ARM          Placebo      AGE                   median           Median</span></span>
+<span><span class="co">#&gt; 2     ARM          Placebo      AGE                      p25 25th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 3     ARM          Placebo      AGE                      p75 75th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 4     ARM          Placebo      AGE                     mean             Mean</span></span>
+<span><span class="co">#&gt; 5     ARM          Placebo      AGE                       sd               SD</span></span>
+<span><span class="co">#&gt; 6     ARM          Placebo      AGE                      min              Min</span></span>
+<span><span class="co">#&gt; 7     ARM          Placebo      AGE                      max              Max</span></span>
+<span><span class="co">#&gt; 8     ARM Xanomeli&lt;U+2026&gt;      AGE                   median           Median</span></span>
+<span><span class="co">#&gt; 9     ARM Xanomeli&lt;U+2026&gt;      AGE                      p25 25th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 10    ARM Xanomeli&lt;U+2026&gt;      AGE                      p75 75th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt;      stat</span></span>
+<span><span class="co">#&gt; 1      76</span></span>
+<span><span class="co">#&gt; 2      69</span></span>
+<span><span class="co">#&gt; 3      82</span></span>
+<span><span class="co">#&gt; 4  75.209</span></span>
+<span><span class="co">#&gt; 5    8.59</span></span>
+<span><span class="co">#&gt; 6      52</span></span>
+<span><span class="co">#&gt; 7      89</span></span>
+<span><span class="co">#&gt; 8      76</span></span>
+<span><span class="co">#&gt; 9    70.5</span></span>
+<span><span class="co">#&gt; 10     80</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">47 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="shortcut">Shortcut<a class="anchor" aria-label="anchor" href="#shortcut"></a>
@@ -753,20 +756,31 @@ header row of the table.</p>
 <span>  <span class="fu"><a href="../reference/ard_dichotomous.html">ard_dichotomous</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="va">SEX</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 66 x 11</span></span></span>
-<span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label   stat</span></span>
-<span><span class="co">#&gt; 1     ARM      Placebo      AGE                   median     Median     76</span></span>
-<span><span class="co">#&gt; 2     ARM      Placebo      AGE                      p25  25th Per…     69</span></span>
-<span><span class="co">#&gt; 3     ARM      Placebo      AGE                      p75  75th Per…     82</span></span>
-<span><span class="co">#&gt; 4     ARM      Placebo      AGE                     mean       Mean 75.209</span></span>
-<span><span class="co">#&gt; 5     ARM      Placebo      AGE                       sd         SD   8.59</span></span>
-<span><span class="co">#&gt; 6     ARM      Placebo      AGE                      min        Min     52</span></span>
-<span><span class="co">#&gt; 7     ARM      Placebo      AGE                      max        Max     89</span></span>
-<span><span class="co">#&gt; 8     ARM    Xanomeli…      AGE                   median     Median     76</span></span>
-<span><span class="co">#&gt; 9     ARM    Xanomeli…      AGE                      p25  25th Per…   70.5</span></span>
-<span><span class="co">#&gt; 10    ARM    Xanomeli…      AGE                      p75  75th Per…     80</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">56 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    group1     group1_level variable variable_level stat_name       stat_label</span></span>
+<span><span class="co">#&gt; 1     ARM          Placebo      AGE                   median           Median</span></span>
+<span><span class="co">#&gt; 2     ARM          Placebo      AGE                      p25 25th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 3     ARM          Placebo      AGE                      p75 75th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 4     ARM          Placebo      AGE                     mean             Mean</span></span>
+<span><span class="co">#&gt; 5     ARM          Placebo      AGE                       sd               SD</span></span>
+<span><span class="co">#&gt; 6     ARM          Placebo      AGE                      min              Min</span></span>
+<span><span class="co">#&gt; 7     ARM          Placebo      AGE                      max              Max</span></span>
+<span><span class="co">#&gt; 8     ARM Xanomeli&lt;U+2026&gt;      AGE                   median           Median</span></span>
+<span><span class="co">#&gt; 9     ARM Xanomeli&lt;U+2026&gt;      AGE                      p25 25th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt; 10    ARM Xanomeli&lt;U+2026&gt;      AGE                      p75 75th Per&lt;U+2026&gt;</span></span>
+<span><span class="co">#&gt;      stat</span></span>
+<span><span class="co">#&gt; 1      76</span></span>
+<span><span class="co">#&gt; 2      69</span></span>
+<span><span class="co">#&gt; 3      82</span></span>
+<span><span class="co">#&gt; 4  75.209</span></span>
+<span><span class="co">#&gt; 5    8.59</span></span>
+<span><span class="co">#&gt; 6      52</span></span>
+<span><span class="co">#&gt; 7      89</span></span>
+<span><span class="co">#&gt; 8      76</span></span>
+<span><span class="co">#&gt; 9    70.5</span></span>
+<span><span class="co">#&gt; 10     80</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">56 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">

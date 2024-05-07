@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9022</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,14 +31,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -134,23 +126,23 @@ statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_missing</span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 15 x 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo      AGE     N_obs  Vector L…   86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo      AGE    N_miss  N Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo      AGE N_nonmiss  N Non-mi…   86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      Placebo      AGE    p_miss  % Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      Placebo      AGE p_nonmiss  % Non-mi…    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…      AGE     N_obs  Vector L…   84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…      AGE    N_miss  N Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…      AGE N_nonmiss  N Non-mi…   84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…      AGE    p_miss  % Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM    Xanomeli…      AGE p_nonmiss  % Non-mi…    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11    ARM    Xanomeli…      AGE     N_obs  Vector L…   84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    ARM    Xanomeli…      AGE    N_miss  N Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13    ARM    Xanomeli…      AGE N_nonmiss  N Non-mi…   84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14    ARM    Xanomeli…      AGE    p_miss  % Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15    ARM    Xanomeli…      AGE p_nonmiss  % Non-mi…    1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1     group1_level variable stat_name       stat_label stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM          Placebo      AGE     N_obs Vector L&lt;U+2026&gt;   86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM          Placebo      AGE    N_miss        N Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM          Placebo      AGE N_nonmiss N Non-mi&lt;U+2026&gt;   86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM          Placebo      AGE    p_miss        % Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM          Placebo      AGE p_nonmiss % Non-mi&lt;U+2026&gt;    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM Xanomeli&lt;U+2026&gt;      AGE     N_obs Vector L&lt;U+2026&gt;   84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM Xanomeli&lt;U+2026&gt;      AGE    N_miss        N Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM Xanomeli&lt;U+2026&gt;      AGE N_nonmiss N Non-mi&lt;U+2026&gt;   84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM Xanomeli&lt;U+2026&gt;      AGE    p_miss        % Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM Xanomeli&lt;U+2026&gt;      AGE p_nonmiss % Non-mi&lt;U+2026&gt;    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    ARM Xanomeli&lt;U+2026&gt;      AGE     N_obs Vector L&lt;U+2026&gt;   84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    ARM Xanomeli&lt;U+2026&gt;      AGE    N_miss        N Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    ARM Xanomeli&lt;U+2026&gt;      AGE N_nonmiss N Non-mi&lt;U+2026&gt;   84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    ARM Xanomeli&lt;U+2026&gt;      AGE    p_miss        % Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    ARM Xanomeli&lt;U+2026&gt;      AGE p_nonmiss % Non-mi&lt;U+2026&gt;    1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
@@ -159,11 +151,11 @@ statistic labels, e.g. <code>everything() ~ list(mean = "Mean", sd = "SD")</code
 <span class="r-in"><span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">missing_summary_fns</a></span><span class="op">(</span><span class="st">"N_miss"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 3 x 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group1 group1_level variable stat_name stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM      Placebo      AGE    N_miss  N Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM    Xanomeli…      AGE    N_miss  N Missing    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM    Xanomeli…      AGE    N_miss  N Missing    0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group1     group1_level variable stat_name stat_label stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM          Placebo      AGE    N_miss  N Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM Xanomeli&lt;U+2026&gt;      AGE    N_miss  N Missing    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM Xanomeli&lt;U+2026&gt;      AGE    N_miss  N Missing    0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

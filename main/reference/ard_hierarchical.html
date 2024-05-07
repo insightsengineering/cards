@@ -28,7 +28,7 @@ in AESOC, and also summarizes the counts of AESOC.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9022</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,14 +49,6 @@ in AESOC, and also summarizes the counts of AESOC.
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -181,31 +173,31 @@ add a check there are no duplicates in <code>data['USUBJID']</code>.</p></dd>
 <span class="r-in"><span>  denominator <span class="op">=</span> <span class="va">ADSL</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6534 x 15</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level group3 group3_level variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESEV     MODERATE  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable_level stat_name stat_label  stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       ABDOMINA…         n          n     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       ABDOMINA…         N          N    86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       ABDOMINA…         p          %     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       ABDOMINA…         n          n     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       ABDOMINA…         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       ABDOMINA…         p          % 0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       ABDOMINA…         n          n     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       ABDOMINA…         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       ABDOMINA…         p          %     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      ABDOMINA…         n          n     0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">6524 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1     group1_level group2 group2_level group3     group3_level variable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA          Placebo  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA          Placebo  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA          Placebo  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA Xanomeli&lt;U+2026&gt;  AESEV         MILD  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA          Placebo  AESEV     MODERATE  AESOC GASTROIN&lt;U+2026&gt;   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      variable_level stat_name stat_label  stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  ABDOMINA&lt;U+2026&gt;         n          n     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  ABDOMINA&lt;U+2026&gt;         N          N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  ABDOMINA&lt;U+2026&gt;         p          %     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  ABDOMINA&lt;U+2026&gt;         n          n     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  ABDOMINA&lt;U+2026&gt;         N          N    84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  ABDOMINA&lt;U+2026&gt;         p          % 0.012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  ABDOMINA&lt;U+2026&gt;         n          n     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  ABDOMINA&lt;U+2026&gt;         N          N    84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  ABDOMINA&lt;U+2026&gt;         p          %     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 ABDOMINA&lt;U+2026&gt;         n          n     0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">6524 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">ard_hierarchical_count</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">ADAE</span>,</span></span>
@@ -213,31 +205,31 @@ add a check there are no duplicates in <code>data['USUBJID']</code>.</p></dd>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">TRTA</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 795 x 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    SKIN AND…   AETERM      ACTINIC …         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           n    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           n    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           n    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           n    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           n    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          n    0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">785 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1     group1_level group2     group2_level variable   variable_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA          Placebo  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA Xanomeli&lt;U+2026&gt;  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA Xanomeli&lt;U+2026&gt;  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA          Placebo  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA Xanomeli&lt;U+2026&gt;  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA Xanomeli&lt;U+2026&gt;  AESOC GASTROIN&lt;U+2026&gt;   AETERM ABDOMINA&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA          Placebo  AESOC SURGICAL&lt;U+2026&gt;   AETERM ACROCHOR&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA Xanomeli&lt;U+2026&gt;  AESOC SURGICAL&lt;U+2026&gt;   AETERM ACROCHOR&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA Xanomeli&lt;U+2026&gt;  AESOC SURGICAL&lt;U+2026&gt;   AETERM ACROCHOR&lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA          Placebo  AESOC SKIN AND&lt;U+2026&gt;   AETERM ACTINIC &lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    stat_name stat_label stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          n          n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          n          n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          n          n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          n          n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          n          n    2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          n          n    3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          n          n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          n          n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          n          n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         n          n    0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">785 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

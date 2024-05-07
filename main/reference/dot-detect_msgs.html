@@ -12,7 +12,7 @@ before removal. Specifically used for detecting messages."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9022</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,14 +33,6 @@ before removal. Specifically used for detecting messages."><meta property="og:im
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -112,27 +104,27 @@ columns to search within</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"warning"</span> column contains messages that will be removed.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"error"</span> column contains messages that will be removed.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 9 x 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   group1 group1_level variable    stat_name stat_label   stat   warning</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM      Placebo      AGE         mean       Mean 75.209          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM      Placebo      AGE mean_warning  mean_war… 75.209 warn1, w…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM      Placebo      AGE       err_fn     err_fn                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM    Xanomeli…      AGE         mean       Mean 74.381          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    ARM    Xanomeli…      AGE mean_warning  mean_war… 74.381 warn1, w…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM    Xanomeli…      AGE       err_fn     err_fn                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM    Xanomeli…      AGE         mean       Mean 75.667          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM    Xanomeli…      AGE mean_warning  mean_war… 75.667 warn1, w…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    ARM    Xanomeli…      AGE       err_fn     err_fn                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 'tis an …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 'tis an …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9 'tis an …</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: context, fmt_fn</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   group1     group1_level variable    stat_name       stat_label   stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM          Placebo      AGE         mean             Mean 75.209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM          Placebo      AGE mean_warning mean_war&lt;U+2026&gt; 75.209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM          Placebo      AGE       err_fn           err_fn       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM Xanomeli&lt;U+2026&gt;      AGE         mean             Mean 74.381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    ARM Xanomeli&lt;U+2026&gt;      AGE mean_warning mean_war&lt;U+2026&gt; 74.381</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM Xanomeli&lt;U+2026&gt;      AGE       err_fn           err_fn       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM Xanomeli&lt;U+2026&gt;      AGE         mean             Mean 75.667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM Xanomeli&lt;U+2026&gt;      AGE mean_warning mean_war&lt;U+2026&gt; 75.667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    ARM Xanomeli&lt;U+2026&gt;      AGE       err_fn           err_fn       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            warning            error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 warn1, w&lt;U+2026&gt;                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  'tis an &lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 warn1, w&lt;U+2026&gt;                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  'tis an &lt;U+2026&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 warn1, w&lt;U+2026&gt;                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                  'tis an &lt;U+2026&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">2 more variables: context, fmt_fn</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
