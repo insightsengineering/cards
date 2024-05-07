@@ -65,3 +65,14 @@ test_that("print_ard_conditions() works", {
     tbl_summary()
   })
 })
+
+test_that("print_ard_conditions() no error when 'error'/'warning' columns not present", {
+  expect_snapshot(
+    ard_continuous(
+      ADSL,
+      variables = AGE
+    ) |>
+      dplyr::select(-warning, -error) |>
+      print_ard_conditions()
+  )
+})
