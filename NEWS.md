@@ -1,4 +1,4 @@
-# cards 0.1.0.9021
+# cards 0.1.0.9022
 
 * The `print_ard_conditions()` function has been updated to no longer error out if the ARD object does not have `"error"` or `"warning"` columns. (#240)
 
@@ -17,6 +17,8 @@
 * A messaging overhaul to utilize the scripts in `https://github.com/ddsjoberg/standalone/blob/main/R/standalone-cli_call_env.R`. This allows clear error messaging across functions and packages. (#42)
   - As a part of this change, the `is_pkg_installed()` and `check_pkg_installed()` function have been migrated to a standalone script `https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R` and are no longer exported by {cards}.
   - The `print_ard_conditions(call)`, `check_list_elements(env)`, `cards_select(.call)` arguments have been removed.
+
+* Bug fix in `shuffle_ard()` where factors were coerced to integers instead of their labels. (#232)
 
 # cards 0.1.0
 
