@@ -19,8 +19,10 @@ print_ard_conditions <- function(x) {
   check_class(x, cls = "card")
 
   # print condition messages ---------------------------------------------------
-  .cli_condition_messaging(x, msg_type = "error")
-  .cli_condition_messaging(x, msg_type = "warning")
+  # styler: off
+  if ("error" %in% names(x)) .cli_condition_messaging(x, msg_type = "error")
+  if ("warning" %in% names(x)) .cli_condition_messaging(x, msg_type = "warning")
+  # styler: on
 
   invisible()
 }

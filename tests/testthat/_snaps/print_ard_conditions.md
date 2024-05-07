@@ -64,3 +64,9 @@
       The following errors were returned during `tbl_summary()`:
       x For variable `AGE` and "err_fn" statistic: 'tis an error
 
+# print_ard_conditions() no error when 'error'/'warning' columns not present
+
+    Code
+      print_ard_conditions(dplyr::select(ard_continuous(ADSL, variables = AGE),
+      -warning, -error))
+
