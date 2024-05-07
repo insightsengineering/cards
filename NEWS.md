@@ -1,4 +1,4 @@
-# cards 0.1.0.9022
+# cards 0.1.0.9023
 
 * The `print_ard_conditions()` function has been updated to no longer error out if the ARD object does not have `"error"` or `"warning"` columns. (#240)
 
