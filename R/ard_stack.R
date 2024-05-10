@@ -70,7 +70,7 @@ ard_stack <- function(data,
 
   if (is_empty(by) && isTRUE(.overall)) {
     cli::cli_abort(
-      "Argument {.arg by} cannot be empty when {.code .overall=TRUE}.",
+      "Argument {.arg by} must be specified when {.code .overall=TRUE}.",
       call = get_cli_abort_call()
     )
   }

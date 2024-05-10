@@ -134,6 +134,38 @@ test_that("ard_stack() adding missing/attributes", {
       .order = TRUE
     )
   )
+
+  # including `.overall=TRUE`
+  expect_error(
+    ard_test_overall <- ard_stack(
+      data = mtcars,
+      by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .missing = TRUE,
+      .overall = TRUE,
+      .attributes = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test_overall,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
+
+      ard_continuous(data = mtcars, variables = "mpg"),
+      ard_dichotomous(data = mtcars, variables = "vs"),
+      ard_missing(data = mtcars, variables = c("mpg", "vs")),
+
+      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_attributes(mtcars, variables = c("cyl", "mpg", "vs")),
+      .update = TRUE,
+      .order = TRUE
+    )
+  )
 })
 
 
@@ -158,5 +190,17 @@ test_that("ard_stack() .shuffle argument", {
       .order = TRUE
     ) |>
       shuffle_ard()
+  )
+})
+
+test_that("ard_stack() error messaging", {
+  expect_snapshot(
+    error = TRUE,
+    ard_stack(
+      data = mtcars,
+      by = NULL,
+      ard_continuous(variables = "mpg"),
+      .overall = TRUE
+    )
   )
 })
