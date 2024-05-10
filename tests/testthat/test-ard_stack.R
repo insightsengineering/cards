@@ -191,14 +191,14 @@ test_that("ard_stack() .shuffle argument", {
   )
 })
 
-test_that("ard_stack() error messaging", {
+test_that("ard_stack() messaging", {
   expect_snapshot(
-    error = TRUE,
     ard_stack(
       data = mtcars,
       by = NULL,
       ard_continuous(variables = "mpg"),
       .overall = TRUE
-    )
+    ) |>
+      head(1L)
   )
 })
