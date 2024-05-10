@@ -69,8 +69,10 @@ ard_stack <- function(data,
   check_scalar_logical(.shuffle)
 
   if (is_empty(by) && isTRUE(.overall)) {
-    cli::cli_abort("Cannot specify {.arg by} argument with {.code .overall=TRUE}.",
-                   call = get_cli_abort_call())
+    cli::cli_abort(
+      "Argument {.arg by} cannot be empty when {.code .overall=TRUE}.",
+      call = get_cli_abort_call()
+    )
   }
 
   # evaluate the dots using common `data` and `by`
