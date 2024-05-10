@@ -57,10 +57,7 @@ ard_stack <- function(data,
   set_cli_abort_call()
 
   # process arguments ----------------------------------------------------------
-  process_selectors(
-    data,
-    by = {{ by }}
-  )
+  process_selectors(data, by = {{ by }})
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
@@ -70,6 +67,15 @@ ard_stack <- function(data,
   check_scalar_logical(.missing)
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
+
+  if (is_empty(by) && isTRUE(.overall)) {
+    cli::cli_inform(
+      c("The {.arg by} argument should be specified when using {.code .overall=TRUE}.",
+        i = "Setting {.code ard_stack(.overall=FALSE)}."
+      )
+    )
+    .overall <- FALSE
+  }
 
   # evaluate the dots using common `data` and `by`
   ard_list <- .eval_ard_calls(data, by, ...)
@@ -96,21 +102,27 @@ ard_stack <- function(data,
   }
 
   # get all variables represented
-  variables <- unique(ard_full$variable)
+  variables <- unique(ard_full$variable) |> setdiff(by)
 
   # missingness
   if (isTRUE(.missing)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_missing(data = data, variables = all_of(variables))
+      ard_missing(data = data, by = any_of(by), variables = all_of(variables))
     )
+    if (!is_empty(by) && isTRUE(.overall)) {
+      ard_full <- bind_ard(
+        ard_full,
+        ard_missing(data = data, by = character(0L), variables = all_of(variables))
+      )
+    }
   }
 
   # attributes
   if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_attributes(data, variables = all_of(variables))
+      ard_attributes(data, variables = all_of(c(variables, by)))
     )
   }
 
