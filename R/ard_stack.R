@@ -71,7 +71,8 @@ ard_stack <- function(data,
   if (is_empty(by) && isTRUE(.overall)) {
     cli::cli_inform(
       c("The {.arg by} argument should be specified when using {.code .overall=TRUE}.",
-        i = "Setting {.code ard_stack(.overall=FALSE)}.")
+        i = "Setting {.code ard_stack(.overall=FALSE)}."
+      )
     )
     .overall <- FALSE
   }
