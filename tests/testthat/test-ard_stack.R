@@ -155,11 +155,9 @@ test_that("ard_stack() adding missing/attributes", {
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
       ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
-
       ard_continuous(data = mtcars, variables = "mpg"),
       ard_dichotomous(data = mtcars, variables = "vs"),
       ard_missing(data = mtcars, variables = c("mpg", "vs")),
-
       ard_categorical(data = mtcars, variables = "cyl"),
       ard_attributes(mtcars, variables = c("cyl", "mpg", "vs")),
       .update = TRUE,
