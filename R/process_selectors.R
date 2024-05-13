@@ -102,7 +102,25 @@ NULL
 
 #' @name process_selectors
 #' @export
-process_selectors <- function(data, ..., env = caller_env()) {
+process_selectors <- function(data, ...) {
+  UseMethod("process_selectors")
+}
+
+#' @name process_selectors
+#' @export
+process_formula_selectors <- function(data, ...) {
+  UseMethod("process_formula_selectors")
+}
+
+#' @name process_selectors
+#' @export
+fill_formula_selectors <- function(data, ...) {
+  UseMethod("fill_formula_selectors")
+}
+
+#' @name process_selectors
+#' @export
+process_selectors.data.frame <- function(data, ..., env = caller_env()) {
   set_cli_abort_call()
 
   # saved dots as named list of quos
@@ -132,8 +150,8 @@ process_selectors <- function(data, ..., env = caller_env()) {
 
 #' @name process_selectors
 #' @export
-process_formula_selectors <- function(data, ..., env = caller_env(),
-                                      include_env = FALSE, allow_empty = TRUE) {
+process_formula_selectors.data.frame <- function(data, ..., env = caller_env(),
+                                                 include_env = FALSE, allow_empty = TRUE) {
   set_cli_abort_call()
 
   # saved dots as named list
@@ -159,7 +177,7 @@ process_formula_selectors <- function(data, ..., env = caller_env(),
 
 #' @name process_selectors
 #' @export
-fill_formula_selectors <- function(data, ..., env = caller_env()) {
+fill_formula_selectors.data.frame <- function(data, ..., env = caller_env()) {
   set_cli_abort_call()
 
   dots <- dots_list(...)
