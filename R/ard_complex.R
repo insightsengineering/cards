@@ -93,14 +93,14 @@ ard_complex.data.frame <- function(data,
   on.exit(options(cards.calculate_stats_as_ard.eval_fun = old_option), add = TRUE)
   options(
     cards.calculate_stats_as_ard.eval_fun =
-      # putting the expr in quotes to avoid note about global variables
+    # putting the expr in quotes to avoid note about global variables
       "do.call(fun, args = list(x = stats::na.omit(nested_data[[variable]]),
                                 data = tidyr::drop_na(nested_data, any_of(variable)),
                                 data_full = data,
                                 variable = variable,
                                 by = by,
                                 strata = strata))" |>
-      parse_expr()
+        parse_expr()
   )
 
   ard_continuous(

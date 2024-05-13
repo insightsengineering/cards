@@ -86,9 +86,9 @@ ard_continuous.data.frame <- function(data,
 
   # process arguments ----------------------------------------------------------
   process_selectors(data,
-                    variables = {{ variables }},
-                    by = {{ by }},
-                    strata = {{ strata }}
+    variables = {{ variables }},
+    by = {{ by }},
+    strata = {{ strata }}
   )
   data <- dplyr::ungroup(data)
 
