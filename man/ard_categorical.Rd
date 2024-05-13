@@ -2,9 +2,12 @@
 % Please edit documentation in R/ard_categorical.R
 \name{ard_categorical}
 \alias{ard_categorical}
+\alias{ard_categorical.data.frame}
 \title{Categorical ARD Statistics}
 \usage{
-ard_categorical(
+ard_categorical(data, ...)
+
+\method{ard_categorical}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
@@ -12,12 +15,15 @@ ard_categorical(
   statistic = everything() ~ categorical_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}

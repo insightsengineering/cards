@@ -59,7 +59,7 @@
 #'   be used as the updated `"N"` in the calculations.
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_categorical
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
@@ -70,20 +70,31 @@
 #'     variables = "AGEGR1",
 #'     statistic = everything() ~ categorical_summary_fns("n")
 #'   )
-ard_categorical <- function(data,
-                            variables,
-                            by = dplyr::group_vars(data),
-                            strata = NULL,
-                            statistic = everything() ~ categorical_summary_fns(),
-                            denominator = NULL,
-                            fmt_fn = NULL,
-                            stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @rdname ard_categorical
+#' @export
+ard_categorical <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_categorical")
+}
+
+#' @rdname ard_categorical
+#' @export
+ard_categorical.data.frame <- function(data,
+                                       variables,
+                                       by = dplyr::group_vars(data),
+                                       strata = NULL,
+                                       statistic = everything() ~ categorical_summary_fns(),
+                                       denominator = NULL,
+                                       fmt_fn = NULL,
+                                       stat_label = everything() ~ default_stat_labels(),
+                                       ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x = data)
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
@@ -97,14 +108,14 @@ ard_categorical <- function(data,
   .check_whether_na_counts(data[variables])
 
   process_formula_selectors(
-    data = data[variables],
+    data[variables],
     statistic = statistic,
     stat_label = stat_label,
     fmt_fn = fmt_fn
   )
   fill_formula_selectors(
-    data = data[variables],
-    statistic = formals(cards::ard_continuous)[["statistic"]] |> eval()
+    data[variables],
+    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
   )
 
   # return empty tibble if no variables selected -------------------------------
@@ -227,8 +238,8 @@ ard_categorical <- function(data,
             }
           }
         ) |>
-          compact() |>
-          names(),
+        compact() |>
+        names(),
       denominator = denominator,
       by = by,
       strata = strata
@@ -277,7 +288,7 @@ ard_categorical <- function(data,
           dplyr::mutate(
             stat_name =
               gsub(pattern = "^...ard_", replacement = "", x = .data$stat_name) %>%
-                gsub(pattern = "...$", replacement = "", x = .)
+              gsub(pattern = "...$", replacement = "", x = .)
           ) |>
           dplyr::filter(.data$stat_name %in% tab_stats[["tabulation"]])
       }
@@ -438,8 +449,8 @@ ard_categorical <- function(data,
   }
   # if user passed a data frame WITHOUT the counts pre-specified and no by/strata
   else if (is.data.frame(denominator) &&
-    !"...ard_N..." %in% names(denominator) &&
-    is_empty(intersect(c(by, strata), names(denominator)))) {
+           !"...ard_N..." %in% names(denominator) &&
+           is_empty(intersect(c(by, strata), names(denominator)))) {
     lst_denominator <-
       rep_named(
         variables,
@@ -518,7 +529,7 @@ ard_categorical <- function(data,
     # check there are no duplicates in by/strata variables
     if (
       (any(c(by, strata) %in% names(denominator)) && any(duplicated(denominator[c(by, strata)]))) ||
-        (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
+      (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
     ) {
       paste(
         "Specified counts in column {.val '...ard_N...'} are not unique in",

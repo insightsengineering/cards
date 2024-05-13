@@ -3,9 +3,15 @@
 \name{ard_hierarchical}
 \alias{ard_hierarchical}
 \alias{ard_hierarchical_count}
+\alias{ard_hierarchical.data.frame}
+\alias{ard_hierarchical_count.data.frame}
 \title{Hierarchical ARD Statistics}
 \usage{
-ard_hierarchical(
+ard_hierarchical(data, ...)
+
+ard_hierarchical_count(data, ...)
+
+\method{ard_hierarchical}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
@@ -13,20 +19,24 @@ ard_hierarchical(
   denominator = NULL,
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels(),
-  id = NULL
+  id = NULL,
+  ...
 )
 
-ard_hierarchical_count(
+\method{ard_hierarchical_count}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to perform the nested/hierarchical tabulations within.}

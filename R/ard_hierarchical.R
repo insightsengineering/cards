@@ -40,19 +40,33 @@ NULL
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical <- function(data,
-                             variables,
-                             by = dplyr::group_vars(data),
-                             statistic = everything() ~ categorical_summary_fns(),
-                             denominator = NULL, fmt_fn = NULL,
-                             stat_label = everything() ~ default_stat_labels(),
-                             id = NULL) {
+ard_hierarchical <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_hierarchical")
+}
+
+#' @rdname ard_hierarchical
+#' @export
+ard_hierarchical_count <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_hierarchical_count")
+}
+
+#' @rdname ard_hierarchical
+#' @export
+ard_hierarchical.data.frame <- function(data,
+                                        variables,
+                                        by = dplyr::group_vars(data),
+                                        statistic = everything() ~ categorical_summary_fns(),
+                                        denominator = NULL, fmt_fn = NULL,
+                                        stat_label = everything() ~ default_stat_labels(),
+                                        id = NULL,
+                                        ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -114,17 +128,17 @@ ard_hierarchical <- function(data,
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical_count <- function(data,
-                                   variables,
-                                   by = dplyr::group_vars(data),
-                                   fmt_fn = NULL,
-                                   stat_label = everything() ~ default_stat_labels()) {
+ard_hierarchical_count.data.frame <- function(data,
+                                              variables,
+                                              by = dplyr::group_vars(data),
+                                              fmt_fn = NULL,
+                                              stat_label = everything() ~ default_stat_labels(),
+                                              ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x = data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(

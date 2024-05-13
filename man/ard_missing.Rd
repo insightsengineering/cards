@@ -2,20 +2,26 @@
 % Please edit documentation in R/ard_missing.R
 \name{ard_missing}
 \alias{ard_missing}
+\alias{ard_missing.data.frame}
 \title{Missing ARD Statistics}
 \usage{
-ard_missing(
+ard_missing(data, ...)
+
+\method{ard_missing}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
   statistic = everything() ~ missing_summary_fns(),
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}

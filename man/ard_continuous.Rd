@@ -2,21 +2,27 @@
 % Please edit documentation in R/ard_continuous.R
 \name{ard_continuous}
 \alias{ard_continuous}
+\alias{ard_continuous.data.frame}
 \title{Continuous ARD Statistics}
 \usage{
-ard_continuous(
+ard_continuous(data, ...)
+
+\method{ard_continuous}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic = everything() ~ continuous_summary_fns(),
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}

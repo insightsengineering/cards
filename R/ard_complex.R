@@ -23,7 +23,7 @@
 #'   may look like: `foo(x, data, ...)`
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_complex
 #'
 #' @examples
 #' # example how to mimic behavior of `ard_continuous()`
@@ -48,17 +48,29 @@
 #'     variables = "AGE",
 #'     statistic = list(AGE = list(means = grand_mean))
 #'   )
-ard_complex <- function(data,
-                        variables,
-                        by = dplyr::group_vars(data),
-                        strata = NULL,
-                        statistic,
-                        fmt_fn = NULL,
-                        stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @rdname ard_complex
+#' @export
+ard_complex <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_complex")
+}
+
+#' @rdname ard_complex
+#' @export
+ard_complex.data.frame <- function(data,
+                                   variables,
+                                   by = dplyr::group_vars(data),
+                                   strata = NULL,
+                                   statistic,
+                                   fmt_fn = NULL,
+                                   stat_label = everything() ~ default_stat_labels(),
+                                   ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
   check_not_missing(statistic)
   check_data_frame(x = data)
@@ -81,14 +93,14 @@ ard_complex <- function(data,
   on.exit(options(cards.calculate_stats_as_ard.eval_fun = old_option), add = TRUE)
   options(
     cards.calculate_stats_as_ard.eval_fun =
-    # putting the expr in quotes to avoid note about global variables
+      # putting the expr in quotes to avoid note about global variables
       "do.call(fun, args = list(x = stats::na.omit(nested_data[[variable]]),
                                 data = tidyr::drop_na(nested_data, any_of(variable)),
                                 data_full = data,
                                 variable = variable,
                                 by = by,
                                 strata = strata))" |>
-        parse_expr()
+      parse_expr()
   )
 
   ard_continuous(

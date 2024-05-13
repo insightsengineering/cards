@@ -7,7 +7,7 @@
 #'   results are tabulated by **all combinations** of the columns specified.
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_missing
 #'
 #' @examples
 #' ard_missing(ADSL, by = "ARM", variables = "AGE")
@@ -18,13 +18,26 @@
 #'     variables = "AGE",
 #'     statistic = ~ missing_summary_fns("N_miss")
 #'   )
-ard_missing <- function(data,
-                        variables,
-                        by = dplyr::group_vars(data),
-                        statistic = everything() ~ missing_summary_fns(),
-                        fmt_fn = NULL,
-                        stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @export
+#' @rdname ard_missing
+ard_missing <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_missing")
+}
+
+#' @export
+#' @rdname ard_missing
+ard_missing.data.frame <- function(data,
+                                   variables,
+                                   by = dplyr::group_vars(data),
+                                   statistic = everything() ~ missing_summary_fns(),
+                                   fmt_fn = NULL,
+                                   stat_label = everything() ~ default_stat_labels(),
+                                   ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})

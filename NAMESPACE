@@ -2,6 +2,13 @@
 
 S3method(ard_attributes,data.frame)
 S3method(ard_attributes,default)
+S3method(ard_categorical,data.frame)
+S3method(ard_complex,data.frame)
+S3method(ard_continuous,data.frame)
+S3method(ard_dichotomous,data.frame)
+S3method(ard_hierarchical,data.frame)
+S3method(ard_hierarchical_count,data.frame)
+S3method(ard_missing,data.frame)
 S3method(print,card)
 export("%>%")
 export(alias_as_fmt_fn)
