@@ -16,7 +16,7 @@
 #' @param label (named `list`)\cr
 #'   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
 #'   Default is `NULL`
-#' @param ... Arguments passed to other methods
+#' @inheritParams rlang::args_dots_empty
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_attributes

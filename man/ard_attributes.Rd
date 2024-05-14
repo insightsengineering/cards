@@ -16,7 +16,7 @@ ard_attributes(data, ...)
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{...}{Arguments passed to other methods}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 variables to include}
