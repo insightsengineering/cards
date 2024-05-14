@@ -75,7 +75,8 @@ ard_attributes.data.frame <- function(data,
         TRUE ~ .data$stat_name
       ),
       context = "attributes"
-    ) %>%
+    ) |>
+    cards::tidy_ard_column_order() %>%
     structure(., class = c("card", class(.)))
 }
 

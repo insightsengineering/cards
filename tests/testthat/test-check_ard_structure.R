@@ -4,6 +4,6 @@ test_that("check_ard_structure() works", {
       dplyr::mutate(stat = unlist(stat)) |>
       dplyr::select(-error) |>
       structure(class = "data.frame") |>
-      check_ard_structure()
+      check_ard_structure(method = FALSE)
   )
 })
