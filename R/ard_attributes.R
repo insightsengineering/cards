@@ -9,7 +9,7 @@
 #' - Any other attribute returned by `attributes()` will also be added, e.g. factor levels.
 #'
 #' @rdname ard_attributes
-#' @param x (`data.frame`)\cr
+#' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to include
@@ -30,25 +30,25 @@ NULL
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes <- function(x, ...) {
+ard_attributes <- function(data, ...) {
   UseMethod("ard_attributes")
 }
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.data.frame <- function(x,
+ard_attributes.data.frame <- function(data,
                                       variables = everything(),
                                       label = NULL,
                                       ...) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(x)
+  check_not_missing(data)
   check_not_missing(variables)
   check_dots_empty()
 
   # process arguments ----------------------------------------------------------
-  data <- dplyr::ungroup(x)
+  data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{ variables }})
 
   variables |>
@@ -81,7 +81,7 @@ ard_attributes.data.frame <- function(x,
 
 #' @rdname ard_attributes
 #' @export
-ard_attributes.default <- function(x, ...) {
+ard_attributes.default <- function(data, ...) {
   set_cli_abort_call()
-  cli::cli_abort("There is no method for objects of class {.cls {class(x)}}.", call = get_cli_abort_call())
+  cli::cli_abort("There is no method for objects of class {.cls {class(data)}}.", call = get_cli_abort_call())
 }
