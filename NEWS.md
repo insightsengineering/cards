@@ -1,5 +1,7 @@
 # cards 0.1.0.9026
 
+* Added `check_ard_structure(column_order, method)` arguments to the function to check for column ordering and whether result contains a `stat_name='method'` row.
+
 * Converting `ard_*()` functions and other helpers to S3 generics to make them extendable. (#227) 
 
 * Bug fix where `ard_stack(by)` argument was not passed to `ard_missing()` when `ard_stack(.missing=TRUE)`. (#244)
