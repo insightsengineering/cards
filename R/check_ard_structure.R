@@ -54,7 +54,8 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE) {
     if (!identical(names(x), names(tidy_ard_column_order(x)))) {
       cli::cli_inform(
         c("The column order is not in the standard order.",
-          i = "Use {.fun cards::tidy_ard_column_order} for standard ordering.")
+          i = "Use {.fun cards::tidy_ard_column_order} for standard ordering."
+        )
       )
     }
   }
