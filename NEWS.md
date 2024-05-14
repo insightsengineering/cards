@@ -1,4 +1,4 @@
-# cards 0.1.0.9024
+# cards 0.1.0.9025
 
 * Converting `ard_*()` functions and other helpers to S3 generics to make them extendable. (#227) 
 
