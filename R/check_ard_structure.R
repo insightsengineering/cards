@@ -5,7 +5,10 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
-#'
+#' @param column_order (scalar `logical`)\cr
+#'   check whether ordering of columns adheres to to `cards::tidy_ard_column_order()`.
+#' @param method (scalar `logical`)\cr
+#'   check whether a `"stat_name"` equal to `"method"` appears in results.
 #' @return an ARD data frame of class 'card' (invisible)
 #' @export
 #'
@@ -13,8 +16,10 @@
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   dplyr::select(-warning, -error) |>
 #'   check_ard_structure()
-check_ard_structure <- function(x) {
+check_ard_structure <- function(x, column_order = TRUE, method = TRUE) {
   set_cli_abort_call()
+  check_scalar_logical(method)
+  check_scalar_logical(column_order)
 
   # check class ----------------------------------------------------------------
   if (!inherits(x, "card")) {
@@ -35,6 +40,24 @@ check_ard_structure <- function(x) {
     setdiff(names(x))
   if (!is_empty(missing_variables)) {
     cli::cli_inform("The following columns are not present: {.val {missing_variables}}.")
+  }
+
+  # check whether AR contains a method stat ------------------------------------
+  if (isTRUE(method)) {
+    if (!"method" %in% x$stat_name) {
+      cli::cli_inform("Expecting a row with {.code stat_name = 'method'}, but it is not present.")
+    }
+  }
+
+  # check order of columns -----------------------------------------------------
+  if (isTRUE(column_order)) {
+    if (!identical(names(x), names(tidy_ard_column_order(x)))) {
+      cli::cli_inform(
+        c("The column order is not in the standard order.",
+          i = "Use {.fun cards::tidy_ard_column_order} for standard ordering."
+        )
+      )
+    }
   }
 
   # check columns are list columns as expected ---------------------------------

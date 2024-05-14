@@ -4,11 +4,17 @@
 \alias{check_ard_structure}
 \title{Check ARD Structure}
 \usage{
-check_ard_structure(x)
+check_ard_structure(x, column_order = TRUE, method = TRUE)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 an ARD data frame of class 'card'}
+
+\item{column_order}{(scalar \code{logical})\cr
+check whether ordering of columns adheres to to \code{cards::tidy_ard_column_order()}.}
+
+\item{method}{(scalar \code{logical})\cr
+check whether a \code{"stat_name"} equal to \code{"method"} appears in results.}
 }
 \value{
 an ARD data frame of class 'card' (invisible)

@@ -6,5 +6,6 @@
     Message
       Object is not of class <card>.
       The following columns are not present: "error".
+      Expecting a row with `stat_name = 'method'`, but it is not present.
       The following columns are expected to be list columns: "stat".
 
