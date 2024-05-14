@@ -1,4 +1,4 @@
-# cards 0.1.0.9026
+# cards 0.1.0.9027
 
 * Added `check_ard_structure(column_order, method)` arguments to the function to check for column ordering and whether result contains a `stat_name='method'` row.
 
