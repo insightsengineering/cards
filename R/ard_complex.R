@@ -73,7 +73,6 @@ ard_complex.data.frame <- function(data,
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
   check_not_missing(statistic)
-  check_data_frame(x = data)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})

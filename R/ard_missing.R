@@ -39,6 +39,9 @@ ard_missing.data.frame <- function(data,
   set_cli_abort_call()
   check_dots_used()
 
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(variables)
+
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})
 
