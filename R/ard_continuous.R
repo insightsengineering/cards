@@ -39,9 +39,10 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
 #'   `everything() ~ list(mean ~ "Mean", sd ~ "SD")`.
+#' @inheritParams rlang::args_dots_used
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_continuous
 #'
 #' @examples
 #' ard_continuous(ADSL, by = "ARM", variables = "AGE")
@@ -57,19 +58,30 @@
 #'         as.list() |>
 #'         setNames(c("conf.low", "conf.high")))
 #'   )
-ard_continuous <- function(data,
-                           variables,
-                           by = dplyr::group_vars(data),
-                           strata = NULL,
-                           statistic = everything() ~ continuous_summary_fns(),
-                           fmt_fn = NULL,
-                           stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @rdname ard_continuous
+#' @export
+ard_continuous <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_continuous")
+}
+
+#' @rdname ard_continuous
+#' @export
+ard_continuous.data.frame <- function(data,
+                                      variables,
+                                      by = dplyr::group_vars(data),
+                                      strata = NULL,
+                                      statistic = everything() ~ continuous_summary_fns(),
+                                      fmt_fn = NULL,
+                                      stat_label = everything() ~ default_stat_labels(),
+                                      ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x = data)
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
@@ -81,15 +93,15 @@ ard_continuous <- function(data,
   data <- dplyr::ungroup(data)
 
   process_formula_selectors(
-    data = data[variables],
+    data[variables],
     statistic = statistic,
     fmt_fn = fmt_fn,
     stat_label = stat_label
   )
   fill_formula_selectors(
-    data = data[variables],
-    statistic = formals(cards::ard_continuous)[["statistic"]] |> eval(),
-    stat_label = formals(cards::ard_continuous)[["stat_label"]] |> eval()
+    data[variables],
+    statistic = formals(asNamespace("cards")[["ard_continuous.data.frame"]])[["stat_label"]] |> eval(),
+    stat_label = formals(asNamespace("cards")[["ard_continuous.data.frame"]])[["stat_label"]] |> eval()
   )
 
   check_list_elements(
@@ -352,9 +364,9 @@ ard_continuous <- function(data,
           ) %>%
             # styler: off
             {dplyr::tibble(
-                variable = variable,
-                stat_name = names(.),
-                "{new_column}" := unname(.)
+              variable = variable,
+              stat_name = names(.),
+              "{new_column}" := unname(.)
             )}
           # styler: on
         }

@@ -4,14 +4,23 @@
 \alias{process_selectors}
 \alias{process_formula_selectors}
 \alias{fill_formula_selectors}
+\alias{process_selectors.data.frame}
+\alias{process_formula_selectors.data.frame}
+\alias{fill_formula_selectors.data.frame}
 \alias{compute_formula_selector}
 \alias{check_list_elements}
 \alias{cards_select}
 \title{Process tidyselectors}
 \usage{
-process_selectors(data, ..., env = caller_env())
+process_selectors(data, ...)
 
-process_formula_selectors(
+process_formula_selectors(data, ...)
+
+fill_formula_selectors(data, ...)
+
+\method{process_selectors}{data.frame}(data, ..., env = caller_env())
+
+\method{process_formula_selectors}{data.frame}(
   data,
   ...,
   env = caller_env(),
@@ -19,7 +28,7 @@ process_formula_selectors(
   allow_empty = TRUE
 )
 
-fill_formula_selectors(data, ..., env = caller_env())
+\method{fill_formula_selectors}{data.frame}(data, ..., env = caller_env())
 
 compute_formula_selector(
   data,

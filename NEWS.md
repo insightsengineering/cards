@@ -1,5 +1,7 @@
 # cards 0.1.0.9024
 
+* Converting `ard_*()` functions and other helpers to S3 generics to make them extendable. (#227) 
+
 * Bug fix where `ard_stack(by)` argument was not passed to `ard_missing()` when `ard_stack(.missing=TRUE)`. (#244)
 
 * The `print_ard_conditions()` function has been updated to no longer error out if the ARD object does not have `"error"` or `"warning"` columns. (#240)

@@ -23,7 +23,7 @@
 #'   may look like: `foo(x, data, ...)`
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_complex
 #'
 #' @examples
 #' # example how to mimic behavior of `ard_continuous()`
@@ -48,20 +48,31 @@
 #'     variables = "AGE",
 #'     statistic = list(AGE = list(means = grand_mean))
 #'   )
-ard_complex <- function(data,
-                        variables,
-                        by = dplyr::group_vars(data),
-                        strata = NULL,
-                        statistic,
-                        fmt_fn = NULL,
-                        stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @rdname ard_complex
+#' @export
+ard_complex <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_complex")
+}
+
+#' @rdname ard_complex
+#' @export
+ard_complex.data.frame <- function(data,
+                                   variables,
+                                   by = dplyr::group_vars(data),
+                                   strata = NULL,
+                                   statistic,
+                                   fmt_fn = NULL,
+                                   stat_label = everything() ~ default_stat_labels(),
+                                   ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
   check_not_missing(statistic)
-  check_data_frame(x = data)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})

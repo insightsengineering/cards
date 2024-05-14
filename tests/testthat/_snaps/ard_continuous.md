@@ -60,8 +60,8 @@
     Code
       ard_continuous(letters, variables = "mpg")
     Condition
-      Error in `ard_continuous()`:
-      ! The `data` argument must be class <data.frame>, not a character vector.
+      Error in `UseMethod()`:
+      ! no applicable method for 'ard_continuous' applied to an object of class "character"
 
 ---
 

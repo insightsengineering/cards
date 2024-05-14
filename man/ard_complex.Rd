@@ -2,21 +2,27 @@
 % Please edit documentation in R/ard_complex.R
 \name{ard_complex}
 \alias{ard_complex}
+\alias{ard_complex.data.frame}
 \title{Complex ARD Summaries}
 \usage{
-ard_complex(
+ard_complex(data, ...)
+
+\method{ard_complex}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic,
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}

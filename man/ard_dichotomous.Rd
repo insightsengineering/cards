@@ -2,9 +2,12 @@
 % Please edit documentation in R/ard_dichotomous.R
 \name{ard_dichotomous}
 \alias{ard_dichotomous}
+\alias{ard_dichotomous.data.frame}
 \title{Dichotomous ARD Statistics}
 \usage{
-ard_dichotomous(
+ard_dichotomous(data, ...)
+
+\method{ard_dichotomous}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
@@ -13,12 +16,15 @@ ard_dichotomous(
   statistic = everything() ~ categorical_summary_fns(),
   denominator = NULL,
   fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  stat_label = everything() ~ default_stat_labels(),
+  ...
 )
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}

@@ -59,7 +59,7 @@
 #'   be used as the updated `"N"` in the calculations.
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_categorical
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
@@ -70,20 +70,31 @@
 #'     variables = "AGEGR1",
 #'     statistic = everything() ~ categorical_summary_fns("n")
 #'   )
-ard_categorical <- function(data,
-                            variables,
-                            by = dplyr::group_vars(data),
-                            strata = NULL,
-                            statistic = everything() ~ categorical_summary_fns(),
-                            denominator = NULL,
-                            fmt_fn = NULL,
-                            stat_label = everything() ~ default_stat_labels()) {
+NULL
+
+#' @rdname ard_categorical
+#' @export
+ard_categorical <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_categorical")
+}
+
+#' @rdname ard_categorical
+#' @export
+ard_categorical.data.frame <- function(data,
+                                       variables,
+                                       by = dplyr::group_vars(data),
+                                       strata = NULL,
+                                       statistic = everything() ~ categorical_summary_fns(),
+                                       denominator = NULL,
+                                       fmt_fn = NULL,
+                                       stat_label = everything() ~ default_stat_labels(),
+                                       ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
   check_not_missing(variables)
-  check_data_frame(x = data)
   .check_no_ard_columns(data)
 
   # process arguments ----------------------------------------------------------
@@ -97,14 +108,14 @@ ard_categorical <- function(data,
   .check_whether_na_counts(data[variables])
 
   process_formula_selectors(
-    data = data[variables],
+    data[variables],
     statistic = statistic,
     stat_label = stat_label,
     fmt_fn = fmt_fn
   )
   fill_formula_selectors(
-    data = data[variables],
-    statistic = formals(cards::ard_continuous)[["statistic"]] |> eval()
+    data[variables],
+    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
   )
 
   # return empty tibble if no variables selected -------------------------------
