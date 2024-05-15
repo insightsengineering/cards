@@ -20,7 +20,7 @@ by variable will also be returned."><meta property="og:image" content="https://i
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9027</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9028</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,14 +41,6 @@ by variable will also be returned."><meta property="og:image" content="https://i
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -83,8 +75,8 @@ by variable will also be returned.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ard_stack</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  .by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  .overall <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  .attributes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -99,14 +91,14 @@ by variable will also be returned.</p>
 a data frame</p></dd>
 
 
-<dt>by</dt>
-<dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-columns to tabulate by in the series of ARD function calls</p></dd>
-
-
 <dt>...</dt>
 <dd><p>(<code>dynamic-dots</code>)<br>
 Series of ARD function calls to be run and stacked</p></dd>
+
+
+<dt>.by</dt>
+<dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
+columns to tabulate by in the series of ARD function calls</p></dd>
 
 
 <dt>.overall</dt>
@@ -144,11 +136,13 @@ Default is <code>FALSE</code>.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_stack</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">ADSL</span>,</span></span>
-<span class="r-in"><span>  by <span class="op">=</span> <span class="st">"ARM"</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  .by <span class="op">=</span> <span class="st">"ARM"</span>,</span></span>
+<span class="r-in"><span>  .overall <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  .attributes <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 60 x 11</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 83 x 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1     group1_level variable variable_level stat_name stat_label  stat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM          Placebo   AGEGR1          65-80         n          n    42</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM          Placebo   AGEGR1          65-80         N          N    86</span>
@@ -160,15 +154,15 @@ Default is <code>FALSE</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM          Placebo   AGEGR1            &gt;80         N          N    86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM          Placebo   AGEGR1            &gt;80         p          % 0.349</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM Xanomeli&lt;U+2026&gt;   AGEGR1          65-80         n          n    55</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">50 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">73 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">ard_stack</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">ADSL</span>,</span></span>
-<span class="r-in"><span>  by <span class="op">=</span> <span class="st">"ARM"</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGEGR1"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  .by <span class="op">=</span> <span class="st">"ARM"</span>,</span></span>
 <span class="r-in"><span>  .shuffle <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 60 x 6</span></span>
