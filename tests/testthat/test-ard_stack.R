@@ -3,7 +3,7 @@ test_that("ard_stack() works", {
   expect_error(
     ard1 <- ard_stack(
       data = mtcars,
-      by = "cyl",
+      .by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs")
     ),
@@ -26,7 +26,7 @@ test_that("ard_stack() works", {
     ard1,
     ard_stack(
       data = mtcars,
-      by = cyl,
+      .by = cyl,
       ard_continuous(variables = mpg),
       ard_dichotomous(variables = vs)
     ),
@@ -42,7 +42,7 @@ test_that("ard_stack() works", {
     ard1,
     ard_stack(
       data = mtcars2,
-      by = all_of(by),
+      .by = all_of(by),
       ard_continuous(variables = all_of(var_cont)),
       ard_dichotomous(variables = all_of(var_cat))
     )
@@ -52,7 +52,7 @@ test_that("ard_stack() works", {
   expect_error(
     ard2 <- ard_stack(
       data = mtcars,
-      by = NULL,
+      .by = NULL,
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs")
     ),
@@ -74,7 +74,6 @@ test_that("ard_stack() works", {
     ard2,
     ard_stack(
       data = mtcars2,
-      by = NULL,
       ard_continuous(variables = all_of(var_cont)),
       ard_dichotomous(variables = all_of(var_cat))
     )
@@ -85,7 +84,7 @@ test_that("ard_stack() adding overalls", {
   expect_error(
     ard_test <- ard_stack(
       data = mtcars,
-      by = "cyl",
+      .by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs"),
       .overall = TRUE
@@ -113,7 +112,7 @@ test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
       data = mtcars,
-      by = "cyl",
+      .by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs"),
       .missing = TRUE,
@@ -139,7 +138,7 @@ test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test_overall <- ard_stack(
       data = mtcars,
-      by = "cyl",
+      .by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs"),
       .missing = TRUE,
@@ -171,7 +170,7 @@ test_that("ard_stack() .shuffle argument", {
   expect_error(
     ard_test <- ard_stack(
       data = mtcars,
-      by = "cyl",
+      .by = "cyl",
       ard_continuous(variables = "mpg"),
       ard_dichotomous(variables = "vs"),
       .shuffle = TRUE
@@ -195,7 +194,6 @@ test_that("ard_stack() messaging", {
   expect_snapshot(
     ard_stack(
       data = mtcars,
-      by = NULL,
       ard_continuous(variables = "mpg"),
       .overall = TRUE
     ) |>

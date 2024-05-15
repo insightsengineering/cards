@@ -1,5 +1,7 @@
 # cards 0.1.0.9028
 
+* The `ard_stack(by)` argument has been renamed to `".by"` and its location moved to after the dots inputs, e.g. `ard_stack(..., .by)`. (#243)
+
 * Added `check_ard_structure(column_order, method)` arguments to the function to check for column ordering and whether result contains a `stat_name='method'` row.
 
 * Converting `ard_*()` functions and other helpers to S3 generics to make them extendable. (#227) 
