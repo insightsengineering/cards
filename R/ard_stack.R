@@ -169,11 +169,25 @@ ard_stack <- function(data,
   lapply(
     dots,
     function(x) {
-      x_rhs <- f_rhs(x)
-      x_fn <- call_name(x_rhs)
-      x_args <- call_args(x_rhs)
+      if (!is_call_simple(x)) {
+        cli::cli_abort(
+          "{.fun cards::ard_stack} works with {.help [simple calls](rlang::call_name)}
+           and {.code {as_label(x)}} is not simple.",
+          call = get_cli_abort_call()
+        )
+      }
+      x_ns <- call_ns(x)
+      x_fn <- call_name(x)
+      x_args <- call_args(x)
 
-      do.call(x_fn, c(list(data = data, by = .by), x_args), envir = attr(x, ".Environment"))
+      # if a function was namespaced, then grab function from that pkg's Namespace
+      # styler: off
+      final_fn <-
+        if (is.null(x_ns)) x_fn
+        else get(x_fn, envir = asNamespace(x_ns))
+      # styler: on
+
+      do.call(final_fn, c(list(data = data, by = .by), x_args), envir = attr(x, ".Environment"))
     }
   )
 }

@@ -13,3 +13,14 @@
     Message
       i 2 more variables: warning, error
 
+# ard_stack() complex call error
+
+    Code
+      complex_call <- list()
+      complex_call$ard_continuous <- ard_continuous
+      ard_stack(data = mtcars, .by = am, complex_call$ard_continuous(variables = "mpg"),
+      )
+    Condition
+      Error in `ard_stack()`:
+      ! `cards::ard_stack()` works with simple calls (`?rlang::call_name()`) and `complex_call$ard_continuous(variables = "mpg")` is not simple.
+
