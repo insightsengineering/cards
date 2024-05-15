@@ -220,14 +220,16 @@ test_that("ard_stack() messaging", {
 })
 
 test_that("ard_stack() complex call error", {
-  expect_snapshot({
-    complex_call <- list()
-    complex_call$ard_continuous <- ard_continuous
-    ard_stack(
-      data = mtcars,
-      by = am,
-      complex_call$ard_continuous(variables = "mpg"),
-    )},
+  expect_snapshot(
+    {
+      complex_call <- list()
+      complex_call$ard_continuous <- ard_continuous
+      ard_stack(
+        data = mtcars,
+        by = am,
+        complex_call$ard_continuous(variables = "mpg"),
+      )
+    },
     error = TRUE
   )
 })
