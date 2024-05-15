@@ -25,7 +25,7 @@ Evaluate the \verb{ard_*()} function calls
 \examples{
 cards:::.eval_ard_calls(
   data = ADSL,
-  by = "ARM",
+  .by = "ARM",
   ard_categorical(variables = "AGEGR1"),
   ard_continuous(variables = "AGE")
 )

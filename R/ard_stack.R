@@ -156,7 +156,7 @@ ard_stack <- function(data,
 #' @examples
 #' cards:::.eval_ard_calls(
 #'   data = ADSL,
-#'   by = "ARM",
+#'   .by = "ARM",
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE")
 #' )
