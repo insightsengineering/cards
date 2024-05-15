@@ -191,6 +191,22 @@ test_that("ard_stack() .shuffle argument", {
   )
 })
 
+
+test_that("ard_stack() works with namespaced functions", {
+  expect_equal(
+    ard_stack(
+      data = mtcars,
+      by = NULL,
+      cards::ard_continuous(variables = "mpg")
+    ),
+    ard_stack(
+      data = mtcars,
+      by = NULL,
+      ard_continuous(variables = "mpg")
+    )
+  )
+})
+
 test_that("ard_stack() messaging", {
   expect_snapshot(
     ard_stack(
@@ -200,5 +216,18 @@ test_that("ard_stack() messaging", {
       .overall = TRUE
     ) |>
       head(1L)
+  )
+})
+
+test_that("ard_stack() complex call error", {
+  expect_snapshot({
+    complex_call <- list()
+    complex_call$ard_continuous <- ard_continuous
+    ard_stack(
+      data = mtcars,
+      by = am,
+      complex_call$ard_continuous(variables = "mpg"),
+    )},
+    error = TRUE
   )
 })
