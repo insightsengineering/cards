@@ -114,7 +114,7 @@ Moreover, we will also be returned the univariate tabulation of the `by` variabl
 ```{r}
 ard_stack(
   data = ADSL,
-  by = ARM,
+  .by = ARM,
   ard_continuous(
     variables = AGE,
     statistic = ~ continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))

@@ -4,13 +4,13 @@
 \alias{.eval_ard_calls}
 \title{Evaluate the \verb{ard_*()} function calls}
 \usage{
-.eval_ard_calls(data, by, ...)
+.eval_ard_calls(data, .by, ...)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+\item{.by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by in the series of ARD function calls}
 
 \item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
@@ -25,7 +25,7 @@ Evaluate the \verb{ard_*()} function calls
 \examples{
 cards:::.eval_ard_calls(
   data = ADSL,
-  by = "ARM",
+  .by = "ARM",
   ard_categorical(variables = "AGEGR1"),
   ard_continuous(variables = "AGE")
 )

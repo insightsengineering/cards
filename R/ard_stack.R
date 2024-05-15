@@ -11,7 +11,7 @@
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#' @param .by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by in the series of ARD function calls
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
@@ -34,22 +34,24 @@
 #' @examples
 #' ard_stack(
 #'   data = ADSL,
-#'   by = "ARM",
 #'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE")
+#'   ard_continuous(variables = "AGE"),
+#'   .by = "ARM",
+#'   .overall = TRUE,
+#'   .attributes = TRUE
 #' )
 #'
 #' ard_stack(
 #'   data = ADSL,
-#'   by = "ARM",
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE"),
+#'   .by = "ARM",
 #'   .shuffle = TRUE
 #' )
 #'
 ard_stack <- function(data,
-                      by = NULL,
                       ...,
+                      .by = NULL,
                       .overall = FALSE,
                       .missing = FALSE,
                       .attributes = FALSE,
@@ -57,20 +59,20 @@ ard_stack <- function(data,
   set_cli_abort_call()
 
   # process arguments ----------------------------------------------------------
-  process_selectors(data, by = {{ by }})
+  process_selectors(data, .by = {{ .by }})
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
-  check_data_frame(x = data)
+  check_data_frame(data)
 
   check_scalar_logical(.overall)
   check_scalar_logical(.missing)
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
 
-  if (is_empty(by) && isTRUE(.overall)) {
+  if (is_empty(.by) && isTRUE(.overall)) {
     cli::cli_inform(
-      c("The {.arg by} argument should be specified when using {.code .overall=TRUE}.",
+      c("The {.arg .by} argument should be specified when using {.code .overall=TRUE}.",
         i = "Setting {.code ard_stack(.overall=FALSE)}."
       )
     )
@@ -78,13 +80,13 @@ ard_stack <- function(data,
   }
 
   # evaluate the dots using common `data` and `by`
-  ard_list <- .eval_ard_calls(data, by, ...)
+  ard_list <- .eval_ard_calls(data, .by, ...)
 
   # add overall
   if (isTRUE(.overall)) {
     ard_list <- c(
       ard_list,
-      .eval_ard_calls(data, by = character(0), ...)
+      .eval_ard_calls(data, .by = character(0), ...)
     )
   }
 
@@ -94,7 +96,7 @@ ard_stack <- function(data,
       ard_list,
       ard_categorical(
         data = data,
-        variables = all_of(by)
+        variables = all_of(.by)
       )
     )
   } else {
@@ -102,13 +104,13 @@ ard_stack <- function(data,
   }
 
   # get all variables represented
-  variables <- unique(ard_full$variable) |> setdiff(by)
+  variables <- unique(ard_full$variable) |> setdiff(.by)
 
   # missingness
   if (isTRUE(.missing)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_missing(data = data, by = any_of(by), variables = all_of(variables))
+      ard_missing(data = data, by = any_of(.by), variables = all_of(variables))
     )
     if (!is_empty(by) && isTRUE(.overall)) {
       ard_full <- bind_ard(
@@ -122,7 +124,7 @@ ard_stack <- function(data,
   if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
-      ard_attributes(data, variables = all_of(c(variables, by)))
+      ard_attributes(data, variables = all_of(c(variables, .by)))
     )
   }
 
@@ -143,7 +145,7 @@ ard_stack <- function(data,
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#' @param .by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by in the series of ARD function calls
 #' @param ... ([`dynamic-dots`][dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
@@ -154,11 +156,11 @@ ard_stack <- function(data,
 #' @examples
 #' cards:::.eval_ard_calls(
 #'   data = ADSL,
-#'   by = "ARM",
+#'   .by = "ARM",
 #'   ard_categorical(variables = "AGEGR1"),
 #'   ard_continuous(variables = "AGE")
 #' )
-.eval_ard_calls <- function(data, by, ...) {
+.eval_ard_calls <- function(data, .by, ...) {
   # capture quosures -----------------------------------------------------------
   dots <- enquos(...)
 
@@ -185,7 +187,7 @@ ard_stack <- function(data,
         else get(x_fn, envir = asNamespace(x_ns))
       # styler: on
 
-      do.call(final_fn, c(list(data = data, by = by), x_args), envir = attr(x, ".Environment"))
+      do.call(final_fn, c(list(data = data, by = .by), x_args), envir = attr(x, ".Environment"))
     }
   )
 }

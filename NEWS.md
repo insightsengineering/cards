@@ -1,4 +1,6 @@
-# cards 0.1.0.9028
+# cards 0.1.0.9029
+
+* The `ard_stack(by)` argument has been renamed to `".by"` and its location moved to after the dots inputs, e.g. `ard_stack(..., .by)`. (#243)
 
 * Bug fix in `ard_stack()` when calls to functions were namespaced. (#242)
 

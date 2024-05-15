@@ -1,10 +1,10 @@
 # ard_stack() messaging
 
     Code
-      head(ard_stack(data = mtcars, by = NULL, ard_continuous(variables = "mpg"),
-      .overall = TRUE), 1L)
+      head(ard_stack(data = mtcars, ard_continuous(variables = "mpg"), .overall = TRUE),
+      1L)
     Message
-      The `by` argument should be specified when using `.overall=TRUE`.
+      The `.by` argument should be specified when using `.overall=TRUE`.
       i Setting `ard_stack(.overall=FALSE)`.
       {cards} data frame: 1 x 8
     Output
