@@ -195,12 +195,10 @@ test_that("ard_stack() works with namespaced functions", {
   expect_equal(
     ard_stack(
       data = mtcars,
-      by = NULL,
       cards::ard_continuous(variables = "mpg")
     ),
     ard_stack(
       data = mtcars,
-      by = NULL,
       ard_continuous(variables = "mpg")
     )
   )
@@ -224,7 +222,7 @@ test_that("ard_stack() complex call error", {
       complex_call$ard_continuous <- ard_continuous
       ard_stack(
         data = mtcars,
-        by = am,
+        .by = am,
         complex_call$ard_continuous(variables = "mpg"),
       )
     },

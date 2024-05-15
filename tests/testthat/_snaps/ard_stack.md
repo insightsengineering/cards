@@ -18,7 +18,7 @@
     Code
       complex_call <- list()
       complex_call$ard_continuous <- ard_continuous
-      ard_stack(data = mtcars, by = am, complex_call$ard_continuous(variables = "mpg"),
+      ard_stack(data = mtcars, .by = am, complex_call$ard_continuous(variables = "mpg"),
       )
     Condition
       Error in `ard_stack()`:
