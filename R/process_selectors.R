@@ -334,4 +334,3 @@ f_rhs_as_quo <- function(f) {
   if (is.null(f_rhs(f))) return(NULL) # styler: off
   quo(!!f_rhs(f)) |> structure(.Environment = attr(f, ".Environment"))
 }
-
