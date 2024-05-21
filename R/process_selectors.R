@@ -225,12 +225,12 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   for (i in seq_along(x)) {
     # if element is a formula, convert to a named list
     if (inherits(x[[i]], "formula")) {
-      lhs_expr <- f_lhs(x[[i]])
+      lhs_quo <- f_lhs_as_quo(x[[i]])
 
       if (!is.null(data)) {
-        lhs_expr <- cards_select(
+        lhs_quo <- cards_select(
           # if nothing found on LHS of formula, using `everything()`
-          expr = f_lhs(x[[i]]) %||% dplyr::everything(),
+          expr = lhs_quo %||% dplyr::everything(),
           data = data,
           strict = strict,
           allow_rename = FALSE,
@@ -238,19 +238,14 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
         )
       }
 
-      colnames <-
-        eval(
-          lhs_expr,
-          envir = attr(x[[i]], ".Environment")
-        )
+      colnames <- eval_tidy(lhs_quo)
       x[i] <-
         rep_len(
           list(
-            eval_tidy(f_rhs(x[[i]]), env = attr(x[[i]], ".Environment")) |>
+            eval_tidy(f_rhs_as_quo(x[[i]])) |>
               structure(
-                .Environment = switch(isTRUE(include_env),
-                  attr(x[[i]], ".Environment")
-                )
+                .Environment =
+                  switch(isTRUE(include_env), attr(x[[i]], ".Environment")) # styler: off
               )
           ),
           length.out = length(colnames)
@@ -325,4 +320,17 @@ cards_select <- function(expr, data, ...,
       )
     }
   )
+}
+
+
+# These functions are like rlang::f_lhs(), but they extract the expression
+# as a quosure with the env from the formula.
+f_lhs_as_quo <- function(f) {
+  if (is.null(f_lhs(f))) return(NULL) # styler: off
+  quo(!!f_lhs(f)) |> structure(.Environment = attr(f, ".Environment"))
+}
+
+f_rhs_as_quo <- function(f) {
+  if (is.null(f_rhs(f))) return(NULL) # styler: off
+  quo(!!f_rhs(f)) |> structure(.Environment = attr(f, ".Environment"))
 }
