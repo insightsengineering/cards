@@ -29,6 +29,9 @@
 #' @param list_columns (`logical`)\cr
 #'   logical indicating whether to put levels of `by` and
 #'   `strata` columns in a list. Default is `TRUE`.
+#' @param include_data (scalar `logical`)\cr
+#'   logical indicating whether to include the data subsets as a list-column.
+#'   Default is `TRUE`.
 #'
 #' @return a nested tibble
 #' @export
@@ -43,7 +46,8 @@
 #'   strata = "AESOC"
 #' )
 nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
-                         rename_columns = TRUE, list_columns = TRUE) {
+                         rename_columns = TRUE, list_columns = TRUE,
+                         include_data = TRUE) {
   set_cli_abort_call()
 
   # if no by/stratifying variables, simply return the data frame
@@ -95,34 +99,36 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   # we will now add a column to the df_return data frame of the subsetted data
   #   to do so, we'll construct a list of expressions that can be passed to
   #   dplyr::filter() to subset the data frame
-  lst_filter_exprs <-
-    seq_len(nrow(df_return)) |>
-    lapply(
-      FUN = function(i) {
-        lapply(
-          X = c(by, strata),
-          FUN = function(z) {
-            expr(!!data_sym(z) %in% df_return[[!!z]][!!i])
-          }
-        )
-      }
-    )
+  if (isTRUE(include_data)) {
+    lst_filter_exprs <-
+      seq_len(nrow(df_return)) |>
+      lapply(
+        FUN = function(i) {
+          lapply(
+            X = c(by, strata),
+            FUN = function(z) {
+              expr(!!data_sym(z) %in% df_return[[!!z]][!!i])
+            }
+          )
+        }
+      )
 
-  # now adding the subsetted data frames to the nested tibble
-  df_return[[key]] <-
-    lapply(
-      seq_len(nrow(df_return)),
-      FUN = function(i) {
-        dplyr::filter(data, !!!lst_filter_exprs[[i]]) |>
-          dplyr::select(-all_of(.env$by), -all_of(.env$strata))
-      }
-    )
+    # now adding the subsetted data frames to the nested tibble
+    df_return[[key]] <-
+      lapply(
+        seq_len(nrow(df_return)),
+        FUN = function(i) {
+          dplyr::filter(data, !!!lst_filter_exprs[[i]]) |>
+            dplyr::select(-all_of(.env$by), -all_of(.env$strata))
+        }
+      )
+  }
 
   # put variable levels in list to preserve types when stacked -----------------
   if (isTRUE(list_columns)) {
     df_return <-
       df_return |>
-      dplyr::mutate(across(.cols = -all_of(key), .fns = as.list))
+      dplyr::mutate(across(.cols = -any_of(key), .fns = as.list))
   }
 
   # rename by and strata columns to group## and group##_level ------------------

@@ -10,7 +10,8 @@ nest_for_ard(
   strata = NULL,
   key = "data",
   rename_columns = TRUE,
-  list_columns = TRUE
+  list_columns = TRUE,
+  include_data = TRUE
 )
 }
 \arguments{
@@ -39,6 +40,10 @@ Default is \code{TRUE}.}
 \item{list_columns}{(\code{logical})\cr
 logical indicating whether to put levels of \code{by} and
 \code{strata} columns in a list. Default is \code{TRUE}.}
+
+\item{include_data}{(scalar \code{logical})\cr
+logical indicating whether to include the data subsets as a list-column.
+Default is \code{TRUE}.}
 }
 \value{
 a nested tibble
