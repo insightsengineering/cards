@@ -12,7 +12,7 @@ Function aliases are converted to functions using alias_as_fmt_fn()."><meta prop
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,14 +33,6 @@ Function aliases are converted to functions using alias_as_fmt_fn()."><meta prop
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -91,16 +83,16 @@ an ARD data frame of class 'card'</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">apply_fmt_fn</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 8 x 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable          context stat_name       stat_label   stat stat_fmt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo&lt;U+2026&gt;         N                N    254      254</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo&lt;U+2026&gt;      mean             Mean 75.087     75.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE continuo&lt;U+2026&gt;        sd               SD  8.246      8.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE continuo&lt;U+2026&gt;    median           Median     77     77.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE continuo&lt;U+2026&gt;       p25 25th Per&lt;U+2026&gt;     70     70.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE continuo&lt;U+2026&gt;       p75 75th Per&lt;U+2026&gt;     81     81.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE continuo&lt;U+2026&gt;       min              Min     51     51.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE continuo&lt;U+2026&gt;       max              Max     89     89.0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">3 more variables: fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label   stat stat_fmt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N    254      254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…      mean       Mean 75.087     75.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE continuo…        sd         SD  8.246      8.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE continuo…    median     Median     77     77.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE continuo…       p25  25th Per…     70     70.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE continuo…       p75  75th Per…     81     81.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE continuo…       min        Min     51     51.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE continuo…       max        Max     89     89.0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

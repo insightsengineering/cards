@@ -44,7 +44,7 @@ for variable-level summaries, such as number and rate of missing data.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,14 +65,6 @@ for variable-level summaries, such as number and rate of missing data.
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -161,10 +153,10 @@ functions, <code>categorical_summary_fns()</code> returns a named list of summar
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu">continuous_summary_fns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="st">"median"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 2 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable          context stat_name stat_label stat fmt_fn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo&lt;U+2026&gt;         N          N  254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo&lt;U+2026&gt;    median     Median   77      1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label stat fmt_fn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N  254      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…    median     Median   77      1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># categorical variable summaries</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span></span></span>
@@ -173,14 +165,14 @@ functions, <code>categorical_summary_fns()</code> returns a named list of summar
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu">categorical_summary_fns</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"N"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6 x 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level          context stat_name stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   AGEGR1          65-80 categori&lt;U+2026&gt;         n          n  144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   AGEGR1          65-80 categori&lt;U+2026&gt;         N          N  254</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   AGEGR1            &lt;65 categori&lt;U+2026&gt;         n          n   33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   AGEGR1            &lt;65 categori&lt;U+2026&gt;         N          N  254</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   AGEGR1            &gt;80 categori&lt;U+2026&gt;         n          n   77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   AGEGR1            &gt;80 categori&lt;U+2026&gt;         N          N  254</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">3 more variables: fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable variable_level   context stat_name stat_label stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   AGEGR1          65-80 categori…         n          n  144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   AGEGR1          65-80 categori…         N          N  254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   AGEGR1            &lt;65 categori…         n          n   33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   AGEGR1            &lt;65 categori…         N          N  254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   AGEGR1            &gt;80 categori…         n          n   77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   AGEGR1            &gt;80 categori…         N          N  254</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: fmt_fn, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># summary for rates of missing data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="ard_missing.html">ard_missing</a></span><span class="op">(</span></span></span>
@@ -189,18 +181,18 @@ functions, <code>categorical_summary_fns()</code> returns a named list of summar
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu">missing_summary_fns</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 10 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    variable context stat_name       stat_label stat fmt_fn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       AGE missing     N_obs Vector L&lt;U+2026&gt;  254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       AGE missing    N_miss        N Missing    0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       AGE missing N_nonmiss N Non-mi&lt;U+2026&gt;  254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       AGE missing    p_miss        % Missing    0   &lt;fn&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       AGE missing p_nonmiss % Non-mi&lt;U+2026&gt;    1   &lt;fn&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    AGEGR1 missing     N_obs Vector L&lt;U+2026&gt;  254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    AGEGR1 missing    N_miss        N Missing    0      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    AGEGR1 missing N_nonmiss N Non-mi&lt;U+2026&gt;  254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    AGEGR1 missing    p_miss        % Missing    0   &lt;fn&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   AGEGR1 missing p_nonmiss % Non-mi&lt;U+2026&gt;    1   &lt;fn&gt;</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    variable context stat_name stat_label stat fmt_fn</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       AGE missing     N_obs  Vector L…  254      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       AGE missing    N_miss  N Missing    0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       AGE missing N_nonmiss  N Non-mi…  254      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       AGE missing    p_miss  % Missing    0   &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       AGE missing p_nonmiss  % Non-mi…    1   &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    AGEGR1 missing     N_obs  Vector L…  254      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    AGEGR1 missing    N_miss  N Missing    0      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    AGEGR1 missing N_nonmiss  N Non-mi…  254      0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    AGEGR1 missing    p_miss  % Missing    0   &lt;fn&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   AGEGR1 missing p_nonmiss  % Non-mi…    1   &lt;fn&gt;</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

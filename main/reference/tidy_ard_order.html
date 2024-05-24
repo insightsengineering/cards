@@ -20,7 +20,7 @@ strata, while retaining the order of the input ARD.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9031</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,14 +41,6 @@ strata, while retaining the order of the input ARD.
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -109,20 +101,20 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-in"><span><span class="fu">tidy_ard_column_order</span><span class="op">(</span><span class="va">ard</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">tidy_ard_row_order</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 32 x 10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name       stat_label   stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;                   mpg         N                N     32</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;                   mpg      mean             Mean 20.091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;                   mpg        sd               SD  6.027</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;                   mpg    median           Median   19.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;                   mpg       p25 25th Per&lt;U+2026&gt;  15.35</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;                   mpg       p75 75th Per&lt;U+2026&gt;   22.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    &lt;NA&gt;                   mpg       min              Min   10.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    &lt;NA&gt;                   mpg       max              Max   33.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     cyl            4      mpg         N                N     11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    cyl            4      mpg      mean             Mean 26.664</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">22 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">i</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name stat_label   stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    &lt;NA&gt;                   mpg         N          N     32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    &lt;NA&gt;                   mpg      mean       Mean 20.091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    &lt;NA&gt;                   mpg        sd         SD  6.027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    &lt;NA&gt;                   mpg    median     Median   19.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    &lt;NA&gt;                   mpg       p25  25th Per…  15.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    &lt;NA&gt;                   mpg       p75  75th Per…   22.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    &lt;NA&gt;                   mpg       min        Min   10.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    &lt;NA&gt;                   mpg       max        Max   33.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     cyl            4      mpg         N          N     11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    cyl            4      mpg      mean       Mean 26.664</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">22 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
