@@ -1,5 +1,7 @@
 # cards 0.1.0.9031
 
+* Added the `nest_for_ard(include_data)` argument to either include or exclude the subsetted data frames in a list-column in the returned tibble.
+
 * The `ard_stack(by)` argument has been renamed to `".by"` and its location moved to after the dots inputs, e.g. `ard_stack(..., .by)`. (#243)
 
 * Bug fix in `ard_stack()` when calls to functions were namespaced. (#242)
