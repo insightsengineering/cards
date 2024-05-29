@@ -46,7 +46,7 @@ argument, except the summary function \emph{must} accept the following arguments
 \item \code{x}: a vector
 \item \code{data}: the data frame that has been subset such that the \code{by}/\code{strata} columns
 and rows in which \code{"variable"} is \code{NA} have been removed.
-\item \code{data_full}: the full data frame
+\item \code{full_data}: the full data frame
 \item \code{by}: character vector of the \code{by} variables
 \item \code{strata}: character vector of the \code{strata} variables
 It is unlikely any one function will need \emph{all} of the above elements,
@@ -88,10 +88,10 @@ ard_complex(
 )
 
 # return the grand mean and the mean within the `by` group
-grand_mean <- function(data, data_full, variable, ...) {
+grand_mean <- function(data, full_data, variable, ...) {
   list(
     mean = mean(data[[variable]], na.rm = TRUE),
-    grand_mean = mean(data_full[[variable]], na.rm = TRUE)
+    grand_mean = mean(full_data[[variable]], na.rm = TRUE)
   )
 }
 

@@ -12,7 +12,7 @@
 #'   - `x`: a vector
 #'   - `data`: the data frame that has been subset such that the `by`/`strata` columns
 #'       and rows in which `"variable"` is `NA` have been removed.
-#'   - `data_full`: the full data frame
+#'   - `full_data`: the full data frame
 #'   - `by`: character vector of the `by` variables
 #'   - `strata`: character vector of the `strata` variables
 #'   It is unlikely any one function will need _all_ of the above elements,
@@ -35,10 +35,10 @@
 #' )
 #'
 #' # return the grand mean and the mean within the `by` group
-#' grand_mean <- function(data, data_full, variable, ...) {
+#' grand_mean <- function(data, full_data, variable, ...) {
 #'   list(
 #'     mean = mean(data[[variable]], na.rm = TRUE),
-#'     grand_mean = mean(data_full[[variable]], na.rm = TRUE)
+#'     grand_mean = mean(full_data[[variable]], na.rm = TRUE)
 #'   )
 #' }
 #'
@@ -95,7 +95,7 @@ ard_complex.data.frame <- function(data,
     # putting the expr in quotes to avoid note about global variables
       "do.call(fun, args = list(x = stats::na.omit(nested_data[[variable]]),
                                 data = tidyr::drop_na(nested_data, any_of(variable)),
-                                data_full = data,
+                                full_data = data,
                                 variable = variable,
                                 by = by,
                                 strata = strata))" |>
