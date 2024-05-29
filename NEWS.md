@@ -1,4 +1,4 @@
-# cards 0.1.0.9031
+# cards 0.1.0.9032
 
 * Added the `nest_for_ard(include_data)` argument to either include or exclude the subsetted data frames in a list-column in the returned tibble.
 
