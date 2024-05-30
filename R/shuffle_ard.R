@@ -362,7 +362,7 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
 
   # loop through each of the grouping variables and do the renaming
   for (v in grp_vars) {
-    x <- rename_ard_columns(x, {{v}})
+    x <- rename_ard_columns(x, {{ v }})
   }
 
   x
