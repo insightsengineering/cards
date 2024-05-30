@@ -153,7 +153,6 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
 })
 
 test_that("rename_ard_columns() works", {
-
   # no variable level
   res_var <- ard_continuous(data = ADSL, by = TRT01A, variables = c(AGE, BMIBL, HEIGHTBL))
 
@@ -185,12 +184,13 @@ test_that("rename_ard_columns() works", {
   )
 
   # robust to order and NSE
-  expect_equal(res_multi_1,
-               res_multi |>
-                 rename_ard_columns(group2) |>
-                 rename_ard_columns(variable) |>
-                 rename_ard_columns(group1)
-               )
+  expect_equal(
+    res_multi_1,
+    res_multi |>
+      rename_ard_columns(group2) |>
+      rename_ard_columns(variable) |>
+      rename_ard_columns(group1)
+  )
 
   # rename variables after shuffle
   # include case where one of the variables is already present as a group
@@ -206,5 +206,4 @@ test_that("rename_ard_columns() works", {
     res_shuffle |>
       rename_ard_columns("variable", col_lev = "label")
   )
-
 })

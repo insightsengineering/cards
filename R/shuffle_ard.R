@@ -244,21 +244,22 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' cards:::rename_ard_columns(data, "group1")
 #' cards:::rename_ard_columns(data, "variable")
-rename_ard_columns <- function(x, col, col_lev = NULL){
-
+rename_ard_columns <- function(x, col, col_lev = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 
   # process arguments ----------------------------------------------------------
   process_selectors(x,
-                    col = {{ col }},
-                    col_lev = {{ col_lev }}
+    col = {{ col }},
+    col_lev = {{ col_lev }}
   )
- if (length(col_lev)==0){
-   col_lev <- paste0(col, "_level")
- }
+  if (length(col_lev) == 0) {
+    col_lev <- paste0(col, "_level")
+  }
 
-  col_vals <- unique(x[[col]]) |> na.omit() |> as.character()
+  col_vals <- unique(x[[col]]) |>
+    stats::na.omit() |>
+    as.character()
   col_vals_new <- setdiff(col_vals, names(x))
 
   # rename as the variable level within the unique levels of the grouping variable
@@ -298,24 +299,22 @@ rename_ard_columns <- function(x, col, col_lev = NULL){
           dplyr::mutate(across(any_of(c(col, col_lev)), as.character)) |>
           dplyr::mutate(!!col_lev := tidyr::replace_na(.data[[col_lev]], col_new_fill))
 
-        if (col_new %in% names(dat_rnm)){
-
+        if (col_new %in% names(dat_rnm)) {
           # if there are any mismatches between the an existing column and the column-to-be, notify user that column-to-be will take precedence
           if (!all(is.na(dat_rnm[[col_new]])) &&
-              !all(is.na(dat_rnm[[col_lev]])) &&
-              any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])){
-
+            !all(is.na(dat_rnm[[col_lev]])) &&
+            any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
             cli::cli_alert_warning("Original values of {.val {col_new}} will be overwritten by those from {.val {col_lev}}.")
           }
 
-            dat_rnm <- dat_rnm |>
-              dplyr::mutate(!!col_new := ifelse(!is.na(.data[[col_lev]]),
-                                                .data[[col_lev]],
-                                                .data[[col_new]] )) |>
-              dplyr::relocate(all_of(col_new), .after = all_of(col_lev)) |>
-              dplyr::select(-all_of(c(col, col_lev)))
+          dat_rnm <- dat_rnm |>
+            dplyr::mutate(!!col_new := ifelse(!is.na(.data[[col_lev]]),
+              .data[[col_lev]],
+              .data[[col_new]]
+            )) |>
+            dplyr::relocate(all_of(col_new), .after = all_of(col_lev)) |>
+            dplyr::select(-all_of(c(col, col_lev)))
         } else {
-
           dat_rnm <- dat_rnm |>
             dplyr::rename(!!col_new := all_of(col_lev)) |>
             dplyr::select(-all_of(col))
@@ -326,7 +325,7 @@ rename_ard_columns <- function(x, col, col_lev = NULL){
   x_combined <- dplyr::bind_rows(x)
 
   # ensure all the newly created appear in sequence
-  if (length(col_vals_new)>1){
+  if (length(col_vals_new) > 1) {
     x_combined <- x_combined |>
       dplyr::relocate(all_of(col_vals_new[-1]), .after = all_of(col_vals_new[1]))
   }
