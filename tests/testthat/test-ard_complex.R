@@ -36,13 +36,13 @@ test_that("ard_complex() works", {
       dplyr::select(all_ard_groups(), all_ard_variables(), stat)
   )
 
-  # test a function using `data` and `data_full` arguments
+  # test a function using `data` and `full_data` arguments
   expect_error(
     {
-      grand_mean <- function(data, data_full, variable, ...) {
+      grand_mean <- function(data, full_data, variable, ...) {
         list(
           mean = mean(data[[variable]], na.rm = TRUE),
-          grand_mean = mean(data_full[[variable]], na.rm = TRUE)
+          grand_mean = mean(full_data[[variable]], na.rm = TRUE)
         )
       }
       ard_grand_mean <-
