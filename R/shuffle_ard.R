@@ -40,6 +40,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   vars_ard <- dat_cards |>
     dplyr::select(all_ard_groups(), all_ard_variables()) |>
     names()
+
   vars_protected <- setdiff(names(dat_cards), vars_ard)
 
   dat_cards_grps <- dat_cards |>
@@ -361,7 +362,7 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
 
   # loop through each of the grouping variables and do the renaming
   for (v in grp_vars) {
-    x <- rename_ard_columns(x, v)
+    x <- rename_ard_columns(x, {{v}})
   }
 
   x
