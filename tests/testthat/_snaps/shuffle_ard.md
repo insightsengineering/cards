@@ -432,3 +432,50 @@
       1 Overall ARM AGE      <NA>       p          0.05
       2 <NA>        AGE      continuous mean      75.1 
 
+# rename_ard_columns() works
+
+    Code
+      res_rnm_var
+    Output
+      # A tibble: 72 x 12
+         group1 group1_level AGE     BMIBL HEIGHTBL context stat_name stat_label stat 
+         <chr>  <list>       <chr>   <chr> <chr>    <chr>   <chr>     <chr>      <lis>
+       1 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ N         N          <int>
+       2 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ mean      Mean       <dbl>
+       3 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ sd        SD         <dbl>
+       4 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ median    Median     <dbl>
+       5 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ p25       25th Perc~ <dbl>
+       6 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ p75       75th Perc~ <dbl>
+       7 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ min       Min        <dbl>
+       8 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ max       Max        <dbl>
+       9 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ N         N          <int>
+      10 TRT01A <chr [1]>    Overal~ <NA>  <NA>     contin~ mean      Mean       <dbl>
+      # i 62 more rows
+      # i 3 more variables: fmt_fn <list>, warning <list>, error <list>
+
+---
+
+    Code
+      res_multi_1 <- rename_ard_columns(rename_ard_columns(rename_ard_columns(
+        res_multi, "group1"), "group2"), "variable")
+
+---
+
+    Code
+      rename_ard_columns(res_shuffle, "variable", col_lev = "label")
+    Output
+      # A tibble: 78 x 7
+         TRT01A               RACE              ETHNIC AGE   context stat_name    stat
+         <chr>                <chr>             <chr>  <chr> <chr>   <chr>       <dbl>
+       1 Placebo              AMERICAN INDIAN ~ <NA>   <NA>  catego~ n          0     
+       2 Placebo              AMERICAN INDIAN ~ <NA>   <NA>  catego~ N         86     
+       3 Placebo              AMERICAN INDIAN ~ <NA>   <NA>  catego~ p          0     
+       4 Placebo              BLACK OR AFRICAN~ <NA>   <NA>  catego~ n          8     
+       5 Placebo              BLACK OR AFRICAN~ <NA>   <NA>  catego~ N         86     
+       6 Placebo              BLACK OR AFRICAN~ <NA>   <NA>  catego~ p          0.0930
+       7 Placebo              WHITE             <NA>   <NA>  catego~ n         78     
+       8 Placebo              WHITE             <NA>   <NA>  catego~ N         86     
+       9 Placebo              WHITE             <NA>   <NA>  catego~ p          0.907 
+      10 Xanomeline High Dose AMERICAN INDIAN ~ <NA>   <NA>  catego~ n          1     
+      # i 68 more rows
+
