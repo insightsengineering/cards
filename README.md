@@ -15,7 +15,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The [CDISC Analysis Results
-Standard](https://www.cdisc.org/standards/foundational/analysis-results-standards)
+Standard](https://www.cdisc.org/standards/foundational/analysis-results-standard)
 aims to facilitate automation, reproducibility, reusability, and
 traceability of analysis results data (ARD). The {cards} package creates
 these **C**DISC **A**nalysis **R**esult **D**ata **S**ets.
