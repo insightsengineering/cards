@@ -30,7 +30,19 @@ apply_fmt_fn <- function(x) {
           ),
           function(stat, variable, stat_name, fn) {
             if (!is.null(fn)) {
-              do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat))
+              tryCatch(
+                do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat)),
+                error = \(e) {
+                  cli::cli_abort(
+                    c("There was an error applying the formatting function to
+                       statistic {.val {stat_name}} for variable {.val {variable}}.",
+                      "i" = "Perhaps try formmatting function {.fun as.character}? See error message below:",
+                      "x" = conditionMessage(e)),
+                    call = get_cli_abort_call()
+                  )
+                }
+              )
+
             } else {
               NULL
             }
