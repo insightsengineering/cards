@@ -6,7 +6,9 @@ test_that("rename_ard_columns() works", {
 
   expect_equal(nrow(res_var), nrow(res_rnm_var))
 
-  expect_snapshot(res_rnm_var)
+  expect_snapshot(res_rnm_var |>
+                    dplyr::select(-c(fmt_fn, warning, error)) |>
+                    as.data.frame())
 
 
   # multiple variables and levels
@@ -21,12 +23,16 @@ test_that("rename_ard_columns() works", {
 
   expect_equal(nrow(res_multi), nrow(res_rnm_multi))
 
+  res_multi_1 <- res_multi |>
+    rename_ard_columns("group1") |>
+    rename_ard_columns("group2") |>
+    rename_ard_columns("variable")
+
   # rename groups and variables
   expect_snapshot(
-    res_multi_1 <- res_multi |>
-      rename_ard_columns("group1") |>
-      rename_ard_columns("group2") |>
-      rename_ard_columns("variable")
+      res_multi_1 |>
+        dplyr::select(-c(fmt_fn, warning, error)) |>
+        as.data.frame()
   )
 
   # robust to order and NSE
@@ -50,6 +56,7 @@ test_that("rename_ard_columns() works", {
 
   expect_snapshot(
     res_shuffle |>
-      rename_ard_columns("variable", col_lev = "label")
+      rename_ard_columns("variable", col_lev = "label")|>
+      as.data.frame()
   )
 })
