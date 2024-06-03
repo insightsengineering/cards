@@ -233,9 +233,9 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @param x (`data.frame`)\cr
 #'   a data frame
 #' @param col ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'  Name of column containing the variable names
+#'   Name of column containing the variable names
 #' @param col_lev ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'  Name of column containing the variable levels. If `NULL` (default), this will be assumed to match the `col` argument with `_level` appended to the end (e.g. if `col` = "group1", `col_lev` will be assumed to be "group1_level")
+#'   Name of column containing the variable levels. If `NULL` (default), this will be assumed to match the `col` argument with `_level` appended to the end (e.g. if `col` = "group1", `col_lev` will be assumed to be "group1_level")
 #'
 #' @return data frame
 #' @export
@@ -243,8 +243,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @examples
 #' data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
 #'
-#' cards:::rename_ard_columns(data, "group1")
-#' cards:::rename_ard_columns(data, "variable")
+#' cards::rename_ard_columns(data, "group1")
+#' cards::rename_ard_columns(data, "variable")
 rename_ard_columns <- function(x, col, col_lev = NULL) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
