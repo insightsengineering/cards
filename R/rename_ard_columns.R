@@ -25,8 +25,8 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
 
   # process arguments ----------------------------------------------------------
   process_selectors(x,
-                    col = {{ col }},
-                    col_lev = {{ col_lev }}
+    col = {{ col }},
+    col_lev = {{ col_lev }}
   )
   if (length(col_lev) == 0) {
     col_lev <- paste0(col, "_level")
@@ -77,15 +77,15 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
         if (col_new %in% names(dat_rnm)) {
           # if there are any mismatches between the an existing column and the column-to-be, notify user that column-to-be will take precedence
           if (!all(is.na(dat_rnm[[col_new]])) &&
-              !all(is.na(dat_rnm[[col_lev]])) &&
-              any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
+            !all(is.na(dat_rnm[[col_lev]])) &&
+            any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
             cli::cli_alert_warning("Original values of {.val {col_new}} will be overwritten by those from {.val {col_lev}}.")
           }
 
           dat_rnm <- dat_rnm |>
             dplyr::mutate(!!col_new := ifelse(!is.na(.data[[col_lev]]),
-                                              .data[[col_lev]],
-                                              .data[[col_new]]
+              .data[[col_lev]],
+              .data[[col_new]]
             )) |>
             dplyr::relocate(all_of(col_new), .after = all_of(col_lev)) |>
             dplyr::select(-all_of(c(col, col_lev)))
@@ -107,4 +107,3 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
 
   x_combined
 }
-
