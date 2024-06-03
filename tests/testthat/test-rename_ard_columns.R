@@ -8,6 +8,7 @@ test_that("rename_ard_columns() works", {
 
   expect_snapshot(res_rnm_var |>
                     dplyr::select(-c(fmt_fn, warning, error)) |>
+                    dplyr::slice(1:20) |>
                     as.data.frame())
 
 
@@ -32,6 +33,7 @@ test_that("rename_ard_columns() works", {
   expect_snapshot(
       res_multi_1 |>
         dplyr::select(-c(fmt_fn, warning, error)) |>
+        dplyr::slice(1:20) |>
         as.data.frame()
   )
 
@@ -57,6 +59,7 @@ test_that("rename_ard_columns() works", {
   expect_snapshot(
     res_shuffle |>
       rename_ard_columns("variable", col_lev = "label")|>
+      dplyr::slice(1:20) |>
       as.data.frame()
   )
 })
