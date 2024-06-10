@@ -32,7 +32,7 @@
 
 * Bug fix in `shuffle_ard()` where factors were coerced to integers instead of their labels. (#232)
 
-* Added helper `rename_ard_columns()` for renaming/coalescing group/variable columns. (#213).
+* Added helper `shift_ard_columns()` for renaming/coalescing group/variable columns. (#213).
 
 # cards 0.1.0
 

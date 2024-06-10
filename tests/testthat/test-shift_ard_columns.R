@@ -1,8 +1,8 @@
-test_that("rename_ard_columns() works", {
+test_that("shift_ard_columns() works", {
   # no variable level
   res_var <- ard_continuous(data = ADSL, by = TRT01A, variables = c(AGE, BMIBL, HEIGHTBL))
 
-  res_rnm_var <- rename_ard_columns(res_var, all_ard_variables())
+  res_rnm_var <- shift_ard_columns(res_var, all_ard_variables())
 
   expect_equal(nrow(res_var), nrow(res_rnm_var))
 
@@ -20,11 +20,11 @@ test_that("rename_ard_columns() works", {
     ard_continuous(variables = AGE)
   )
 
-  res_rnm_multi <- rename_ard_columns(res_multi, all_ard_variables())
+  res_rnm_multi <- shift_ard_columns(res_multi, all_ard_variables())
 
   expect_equal(nrow(res_multi), nrow(res_rnm_multi))
 
-  res_multi_1 <- rename_ard_columns(res_multi, c(all_ard_groups(), all_ard_variables()))
+  res_multi_1 <- shift_ard_columns(res_multi, c(all_ard_groups(), all_ard_variables()))
 
   # rename groups and variables
   expect_snapshot(
@@ -38,7 +38,7 @@ test_that("rename_ard_columns() works", {
   expect_equal(
     res_multi_1,
     res_multi |>
-      rename_ard_columns(c(variable, group1, group2_level,
+      shift_ard_columns(c(variable, group1, group2_level,
                            variable_level, group2, group1_level))
   )
 
@@ -54,7 +54,7 @@ test_that("rename_ard_columns() works", {
 
   expect_snapshot(
     res_shuffle |>
-      rename_ard_columns(c(variable, label)) |>
+      shift_ard_columns(c(variable, label)) |>
       dplyr::slice(1:20) |>
       as.data.frame()
   )
@@ -63,7 +63,7 @@ test_that("rename_ard_columns() works", {
   res_var <- ard_continuous(data = ADSL, by = TRT01A, variables = c(AGE, BMIBL, HEIGHTBL))
 
   expect_snapshot(
-    rename_ard_columns(res_var |> dplyr::select(-group1),
+    shift_ard_columns(res_var |> dplyr::select(-group1),
                                     "group1_level")
 
   )

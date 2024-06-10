@@ -1,4 +1,4 @@
-#' Coalesce ARD Columns
+#' Shift ARD Columns
 #'
 #' This function combines a pair of `group`/`group_level` or `variable`/`variable_level` columns into a
 #' single column. The `group_level` or `variable_level` column is renamed according to the value of
@@ -15,9 +15,9 @@
 #' @examples
 #' data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
 #'
-#' cards::coalesce_ard_columns(data)
-#' cards::coalesce_ard_columns(data, columns = c("group1", "group1_level"))
-coalesce_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())){
+#' cards::shift_ard_columns(data)
+#' cards::shift_ard_columns(data, columns = c("group1", "group1_level"))
+shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())){
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 
@@ -33,14 +33,28 @@ coalesce_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variab
 
   # Sequentially coalesce/rename -----------------------------------------------
   for (col_pair in column_pairs) {
-    x <- .rename_col_pair(x, col_pair)
+    x <- .shift_column_pair(x, col_pair)
   }
 
   x
 }
 
 
-#' Determine column pairs for each variable name and level
+#' Pair columns
+#'
+#' This function ingests an ARD object and finds pairs of columns based on those requested for coalescing/renaming
+#'
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#' @param columns (`character`)\cr
+#'   all columns to consider for coalescing/renaming
+#'
+#' @return a list of column pairs (as character vectors)
+#' @keywords internal
+#'
+#' @examples
+#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+#'   cards:::.pair_columns(columns = c("group1","group1_level","variable","variable_level"))
 .pair_columns <- function(x, columns){
 
   # if `x` is the result of `shuffle_ard` then only columns to be coalesced/renamed will be variable/label
@@ -69,10 +83,26 @@ coalesce_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variab
     }
 }
 
-.rename_col_pair <- function(x, col_pair){
+#' Shift column pair
+#'
+#' This function ingests an ARD object and coalesces/renames a given pair of columns (variable and levels)
+#'
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#' @param col_pair (`character`)\cr
+#'   character vector containing the column names for variables (first element) and their corresponding levels (second element)
+#'
+#' @return a tibble
+#' @keywords internal
+#'
+#' @examples
+#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+#'   cards:::.shift_column_pair(col_pair = c("group1", "group1_level"))
+#'
+.shift_column_pair <- function(x, col_pair){
 
-  col <- col_pair[[1]]
-  col_lev <- col_pair[[2]]
+  col <- col_pair[1]
+  col_lev <- col_pair[2]
 
   col_vals <- unique(x[[col]]) |>
     stats::na.omit() |>

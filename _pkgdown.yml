@@ -50,7 +50,7 @@ reference:
       - check_ard_structure
       - alias_as_fmt_fn
       - label_cards
-      - rename_ard_columns
+      - shift_ard_columns
   - subtitle: "Wrangle ARD"
     contents:
       - shuffle_ard
