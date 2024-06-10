@@ -21,6 +21,6 @@ This function ingests an ARD object and finds pairs of columns based on those re
 }
 \examples{
 ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-  cards:::.pair_columns(columns = c("group1","group1_level","variable","variable_level"))
+  cards:::.pair_columns(columns = c("group1", "group1_level", "variable", "variable_level"))
 }
 \keyword{internal}
