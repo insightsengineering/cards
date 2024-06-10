@@ -38,8 +38,10 @@ test_that("shift_ard_columns() works", {
   expect_equal(
     res_multi_1,
     res_multi |>
-      shift_ard_columns(c(variable, group1, group2_level,
-                           variable_level, group2, group1_level))
+      shift_ard_columns(c(
+        variable, group1, group2_level,
+        variable_level, group2, group1_level
+      ))
   )
 
   # rename variables after shuffle
@@ -63,9 +65,9 @@ test_that("shift_ard_columns() works", {
   res_var <- ard_continuous(data = ADSL, by = TRT01A, variables = c(AGE, BMIBL, HEIGHTBL))
 
   expect_snapshot(
-    shift_ard_columns(res_var |> dplyr::select(-group1),
-                                    "group1_level")
-
+    shift_ard_columns(
+      res_var |> dplyr::select(-group1),
+      "group1_level"
+    )
   )
-
 })

@@ -17,12 +17,12 @@
 #'
 #' cards::shift_ard_columns(data)
 #' cards::shift_ard_columns(data, columns = c("group1", "group1_level"))
-shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())){
+shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 
   # process arguments ----------------------------------------------------------
-  process_selectors(x, columns = {{columns}})
+  process_selectors(x, columns = {{ columns }})
 
   if (length(columns) == 0) {
     return(x)
@@ -54,33 +54,27 @@ shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables
 #'
 #' @examples
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-#'   cards:::.pair_columns(columns = c("group1","group1_level","variable","variable_level"))
-.pair_columns <- function(x, columns){
-
+#'   cards:::.pair_columns(columns = c("group1", "group1_level", "variable", "variable_level"))
+.pair_columns <- function(x, columns) {
   # if `x` is the result of `shuffle_ard` then only columns to be coalesced/renamed will be variable/label
-  if (identical(sort(columns), c("label", "variable"))){
-
+  if (identical(sort(columns), c("label", "variable"))) {
     list(c("variable", "label"))
-
   } else {
-
     col_vars <- columns[!grepl(".*_level$", columns)]
 
     # determine if any of the columns of variables do not have a matching column of levels
     col_levs <- columns[grepl(".*_level$", columns)]
     unmatched_lev <- setdiff(col_levs, paste0(col_vars, "_level"))
-    if (length(unmatched_lev)>0){
-     cli::cli_alert_warning("The following `*_level` columns do not have a match and will not be renamed: {.val {unmatched_lev}}")
+    if (length(unmatched_lev) > 0) {
+      cli::cli_alert_warning("The following `*_level` columns do not have a match and will not be renamed: {.val {unmatched_lev}}")
     }
 
     # return a pair of columns (ok if the _level doesn't actually exist)
-    lapply(col_vars, function(col){
-
-       col_lev <- paste0(col, "_level")
-       c(col, col_lev)
-     })
-
-    }
+    lapply(col_vars, function(col) {
+      col_lev <- paste0(col, "_level")
+      c(col, col_lev)
+    })
+  }
 }
 
 #' Shift column pair
@@ -99,8 +93,7 @@ shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables
 #' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
 #'   cards:::.shift_column_pair(col_pair = c("group1", "group1_level"))
 #'
-.shift_column_pair <- function(x, col_pair){
-
+.shift_column_pair <- function(x, col_pair) {
   col <- col_pair[1]
   col_lev <- col_pair[2]
 
@@ -149,15 +142,15 @@ shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables
         if (col_new %in% names(dat_rnm)) {
           # if there are any mismatches between the an existing column and the column-to-be, notify user that column-to-be will take precedence
           if (!all(is.na(dat_rnm[[col_new]])) &&
-              !all(is.na(dat_rnm[[col_lev]])) &&
-              any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
+            !all(is.na(dat_rnm[[col_lev]])) &&
+            any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
             cli::cli_alert_warning("Original values of {.val {col_new}} will be overwritten by those from {.val {col_lev}}.")
           }
 
           dat_rnm <- dat_rnm |>
             dplyr::mutate(!!col_new := ifelse(!is.na(.data[[col_lev]]),
-                                              .data[[col_lev]],
-                                              .data[[col_new]]
+              .data[[col_lev]],
+              .data[[col_new]]
             )) |>
             dplyr::relocate(all_of(col_new), .after = all_of(col_lev)) |>
             dplyr::select(-all_of(c(col, col_lev)))
@@ -178,5 +171,4 @@ shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables
   }
 
   x_combined
-
 }
