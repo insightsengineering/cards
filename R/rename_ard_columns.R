@@ -1,4 +1,4 @@
-#' Rename ARD Columns
+#' Coalesce ARD Columns
 #'
 #' This function combines a pair of `group`/`group_level` or `variable`/`variable_level` columns into a
 #' single column. The `group_level` or `variable_level` column is renamed according to the value of
@@ -6,10 +6,8 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
-#' @param col ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   Name of column containing the variable names
-#' @param col_lev ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   Name of column containing the variable levels. If `NULL` (default), this will be assumed to match the `col` argument with `_level` appended to the end (e.g. if `col` = "group1", `col_lev` will be assumed to be "group1_level")
+#' @param columns ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   Name of columns to coalesce together and rename.
 #'
 #' @return data frame
 #' @export
@@ -17,20 +15,64 @@
 #' @examples
 #' data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
 #'
-#' cards::rename_ard_columns(data, "group1")
-#' cards::rename_ard_columns(data, "variable")
-rename_ard_columns <- function(x, col, col_lev = NULL) {
+#' cards::coalesce_ard_columns(data)
+#' cards::coalesce_ard_columns(data, columns = c("group1", "group1_level"))
+coalesce_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())){
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 
   # process arguments ----------------------------------------------------------
-  process_selectors(x,
-    col = {{ col }},
-    col_lev = {{ col_lev }}
-  )
-  if (length(col_lev) == 0) {
-    col_lev <- paste0(col, "_level")
+  process_selectors(x, columns = {{columns}})
+
+  if (length(columns) == 0) {
+    return(x)
   }
+
+  # determine pairs of variables and levels ------------------------------------
+  column_pairs <- .pair_columns(x, columns)
+
+  # Sequentially coalesce/rename -----------------------------------------------
+  for (col_pair in column_pairs) {
+    x <- .rename_col_pair(x, col_pair)
+  }
+
+  x
+}
+
+
+#' Determine column pairs for each variable name and level
+.pair_columns <- function(x, columns){
+
+  # if `x` is the result of `shuffle_ard` then only columns to be coalesced/renamed will be variable/label
+  if (identical(sort(columns), c("label", "variable"))){
+
+    list(c("variable", "label"))
+
+  } else {
+
+    col_vars <- columns[!grepl(".*_level$", columns)]
+
+    # determine if any of the columns of variables do not have a matching column of levels
+    col_levs <- columns[grepl(".*_level$", columns)]
+    unmatched_lev <- setdiff(col_levs, paste0(col_vars, "_level"))
+    if (length(unmatched_lev)>0){
+     cli::cli_alert_warning("The following `*_level` columns do not have a match and will not be renamed: {.val {unmatched_lev}}")
+    }
+
+    # return a pair of columns (ok if the _level doesn't actually exist)
+    lapply(col_vars, function(col){
+
+       col_lev <- paste0(col, "_level")
+       c(col, col_lev)
+     })
+
+    }
+}
+
+.rename_col_pair <- function(x, col_pair){
+
+  col <- col_pair[[1]]
+  col_lev <- col_pair[[2]]
 
   col_vals <- unique(x[[col]]) |>
     stats::na.omit() |>
@@ -77,15 +119,15 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
         if (col_new %in% names(dat_rnm)) {
           # if there are any mismatches between the an existing column and the column-to-be, notify user that column-to-be will take precedence
           if (!all(is.na(dat_rnm[[col_new]])) &&
-            !all(is.na(dat_rnm[[col_lev]])) &&
-            any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
+              !all(is.na(dat_rnm[[col_lev]])) &&
+              any(dat_rnm[[col_new]] != dat_rnm[[col_lev]])) {
             cli::cli_alert_warning("Original values of {.val {col_new}} will be overwritten by those from {.val {col_lev}}.")
           }
 
           dat_rnm <- dat_rnm |>
             dplyr::mutate(!!col_new := ifelse(!is.na(.data[[col_lev]]),
-              .data[[col_lev]],
-              .data[[col_new]]
+                                              .data[[col_lev]],
+                                              .data[[col_new]]
             )) |>
             dplyr::relocate(all_of(col_new), .after = all_of(col_lev)) |>
             dplyr::select(-all_of(c(col, col_lev)))
@@ -106,4 +148,5 @@ rename_ard_columns <- function(x, col, col_lev = NULL) {
   }
 
   x_combined
+
 }

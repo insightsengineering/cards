@@ -60,7 +60,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       )
     ) |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    .rename_ard_groups() |>
+    rename_ard_columns(columns = all_ard_groups()) |>
     .fill_grps_from_variables()
 
   # join together again
@@ -222,39 +222,6 @@ shuffle_ard <- function(x, trim = TRUE) {
   } else {
     x
   }
-}
-
-
-#' Rename ARD Group Variables
-#'
-#' This function combines each pair of `group` and `group_level` columns into a
-#' single column. The `group_level` column is renamed according to the value of
-#' the `group` column.
-#'
-#' @param x (`data.frame`)\cr
-#'   a data frame
-#'
-#' @return data frame
-#' @keywords internal
-#'
-#' @examples
-#' data <- data.frame(group1 = "A", group1_level = "B", group2 = "C", group2_level = "D")
-#'
-#' cards:::.rename_ard_groups(data)
-.rename_ard_groups <- function(x) {
-  grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
-  grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
-
-  if (length(grp_vars) == 0) {
-    return(x)
-  }
-
-  # loop through each of the grouping variables and do the renaming
-  for (v in grp_vars) {
-    x <- rename_ard_columns(x, {{ v }})
-  }
-
-  x
 }
 
 #' Back Fill Group Variables

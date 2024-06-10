@@ -99,7 +99,7 @@
 ---
 
     Code
-      as.data.frame(dplyr::slice(rename_ard_columns(res_shuffle, "variable", col_lev = "label"),
+      as.data.frame(dplyr::slice(rename_ard_columns(res_shuffle, c(variable, label)),
       1:20))
     Output
                        TRT01A                             RACE ETHNIC  AGE
@@ -144,4 +144,28 @@
       18 categorical         p  0.88095238
       19 categorical         n  0.00000000
       20 categorical         N 84.00000000
+
+---
+
+    Code
+      rename_ard_columns(dplyr::select(res_var, -group1), "group1_level")
+    Message
+      ! The following `*_level` columns do not have a match and will not be renamed: "group1_level"
+      {cards} data frame: 72 x 9
+    Output
+         group1_level variable   context stat_name stat_label   stat
+      1       Placebo      AGE continuo…         N          N     86
+      2       Placebo      AGE continuo…      mean       Mean 75.209
+      3       Placebo      AGE continuo…        sd         SD   8.59
+      4       Placebo      AGE continuo…    median     Median     76
+      5       Placebo      AGE continuo…       p25  25th Per…     69
+      6       Placebo      AGE continuo…       p75  75th Per…     82
+      7       Placebo      AGE continuo…       min        Min     52
+      8       Placebo      AGE continuo…       max        Max     89
+      9       Placebo    BMIBL continuo…         N          N     86
+      10      Placebo    BMIBL continuo…      mean       Mean 23.636
+    Message
+      i 62 more rows
+      i Use `print(n = ...)` to see more rows
+      i 3 more variables: fmt_fn, warning, error
 
