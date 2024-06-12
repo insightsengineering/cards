@@ -127,7 +127,13 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-lst_results_as_df.html</loc>
   </url>
   <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-nesting_rename_ard_columns.html</loc>
+  </url>
+  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-one_row_ard_to_nested_list.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-pair_columns.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-process_denominator.html</loc>
@@ -139,13 +145,10 @@
     <loc>https://insightsengineering.github.io/cards/reference/dot-purrr_list_flatten.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-rename_ard_columns.html</loc>
-  </url>
-  <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-rename_last_group_as_variable.html</loc>
   </url>
   <url>
-    <loc>https://insightsengineering.github.io/cards/reference/dot-rnm_grp_vars.html</loc>
+    <loc>https://insightsengineering.github.io/cards/reference/dot-shift_column_pair.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/dot-table_as_df.html</loc>
@@ -185,6 +188,9 @@
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://insightsengineering.github.io/cards/reference/rename_ard_columns.html</loc>
   </url>
   <url>
     <loc>https://insightsengineering.github.io/cards/reference/replace_null_statistic.html</loc>
