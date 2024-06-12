@@ -29,6 +29,7 @@ reference:
       - ard_hierarchical
       - ard_dichotomous
       - ard_missing
+      - ard_total_n
       - ard_complex
       - ard_stack
 
