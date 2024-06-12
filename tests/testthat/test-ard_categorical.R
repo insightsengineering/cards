@@ -310,7 +310,7 @@ test_that("ard_categorical(denominator='cell') works", {
     ard_categorical(
       data = df_missing,
       variables = c(all_na_lgl, all_na_fct),
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "cell"
     ) |>
       dplyr::pull(stat) |>
@@ -323,7 +323,7 @@ test_that("ard_categorical(denominator='cell') works", {
       data = df_missing,
       variables = c(all_na_lgl, all_na_fct),
       by = letters,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "cell"
     ) |>
       dplyr::pull(stat) |>
@@ -382,7 +382,7 @@ test_that("ard_categorical(denominator='row') works", {
         ADSL,
         variables = "AGEGR1", by = "ARM",
         denominator = "row",
-        statistic = list(AGEGR1 = categorical_summary_fns(c("n", "N"))),
+        statistic = list(AGEGR1 = c("n", "N")),
         fmt_fn = list(AGEGR1 = list("n" = 2))
       ),
     NA
@@ -401,7 +401,7 @@ test_that("ard_categorical(denominator='row') works", {
     ard_categorical(
       data = df_missing,
       variable = all_na_lgl,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "row"
     ) |>
       dplyr::pull(stat) |>
@@ -414,7 +414,7 @@ test_that("ard_categorical(denominator='row') works", {
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "row"
     ) |>
       dplyr::pull(stat) |>
@@ -437,7 +437,7 @@ test_that("ard_categorical(denominator='column') works", {
     ard_categorical(
       data = df_missing,
       variable = all_na_lgl,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "column"
     ) |>
       dplyr::pull(stat) |>
@@ -450,7 +450,7 @@ test_that("ard_categorical(denominator='column') works", {
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "column"
     ) |>
       dplyr::pull(stat) |>
@@ -464,7 +464,7 @@ test_that("ard_categorical(denominator='column') works", {
     ard_categorical(
       data = df_missing,
       variable = all_na_lgl,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "column"
     ) |>
       dplyr::pull(stat) |>
@@ -477,7 +477,7 @@ test_that("ard_categorical(denominator='column') works", {
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
-      statistic = ~ categorical_summary_fns(c("n", "N")),
+      statistic = ~ c("n", "N"),
       denominator = "column"
     ) |>
       dplyr::pull(stat) |>
@@ -546,7 +546,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
       dplyr::mutate(AGEGR1 = NA) |>
       ard_categorical(
         variables = AGEGR1,
-        statistic = ~ categorical_summary_fns(c("n", "p")),
+        statistic = ~ c("n", "p"),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
       dplyr::pull(stat) |>
@@ -562,58 +562,13 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
       ard_categorical(
         variables = AGEGR1,
         by = ARM,
-        statistic = ~ categorical_summary_fns(c("n", "p")),
+        statistic = ~ c("n", "p"),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
       ) |>
       dplyr::pull(stat) |>
       unlist() |>
       unique(),
     0L
-  )
-})
-
-test_that("ard_categorical(statistic) works with custom fns", {
-  expect_snapshot(
-    ard_custom_fns <-
-      ard_categorical(
-        ADSL,
-        variables = AGEGR1,
-        statistic =
-          ~ categorical_summary_fns(
-            other_stats = list(
-              mode = function(x) {
-                table(x) |>
-                  sort(decreasing = TRUE) |>
-                  names() |>
-                  getElement(1)
-              },
-              length = function(x) length(x)
-            )
-          )
-      )
-  )
-
-  expect_equal(
-    ard_custom_fns |>
-      dplyr::select(-variable_level) |>
-      dplyr::filter(stat_name %in% c("mode", "length")),
-    ard_categorical(
-      ADSL,
-      variables = AGEGR1,
-      statistic =
-        ~ categorical_summary_fns(
-          summaries = list(),
-          other_stats = list(
-            mode = function(x) {
-              table(x) |>
-                sort(decreasing = TRUE) |>
-                names() |>
-                getElement(1)
-            },
-            length = function(x) length(x)
-          )
-        )
-    )
   )
 })
 

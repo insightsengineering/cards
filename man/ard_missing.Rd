@@ -11,7 +11,7 @@ ard_missing(data, ...)
   data,
   variables,
   by = dplyr::group_vars(data),
-  statistic = everything() ~ missing_summary_fns(),
+  statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels(),
   ...
@@ -67,6 +67,6 @@ ADSL |>
   dplyr::group_by(ARM) |>
   ard_missing(
     variables = "AGE",
-    statistic = ~ missing_summary_fns("N_miss")
+    statistic = ~"N_miss"
   )
 }

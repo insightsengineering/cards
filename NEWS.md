@@ -1,5 +1,7 @@
 # cards 0.1.0.9036
 
+* The API for `ard_continuous(statistic)` and `ard_missing(statistic)` arguments has been updated. Previously, the RHS of these argument's passed lists would be either `continuous_summary_fns()` and `missing_summary_fns()`. Now these arguments accept simple character vectors of the statistic names. For example, `ard_categorical(statistic = everything() ~ c("n", "p", "N"))` and `ard_missing(statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"))`. (#223) 
+
 * Added the `nest_for_ard(include_data)` argument to either include or exclude the subsetted data frames in a list-column in the returned tibble.
 
 * The `ard_stack(by)` argument has been renamed to `".by"` and its location moved to after the dots inputs, e.g. `ard_stack(..., .by)`. (#243)

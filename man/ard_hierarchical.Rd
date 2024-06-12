@@ -15,7 +15,7 @@ ard_hierarchical_count(data, ...)
   data,
   variables,
   by = dplyr::group_vars(data),
-  statistic = everything() ~ categorical_summary_fns(),
+  statistic = everything() ~ c("n", "N", "p"),
   denominator = NULL,
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels(),
@@ -47,9 +47,8 @@ specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element is a named list of functions
-(or the RHS of a formula),
-e.g. \code{list(mpg = categorical_summary_fns())}.}
+or a single formula where the list element one or more of  \code{c("n", "N", "p")}
+(or the RHS of a formula).}
 
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
 Specify this \emph{optional} argument to change the denominator,
