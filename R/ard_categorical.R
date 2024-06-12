@@ -275,7 +275,7 @@ ard_categorical.data.frame <- function(data,
         }
 
         df_result_tabulation |>
-          .rename_ard_columns(variable = variable, by = by, strata = strata) |>
+          .nesting_rename_ard_columns(variable = variable, by = by, strata = strata) |>
           dplyr::mutate(
             across(any_of(c("...ard_n...", "...ard_N...", "...ard_p...")), as.list),
             across(c(matches("^group[0-9]+_level$"), any_of("variable_level")), as.list)

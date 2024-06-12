@@ -40,6 +40,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   vars_ard <- dat_cards |>
     dplyr::select(all_ard_groups(), all_ard_variables()) |>
     names()
+
   vars_protected <- setdiff(names(dat_cards), vars_ard)
 
   dat_cards_grps <- dat_cards |>
@@ -59,7 +60,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       )
     ) |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    .rnm_grp_vars() |>
+    rename_ard_columns(columns = all_ard_groups()) |>
     .fill_grps_from_variables()
 
   # join together again
@@ -221,72 +222,6 @@ shuffle_ard <- function(x, trim = TRUE) {
   } else {
     x
   }
-}
-
-
-#' Rename Group Variables
-#'
-#' This function combines each pair of `group` and `group_level` columns into a
-#' single column. The `group_level` column is renamed according to the value of
-#' the `group` column.
-#'
-#' @param x (`data.frame`)\cr
-#'   a data frame
-#'
-#' @return data frame
-#' @keywords internal
-#'
-#' @examples
-#' data <- data.frame(group1 = "A", x = "B", group2 = "C", y = "D")
-#'
-#' cards:::.rnm_grp_vars(data)
-.rnm_grp_vars <- function(x) {
-  grp_var_levs <- names(x)[grep("^group[0-9]+_level$", names(x))]
-  grp_vars <- names(x)[grep("^group[0-9]+$", names(x))]
-
-  if (length(grp_vars) == 0) {
-    return(x)
-  }
-
-  # loop through each of the grouping variables
-  for (v in grp_vars) {
-    # rename as the variable level within the unique levels of the grouping variable
-    x <- x |>
-      dplyr::mutate(!!v := fct_inorder(.data[[v]])) |>
-      dplyr::group_by(.data[[v]]) |>
-      dplyr::group_split() |>
-      map(function(dat) {
-        v_lev <- paste0(v, "_level")
-        v_new <- unique(dat[[v]]) |> as.character()
-
-        # drop if no grouping values
-        if (is.na(v_new)) {
-          dplyr::select(dat, -any_of(c(v_lev, v)))
-        } else {
-          # create _level var if it does not exist
-          if (is.null(dat[[v_lev]])) {
-            dat <- dat |> dplyr::mutate(!!v_lev := NA_character_)
-          }
-
-          # fill any NA _level
-          v_new_fill <- make.unique(c(
-            unique(dat[[v_lev]]),
-            paste("Overall", v_new)
-          )) |>
-            dplyr::last()
-
-          # rename _level var & drop source
-          dat %>%
-            dplyr::mutate(!!v_lev := tidyr::replace_na(.data[[v_lev]], v_new_fill)) |>
-            dplyr::rename(!!v_new := all_of(v_lev)) |>
-            dplyr::select(-all_of(v))
-        }
-      }) |>
-      dplyr::bind_rows()
-  }
-
-  x |>
-    dplyr::relocate(all_ard_variables(), any_of(".cards_idx"), .after = last_col())
 }
 
 #' Back Fill Group Variables
