@@ -37,12 +37,12 @@ apply_fmt_fn <- function(x) {
                     c("There was an error applying the formatting function to
                        statistic {.val {stat_name}} for variable {.val {variable}}.",
                       "i" = "Perhaps try formmatting function {.fun as.character}? See error message below:",
-                      "x" = conditionMessage(e)),
+                      "x" = conditionMessage(e)
+                    ),
                     call = get_cli_abort_call()
                   )
                 }
               )
-
             } else {
               NULL
             }

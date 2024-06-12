@@ -18,7 +18,7 @@
 #'   ard_dichotomous(
 #'     variables = c(cyl, am),
 #'     value = list(cyl = 4),
-#'     statistic = ~ "p"
+#'     statistic = ~"p"
 #'   )
 NULL
 

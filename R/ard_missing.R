@@ -16,7 +16,7 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_missing(
 #'     variables = "AGE",
-#'     statistic = ~ "N_miss"
+#'     statistic = ~"N_miss"
 #'   )
 NULL
 
@@ -105,4 +105,3 @@ missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p
       }
   )
 }
-
