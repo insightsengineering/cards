@@ -60,7 +60,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       )
     ) |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    shift_ard_columns(columns = all_ard_groups()) |>
+    rename_ard_columns(columns = all_ard_groups()) |>
     .fill_grps_from_variables()
 
   # join together again

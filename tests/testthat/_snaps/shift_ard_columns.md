@@ -1,4 +1,4 @@
-# shift_ard_columns() works
+# rename_ard_columns() works
 
     Code
       as.data.frame(dplyr::slice(dplyr::select(res_rnm_var, -c(fmt_fn, warning, error)),
@@ -99,7 +99,7 @@
 ---
 
     Code
-      as.data.frame(dplyr::slice(shift_ard_columns(res_shuffle, c(variable, label)),
+      as.data.frame(dplyr::slice(rename_ard_columns(res_shuffle, c(variable, label)),
       1:20))
     Output
                        TRT01A                             RACE ETHNIC  AGE
@@ -148,7 +148,7 @@
 ---
 
     Code
-      shift_ard_columns(dplyr::select(res_var, -group1), "group1_level")
+      rename_ard_columns(dplyr::select(res_var, -group1), "group1_level")
     Message
       ! The following `*_level` columns do not have a match and will not be renamed: "group1_level"
       {cards} data frame: 72 x 9

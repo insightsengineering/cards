@@ -1,4 +1,4 @@
-#' Shift ARD Columns
+#' Rename ARD Columns
 #'
 #' This function combines a pair of `group`/`group_level` or `variable`/`variable_level` columns into a
 #' single column. The `group_level` or `variable_level` column is renamed according to the value of
@@ -15,9 +15,9 @@
 #' @examples
 #' data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
 #'
-#' cards::shift_ard_columns(data)
-#' cards::shift_ard_columns(data, columns = c("group1", "group1_level"))
-shift_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())) {
+#' rename_ard_columns(data)
+#' rename_ard_columns(data, columns = c("group1", "group1_level"))
+rename_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())) {
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 

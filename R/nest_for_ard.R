@@ -135,7 +135,7 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   if (isTRUE(rename_columns)) {
     df_return <-
       df_return |>
-      .rename_ard_columns(by = by, strata = strata)
+      .nesting_rename_ard_columns(by = by, strata = strata)
   }
 
   # returning final nested tibble ----------------------------------------------
@@ -171,8 +171,8 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
 #'   rename_columns = FALSE
 #' )
 #'
-#' cards:::.rename_ard_columns(ard, by = "ARM", strata = "AESOC")
-.rename_ard_columns <- function(x, variable = NULL, by = NULL, strata = NULL) {
+#' cards:::.nesting_rename_ard_columns(ard, by = "ARM", strata = "AESOC")
+.nesting_rename_ard_columns <- function(x, variable = NULL, by = NULL, strata = NULL) {
   if (!is_empty(variable)) {
     x <-
       x |>
