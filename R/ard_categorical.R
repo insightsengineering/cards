@@ -61,7 +61,7 @@
 #' In some cases, you may need other kinds of statistics for categorical variables.
 #' Despite the name, `ard_continuous()` can be used to obtain these statistics.
 #'
-#' In the example below, we calcualte the mode of a categorical variable.
+#' In the example below, we calculate the mode of a categorical variable.
 #'
 #' ```{r}
 #' get_mode <- function(x) {

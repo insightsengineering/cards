@@ -102,7 +102,7 @@ be used as the updated \code{"N"} in the calculations.
 In some cases, you may need other kinds of statistics for categorical variables.
 Despite the name, \code{ard_continuous()} can be used to obtain these statistics.
 
-In the example below, we calcualte the mode of a categorical variable.
+In the example below, we calculate the mode of a categorical variable.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{get_mode <- function(x) \{
   table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1L)
