@@ -16,7 +16,7 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_missing(
 #'     variables = "AGE",
-#'     statistic = ~ missing_summary_fns("N_miss")
+#'     statistic = ~ "N_miss"
 #'   )
 NULL
 
@@ -32,7 +32,7 @@ ard_missing <- function(data, ...) {
 ard_missing.data.frame <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
-                                   statistic = everything() ~ missing_summary_fns(),
+                                   statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
                                    fmt_fn = NULL,
                                    stat_label = everything() ~ default_stat_labels(),
                                    ...) {
@@ -51,12 +51,26 @@ ard_missing.data.frame <- function(data,
       across(all_of(variables), Negate(is.na))
     )
 
+  process_formula_selectors(
+    data[variables],
+    statistic = statistic
+  )
+  fill_formula_selectors(
+    data[variables],
+    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
+  )
+  check_list_elements(
+    x = statistic,
+    predicate = \(x) is.character(x) && all(x %in% c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")),
+    error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss')}}"
+  )
+
   # get the summary statistics -------------------------------------------------
   ard_continuous(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
-    statistic = statistic,
+    statistic = lapply(statistic, \(x) missing_summary_fns(x)),
     fmt_fn = fmt_fn,
     stat_label = stat_label
   ) |>
@@ -64,3 +78,31 @@ ard_missing.data.frame <- function(data,
       context = "missing"
     )
 }
+
+missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
+  list(
+    var_level =
+      function(x, stats = summaries) {
+        res <- list()
+
+        if (any(c("N_obs", "N_nonmiss", "p_miss", "p_nonmiss") %in% stats)) {
+          res[["N_obs"]] <- length(x)
+        }
+        if (any(c("N_miss", "N_nonmiss", "p_miss") %in% stats)) {
+          res[["N_miss"]] <- sum(!x)
+        }
+        if (any(c("N_nonmiss", "p_nonmiss") %in% stats)) {
+          res[["N_nonmiss"]] <- res[["N_obs"]] - res[["N_miss"]]
+        }
+        if ("p_miss" %in% stats) {
+          res[["p_miss"]] <- res[["N_miss"]] / res[["N_obs"]]
+        }
+        if ("p_nonmiss" %in% stats) {
+          res[["p_nonmiss"]] <- res[["N_nonmiss"]] / res[["N_obs"]]
+        }
+
+        res
+      }
+  )
+}
+

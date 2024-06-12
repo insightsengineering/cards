@@ -22,9 +22,8 @@
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #' @param statistic ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
-#'   or a single formula where the list element is a named list of functions
-#'   (or the RHS of a formula),
-#'   e.g. `list(mpg = categorical_summary_fns())`.
+#'   or a single formula where the list element one or more of  `c("n", "N", "p")`
+#'   (or the RHS of a formula).
 #' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
@@ -68,7 +67,7 @@
 #'   dplyr::group_by(ARM) |>
 #'   ard_categorical(
 #'     variables = "AGEGR1",
-#'     statistic = everything() ~ categorical_summary_fns("n")
+#'     statistic = everything() ~ "n"
 #'   )
 NULL
 
@@ -85,7 +84,7 @@ ard_categorical.data.frame <- function(data,
                                        variables,
                                        by = dplyr::group_vars(data),
                                        strata = NULL,
-                                       statistic = everything() ~ categorical_summary_fns(),
+                                       statistic = everything() ~ c("n", "p", "N"),
                                        denominator = NULL,
                                        fmt_fn = NULL,
                                        stat_label = everything() ~ default_stat_labels(),
@@ -117,6 +116,11 @@ ard_categorical.data.frame <- function(data,
     data[variables],
     statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
   )
+  check_list_elements(
+    x = statistic,
+    predicate = \(x) is.character(x) && all(x %in% c("n", "p", "N")),
+    error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N')}}"
+  )
 
   # return empty tibble if no variables selected -------------------------------
   if (is_empty(variables)) {
@@ -124,27 +128,6 @@ ard_categorical.data.frame <- function(data,
   }
 
   # calculating summary stats --------------------------------------------------
-  # first calculate non-tabulation statistics
-  statistics_non_tabulation <-
-    lapply(statistic, function(x) utils::modifyList(x, list(tabulation = NULL))) |>
-    compact()
-
-  if (is_empty(statistics_non_tabulation)) {
-    df_result_non_tabulation <- dplyr::tibble()
-  } else {
-    df_result_non_tabulation <-
-      ard_continuous(
-        data = data,
-        variables = all_of(variables),
-        by = all_of(by),
-        strata = all_of(strata),
-        statistic = statistics_non_tabulation,
-        fmt_fn = NULL,
-        stat_label = NULL
-      ) |>
-      dplyr::select(-c("stat_label", "fmt_fn"))
-  }
-
   # calculate tabulation statistics
   df_result_tabulation <-
     .calculate_tabulation_statistics(
@@ -153,13 +136,13 @@ ard_categorical.data.frame <- function(data,
       by = by,
       strata = strata,
       denominator = denominator,
-      statistic = statistic
+      statistic = lapply(statistic, \(x) list(tabulation = x))
     )
 
 
   # final processing of fmt_fn -------------------------------------------------
   df_result_final <-
-    dplyr::bind_rows(df_result_tabulation, df_result_non_tabulation) |>
+    df_result_tabulation |>
     .process_nested_list_as_df(
       arg = fmt_fn,
       new_column = "fmt_fn"
