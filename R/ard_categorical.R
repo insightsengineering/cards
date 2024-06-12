@@ -57,6 +57,25 @@
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
 #'   be used as the updated `"N"` in the calculations.
 #'
+#' @section Other Statistics:
+#' In some cases, you may need other kinds of statistics for categorical variables.
+#' Despite the name, `ard_continuous()` can be used to obtain these statistics.
+#'
+#' In the example below, we calcualte the mode of a categorical variable.
+#'
+#' ```{r}
+#' get_mode <- function(x) {
+#'   table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1L)
+#' }
+#'
+#' ADSL |>
+#'   ard_continuous(
+#'     variables = AGEGR1,
+#'     statistic = list(AGEGR1 = list(mode = get_mode))
+#'   )
+#' ```
+#'
+#'
 #' @return an ARD data frame of class 'card'
 #' @name ard_categorical
 #'

@@ -97,6 +97,29 @@ be used as the updated \code{"N"} in the calculations.
 }
 }
 
+\section{Other Statistics}{
+
+In some cases, you may need other kinds of statistics for categorical variables.
+Despite the name, \code{ard_continuous()} can be used to obtain these statistics.
+
+In the example below, we calcualte the mode of a categorical variable.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{get_mode <- function(x) \{
+  table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1L)
+\}
+
+ADSL |>
+  ard_continuous(
+    variables = AGEGR1,
+    statistic = list(AGEGR1 = list(mode = get_mode))
+  )
+#> \{cards\} data frame: 1 x 8
+#>   variable   context stat_name stat_label  stat fmt_fn
+#> 1   AGEGR1 continuo…      mode       mode 65-80   <fn>
+#> i 2 more variables: warning, error
+}\if{html}{\out{</div>}}
+}
+
 \examples{
 ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 
