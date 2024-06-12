@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9036</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@
 <span>  <span class="va">variables</span>,</span>
 <span>  by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_summary_fns</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"p"</span>, <span class="st">"N"</span><span class="op">)</span>,</span>
 <span>  denominator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stat_label <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="default_stat_labels.html">default_stat_labels</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -104,9 +104,8 @@ columns specified.</p>
 <dt>statistic</dt>
 <dd><p>(<code><a href="syntax.html">formula-list-selector</a></code>)<br>
 a named list, a list of formulas,
-or a single formula where the list element is a named list of functions
-(or the RHS of a formula),
-e.g. <code>list(mpg = categorical_summary_fns())</code>.</p></dd>
+or a single formula where the list element one or more of  <code>c("n", "N", "p")</code>
+(or the RHS of a formula).</p></dd>
 
 
 <dt>denominator</dt>
@@ -163,6 +162,27 @@ rows in the source data frame.</p></li>
 The last column must be named <code>"...ard_N..."</code>. The integers in this column will
 be used as the updated <code>"N"</code> in the calculations.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="other-statistics">Other Statistics<a class="anchor" aria-label="anchor" href="#other-statistics"></a></h2>
+    
+
+<p>In some cases, you may need other kinds of statistics for categorical variables.
+Despite the name, <code><a href="ard_continuous.html">ard_continuous()</a></code> can be used to obtain these statistics.</p>
+<p>In the example below, we calculate the mode of a categorical variable.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">get_mode</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span>decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Extract.html" class="external-link">getElement</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">ADSL</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>    variables <span class="op">=</span> <span class="va">AGEGR1</span>,</span>
+<span>    statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AGEGR1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="va">get_mode</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; {cards} data frame: 1 x 8</span></span>
+<span><span class="co">#&gt;   variable   context stat_name stat_label  stat fmt_fn</span></span>
+<span><span class="co">#&gt; 1   AGEGR1 continuo…      mode       mode 65-80   &lt;fn&gt;</span></span>
+<span><span class="co">#&gt; i 2 more variables: warning, error</span></span></code></pre><p></p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -187,7 +207,7 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">ard_categorical</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    variables <span class="op">=</span> <span class="st">"AGEGR1"</span>,</span></span>
-<span class="r-in"><span>    statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_summary_fns</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"n"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 9 x 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   group1 group1_level variable variable_level stat_name stat_label stat</span>

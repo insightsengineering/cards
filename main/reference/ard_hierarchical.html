@@ -28,7 +28,7 @@ in AESOC, and also summarizes the counts of AESOC.
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9035</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9036</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@ in <code>AESOC</code>, and also summarizes the counts of <code>AESOC</code>.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">variables</span>,</span>
 <span>  by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
-<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">categorical_summary_fns</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"N"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
 <span>  denominator <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stat_label <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="default_stat_labels.html">default_stat_labels</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -135,9 +135,8 @@ specified here appear in results. Default is <code>dplyr::group_vars(data)</code
 <dt>statistic</dt>
 <dd><p>(<code><a href="syntax.html">formula-list-selector</a></code>)<br>
 a named list, a list of formulas,
-or a single formula where the list element is a named list of functions
-(or the RHS of a formula),
-e.g. <code>list(mpg = categorical_summary_fns())</code>.</p></dd>
+or a single formula where the list element one or more of  <code>c("n", "N", "p")</code>
+(or the RHS of a formula).</p></dd>
 
 
 <dt>denominator</dt>
