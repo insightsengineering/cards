@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.915961646926114" branch-rate="0" lines-covered="1624" lines-valid="1773" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-06-10 20:29:51.966801">
+<coverage line-rate="0.915961646926114" branch-rate="0" lines-covered="1624" lines-valid="1773" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-06-12 16:39:49.132906">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -2497,7 +2497,7 @@
                 <line number="142" hits="60" branch="false"/>
               </lines>
             </method>
-            <method name=".rename_ard_columns" signature="" line-rate="1" branch-rate="0" complexity="0">
+            <method name=".nesting_rename_ard_columns" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
                 <line number="176" hits="169" branch="false"/>
                 <line number="177" hits="109" branch="false"/>
@@ -3297,7 +3297,7 @@
         </class>
         <class name="shift_ard_columns.R" filename="R/shift_ard_columns.R" line-rate="0.831168831168831" branch-rate="0" complexity="0">
           <methods>
-            <method name="shift_ard_columns" signature="" line-rate="1" branch-rate="0" complexity="0">
+            <method name="rename_ard_columns" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
                 <line number="22" hits="10" branch="false"/>
                 <line number="25" hits="10" branch="false"/>
