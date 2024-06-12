@@ -11,6 +11,11 @@
 #' @examples
 #' ard_total_n(ADSL)
 ard_total_n <- function(data) {
+  # process inputs -------------------------------------------------------------
+  set_cli_abort_call()
+  check_data_frame(data)
+
+  # calculate total N ----------------------------------------------------------
   data |>
     dplyr::mutate(..ard_total_n.. = TRUE) |>
     ard_dichotomous(variables = "..ard_total_n..", statistic = list(..ard_total_n.. = "N")) |>
