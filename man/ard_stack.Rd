@@ -11,6 +11,7 @@ ard_stack(
   .overall = FALSE,
   .missing = FALSE,
   .attributes = FALSE,
+  .total_n = FALSE,
   .shuffle = FALSE
 )
 }
@@ -35,6 +36,9 @@ variables represented in the ARD. Default is \code{FALSE}.}
 \item{.attributes}{(\code{logical})\cr
 logical indicating whether to include the results of \code{ard_attributes()} for all
 variables represented in the ARD. Default is \code{FALSE}.}
+
+\item{.total_n}{(\code{logical})\cr
+logical indicating whether to include of \code{ard_total_n()} in the returned ARD.}
 
 \item{.shuffle}{(\code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
