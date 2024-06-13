@@ -27,10 +27,12 @@
 #' @param .shuffle (`logical`)\cr
 #'   logical indicating whether to perform `shuffle_ard()` on the final result.
 #'   Default is `FALSE`.
+#' @param .total_n (`logical`)\cr
+#'   logical indicating whether to include of `ard_total_n()` in the returned ARD.
 #'
 #' @return  a transformed ARD data frame (of class 'card' if `.shuffle = FALSE`)
-#'
 #' @export
+#'
 #' @examples
 #' ard_stack(
 #'   data = ADSL,
@@ -55,6 +57,7 @@ ard_stack <- function(data,
                       .overall = FALSE,
                       .missing = FALSE,
                       .attributes = FALSE,
+                      .total_n = FALSE,
                       .shuffle = FALSE) {
   set_cli_abort_call()
 
@@ -69,6 +72,7 @@ ard_stack <- function(data,
   check_scalar_logical(.missing)
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
+  check_scalar_logical(.total_n)
 
   if (is_empty(.by) && isTRUE(.overall)) {
     cli::cli_inform(
@@ -125,6 +129,14 @@ ard_stack <- function(data,
     ard_full <- bind_ard(
       ard_full,
       ard_attributes(data, variables = all_of(c(variables, .by)))
+    )
+  }
+
+  # total n
+  if (isTRUE(.total_n)) {
+    ard_full <- bind_ard(
+      ard_full,
+      ard_total_n(data)
     )
   }
 

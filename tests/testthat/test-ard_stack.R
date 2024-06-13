@@ -190,6 +190,19 @@ test_that("ard_stack() .shuffle argument", {
   )
 })
 
+test_that("ard_stack() adding total N", {
+  expect_equal(
+    ard_stack(
+      mtcars,
+      .by = am,
+      ard_continuous(variables = mpg),
+      .total_n = TRUE
+    ) |>
+      tail(n = 1) |>
+      dplyr::select(-all_ard_groups(), -all_ard_variables("levels")),
+    ard_total_n(mtcars)
+  )
+})
 
 test_that("ard_stack() works with namespaced functions", {
   expect_equal(
