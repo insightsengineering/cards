@@ -10,6 +10,8 @@
 #' @return an ARD data frame of class 'card'
 #' @name ard_dichotomous
 #'
+#' @inheritSection ard_categorical Denominators
+#'
 #' @examples
 #' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), value = list(cyl = 4))
 #'
