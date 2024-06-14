@@ -57,7 +57,7 @@ ard_missing.data.frame <- function(data,
   )
   fill_formula_selectors(
     data[variables],
-    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
+    statistic = formals(asNamespace("cards")[["ard_missing.data.frame"]])[["statistic"]] |> eval()
   )
   check_list_elements(
     x = statistic,
