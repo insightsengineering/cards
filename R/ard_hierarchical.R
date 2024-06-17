@@ -23,6 +23,8 @@
 #' @return an ARD data frame of class 'card'
 #' @name ard_hierarchical
 #'
+#' @inheritSection ard_categorical Denominators
+#'
 #' @examples
 #' ard_hierarchical(
 #'   data = ADAE,
