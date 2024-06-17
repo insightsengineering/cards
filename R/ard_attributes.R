@@ -51,6 +51,11 @@ ard_attributes.data.frame <- function(data,
   data <- dplyr::ungroup(data)
   process_selectors(data, variables = {{ variables }})
 
+  # return empty tibble if no variables selected -------------------------------
+  if (is_empty(variables)) {
+    return(dplyr::tibble())
+  }
+
   variables |>
     lapply(
       FUN = function(y) {
