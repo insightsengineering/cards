@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9037</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9040</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,14 +31,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -151,6 +143,32 @@ statistic labels, e.g. <code>everything() ~ list(n = "n", p = "pct")</code> or
 
 <p>an ARD data frame of class 'card'</p>
     </div>
+    <div class="section level2">
+    <h2 id="denominators">Denominators<a class="anchor" aria-label="anchor" href="#denominators"></a></h2>
+    
+
+<p>By default, the <code><a href="ard_categorical.html">ard_categorical()</a></code> function returns the statistics <code>"n"</code>, <code>"N"</code>, and
+<code>"p"</code>, where little <code>"n"</code> are the counts for the variable levels, and big <code>"N"</code> is
+the number of non-missing observations. The default calculation for the
+percentage is merely <code>p = n/N</code>.</p>
+<p>However, it is sometimes necessary to provide a different <code>"N"</code> to use
+as the denominator in this calculation. For example, in a calculation
+of the rates of various observed adverse events, you may need to update the
+denominator to the number of enrolled subjects.</p>
+<p>In such cases, use the <code>denominator</code> argument to specify a new definition
+of <code>"N"</code>, and subsequently <code>"p"</code>.
+The argument expects one of the following inputs:</p><ul><li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
+columns will be used to calculate the new <code>"N"</code>.</p></li>
+<li><p>an integer. This single integer will be used as the new <code>"N"</code></p></li>
+<li><p>a string: one of <code>"column"</code>, <code>"row"</code>, or <code>"cell"</code>. <code>"column"</code> is equivalent
+to <code>denominator=NULL</code>. <code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code>
+columns are the 'top' of a cross table, and the variables are the rows.
+<code>"cell"</code> gives percentages where the denominator is the number of non-missing
+rows in the source data frame.</p></li>
+<li><p>a structured data frame. The data frame will include columns from <code>by</code>/<code>strata</code>.
+The last column must be named <code>"...ard_N..."</code>. The integers in this column will
+be used as the updated <code>"N"</code> in the calculations.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
