@@ -130,45 +130,53 @@ Next, we will review an examples for creating a basic adverse events (AE) table.
 
 ```{r, echo=FALSE, message=FALSE}
 # use the summary data available in tfrmt
-dat_ae <- tfrmt::data_ae |> 
-  dplyr::group_by(AEBODSYS, AETERM) |> 
-  dplyr::mutate(pct_high = value[col2=="Xanomeline High Dose" & param=="pct"]) |> 
+dat_ae <- tfrmt::data_ae |>
+  dplyr::group_by(AEBODSYS, AETERM) |>
+  dplyr::mutate(pct_high = value[col2 == "Xanomeline High Dose" & param == "pct"]) |>
   dplyr::ungroup() |>
-  dplyr::filter(pct_high >10) |> 
+  dplyr::filter(pct_high > 10) |>
   dplyr::select(-pct_high) |>
-  dplyr::filter(!param=="pval") |>
-  dplyr::mutate(col1 = ifelse(col1=="n_pct", "n (%)",
-                              ifelse(col1=="AEs", "[AEs]",
-                                     col1))) 
+  dplyr::filter(!param == "pval") |>
+  dplyr::mutate(col1 = ifelse(col1 == "n_pct", "n (%)",
+    ifelse(col1 == "AEs", "[AEs]",
+      col1
+    )
+  ))
 # create formatted display
-tfrmt_ae <- tfrmt::tfrmt( 
+tfrmt_ae <- tfrmt::tfrmt(
   group = AEBODSYS,
   label = AETERM,
-  column = c(col2, col1), 
+  column = c(col2, col1),
   param = param,
   value = value,
   sorting_cols = c(ord1, ord2),
-  # specify value formatting 
+  # specify value formatting
   body_plan = tfrmt::body_plan(
-    tfrmt::frmt_structure(group_val = ".default", label_val = ".default",
-                   tfrmt::frmt_combine("{n} {pct}",
-                                n = tfrmt::frmt("XXX"),
-                                pct = tfrmt::frmt_when(
-                                  "==100" ~ "",
-                                  "==0" ~ "",
-                                  TRUE ~ tfrmt::frmt("(xx%)")))),
-    tfrmt::frmt_structure(group_val = ".default", label_val = ".default", 
-                   AEs = tfrmt::frmt("[XXX]")) 
-  ),   
-  col_plan = tfrmt::col_plan( 
-    -starts_with("ord") 
-  ) 
+    tfrmt::frmt_structure(
+      group_val = ".default", label_val = ".default",
+      tfrmt::frmt_combine("{n} {pct}",
+        n = tfrmt::frmt("XXX"),
+        pct = tfrmt::frmt_when(
+          "==100" ~ "",
+          "==0" ~ "",
+          TRUE ~ tfrmt::frmt("(xx%)")
+        )
+      )
+    ),
+    tfrmt::frmt_structure(
+      group_val = ".default", label_val = ".default",
+      AEs = tfrmt::frmt("[XXX]")
+    )
+  ),
+  col_plan = tfrmt::col_plan(
+    -starts_with("ord")
+  )
 )
- 
+
 tfrmt::print_to_gt(tfrmt_ae, dat_ae) |>
   gt::tab_options(
-      table.font.size = 12 
-  )|> 
+    table.font.size = 12
+  ) |>
   gt::cols_align(align = "center") |>
   gt::cols_width(
     1 ~ "40%",
@@ -183,7 +191,7 @@ For the computations below, we will not only make use of the `ADAE` dataset, but
 ```{r}
 # rename trt variable
 adsl <- ADSL |>
-  dplyr::rename("TRTA"="TRT01A")
+  dplyr::rename("TRTA" = "TRT01A")
 ```
 
 #### Participant-level summaries
@@ -192,7 +200,9 @@ To get the participant level summaries, we will take a multi-step approach by ca
 
 Because `ADAE` potentially contains multiple records per subject for a given AE, we must collapse the data so that it is subject-level. For the first step, we must reduce the data down to 1 record per subject with any AE (note that your data may contain derived flags to assist with this step):
 ```{r}
-adae_subj <- ADAE |> dplyr::select(USUBJID, TRTA) |> unique()
+adae_subj <- ADAE |>
+  dplyr::select(USUBJID, TRTA) |>
+  unique()
 ```
 
 We then pass this dataset to `ard_categorical()` to compute the number and percentage of subjects by treatment arm. To ensure our denominator is the full study population, we pass our `adsl` data to the `denominator` argument:
@@ -202,7 +212,7 @@ We then pass this dataset to `ard_categorical()` to compute the number and perce
 ard_subj_any <- ard_categorical(
   data = adae_subj,
   variables = TRTA,
-  statistic = ~ c("n","p"),
+  statistic = ~ c("n", "p"),
   denominator = adsl
 )
 ```
@@ -210,7 +220,9 @@ ard_subj_any <- ard_categorical(
 For the second step, we create a new dataset of 1 record per subject with any AE by system organ class: 
 
 ```{r}
-adae_soc <- ADAE |> dplyr::select(USUBJID, TRTA, AEBODSYS) |> unique()
+adae_soc <- ADAE |>
+  dplyr::select(USUBJID, TRTA, AEBODSYS) |>
+  unique()
 ```
 
 We then pass this dataset to `ard_categorical()` to compute the number and percentage of subjects within each system organ class by treatment arm. 
@@ -220,7 +232,7 @@ ard_subj_soc <- ard_categorical(
   data = adae_soc,
   by = TRTA,
   variables = AEBODSYS,
-  statistic = ~ c("n","p"),
+  statistic = ~ c("n", "p"),
   denominator = adsl
 )
 ```
@@ -228,7 +240,9 @@ ard_subj_soc <- ard_categorical(
 Finally, we create another dataset of 1 record per subject with any AE by system organ class and preferred term. 
 
 ```{r}
-adae_pt <- ADAE |> dplyr::select(USUBJID, TRTA, AEBODSYS, AETERM) |> unique()
+adae_pt <- ADAE |>
+  dplyr::select(USUBJID, TRTA, AEBODSYS, AETERM) |>
+  unique()
 ```
 
 This time, we will use `ard_hierarchical()` to compute the number and percentage of subjects within each preferred term observed within each system organ class by treatment arm. The use of `ard_hierarchical()` ensures we keep the nested structure of preferred terms within system organ classes. 
@@ -237,8 +251,8 @@ This time, we will use `ard_hierarchical()` to compute the number and percentage
 ard_subj_pt <- ard_hierarchical(
   data = adae_pt,
   by = TRTA,
-  variables = c(AEBODSYS, AETERM), 
-  statistic = ~ c("n","p"),
+  variables = c(AEBODSYS, AETERM),
+  statistic = ~ c("n", "p"),
   denominator = adsl
 )
 ```
@@ -246,7 +260,7 @@ ard_subj_pt <- ard_hierarchical(
 All participant level summaries can be combined using `bind_ard()`.
 
 ```{r}
-ard_subj_all <- bind_ard(ard_subj_any, ard_subj_soc, ard_subj_pt)  
+ard_subj_all <- bind_ard(ard_subj_any, ard_subj_soc, ard_subj_pt)
 ard_subj_all
 ```
 
@@ -260,7 +274,8 @@ For overall AE counts by treatment group, we can use `ard_hierarchical_count()` 
 # overall
 ard_event_any <- ard_hierarchical_count(
   data = ADAE,
-  variables = TRTA) 
+  variables = TRTA
+)
 ```
 
 For AE counts within preferred term and system organ class by treatment group, we can use `ard_hierarchical()` specifying our nesting as such:
@@ -270,7 +285,7 @@ ard_event_socpt <- ard_hierarchical_count(
   data = ADAE,
   by = TRTA,
   variables = c(AEBODSYS, AETERM)
-) 
+)
 ```
  
 These event-level summaries can be combined using `bind_ard()`.
@@ -285,6 +300,8 @@ ard_event_all
 The subject and event level results can be combined using `bind_ard()` as such:
 
 ```{r}
-bind_ard(ard_subj_all,
-         ard_event_all|> dplyr::mutate(stat_name = "n_aes")) 
+bind_ard(
+  ard_subj_all,
+  ard_event_all |> dplyr::mutate(stat_name = "n_aes")
+)
 ```
