@@ -297,7 +297,7 @@ ard_event_all
 
 #### Combine results 
 
-The subject and event level results can be combined using `bind_ard()` as such:
+The subject and event level results can be combined using `bind_ard()` to form a comprehensive dataset as such:
 
 ```{r}
 bind_ard(
