@@ -13,6 +13,15 @@
     Message
       i 2 more variables: warning, error
 
+---
+
+    Code
+      ard_stack(ADSL, by = "ARM", ard_continuous(variables = AGE))
+    Condition
+      Error in `ard_stack()`:
+      ! Cannot evaluate expression `by = ARM`.
+      i Did you mean `.by = ARM`?
+
 # ard_stack() complex call error
 
     Code

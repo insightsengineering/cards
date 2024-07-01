@@ -178,10 +178,19 @@ ard_stack <- function(data,
 
 
   # run the ARD calls -------------------------------------------------------
-  lapply(
+  imap(
     dots,
-    function(x) {
+    function(x, y) {
       if (!is_call_simple(x)) {
+        if (identical(y, "by")) {
+          cli::cli_abort(
+            c("Cannot evaluate expression {.code {y} = {quo_squash(x)}}.",
+              i = "Did you mean {.code .{y} = {quo_squash(x)}}?"
+            ),
+            call = get_cli_abort_call()
+          )
+        }
+
         cli::cli_abort(
           "{.fun cards::ard_stack} works with {.help [simple calls](rlang::call_name)}
            and {.code {as_label(x)}} is not simple.",
