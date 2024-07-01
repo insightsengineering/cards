@@ -185,7 +185,8 @@ ard_stack <- function(data,
         if (identical(y, "by")) {
           cli::cli_abort(
             c("Cannot evaluate expression {.code {y} = {quo_squash(x)}}.",
-              i = "Did you mean {.code .{y} = {quo_squash(x)}}?"),
+              i = "Did you mean {.code .{y} = {quo_squash(x)}}?"
+            ),
             call = get_cli_abort_call()
           )
         }
