@@ -196,13 +196,13 @@ test_that("ard_categorical() with strata and by arguments", {
       dplyr::pull(stat) |>
       getElement(1),
     (ADAE_small |>
-      dplyr::filter(
-        AESOC %in% "EYE DISORDERS",
-        AELLT %in% "EYES SWOLLEN",
-        TRTA %in% "Placebo",
-        AESEV %in% "MILD"
-      ) |>
-      nrow()) /
+       dplyr::filter(
+         AESOC %in% "EYE DISORDERS",
+         AELLT %in% "EYES SWOLLEN",
+         TRTA %in% "Placebo",
+         AESEV %in% "MILD"
+       ) |>
+       nrow()) /
       (ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow())
   )
 
@@ -697,5 +697,25 @@ test_that("ard_categorical(strata) returns results in proper order", {
       unique() |>
       as.character(),
     c("MILD", "MODERATE", "SEVERE")
+  )
+})
+
+test_that("ard_categorical(by) messages about protected names", {
+  mtcars2 <- mtcars |>
+    dplyr::mutate(
+      variable = am,
+      variable_level = cyl,
+      by = am,
+      by_level = cyl
+    )
+
+  expect_snapshot(
+    error = TRUE,
+    ard_categorical(mtcars2, by = variable, variables = gear)
+  )
+
+  expect_error(
+    ard_categorical(mtcars2, by = variable_level, variables = gear),
+    'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })

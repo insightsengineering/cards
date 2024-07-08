@@ -170,3 +170,11 @@
       ! Column "AGEGR1" is all missing and cannot by tabulated.
       i Only columns of class <logical> and <factor> can be tabulated when all values are missing.
 
+# ard_categorical(by) messages about protected names
+
+    Code
+      ard_categorical(mtcars2, by = variable, variables = gear)
+    Condition
+      Error in `ard_categorical()`:
+      ! The `by` argument cannot include variables named "variable" and "variable_level".
+
