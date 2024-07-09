@@ -10,7 +10,7 @@ get_ard_statistics(x, ..., .column = "stat", .attributes = NULL)
 \item{x}{(\code{data.frame})\cr
 an ARD data frame of class 'card'}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 optional arguments indicating rows to subset of the ARD.
 For example, to return only rows where the column \code{"AGEGR1"} is \code{"65-80"},
 pass \code{AGEGR1 \%in\% "65-80"}.}

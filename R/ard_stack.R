@@ -13,7 +13,7 @@
 #'   a data frame
 #' @param .by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by in the series of ARD function calls
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
 #' @param .overall (`logical`)\cr logical indicating whether overall statistics
 #'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
@@ -159,7 +159,7 @@ ard_stack <- function(data,
 #'   a data frame
 #' @param .by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by in the series of ARD function calls
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
 #'
 #' @return list of ARD data frames of class 'card'
