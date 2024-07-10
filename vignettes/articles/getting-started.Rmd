@@ -139,10 +139,10 @@ dat_ae <- tfrmt::data_ae |>
   dplyr::mutate(pct_high = value[col2 == "Xanomeline High Dose" & param == "pct"]) |>
   dplyr::ungroup() |>
   dplyr::filter(pct_high > 10) |>
-  dplyr::select(-pct_high, - col1) 
+  dplyr::select(-pct_high, -col1)
 
 dat_ae_ptcpt <- dat_ae |>
-  dplyr::filter(param %in% c("n","pct"))
+  dplyr::filter(param %in% c("n", "pct"))
 
 # create formatted display
 tfrmt_ae <- tfrmt::tfrmt(
@@ -175,7 +175,7 @@ tfrmt::print_to_gt(tfrmt_ae, dat_ae_ptcpt) |>
   gt::tab_options(
     table.font.size = 12
   ) |>
-  gt::cols_align(align = "center") 
+  gt::cols_align(align = "center")
 ```
 
 For the computations below, we will not only make use of the `ADAE` dataset, but we will also rely on `ADSL` for the full study population. To match between them, we need to do a small data manipulation on the naming of the treatment variable. 
@@ -261,9 +261,8 @@ In addition to participant-level summaries, event-level summaries are often need
 
 
 ```{r, echo=FALSE, message=FALSE}
-
 dat_ae_event <- dat_ae |>
-  dplyr::filter(param == "AEs") 
+  dplyr::filter(param == "AEs")
 
 # create formatted display
 tfrmt_ae <- tfrmt::tfrmt(
@@ -275,9 +274,8 @@ tfrmt_ae <- tfrmt::tfrmt(
   sorting_cols = c(ord1, ord2),
   # specify value formatting
   body_plan = tfrmt::body_plan(
-    tfrmt::frmt_structure(group_val = ".default", label_val = ".default", frmt("xxx")
-      )
-    ),
+    tfrmt::frmt_structure(group_val = ".default", label_val = ".default", frmt("xxx"))
+  ),
   col_plan = tfrmt::col_plan(
     -starts_with("ord")
   )
@@ -287,7 +285,7 @@ tfrmt::print_to_gt(tfrmt_ae, dat_ae_event) |>
   gt::tab_options(
     table.font.size = 12
   ) |>
-  gt::cols_align(align = "center") 
+  gt::cols_align(align = "center")
 ```
 
 
