@@ -126,7 +126,11 @@ ard_stack(
 
 ### Adverse Events
 
-Next, we will review an examples for creating a basic adverse events (AE) table.
+Next, we will review several examples for creating basic adverse events (AE) tables.
+
+#### Participant-level summaries
+
+A common type of AE table contains participant-level summaries.  Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
 
 ```{r, echo=FALSE, message=FALSE}
 # use the summary data available in tfrmt
@@ -135,18 +139,16 @@ dat_ae <- tfrmt::data_ae |>
   dplyr::mutate(pct_high = value[col2 == "Xanomeline High Dose" & param == "pct"]) |>
   dplyr::ungroup() |>
   dplyr::filter(pct_high > 10) |>
-  dplyr::select(-pct_high) |>
-  dplyr::filter(!param == "pval") |>
-  dplyr::mutate(col1 = ifelse(col1 == "n_pct", "n (%)",
-    ifelse(col1 == "AEs", "[AEs]",
-      col1
-    )
-  ))
+  dplyr::select(-pct_high, - col1) 
+
+dat_ae_ptcpt <- dat_ae |>
+  dplyr::filter(param %in% c("n","pct"))
+
 # create formatted display
 tfrmt_ae <- tfrmt::tfrmt(
   group = AEBODSYS,
   label = AETERM,
-  column = c(col2, col1),
+  column = col2,
   param = param,
   value = value,
   sorting_cols = c(ord1, ord2),
@@ -162,10 +164,6 @@ tfrmt_ae <- tfrmt::tfrmt(
           TRUE ~ tfrmt::frmt("(xx%)")
         )
       )
-    ),
-    tfrmt::frmt_structure(
-      group_val = ".default", label_val = ".default",
-      AEs = tfrmt::frmt("[XXX]")
     )
   ),
   col_plan = tfrmt::col_plan(
@@ -173,18 +171,12 @@ tfrmt_ae <- tfrmt::tfrmt(
   )
 )
 
-tfrmt::print_to_gt(tfrmt_ae, dat_ae) |>
+tfrmt::print_to_gt(tfrmt_ae, dat_ae_ptcpt) |>
   gt::tab_options(
     table.font.size = 12
   ) |>
-  gt::cols_align(align = "center") |>
-  gt::cols_width(
-    1 ~ "40%",
-    everything() ~ "10%"
-  )
+  gt::cols_align(align = "center") 
 ```
-
-The table above contains two different types of summaries: event-level (i.e. total number of AEs, which are displayed in the column labeled "[AEs]") and participant-level (i.e. number and percent of subjects with at least one AE, which are displayed in the column labeled "n (%)"). 
 
 For the computations below, we will not only make use of the `ADAE` dataset, but we will also rely on `ADSL` for the full study population. To match between them, we need to do a small data manipulation on the naming of the treatment variable. 
 
@@ -194,11 +186,10 @@ adsl <- ADSL |>
   dplyr::rename("TRTA" = "TRT01A")
 ```
 
-#### Participant-level summaries
-
-To get the participant level summaries, we will take a multi-step approach by calculating number and percent of subjects with: (1) at least one AE, (2) at least one AE by system organ class, and (3) at least one AE by system organ class and preferred term.
+To get these participant level summaries, we will take a multi-step approach by calculating number and percent of subjects with: (1) at least one AE, (2) at least one AE by system organ class, and (3) at least one AE by system organ class and preferred term.
 
 Because `ADAE` potentially contains multiple records per subject for a given AE, we must collapse the data so that it is subject-level. For the first step, we must reduce the data down to 1 record per subject with any AE (note that your data may contain derived flags to assist with this step):
+
 ```{r}
 adae_subj <- ADAE |>
   dplyr::select(USUBJID, TRTA) |>
@@ -260,14 +251,45 @@ ard_subj_pt <- ard_hierarchical(
 All participant level summaries can be combined using `bind_ard()`.
 
 ```{r}
-ard_subj_all <- bind_ard(ard_subj_any, ard_subj_soc, ard_subj_pt)
-ard_subj_all
+bind_ard(ard_subj_any, ard_subj_soc, ard_subj_pt)
 ```
 
 
 #### Event-level Summaries
 
-For event level summaries, we will be counting the total number of AEs and therefore can use the `ADAE` data directly. We will need to count AEs overall, by system organ class, and by preferred term (within system organ class).
+In addition to participant-level summaries, event-level summaries are often needed. For these types of tables, we report total counts of AEs , and therefore we can use the `ADAE` data directly. We will need to count AEs overall, by system organ class, and by preferred term (within system organ class).
+
+
+```{r, echo=FALSE, message=FALSE}
+
+dat_ae_event <- dat_ae |>
+  dplyr::filter(param == "AEs") 
+
+# create formatted display
+tfrmt_ae <- tfrmt::tfrmt(
+  group = AEBODSYS,
+  label = AETERM,
+  column = col2,
+  param = param,
+  value = value,
+  sorting_cols = c(ord1, ord2),
+  # specify value formatting
+  body_plan = tfrmt::body_plan(
+    tfrmt::frmt_structure(group_val = ".default", label_val = ".default", frmt("xxx")
+      )
+    ),
+  col_plan = tfrmt::col_plan(
+    -starts_with("ord")
+  )
+)
+
+tfrmt::print_to_gt(tfrmt_ae, dat_ae_event) |>
+  gt::tab_options(
+    table.font.size = 12
+  ) |>
+  gt::cols_align(align = "center") 
+```
+
 
 For overall AE counts by treatment group, we can use `ard_hierarchical_count()` as such. As we don't have a hierarchy, this is equivalent to `ard_categorical()` with `statistic = ~ "n"`. We can rename the counts so they are distinguishable when stacked with the participate level counts. 
 ```{r}
@@ -290,18 +312,5 @@ ard_event_socpt <- ard_hierarchical_count(
  
 These event-level summaries can be combined using `bind_ard()`.
 ```{r}
-ard_event_all <- bind_ard(ard_event_any, ard_event_socpt)
-ard_event_all
-```
-
-
-#### Combine results 
-
-The subject and event level results can be combined using `bind_ard()` to form a comprehensive dataset as such:
-
-```{r}
-bind_ard(
-  ard_subj_all,
-  ard_event_all |> dplyr::mutate(stat_name = "n_aes")
-)
+bind_ard(ard_event_any, ard_event_socpt)
 ```
