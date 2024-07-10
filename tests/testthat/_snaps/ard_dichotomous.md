@@ -38,6 +38,7 @@
       Error in `ard_dichotomous()`:
       ! Error in argument `value` for variable "Species".
       i A value of "not_a_species" was passed, but must be one of setosa, versicolor, and virginica.
+      i To summarize this value, use `forcats::fct_expand()` to add "not_a_species" as a level.
 
 ---
 
@@ -47,4 +48,5 @@
       Error in `ard_dichotomous()`:
       ! Error in argument `value` for variable "cyl".
       i A value of 100 was passed, but must be one of 4, 6, and 8.
+      i To summarize this value, make the column a factor and include 100 as a level.
 

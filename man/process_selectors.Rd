@@ -53,7 +53,7 @@ cards_select(expr, data, ..., arg_name = NULL)
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 named arguments where the value of the argument is processed with tidyselect.
 \itemize{
 \item \code{process_selectors()}: the values are tidyselect-compatible selectors

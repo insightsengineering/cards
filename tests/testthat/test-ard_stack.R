@@ -226,6 +226,12 @@ test_that("ard_stack() messaging", {
     ) |>
       head(1L)
   )
+
+  # by argument doesn't include period in front
+  expect_snapshot(
+    error = TRUE,
+    ard_stack(ADSL, by = "ARM", ard_continuous(variables = AGE))
+  )
 })
 
 test_that("ard_stack() complex call error", {

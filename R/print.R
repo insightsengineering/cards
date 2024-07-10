@@ -16,7 +16,7 @@
 #'   Columns `'error'`, `'warning'`, `'context'`, and `'fmt_fn'` *may* be removed
 #'   from the print. All other columns will be printed, even if more than `n_col`
 #'   columns are present.
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   not used
 #'
 #' @return an ARD data frame of class 'card' (invisibly)

@@ -10,7 +10,7 @@
 \item{x}{(\code{data.frame})\cr
 a data frame}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 columns to search within}
 }
 \value{

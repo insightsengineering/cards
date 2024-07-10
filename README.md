@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="138" alt="cards website" /></a>
+# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
 
 <!-- badges: start -->
 
@@ -71,6 +71,6 @@ models, and more.
 ## Getting Started
 
 Review the [Getting
-Started](https://insightsengineering.github.io/cards/main/articles/getting-started.html)
+Started](https://insightsengineering.github.io/cards//main/articles/getting-started.html)
 page for examples using ARDs to calculate statistics to later include in
 tables.

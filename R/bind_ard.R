@@ -3,7 +3,7 @@
 #' Wrapper for `dplyr::bind_rows()` with additional checks
 #' for duplicated statistics.
 #'
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   ARDs to combine. Each argument can either be an ARD,
 #'   or a list of ARDs. Columns are matched by name, and any missing
 #'   columns will be filled with `NA`.
