@@ -24,7 +24,7 @@ Columns \code{'error'}, \code{'warning'}, \code{'context'}, and \code{'fmt_fn'} 
 from the print. All other columns will be printed, even if more than \code{n_col}
 columns are present.}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 not used}
 }
 \value{

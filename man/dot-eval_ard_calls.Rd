@@ -13,7 +13,7 @@ a data frame}
 \item{.by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by in the series of ARD function calls}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 Series of ARD function calls to be run and stacked}
 }
 \value{

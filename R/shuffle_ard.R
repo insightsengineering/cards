@@ -138,7 +138,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   columns to search within
 #'
 #' @return a data frame
