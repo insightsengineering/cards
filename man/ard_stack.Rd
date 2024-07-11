@@ -19,7 +19,7 @@ ard_stack(
 \item{data}{(\code{data.frame})\cr
 a data frame}
 
-\item{...}{(\code{\link[=dyn-dots]{dynamic-dots}})\cr
+\item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 Series of ARD function calls to be run and stacked}
 
 \item{.by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr

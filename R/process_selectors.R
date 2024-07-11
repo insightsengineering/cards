@@ -28,7 +28,7 @@
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param ... ([`dynamic-dots`][dyn-dots])\cr
+#' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   named arguments where the value of the argument is processed with tidyselect.
 #'   - `process_selectors()`: the values are tidyselect-compatible selectors
 #'   - `process_formula_selectors()`: the values are named lists, list of formulas
