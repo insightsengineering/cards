@@ -722,119 +722,110 @@ test_that("ard_categorical(by) messages about protected names", {
 
 # - test if function parameters can be used as variable names without error
 test_that("ard_categorical() works when using generic names ", {
-  data(api, package = "survey")
-  df_titanic <- as.data.frame(Titanic) |> tidyr::uncount(weights = Freq)
 
-  # duplicate and rename some variables
-
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename("variable" = Class, "variable_level" = Age, "by" = Survived, "group1_level" = Sex)
+  #rename some variables
+  mtcars2 <- mtcars %>%
+    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(variable, variable_level), by = by, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(variable, variable_level), by = by, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Age, Class), by = Sex, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(variable_level, variable), by = group1_level, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(cyl, am), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(variable_level, variable), by = group1_level, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Sex, Class), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(group1_level, variable), by = by, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(gear, am), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(group1_level, variable), by = by, denominator = "row") |> dplyr::select(stat)
   )
 
   # rename vars
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename("N" = Class, "p" = Age, "name" = Survived, "group1_level" = Sex)
+  mtcars2 <- mtcars %>%
+    dplyr::rename("N" = am, "p" = cyl, "name" = disp, "group1_level" = gear)
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N, p), by = name, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, p), by = name, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Survived, Sex), by = Class, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(name, group1_level), by = N, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(name, group1_level), by = N, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Sex, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N, name), by = group1_level, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, name), by = group1_level, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Age, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N, name), by = p, denominator = "row") |> dplyr::select(stat)
-  )
-
-  # rename vars
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename("n" = Class, "mean" = Age, "p.std.error" = Survived, "n_unweighted" = Sex)
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Sex, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(n_unweighted, mean), by = p.std.error, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Sex, Age), by = Class, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(n_unweighted, mean), by = n, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Age, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(n, p.std.error), by = mean, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Sex, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(n, p.std.error), by = n_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, name), by = p, denominator = "row") |> dplyr::select(stat)
   )
 
   # rename vars
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename("N_unweighted" = Class, "p_unweighted" = Age, "column" = Survived, "row" = Sex)
-
+  mtcars2 <- mtcars %>%
+    dplyr::rename("n" = am, "mean" = cyl, "p.std.error" = disp, "n_unweighted" = gear)
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N_unweighted, p_unweighted), by = column, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(gear, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = p.std.error, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Survived, Sex), by = Class, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(column, row), by = N_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(gear, cyl), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = n, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Age, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N_unweighted, column), by = p_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n, p.std.error), by = mean, denominator = "row") |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Sex, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(N_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n, p.std.error), by = n_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("N_unweighted" = am, "p_unweighted" = cyl, "column" = disp, "row" = gear)
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, p_unweighted), by = column, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(column, row), by = N_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = p_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
   )
 })
 
 test_that("ard_categorical.survey.design(by) messages about protected names", {
-  data(api, package = "survey")
-  df_titanic <- as.data.frame(Titanic) |> tidyr::uncount(weights = Freq)
-
-  # duplicate and rename some variables
-  new_names <- c("variable", "variable_level", "by", "group1_level")
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
+  mtcars2 <- mtcars %>%
+    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
 
   expect_snapshot(
     error = TRUE,
-    ard_categorical(df_titanic2, by = variable, variables = by)
+    ard_categorical(mtcars2, by = variable, variables = by)
   )
 
   expect_error(
-    ard_categorical(df_titanic2, by = variable_level, variables = by),
+    ard_categorical(mtcars2, by = variable_level, variables = by),
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })

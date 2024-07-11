@@ -181,7 +181,7 @@
 # ard_categorical.survey.design(by) messages about protected names
 
     Code
-      ard_categorical(df_titanic2, by = variable, variables = by)
+      ard_categorical(mtcars2, by = variable, variables = by)
     Condition
       Error in `ard_categorical()`:
       ! The `by` argument cannot include variables named "variable" and "variable_level".
