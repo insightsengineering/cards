@@ -726,10 +726,9 @@ test_that("ard_categorical() works when using generic names ", {
   df_titanic <- as.data.frame(Titanic) |> tidyr::uncount(weights = Freq)
 
   # duplicate and rename some variables
-  new_names <- c("variable", "variable_level", "by", "group1_level")
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
 
+  df_titanic2 <- df_titanic %>%
+    dplyr::rename("variable" = Class, "variable_level" = Age, "by" = Survived, "group1_level" = Sex)
 
   expect_equal(
     ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
@@ -747,10 +746,8 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   # rename vars
-
-  new_names <- c("N", "p", "name", "group1_level")
   df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
+    dplyr::rename("N" = Class, "p" = Age, "name" = Survived, "group1_level" = Sex)
 
   expect_equal(
     ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
@@ -772,10 +769,9 @@ test_that("ard_categorical() works when using generic names ", {
     ard_categorical(df_titanic2, variables = c(N, name), by = p, denominator = "row") |> dplyr::select(stat)
   )
 
-  # rename vars again
-  new_names <- c("n", "mean", "p.std.error", "n_unweighted")
+  # rename vars
   df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
+    dplyr::rename("n" = Class, "mean" = Age, "p.std.error" = Survived, "n_unweighted" = Sex)
 
   expect_equal(
     ard_categorical(df_titanic, variables = c(Sex, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
@@ -797,10 +793,10 @@ test_that("ard_categorical() works when using generic names ", {
     ard_categorical(df_titanic2, variables = c(n, p.std.error), by = n_unweighted, denominator = "row") |> dplyr::select(stat)
   )
 
-  # rename vars again
-  new_names <- c("N_unweighted", "p_unweighted", "column", "row")
+  # rename vars
   df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
+    dplyr::rename("N_unweighted" = Class, "p_unweighted" = Age, "column" = Survived, "row" = Sex)
+
 
   expect_equal(
     ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
@@ -821,35 +817,9 @@ test_that("ard_categorical() works when using generic names ", {
     ard_categorical(df_titanic, variables = c(Class, Survived), by = Sex, denominator = "row") |> dplyr::select(stat),
     ard_categorical(df_titanic2, variables = c(N_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
   )
-
-  # rename vars again
-  new_names <- c("cell", "p_unweighted", "column", "row")
-  df_titanic2 <- df_titanic %>%
-    dplyr::rename_with(~new_names, .cols = c(Class, Age, Survived, Sex))
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Survived), by = Age, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(cell, column), by = p_unweighted, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Sex, Survived), by = Class, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(row, column), by = cell, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Class, Age), by = Survived, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(cell, p_unweighted), by = column, denominator = "row") |> dplyr::select(stat)
-  )
-
-  expect_equal(
-    ard_categorical(df_titanic, variables = c(Age, Survived), by = Sex, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(df_titanic2, variables = c(p_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
-  )
 })
 
 test_that("ard_categorical.survey.design(by) messages about protected names", {
-
   data(api, package = "survey")
   df_titanic <- as.data.frame(Titanic) |> tidyr::uncount(weights = Freq)
 

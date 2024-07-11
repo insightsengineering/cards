@@ -297,9 +297,8 @@ test_that("ard_continuous() works with non-syntactic names", {
 
 # - test if function parameters can be used as variable names without error
 test_that("ard_continuous() works when using generic names ", {
-  new_names <- c("variable_level", "variable", "median", "p25")
   mtcars2 <- mtcars %>%
-    dplyr::rename_with(~new_names, .cols = c(mpg, cyl, disp, gear))
+    dplyr::rename("variable_level" = mpg, "variable" = cyl, "median" = disp, "p25" = gear)
 
   expect_equal(
     ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
@@ -323,9 +322,8 @@ test_that("ard_continuous() works when using generic names ", {
 
   # rename vars
 
-  new_names <- c("by", "statistic", "weights", "p75")
   mtcars2 <- mtcars %>%
-    dplyr::rename_with(~new_names, .cols = c(mpg, cyl, disp, gear))
+    dplyr::rename("by" = mpg, "statistic" = cyl, "weights" = disp, "p75" = gear)
 
   expect_equal(
     ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
@@ -352,10 +350,9 @@ test_that("ard_continuous() works when using generic names ", {
     ard_continuous(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
   )
 
-  # rename vars again
-  new_names <- c("mean", "sd", "var", "sum")
+  # rename vars
   mtcars2 <- mtcars %>%
-    dplyr::rename_with(~new_names, .cols = c(mpg, cyl, disp, gear))
+    dplyr::rename("mean" = mpg, "sd" = cyl, "var" = disp, "sum" = gear)
 
   expect_equal(
     ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
@@ -382,10 +379,9 @@ test_that("ard_continuous() works when using generic names ", {
     ard_continuous(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat)
   )
 
-  # rename vars again
-  new_names <- c("deff", "min", "max", "mean.std.error")
+  # rename vars
   mtcars2 <- mtcars %>%
-    dplyr::rename_with(~new_names, .cols = c(mpg, cyl, disp, gear))
+    dplyr::rename("deff" = mpg, "min" = cyl, "max" = disp, "mean.std.error" = gear)
 
   expect_equal(
     ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
