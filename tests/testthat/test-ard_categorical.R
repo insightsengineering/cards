@@ -722,8 +722,7 @@ test_that("ard_categorical(by) messages about protected names", {
 
 # - test if function parameters can be used as variable names without error
 test_that("ard_categorical() works when using generic names ", {
-
-  #rename some variables
+  # rename some variables
   mtcars2 <- mtcars %>%
     dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
 
