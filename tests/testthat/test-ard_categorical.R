@@ -814,7 +814,7 @@ test_that("ard_categorical() works when using generic names ", {
   )
 })
 
-test_that("ard_categorical.survey.design(by) messages about protected names", {
+test_that("ard_categorical(by) messages about protected names", {
   mtcars2 <- mtcars %>%
     dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
 
