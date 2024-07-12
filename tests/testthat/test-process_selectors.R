@@ -111,6 +111,15 @@ test_that("compute_formula_selector() selects the last assignment when multiple 
     ),
     list(NAME = NULL) |> compact()
   )
+
+  expect_equal({
+    label <- list(ARM = "treatment", ARM = "TREATMENT")
+    compute_formula_selector(
+      ADSL,
+      x = label
+    )},
+    list(ARM = "TREATMENT")
+  )
 })
 
 # This check for `vars()` usage can be removed after Jan 1, 2025
