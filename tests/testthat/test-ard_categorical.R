@@ -196,13 +196,13 @@ test_that("ard_categorical() with strata and by arguments", {
       dplyr::pull(stat) |>
       getElement(1),
     (ADAE_small |>
-       dplyr::filter(
-         AESOC %in% "EYE DISORDERS",
-         AELLT %in% "EYES SWOLLEN",
-         TRTA %in% "Placebo",
-         AESEV %in% "MILD"
-       ) |>
-       nrow()) /
+      dplyr::filter(
+        AESOC %in% "EYE DISORDERS",
+        AELLT %in% "EYES SWOLLEN",
+        TRTA %in% "Placebo",
+        AESEV %in% "MILD"
+      ) |>
+      nrow()) /
       (ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow())
   )
 

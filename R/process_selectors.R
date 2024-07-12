@@ -216,6 +216,9 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
 
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
+    # remove duplicates (keeping the last one)
+    x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
+
     return(x[intersect(names(x), names(data))])
   }
 
