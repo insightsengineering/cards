@@ -1,4 +1,4 @@
-# cards 0.1.0.9049
+# cards 0.1.0.9050
 
 * Added new function `ard_total_n()` for calculating the total N in a data frame. (#236)
 
