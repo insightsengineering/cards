@@ -103,11 +103,11 @@
           p75 = "75th %ile"))), stat_name %in% c("p25", "p75")), variable, stat_name,
       stat_label))
     Output
-        variable stat_name      stat_label
-      1      AGE       p25       25th %ile
-      2      AGE       p75       75th %ile
-      3    BMIBL       p25 25th Percentile
-      4    BMIBL       p75 75th Percentile
+        variable stat_name stat_label
+      1      AGE       p25  25th %ile
+      2      AGE       p75  75th %ile
+      3    BMIBL       p25         Q1
+      4    BMIBL       p75         Q3
 
 ---
 

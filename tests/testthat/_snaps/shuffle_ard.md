@@ -3,15 +3,15 @@
     Code
       ard_simple_shuffled
     Output
-        variable    context stat_name      stat_label     stat fmt_fn warning error
-      1      AGE continuous         N               N      254      0    NULL  NULL
-      2      AGE continuous      mean            Mean 75.08661      1    NULL  NULL
-      3      AGE continuous        sd              SD 8.246234      1    NULL  NULL
-      4      AGE continuous    median          Median       77      1    NULL  NULL
-      5      AGE continuous       p25 25th Percentile       70      1    NULL  NULL
-      6      AGE continuous       p75 75th Percentile       81      1    NULL  NULL
-      7      AGE continuous       min             Min       51      1    NULL  NULL
-      8      AGE continuous       max             Max       89      1    NULL  NULL
+        variable    context stat_name stat_label     stat fmt_fn warning error
+      1      AGE continuous         N          N      254      0    NULL  NULL
+      2      AGE continuous      mean       Mean 75.08661      1    NULL  NULL
+      3      AGE continuous        sd         SD 8.246234      1    NULL  NULL
+      4      AGE continuous    median     Median       77      1    NULL  NULL
+      5      AGE continuous       p25         Q1       70      1    NULL  NULL
+      6      AGE continuous       p75         Q3       81      1    NULL  NULL
+      7      AGE continuous       min        Min       51      1    NULL  NULL
+      8      AGE continuous       max        Max       89      1    NULL  NULL
 
 ---
 
