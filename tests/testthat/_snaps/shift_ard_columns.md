@@ -25,27 +25,27 @@
       18 TRT01A  Xanomeline Low Dose Overall AGE  <NA>     <NA> continuous      mean
       19 TRT01A  Xanomeline Low Dose Overall AGE  <NA>     <NA> continuous        sd
       20 TRT01A  Xanomeline Low Dose Overall AGE  <NA>     <NA> continuous    median
-              stat_label     stat
-      1                N       86
-      2             Mean  75.2093
-      3               SD 8.590167
-      4           Median       76
-      5  25th Percentile       69
-      6  75th Percentile       82
-      7              Min       52
-      8              Max       89
-      9                N       84
-      10            Mean 74.38095
-      11              SD 7.886094
-      12          Median       76
-      13 25th Percentile     70.5
-      14 75th Percentile       80
-      15             Min       56
-      16             Max       88
-      17               N       84
-      18            Mean 75.66667
-      19              SD 8.286051
-      20          Median     77.5
+         stat_label     stat
+      1           N       86
+      2        Mean  75.2093
+      3          SD 8.590167
+      4      Median       76
+      5          Q1       69
+      6          Q3       82
+      7         Min       52
+      8         Max       89
+      9           N       84
+      10       Mean 74.38095
+      11         SD 7.886094
+      12     Median       76
+      13         Q1     70.5
+      14         Q3       80
+      15        Min       56
+      16        Max       88
+      17          N       84
+      18       Mean 75.66667
+      19         SD 8.286051
+      20     Median     77.5
 
 ---
 
@@ -158,8 +158,8 @@
       2       Placebo      AGE continuo…      mean       Mean 75.209
       3       Placebo      AGE continuo…        sd         SD   8.59
       4       Placebo      AGE continuo…    median     Median     76
-      5       Placebo      AGE continuo…       p25  25th Per…     69
-      6       Placebo      AGE continuo…       p75  75th Per…     82
+      5       Placebo      AGE continuo…       p25         Q1     69
+      6       Placebo      AGE continuo…       p75         Q3     82
       7       Placebo      AGE continuo…       min        Min     52
       8       Placebo      AGE continuo…       max        Max     89
       9       Placebo    BMIBL continuo…         N          N     86
