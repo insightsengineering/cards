@@ -192,11 +192,12 @@ adae <- ADAE |>
 
 To get these participant level summaries, we will take a multi-step approach by calculating number and percent of subjects with: (1) at least one AE, (2) at least one AE by system organ class, and (3) at least one AE by system organ class and preferred term.
 
-Because `ADAE` potentially contains multiple records per subject for a given AE, we must collapse the data so that it is subject-level. For the first step, we must reduce the data down to 1 record per subject with any AE (note that your data may contain derived flags to assist with this step):
+Because `ADAE` potentially contains multiple records per subject for a given AE, we must collapse the data so that it is subject-level. For the first step, we must reduce the data down to 1 record per subject with any AE (note that your data may contain derived flags to assist with this step). If it doesn't exist, we can create a flag variable to compute over:
 
 ```{r}
 adae_subj <- adae |>
   dplyr::select(USUBJID, TRTA) |>
+  dplyr::mutate(any_ae = 1) |>
   unique()
 ```
 
@@ -206,7 +207,8 @@ We then pass this dataset to `ard_categorical()` to compute the number and perce
 # any ae
 ard_subj_any <- ard_categorical(
   data = adae_subj,
-  variables = TRTA,
+  by = TRTA,
+  variables = any_ae,
   statistic = ~ c("n", "p"),
   denominator = adsl
 )
