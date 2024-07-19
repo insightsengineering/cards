@@ -58,12 +58,11 @@
 #' get_min_version_required("dplyr")
 #'
 #' @name check_pkg_installed
-#' @noRd
 NULL
 
 #' @inheritParams check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
                                 call = get_cli_abort_call()) {
@@ -89,7 +88,7 @@ check_pkg_installed <- function(pkg,
 
 #' @inheritParams check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 is_pkg_installed <- function(pkg,
                              reference_pkg = "cards",
                              call = get_cli_abort_call()) {
@@ -114,7 +113,7 @@ is_pkg_installed <- function(pkg,
 
 #' @inheritParams check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = get_cli_abort_call()) {
   check_string(reference_pkg, allow_empty = TRUE, call = call)
 
@@ -168,7 +167,7 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call =
 
 #' @inheritParams check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 get_min_version_required <- function(pkg, reference_pkg = "cards",
                                      lib.loc = NULL, call = get_cli_abort_call()) {
   check_not_missing(pkg, call = call)
