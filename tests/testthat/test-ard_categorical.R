@@ -719,3 +719,112 @@ test_that("ard_categorical(by) messages about protected names", {
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })
+
+# - test if function parameters can be used as variable names without error
+test_that("ard_categorical() works when using generic names ", {
+  # rename some variables
+  mtcars2 <- mtcars %>%
+    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(variable, variable_level), by = by, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(cyl, am), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(variable_level, variable), by = group1_level, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(gear, am), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(group1_level, variable), by = by, denominator = "row") |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("N" = am, "p" = cyl, "name" = disp, "group1_level" = gear)
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, p), by = name, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(name, group1_level), by = N, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, name), by = group1_level, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N, name), by = p, denominator = "row") |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("n" = am, "mean" = cyl, "p.std.error" = disp, "n_unweighted" = gear)
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(gear, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = p.std.error, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(gear, cyl), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = n, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n, p.std.error), by = mean, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(n, p.std.error), by = n_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("N_unweighted" = am, "p_unweighted" = cyl, "column" = disp, "row" = gear)
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, p_unweighted), by = column, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(column, row), by = N_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = p_unweighted, denominator = "row") |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
+    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
+  )
+})
+
+test_that("ard_categorical(by) messages about protected names", {
+  mtcars2 <- mtcars %>%
+    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
+
+  expect_snapshot(
+    error = TRUE,
+    ard_categorical(mtcars2, by = variable, variables = by)
+  )
+
+  expect_error(
+    ard_categorical(mtcars2, by = variable_level, variables = by),
+    'The `by` argument cannot include variables named "variable" and "variable_level".'
+  )
+})

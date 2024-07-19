@@ -294,3 +294,117 @@ test_that("ard_continuous() works with non-syntactic names", {
     ) |>
     as.data.frame())
 })
+
+# - test if function parameters can be used as variable names without error
+test_that("ard_continuous() works when using generic names ", {
+  mtcars2 <- mtcars %>%
+    dplyr::rename("variable_level" = mpg, "variable" = cyl, "median" = disp, "p25" = gear)
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(variable_level, variable), by = median) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(disp, gear), by = mpg) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(median, p25), by = variable_level) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(disp, gear), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(median, p25), by = variable) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(disp, mpg), by = gear) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(median, variable_level), by = p25) |> dplyr::select(stat)
+  )
+
+  # rename vars
+
+  mtcars2 <- mtcars %>%
+    dplyr::rename("by" = mpg, "statistic" = cyl, "weights" = disp, "p75" = gear)
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(by, statistic), by = weights) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(statistic, weights), by = by) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(by, statistic), by = p75) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("mean" = mpg, "sd" = cyl, "var" = disp, "sum" = gear)
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(mean, sd), by = var) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(sd, var), by = mean) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(mean, var), by = sd) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(mean, sd), by = sum) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat)
+  )
+
+  # rename vars
+  mtcars2 <- mtcars %>%
+    dplyr::rename("deff" = mpg, "min" = cyl, "max" = disp, "mean.std.error" = gear)
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(deff, min), by = max) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(min, max), by = deff) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(deff, max), by = min) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(deff, min), by = mean.std.error) |> dplyr::select(stat)
+  )
+
+  expect_equal(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_continuous(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
+  )
+})

@@ -178,3 +178,11 @@
       Error in `ard_categorical()`:
       ! The `by` argument cannot include variables named "variable" and "variable_level".
 
+---
+
+    Code
+      ard_categorical(mtcars2, by = variable, variables = by)
+    Condition
+      Error in `ard_categorical()`:
+      ! The `by` argument cannot include variables named "variable" and "variable_level".
+
