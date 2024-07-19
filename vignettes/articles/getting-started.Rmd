@@ -184,6 +184,10 @@ For the computations below, we will not only make use of the `ADAE` dataset, but
 # rename trt variable
 adsl <- ADSL |>
   dplyr::rename("TRTA" = "TRT01A")
+
+# subset to Treatment emergent AES
+adae <- ADAE |>
+  dplyr::filter(TRTEMFL=="Y")
 ```
 
 To get these participant level summaries, we will take a multi-step approach by calculating number and percent of subjects with: (1) at least one AE, (2) at least one AE by system organ class, and (3) at least one AE by system organ class and preferred term.
@@ -191,7 +195,7 @@ To get these participant level summaries, we will take a multi-step approach by 
 Because `ADAE` potentially contains multiple records per subject for a given AE, we must collapse the data so that it is subject-level. For the first step, we must reduce the data down to 1 record per subject with any AE (note that your data may contain derived flags to assist with this step):
 
 ```{r}
-adae_subj <- ADAE |>
+adae_subj <- adae |>
   dplyr::select(USUBJID, TRTA) |>
   unique()
 ```
@@ -211,7 +215,7 @@ ard_subj_any <- ard_categorical(
 For the second step, we create a new dataset of 1 record per subject with any AE by system organ class: 
 
 ```{r}
-adae_soc <- ADAE |>
+adae_soc <- adae |>
   dplyr::select(USUBJID, TRTA, AEBODSYS) |>
   unique()
 ```
@@ -231,7 +235,7 @@ ard_subj_soc <- ard_categorical(
 Finally, we create another dataset of 1 record per subject with any AE by system organ class and preferred term. 
 
 ```{r}
-adae_pt <- ADAE |>
+adae_pt <- adae |>
   dplyr::select(USUBJID, TRTA, AEBODSYS, AETERM) |>
   unique()
 ```
@@ -293,7 +297,7 @@ For overall AE counts by treatment group, we can use `ard_hierarchical_count()` 
 ```{r}
 # overall
 ard_event_any <- ard_hierarchical_count(
-  data = ADAE,
+  data = adae,
   variables = TRTA
 )
 ```
@@ -302,7 +306,7 @@ For AE counts within preferred term and system organ class by treatment group, w
 
 ```{r}
 ard_event_socpt <- ard_hierarchical_count(
-  data = ADAE,
+  data = adae,
   by = TRTA,
   variables = c(AEBODSYS, AETERM)
 )
