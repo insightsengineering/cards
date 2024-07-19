@@ -187,7 +187,7 @@ adsl <- ADSL |>
 
 # subset to Treatment emergent AES
 adae <- ADAE |>
-  dplyr::filter(TRTEMFL=="Y")
+  dplyr::filter(TRTEMFL == "Y")
 ```
 
 To get these participant level summaries, we will take a multi-step approach by calculating number and percent of subjects with: (1) at least one AE, (2) at least one AE by system organ class, and (3) at least one AE by system organ class and preferred term.
