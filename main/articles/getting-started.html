@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9052</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9053</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,14 +56,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -1328,7 +1320,11 @@ small data manipulation on the naming of the treatment variable.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># rename trt variable</span></span>
 <span><span class="va">adsl</span> <span class="op">&lt;-</span> <span class="va">ADSL</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="st">"TRTA"</span> <span class="op">=</span> <span class="st">"TRT01A"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="st">"TRTA"</span> <span class="op">=</span> <span class="st">"TRT01A"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># subset to Treatment emergent AES</span></span>
+<span><span class="va">adae</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">TRTEMFL</span> <span class="op">==</span> <span class="st">"Y"</span><span class="op">)</span></span></code></pre></div>
 <p>To get these participant level summaries, we will take a multi-step
 approach by calculating number and percent of subjects with: (1) at
 least one AE, (2) at least one AE by system organ class, and (3) at
@@ -1337,10 +1333,12 @@ least one AE by system organ class and preferred term.</p>
 subject for a given AE, we must collapse the data so that it is
 subject-level. For the first step, we must reduce the data down to 1
 record per subject with any AE (note that your data may contain derived
-flags to assist with this step):</p>
+flags to assist with this step). If it doesn’t exist, we can create a
+flag variable to compute over:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adae_subj</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">adae_subj</span> <span class="op">&lt;-</span> <span class="va">adae</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">TRTA</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>any_ae <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We then pass this dataset to <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> to
 compute the number and percentage of subjects by treatment arm. To
@@ -1350,14 +1348,15 @@ ensure our denominator is the full study population, we pass our
 <code class="sourceCode R"><span><span class="co"># any ae</span></span>
 <span><span class="va">ard_subj_any</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_categorical.html">ard_categorical</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">adae_subj</span>,</span>
-<span>  variables <span class="op">=</span> <span class="va">TRTA</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
+<span>  variables <span class="op">=</span> <span class="va">any_ae</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
 <span>  denominator <span class="op">=</span> <span class="va">adsl</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>For the second step, we create a new dataset of 1 record per subject
 with any AE by system organ class:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adae_soc</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">adae_soc</span> <span class="op">&lt;-</span> <span class="va">adae</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">TRTA</span>, <span class="va">AEBODSYS</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We then pass this dataset to <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> to
@@ -1374,7 +1373,7 @@ class by treatment arm.</p>
 <p>Finally, we create another dataset of 1 record per subject with any
 AE by system organ class and preferred term.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">adae_pt</span> <span class="op">&lt;-</span> <span class="va">ADAE</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">adae_pt</span> <span class="op">&lt;-</span> <span class="va">adae</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">TRTA</span>, <span class="va">AEBODSYS</span>, <span class="va">AETERM</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This time, we will use <code><a href="../reference/ard_hierarchical.html">ard_hierarchical()</a></code> to compute the
@@ -1394,30 +1393,30 @@ preferred terms within system organ classes.</p>
 <code><a href="../reference/bind_ard.html">bind_ard()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bind_ard.html">bind_ard</a></span><span class="op">(</span><span class="va">ard_subj_any</span>, <span class="va">ard_subj_soc</span>, <span class="va">ard_subj_pt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 1596 x 13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 1524 x 13</span></span></span>
 <span><span class="co">#&gt;    group1 group1_level group2 group2_level variable variable_level stat_name</span></span>
-<span><span class="co">#&gt; 1    &lt;NA&gt;                &lt;NA&gt;                  TRTA        Placebo         n</span></span>
-<span><span class="co">#&gt; 2    &lt;NA&gt;                &lt;NA&gt;                  TRTA        Placebo         p</span></span>
-<span><span class="co">#&gt; 3    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
-<span><span class="co">#&gt; 4    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         p</span></span>
-<span><span class="co">#&gt; 5    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
-<span><span class="co">#&gt; 6    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         p</span></span>
+<span><span class="co">#&gt; 1    TRTA      Placebo   &lt;NA&gt;                any_ae              1         n</span></span>
+<span><span class="co">#&gt; 2    TRTA      Placebo   &lt;NA&gt;                any_ae              1         p</span></span>
+<span><span class="co">#&gt; 3    TRTA    Xanomeli…   &lt;NA&gt;                any_ae              1         n</span></span>
+<span><span class="co">#&gt; 4    TRTA    Xanomeli…   &lt;NA&gt;                any_ae              1         p</span></span>
+<span><span class="co">#&gt; 5    TRTA    Xanomeli…   &lt;NA&gt;                any_ae              1         n</span></span>
+<span><span class="co">#&gt; 6    TRTA    Xanomeli…   &lt;NA&gt;                any_ae              1         p</span></span>
 <span><span class="co">#&gt; 7    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
 <span><span class="co">#&gt; 8    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         p</span></span>
 <span><span class="co">#&gt; 9    TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
 <span><span class="co">#&gt; 10   TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CARDIAC …         p</span></span>
 <span><span class="co">#&gt;    stat_label  stat</span></span>
-<span><span class="co">#&gt; 1           n    69</span></span>
-<span><span class="co">#&gt; 2           % 0.272</span></span>
-<span><span class="co">#&gt; 3           n    79</span></span>
-<span><span class="co">#&gt; 4           % 0.311</span></span>
+<span><span class="co">#&gt; 1           n    65</span></span>
+<span><span class="co">#&gt; 2           % 0.756</span></span>
+<span><span class="co">#&gt; 3           n    76</span></span>
+<span><span class="co">#&gt; 4           % 0.905</span></span>
 <span><span class="co">#&gt; 5           n    77</span></span>
-<span><span class="co">#&gt; 6           % 0.303</span></span>
-<span><span class="co">#&gt; 7           n    13</span></span>
-<span><span class="co">#&gt; 8           % 0.151</span></span>
-<span><span class="co">#&gt; 9           n    18</span></span>
-<span><span class="co">#&gt; 10          % 0.214</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1586 more rows</span></span></span>
+<span><span class="co">#&gt; 6           % 0.917</span></span>
+<span><span class="co">#&gt; 7           n    12</span></span>
+<span><span class="co">#&gt; 8           %  0.14</span></span>
+<span><span class="co">#&gt; 9           n    15</span></span>
+<span><span class="co">#&gt; 10          % 0.179</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1514 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
@@ -1978,7 +1977,7 @@ distinguishable when stacked with the participate level counts.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># overall</span></span>
 <span><span class="va">ard_event_any</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">ADAE</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
 <span>  variables <span class="op">=</span> <span class="va">TRTA</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>For AE counts within preferred term and system organ class by
@@ -1986,7 +1985,7 @@ treatment group, we can use <code><a href="../reference/ard_hierarchical.html">a
 our nesting as such:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ard_event_socpt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">ADAE</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AEBODSYS</span>, <span class="va">AETERM</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -1994,7 +1993,7 @@ our nesting as such:</p>
 <code><a href="../reference/bind_ard.html">bind_ard()</a></code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bind_ard.html">bind_ard</a></span><span class="op">(</span><span class="va">ard_event_any</span>, <span class="va">ard_event_socpt</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 798 x 13</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 762 x 13</span></span></span>
 <span><span class="co">#&gt;    group1 group1_level   group2 group2_level variable variable_level stat_name</span></span>
 <span><span class="co">#&gt; 1    &lt;NA&gt;                  &lt;NA&gt;                  TRTA        Placebo         n</span></span>
 <span><span class="co">#&gt; 2    &lt;NA&gt;                  &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
@@ -2007,9 +2006,9 @@ our nesting as such:</p>
 <span><span class="co">#&gt; 9    TRTA    Xanomeli… AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
 <span><span class="co">#&gt; 10   TRTA      Placebo AEBODSYS    SURGICAL…   AETERM      ACROCHOR…         n</span></span>
 <span><span class="co">#&gt;    stat_label stat</span></span>
-<span><span class="co">#&gt; 1           n  301</span></span>
-<span><span class="co">#&gt; 2           n  455</span></span>
-<span><span class="co">#&gt; 3           n  435</span></span>
+<span><span class="co">#&gt; 1           n  281</span></span>
+<span><span class="co">#&gt; 2           n  433</span></span>
+<span><span class="co">#&gt; 3           n  412</span></span>
 <span><span class="co">#&gt; 4           n    0</span></span>
 <span><span class="co">#&gt; 5           n    1</span></span>
 <span><span class="co">#&gt; 6           n    0</span></span>
@@ -2017,7 +2016,7 @@ our nesting as such:</p>
 <span><span class="co">#&gt; 8           n    2</span></span>
 <span><span class="co">#&gt; 9           n    3</span></span>
 <span><span class="co">#&gt; 10          n    0</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">788 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">752 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
 </div>
