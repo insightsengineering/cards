@@ -31,7 +31,6 @@
 * Updated `is_pkg_installed()` and `check_pkg_installed()` to allow checks for more than package at a time. The `get_min_version_required()` function has also been updated to return a tibble instead of a list with attributes. (#201)
 
 * A messaging overhaul to utilize the scripts in `https://github.com/ddsjoberg/standalone/blob/main/R/standalone-cli_call_env.R`. This allows clear error messaging across functions and packages. (#42)
-  - As a part of this change, the `is_pkg_installed()` and `check_pkg_installed()` function have been migrated to a standalone script `https://github.com/ddsjoberg/standalone/blob/main/R/standalone-check_pkg_installed.R` and are no longer exported by {cards}.
   - The `print_ard_conditions(call)`, `check_list_elements(env)`, `cards_select(.call)` arguments have been removed.
 
 * Bug fix in `shuffle_ard()` where factors were coerced to integers instead of their labels. (#232)

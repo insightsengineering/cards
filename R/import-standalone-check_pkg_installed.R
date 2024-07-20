@@ -38,7 +38,7 @@
 #' @param pkg (`character`)\cr
 #'   vector of package names to check.
 #' @param call (`environment`)\cr
-#'   frame for error messaging. Default is [get_cli_abort_call()].
+#'   frame for error messaging. Default is `get_cli_abort_call()`.
 #' @param reference_pkg (`string`)\cr
 #'   name of the package the function will search for a minimum required version from.
 #' @param lib.loc (`path`)\cr
@@ -58,12 +58,11 @@
 #' get_min_version_required("dplyr")
 #'
 #' @name check_pkg_installed
-#' @noRd
 NULL
 
-#' @inheritParams check_pkg_installed
+#' @rdname check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 check_pkg_installed <- function(pkg,
                                 reference_pkg = "cards",
                                 call = get_cli_abort_call()) {
@@ -87,9 +86,9 @@ check_pkg_installed <- function(pkg,
     suppressWarnings()
 }
 
-#' @inheritParams check_pkg_installed
+#' @rdname check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 is_pkg_installed <- function(pkg,
                              reference_pkg = "cards",
                              call = get_cli_abort_call()) {
@@ -112,9 +111,9 @@ is_pkg_installed <- function(pkg,
     suppressWarnings()
 }
 
-#' @inheritParams check_pkg_installed
+#' @rdname check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call = get_cli_abort_call()) {
   check_string(reference_pkg, allow_empty = TRUE, call = call)
 
@@ -166,9 +165,9 @@ get_pkg_dependencies <- function(reference_pkg = "cards", lib.loc = NULL, call =
   )
 }
 
-#' @inheritParams check_pkg_installed
+#' @rdname check_pkg_installed
 #' @keywords internal
-#' @noRd
+#' @export
 get_min_version_required <- function(pkg, reference_pkg = "cards",
                                      lib.loc = NULL, call = get_cli_abort_call()) {
   check_not_missing(pkg, call = call)
