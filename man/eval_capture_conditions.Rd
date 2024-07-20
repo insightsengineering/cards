@@ -30,7 +30,7 @@ If there is an error, the result element will be \code{NULL}.
 
 Messages are neither saved nor printed to the console.
 
-Evaluation is done via \code{\link[=eval_tidy]{eval_tidy()}}. If errors and warnings are produced
+Evaluation is done via \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}. If errors and warnings are produced
 using the \code{{cli}} package, the messages are processed with \code{cli::ansi_strip()}
 to remove styling from the message.
 }

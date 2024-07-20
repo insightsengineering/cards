@@ -8,7 +8,7 @@
 #'
 #' Messages are neither saved nor printed to the console.
 #'
-#' Evaluation is done via [eval_tidy()]. If errors and warnings are produced
+#' Evaluation is done via [`rlang::eval_tidy()`]. If errors and warnings are produced
 #' using the `{cli}` package, the messages are processed with `cli::ansi_strip()`
 #' to remove styling from the message.
 #'
