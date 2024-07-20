@@ -4,23 +4,17 @@
 * macOS (on github actions), release
 * win-builder devel
 
+## revdepcheck results
+
+We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-  Maintainer: ‘Daniel D. Sjoberg <danield.sjoberg@gmail.com>’
-  
-  New submission
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 ## Additional Comments
-
-* This is a re-submission of a new release.
-
-* Thank you for the review comments.
-  - Unexported functions no longer have examples.
-  - The `installed.packages()` function has been removed/replaced.
-  - References to software names and APIs in the DESCRIPTION have been removed to highlight other package functionality, therefore, no need to quote them.
-  
-* There are no additional references describing the methods in this package.
 
 * Thank you for your time!
