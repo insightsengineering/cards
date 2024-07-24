@@ -73,7 +73,8 @@ add_calculated_row <- function(x,
         if (!is_empty(new_stat[["error"]])) {
           cli::cli_abort(
             c("There was an error calculating the new statistic. See below:",
-              "x" = new_stat[["error"]]),
+              "x" = new_stat[["error"]]
+            ),
             call = get_cli_abort_call()
           )
         }
