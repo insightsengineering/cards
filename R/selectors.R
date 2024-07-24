@@ -16,6 +16,8 @@
 #' @param types (`character`)\cr
 #'   type(s) of columns to select. `"names"` selects the columns variable name columns,
 #'   and `"levels"` selects the level columns. Default is `c("names", "levels")`.
+#' @param n (`integer`)\cr
+#'   integer(s) indicating which grouping columns to select.
 #'
 #' @return tidyselect output
 #' @name selectors
@@ -63,8 +65,7 @@ all_ard_variables <- function(types = c("names", "levels")) {
 #' @rdname selectors
 all_ard_group_n <- function(n) {
   check_integerish(n)
-
-  any_of(c(paste0("group", n), paste0("group", n, "_level")))
+  any_of(sort(c(paste0("group", n), paste0("group", n, "_level"))))
 }
 
 #' @export

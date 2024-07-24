@@ -85,7 +85,8 @@ test_that("selectors work", {
       ard_categorical(mtcars, variables = vs)
     ) |>
       dplyr::filter(variable == "vs") |>
-      dplyr::select(all_missing_columns()),
+      dplyr::select(all_missing_columns()) |>
+      names(),
     c("group1", "group1_level", "warning", "error")
   )
 

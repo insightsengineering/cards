@@ -20,6 +20,9 @@ all_missing_columns()
 \item{types}{(\code{character})\cr
 type(s) of columns to select. \code{"names"} selects the columns variable name columns,
 and \code{"levels"} selects the level columns. Default is \code{c("names", "levels")}.}
+
+\item{n}{(\code{integer})\cr
+integer(s) indicating which grouping columns to select.}
 }
 \value{
 tidyselect output
