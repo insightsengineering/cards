@@ -89,5 +89,4 @@ test_that("selectors work", {
       names(),
     c("group1", "group1_level", "warning", "error")
   )
-
 })
