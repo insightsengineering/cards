@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.912034538586077" branch-rate="0" lines-covered="1690" lines-valid="1853" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-07-24 15:59:37.709652">
+<coverage line-rate="0.912081984897519" branch-rate="0" lines-covered="1691" lines-valid="1854" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-07-24 16:04:55.375362">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.912034538586077" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.912081984897519" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -41,21 +41,22 @@
                 <line number="76" hits="1" branch="false"/>
                 <line number="77" hits="1" branch="false"/>
                 <line number="78" hits="1" branch="false"/>
-                <line number="79" hits="3" branch="false"/>
-                <line number="81" hits="1" branch="false"/>
+                <line number="79" hits="1" branch="false"/>
+                <line number="80" hits="3" branch="false"/>
                 <line number="82" hits="1" branch="false"/>
                 <line number="83" hits="1" branch="false"/>
                 <line number="84" hits="1" branch="false"/>
                 <line number="85" hits="1" branch="false"/>
                 <line number="86" hits="1" branch="false"/>
                 <line number="87" hits="1" branch="false"/>
-                <line number="88" hits="3" branch="false"/>
+                <line number="88" hits="1" branch="false"/>
                 <line number="89" hits="3" branch="false"/>
                 <line number="90" hits="3" branch="false"/>
-                <line number="93" hits="1" branch="false"/>
+                <line number="91" hits="3" branch="false"/>
                 <line number="94" hits="1" branch="false"/>
                 <line number="95" hits="1" branch="false"/>
                 <line number="96" hits="1" branch="false"/>
+                <line number="97" hits="1" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -90,21 +91,22 @@
             <line number="76" hits="1" branch="false"/>
             <line number="77" hits="1" branch="false"/>
             <line number="78" hits="1" branch="false"/>
-            <line number="79" hits="3" branch="false"/>
-            <line number="81" hits="1" branch="false"/>
+            <line number="79" hits="1" branch="false"/>
+            <line number="80" hits="3" branch="false"/>
             <line number="82" hits="1" branch="false"/>
             <line number="83" hits="1" branch="false"/>
             <line number="84" hits="1" branch="false"/>
             <line number="85" hits="1" branch="false"/>
             <line number="86" hits="1" branch="false"/>
             <line number="87" hits="1" branch="false"/>
-            <line number="88" hits="3" branch="false"/>
+            <line number="88" hits="1" branch="false"/>
             <line number="89" hits="3" branch="false"/>
             <line number="90" hits="3" branch="false"/>
-            <line number="93" hits="1" branch="false"/>
+            <line number="91" hits="3" branch="false"/>
             <line number="94" hits="1" branch="false"/>
             <line number="95" hits="1" branch="false"/>
             <line number="96" hits="1" branch="false"/>
+            <line number="97" hits="1" branch="false"/>
           </lines>
         </class>
         <class name="apply_fmt_fn.R" filename="R/apply_fmt_fn.R" line-rate="0.747368421052632" branch-rate="0" complexity="0">
