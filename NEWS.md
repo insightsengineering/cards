@@ -1,5 +1,7 @@
 # cards 0.2.0.9001
 
+* Added new function `add_calculated_row()` for adding a new row of calculated statistic(s) that are a function of the other statistics in the ARD. (#275)
+
 # cards 0.2.0
 
 ## New Features & Updates
