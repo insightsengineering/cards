@@ -3,13 +3,15 @@
 #' @description
 #' These selection helpers match variables according to a given pattern.
 #'
-#' - `all_ard_groups()`: Use this function in dplyr selecting environments, such
-#'   as [dplyr::select()]. Function selects grouping columns, e.g. columns
+#' - `all_ard_groups()`: Function selects grouping columns, e.g. columns
 #'   named `"group##"` or `"group##_level"`.
 #'
-#' - `all_ard_variables()`: Use this function in dplyr selecting environments, such
-#'   as `dplyr::select()`. Function selects variables columns, e.g. columns
+#' - `all_ard_variables()`: Function selects variables columns, e.g. columns
 #'   named `"variable"` or `"variable_level"`.
+#'
+#' - `all_ard_group_n()`: Function selects `n` grouping columns.
+#'
+#' - `all_missing_columns()`: Function selects columns that are all `NA` or empty.
 #'
 #' @param types (`character`)\cr
 #'   type(s) of columns to select. `"names"` selects the columns variable name columns,
@@ -56,3 +58,19 @@ all_ard_variables <- function(types = c("names", "levels")) {
     return(dplyr::any_of("variable_level"))
   }
 }
+
+#' @export
+#' @rdname selectors
+all_ard_group_n <- function(n) {
+  check_integerish(n)
+
+  any_of(c(paste0("group", n), paste0("group", n, "_level")))
+}
+
+#' @export
+#' @rdname selectors
+all_missing_columns <- function() {
+  where(\(x) case_switch(is.list(x) ~ all_empty(x), .default = all_na(x)))
+}
+all_na <- function(x) all(is.na(x))
+all_empty <- function(x) all(map_lgl(x, is_empty))

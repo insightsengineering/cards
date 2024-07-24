@@ -1,5 +1,7 @@
 # cards 0.2.0.9001
 
+* Adding selectors `all_group_n()` and `all_missing_columns()`. (#272, #274)
+
 # cards 0.2.0
 
 ## New Features & Updates
