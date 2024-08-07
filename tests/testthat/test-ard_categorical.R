@@ -828,3 +828,10 @@ test_that("ard_categorical(by) messages about protected names", {
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })
+
+test_that("ard_categorical() follows ard structure", {
+  expect_silent(
+    ard_categorical(mtcars, variables = "am") |>
+      check_ard_structure(method = FALSE)
+  )
+})

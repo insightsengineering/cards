@@ -408,3 +408,10 @@ test_that("ard_continuous() works when using generic names ", {
     ard_continuous(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
   )
 })
+
+test_that("ard_continuous() follows ard structure", {
+  expect_silent(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl)|>
+      check_ard_structure(method = FALSE)
+  )
+})

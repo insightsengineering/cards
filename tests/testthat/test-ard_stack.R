@@ -248,3 +248,15 @@ test_that("ard_stack() complex call error", {
     error = TRUE
   )
 })
+
+test_that("ard_stack() follows ard structure", {
+  expect_silent(
+    ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs")
+    )|>
+      check_ard_structure(method = FALSE)
+  )
+})
