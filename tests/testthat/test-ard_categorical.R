@@ -227,6 +227,17 @@ test_that("ard_categorical() with strata and by arguments", {
       denominator = ADSL |> dplyr::filter(ARM %in% "Placebo")
     )
   )
+
+  # addressing a sort edge case reported here: https://github.com/ddsjoberg/gtsummary/issues/1889
+  expect_silent(
+    ard_sort_test <-
+      iris |>
+      dplyr::mutate(
+        trt = rep_len(c("Bladder + RP LN", "Bladder + Renal Fossa"), length.out = dplyr::n())
+      ) |>
+      ard_categorical(variables = trt, by = Species)
+  )
+  expect_s3_class(ard_sort_test$group1_level[[1]], "factor")
 })
 
 test_that("ard_categorical(stat_label) argument works", {
