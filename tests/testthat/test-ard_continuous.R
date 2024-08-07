@@ -411,7 +411,7 @@ test_that("ard_continuous() works when using generic names ", {
 
 test_that("ard_continuous() follows ard structure", {
   expect_silent(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl)|>
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |>
       check_ard_structure(method = FALSE)
   )
 })

@@ -120,7 +120,7 @@ test_that("ard_complex() follows ard structure", {
       by = "ARM",
       variables = "AGE",
       statistic = list(AGE = list(mean = \(x, ...) mean(x)))
-    )|>
+    ) |>
       check_ard_structure(method = FALSE)
   )
 })

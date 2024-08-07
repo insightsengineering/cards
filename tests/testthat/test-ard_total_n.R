@@ -12,7 +12,7 @@ test_that("ard_total_n() works", {
 
 test_that("ard_total_n() follows ard structure", {
   expect_silent(
-    ard_total_n(ADSL)|>
+    ard_total_n(ADSL) |>
       check_ard_structure(method = FALSE)
   )
 })

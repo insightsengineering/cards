@@ -274,7 +274,7 @@ test_that("ard_hierarchical() follows ard structure", {
       dplyr::group_by(TRTA) |>
       ard_hierarchical_count(
         variables = c(AESOC, AETERM)
-      )|>
+      ) |>
       check_ard_structure(method = FALSE)
   )
 })

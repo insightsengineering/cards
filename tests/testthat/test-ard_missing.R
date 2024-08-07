@@ -87,7 +87,7 @@ test_that("ard_missing() follows ard structure", {
   expect_silent(
     ADSL |>
       dplyr::group_by(ARM) |>
-      ard_missing(variables = "BMIBL")|>
+      ard_missing(variables = "BMIBL") |>
       check_ard_structure(method = FALSE)
   )
 })
