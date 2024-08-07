@@ -267,3 +267,14 @@ test_that("ard_hierarchical() and ard_hierarchical_count() with grouped data wor
     )
   )
 })
+
+test_that("ard_hierarchical() follows ard structure", {
+  expect_silent(
+    ADAE |>
+      dplyr::group_by(TRTA) |>
+      ard_hierarchical_count(
+        variables = c(AESOC, AETERM)
+      ) |>
+      check_ard_structure(method = FALSE)
+  )
+})

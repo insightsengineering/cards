@@ -111,3 +111,16 @@ test_that("ard_complex() with grouped data works", {
     )
   )
 })
+
+
+test_that("ard_complex() follows ard structure", {
+  expect_silent(
+    ard_complex(
+      ADSL,
+      by = "ARM",
+      variables = "AGE",
+      statistic = list(AGE = list(mean = \(x, ...) mean(x)))
+    ) |>
+      check_ard_structure(method = FALSE)
+  )
+})
