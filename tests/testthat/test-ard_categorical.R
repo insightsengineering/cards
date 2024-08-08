@@ -839,3 +839,24 @@ test_that("ard_categorical(by) messages about protected names", {
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })
+
+test_that("ard_categorical() with hms times", {
+  # originally reported in https://github.com/ddsjoberg/gtsummary/issues/1893
+  skip_if_not_installed("hms")
+  withr::local_package("hms")
+
+  ADSL2 <-
+    ADSL |>
+    dplyr::mutate(time_hms = hms(seconds = 15))
+  expect_silent(
+    ard <- ard_categorical(ADSL2, by = ARM, variables = time_hms)
+  )
+  expect_equal(
+    ard$stat,
+    ard_categorical(
+      ADSL2 |> dplyr::mutate(time_hms = as.numeric(time_hms)),
+      by = ARM,
+      variables = time_hms
+    )$stat
+  )
+})
