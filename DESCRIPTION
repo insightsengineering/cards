@@ -31,6 +31,7 @@ Suggests:
     spelling (>= 2.2.0),
     testthat (>= 3.2.0),
     withr (>= 3.0.0)
+Config/Needs/check: hms
 Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt,
     insightsengineering/nesttemplate
 Config/testthat/edition: 3

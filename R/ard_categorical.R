@@ -378,7 +378,7 @@ ard_categorical.data.frame <- function(data,
     every(
       c(by, strata, variable),
       ~ all(
-        df_table[[.x]] == df_original_types[[.x]] | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
+        df_table[[.x]] == as.character(df_original_types[[.x]]) | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
       )
     )
   if (isTRUE(all_cols_equal)) {
