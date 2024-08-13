@@ -22,7 +22,7 @@ as_card <- function(x) {
   check_class(x, cls = "data.frame")
 
   # convert to class "card" ----------------------------------------------------
-  if (is(x, "card")) {
+  if (inherits(x, "card")) {
     x
   } else {
     structure(x, class = c("card", class(x)))
