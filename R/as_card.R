@@ -1,6 +1,6 @@
 #' Data Frame as ARD
 #'
-#' Convert data frames to ARDs.
+#' Convert data frames to ARDs of class 'card'.
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame

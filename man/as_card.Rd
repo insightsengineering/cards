@@ -14,7 +14,7 @@ a data frame}
 an ARD data frame of class 'card'
 }
 \description{
-Convert data frames to ARDs.
+Convert data frames to ARDs of class 'card'.
 }
 \examples{
 data.frame(
