@@ -175,8 +175,8 @@ ard_hierarchical_count.data.frame <- function(data,
       }
     ) |>
     bind_ard() |>
-    dplyr::mutate(context = "hierarchical_count") %>%
-    {structure(., class = unique(c("card", class(.))))} # styler: off
+    dplyr::mutate(context = "hierarchical_count") |>
+    as_card()
 }
 
 #' Rename Last Group to Variable

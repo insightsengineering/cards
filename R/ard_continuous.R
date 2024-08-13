@@ -167,8 +167,8 @@ ard_continuous.data.frame <- function(data,
   # add meta data and class ----------------------------------------------------
   df_results |>
     dplyr::mutate(context = "continuous") |>
-    tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))} # styler: off
+    tidy_ard_column_order() |>
+    as_card()
 }
 
 

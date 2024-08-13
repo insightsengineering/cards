@@ -111,6 +111,6 @@ tidy_as_ard <- function(lst_tidy,
     error = lst_tidy["error"],
     !!!lst_ard_columns,
   ) |>
-    tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))} # styler: off
+    tidy_ard_column_order() |>
+    as_card()
 }

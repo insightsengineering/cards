@@ -22,5 +22,9 @@ as_card <- function(x) {
   check_class(x, cls = "data.frame")
 
   # convert to class "card" ----------------------------------------------------
-  structure(x, class = c("card", class(x)))
+  if (is(x, "card")) {
+    x
+  } else {
+    structure(x, class = c("card", class(x)))
+  }
 }
