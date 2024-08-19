@@ -6,7 +6,7 @@
 #'   in the `variables` argument, nested within the other variables included.
 #' - `ard_hierarchical_count()` includes summaries for _all_ variables
 #'   listed in the `variables` argument each summary nested within the preceding
-#'   variables, e.g. `variables=c(AESOC, AETERM)` summarizes `AETERM` nested
+#'   variables, e.g. `variables=c(AESOC, AEDECOD)` summarizes `AEDECOD` nested
 #'   in `AESOC`, and also summarizes the counts of `AESOC`.
 #'
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -28,14 +28,14 @@
 #' @examples
 #' ard_hierarchical(
 #'   data = ADAE,
-#'   variables = c(AESOC, AETERM),
+#'   variables = c(AESOC, AEDECOD),
 #'   by = c(TRTA, AESEV),
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 #' )
 #'
 #' ard_hierarchical_count(
 #'   data = ADAE,
-#'   variables = c(AESOC, AETERM),
+#'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA
 #' )
 NULL
