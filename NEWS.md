@@ -1,6 +1,8 @@
-# cards 0.2.0.9002
+# cards 0.2.1
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.
+
+* Update in `ard_categorical()` to run `base::table()` output checks against coerced character columns. Previously, we relied on R to perform checks on the type it decided to check against (e.g. when it coerces to a common type). While the initial strategy worked in cases of Base R classes, there were some bespoke classes, such as times from {hms}, where Base R does not coerce as we expected.
 
 # cards 0.2.0
 
