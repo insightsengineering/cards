@@ -5,7 +5,7 @@ ard_hierarchical() includes summaries for the last variable listed
 in the variables argument, nested within the other variables included.
 ard_hierarchical_count() includes summaries for all variables
 listed in the variables argument each summary nested within the preceding
-variables, e.g. variables=c(AESOC, AETERM) summarizes AETERM nested
+variables, e.g. variables=c(AESOC, AEDECOD) summarizes AEDECOD nested
 in AESOC, and also summarizes the counts of AESOC.
 
 "><meta property="og:description" content="Performs hierarchical or nested tabulations, e.g. tabulates AE terms
@@ -14,7 +14,7 @@ ard_hierarchical() includes summaries for the last variable listed
 in the variables argument, nested within the other variables included.
 ard_hierarchical_count() includes summaries for all variables
 listed in the variables argument each summary nested within the preceding
-variables, e.g. variables=c(AESOC, AETERM) summarizes AETERM nested
+variables, e.g. variables=c(AESOC, AEDECOD) summarizes AEDECOD nested
 in AESOC, and also summarizes the counts of AESOC.
 
 "><meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png"><link rel="stylesheet" href="../consent.css"><script src="../consent.js" type="text/javascript" charset="utf-8"></script></head><body>
@@ -25,7 +25,7 @@ in AESOC, and also summarizes the counts of AESOC.
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9000</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,16 +41,6 @@ in AESOC, and also summarizes the counts of AESOC.
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -71,7 +61,7 @@ nested within AE system organ class.</p><ul><li><p><code>ard_hierarchical()</cod
 in the <code>variables</code> argument, nested within the other variables included.</p></li>
 <li><p><code>ard_hierarchical_count()</code> includes summaries for <em>all</em> variables
 listed in the <code>variables</code> argument each summary nested within the preceding
-variables, e.g. <code>variables=c(AESOC, AETERM)</code> summarizes <code>AETERM</code> nested
+variables, e.g. <code>variables=c(AESOC, AEDECOD)</code> summarizes <code>AEDECOD</code> nested
 in <code>AESOC</code>, and also summarizes the counts of <code>AESOC</code>.</p></li>
 </ul></div>
 
@@ -200,22 +190,22 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_hierarchical</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">ADAE</span>,</span></span>
-<span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AETERM</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">TRTA</span>, <span class="va">AESEV</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  denominator <span class="op">=</span> <span class="va">ADSL</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 6534 x 15</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level group3 group3_level variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…   AETERM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESEV     MODERATE  AESOC    GASTROIN…   AETERM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESEV         MILD  AESOC    GASTROIN…  AEDECOD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESEV     MODERATE  AESOC    GASTROIN…  AEDECOD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    variable_level stat_name stat_label  stat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       ABDOMINA…         n          n     0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       ABDOMINA…         N          N    86</span>
@@ -233,21 +223,21 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">ard_hierarchical_count</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">ADAE</span>,</span></span>
-<span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AETERM</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">TRTA</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 795 x 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GASTROIN…   AETERM      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    SURGICAL…   AETERM      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    SKIN AND…   AETERM      ACTINIC …         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    SKIN AND…  AEDECOD      ACTINIC …         n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    stat_label stat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           n    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           n    1</span>
