@@ -74,3 +74,24 @@ Review the [Getting
 Started](https://insightsengineering.github.io/cards//main/articles/getting-started.html)
 page for examples using ARDs to calculate statistics to later include in
 tables.
+
+``` r
+library(cards)
+
+ard_continuous(ADSL, by = "ARM", variables = "AGE")
+#> {cards} data frame: 24 x 10
+#>    group1 group1_level variable stat_name stat_label   stat
+#> 1     ARM      Placebo      AGE         N          N     86
+#> 2     ARM      Placebo      AGE      mean       Mean 75.209
+#> 3     ARM      Placebo      AGE        sd         SD   8.59
+#> 4     ARM      Placebo      AGE    median     Median     76
+#> 5     ARM      Placebo      AGE       p25         Q1     69
+#> 6     ARM      Placebo      AGE       p75         Q3     82
+#> 7     ARM      Placebo      AGE       min        Min     52
+#> 8     ARM      Placebo      AGE       max        Max     89
+#> 9     ARM    Xanomeli…      AGE         N          N     84
+#> 10    ARM    Xanomeli…      AGE      mean       Mean 74.381
+#> ℹ 14 more rows
+#> ℹ Use `print(n = ...)` to see more rows
+#> ℹ 4 more variables: context, fmt_fn, warning, error
+```
