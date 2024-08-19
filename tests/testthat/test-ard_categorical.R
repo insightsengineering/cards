@@ -845,6 +845,7 @@ test_that("ard_categorical() follows ard structure", {
   expect_silent(
     ard_categorical(mtcars, variables = "am") |>
       check_ard_structure(method = FALSE)
+  )
 })
 
 test_that("ard_categorical() with hms times", {
