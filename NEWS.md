@@ -1,4 +1,4 @@
-# cards 0.2.1.9000
+# cards 0.2.1.9001
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.
 
