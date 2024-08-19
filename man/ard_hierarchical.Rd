@@ -82,7 +82,7 @@ nested within AE system organ class.
 in the \code{variables} argument, nested within the other variables included.
 \item \code{ard_hierarchical_count()} includes summaries for \emph{all} variables
 listed in the \code{variables} argument each summary nested within the preceding
-variables, e.g. \code{variables=c(AESOC, AETERM)} summarizes \code{AETERM} nested
+variables, e.g. \code{variables=c(AESOC, AEDECOD)} summarizes \code{AEDECOD} nested
 in \code{AESOC}, and also summarizes the counts of \code{AESOC}.
 }
 }
@@ -119,14 +119,14 @@ be used as the updated \code{"N"} in the calculations.
 \examples{
 ard_hierarchical(
   data = ADAE,
-  variables = c(AESOC, AETERM),
+  variables = c(AESOC, AEDECOD),
   by = c(TRTA, AESEV),
   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 )
 
 ard_hierarchical_count(
   data = ADAE,
-  variables = c(AESOC, AETERM),
+  variables = c(AESOC, AEDECOD),
   by = TRTA
 )
 }

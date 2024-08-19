@@ -20,7 +20,7 @@ test_that("shuffle/trim works", {
 
   ard_hier <- ard_hierarchical_count(
     data = ADAE,
-    variables = c(AESOC, AETERM),
+    variables = c(AESOC, AEDECOD),
     by = TRTA
   )
   ard_hier_shuff <- ard_hier |>
