@@ -9,3 +9,10 @@ test_that("ard_total_n() works", {
     ard_total_n(letters)
   )
 })
+
+test_that("ard_total_n() follows ard structure", {
+  expect_silent(
+    ard_total_n(ADSL) |>
+      check_ard_structure(method = FALSE)
+  )
+})
