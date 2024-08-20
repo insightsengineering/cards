@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.907386990077178" branch-rate="0" lines-covered="1646" lines-valid="1814" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-20 03:18:20.971775">
+<coverage line-rate="0.907539900935608" branch-rate="0" lines-covered="1649" lines-valid="1817" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-20 03:56:42.699323">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.907386990077178" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.907539900935608" branch-rate="0" complexity="0">
       <classes>
         <class name="apply_fmt_fn.R" filename="R/apply_fmt_fn.R" line-rate="0.747368421052632" branch-rate="0" complexity="0">
           <methods>
@@ -2203,24 +2203,34 @@
           <methods>
             <method name="ard_total_n" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="15" hits="4" branch="false"/>
-                <line number="16" hits="4" branch="false"/>
                 <line number="19" hits="4" branch="false"/>
                 <line number="20" hits="4" branch="false"/>
-                <line number="21" hits="4" branch="false"/>
-                <line number="22" hits="4" branch="false"/>
-                <line number="23" hits="4" branch="false"/>
+              </lines>
+            </method>
+            <method name="ard_total_n.data.frame" signature="" line-rate="1" branch-rate="0" complexity="0">
+              <lines>
+                <line number="27" hits="4" branch="false"/>
+                <line number="28" hits="4" branch="false"/>
+                <line number="29" hits="4" branch="false"/>
+                <line number="32" hits="4" branch="false"/>
+                <line number="33" hits="4" branch="false"/>
+                <line number="34" hits="4" branch="false"/>
+                <line number="35" hits="4" branch="false"/>
+                <line number="36" hits="4" branch="false"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="15" hits="4" branch="false"/>
-            <line number="16" hits="4" branch="false"/>
             <line number="19" hits="4" branch="false"/>
             <line number="20" hits="4" branch="false"/>
-            <line number="21" hits="4" branch="false"/>
-            <line number="22" hits="4" branch="false"/>
-            <line number="23" hits="4" branch="false"/>
+            <line number="27" hits="4" branch="false"/>
+            <line number="28" hits="4" branch="false"/>
+            <line number="29" hits="4" branch="false"/>
+            <line number="32" hits="4" branch="false"/>
+            <line number="33" hits="4" branch="false"/>
+            <line number="34" hits="4" branch="false"/>
+            <line number="35" hits="4" branch="false"/>
+            <line number="36" hits="4" branch="false"/>
           </lines>
         </class>
         <class name="as_nested_list.R" filename="R/as_nested_list.R" line-rate="1" branch-rate="0" complexity="0">
