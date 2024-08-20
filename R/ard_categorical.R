@@ -141,9 +141,9 @@ ard_categorical.data.frame <- function(data,
     error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N')}}"
   )
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # return note about column names that result in errors -----------------------
@@ -195,8 +195,8 @@ ard_categorical.data.frame <- function(data,
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
-    tidy_ard_column_order() %>%
-    {structure(., class = unique(c("card", class(.))))} # styler: off
+    tidy_ard_column_order() |>
+    as_card()
 }
 
 

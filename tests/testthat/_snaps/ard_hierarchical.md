@@ -10,8 +10,10 @@
     Code
       ard_hierarchical(data = ADAE, variables = starts_with("xxxx"), by = c(TRTA,
         AESEV))
+    Message
+      {cards} data frame: 0 x 0
     Output
-      # A tibble: 0 x 0
+      data frame with 0 columns and 0 rows
 
 # ard_hierarchical(id) argument works
 
@@ -64,6 +66,8 @@
     Code
       ard_hierarchical_count(data = ADAE, variables = starts_with("xxxx"), by = c(
         TRTA, AESEV))
+    Message
+      {cards} data frame: 0 x 0
     Output
-      # A tibble: 0 x 0
+      data frame with 0 columns and 0 rows
 

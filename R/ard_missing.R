@@ -45,6 +45,11 @@ ard_missing.data.frame <- function(data,
   # process variable inputs ----------------------------------------------------
   process_selectors(data, variables = {{ variables }})
 
+  # return empty ARD if no variables selected ----------------------------------
+  if (is_empty(variables)) {
+    return(dplyr::tibble() |> as_card())
+  }
+
   # convert all variables to T/F whether it's missing --------------------------
   data <- data |>
     dplyr::mutate(
