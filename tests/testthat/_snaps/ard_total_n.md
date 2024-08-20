@@ -11,6 +11,6 @@
     Code
       ard_total_n(letters)
     Condition
-      Error in `ard_total_n()`:
-      ! The `data` argument must be class <data.frame>, not a character vector.
+      Error in `UseMethod()`:
+      ! no applicable method for 'ard_total_n' applied to an object of class "character"
 

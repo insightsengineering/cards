@@ -840,6 +840,14 @@ test_that("ard_categorical(by) messages about protected names", {
   )
 })
 
+
+test_that("ard_categorical() follows ard structure", {
+  expect_silent(
+    ard_categorical(mtcars, variables = "am") |>
+      check_ard_structure(method = FALSE)
+  )
+})
+
 test_that("ard_categorical() with hms times", {
   # originally reported in https://github.com/ddsjoberg/gtsummary/issues/1893
   skip_if_not_installed("hms")

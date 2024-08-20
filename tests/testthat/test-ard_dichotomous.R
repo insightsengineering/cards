@@ -85,3 +85,12 @@ test_that("ard_dichotomous() with grouped data works", {
     )
   )
 })
+
+test_that("ard_dichotomous() follows ard structure", {
+  expect_silent(
+    mtcars |>
+      dplyr::group_by(vs) |>
+      ard_dichotomous(variables = c(cyl, am), value = list(cyl = 4)) |>
+      check_ard_structure(method = FALSE)
+  )
+})
