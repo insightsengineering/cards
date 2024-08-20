@@ -26,7 +26,7 @@ test_that("ard_continuous() works", {
       mtcars,
       variables = starts_with("xxxxx")
     ),
-    dplyr::tibble()
+    dplyr::tibble() |> as_card()
   )
 })
 

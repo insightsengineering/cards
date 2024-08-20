@@ -60,5 +60,5 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
   }
 
   # return stacked ARDs --------------------------------------------------------
-  tidy_ard_column_order(data)
+  tidy_ard_column_order(data) |> as_card()
 }
