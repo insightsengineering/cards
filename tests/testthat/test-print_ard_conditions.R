@@ -79,16 +79,25 @@ test_that("print_ard_conditions() no error when 'error'/'warning' columns not pr
 
 test_that("print_ard_conditions() no error when factors are present", {
   ard <-
-    structure(list(group1 = c("by_var", "by_var"), group1_level = list(
-      structure(1L, levels = c("cohort_1", "cohort_2"), class = "factor"),
-      structure(1L, levels = c("cohort_1", "cohort_2"), class = "factor")),
+    structure(list(
+      group1 = c("by_var", "by_var"), group1_level = list(
+        structure(1L, levels = c("cohort_1", "cohort_2"), class = "factor"),
+        structure(1L, levels = c("cohort_1", "cohort_2"), class = "factor")
+      ),
       variable = c("continuous_var", "continuous_var"), variable_level = list(
-        NULL, NULL), context = c("continuous", "continuous"),
+        NULL, NULL
+      ), context = c("continuous", "continuous"),
       stat_name = c("min", "max"), stat_label = c("Min", "Max"),
-      stat = list(Inf, -Inf), fmt_fn = list(1L, 1L), warning = list("no non-missing arguments to min; returning Inf",
-                                                                    "no non-missing arguments to max; returning -Inf"), error = list(
-                                                                      NULL, NULL)), row.names = c(NA, -2L), class = c("card",
-                                                                                                                      "tbl_df", "tbl", "data.frame"))
+      stat = list(Inf, -Inf), fmt_fn = list(1L, 1L), warning = list(
+        "no non-missing arguments to min; returning Inf",
+        "no non-missing arguments to max; returning -Inf"
+      ), error = list(
+        NULL, NULL
+      )
+    ), row.names = c(NA, -2L), class = c(
+      "card",
+      "tbl_df", "tbl", "data.frame"
+    ))
   expect_snapshot(
     print_ard_conditions(ard)
   )
