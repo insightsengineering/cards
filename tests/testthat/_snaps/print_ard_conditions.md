@@ -70,3 +70,12 @@
       print_ard_conditions(dplyr::select(ard_continuous(ADSL, variables = AGE),
       -warning, -error))
 
+# print_ard_conditions() no error when factors are present
+
+    Code
+      print_ard_conditions(ard)
+    Message
+      The following warnings were returned during `print_ard_conditions()`:
+      ! For variable `continuous_var` (`by_var = "cohort_1"`) and "min" statistic: no non-missing arguments to min; returning Inf
+      ! For variable `continuous_var` (`by_var = "cohort_1"`) and "max" statistic: no non-missing arguments to max; returning -Inf
+

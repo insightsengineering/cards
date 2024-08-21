@@ -154,7 +154,7 @@ print_ard_conditions <- function(x) {
   # format the 'values' or levels of the variables
   levels <-
     x[endsWith(names, "_level")] |>
-    lapply(\(x) glue::glue("{{.val {{{cli::cli_format(x)}}}}}"))
+    lapply(\(x) glue::glue("{{.val {{{cli::cli_format(ifelse(is.numeric(x) || is.logical(x), x, as.character(x)))}}}}}"))
   # rename the levels to remove the '_level' suffix
   names(levels) <- sub(pattern = "_level$", replacement = "", x = names(levels))
 
