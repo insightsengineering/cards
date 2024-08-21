@@ -74,14 +74,14 @@ ard_complex.data.frame <- function(data,
   check_not_missing(variables)
   check_not_missing(statistic)
 
+  # process inputs -------------------------------------------------------------
+  process_selectors(data, variables = {{ variables }})
+  process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
+
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
   }
-
-  # process inputs -------------------------------------------------------------
-  process_selectors(data, variables = {{ variables }})
-  process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
   missing_statistics_vars <- setdiff(variables, names(statistic))
   if (!is_empty(missing_statistics_vars)) {
