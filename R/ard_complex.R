@@ -78,6 +78,11 @@ ard_complex.data.frame <- function(data,
   process_selectors(data, variables = {{ variables }})
   process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
+  # return empty ARD if no variables selected ----------------------------------
+  if (is_empty(variables)) {
+    return(dplyr::tibble() |> as_card())
+  }
+
   missing_statistics_vars <- setdiff(variables, names(statistic))
   if (!is_empty(missing_statistics_vars)) {
     "The following columns do not have {.arg statistic} defined: {.val {missing_statistics_vars}}." |>
