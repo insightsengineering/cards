@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.906900328587076" branch-rate="0" lines-covered="1656" lines-valid="1826" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-20 23:25:30.081383">
+<coverage line-rate="0.906900328587076" branch-rate="0" lines-covered="1656" lines-valid="1826" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-21 02:31:37.516748">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -1056,9 +1056,9 @@
                 <line number="74" hits="7" branch="false"/>
                 <line number="75" hits="7" branch="false"/>
                 <line number="78" hits="7" branch="false"/>
-                <line number="79" hits="0" branch="false"/>
-                <line number="83" hits="7" branch="false"/>
-                <line number="84" hits="7" branch="false"/>
+                <line number="79" hits="7" branch="false"/>
+                <line number="82" hits="7" branch="false"/>
+                <line number="83" hits="0" branch="false"/>
                 <line number="86" hits="7" branch="false"/>
                 <line number="87" hits="7" branch="false"/>
                 <line number="88" hits="1" branch="false"/>
@@ -1096,9 +1096,9 @@
             <line number="74" hits="7" branch="false"/>
             <line number="75" hits="7" branch="false"/>
             <line number="78" hits="7" branch="false"/>
-            <line number="79" hits="0" branch="false"/>
-            <line number="83" hits="7" branch="false"/>
-            <line number="84" hits="7" branch="false"/>
+            <line number="79" hits="7" branch="false"/>
+            <line number="82" hits="7" branch="false"/>
+            <line number="83" hits="0" branch="false"/>
             <line number="86" hits="7" branch="false"/>
             <line number="87" hits="7" branch="false"/>
             <line number="88" hits="1" branch="false"/>
