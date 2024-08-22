@@ -86,9 +86,9 @@ ard_hierarchical.data.frame <- function(data,
     ))
   }
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # if denominator doesn't have all by, they need to be added ------------------
@@ -149,9 +149,9 @@ ard_hierarchical_count.data.frame <- function(data,
     by = {{ by }}
   )
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # add dummy variable for counting --------------------------------------------
@@ -175,8 +175,8 @@ ard_hierarchical_count.data.frame <- function(data,
       }
     ) |>
     bind_ard() |>
-    dplyr::mutate(context = "hierarchical_count") %>%
-    {structure(., class = unique(c("card", class(.))))} # styler: off
+    dplyr::mutate(context = "hierarchical_count") |>
+    as_card()
 }
 
 #' Rename Last Group to Variable
