@@ -1,4 +1,4 @@
-# cards 0.2.1.9007
+# cards 0.2.1.9008
 
 * Converted `ard_total_n()` to an S3 generic and added method `ard_total_n.data.frame()`.
 
