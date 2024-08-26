@@ -4,6 +4,8 @@
 
 * Fix in `print_ard_conditions()` when the variables were factors, which did not render properly in `cli::cli_format()`.
 
+* Added the `bind_ard(.quiet)` argument to suppress messaging. (#299)
+
 # cards 0.2.1
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.

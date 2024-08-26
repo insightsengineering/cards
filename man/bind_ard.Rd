@@ -4,7 +4,7 @@
 \alias{bind_ard}
 \title{Bind ARDs}
 \usage{
-bind_ard(..., .update = FALSE, .order = FALSE)
+bind_ard(..., .update = FALSE, .order = FALSE, .quiet = FALSE)
 }
 \arguments{
 \item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
@@ -22,6 +22,9 @@ logical indicating whether to order the rows of the stacked ARDs, allowing
 statistics that share common group and variable values to appear in
 consecutive rows. Default is \code{FALSE}. Ordering will be based on the order
 of the group/variable values prior to stacking.}
+
+\item{.quiet}{(\code{logical})\cr
+logical indicating whether to suppress any messaging. Default is \code{FALSE}}
 }
 \value{
 an ARD data frame of class 'card'

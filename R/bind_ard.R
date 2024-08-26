@@ -16,6 +16,8 @@
 #'   statistics that share common group and variable values to appear in
 #'   consecutive rows. Default is `FALSE`. Ordering will be based on the order
 #'   of the group/variable values prior to stacking.
+#' @param .quiet (`logical`)\cr
+#'   logical indicating whether to suppress any messaging. Default is `FALSE`
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -24,12 +26,13 @@
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' bind_ard(ard, ard, .update = TRUE)
-bind_ard <- function(..., .update = FALSE, .order = FALSE) {
+bind_ard <- function(..., .update = FALSE, .order = FALSE, .quiet = FALSE) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
   check_scalar_logical(.update)
   check_scalar_logical(.order)
+  check_scalar_logical(.quiet)
 
   # stack ARDs -----------------------------------------------------------------
   data <- dplyr::bind_rows(...)
@@ -40,7 +43,7 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
     duplicated()
 
   if (any(dupes) && isTRUE(.update)) {
-    cli::cli_inform(c("i" = "{sum(dupes)} duplicate observation{?/s} removed."))
+    if (isFALSE(.quiet)) cli::cli_inform(c("i" = "{sum(dupes)} duplicate observation{?/s} removed."))
     data <-
       dplyr::filter(
         data,
@@ -52,7 +55,6 @@ bind_ard <- function(..., .update = FALSE, .order = FALSE) {
       call = get_cli_abort_call()
     )
   }
-
 
   # optionally reorder ---------------------------------------------------------
   if (isTRUE(.order)) {
