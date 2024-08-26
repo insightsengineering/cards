@@ -50,6 +50,6 @@ test_that("bind_ard() .order argument works", {
 test_that("bind_ard(.quiet)", {
   expect_silent(
     ard_continuous(ADSL, variables = AGE) %>%
-      {bind_ard(., ., .update = TRUE, .quiet = TRUE)}
+      {bind_ard(., ., .update = TRUE, .quiet = TRUE)} # styler: off
   )
 })
