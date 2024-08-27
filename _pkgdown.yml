@@ -53,6 +53,7 @@ reference:
       - alias_as_fmt_fn
       - label_cards
       - rename_ard_columns
+      - add_calculated_row
   - subtitle: "Wrangle ARD"
     contents:
       - shuffle_ard
