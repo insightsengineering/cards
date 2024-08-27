@@ -14,7 +14,7 @@ a data frame}
 columns to stratify results by.}
 
 \item{.ard_fn}{(\code{function}, \code{formula})\cr
-a function or a formula that can be corced to a function with
+a function or a formula that can be coerced to a function with
 \code{rlang::as_function()} (similar to \code{purrr::map(.f)})}
 
 \item{...}{Additional arguments passed on to the \code{.ard_fn} function.}
@@ -33,7 +33,7 @@ cardx functions.
 ard_strata(
   ADSL,
   strata = ARM,
-  ~ard_continuous(.x, variables = AGE)
+  ~ ard_continuous(.x, variables = AGE)
 )
 
 ard_strata(

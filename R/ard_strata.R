@@ -12,7 +12,7 @@
 #' @param strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to stratify results by.
 #' @param .ard_fn (`function`, `formula`)\cr
-#'   a function or a formula that can be corced to a function with
+#'   a function or a formula that can be coerced to a function with
 #'   `rlang::as_function()` (similar to `purrr::map(.f)`)
 #' @param ... Additional arguments passed on to the `.ard_fn` function.
 #'
