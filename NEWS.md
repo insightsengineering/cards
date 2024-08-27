@@ -1,8 +1,10 @@
-# cards 0.2.1.9006
+# cards 0.2.1.9009
 
 * Converted `ard_total_n()` to an S3 generic and added method `ard_total_n.data.frame()`.
 
 * Fix in `print_ard_conditions()` when the variables were factors, which did not render properly in `cli::cli_format()`.
+
+* Added the `bind_ard(.quiet)` argument to suppress messaging. (#299)
 
 # cards 0.2.1
 
