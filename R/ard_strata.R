@@ -23,7 +23,7 @@
 #' ard_strata(
 #'   ADSL,
 #'   strata = ARM,
-#'   ~ard_continuous(.x, variables = AGE)
+#'   ~ ard_continuous(.x, variables = AGE)
 #' )
 #'
 #' ard_strata(
@@ -61,7 +61,7 @@ ard_strata <- function(data, strata, .ard_fn, ...) {
   max_group_n <-
     map(
       df_nested_data$ard,
-      ~dplyr::select(.x, all_ard_groups("names")) |> names()
+      ~ dplyr::select(.x, all_ard_groups("names")) |> names()
     ) |>
     unlist() |>
     unique() |>
@@ -73,8 +73,10 @@ ard_strata <- function(data, strata, .ard_fn, ...) {
 
   if (!is.infinite(max_group_n)) {
     new_group_colnames <-
-      c(paste0("group", seq_along(strata) + 1L),
-        paste0("group", seq_along(strata) + 1L, "_level")) |>
+      c(
+        paste0("group", seq_along(strata) + 1L),
+        paste0("group", seq_along(strata) + 1L, "_level")
+      ) |>
       sort()
     names(df_nested_data)[seq_along(new_group_colnames)] <- new_group_colnames
   }
