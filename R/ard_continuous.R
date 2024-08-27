@@ -113,9 +113,9 @@ ard_continuous.data.frame <- function(data,
       )
   )
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # calculate statistics -------------------------------------------------------
@@ -167,8 +167,8 @@ ard_continuous.data.frame <- function(data,
   # add meta data and class ----------------------------------------------------
   df_results |>
     dplyr::mutate(context = "continuous") |>
-    tidy_ard_column_order() %>%
-    {structure(., class = c("card", class(.)))} # styler: off
+    tidy_ard_column_order() |>
+    as_card()
 }
 
 

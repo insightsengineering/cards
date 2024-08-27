@@ -141,9 +141,9 @@ ard_categorical.data.frame <- function(data,
     error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N')}}"
   )
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # return note about column names that result in errors -----------------------
@@ -195,8 +195,8 @@ ard_categorical.data.frame <- function(data,
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
-    tidy_ard_column_order() %>%
-    {structure(., class = unique(c("card", class(.))))} # styler: off
+    tidy_ard_column_order() |>
+    as_card()
 }
 
 
@@ -371,19 +371,27 @@ ard_categorical.data.frame <- function(data,
     ) |>
     stats::setNames(c(by, strata, variable)) %>%
     {tidyr::expand_grid(!!!.)} |> # styler: off
-    dplyr::arrange(!!!syms(rev(...ard_tab_vars...)))
+    arrange_using_order(rev(...ard_tab_vars...))
 
   # if all columns match, then replace the coerced character cols with their original type/class
   all_cols_equal <-
     every(
       c(by, strata, variable),
       ~ all(
-        df_table[[.x]] == df_original_types[[.x]] | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
+        df_table[[.x]] == as.character(df_original_types[[.x]]) | (is.na(df_table[[.x]]) & is.na(df_original_types[[.x]]))
       )
     )
   if (isTRUE(all_cols_equal)) {
     df_table <-
       dplyr::bind_cols(df_original_types, df_table[count_column], .name_repair = "minimal")
+  }
+  # I hope this message is never triggered!
+  else {
+    cli::cli_inform(c(
+      "If you see this message, the order of the sorted variables in the tabulaton is unexpected, which could cause downstream issues.",
+      "*" = "Please post a reproducible example to {.url https://github.com/insightsengineering/cards/issues/new}, so we can address in the next release.",
+      "i" = "You can create a minimal reproducible example with {.fun reprex::reprex}."
+    ))
   }
 
   # if strata is present, remove unobserved rows
@@ -405,6 +413,11 @@ ard_categorical.data.frame <- function(data,
   }
 
   df_table
+}
+
+# like `dplyr::arrange()`, but uses base R's `order()` to keep consistency in some edge cases
+arrange_using_order <- function(data, columns) {
+  inject(data[with(data, order(!!!syms(columns))), ])
 }
 
 

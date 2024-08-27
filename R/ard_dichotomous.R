@@ -57,9 +57,9 @@ ard_dichotomous.data.frame <- function(data,
   )
   .check_dichotomous_value(data, value)
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # calculate summary statistics -----------------------------------------------

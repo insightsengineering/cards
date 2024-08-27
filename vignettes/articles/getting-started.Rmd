@@ -26,7 +26,7 @@ ADSL |>
   dplyr::select(ARM, AGE, AGEGR1, SEX) |>
   dplyr::mutate(
     ARM = factor(ARM, levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose")),
-    AGEGR1 = factor(AGEGR1, levels = c("<65", "65-80", ">80"), labels = c("&lt;65", "65-80", ">80"))
+    AGEGR1 = factor(AGEGR1, levels = c("<65", "65-80", ">80"), labels = c("<65", "65-80", ">80"))
   ) |>
   gtsummary::tbl_summary(
     by = ARM,

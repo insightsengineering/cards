@@ -2,13 +2,18 @@
 % Please edit documentation in R/ard_total_n.R
 \name{ard_total_n}
 \alias{ard_total_n}
+\alias{ard_total_n.data.frame}
 \title{ARD Total N}
 \usage{
-ard_total_n(data)
+ard_total_n(data, ...)
+
+\method{ard_total_n}{data.frame}(data, ...)
 }
 \arguments{
 \item{data}{(\code{data.frame})\cr
 a data frame}
+
+\item{...}{Arguments passed to methods.}
 }
 \value{
 an ARD data frame of class 'card'

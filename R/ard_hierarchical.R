@@ -6,7 +6,7 @@
 #'   in the `variables` argument, nested within the other variables included.
 #' - `ard_hierarchical_count()` includes summaries for _all_ variables
 #'   listed in the `variables` argument each summary nested within the preceding
-#'   variables, e.g. `variables=c(AESOC, AETERM)` summarizes `AETERM` nested
+#'   variables, e.g. `variables=c(AESOC, AEDECOD)` summarizes `AEDECOD` nested
 #'   in `AESOC`, and also summarizes the counts of `AESOC`.
 #'
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -28,14 +28,14 @@
 #' @examples
 #' ard_hierarchical(
 #'   data = ADAE,
-#'   variables = c(AESOC, AETERM),
+#'   variables = c(AESOC, AEDECOD),
 #'   by = c(TRTA, AESEV),
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 #' )
 #'
 #' ard_hierarchical_count(
 #'   data = ADAE,
-#'   variables = c(AESOC, AETERM),
+#'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA
 #' )
 NULL
@@ -86,9 +86,9 @@ ard_hierarchical.data.frame <- function(data,
     ))
   }
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # if denominator doesn't have all by, they need to be added ------------------
@@ -149,9 +149,9 @@ ard_hierarchical_count.data.frame <- function(data,
     by = {{ by }}
   )
 
-  # return empty tibble if no variables selected -------------------------------
+  # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble())
+    return(dplyr::tibble() |> as_card())
   }
 
   # add dummy variable for counting --------------------------------------------
@@ -175,8 +175,8 @@ ard_hierarchical_count.data.frame <- function(data,
       }
     ) |>
     bind_ard() |>
-    dplyr::mutate(context = "hierarchical_count") %>%
-    {structure(., class = unique(c("card", class(.))))} # styler: off
+    dplyr::mutate(context = "hierarchical_count") |>
+    as_card()
 }
 
 #' Rename Last Group to Variable

@@ -26,7 +26,7 @@ test_that("ard_continuous() works", {
       mtcars,
       variables = starts_with("xxxxx")
     ),
-    dplyr::tibble()
+    dplyr::tibble() |> as_card()
   )
 })
 
@@ -406,5 +406,12 @@ test_that("ard_continuous() works when using generic names ", {
   expect_equal(
     ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
     ard_continuous(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
+  )
+})
+
+test_that("ard_continuous() follows ard structure", {
+  expect_silent(
+    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |>
+      check_ard_structure(method = FALSE)
   )
 })

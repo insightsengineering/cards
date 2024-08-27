@@ -67,3 +67,9 @@ The [{cardx}](https://github.com/insightsengineering/cardx/) R package is an ext
 ## Getting Started
 
 Review the [Getting Started](https://insightsengineering.github.io/cards//main/articles/getting-started.html) page for examples using ARDs to calculate statistics to later include in tables.
+
+```{r}
+library(cards)
+
+ard_continuous(ADSL, by = "ARM", variables = "AGE")
+```
