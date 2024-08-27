@@ -14,6 +14,8 @@
 
 * Adding selectors `all_group_n()` and `all_missing_columns()`. (#272, #274)
 
+* Added new function `add_calculated_row()` for adding a new row of calculated statistic(s) that are a function of the other statistics in the ARD. (#275)
+
 # cards 0.2.0
 
 ## New Features & Updates
