@@ -12,6 +12,8 @@
 
 * Update in `ard_categorical()` to run `base::table()` output checks against coerced character columns. Previously, we relied on R to perform checks on the type it decided to check against (e.g. when it coerces to a common type). While the initial strategy worked in cases of Base R classes, there were some bespoke classes, such as times from {hms}, where Base R does not coerce as we expected.
 
+* Adding selectors `all_group_n()` and `all_missing_columns()`. (#272, #274)
+
 # cards 0.2.0
 
 ## New Features & Updates

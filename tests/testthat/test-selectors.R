@@ -54,4 +54,39 @@ test_that("selectors work", {
       length(),
     22L
   )
+
+  # all_ard_group_n() works
+  expect_equal(
+    ard_categorical(
+      mtcars,
+      by = c(am, vs),
+      variables = cyl
+    ) |>
+      dplyr::select(all_ard_group_n(1L)) |>
+      names(),
+    c("group1", "group1_level")
+  )
+
+  expect_equal(
+    ard_categorical(
+      mtcars,
+      by = c(am, vs),
+      variables = cyl
+    ) |>
+      dplyr::select(all_ard_group_n(1:2)) |>
+      names(),
+    c("group1", "group1_level", "group2", "group2_level")
+  )
+
+  # all_missing_columns() works
+  expect_equal(
+    bind_ard(
+      ard_categorical(mtcars, by = am, variables = cyl),
+      ard_categorical(mtcars, variables = vs)
+    ) |>
+      dplyr::filter(variable == "vs") |>
+      dplyr::select(all_missing_columns()) |>
+      names(),
+    c("group1", "group1_level", "warning", "error")
+  )
 })
