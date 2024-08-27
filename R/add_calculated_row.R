@@ -67,7 +67,7 @@ add_calculated_row <- function(x,
         }
 
         new_stat <-
-          cards::eval_capture_conditions(
+          eval_capture_conditions(
             eval_tidy(expr, data = get_ard_statistics(x_subgroup))
           )
         if (!is_empty(new_stat[["error"]])) {
