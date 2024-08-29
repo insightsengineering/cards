@@ -289,17 +289,16 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @examples
 #' data <- dplyr::tibble(
-#'   grp = c("AA","AA", NA, "BB",NA),
-#'   variable = c("A","B","A","C","C"),
-#'   variable_level = c(1,2,1,3,3),
+#'   grp = c("AA", "AA", NA, "BB", NA),
+#'   variable = c("A", "B", "A", "C", "C"),
+#'   variable_level = c(1, 2, 1, 3, 3),
 #'   A = rep(NA, 5),
 #'   B = rep(NA, 5),
 #'   .cards_idx = c(1:5)
 #' )
 #'
 #' cards:::.fill_overall_grp_values(data)
-.fill_overall_grp_values <- function(x, vars_protected){
-
+.fill_overall_grp_values <- function(x, vars_protected) {
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
   id_vars <- id_vars[id_vars %in% names(x)]
@@ -307,17 +306,19 @@ shuffle_ard <- function(x, trim = TRUE) {
 
   # replace NA group values with "Overall <var>" where it is likely to be an overall calculation
   x_missing_by <- x |>
-    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))|>  # all NA grouping values
+    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.))) |> # all NA grouping values
     dplyr::rows_update(
       x |>
         dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
-        dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()){
-          overall_val <- make.unique(c(unique(v),
-                                       paste("Overall", cur_col))) |>
+        dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
+          overall_val <- make.unique(c(
+            unique(v),
+            paste("Overall", cur_col)
+          )) |>
             rev() %>%
             .[1]
           ifelse(!is.na(v), overall_val, v)
-           }))|>
+        })) |>
         dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
         dplyr::distinct(),
       by = id_vars,

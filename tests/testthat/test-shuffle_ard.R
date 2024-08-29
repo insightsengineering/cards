@@ -100,9 +100,9 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
       ard_categorical(ADSL, variables = AGEGR1),
       ard_continuous(ADSL, by = SEX, variables = AGE),
       ard_continuous(ADSL, variables = AGE)
-  ) |>
-    shuffle_ard() |>
-    as.data.frame()
+    ) |>
+      shuffle_ard() |>
+      as.data.frame()
   )
 })
 
