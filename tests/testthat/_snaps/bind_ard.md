@@ -9,10 +9,11 @@
 ---
 
     Code
-      bind_ard(ard, ard, .update = FALSE)
+      bind_ard(ard, ard, .distinct = FALSE, .update = FALSE)
     Condition
       Error in `bind_ard()`:
-      ! 27 duplicate observations found.
+      ! 27 rows with duplicated statistic names have been found.
+      i See cards::bind_ard(.update) (`?cards::bind_ard()`) for details.
 
 # bind_ard() .order argument works
 
@@ -107,4 +108,27 @@
       16        44
       17        84
       18        34
+
+# bind_ard(.distinct)
+
+    Code
+      ard_continuous(ADSL, variables = AGE) %>% {
+        bind_ard(., ., .update = FALSE)
+      }
+    Message
+      i 8 rows with duplicated statistic values have been removed.
+      * See cards::bind_ard(.distinct) (`?cards::bind_ard()`) for details.
+      {cards} data frame: 8 x 8
+    Output
+        variable   context stat_name stat_label   stat fmt_fn
+      1      AGE continuo…         N          N    254      0
+      2      AGE continuo…      mean       Mean 75.087      1
+      3      AGE continuo…        sd         SD  8.246      1
+      4      AGE continuo…    median     Median     77      1
+      5      AGE continuo…       p25         Q1     70      1
+      6      AGE continuo…       p75         Q3     81      1
+      7      AGE continuo…       min        Min     51      1
+      8      AGE continuo…       max        Max     89      1
+    Message
+      i 2 more variables: warning, error
 
