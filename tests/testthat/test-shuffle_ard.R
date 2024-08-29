@@ -92,6 +92,18 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
     ) |>
       shuffle_ard()
   )
+
+  # mix of group variables - fills overall only if variable has been calculated by group elsewhere
+  expect_snapshot(
+    bind_ard(
+      ard_categorical(ADSL, by = ARM, variables = AGEGR1),
+      ard_categorical(ADSL, variables = AGEGR1),
+      ard_continuous(ADSL, by = SEX, variables = AGE),
+      ard_continuous(ADSL, variables = AGE)
+  ) |>
+    shuffle_ard() |>
+    as.data.frame()
+  )
 })
 
 test_that("shuffle_ard doesn't trim off NULL/NA values", {

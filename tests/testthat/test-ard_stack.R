@@ -108,6 +108,7 @@ test_that("ard_stack() adding overalls", {
 })
 
 
+
 test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
@@ -188,7 +189,35 @@ test_that("ard_stack() .shuffle argument", {
     ) |>
       shuffle_ard()
   )
+
+
+  # with overalls
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .shuffle = TRUE,
+      .overall = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_continuous(data = mtcars, variables = "mpg"),
+      ard_dichotomous(data = mtcars, variables = "vs"),
+      .order = TRUE
+    ) |>
+      shuffle_ard()
+  )
 })
+
 
 test_that("ard_stack() adding total N", {
   expect_equal(
