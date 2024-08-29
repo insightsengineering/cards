@@ -297,7 +297,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   .cards_idx = c(1:5)
 #' )
 #'
-#' cards:::.fill_overall_grp_values(data)
+#' cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
 .fill_overall_grp_values <- function(x, vars_protected) {
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")

@@ -32,6 +32,6 @@ data <- dplyr::tibble(
   .cards_idx = c(1:5)
 )
 
-cards:::.fill_overall_grp_values(data)
+cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
 }
 \keyword{internal}
