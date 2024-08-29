@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.945263157894737" branch-rate="0" lines-covered="1796" lines-valid="1900" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-29 19:23:32.827425">
+<coverage line-rate="0.945320715036803" branch-rate="0" lines-covered="1798" lines-valid="1902" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-08-29 19:29:04.196481">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.945263157894737" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.945320715036803" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -3931,32 +3931,34 @@
             </method>
             <method name=".fill_overall_grp_values" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
+                <line number="303" hits="11" branch="false"/>
                 <line number="304" hits="11" branch="false"/>
                 <line number="305" hits="11" branch="false"/>
-                <line number="306" hits="11" branch="false"/>
+                <line number="308" hits="11" branch="false"/>
                 <line number="309" hits="11" branch="false"/>
                 <line number="310" hits="11" branch="false"/>
                 <line number="311" hits="11" branch="false"/>
                 <line number="312" hits="11" branch="false"/>
                 <line number="313" hits="11" branch="false"/>
-                <line number="314" hits="11" branch="false"/>
+                <line number="314" hits="7" branch="false"/>
                 <line number="315" hits="7" branch="false"/>
                 <line number="316" hits="7" branch="false"/>
                 <line number="317" hits="7" branch="false"/>
                 <line number="318" hits="7" branch="false"/>
                 <line number="319" hits="7" branch="false"/>
-                <line number="320" hits="11" branch="false"/>
+                <line number="320" hits="7" branch="false"/>
                 <line number="321" hits="11" branch="false"/>
                 <line number="322" hits="11" branch="false"/>
                 <line number="323" hits="11" branch="false"/>
                 <line number="324" hits="11" branch="false"/>
                 <line number="325" hits="11" branch="false"/>
-                <line number="328" hits="11" branch="false"/>
+                <line number="326" hits="11" branch="false"/>
+                <line number="329" hits="11" branch="false"/>
               </lines>
             </method>
             <method name=".is_list_column_of_scalars" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="345" hits="42" branch="false"/>
+                <line number="346" hits="42" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -4063,28 +4065,30 @@
             <line number="268" hits="11" branch="false"/>
             <line number="269" hits="11" branch="false"/>
             <line number="270" hits="11" branch="false"/>
+            <line number="303" hits="11" branch="false"/>
             <line number="304" hits="11" branch="false"/>
             <line number="305" hits="11" branch="false"/>
-            <line number="306" hits="11" branch="false"/>
+            <line number="308" hits="11" branch="false"/>
             <line number="309" hits="11" branch="false"/>
             <line number="310" hits="11" branch="false"/>
             <line number="311" hits="11" branch="false"/>
             <line number="312" hits="11" branch="false"/>
             <line number="313" hits="11" branch="false"/>
-            <line number="314" hits="11" branch="false"/>
+            <line number="314" hits="7" branch="false"/>
             <line number="315" hits="7" branch="false"/>
             <line number="316" hits="7" branch="false"/>
             <line number="317" hits="7" branch="false"/>
             <line number="318" hits="7" branch="false"/>
             <line number="319" hits="7" branch="false"/>
-            <line number="320" hits="11" branch="false"/>
+            <line number="320" hits="7" branch="false"/>
             <line number="321" hits="11" branch="false"/>
             <line number="322" hits="11" branch="false"/>
             <line number="323" hits="11" branch="false"/>
             <line number="324" hits="11" branch="false"/>
             <line number="325" hits="11" branch="false"/>
-            <line number="328" hits="11" branch="false"/>
-            <line number="345" hits="42" branch="false"/>
+            <line number="326" hits="11" branch="false"/>
+            <line number="329" hits="11" branch="false"/>
+            <line number="346" hits="42" branch="false"/>
           </lines>
         </class>
         <class name="summary_functions.R" filename="R/summary_functions.R" line-rate="0.96" branch-rate="0" complexity="0">
