@@ -123,5 +123,4 @@ test_that("apply_fmt_fn(replace)", {
   expect_snapshot(
     apply_fmt_fn(ard, replace = TRUE)
   )
-
 })
