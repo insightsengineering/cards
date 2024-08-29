@@ -51,8 +51,12 @@ bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .qu
     dplyr::select(data, all_ard_groups(), all_ard_variables(), any_of("context"), "stat_name", "stat")[seq(nrow(data), 1L), ] |>
     duplicated()
   if (any(not_distinct) && isTRUE(.distinct)) {
-    if (isFALSE(.quiet)) cli::cli_inform(c("i" = "{sum(not_distinct)} row{?s} with {.emph duplicated statistic values} {?has/have} been removed.",
-                                           "*" = "See {.help [cards::bind_ard(.distinct)](cards::bind_ard)} for details."))
+    if (isFALSE(.quiet)) {
+      cli::cli_inform(c(
+        "i" = "{sum(not_distinct)} row{?s} with {.emph duplicated statistic values} {?has/have} been removed.",
+        "*" = "See {.help [cards::bind_ard(.distinct)](cards::bind_ard)} for details."
+      ))
+    }
     data <-
       dplyr::filter(
         data,
@@ -67,8 +71,12 @@ bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .qu
     duplicated()
 
   if (any(dupes) && isTRUE(.update)) {
-    if (isFALSE(.quiet)) cli::cli_inform(c("i" = "{sum(dupes)} row{?s} with {.emph duplicated statistic names} {?has/have} been removed.",
-                                           "*" = "See {.help [cards::bind_ard(.update)](cards::bind_ard)} for details."))
+    if (isFALSE(.quiet)) {
+      cli::cli_inform(c(
+        "i" = "{sum(dupes)} row{?s} with {.emph duplicated statistic names} {?has/have} been removed.",
+        "*" = "See {.help [cards::bind_ard(.update)](cards::bind_ard)} for details."
+      ))
+    }
     data <-
       dplyr::filter(
         data,
@@ -76,8 +84,11 @@ bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .qu
         dplyr::row_number() == dplyr::n()
       )
   } else if (any(dupes) && isFALSE(.update)) {
-    cli::cli_abort(c("!" = "{sum(dupes)} row{?s} with {.emph duplicated statistic names} {?has/have} been found.",
-                     "i" = "See {.help [cards::bind_ard(.update)](cards::bind_ard)} for details."),
+    cli::cli_abort(
+      c(
+        "!" = "{sum(dupes)} row{?s} with {.emph duplicated statistic names} {?has/have} been found.",
+        "i" = "See {.help [cards::bind_ard(.update)](cards::bind_ard)} for details."
+      ),
       call = get_cli_abort_call()
     )
   }
