@@ -501,3 +501,14 @@
       59                 <NA> Overall SEX      AGE    Min  continuous       min  51.0000000
       60                 <NA> Overall SEX      AGE    Max  continuous       max  89.0000000
 
+# shuffle_ard fills missing group levels if the group is meaningful for cardx output
+
+    Code
+      as.data.frame(shuffle_ard(ard_cardx))
+    Output
+                ARM         SEX variable          context stat_name       stat
+      1 Overall ARM        <NA>   AGEGR1 stats_chisq_test statistic 5.07944167
+      2 Overall ARM        <NA>   AGEGR1 stats_chisq_test   p.value 0.07888842
+      3        <NA> Overall SEX   AGEGR1 stats_chisq_test statistic 1.03944200
+      4        <NA> Overall SEX   AGEGR1 stats_chisq_test   p.value 0.59468644
+

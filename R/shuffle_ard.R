@@ -306,27 +306,33 @@ shuffle_ard <- function(x, trim = TRUE) {
 
   # replace NA group values with "Overall <var>" where it is likely to be an overall calculation
   x_missing_by <- x |>
-    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.))) |> # all NA grouping values
-    dplyr::rows_update(
-      x |>
-        dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
-        dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
-          overall_val <- make.unique(c(
-            unique(v),
-            paste("Overall", cur_col)
-          )) |>
-            rev() %>%
-            .[1]
-          ifelse(!is.na(v), overall_val, v)
-        })) |>
-        dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
-        dplyr::distinct(),
-      by = id_vars,
-      unmatched = "ignore"
-    )
+    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))
 
-  # replace the modified rows based on indices
-  dplyr::rows_update(x, x_missing_by, by = ".cards_idx")
+  if (nrow(x_missing_by) > 0) {
+    x_missing_by_replaced <- x_missing_by |> # all NA grouping values
+      dplyr::rows_update(
+        x |>
+          dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
+          dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
+            overall_val <- make.unique(c(
+              unique(v),
+              paste("Overall", cur_col)
+            )) |>
+              rev() %>%
+              .[1]
+            ifelse(!is.na(v), overall_val, v)
+          })) |>
+          dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
+          dplyr::distinct(),
+        by = id_vars,
+        unmatched = "ignore"
+      )
+
+    # replace the modified rows based on indices
+    dplyr::rows_update(x, x_missing_by_replaced, by = ".cards_idx")
+  } else {
+    x
+  }
 }
 
 #' List Column as a Vector Predicate
