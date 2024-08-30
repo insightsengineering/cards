@@ -308,7 +308,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   x_missing_by <- x |>
     dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))
 
-  if (nrow(x_missing_by)>0){
+  if (nrow(x_missing_by) > 0) {
     x_missing_by_replaced <- x_missing_by |> # all NA grouping values
       dplyr::rows_update(
         x |>
@@ -330,7 +330,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 
     # replace the modified rows based on indices
     dplyr::rows_update(x, x_missing_by_replaced, by = ".cards_idx")
-
   } else {
     x
   }
