@@ -11,7 +11,7 @@
 #'   logical indicating whether to remove non-distinct values from the ARD.
 #'   Duplicates are checked across grouping variables, primary variables,
 #'   context (if present), the **statistic name and the statistic value**.
-#'   Default is `FALSE`. If a statistic name is repeated and `.update=TRUE`,
+#'   Default is `FALSE`. If a statistic name and value is repeated and `.distinct=TRUE`,
 #'   the more recently added statistics will be retained, and the other(s) omitted.
 #' @param .update (`logical`)\cr
 #'   logical indicating whether to update ARD and remove duplicated named statistics.
