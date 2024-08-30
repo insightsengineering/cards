@@ -8,6 +8,8 @@
 
 * Improved ability of `shuffle_ard()` to populate missing group values where possible. (#306)
 
+* Added `apply_fmt_fn(replace)` argument. Use `replace=FALSE` to retain any previously formatted statistics in the `stat_fmt` column. (#285)
+
 # cards 0.2.1
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.

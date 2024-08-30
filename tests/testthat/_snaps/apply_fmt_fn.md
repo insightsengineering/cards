@@ -43,3 +43,31 @@
       1  NULL
       2  NULL
 
+# apply_fmt_fn(replace)
+
+    Code
+      apply_fmt_fn(ard, replace = FALSE)
+    Message
+      {cards} data frame: 3 x 10
+    Output
+        variable variable_level stat_name stat_label stat   stat_fmt
+      1   AGEGR1          65-80         n          n  144 144.000000
+      2   AGEGR1            <65         n          n   33         33
+      3   AGEGR1            >80         n          n   77         77
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
+---
+
+    Code
+      apply_fmt_fn(ard, replace = TRUE)
+    Message
+      {cards} data frame: 3 x 10
+    Output
+        variable variable_level stat_name stat_label stat stat_fmt
+      1   AGEGR1          65-80         n          n  144      144
+      2   AGEGR1            <65         n          n   33       33
+      3   AGEGR1            >80         n          n   77       77
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+

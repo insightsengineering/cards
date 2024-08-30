@@ -107,3 +107,20 @@ test_that("apply_fmt_fn() error messaging", {
       as.data.frame()
   )
 })
+
+test_that("apply_fmt_fn(replace)", {
+  ard <-
+    ADSL |>
+    ard_categorical(variables = AGEGR1, statistic = ~"n") |>
+    dplyr::mutate(
+      stat_fmt = ifelse(dplyr::row_number() == 1, list("144.000000"), list(NULL))
+    )
+
+  expect_snapshot(
+    apply_fmt_fn(ard, replace = FALSE)
+  )
+
+  expect_snapshot(
+    apply_fmt_fn(ard, replace = TRUE)
+  )
+})
