@@ -164,3 +164,28 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
     sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC)))
   )
 })
+
+test_that("shuffle_ard fills missing group levels if the group is meaningful", {
+  skip_if_not_installed("cardx")
+  skip_if_not(is_pkg_installed(c("broom", "withr"), reference_pkg = "cardx"))
+  withr::local_package("cardx")
+
+  adsl_sub <- ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
+
+  expect_snapshot(
+    bind_ard(
+      ard_stats_chisq_test(
+        data = adsl_sub,
+        by = "ARM",
+        variables = "AGEGR1"
+      ),
+      ard_stats_chisq_test(
+        data = adsl_sub,
+        by = "SEX",
+        variables = "AGEGR1"
+      )
+    ) |>
+      shuffle_ard() |>
+      as.data.frame()
+  )
+})
