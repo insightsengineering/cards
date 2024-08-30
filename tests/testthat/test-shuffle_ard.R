@@ -167,7 +167,8 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   skip_if_not_installed("cardx")
-  skip_if_not(is_pkg_installed(c("broom", "withr"), reference_pkg = "cardx"))
+  skip_if_not(is_pkg_installed("broom", reference_pkg = "cardx"))
+  skip_if_not(is_pkg_installed("withr", reference_pkg = "cards"))
   withr::local_package("cardx")
 
   adsl_sub <- ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
