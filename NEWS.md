@@ -1,4 +1,4 @@
-# cards 0.2.1.9012
+# cards 0.2.1.9014
 
 * Converted `ard_total_n()` to an S3 generic and added method `ard_total_n.data.frame()`.
 
@@ -9,6 +9,8 @@
 * Improved ability of `shuffle_ard()` to populate missing group values where possible. (#306)
 
 * Added `apply_fmt_fn(replace)` argument. Use `replace=FALSE` to retain any previously formatted statistics in the `stat_fmt` column. (#285)
+
+* Added `bind_ard(.distinct)` argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (#286)
 
 # cards 0.2.1
 
