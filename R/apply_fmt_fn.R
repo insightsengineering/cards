@@ -7,7 +7,7 @@
 #'   an ARD data frame of class 'card'
 #' @param replace (scalar `logical`)\cr
 #'   logical indicating whether to replace values in the `'stat_fmt'` column (if present).
-#'   Default is `FALSE`
+#'   Default is `FALSE`.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
