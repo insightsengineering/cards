@@ -94,6 +94,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   )
 
   # mix of group variables - fills overall only if variable has been calculated by group elsewhere
+  withr::local_options(list(width = 90))
   expect_snapshot(
     bind_ard(
       ard_categorical(ADSL, by = ARM, variables = AGEGR1),

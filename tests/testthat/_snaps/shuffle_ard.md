@@ -436,129 +436,68 @@
 
     Code
       as.data.frame(shuffle_ard(bind_ard(ard_categorical(ADSL, by = ARM, variables = AGEGR1),
-      ard_categorical(ADSL, variables = AGEGR1), ard_continuous(ADSL, by = SEX,
-        variables = AGE), ard_continuous(ADSL, variables = AGE))))
+      ard_categorical(ADSL, variables = AGEGR1), ard_continuous(ADSL, by = SEX, variables = AGE),
+      ard_continuous(ADSL, variables = AGE))))
     Output
-                          ARM         SEX variable  label     context stat_name
-      1               Placebo        <NA>   AGEGR1  65-80 categorical         n
-      2               Placebo        <NA>   AGEGR1  65-80 categorical         N
-      3               Placebo        <NA>   AGEGR1  65-80 categorical         p
-      4               Placebo        <NA>   AGEGR1    <65 categorical         n
-      5               Placebo        <NA>   AGEGR1    <65 categorical         N
-      6               Placebo        <NA>   AGEGR1    <65 categorical         p
-      7               Placebo        <NA>   AGEGR1    >80 categorical         n
-      8               Placebo        <NA>   AGEGR1    >80 categorical         N
-      9               Placebo        <NA>   AGEGR1    >80 categorical         p
-      10 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         n
-      11 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         N
-      12 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         p
-      13 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         n
-      14 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         N
-      15 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         p
-      16 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         n
-      17 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         N
-      18 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         p
-      19  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         n
-      20  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         N
-      21  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         p
-      22  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         n
-      23  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         N
-      24  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         p
-      25  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         n
-      26  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         N
-      27  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         p
-      28          Overall ARM        <NA>   AGEGR1  65-80 categorical         n
-      29          Overall ARM        <NA>   AGEGR1  65-80 categorical         N
-      30          Overall ARM        <NA>   AGEGR1  65-80 categorical         p
-      31          Overall ARM        <NA>   AGEGR1    <65 categorical         n
-      32          Overall ARM        <NA>   AGEGR1    <65 categorical         N
-      33          Overall ARM        <NA>   AGEGR1    <65 categorical         p
-      34          Overall ARM        <NA>   AGEGR1    >80 categorical         n
-      35          Overall ARM        <NA>   AGEGR1    >80 categorical         N
-      36          Overall ARM        <NA>   AGEGR1    >80 categorical         p
-      37                 <NA>           F      AGE      N  continuous         N
-      38                 <NA>           F      AGE   Mean  continuous      mean
-      39                 <NA>           F      AGE     SD  continuous        sd
-      40                 <NA>           F      AGE Median  continuous    median
-      41                 <NA>           F      AGE     Q1  continuous       p25
-      42                 <NA>           F      AGE     Q3  continuous       p75
-      43                 <NA>           F      AGE    Min  continuous       min
-      44                 <NA>           F      AGE    Max  continuous       max
-      45                 <NA>           M      AGE      N  continuous         N
-      46                 <NA>           M      AGE   Mean  continuous      mean
-      47                 <NA>           M      AGE     SD  continuous        sd
-      48                 <NA>           M      AGE Median  continuous    median
-      49                 <NA>           M      AGE     Q1  continuous       p25
-      50                 <NA>           M      AGE     Q3  continuous       p75
-      51                 <NA>           M      AGE    Min  continuous       min
-      52                 <NA>           M      AGE    Max  continuous       max
-      53                 <NA> Overall SEX      AGE      N  continuous         N
-      54                 <NA> Overall SEX      AGE   Mean  continuous      mean
-      55                 <NA> Overall SEX      AGE     SD  continuous        sd
-      56                 <NA> Overall SEX      AGE Median  continuous    median
-      57                 <NA> Overall SEX      AGE     Q1  continuous       p25
-      58                 <NA> Overall SEX      AGE     Q3  continuous       p75
-      59                 <NA> Overall SEX      AGE    Min  continuous       min
-      60                 <NA> Overall SEX      AGE    Max  continuous       max
-                stat
-      1   42.0000000
-      2   86.0000000
-      3    0.4883721
-      4   14.0000000
-      5   86.0000000
-      6    0.1627907
-      7   30.0000000
-      8   86.0000000
-      9    0.3488372
-      10  55.0000000
-      11  84.0000000
-      12   0.6547619
-      13  11.0000000
-      14  84.0000000
-      15   0.1309524
-      16  18.0000000
-      17  84.0000000
-      18   0.2142857
-      19  47.0000000
-      20  84.0000000
-      21   0.5595238
-      22   8.0000000
-      23  84.0000000
-      24   0.0952381
-      25  29.0000000
-      26  84.0000000
-      27   0.3452381
-      28 144.0000000
-      29 254.0000000
-      30   0.5669291
-      31  33.0000000
-      32 254.0000000
-      33   0.1299213
-      34  77.0000000
-      35 254.0000000
-      36   0.3031496
-      37 143.0000000
-      38  75.6503497
-      39   8.1933146
-      40  77.0000000
-      41  72.0000000
-      42  81.0000000
-      43  54.0000000
-      44  89.0000000
-      45 111.0000000
-      46  74.3603604
-      47   8.2943494
-      48  77.0000000
-      49  69.0000000
-      50  81.0000000
-      51  51.0000000
-      52  88.0000000
-      53 254.0000000
-      54  75.0866142
-      55   8.2462339
-      56  77.0000000
-      57  70.0000000
-      58  81.0000000
-      59  51.0000000
-      60  89.0000000
+                          ARM         SEX variable  label     context stat_name        stat
+      1               Placebo        <NA>   AGEGR1  65-80 categorical         n  42.0000000
+      2               Placebo        <NA>   AGEGR1  65-80 categorical         N  86.0000000
+      3               Placebo        <NA>   AGEGR1  65-80 categorical         p   0.4883721
+      4               Placebo        <NA>   AGEGR1    <65 categorical         n  14.0000000
+      5               Placebo        <NA>   AGEGR1    <65 categorical         N  86.0000000
+      6               Placebo        <NA>   AGEGR1    <65 categorical         p   0.1627907
+      7               Placebo        <NA>   AGEGR1    >80 categorical         n  30.0000000
+      8               Placebo        <NA>   AGEGR1    >80 categorical         N  86.0000000
+      9               Placebo        <NA>   AGEGR1    >80 categorical         p   0.3488372
+      10 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         n  55.0000000
+      11 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         N  84.0000000
+      12 Xanomeline High Dose        <NA>   AGEGR1  65-80 categorical         p   0.6547619
+      13 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         n  11.0000000
+      14 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         N  84.0000000
+      15 Xanomeline High Dose        <NA>   AGEGR1    <65 categorical         p   0.1309524
+      16 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         n  18.0000000
+      17 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         N  84.0000000
+      18 Xanomeline High Dose        <NA>   AGEGR1    >80 categorical         p   0.2142857
+      19  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         n  47.0000000
+      20  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         N  84.0000000
+      21  Xanomeline Low Dose        <NA>   AGEGR1  65-80 categorical         p   0.5595238
+      22  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         n   8.0000000
+      23  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         N  84.0000000
+      24  Xanomeline Low Dose        <NA>   AGEGR1    <65 categorical         p   0.0952381
+      25  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         n  29.0000000
+      26  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         N  84.0000000
+      27  Xanomeline Low Dose        <NA>   AGEGR1    >80 categorical         p   0.3452381
+      28          Overall ARM        <NA>   AGEGR1  65-80 categorical         n 144.0000000
+      29          Overall ARM        <NA>   AGEGR1  65-80 categorical         N 254.0000000
+      30          Overall ARM        <NA>   AGEGR1  65-80 categorical         p   0.5669291
+      31          Overall ARM        <NA>   AGEGR1    <65 categorical         n  33.0000000
+      32          Overall ARM        <NA>   AGEGR1    <65 categorical         N 254.0000000
+      33          Overall ARM        <NA>   AGEGR1    <65 categorical         p   0.1299213
+      34          Overall ARM        <NA>   AGEGR1    >80 categorical         n  77.0000000
+      35          Overall ARM        <NA>   AGEGR1    >80 categorical         N 254.0000000
+      36          Overall ARM        <NA>   AGEGR1    >80 categorical         p   0.3031496
+      37                 <NA>           F      AGE      N  continuous         N 143.0000000
+      38                 <NA>           F      AGE   Mean  continuous      mean  75.6503497
+      39                 <NA>           F      AGE     SD  continuous        sd   8.1933146
+      40                 <NA>           F      AGE Median  continuous    median  77.0000000
+      41                 <NA>           F      AGE     Q1  continuous       p25  72.0000000
+      42                 <NA>           F      AGE     Q3  continuous       p75  81.0000000
+      43                 <NA>           F      AGE    Min  continuous       min  54.0000000
+      44                 <NA>           F      AGE    Max  continuous       max  89.0000000
+      45                 <NA>           M      AGE      N  continuous         N 111.0000000
+      46                 <NA>           M      AGE   Mean  continuous      mean  74.3603604
+      47                 <NA>           M      AGE     SD  continuous        sd   8.2943494
+      48                 <NA>           M      AGE Median  continuous    median  77.0000000
+      49                 <NA>           M      AGE     Q1  continuous       p25  69.0000000
+      50                 <NA>           M      AGE     Q3  continuous       p75  81.0000000
+      51                 <NA>           M      AGE    Min  continuous       min  51.0000000
+      52                 <NA>           M      AGE    Max  continuous       max  88.0000000
+      53                 <NA> Overall SEX      AGE      N  continuous         N 254.0000000
+      54                 <NA> Overall SEX      AGE   Mean  continuous      mean  75.0866142
+      55                 <NA> Overall SEX      AGE     SD  continuous        sd   8.2462339
+      56                 <NA> Overall SEX      AGE Median  continuous    median  77.0000000
+      57                 <NA> Overall SEX      AGE     Q1  continuous       p25  70.0000000
+      58                 <NA> Overall SEX      AGE     Q3  continuous       p75  81.0000000
+      59                 <NA> Overall SEX      AGE    Min  continuous       min  51.0000000
+      60                 <NA> Overall SEX      AGE    Max  continuous       max  89.0000000
 
