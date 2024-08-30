@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9014</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,16 +23,6 @@
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -47,10 +37,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.1.9013" id="cards-0219013">cards 0.2.1.9013<a class="anchor" aria-label="anchor" href="#cards-0219013"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.1.9014" id="cards-0219014">cards 0.2.1.9014<a class="anchor" aria-label="anchor" href="#cards-0219014"></a></h2>
 <ul><li><p>Converted <code><a href="../reference/ard_total_n.html">ard_total_n()</a></code> to an S3 generic and added method <code><a href="../reference/ard_total_n.html">ard_total_n.data.frame()</a></code>.</p></li>
 <li><p>Fix in <code><a href="../reference/print_ard_conditions.html">print_ard_conditions()</a></code> when the variables were factors, which did not render properly in <code><a href="https://cli.r-lib.org/reference/cli_format.html" class="external-link">cli::cli_format()</a></code>.</p></li>
 <li><p>Added the <code>bind_ard(.quiet)</code> argument to suppress messaging. (<a href="https://github.com/insightsengineering/cards/issues/299" class="external-link">#299</a>)</p></li>
+<li><p>Improved ability of <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> to populate missing group values where possible. (<a href="https://github.com/insightsengineering/cards/issues/306" class="external-link">#306</a>)</p></li>
 <li><p>Added <code>apply_fmt_fn(replace)</code> argument. Use <code>replace=FALSE</code> to retain any previously formatted statistics in the <code>stat_fmt</code> column. (<a href="https://github.com/insightsengineering/cards/issues/285" class="external-link">#285</a>)</p></li>
 <li><p>Added <code>bind_ard(.distinct)</code> argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (<a href="https://github.com/insightsengineering/cards/issues/286" class="external-link">#286</a>)</p></li>
 </ul></div>
