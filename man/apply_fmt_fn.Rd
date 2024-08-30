@@ -12,7 +12,7 @@ an ARD data frame of class 'card'}
 
 \item{replace}{(scalar \code{logical})\cr
 logical indicating whether to replace values in the \code{'stat_fmt'} column (if present).
-Default is \code{FALSE}}
+Default is \code{FALSE}.}
 }
 \value{
 an ARD data frame of class 'card'
