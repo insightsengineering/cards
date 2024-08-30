@@ -6,6 +6,8 @@
 
 * Added the `bind_ard(.quiet)` argument to suppress messaging. (#299)
 
+* Improved ability of `shuffle_ard()` to populate missing group values where possible. (#306)
+
 * Added `apply_fmt_fn(replace)` argument. Use `replace=FALSE` to retain any previously formatted statistics in the `stat_fmt` column. (#285)
 
 * Added `bind_ard(.distinct)` argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (#286)
