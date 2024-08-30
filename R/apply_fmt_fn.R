@@ -5,6 +5,9 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
+#' @param replace (scalar `logical`)\cr
+#'   logical indicating whether to replace values in the `'stat_fmt'` column (if present).
+#'   Default is `FALSE`.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -12,24 +15,30 @@
 #' @examples
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   apply_fmt_fn()
-apply_fmt_fn <- function(x) {
+apply_fmt_fn <- function(x, replace = FALSE) {
   set_cli_abort_call()
 
   check_class(x, cls = "card")
+  check_scalar_logical(replace)
+
+  # add stat_fmt if not already present, if replace is TRUE overwrite existing stat_fmt column
+  if (!"stat_fmt" %in% names(x) || isTRUE(replace)) {
+    x <- x |> dplyr::mutate(.after = "stat", stat_fmt = list(NULL))
+  }
 
   x |>
     dplyr::mutate(
-      .after = "stat",
       stat_fmt =
         pmap(
           list(
             .data$stat,
             .data$variable,
             .data$stat_name,
-            .data$fmt_fn
+            .data$fmt_fn,
+            .data$stat_fmt
           ),
-          function(stat, variable, stat_name, fn) {
-            if (!is.null(fn)) {
+          function(stat, variable, stat_name, fn, stat_fmt) {
+            if (!is.null(fn) && is.null(stat_fmt)) {
               tryCatch(
                 do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat)),
                 error = \(e) {
@@ -44,7 +53,7 @@ apply_fmt_fn <- function(x) {
                 }
               )
             } else {
-              NULL
+              stat_fmt
             }
           }
         )
