@@ -108,7 +108,6 @@ print_ard_conditions <- function(x) {
           "For variable {ard_msg$cli_variable_msg[[i]]} ",
           "{switch(!is.null(ard_msg$cli_group_msg[[i]]), paste0('(', ard_msg$cli_group_msg[[i]], ')')) %||% ''} ",
           "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}"
-
         ),
         "{ard_msg$cond_msg[[i]]}",
         sep = ": "
