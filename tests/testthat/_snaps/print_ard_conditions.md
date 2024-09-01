@@ -79,3 +79,13 @@
       ! For variable `continuous_var` (`by_var = "cohort_1"`) and "min" statistic: no non-missing arguments to min; returning Inf
       ! For variable `continuous_var` (`by_var = "cohort_1"`) and "max" statistic: no non-missing arguments to max; returning -Inf
 
+# print_ard_conditions() works when curly brackets appear in condition message
+
+    Code
+      print_ard_conditions(ard)
+    Message
+      The following errors were returned during `print_ard_conditions()`:
+      x For variable `AGE` and "mean" statistic: error with {curly} brackets
+      The following warnings were returned during `print_ard_conditions()`:
+      ! For variable `AGE` and "mean" statistic: warning with {curly} brackets
+

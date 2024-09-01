@@ -102,18 +102,21 @@ print_ard_conditions <- function(x) {
   )
 
   for (i in seq_len(nrow(ard_msg))) {
-    cli::cli_inform(c(
-      glue::glue(
-        "For variable {ard_msg$cli_variable_msg[[i]]} ",
-        "{switch(!is.null(ard_msg$cli_group_msg[[i]]), paste0('(', ard_msg$cli_group_msg[[i]], ')')) %||% ''} ",
-        "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}: ",
-        "{ard_msg$cond_msg[[i]]}"
+    cli::cli_inform(
+      paste(
+        glue::glue(
+          "For variable {ard_msg$cli_variable_msg[[i]]} ",
+          "{switch(!is.null(ard_msg$cli_group_msg[[i]]), paste0('(', ard_msg$cli_group_msg[[i]], ')')) %||% ''} ",
+          "and {{.val {{ard_msg$all_stat_names[[i]]}}}} statistic{{?s}}"
+        ),
+        "{ard_msg$cond_msg[[i]]}",
+        sep = ": "
       ) |>
         stats::setNames(switch(msg_type,
           "warning" = "!",
           "error" = "x"
         ))
-    ))
+    )
   }
 
   invisible()
