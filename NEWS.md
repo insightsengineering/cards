@@ -12,6 +12,8 @@
 
 * Added `bind_ard(.distinct)` argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (#286)
 
+* Bug fix in `print_ard_conditions()` and we can now print condition messages that contain curly brace pairs. (#309)
+
 # cards 0.2.1
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.

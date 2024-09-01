@@ -102,3 +102,17 @@ test_that("print_ard_conditions() no error when factors are present", {
     print_ard_conditions(ard)
   )
 })
+
+# See issue #309
+test_that("print_ard_conditions() works when curly brackets appear in condition message", {
+  # add a warning message that has curly brackets in it
+  ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ continuous_summary_fns("mean")) |>
+    dplyr::mutate(
+      warning = list("warning with {curly} brackets"),
+      error = list("error with {curly} brackets")
+    )
+
+  expect_snapshot(
+    print_ard_conditions(ard)
+  )
+})
