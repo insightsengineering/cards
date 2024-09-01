@@ -274,9 +274,9 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' Fill Overall Group Variables
 #'
 #' This function fills the missing values of grouping variables with "Overall
-#' <variable name>" where relevant. Specifically it will modify grouping values
+#' `variable name`" where relevant. Specifically it will modify grouping values
 #' from rows with likely overall calculations present (e.g. non-missing
-#' variable/variable_level, 100% missing group variables, and evidence that the
+#' variable/variable_level, 100 percent missing group variables, and evidence that the
 #' `variable` has been computed by group in other rows). "Overall" values will
 #' be populated only for grouping variables that have been used in other calculations
 #' of the same variable and statistics.

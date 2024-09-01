@@ -15,9 +15,9 @@ data frame
 }
 \description{
 This function fills the missing values of grouping variables with "Overall
-\if{html}{\out{<variable name>}}" where relevant. Specifically it will modify grouping values
+\verb{variable name}" where relevant. Specifically it will modify grouping values
 from rows with likely overall calculations present (e.g. non-missing
-variable/variable_level, 100\% missing group variables, and evidence that the
+variable/variable_level, 100 percent missing group variables, and evidence that the
 \code{variable} has been computed by group in other rows). "Overall" values will
 be populated only for grouping variables that have been used in other calculations
 of the same variable and statistics.
