@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,7 @@
           aria-expanded="false" aria-haspopup="true"
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
@@ -43,13 +44,31 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.2.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.2.2/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.1" id="cards-021">cards 0.2.1<a class="anchor" aria-label="anchor" href="#cards-021"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.2" id="cards-022">cards 0.2.2<a class="anchor" aria-label="anchor" href="#cards-022"></a></h2><p class="text-muted">CRAN release: 2024-09-02</p>
+<div class="section level3">
+<h3 id="new-features--updates-0-2-2">New Features &amp; Updates<a class="anchor" aria-label="anchor" href="#new-features--updates-0-2-2"></a></h3>
+<ul><li><p>Converted <code><a href="../reference/ard_total_n.html">ard_total_n()</a></code> to an S3 generic and added method <code><a href="../reference/ard_total_n.html">ard_total_n.data.frame()</a></code>.</p></li>
+<li><p>Added the <code>bind_ard(.quiet)</code> argument to suppress messaging. (<a href="https://github.com/insightsengineering/cards/issues/299" class="external-link">#299</a>)</p></li>
+<li><p>Improved ability of <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> to populate missing group values where possible. (<a href="https://github.com/insightsengineering/cards/issues/306" class="external-link">#306</a>)</p></li>
+<li><p>Added <code>apply_fmt_fn(replace)</code> argument. Use <code>replace=FALSE</code> to retain any previously formatted statistics in the <code>stat_fmt</code> column. (<a href="https://github.com/insightsengineering/cards/issues/285" class="external-link">#285</a>)</p></li>
+<li><p>Added <code>bind_ard(.distinct)</code> argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (<a href="https://github.com/insightsengineering/cards/issues/286" class="external-link">#286</a>)</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-2-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-2"></a></h3>
+<ul><li><p>Fix in <code><a href="../reference/print_ard_conditions.html">print_ard_conditions()</a></code> when the variables were factors, which did not render properly in <code><a href="https://cli.r-lib.org/reference/cli_format.html" class="external-link">cli::cli_format()</a></code>.</p></li>
+<li><p>Bug fix in <code><a href="../reference/print_ard_conditions.html">print_ard_conditions()</a></code> and we can now print condition messages that contain curly brace pairs. (<a href="https://github.com/insightsengineering/cards/issues/309" class="external-link">#309</a>)</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.1" id="cards-021">cards 0.2.1<a class="anchor" aria-label="anchor" href="#cards-021"></a></h2><p class="text-muted">CRAN release: 2024-08-17</p>
 <ul><li><p>Update in <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> to use <code><a href="https://rdrr.io/r/base/order.html" class="external-link">base::order()</a></code> instead of <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">dplyr::arrange()</a></code>, so the ordering of variables match the results from <code><a href="https://rdrr.io/r/base/table.html" class="external-link">base::table()</a></code> in some edge cases where sorted order was inconsistent.</p></li>
 <li><p>Update in <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> to run <code><a href="https://rdrr.io/r/base/table.html" class="external-link">base::table()</a></code> output checks against coerced character columns. Previously, we relied on R to perform checks on the type it decided to check against (e.g. when it coerces to a common type). While the initial strategy worked in cases of Base R classes, there were some bespoke classes, such as times from {hms}, where Base R does not coerce as we expected.</p></li>
+<li><p>Adding selectors <code>all_group_n()</code> and <code><a href="../reference/selectors.html">all_missing_columns()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/272" class="external-link">#272</a>, <a href="https://github.com/insightsengineering/cards/issues/274" class="external-link">#274</a>)</p></li>
+<li><p>Added new function <code><a href="../reference/add_calculated_row.html">add_calculated_row()</a></code> for adding a new row of calculated statistic(s) that are a function of the other statistics in the ARD. (<a href="https://github.com/insightsengineering/cards/issues/275" class="external-link">#275</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="cards-020">cards 0.2.0<a class="anchor" aria-label="anchor" href="#cards-020"></a></h2><p class="text-muted">CRAN release: 2024-07-20</p>
