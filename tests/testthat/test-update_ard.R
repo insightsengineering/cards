@@ -8,6 +8,12 @@ test_that("update_ard_fmt_fn()", {
       unlist(),
     c("75.08661417", "8.24623390")
   )
+
+  expect_snapshot(
+    error = TRUE,
+    ard_continuous(ADSL, variables = AGE) |>
+      update_ard_fmt_fn(stat_names = c("mean", "sd"), fmt_fn = -8L)
+  )
 })
 
 test_that("update_ard_stat_label()", {

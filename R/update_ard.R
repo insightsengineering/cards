@@ -27,6 +27,8 @@ NULL
 #' @export
 #' @rdname update_ard
 update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn) {
+  set_cli_abort_call()
+
   # check and process inputs ---------------------------------------------------
   check_class(x, "card")
   process_selectors(data = dplyr::tibble(!!!rep_named(unique(x$variable), NA)), variables = {{ variables }})
@@ -34,7 +36,8 @@ update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn) {
   check_length(fmt_fn, 1L)
 
   # update ARD with new fmt_fn -------------------------------------------------
-  x$fmt_fn[x$variable %in% variables & x$stat_name %in% stat_names] <- list(fmt_fn)
+  x$fmt_fn[x$variable %in% variables & x$stat_name %in% stat_names] <-
+    list(alias_as_fmt_fn(fmt_fn))
 
   # return ard -----------------------------------------------------------------
   x
