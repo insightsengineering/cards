@@ -121,13 +121,14 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
       c("The value in {.arg fmt_fn} cannot be converted into a function for
          statistic {.val {stat_name}} and variable {.val {variable}}.",
         "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-        "*" = "See {.help cards::alias_as_fmt_fn} for details.")
-  }
-  else {
+        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+      )
+  } else {
     error_message <-
       c("The value in {.arg fmt_fn} cannot be converted into a function.",
         "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-        "*" = "See {.help cards::alias_as_fmt_fn} for details.")
+        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+      )
   }
 
   cli::cli_abort(
