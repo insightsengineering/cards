@@ -8,6 +8,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/cards)](https://CRAN.R-project.org/package=cards)
 [![R-CMD-check](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/insightsengineering/cards/actions/workflows/R-CMD-check.yaml)
+[![Downloads](https://cranlogs.r-pkg.org/badges/cards)](https://cran.r-project.org/package=cards)
 [![Codecov test
 coverage](https://codecov.io/gh/insightsengineering/cards/branch/main/graph/badge.svg)](https://app.codecov.io/gh/insightsengineering/cards?branch=main)
 [![Lifecycle:
