@@ -58,8 +58,8 @@ update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn, f
   idx <-
     # first evaluate the variable and stat_names
     eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x) &
-    # and then add any additional reqs passed in `filter`
-    eval_tidy(enquo(filter), data = x)
+      # and then add any additional reqs passed in `filter`
+      eval_tidy(enquo(filter), data = x)
 
   # update ARD with new fmt_fn -------------------------------------------------
   x$fmt_fn[idx] <- list(alias_as_fmt_fn(fmt_fn))
@@ -81,8 +81,8 @@ update_ard_stat_label <- function(x, variables = everything(), stat_names, stat_
   idx <-
     # first evaluate the variable and stat_names
     eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x) &
-    # and then add any additional reqs passed in `filter`
-    eval_tidy(enquo(filter), data = x)
+      # and then add any additional reqs passed in `filter`
+      eval_tidy(enquo(filter), data = x)
 
   # update ARD with new stat_label ---------------------------------------------
   x$stat_label[idx] <- stat_label
