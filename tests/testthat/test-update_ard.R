@@ -16,6 +16,15 @@ test_that("update_ard_fmt_fn()", {
   )
 })
 
+test_that("update_ard_fmt_fn(filter)", {
+  # apply update to the Placebo level
+  expect_snapshot(
+    ard_continuous(ADSL, by = ARM, variables = AGE, statistic = ~ continuous_summary_fns(c("N", "mean"))) |>
+      update_ard_fmt_fn(stat_names = "mean", fmt_fn = 8L, filter = group1_level == "Placebo") |>
+      apply_fmt_fn()
+  )
+})
+
 test_that("update_ard_stat_label()", {
   expect_equal(
     ard_continuous(ADSL, variables = AGE) |>
@@ -26,5 +35,13 @@ test_that("update_ard_stat_label()", {
       unlist() |>
       unique(),
     "Mean (SD)"
+  )
+})
+
+test_that("update_ard_fmt_fn(filter)", {
+  # apply update to the Placebo level
+  expect_snapshot(
+    ard_continuous(ADSL, by = ARM, variables = AGE, statistic = ~ continuous_summary_fns(c("N", "mean", "sd"))) |>
+      update_ard_stat_label(stat_names = c("mean", "sd"), stat_label = "Mean (SD)", filter = group1_level == "Placebo")
   )
 })

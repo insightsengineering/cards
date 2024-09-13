@@ -6,9 +6,21 @@
 \alias{update_ard_stat_label}
 \title{Update ARDs}
 \usage{
-update_ard_fmt_fn(x, variables = everything(), stat_names, fmt_fn)
+update_ard_fmt_fn(
+  x,
+  variables = everything(),
+  stat_names,
+  fmt_fn,
+  filter = TRUE
+)
 
-update_ard_stat_label(x, variables = everything(), stat_names, stat_label)
+update_ard_stat_label(
+  x,
+  variables = everything(),
+  stat_names,
+  stat_label,
+  filter = TRUE
+)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
@@ -24,6 +36,11 @@ apply the update.}
 \item{fmt_fn}{(\code{function})\cr
 a function or alias recognized by \code{alias_as_fmt_fn()}.}
 
+\item{filter}{(\code{expression})\cr
+an expression that evaluates to a logical vector identifying rows in \code{x}
+to apply the update to. Default is \code{TRUE}, and update is applied to
+all rows.}
+
 \item{stat_label}{(\code{function})\cr
 a string of the updated statistic label.}
 }
@@ -37,5 +54,15 @@ Functions used to update ARD formatting functions and statistic labels.
 ard_continuous(ADSL, variables = AGE) |>
   update_ard_fmt_fn(stat_names = c("mean", "sd"), fmt_fn = 8L) |>
   update_ard_stat_label(stat_names = c("mean", "sd"), stat_label = "Mean (SD)") |>
+  apply_fmt_fn()
+
+# same as above, but only apply update to the Placebo level
+ard_continuous(
+  ADSL,
+  by = ARM,
+  variables = AGE,
+  statistic = ~ continuous_summary_fns(c("N", "mean"))
+) |>
+  update_ard_fmt_fn(stat_names = "mean", fmt_fn = 8L, filter = group1_level == "Placebo") |>
   apply_fmt_fn()
 }
