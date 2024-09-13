@@ -77,6 +77,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   }
 
   dat_cards_out <- dat_cards_out |>
+    .fill_overall_grp_values(vars_protected) |>
     dplyr::rename(any_of(c(label = "variable_level"))) |>
     dplyr::arrange(".cards_idx") |>
     dplyr::select(-".cards_idx")
@@ -267,6 +268,71 @@ shuffle_ard <- function(x, trim = TRUE) {
     }) |>
     dplyr::bind_rows() |>
     dplyr::mutate(variable = as.character(.data$variable))
+}
+
+
+#' Fill Overall Group Variables
+#'
+#' This function fills the missing values of grouping variables with "Overall
+#' `variable name`" where relevant. Specifically it will modify grouping values
+#' from rows with likely overall calculations present (e.g. non-missing
+#' variable/variable_level, 100 percent missing group variables, and evidence that the
+#' `variable` has been computed by group in other rows). "Overall" values will
+#' be populated only for grouping variables that have been used in other calculations
+#' of the same variable and statistics.
+#'
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#'
+#' @return data frame
+#' @keywords internal
+#'
+#' @examples
+#' data <- dplyr::tibble(
+#'   grp = c("AA", "AA", NA, "BB", NA),
+#'   variable = c("A", "B", "A", "C", "C"),
+#'   variable_level = c(1, 2, 1, 3, 3),
+#'   A = rep(NA, 5),
+#'   B = rep(NA, 5),
+#'   .cards_idx = c(1:5)
+#' )
+#'
+#' cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
+.fill_overall_grp_values <- function(x, vars_protected) {
+  # determine grouping and merging variables
+  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
+  id_vars <- id_vars[id_vars %in% names(x)]
+  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
+
+  # replace NA group values with "Overall <var>" where it is likely to be an overall calculation
+  x_missing_by <- x |>
+    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))
+
+  if (nrow(x_missing_by) > 0) {
+    x_missing_by_replaced <- x_missing_by |> # all NA grouping values
+      dplyr::rows_update(
+        x |>
+          dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
+          dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
+            overall_val <- make.unique(c(
+              unique(v),
+              paste("Overall", cur_col)
+            )) |>
+              rev() %>%
+              .[1]
+            ifelse(!is.na(v), overall_val, v)
+          })) |>
+          dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
+          dplyr::distinct(),
+        by = id_vars,
+        unmatched = "ignore"
+      )
+
+    # replace the modified rows based on indices
+    dplyr::rows_update(x, x_missing_by_replaced, by = ".cards_idx")
+  } else {
+    x
+  }
 }
 
 #' List Column as a Vector Predicate

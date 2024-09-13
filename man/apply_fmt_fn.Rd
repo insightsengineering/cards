@@ -4,11 +4,15 @@
 \alias{apply_fmt_fn}
 \title{Apply Formatting Functions}
 \usage{
-apply_fmt_fn(x)
+apply_fmt_fn(x, replace = FALSE)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 an ARD data frame of class 'card'}
+
+\item{replace}{(scalar \code{logical})\cr
+logical indicating whether to replace values in the \code{'stat_fmt'} column (if present).
+Default is \code{FALSE}.}
 }
 \value{
 an ARD data frame of class 'card'

@@ -1,0 +1,62 @@
+
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(broom.helpers)
+
+Attaching package: 'broom.helpers'
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+> 
+> test_check("broom.helpers")
+11 cases omitted due to missing values
+Stratified Independent Sampling design (with replacement)
+dpbc <- survey::svydesign(id = ~1, prob = ~1, strata = ~edema, data = survival::pbc)
+11 cases omitted due to missing values
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 774 ]
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+── Warning ('test-add_reference_rows.R:257:3'): tidy_add_reference_rows() works with glmmTMB::glmmTMB ──
+Package version inconsistency detected.
+glmmTMB was built with TMB version 1.9.10
+Current TMB version is 1.9.14
+Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
+Backtrace:
+     ▆
+  1. └─testthat::skip_if_not_installed("glmmTMB") at test-add_reference_rows.R:257:3
+  2.   └─base::requireNamespace(pkg, quietly = TRUE)
+  3.     ├─base::tryCatch(loadNamespace(package, ...), error = function(e) e)
+  4.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  5.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  6.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  7.     └─base::loadNamespace(package, ...)
+  8.       └─base (local) runHook(".onLoad", env, package.lib, package)
+  9.         ├─base::tryCatch(fun(libname, pkgname), error = identity)
+ 10.         │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 11.         │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 12.         │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 13.         └─glmmTMB (local) fun(libname, pkgname)
+ 14.           └─glmmTMB:::checkDepPackageVersion(dep_pkg = "TMB")
+
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 774 ]
+> 
+> proc.time()
+   user  system elapsed 
+ 91.509   6.044 103.966 

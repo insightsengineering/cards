@@ -17,7 +17,7 @@ test_that("ARD helpers messaging", {
   )
 
   expect_snapshot(
-    bind_ard(ard, ard, .update = FALSE),
+    bind_ard(ard, ard, .distinct = FALSE, .update = FALSE),
     error = TRUE
   )
 })
@@ -51,5 +51,12 @@ test_that("bind_ard(.quiet)", {
   expect_silent(
     ard_continuous(ADSL, variables = AGE) %>%
       {bind_ard(., ., .update = TRUE, .quiet = TRUE)} # styler: off
+  )
+})
+
+test_that("bind_ard(.distinct)", {
+  expect_snapshot(
+    ard_continuous(ADSL, variables = AGE) %>%
+      {bind_ard(., ., .update = FALSE)} # styler: off
   )
 })
