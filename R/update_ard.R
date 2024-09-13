@@ -4,7 +4,7 @@
 #' Functions used to update ARD formatting functions and statistic labels.
 #'
 #' This is a helper function to streamline the update process. If it does not
-#' exaclty meet your needs, recall that an ARD is just a data frame and it
+#' exactly meet your needs, recall that an ARD is just a data frame and it
 #' can be modified directly.
 #'
 #' @param x (`data.frame`)\cr
