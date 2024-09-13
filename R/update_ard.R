@@ -64,9 +64,12 @@ update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn, f
     tryCatch(
       eval_tidy(enquo(filter), data = x),
       error = function(e) {
-        cli::cli_abort(c("There was an error evaluating the {.arg filter} argument. See below:",
-                         "x" = "{conditionMessage(e)}"),
-                   call = get_cli_abort_call())
+        cli::cli_abort(
+          c("There was an error evaluating the {.arg filter} argument. See below:",
+            "x" = "{conditionMessage(e)}"
+          ),
+          call = get_cli_abort_call()
+        )
       }
     )
   if (!is.vector(idx2) || !is.logical(idx2) || (length(idx2) != 1L && length(idx2) != nrow(x))) {
@@ -103,9 +106,12 @@ update_ard_stat_label <- function(x, variables = everything(), stat_names, stat_
     tryCatch(
       eval_tidy(enquo(filter), data = x),
       error = function(e) {
-        cli::cli_abort(c("There was an error evaluating the {.arg filter} argument. See below:",
-                         "x" = "{conditionMessage(e)}"),
-                       call = get_cli_abort_call())
+        cli::cli_abort(
+          c("There was an error evaluating the {.arg filter} argument. See below:",
+            "x" = "{conditionMessage(e)}"
+          ),
+          call = get_cli_abort_call()
+        )
       }
     )
   if (!is.vector(idx2) || !is.logical(idx2) || (length(idx2) != 1L && length(idx2) != nrow(x))) {
@@ -122,4 +128,3 @@ update_ard_stat_label <- function(x, variables = everything(), stat_names, stat_
   # return ard -----------------------------------------------------------------
   x
 }
-
