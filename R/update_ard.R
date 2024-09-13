@@ -55,14 +55,30 @@ update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn, f
   check_length(fmt_fn, 1L)
 
   # construct lgl index condition ----------------------------------------------
-  idx <-
-    # first evaluate the variable and stat_names
-    eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x) &
-      # and then add any additional reqs passed in `filter`
-      eval_tidy(enquo(filter), data = x)
+  # first evaluate the variable and stat_names
+  idx1 <-
+    eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x)
+
+  # and then add any additional reqs passed in `filter`
+  idx2 <-
+    tryCatch(
+      eval_tidy(enquo(filter), data = x),
+      error = function(e) {
+        cli::cli_abort(c("There was an error evaluating the {.arg filter} argument. See below:",
+                         "x" = "{conditionMessage(e)}"),
+                   call = get_cli_abort_call())
+      }
+    )
+  if (!is.vector(idx2) || !is.logical(idx2) || (length(idx2) != 1L && length(idx2) != nrow(x))) {
+    cli::cli_abort(
+      "The {.arg filter} argument must be an expression that evaluates to a
+       {.cls logical} vector of length {.val {1L}} or {.val {nrow(x)}}.",
+      call = get_cli_abort_call()
+    )
+  }
 
   # update ARD with new fmt_fn -------------------------------------------------
-  x$fmt_fn[idx] <- list(alias_as_fmt_fn(fmt_fn))
+  x$fmt_fn[idx1 & idx2] <- list(alias_as_fmt_fn(fmt_fn))
 
   # return ard -----------------------------------------------------------------
   x
@@ -78,15 +94,32 @@ update_ard_stat_label <- function(x, variables = everything(), stat_names, stat_
   check_string(stat_label)
 
   # construct lgl index condition ----------------------------------------------
-  idx <-
-    # first evaluate the variable and stat_names
-    eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x) &
-      # and then add any additional reqs passed in `filter`
-      eval_tidy(enquo(filter), data = x)
+  # first evaluate the variable and stat_names
+  idx1 <-
+    eval_tidy(expr(.data$variable %in% variables & .data$stat_name %in% stat_names), data = x)
+
+  # and then add any additional reqs passed in `filter`
+  idx2 <-
+    tryCatch(
+      eval_tidy(enquo(filter), data = x),
+      error = function(e) {
+        cli::cli_abort(c("There was an error evaluating the {.arg filter} argument. See below:",
+                         "x" = "{conditionMessage(e)}"),
+                       call = get_cli_abort_call())
+      }
+    )
+  if (!is.vector(idx2) || !is.logical(idx2) || (length(idx2) != 1L && length(idx2) != nrow(x))) {
+    cli::cli_abort(
+      "The {.arg filter} argument must be an expression that evaluates to a
+       {.cls logical} vector of length {.val {1L}} or {.val {nrow(x)}}.",
+      call = get_cli_abort_call()
+    )
+  }
 
   # update ARD with new stat_label ---------------------------------------------
-  x$stat_label[idx] <- stat_label
+  x$stat_label[idx1 & idx2] <- stat_label
 
   # return ard -----------------------------------------------------------------
   x
 }
+
