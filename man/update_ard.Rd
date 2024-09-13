@@ -49,6 +49,10 @@ an ARD data frame of class 'card'
 }
 \description{
 Functions used to update ARD formatting functions and statistic labels.
+
+This is a helper function to streamline the update process. If it does not
+exaclty meet your needs, recall that an ARD is just a data frame and it
+can be modified directly.
 }
 \examples{
 ard_continuous(ADSL, variables = AGE) |>
