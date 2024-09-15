@@ -12,7 +12,8 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param .by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to tabulate by in the series of ARD function calls
+#'   columns to tabulate by in the series of ARD function calls.
+#'   Any rows with `NA` or `NaN` values are removed from all calculations.
 #' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   Series of ARD function calls to be run and stacked
 #' @param .overall (`logical`)\cr logical indicating whether overall statistics
@@ -83,10 +84,19 @@ ard_stack <- function(data,
     .overall <- FALSE
   }
 
-  # evaluate the dots using common `data` and `by`
+  # remove missing `.by` rows --------------------------------------------------
+  df_na_by <- is.na(data[.by]) | apply(data[.by], MARGIN = 2, is.nan)
+  if (!is_empty(.by) && any(df_na_by)) {
+    rows_with_na <- apply(df_na_by, MARGIN = 1, any)
+    cli::cli_inform("*" = "Removing {.val {sum(rows_with_na)}} row{?s} with
+                           {.val {NA}} or {.val {NaN}} values in {.val {eval(.by)}} column{?s}.")
+    data <- data[!rows_with_na, ]
+  }
+
+  # evaluate the dots using common `data` and `by` -----------------------------
   ard_list <- .eval_ard_calls(data, .by, ...)
 
-  # add overall
+  # add overall ----------------------------------------------------------------
   if (isTRUE(.overall)) {
     ard_list <- c(
       ard_list,
@@ -94,7 +104,7 @@ ard_stack <- function(data,
     )
   }
 
-  # compute Ns by group / combine main calls
+  # compute Ns by group / combine main calls -----------------------------------
   if (!is_empty(by)) {
     ard_full <- bind_ard(
       ard_list,
@@ -107,10 +117,10 @@ ard_stack <- function(data,
     ard_full <- bind_ard(ard_list, .update = TRUE)
   }
 
-  # get all variables represented
+  # get all variables represented ----------------------------------------------
   variables <- unique(ard_full$variable) |> setdiff(.by)
 
-  # missingness
+  # missingness ----------------------------------------------------------------
   if (isTRUE(.missing)) {
     ard_full <- bind_ard(
       ard_full,
@@ -124,7 +134,7 @@ ard_stack <- function(data,
     }
   }
 
-  # attributes
+  # attributes -----------------------------------------------------------------
   if (isTRUE(.attributes)) {
     ard_full <- bind_ard(
       ard_full,
@@ -132,7 +142,7 @@ ard_stack <- function(data,
     )
   }
 
-  # total n
+  # total n --------------------------------------------------------------------
   if (isTRUE(.total_n)) {
     ard_full <- bind_ard(
       ard_full,
@@ -140,14 +150,15 @@ ard_stack <- function(data,
     )
   }
 
-  # order
+  # order ----------------------------------------------------------------------
   ard_full <- tidy_ard_row_order(ard_full)
 
-  # shuffle
+  # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
     return(shuffle_ard(ard_full))
   }
 
+  # return final ARD -----------------------------------------------------------
   ard_full
 }
 
