@@ -88,8 +88,8 @@ ard_stack <- function(data,
   df_na_by <- is.na(data[.by]) | apply(data[.by], MARGIN = 2, is.nan)
   if (!is_empty(.by) && any(df_na_by)) {
     rows_with_na <- apply(df_na_by, MARGIN = 1, any)
-    cli::cli_inform("*" = "Removing {.val {sum(rows_with_na)}} row{?s} with
-                           {.val {NA}} or {.val {NaN}} values in {.val {eval(.by)}} column{?s}.")
+    cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na)}} row{?s} with
+                            {.val {NA}} or {.val {NaN}} values in {.val {eval(.by)}} column{?s}."))
     data <- data[!rows_with_na, ]
   }
 

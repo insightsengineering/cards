@@ -297,7 +297,7 @@ test_that("ard_stack(.by) messaging", {
   expect_snapshot(
     mtcars2 |>
       ard_stack(
-        ard_continuous(variables = "mpg", statistic = ~continuous_summary_fns("N")),
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
         .by = c(am, vs),
         .total_n = TRUE,
         .overall = TRUE
@@ -311,7 +311,7 @@ test_that("ard_stack(.by) messaging", {
   expect_snapshot(
     mtcars3 |>
       ard_stack(
-        ard_continuous(variables = "mpg", statistic = ~continuous_summary_fns("N")),
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
         .by = c(am, vs),
         .total_n = TRUE,
         .overall = TRUE
