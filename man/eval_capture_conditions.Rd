@@ -57,6 +57,7 @@ Execution environment of currently running function. Default is
 a named list
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 \strong{\code{eval_capture_conditions()}}
 
 Evaluates an expression while also capturing error and warning conditions.
@@ -74,7 +75,9 @@ to remove styling from the message.
 
 These functions take the result from \code{eval_capture_conditions()} and return
 errors or warnings as either messages (via \code{cli::cli_inform()}) or
-errors (via \code{cli::cli_abort()}).
+errors (via \code{cli::cli_abort()}). These functions handle cases where the
+condition messages may include curly brackets, which would typically cause
+issues when processed with the \verb{cli::cli_*()} functions.
 
 Functions return the \code{"result"} from \code{eval_capture_conditions()}.
 }

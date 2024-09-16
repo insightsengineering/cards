@@ -2,6 +2,7 @@
 #'
 #' @description
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' **`eval_capture_conditions()`**
 #'
 #' Evaluates an expression while also capturing error and warning conditions.
@@ -19,7 +20,9 @@
 #'
 #' These functions take the result from `eval_capture_conditions()` and return
 #' errors or warnings as either messages (via `cli::cli_inform()`) or
-#' errors (via `cli::cli_abort()`).
+#' errors (via `cli::cli_abort()`). These functions handle cases where the
+#' condition messages may include curly brackets, which would typically cause
+#' issues when processed with the `cli::cli_*()` functions.
 #'
 #' Functions return the `"result"` from `eval_capture_conditions()`.
 #'
