@@ -85,7 +85,7 @@ eval_capture_conditions(letters[1:2])
 # an error is thrown
 res <- eval_capture_conditions(stop("Example Error!"))
 res
-message_captured_conditions(res)
+captured_condition_as_message(res)
 
 # if more than one warning is returned, all are saved
 eval_capture_conditions({
