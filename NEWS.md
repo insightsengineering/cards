@@ -1,4 +1,6 @@
-# cards 0.2.2.9003
+# cards 0.2.2.9004
+
+* Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
 
 * Added functions for printing results from `eval_capture_conditions()`. Captured conditions can be printed as either errors or messages with `captured_condition_as_error()` and `captured_condition_as_message()`, respectively. (#282)
 

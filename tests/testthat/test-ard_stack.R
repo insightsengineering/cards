@@ -289,3 +289,33 @@ test_that("ard_stack() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_stack(.by) messaging", {
+  mtcars2 <- mtcars
+  mtcars2$am[1] <- NA
+  mtcars2$vs[1] <- NA
+  expect_snapshot(
+    mtcars2 |>
+      ard_stack(
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        .by = c(am, vs),
+        .total_n = TRUE,
+        .overall = TRUE
+      ) |>
+      dplyr::filter(stat_name %in% "N")
+  )
+
+  mtcars3 <- mtcars
+  mtcars3$am[1] <- NA
+  mtcars3$vs[2] <- NaN
+  expect_snapshot(
+    mtcars3 |>
+      ard_stack(
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        .by = c(am, vs),
+        .total_n = TRUE,
+        .overall = TRUE
+      ) |>
+      dplyr::filter(stat_name %in% "N")
+  )
+})
