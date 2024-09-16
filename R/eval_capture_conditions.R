@@ -25,6 +25,10 @@
 #'
 #' @inheritParams rlang::eval_tidy
 #' @inheritParams cli::cli_abort
+#' @param x (`captured_condition`)\cr
+#'   a captured condition created by `eval_capture_conditions()`.
+#' @param type (`string`)\cr
+#'   the type of condition to return. Must be one of `'error'` or `'warning'`.
 #' @param message (`character`)\cr
 #'   message passed to `cli::cli_inform()` or `cli::cli_abort()`. The condition
 #'   being printed is saved in an object named `condition`, which should be
