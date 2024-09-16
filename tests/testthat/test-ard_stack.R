@@ -108,6 +108,7 @@ test_that("ard_stack() adding overalls", {
 })
 
 
+
 test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
@@ -188,7 +189,35 @@ test_that("ard_stack() .shuffle argument", {
     ) |>
       shuffle_ard()
   )
+
+
+  # with overalls
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .shuffle = TRUE,
+      .overall = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_continuous(data = mtcars, variables = "mpg"),
+      ard_dichotomous(data = mtcars, variables = "vs"),
+      .order = TRUE
+    ) |>
+      shuffle_ard()
+  )
 })
+
 
 test_that("ard_stack() adding total N", {
   expect_equal(
@@ -258,5 +287,35 @@ test_that("ard_stack() follows ard structure", {
       ard_dichotomous(variables = "vs")
     ) |>
       check_ard_structure(method = FALSE)
+  )
+})
+
+test_that("ard_stack(.by) messaging", {
+  mtcars2 <- mtcars
+  mtcars2$am[1] <- NA
+  mtcars2$vs[1] <- NA
+  expect_snapshot(
+    mtcars2 |>
+      ard_stack(
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        .by = c(am, vs),
+        .total_n = TRUE,
+        .overall = TRUE
+      ) |>
+      dplyr::filter(stat_name %in% "N")
+  )
+
+  mtcars3 <- mtcars
+  mtcars3$am[1] <- NA
+  mtcars3$vs[2] <- NaN
+  expect_snapshot(
+    mtcars3 |>
+      ard_stack(
+        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        .by = c(am, vs),
+        .total_n = TRUE,
+        .overall = TRUE
+      ) |>
+      dplyr::filter(stat_name %in% "N")
   )
 })

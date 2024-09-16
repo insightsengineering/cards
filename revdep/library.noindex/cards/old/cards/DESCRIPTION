@@ -1,0 +1,44 @@
+Package: cards
+Title: Analysis Results Data
+Version: 0.2.1
+Authors@R: c(
+    person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0862-2018")),
+    person("Becca", "Krouse", , "becca.z.krouse@gsk.com", role = "aut"),
+    person("Emily", "de la Rua", , "emily.de_la_rua@contractors.roche.com", role = "aut"),
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
+    person("GlaxoSmithKline Research & Development Limited", role = "cph")
+  )
+Description: Construct CDISC (Clinical Data Interchange Standards
+    Consortium) compliant Analysis Results Data objects. These objects are
+    used and re-used to construct summary tables, visualizations, and
+    written reports. The package also exports utilities for working with
+    these objects and creating new Analysis Results Data objects.
+License: Apache License 2.0
+URL: https://github.com/insightsengineering/cards,
+        https://insightsengineering.github.io/cards/
+BugReports: https://github.com/insightsengineering/cards/issues
+Depends: R (>= 4.1)
+Imports: cli (>= 3.6.1), dplyr (>= 1.1.2), glue (>= 1.6.2), rlang (>=
+        1.1.1), tidyr (>= 1.3.0), tidyselect (>= 1.2.0)
+Suggests: spelling (>= 2.2.0), testthat (>= 3.2.0), withr (>= 3.0.0)
+Config/Needs/check: hms
+Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt,
+        insightsengineering/nesttemplate
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 7.3.2
+NeedsCompilation: no
+Packaged: 2024-08-16 18:59:31 UTC; sjobergd
+Author: Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>),
+  Becca Krouse [aut],
+  Emily de la Rua [aut],
+  F. Hoffmann-La Roche AG [cph, fnd],
+  GlaxoSmithKline Research & Development Limited [cph]
+Maintainer: Daniel D. Sjoberg <danield.sjoberg@gmail.com>
+Repository: CRAN
+Date/Publication: 2024-08-17 05:10:02 UTC
+Built: R 4.3.3; ; 2024-08-17 06:27:00 UTC; unix

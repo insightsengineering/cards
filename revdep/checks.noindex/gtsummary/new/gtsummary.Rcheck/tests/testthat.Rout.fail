@@ -1,0 +1,59 @@
+
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+> # * https://testthat.r-lib.org/articles/special-files.html
+> 
+> library(testthat)
+> library(gtsummary)
+
+Attaching package: 'gtsummary'
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+> 
+> test_check("gtsummary")
+Starting 2 test processes
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 1425 ]
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Failure ('test-tbl_uvregression.R:105:3'): tbl_uvregression(method.args) ────
+Snapshot of code has changed:
+old[2:8] vs new[2:8]
+    as.data.frame(tbl2)
+  Output
+          **Characteristic** **N** **log(HR)**  **95% CI** **p-value**
+-   1                    Age   189        0.01  0.01, 0.01      <0.001
++   1                    Age   183        0.01  0.01, 0.01      <0.001
+-   2 Chemotherapy Treatment   200        <NA>        <NA>        <NA>
++   2 Chemotherapy Treatment   193        <NA>        <NA>        <NA>
+    3                 Drug A  <NA>        <NA>        <NA>        <NA>
+    4                 Drug B  <NA>        0.29 -0.12, 0.70         0.2
+
+* Run `testthat::snapshot_accept('tbl_uvregression')` to accept the change.
+* Run `testthat::snapshot_review('tbl_uvregression')` to interactively review the change.
+
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 1425 ]
+Error: Test failures
+Execution halted
