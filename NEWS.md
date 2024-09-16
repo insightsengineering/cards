@@ -6,6 +6,8 @@
 
 * Added functions `update_ard_fmt_fn()` and `update_ard_stat_label()` to update an ARD's formatting function and statistic label, respectively. (#253)
 
+* Added `rename_ard_columns(unlist)` argument, which unlists specified columns in the ARD data frame. (#313)
+
 # cards 0.2.2
 
 ## New Features & Updates
