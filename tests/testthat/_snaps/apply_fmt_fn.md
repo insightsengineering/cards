@@ -28,7 +28,7 @@
       Caused by error in `apply_fmt_fn()`:
       ! There was an error applying the formatting function to statistic "sd" for variable "mpg".
       i Perhaps try formmatting function `as.character()`? See error message below:
-      x The value -1 supplied for `fmt_fn` cannot be applied to the statistic "sd" for the variable "mpg". Formatting functions/aliases must be a function, a non-negative integer, or a formatting string, e.g. "xx.x".
+      x The value in `fmt_fn` cannot be converted into a function for statistic "sd" and variable "mpg". i Value must be a function, a non-negative integer, or a formatting string, e.g. "xx.x". * See `?cards::alias_as_fmt_fn()` for details.
 
 ---
 

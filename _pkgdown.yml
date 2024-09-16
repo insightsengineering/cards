@@ -45,6 +45,7 @@ reference:
       - bind_ard
       - tidy_ard_column_order
       - apply_fmt_fn
+      - update_ard
       - process_selectors
       - tidy_as_ard
       - nest_for_ard

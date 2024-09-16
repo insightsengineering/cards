@@ -115,16 +115,27 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
     return(label_cards(digits = decimal_n, scale = scale, width = width))
   }
 
+  # if the above conditions are not met, return an error -----------------------
+  if (!missing(variable) && !missing(stat_name)) {
+    error_message <-
+      c("The value in {.arg fmt_fn} cannot be converted into a function for
+         statistic {.val {stat_name}} and variable {.val {variable}}.",
+        "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+      )
+  } else {
+    error_message <-
+      c("The value in {.arg fmt_fn} cannot be converted into a function.",
+        "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+      )
+  }
+
   cli::cli_abort(
-    message =
-      "The value {.val {x}} supplied for `fmt_fn` cannot be applied to the
-       statistic {.val {stat_name}} for the variable {.val {variable}}.
-       Formatting functions/aliases must be a function,
-       a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
+    message = error_message,
     call = get_cli_abort_call()
   )
 }
-
 
 #' Generate Formatting Function
 #'
