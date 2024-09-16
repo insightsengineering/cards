@@ -1,6 +1,8 @@
-# cards 0.2.2.9005
+# cards 0.2.2.9006
 
 * Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
+
+* Added functions `update_ard_fmt_fn()` and `update_ard_stat_label()` to update an ARD's formatting function and statistic label, respectively. (#253)
 
 # cards 0.2.2
 
