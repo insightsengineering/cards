@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.980519480519481" branch-rate="0" lines-covered="1963" lines-valid="2002" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-09-16 19:28:24.967874">
+<coverage line-rate="0.980635551142006" branch-rate="0" lines-covered="1975" lines-valid="2014" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-09-16 20:04:07.521784">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.980519480519481" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.980635551142006" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -2735,46 +2735,78 @@
           <methods>
             <method name="eval_capture_conditions" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="43" hits="9718" branch="false"/>
-                <line number="48" hits="9718" branch="false"/>
-                <line number="49" hits="9718" branch="false"/>
-                <line number="50" hits="9718" branch="false"/>
-                <line number="51" hits="9718" branch="false"/>
-                <line number="52" hits="9718" branch="false"/>
-                <line number="53" hits="9718" branch="false"/>
-                <line number="54" hits="9718" branch="false"/>
-                <line number="55" hits="14" branch="false"/>
-                <line number="57" hits="14" branch="false"/>
-                <line number="58" hits="14" branch="false"/>
-                <line number="59" hits="9718" branch="false"/>
-                <line number="60" hits="9718" branch="false"/>
-                <line number="61" hits="9718" branch="false"/>
-                <line number="62" hits="14" branch="false"/>
-                <line number="63" hits="9718" branch="false"/>
-                <line number="64" hits="9718" branch="false"/>
-                <line number="67" hits="9718" branch="false"/>
+                <line number="75" hits="9724" branch="false"/>
+                <line number="80" hits="9724" branch="false"/>
+                <line number="81" hits="9724" branch="false"/>
+                <line number="82" hits="9724" branch="false"/>
+                <line number="83" hits="9724" branch="false"/>
+                <line number="84" hits="9724" branch="false"/>
+                <line number="85" hits="9724" branch="false"/>
+                <line number="86" hits="9724" branch="false"/>
+                <line number="87" hits="18" branch="false"/>
+                <line number="89" hits="18" branch="false"/>
+                <line number="90" hits="18" branch="false"/>
+                <line number="91" hits="9724" branch="false"/>
+                <line number="92" hits="9724" branch="false"/>
+                <line number="93" hits="9724" branch="false"/>
+                <line number="94" hits="16" branch="false"/>
+                <line number="95" hits="9724" branch="false"/>
+                <line number="96" hits="9724" branch="false"/>
+                <line number="99" hits="9724" branch="false"/>
+                <line number="100" hits="9724" branch="false"/>
+              </lines>
+            </method>
+            <method name="captured_condition_as_message" signature="" line-rate="1" branch-rate="0" complexity="0">
+              <lines>
+                <line number="112" hits="3" branch="false"/>
+                <line number="113" hits="3" branch="false"/>
+                <line number="116" hits="1" branch="false"/>
+                <line number="118" hits="2" branch="false"/>
+                <line number="119" hits="2" branch="false"/>
+                <line number="121" hits="2" branch="false"/>
+              </lines>
+            </method>
+            <method name="captured_condition_as_error" signature="" line-rate="1" branch-rate="0" complexity="0">
+              <lines>
+                <line number="134" hits="3" branch="false"/>
+                <line number="135" hits="3" branch="false"/>
+                <line number="138" hits="1" branch="false"/>
+                <line number="140" hits="2" branch="false"/>
+                <line number="141" hits="2" branch="false"/>
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="43" hits="9718" branch="false"/>
-            <line number="48" hits="9718" branch="false"/>
-            <line number="49" hits="9718" branch="false"/>
-            <line number="50" hits="9718" branch="false"/>
-            <line number="51" hits="9718" branch="false"/>
-            <line number="52" hits="9718" branch="false"/>
-            <line number="53" hits="9718" branch="false"/>
-            <line number="54" hits="9718" branch="false"/>
-            <line number="55" hits="14" branch="false"/>
-            <line number="57" hits="14" branch="false"/>
-            <line number="58" hits="14" branch="false"/>
-            <line number="59" hits="9718" branch="false"/>
-            <line number="60" hits="9718" branch="false"/>
-            <line number="61" hits="9718" branch="false"/>
-            <line number="62" hits="14" branch="false"/>
-            <line number="63" hits="9718" branch="false"/>
-            <line number="64" hits="9718" branch="false"/>
-            <line number="67" hits="9718" branch="false"/>
+            <line number="75" hits="9724" branch="false"/>
+            <line number="80" hits="9724" branch="false"/>
+            <line number="81" hits="9724" branch="false"/>
+            <line number="82" hits="9724" branch="false"/>
+            <line number="83" hits="9724" branch="false"/>
+            <line number="84" hits="9724" branch="false"/>
+            <line number="85" hits="9724" branch="false"/>
+            <line number="86" hits="9724" branch="false"/>
+            <line number="87" hits="18" branch="false"/>
+            <line number="89" hits="18" branch="false"/>
+            <line number="90" hits="18" branch="false"/>
+            <line number="91" hits="9724" branch="false"/>
+            <line number="92" hits="9724" branch="false"/>
+            <line number="93" hits="9724" branch="false"/>
+            <line number="94" hits="16" branch="false"/>
+            <line number="95" hits="9724" branch="false"/>
+            <line number="96" hits="9724" branch="false"/>
+            <line number="99" hits="9724" branch="false"/>
+            <line number="100" hits="9724" branch="false"/>
+            <line number="112" hits="3" branch="false"/>
+            <line number="113" hits="3" branch="false"/>
+            <line number="116" hits="1" branch="false"/>
+            <line number="118" hits="2" branch="false"/>
+            <line number="119" hits="2" branch="false"/>
+            <line number="121" hits="2" branch="false"/>
+            <line number="134" hits="3" branch="false"/>
+            <line number="135" hits="3" branch="false"/>
+            <line number="138" hits="1" branch="false"/>
+            <line number="140" hits="2" branch="false"/>
+            <line number="141" hits="2" branch="false"/>
           </lines>
         </class>
         <class name="get_ard_statistics.R" filename="R/get_ard_statistics.R" line-rate="1" branch-rate="0" complexity="0">
