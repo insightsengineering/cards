@@ -32,3 +32,57 @@ test_that("eval_capture_conditions() works", {
     eval_capture_conditions(expr(two_warn_foo()))
   })
 })
+
+# captured_condition_as_message() ----------------------------------------------
+test_that("captured_condition_as_message() works", {
+  # we get the result back when there is no error or warning
+  expect_equal(
+    eval_capture_conditions(letters) |>
+      captured_condition_as_message(),
+    letters
+  )
+
+  # print error as message with curly brackets in it
+  expect_snapshot(
+    eval_capture_conditions(stop("This is an {error}!")) |>
+      captured_condition_as_message()
+  )
+
+  # print multiple warnings
+  expect_snapshot(
+    eval_capture_conditions({
+      warning("This is a {warning} 1")
+      warning("This is a {warning} 2")
+      NULL
+    }) |>
+      captured_condition_as_message(type = "warning")
+  )
+})
+
+# captured_condition_as_error() ----------------------------------------------
+test_that("captured_condition_as_error() works", {
+  # we get the result back when there is no error or warning
+  expect_equal(
+    eval_capture_conditions(letters) |>
+      captured_condition_as_error(),
+    letters
+  )
+
+  # print error as message with curly brackets in it
+  expect_snapshot(
+    error = TRUE,
+    eval_capture_conditions(stop("This is an {error}!")) |>
+      captured_condition_as_error()
+  )
+
+  # print multiple warnings
+  expect_snapshot(
+    error = TRUE,
+    eval_capture_conditions({
+      warning("This is a {warning} 1")
+      warning("This is a {warning} 2")
+      NULL
+    }) |>
+      captured_condition_as_error(type = "warning")
+  )
+})
