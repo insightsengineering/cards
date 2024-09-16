@@ -50,7 +50,11 @@ test_that("captured_condition_as_message() works", {
 
   # print multiple warnings
   expect_snapshot(
-    eval_capture_conditions({warning("This is a {warning} 1"); warning("This is a {warning} 2"); NULL}) |>
+    eval_capture_conditions({
+      warning("This is a {warning} 1")
+      warning("This is a {warning} 2")
+      NULL
+    }) |>
       captured_condition_as_message(type = "warning")
   )
 })
@@ -74,7 +78,11 @@ test_that("captured_condition_as_error() works", {
   # print multiple warnings
   expect_snapshot(
     error = TRUE,
-    eval_capture_conditions({warning("This is a {warning} 1"); warning("This is a {warning} 2"); NULL}) |>
+    eval_capture_conditions({
+      warning("This is a {warning} 1")
+      warning("This is a {warning} 2")
+      NULL
+    }) |>
       captured_condition_as_error(type = "warning")
   )
 })

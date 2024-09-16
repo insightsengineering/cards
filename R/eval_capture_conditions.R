@@ -103,7 +103,8 @@ captured_condition_as_message <- function(x,
                                           type = c("error", "warning"),
                                           message =
                                             c("The following {type} occured:",
-                                              "x" = "{condition}"),
+                                              "x" = "{condition}"
+                                            ),
                                           envir = rlang::current_env()) {
   check_class(x, "captured_condition")
   type <- rlang::arg_match(type)
@@ -123,7 +124,8 @@ captured_condition_as_error <- function(x,
                                         type = c("error", "warning"),
                                         message =
                                           c("The following {type} occured:",
-                                            "x" = "{condition}"),
+                                            "x" = "{condition}"
+                                          ),
                                         call = get_cli_abort_call(),
                                         envir = rlang::current_env()) {
   check_class(x, "captured_condition")
