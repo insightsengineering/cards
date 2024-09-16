@@ -38,18 +38,22 @@ rename_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variable
       unlisted <-
         eval_capture_conditions(unlist(x[[unlist_var]])) |>
         captured_condition_as_error(
-          message = c("!" = "The following error occured while unlisting column {.val {unlist_var}}.",
-                      "x" = "{condition}")
+          message = c(
+            "!" = "The following error occured while unlisting column {.val {unlist_var}}.",
+            "x" = "{condition}"
+          )
         )
       if (is.list(unlisted)) {
         cli::cli_inform(c("Unable to unlist column {.val {unlist_var}}.",
-                          "i" = "This often occurs when a list column contains elements that cannot coerced to a common type."))
+          "i" = "This often occurs when a list column contains elements that cannot coerced to a common type."
+        ))
       }
 
       if (length(unlisted) != length(x[[unlist_var]])) {
         cli::cli_abort(
           c("Cannot unlist column {.val {unlist_var}}. The unlisted result is not the same length as the original.",
-            "i" = "This often occurs when the column contains {.code NULL} values."),
+            "i" = "This often occurs when the column contains {.code NULL} values."
+          ),
           call = get_cli_abort_call()
         )
       }
