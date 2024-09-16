@@ -12,6 +12,8 @@
       $error
       NULL
       
+      attr(,"class")
+      [1] "captured_condition" "list"              
 
 ---
 
@@ -27,6 +29,8 @@
       $error
       [1] "BIG ERROR"
       
+      attr(,"class")
+      [1] "captured_condition" "list"              
 
 ---
 
@@ -46,6 +50,8 @@
       $error
       NULL
       
+      attr(,"class")
+      [1] "captured_condition" "list"              
 
 ---
 
@@ -66,4 +72,53 @@
       $error
       NULL
       
+      attr(,"class")
+      [1] "captured_condition" "list"              
+
+# captured_condition_as_message() works
+
+    Code
+      captured_condition_as_message(eval_capture_conditions(stop(
+        "This is an {error}!")))
+    Message
+      The following error occured:
+      x This is an {error}!
+    Output
+      NULL
+
+---
+
+    Code
+      captured_condition_as_message(eval_capture_conditions({
+        warning("This is a {warning} 1")
+        warning("This is a {warning} 2")
+        NULL
+      }), type = "warning")
+    Message
+      The following warning occured:
+      x This is a {warning} 1 and This is a {warning} 2
+    Output
+      NULL
+
+# captured_condition_as_error() works
+
+    Code
+      captured_condition_as_error(eval_capture_conditions(stop("This is an {error}!")))
+    Condition
+      Error in `captured_condition_as_error()`:
+      ! The following error occured:
+      x This is an {error}!
+
+---
+
+    Code
+      captured_condition_as_error(eval_capture_conditions({
+        warning("This is a {warning} 1")
+        warning("This is a {warning} 2")
+        NULL
+      }), type = "warning")
+    Condition
+      Error in `captured_condition_as_error()`:
+      ! The following warning occured:
+      x This is a {warning} 1 and This is a {warning} 2
 

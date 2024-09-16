@@ -2,9 +2,26 @@
 % Please edit documentation in R/eval_capture_conditions.R
 \name{eval_capture_conditions}
 \alias{eval_capture_conditions}
+\alias{captured_condition_as_message}
+\alias{captured_condition_as_error}
 \title{Evaluate and Capture Conditions}
 \usage{
 eval_capture_conditions(expr, data = NULL, env = caller_env())
+
+captured_condition_as_message(
+  x,
+  type = c("error", "warning"),
+  message = c("The following {type} occured:", x = "{condition}"),
+  envir = rlang::current_env()
+)
+
+captured_condition_as_error(
+  x,
+  type = c("error", "warning"),
+  message = c("The following {type} occured:", x = "{condition}"),
+  call = get_cli_abort_call(),
+  envir = rlang::current_env()
+)
 }
 \arguments{
 \item{expr}{An \link[rlang:topic-defuse]{expression} or
@@ -18,11 +35,24 @@ data mask created with \code{\link[rlang:as_data_mask]{as_data_mask()}} or
 \item{env}{The environment in which to evaluate \code{expr}. This
 environment is not applicable for quosures because they have
 their own environments.}
+
+\item{message}{(\code{character})\cr
+message passed to \code{cli::cli_inform()} or \code{cli::cli_abort()}. The condition
+being printed is saved in an object named \code{condition}, which should be
+included in this message surrounded by curly brackets.}
+
+\item{envir}{Environment to evaluate the glue expressions in.}
+
+\item{call}{(\code{environment})\cr
+Execution environment of currently running function. Default is
+\code{get_cli_abort_call()}.}
 }
 \value{
 a named list
 }
 \description{
+\strong{\code{eval_capture_conditions()}}
+
 Evaluates an expression while also capturing error and warning conditions.
 Function always returns a named list \code{list(result=, warning=, error=)}.
 If there are no errors or warnings, those elements will be \code{NULL}.
@@ -33,13 +63,23 @@ Messages are neither saved nor printed to the console.
 Evaluation is done via \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}. If errors and warnings are produced
 using the \code{{cli}} package, the messages are processed with \code{cli::ansi_strip()}
 to remove styling from the message.
+
+\strong{\code{captured_condition_as_message()}/\code{captured_condition_as_error()}}
+
+These functions take the result from \code{eval_capture_conditions()} and return
+errors or warnings as either messages (via \code{cli::cli_inform()}) or
+errors (via \code{cli::cli_abort()}).
+
+Functions return the \code{"result"} from \code{eval_capture_conditions()}.
 }
 \examples{
 # function executes without error or warning
 eval_capture_conditions(letters[1:2])
 
 # an error is thrown
-eval_capture_conditions(stop("Example Error!"))
+res <- eval_capture_conditions(stop("Example Error!"))
+res
+message_captured_conditions(res)
 
 # if more than one warning is returned, all are saved
 eval_capture_conditions({

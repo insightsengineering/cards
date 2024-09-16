@@ -47,6 +47,7 @@ set_cli_abort_call <- function(env = rlang::caller_env()) {
 #' @noRd
 get_cli_abort_call <- function() {
   getOption("cli_abort_call", default = parent.frame())
+
 }
 
 # nocov end

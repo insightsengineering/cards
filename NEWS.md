@@ -1,5 +1,7 @@
 # cards 0.2.2.9003
 
+* Added functions for printing results from `eval_capture_conditions()`. Captured conditions can be printed as either errors or messages with `captured_condition_as_error()` and `captured_condition_as_message()`, respectively. (#282)
+
 # cards 0.2.2
 
 ## New Features & Updates
