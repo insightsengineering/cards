@@ -2,7 +2,7 @@
 % Please edit documentation in R/ard_stack_hierarchical.R
 \name{ard_stack_hierarchical}
 \alias{ard_stack_hierarchical}
-\title{Title}
+\title{Stacked Hierarchical ARD Statistics}
 \usage{
 ard_stack_hierarchical(
   data,
@@ -12,6 +12,7 @@ ard_stack_hierarchical(
   denominator = NULL,
   include = everything(),
   overall = FALSE,
+  overall_row = FALSE,
   attributes = FALSE,
   total_n = FALSE,
   shuffle = FALSE
@@ -48,6 +49,10 @@ summary statistics will be returned. Default is \code{everything()}.}
 should be calculated (i.e. re-run all \verb{ard_*()} calls with \code{by=NULL}).
 Default is \code{FALSE}.}
 
+\item{overall_row}{(\code{logical})\cr logical indicating whether overall statistics
+should be calculated across the columns listed in the \code{variables} argument.
+Default is \code{FALSE}.}
+
 \item{attributes}{(\code{logical})\cr
 logical indicating whether to include the results of \code{ard_attributes()} for all
 variables represented in the ARD. Default is \code{FALSE}.}
@@ -63,7 +68,7 @@ Default is \code{FALSE}.}
 an ARD data frame of class 'card'
 }
 \description{
-Title
+Stacked Hierarchical ARD Statistics
 }
 \examples{
 ard_stack_hierarchical(

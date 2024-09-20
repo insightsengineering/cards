@@ -1,4 +1,4 @@
-#' Title
+#' Stacked Hierarchical ARD Statistics
 #'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack
@@ -19,6 +19,9 @@
 #'   summary statistics will be returned. Default is `everything()`.
 #' @param overall (`logical`)\cr logical indicating whether overall statistics
 #'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
+#'   Default is `FALSE`.
+#' @param overall_row (`logical`)\cr logical indicating whether overall statistics
+#'   should be calculated across the columns listed in the `variables` argument.
 #'   Default is `FALSE`.
 #' @param attributes (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
@@ -47,6 +50,7 @@ ard_stack_hierarchical <- function(data,
                                    denominator = NULL,
                                    include = everything(),
                                    overall = FALSE,
+                                   overall_row = FALSE,
                                    attributes = FALSE,
                                    total_n = FALSE,
                                    shuffle = FALSE) {
@@ -55,6 +59,11 @@ ard_stack_hierarchical <- function(data,
   # process inputs -------------------------------------------------------------
   cards::process_selectors(data, variables = {{ variables }}, id = {{ id }}, by = {{ by }})
   cards::process_selectors(data[variables], include = {{ include }})
+  check_scalar_logical(overall)
+  check_scalar_logical(overall_row)
+  check_scalar_logical(attributes)
+  check_scalar_logical(total_n)
+  check_scalar_logical(shuffle)
 
   # check inputs ---------------------------------------------------------------
   if (!is_empty(id)) check_data_frame(denominator) # styler: off
@@ -141,7 +150,7 @@ ard_stack_hierarchical <- function(data,
           .run_hierarchical_fun(
             data = data,
             variables = variables[seq_len(i)],
-            by = all(setdiff(by, names(denominator))),
+            by = all_of(setdiff(by, names(denominator))),
             denominator = denominator,
             id = all_of(id)
           ) |>
@@ -158,6 +167,21 @@ ard_stack_hierarchical <- function(data,
         ard_categorical(
           data = denominator,
           variables = intersect(by, names(denominator))
+        ) |>
+          list()
+      )
+  }
+
+  # add overall row if requested -----------------------------------------------
+  if (isTRUE(overall_row)) {
+    lst_results |>
+      append(
+        .run_hierarchical_fun(
+          data = data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE),
+          variables = "..ard_hierarchical_overall..",
+          by = all_of(by),
+          denominator = denominator,
+          id = all_of(id)
         ) |>
           list()
       )
