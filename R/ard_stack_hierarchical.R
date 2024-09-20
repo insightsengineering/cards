@@ -1,5 +1,8 @@
 #' Stacked Hierarchical ARD Statistics
 #'
+#' `r lifecycle::badge('experimental')`\cr
+#' TODO: Add full description
+#'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -174,7 +177,8 @@ ard_stack_hierarchical <- function(data,
 
   # add overall row if requested -----------------------------------------------
   if (isTRUE(overall_row)) {
-    lst_results |>
+    lst_results <-
+      lst_results |>
       append(
         .run_hierarchical_fun(
           data = data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE),

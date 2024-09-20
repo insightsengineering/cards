@@ -68,7 +68,8 @@ Default is \code{FALSE}.}
 an ARD data frame of class 'card'
 }
 \description{
-Stacked Hierarchical ARD Statistics
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
+TODO: Add full description
 }
 \examples{
 ard_stack_hierarchical(

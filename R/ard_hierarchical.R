@@ -1,5 +1,6 @@
 #' Hierarchical ARD Statistics
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
 #' - `ard_hierarchical()` includes summaries for the last variable listed
@@ -142,11 +143,7 @@ ard_hierarchical_count.data.frame <- function(data,
   check_not_missing(variables)
 
   # process arguments ----------------------------------------------------------
-  process_selectors(
-    data,
-    variables = {{ variables }},
-    by = {{ by }}
-  )
+  process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
@@ -157,23 +154,16 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  seq_along(variables) |>
-    rev() |>
-    lapply(
-      function(i) {
-        ard_categorical(
-          data = data,
-          variables = "...ard_dummy_for_counting...",
-          by = all_of(by),
-          strata = all_of(variables[seq_len(i)]),
-          statistic = everything() ~ "n",
-          fmt_fn = fmt_fn,
-          stat_label = stat_label
-        ) |>
-          .rename_last_group_as_variable()
-      }
-    ) |>
-    bind_ard() |>
+  ard_categorical(
+    data = data,
+    variables = "...ard_dummy_for_counting...",
+    by = all_of(by),
+    strata = all_of(variables),
+    statistic = everything() ~ "n",
+    fmt_fn = fmt_fn,
+    stat_label = stat_label
+  ) |>
+    .rename_last_group_as_variable() |>
     dplyr::mutate(context = "hierarchical_count") |>
     as_card()
 }

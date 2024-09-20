@@ -8,6 +8,8 @@
 
 * Added `rename_ard_columns(unlist)` argument, which unlists specified columns in the ARD data frame. (#313)
 
+* The `ard_hierarchical_count()` function has been updated to match the behavior of `ard_hierarchical()` and results are now only returned for the last column listed in the `variables` arguments, rather than recursively counting all variables.
+
 # cards 0.2.2
 
 ## New Features & Updates
