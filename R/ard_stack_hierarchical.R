@@ -1,23 +1,48 @@
 #' Title
 #'
-#' @param data
-#' @param hierarchies
-#' @param by
-#' @param id
-#' @param denominator (`data.frame`)
-#' @param include
-#' @param overall
-#' @param attributes
-#' @param total_n
-#' @param shuffle
+#' @inheritParams ard_hierarchical
+#' @inheritParams ard_stack
+#' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   Specifies the nested/hierarchical structure of the data.
+#'   The variables that are specified here and in the `include` argument
+#'   will have summary statistics calculated.
+#' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   an optional argument used to subset `data` to obtain the correct percentages.
+#'   When specified, `ard_hierarchical()` is used to calculate event rates. When
+#'   not specified, counts are returned via `ard_hierarchical_count()`.
+#' @param denominator (`data.frame`)\cr
+#'   Must be specified when the `id` argument is used. Pass a data frame here
+#'   to indicate what the denominator is meant to be for rate calculations.
+#'   See the `ard_hierarchical()` help page for details.
+#' @param include ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   Specify the subset a columns indicated in the `variables` argument for which
+#'   summary statistics will be returned. Default is `everything()`.
+#' @param overall (`logical`)\cr logical indicating whether overall statistics
+#'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
+#'   Default is `FALSE`.
+#' @param attributes (`logical`)\cr
+#'   logical indicating whether to include the results of `ard_attributes()` for all
+#'   variables represented in the ARD. Default is `FALSE`.
+#' @param total_n (`logical`)\cr
+#'   logical indicating whether to include of `ard_total_n(denominator)` in the returned ARD.
+#' @param shuffle (`logical`)\cr
+#'   logical indicating whether to perform `shuffle_ard()` on the final result.
+#'   Default is `FALSE`.
 #'
-#' @return
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
+#' ard_stack_hierarchical(
+#'   ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   id = USUBJID
+#' )
 ard_stack_hierarchical <- function(data,
-                                   hierarchies,
-                                   by = NULL,
+                                   variables,
+                                   by = dplyr::group_vars(data),
                                    id = NULL,
                                    denominator = NULL,
                                    include = everything(),
@@ -28,8 +53,8 @@ ard_stack_hierarchical <- function(data,
   set_cli_abort_call()
 
   # process inputs -------------------------------------------------------------
-  cards::process_selectors(data, hierarchies = {{ hierarchies }}, id = {{ id }}, by = {{ by }})
-  cards::process_selectors(data[hierarchies], include = {{ include }})
+  cards::process_selectors(data, variables = {{ variables }}, id = {{ id }}, by = {{ by }})
+  cards::process_selectors(data[variables], include = {{ include }})
 
   # check inputs ---------------------------------------------------------------
   if (!is_empty(id)) check_data_frame(denominator) # styler: off
@@ -38,18 +63,18 @@ ard_stack_hierarchical <- function(data,
                    call = get_cli_abort_call())
   }
 
-  # both hierarchies and include must be specified
-  if (is_empty(hierarchies) || is_empty(include)) {
+  # both variables and include must be specified
+  if (is_empty(variables) || is_empty(include)) {
     cli::cli_abort(
-      "Arguments {.arg hierarchies} and {.arg include} cannot be empty.",
+      "Arguments {.arg variables} and {.arg include} cannot be empty.",
       call = get_cli_abort_call()
     )
   }
 
-  # the last hierarchies variable should be included
-  if (!rev(hierarchies)[1] %in% include) {
+  # the last `variables` variable should be included
+  if (!rev(variables)[1] %in% include) {
     cli::cli_abort(
-      "The last column specified in the {.arg hierarchies} ({.val {rev(hierarchies)[1]}}) must be in the {.arg include} argument.",
+      "The last column specified in the {.arg variables} ({.val {rev(variables)[1]}}) must be in the {.arg include} argument.",
       call = get_cli_abort_call()
     )
   }
@@ -63,11 +88,11 @@ ard_stack_hierarchical <- function(data,
   }
 
   # drop missing values --------------------------------------------------------
-  df_na_nan <- is.na(data[c(by, hierarchies)]) | apply(data[c(by, hierarchies)], MARGIN = 2, is.nan)
+  df_na_nan <- is.na(data[c(by, variables)]) | apply(data[c(by, variables)], MARGIN = 2, is.nan)
   if (any(df_na_nan)) {
     rows_with_na <- apply(df_na_nan, MARGIN = 1, any)
     cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na)}} row{?s} from {.arg data} with
-                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, hierarchies)}} column{?s}."))
+                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, variables)}} column{?s}."))
     data <- data[!rows_with_na, ]
   }
 
@@ -79,18 +104,17 @@ ard_stack_hierarchical <- function(data,
     if (any(df_na_nan_denom)) {
       rows_with_na_denom <- apply(df_na_nan_denom, MARGIN = 1, any)
       cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na_denom)}} row{?s} from {.arg denominator} with
-                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, hierarchies)}} column{?s}."))
+                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, variables)}} column{?s}."))
       denominator <- denominator[!rows_with_na_denom, ]
     }
   }
 
   # sort data if using `ard_hierarchical(id)` ----------------------------------
-  if (!is_empty(id)) data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, hierarchies)))) # styler: off
+  if (!is_empty(id)) data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, variables)))) # styler: off
 
-  # go about calculating the statistics within the hierarchies -----------------
-  # define index in `hierarchies` that also appear in `include`
-  browser()
-  which_include <- which(hierarchies %in% include)
+  # go about calculating the statistics within the variables -------------------
+  # define index in `variables` that also appear in `include`
+  which_include <- which(variables %in% include)
 
   lst_results <- list()
   for (i in which_include) {
@@ -99,7 +123,7 @@ ard_stack_hierarchical <- function(data,
       append(
         .run_hierarchical_fun(
           data = data,
-          variables = hierarchies[seq_len(i)],
+          variables = variables[seq_len(i)],
           by = all_of(by),
           denominator = denominator,
           id = all_of(id)
@@ -116,7 +140,7 @@ ard_stack_hierarchical <- function(data,
         append(
           .run_hierarchical_fun(
             data = data,
-            variables = hierarchies[seq_len(i)],
+            variables = variables[seq_len(i)],
             by = all(setdiff(by, names(denominator))),
             denominator = denominator,
             id = all_of(id)
@@ -126,12 +150,25 @@ ard_stack_hierarchical <- function(data,
     }
   }
 
+  # add univariate tabulations of by variables ---------------------------------
+  if (is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
+    lst_results <-
+      lst_results |>
+      append(
+        ard_categorical(
+          data = denominator,
+          variables = intersect(by, names(denominator))
+        ) |>
+          list()
+      )
+  }
+
   # add attributes if requested ------------------------------------------------
   if (isTRUE(attributes)) {
     lst_results <-
       lst_results |>
       append(
-        ard_attributes(dplyr::select(data, any_of(c(by, hierarchies)))) |>
+        ard_attributes(dplyr::select(data, any_of(c(by, variables)))) |>
           list()
       )
   }
@@ -161,7 +198,7 @@ ard_stack_hierarchical <- function(data,
   result
 }
 
-# this function calculates either the counts or the rates of teh events
+# this function calculates either the counts or the rates of the events
 .run_hierarchical_fun <- function(data, variables, by, denominator, id) {
   if (is_empty(id)) {
     ard_hierarchical_count(
