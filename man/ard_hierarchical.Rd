@@ -66,10 +66,9 @@ the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 
-\item{id}{((\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr)
-an optional argument used to assert there are no duplicates with in the
-column(s) passed here. For example, if \code{id=USUBJID} is passed, we will
-add a check there are no duplicates in \code{data['USUBJID']}.}
+\item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+an optional argument used to assert there are no duplicates within
+the \code{c(id, variables)} columns.}
 }
 \value{
 an ARD data frame of class 'card'

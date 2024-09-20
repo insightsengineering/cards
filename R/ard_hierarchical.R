@@ -14,10 +14,9 @@
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform tabulations by. All combinations of the variables
 #'   specified here appear in results. Default is `dplyr::group_vars(data)`.
-#' @param id (([`tidy-select`][dplyr::dplyr_tidy_select])\cr)
-#'   an optional argument used to assert there are no duplicates with in the
-#'   column(s) passed here. For example, if `id=USUBJID` is passed, we will
-#'   add a check there are no duplicates in `data['USUBJID']`.
+#' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   an optional argument used to assert there are no duplicates within
+#'   the `c(id, variables)` columns.
 #' @inheritParams ard_categorical
 #'
 #' @return an ARD data frame of class 'card'
@@ -79,7 +78,7 @@ ard_hierarchical.data.frame <- function(data,
   )
   data <- dplyr::ungroup(data)
 
-  if (!is_empty(id) && anyDuplicated(data[id]) > 0L) {
+  if (!is_empty(id) && anyDuplicated(data[c(id, variables)]) > 0L) {
     cli::cli_warn(c(
       "Duplicate rows found in data for the {.val {id}} column{?s}.",
       "i" = "Percentages/Denominators are not correct."
