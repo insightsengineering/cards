@@ -1,3 +1,4 @@
+options("lifecycle_verbosity" = "error")
 ADAE_small <-
   ADAE |>
   dplyr::filter(.by = TRTA, dplyr::row_number() <= 2L) |>

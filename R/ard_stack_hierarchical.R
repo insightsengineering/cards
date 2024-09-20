@@ -136,9 +136,9 @@ ard_stack_hierarchical <- function(data,
         .run_hierarchical_fun(
           data = data,
           variables = variables[seq_len(i)],
-          by = all_of(by),
+          by = by,
           denominator = denominator,
-          id = all_of(id)
+          id = id
         ) |>
           list()
       )
@@ -153,9 +153,9 @@ ard_stack_hierarchical <- function(data,
           .run_hierarchical_fun(
             data = data,
             variables = variables[seq_len(i)],
-            by = all_of(setdiff(by, names(denominator))),
+            by = setdiff(by, names(denominator)),
             denominator = denominator,
-            id = all_of(id)
+            id = id
           ) |>
             list()
         )
@@ -169,7 +169,7 @@ ard_stack_hierarchical <- function(data,
       append(
         ard_categorical(
           data = denominator,
-          variables = intersect(by, names(denominator))
+          variables = all_of(intersect(by, names(denominator)))
         ) |>
           list()
       )
@@ -183,9 +183,9 @@ ard_stack_hierarchical <- function(data,
         .run_hierarchical_fun(
           data = data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE),
           variables = "..ard_hierarchical_overall..",
-          by = all_of(by),
+          by = by,
           denominator = denominator,
-          id = all_of(id)
+          id = id
         ) |>
           list()
       )
