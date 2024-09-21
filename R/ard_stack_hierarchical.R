@@ -1,7 +1,17 @@
 #' Stacked Hierarchical ARD Statistics
 #'
+#' @description
 #' `r lifecycle::badge('experimental')`\cr
-#' TODO: Add full description
+#' Use this function to calculate multiple summaries of nested or hierarchical data
+#' in a single call.
+#'
+#' When the `id` argument is specified, event rates and counts are calculated via
+#' `ard_hierarchical()`; otherwise, counts are calculated using `ard_hierarchical_count()`.
+#' See below for details on rate calculations when using the `id` argument.
+#'
+#' @details
+#' ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
+#'
 #'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack
@@ -13,10 +23,12 @@
 #'   an optional argument used to subset `data` to obtain the correct percentages.
 #'   When specified, `ard_hierarchical()` is used to calculate event rates. When
 #'   not specified, counts are returned via `ard_hierarchical_count()`.
-#' @param denominator (`data.frame`)\cr
-#'   Must be specified when the `id` argument is used. Pass a data frame here
-#'   to indicate what the denominator is meant to be for rate calculations.
-#'   See the `ard_hierarchical()` help page for details.
+#' @param denominator (`data.frame`, `integer`)\cr
+#'   an optional argument that can enhance the output.
+#'   - if `total_n=TRUE`, the `denominator` argument is used to calculate/return the N
+#'   - the univariate tabulations of the `by` variables are calculated with `denominator`
+#'   - the `denominator` argument must be specified when `id` is used to
+#'     calculate the event rates. See the `ard_hierarchical()` help page for details
 #' @param include ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   Specify the subset a columns indicated in the `variables` argument for which
 #'   summary statistics will be returned. Default is `everything()`.
@@ -69,11 +81,22 @@ ard_stack_hierarchical <- function(data,
   check_scalar_logical(shuffle)
 
   # check inputs ---------------------------------------------------------------
-  if (!is_empty(id)) check_data_frame(denominator) # styler: off
-  if (!is.null(denominator) && is_empty(id)) {
-    cli::cli_abort("The {.arg id} argument must be specified when the {.arg denominator} is specified.",
-                   call = get_cli_abort_call())
+  # denominator must be empty, a data frame, or integer
+  if (!is_empty(denominator) && !is.data.frame(denominator) && !is_integerish(denominator)) {
+    cli::cli_abort(
+      "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.arg integer}, not {.obj_type_friendly {denominator}}.",
+      call = get_cli_abort_call()
+    )
   }
+
+  # we use the denom arg to calculate rates
+  if (!is_empty(id) && is_empty(denominator)) {
+    cli::cli_abort(
+      "The {.arg denominator} must be specified when the {.arg id} argument is specified.",
+      call = get_cli_abort_call()
+    )
+  }
+
 
   # both variables and include must be specified
   if (is_empty(variables) || is_empty(include)) {
@@ -84,19 +107,27 @@ ard_stack_hierarchical <- function(data,
   }
 
   # the last `variables` variable should be included
-  if (!rev(variables)[1] %in% include) {
+  if (!utils::tail(variables, 1L) %in% include) {
     cli::cli_abort(
-      "The last column specified in the {.arg variables} ({.val {rev(variables)[1]}}) must be in the {.arg include} argument.",
+      "The last column specified in the {.arg variables} ({.val {utils::tail(variables, 1L)}}) must be in the {.arg include} argument.",
       call = get_cli_abort_call()
     )
   }
 
   if (is_empty(by) && isTRUE(overall)) {
     cli::cli_inform(
-      c("The {.arg by} argument should be specified when using {.code total_noverall=TRUE}.",
+      c("The {.arg by} argument should be specified when using {.code overall=TRUE}.",
         i = "Setting {.code ard_stack_hierarchical(overall=FALSE)}.")
     )
     overall <- FALSE
+  }
+
+  if (is_empty(denominator) && isTRUE(total_n)) {
+    cli::cli_inform(
+      c("The {.arg denominator} argument should be specified when using {.code total_n=TRUE}.",
+        i = "Setting {.code ard_stack_hierarchical(total_n=FALSE)}.")
+    )
+    total_n <- FALSE
   }
 
   # drop missing values --------------------------------------------------------
@@ -202,11 +233,17 @@ ard_stack_hierarchical <- function(data,
   }
 
   # add total n if requested ---------------------------------------------------
-  if (isTRUE(total_n)) {
+  if (isTRUE(total_n) && is.data.frame(denominator)) {
+    lst_results <-
+      lst_results |>
+      append(ard_total_n(denominator) |> list())
+  }
+  else if (isTRUE(total_n) && is_integerish(denominator)) {
     lst_results <-
       lst_results |>
       append(
-        ard_total_n(denominator) |>
+        ard_total_n(data) |>
+          dplyr::mutate(stat = list(as.integer(denominator))) |>
           list()
       )
   }

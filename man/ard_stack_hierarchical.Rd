@@ -36,10 +36,14 @@ an optional argument used to subset \code{data} to obtain the correct percentage
 When specified, \code{ard_hierarchical()} is used to calculate event rates. When
 not specified, counts are returned via \code{ard_hierarchical_count()}.}
 
-\item{denominator}{(\code{data.frame})\cr
-Must be specified when the \code{id} argument is used. Pass a data frame here
-to indicate what the denominator is meant to be for rate calculations.
-See the \code{ard_hierarchical()} help page for details.}
+\item{denominator}{(\code{data.frame}, \code{integer})\cr
+an optional argument that can enhance the output.
+\itemize{
+\item if \code{total_n=TRUE}, the \code{denominator} argument is used to calculate/return the N
+\item the univariate tabulations of the \code{by} variables are calculated with \code{denominator}
+\item the \code{denominator} argument must be specified when \code{id} is used to
+calculate the event rates. See the \code{ard_hierarchical()} help page for details
+}}
 
 \item{include}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 Specify the subset a columns indicated in the \code{variables} argument for which
@@ -69,7 +73,15 @@ an ARD data frame of class 'card'
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
-TODO: Add full description
+Use this function to calculate multiple summaries of nested or hierarchical data
+in a single call.
+
+When the \code{id} argument is specified, event rates and counts are calculated via
+\code{ard_hierarchical()}; otherwise, counts are calculated using \code{ard_hierarchical_count()}.
+See below for details on rate calculations when using the \code{id} argument.
+}
+\details{
+ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
 }
 \examples{
 ard_stack_hierarchical(
