@@ -74,6 +74,7 @@ the \code{c(id, variables)} columns.}
 an ARD data frame of class 'card'
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 \itemize{
