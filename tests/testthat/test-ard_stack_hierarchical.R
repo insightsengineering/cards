@@ -176,3 +176,118 @@ test_that("ard_stack_hierarchical(by) rates", {
       cards::tidy_ard_row_order()
   )
 })
+
+test_that("ard_stack_hierarchical(by) messaging", {
+  # missing rows are removed
+  expect_snapshot(
+    ard <- ADAE_small |>
+      dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA)) |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        id = USUBJID,
+        denominator = ADSL
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical(denominator) messaging", {
+  # when the wrong type is passed to the argument
+  expect_snapshot(
+    error = TRUE,
+    ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = letters
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical(denominator) univariate tabulations", {
+  # test that we get the expected univariate by variable tabulations
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      dplyr::filter(variable == "TRTA") |>
+      dplyr::select(-all_missing_columns()),
+    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
+      dplyr::select(-all_missing_columns())
+  )
+
+
+  # everything still works when the by variable includes vars not in the denom data frame
+  expect_equal(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      dplyr::filter(variable == "TRTA") |>
+      dplyr::select(-all_missing_columns()),
+    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
+      dplyr::select(-all_missing_columns())
+  )
+  expect_true(nrow(dplyr::filter(ard, variable == "AESEV")) == 0L)
+})
+
+test_that("ard_stack_hierarchical(denominator,total_n)", {
+  # check N is correct when denom is a data frame
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        denominator = ADSL,
+        total_n = TRUE
+      ) |>
+      dplyr::filter(variable == "..ard_total_n..") |>
+      dplyr::select(-all_missing_columns()),
+    ard_total_n(ADSL) |>
+      dplyr::select(-all_missing_columns())
+  )
+
+  # check N is correct when denom is an integer
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        denominator = nrow(ADSL),
+        total_n = TRUE
+      ) |>
+      dplyr::filter(variable == "..ard_total_n..") |>
+      dplyr::select(-all_missing_columns()),
+    ard_total_n(ADSL) |>
+      dplyr::select(-all_missing_columns())
+  )
+})
+
+test_that("ard_stack_hierarchical(denominator,total_n) messaging", {
+  # requesting total N without a denominator
+  expect_snapshot(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        total_n = TRUE
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical(id,denominator) messaging", {
+  # the denominator must be specified when using the `id` argument
+  expect_snapshot(
+    error = TRUE,
+    ard_stack_hierarchical(
+      ADAE,
+      variables = c(AESOC, AEDECOD),
+      by = TRTA,
+      id = USUBJID
+    )
+  )
+})
+
+

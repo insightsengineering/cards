@@ -8,8 +8,8 @@ ard_stack_hierarchical(
   data,
   variables,
   by = dplyr::group_vars(data),
-  id = NULL,
   denominator = NULL,
+  id = NULL,
   include = everything(),
   overall = FALSE,
   overall_row = FALSE,
@@ -31,40 +31,42 @@ will have summary statistics calculated.}
 variables to perform tabulations by. All combinations of the variables
 specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
+\item{denominator}{(\code{data.frame}, \code{integer})\cr
+an optional argument used to define the denominator and enhance the output.
+\itemize{
+\item the univariate tabulations of the \code{by} variables are calculated with \code{denominator},
+when a data frame is passed, e.g. tabulation of the treatment assignment
+counts that may appear in the header of a table.
+\item the \code{denominator} argument must be specified when \code{id} is used to
+calculate the event rates.
+\item if \code{total_n=TRUE}, the \code{denominator} argument is used to return the total N
+}}
+
 \item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 an optional argument used to subset \code{data} to obtain the correct percentages.
 When specified, \code{ard_hierarchical()} is used to calculate event rates. When
 not specified, counts are returned via \code{ard_hierarchical_count()}.}
 
-\item{denominator}{(\code{data.frame}, \code{integer})\cr
-an optional argument that can enhance the output.
-\itemize{
-\item if \code{total_n=TRUE}, the \code{denominator} argument is used to calculate/return the N
-\item the univariate tabulations of the \code{by} variables are calculated with \code{denominator}
-\item the \code{denominator} argument must be specified when \code{id} is used to
-calculate the event rates. See the \code{ard_hierarchical()} help page for details
-}}
-
 \item{include}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 Specify the subset a columns indicated in the \code{variables} argument for which
 summary statistics will be returned. Default is \code{everything()}.}
 
-\item{overall}{(\code{logical})\cr logical indicating whether overall statistics
+\item{overall}{(scalar \code{logical})\cr logical indicating whether overall statistics
 should be calculated (i.e. re-run all \verb{ard_*()} calls with \code{by=NULL}).
 Default is \code{FALSE}.}
 
-\item{overall_row}{(\code{logical})\cr logical indicating whether overall statistics
+\item{overall_row}{(scalar \code{logical})\cr logical indicating whether overall statistics
 should be calculated across the columns listed in the \code{variables} argument.
 Default is \code{FALSE}.}
 
-\item{attributes}{(\code{logical})\cr
+\item{attributes}{(scalar \code{logical})\cr
 logical indicating whether to include the results of \code{ard_attributes()} for all
 variables represented in the ARD. Default is \code{FALSE}.}
 
-\item{total_n}{(\code{logical})\cr
+\item{total_n}{(scalar \code{logical})\cr
 logical indicating whether to include of \code{ard_total_n(denominator)} in the returned ARD.}
 
-\item{shuffle}{(\code{logical})\cr
+\item{shuffle}{(scalar \code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
 }

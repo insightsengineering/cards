@@ -24,26 +24,28 @@
 #'   When specified, `ard_hierarchical()` is used to calculate event rates. When
 #'   not specified, counts are returned via `ard_hierarchical_count()`.
 #' @param denominator (`data.frame`, `integer`)\cr
-#'   an optional argument that can enhance the output.
-#'   - if `total_n=TRUE`, the `denominator` argument is used to calculate/return the N
-#'   - the univariate tabulations of the `by` variables are calculated with `denominator`
+#'   an optional argument used to define the denominator and enhance the output.
+#'   - the univariate tabulations of the `by` variables are calculated with `denominator`,
+#'     when a data frame is passed, e.g. tabulation of the treatment assignment
+#'     counts that may appear in the header of a table.
 #'   - the `denominator` argument must be specified when `id` is used to
-#'     calculate the event rates. See the `ard_hierarchical()` help page for details
+#'     calculate the event rates.
+#'   - if `total_n=TRUE`, the `denominator` argument is used to return the total N
 #' @param include ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   Specify the subset a columns indicated in the `variables` argument for which
 #'   summary statistics will be returned. Default is `everything()`.
-#' @param overall (`logical`)\cr logical indicating whether overall statistics
+#' @param overall (scalar `logical`)\cr logical indicating whether overall statistics
 #'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
 #'   Default is `FALSE`.
-#' @param overall_row (`logical`)\cr logical indicating whether overall statistics
+#' @param overall_row (scalar `logical`)\cr logical indicating whether overall statistics
 #'   should be calculated across the columns listed in the `variables` argument.
 #'   Default is `FALSE`.
-#' @param attributes (`logical`)\cr
+#' @param attributes (scalar `logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
-#' @param total_n (`logical`)\cr
+#' @param total_n (scalar `logical`)\cr
 #'   logical indicating whether to include of `ard_total_n(denominator)` in the returned ARD.
-#' @param shuffle (`logical`)\cr
+#' @param shuffle (scalar `logical`)\cr
 #'   logical indicating whether to perform `shuffle_ard()` on the final result.
 #'   Default is `FALSE`.
 #'
@@ -61,8 +63,8 @@
 ard_stack_hierarchical <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
-                                   id = NULL,
                                    denominator = NULL,
+                                   id = NULL,
                                    include = everything(),
                                    overall = FALSE,
                                    overall_row = FALSE,
@@ -84,7 +86,7 @@ ard_stack_hierarchical <- function(data,
   # denominator must be empty, a data frame, or integer
   if (!is_empty(denominator) && !is.data.frame(denominator) && !is_integerish(denominator)) {
     cli::cli_abort(
-      "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.arg integer}, not {.obj_type_friendly {denominator}}.",
+      "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.cls integer}, not {.obj_type_friendly {denominator}}.",
       call = get_cli_abort_call()
     )
   }
@@ -116,7 +118,7 @@ ard_stack_hierarchical <- function(data,
 
   if (is_empty(by) && isTRUE(overall)) {
     cli::cli_inform(
-      c("The {.arg by} argument should be specified when using {.code overall=TRUE}.",
+      c("The {.arg by} argument must be specified when using {.code overall=TRUE}.",
         i = "Setting {.code ard_stack_hierarchical(overall=FALSE)}.")
     )
     overall <- FALSE
@@ -124,7 +126,7 @@ ard_stack_hierarchical <- function(data,
 
   if (is_empty(denominator) && isTRUE(total_n)) {
     cli::cli_inform(
-      c("The {.arg denominator} argument should be specified when using {.code total_n=TRUE}.",
+      c("The {.arg denominator} argument must be specified when using {.code total_n=TRUE}.",
         i = "Setting {.code ard_stack_hierarchical(total_n=FALSE)}.")
     )
     total_n <- FALSE
