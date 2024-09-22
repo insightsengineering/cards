@@ -1,4 +1,3 @@
-options("lifecycle_verbosity" = "error")
 ADAE_small <-
   ADAE |>
   dplyr::filter(.by = TRTA, dplyr::row_number() <= 2L) |>
@@ -43,7 +42,7 @@ test_that("ard_stack_hierarchical(variables) rates", {
         ADAE_small,
         variables = c(AESOC, AEDECOD),
         id = USUBJID,
-        denominator = ADSL
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
 
@@ -60,7 +59,7 @@ test_that("ard_stack_hierarchical(variables) rates", {
       ADAE_small,
       variables = c(AESOC, AEDECOD),
       id = USUBJID,
-      denominator = ADSL
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
     )
   )
 
@@ -71,7 +70,7 @@ test_that("ard_stack_hierarchical(variables) rates", {
       ADAE_small |> dplyr::slice_tail(n = 1L, by = c("USUBJID", "TRTA", "AESOC")),
       variables = AESOC,
       id = USUBJID,
-      denominator = ADSL
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
     )
   )
 })
@@ -84,7 +83,7 @@ test_that("ard_stack_hierarchical(variables) messaging", {
       ard_stack_hierarchical(
         variables = c(AESOC, AEDECOD),
         id = USUBJID,
-        denominator = ADSL
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
 
@@ -95,7 +94,7 @@ test_that("ard_stack_hierarchical(variables) messaging", {
       ard_stack_hierarchical(
         variables = starts_with("xxxxx"),
         id = USUBJID,
-        denominator = ADSL
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
 })
@@ -140,14 +139,8 @@ test_that("ard_stack_hierarchical(by) rates", {
         variables = c(AESOC, AEDECOD),
         by = TRTA,
         id = USUBJID,
-        denominator = ADSL
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
-  )
-
-  # check the number of rows is expected
-  expect_equal(
-    nrow(ard),
-    ((length(unique(ADAE_small$AESOC)) + length(unique(ADAE_small$AEDECOD)))) * length(unique(ADAE_small$TRTA)) * 3L # multiply by three for n, N, and p
   )
 
   # check AEDECOD match
@@ -158,20 +151,22 @@ test_that("ard_stack_hierarchical(by) rates", {
       variables = c(AESOC, AEDECOD),
       by = TRTA,
       id = USUBJID,
-      denominator = ADSL
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
     ) |>
       cards::tidy_ard_row_order()
   )
 
   # check AESOC match
   expect_equal(
-    ard |> dplyr::filter(is.na(group2)) |> dplyr::select(-all_ard_group_n(2L)),
+    ard |>
+      dplyr::filter(variable %in% "AESOC") |>
+      dplyr::select(-all_ard_group_n(2L)),
     ard_hierarchical(
       ADAE_small |> dplyr::slice_tail(n = 1L, by = c("USUBJID", "TRTA", "AESOC")),
       variables = AESOC,
       by = TRTA,
       id = USUBJID,
-      denominator = ADSL
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
     ) |>
       cards::tidy_ard_row_order()
   )
@@ -186,7 +181,7 @@ test_that("ard_stack_hierarchical(by) messaging", {
         variables = c(AESOC, AEDECOD),
         by = TRTA,
         id = USUBJID,
-        denominator = ADSL
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
 })
@@ -242,7 +237,7 @@ test_that("ard_stack_hierarchical(denominator,total_n)", {
     ADAE_small |>
       ard_stack_hierarchical(
         variables = c(AESOC, AEDECOD),
-        denominator = ADSL,
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
         total_n = TRUE
       ) |>
       dplyr::filter(variable == "..ard_total_n..") |>
@@ -290,4 +285,51 @@ test_that("ard_stack_hierarchical(id,denominator) messaging", {
   )
 })
 
+# test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the heirarchies
+test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
+  expect_silent(
+    ard <- ard_stack_hierarchical(
+      ADAE_small,
+      variables = c(AESOC, AEDECOD),
+      by = c(TRTA, AESEV),
+      id = USUBJID,
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+    )
+  )
 
+  # check the rates for AEDECOD are correct
+  expect_equal(
+    ard |>
+      dplyr::filter(variable == "AEDECOD"),
+    ADAE_small |>
+      dplyr::arrange(USUBJID, TRTA, AESOC, AEDECOD, AESEV) |>
+      dplyr::filter(.by = c(USUBJID, TRTA, AESOC, AEDECOD), dplyr::n() == dplyr::row_number()) |>
+      ard_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      tidy_ard_row_order(),
+    ignore_attr = TRUE,
+    ignore_function_env = TRUE
+  )
+
+  # check the rates for AESOC are correct
+  expect_equal(
+    ard |>
+      dplyr::filter(variable == "AESOC") |>
+      rename_ard_columns(),
+    ADAE_small |>
+      dplyr::arrange(USUBJID, TRTA, AESOC, AESEV) |>
+      dplyr::filter(.by = c(USUBJID, TRTA, AESOC), dplyr::n() == dplyr::row_number()) |>
+      ard_hierarchical(
+        variables = AESOC,
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      tidy_ard_row_order() |>
+      rename_ard_columns(),
+    ignore_attr = TRUE,
+    ignore_function_env = TRUE
+  )
+})

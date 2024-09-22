@@ -2,7 +2,8 @@
 
     Code
       ard <- ard_stack_hierarchical(dplyr::mutate(ADAE_small, AESOC = ifelse(dplyr::row_number() ==
-        1L, NA, AESOC)), variables = c(AESOC, AEDECOD), id = USUBJID, denominator = ADSL)
+        1L, NA, AESOC)), variables = c(AESOC, AEDECOD), id = USUBJID, denominator = dplyr::rename(
+        ADSL, TRTA = TRT01A))
     Message
       * Removing 1 row from `data` with NA or NaN values in "AESOC" and "AEDECOD" columns.
 
@@ -10,7 +11,7 @@
 
     Code
       ard_stack_hierarchical(ADAE_small, variables = starts_with("xxxxx"), id = USUBJID,
-      denominator = ADSL)
+      denominator = dplyr::rename(ADSL, TRTA = TRT01A))
     Condition
       Error in `ard_stack_hierarchical()`:
       ! Arguments `variables` and `include` cannot be empty.
@@ -20,7 +21,7 @@
     Code
       ard <- ard_stack_hierarchical(dplyr::mutate(ADAE_small, TRTA = ifelse(dplyr::row_number() ==
         1L, NA, TRTA)), variables = c(AESOC, AEDECOD), by = TRTA, id = USUBJID,
-      denominator = ADSL)
+      denominator = dplyr::rename(ADSL, TRTA = TRT01A))
     Message
       * Removing 1 row from `data` with NA or NaN values in "TRTA", "AESOC", and "AEDECOD" columns.
 
