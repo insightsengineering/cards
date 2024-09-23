@@ -4,37 +4,8 @@ ADAE_small <-
   dplyr::select("USUBJID", "TRTA", "AESOC", "AEDECOD", "AESEV") |>
   dplyr::mutate(AESEV = factor(AESEV))
 
-test_that("ard_stack_hierarchical(variables) counts", {
-  # ensure that all nested variables appear in resulting ARD
-  expect_silent(
-    ard <-
-      ard_stack_hierarchical(
-        ADAE_small,
-        variables = c(AESOC, AEDECOD)
-      )
-  )
-
-  # check the number of rows is expected
-  expect_equal(
-    nrow(ard),
-    length(unique(ADAE_small$AESOC)) + length(unique(ADAE_small$AEDECOD))
-  )
-
-  # check AEDECOD match
-  expect_equal(
-    ard |> dplyr::filter(!is.na(group1)),
-    ard_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD))
-  )
-
-  # check AESOC match
-  expect_equal(
-    ard |> dplyr::filter(is.na(group1)) |> dplyr::select(-all_ard_group_n(1L)),
-    ard_hierarchical_count(ADAE_small, variables = AESOC)
-  )
-})
-
-
-test_that("ard_stack_hierarchical(variables) rates", {
+# ard_stack_hierarchical() -----------------------------------------------------
+test_that("ard_stack_hierarchical(variables)", {
   # ensure that all nested variables appear in resulting ARD
   expect_silent(
     ard <-
@@ -75,7 +46,7 @@ test_that("ard_stack_hierarchical(variables) rates", {
   )
 })
 
-test_that("ard_stack_hierarchical(variables) messaging", {
+test_that("ard_stack_hierarchical(variables) messaging removed obs", {
   # missing rows are removed
   expect_snapshot(
     ard <- ADAE_small |>
@@ -87,6 +58,21 @@ test_that("ard_stack_hierarchical(variables) messaging", {
       )
   )
 
+  expect_snapshot(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical(
+        variables = c(AESOC, AEDECOD),
+        id = USUBJID,
+        by = TRTA,
+        denominator =
+          ADSL |>
+          dplyr::rename(TRTA = TRT01A) |>
+          dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA))
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical(variables) messaging", {
   # no variables selected
   expect_snapshot(
     error = TRUE,
@@ -97,40 +83,20 @@ test_that("ard_stack_hierarchical(variables) messaging", {
         denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
-})
 
-test_that("ard_stack_hierarchical(by) counts", {
-  expect_silent(
-    ard <-
+  # no id selected
+  expect_snapshot(
+    error = TRUE,
+    ADAE_small |>
       ard_stack_hierarchical(
-        ADAE_small,
         variables = c(AESOC, AEDECOD),
-        by = TRTA
+        id = starts_with("xxxxx"),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
       )
   )
-
-  # check the number of rows is expected
-  expect_equal(
-    nrow(ard),
-    (length(unique(ADAE_small$AESOC)) + length(unique(ADAE_small$AEDECOD))) * length(unique(ADAE_small$TRTA))
-  )
-
-  # check AEDECOD match
-  expect_equal(
-    ard |> dplyr::filter(!is.na(group2)),
-    ard_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = TRTA) |>
-      cards::tidy_ard_row_order()
-  )
-
-  # check AESOC match
-  expect_equal(
-    ard |> dplyr::filter(is.na(group2)) |> dplyr::select(-all_ard_group_n(2L)),
-    ard_hierarchical_count(ADAE_small, variables = AESOC, by = TRTA) |>
-      cards::tidy_ard_row_order()
-  )
 })
 
-test_that("ard_stack_hierarchical(by) rates", {
+test_that("ard_stack_hierarchical(by)", {
   # ensure that all nested variables appear in resulting ARD
   expect_silent(
     ard <-
@@ -194,86 +160,12 @@ test_that("ard_stack_hierarchical(denominator) messaging", {
       ard_stack_hierarchical(
         variables = c(AESOC, AEDECOD),
         by = TRTA,
-        denominator = letters
+        id = USUBJID,
+        denominator = character()
       )
   )
-})
 
-test_that("ard_stack_hierarchical(denominator) univariate tabulations", {
-  # test that we get the expected univariate by variable tabulations
-  expect_equal(
-    ADAE_small |>
-      ard_stack_hierarchical(
-        variables = c(AESOC, AEDECOD),
-        by = TRTA,
-        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
-      ) |>
-      dplyr::filter(variable == "TRTA") |>
-      dplyr::select(-all_missing_columns()),
-    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
-      dplyr::select(-all_missing_columns())
-  )
-
-
-  # everything still works when the by variable includes vars not in the denom data frame
-  expect_equal(
-    ard <- ADAE_small |>
-      ard_stack_hierarchical(
-        variables = c(AESOC, AEDECOD),
-        by = c(TRTA, AESEV),
-        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
-      ) |>
-      dplyr::filter(variable == "TRTA") |>
-      dplyr::select(-all_missing_columns()),
-    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
-      dplyr::select(-all_missing_columns())
-  )
-  expect_true(nrow(dplyr::filter(ard, variable == "AESEV")) == 0L)
-})
-
-test_that("ard_stack_hierarchical(denominator,total_n)", {
-  # check N is correct when denom is a data frame
-  expect_equal(
-    ADAE_small |>
-      ard_stack_hierarchical(
-        variables = c(AESOC, AEDECOD),
-        denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
-        total_n = TRUE
-      ) |>
-      dplyr::filter(variable == "..ard_total_n..") |>
-      dplyr::select(-all_missing_columns()),
-    ard_total_n(ADSL) |>
-      dplyr::select(-all_missing_columns())
-  )
-
-  # check N is correct when denom is an integer
-  expect_equal(
-    ADAE_small |>
-      ard_stack_hierarchical(
-        variables = c(AESOC, AEDECOD),
-        denominator = nrow(ADSL),
-        total_n = TRUE
-      ) |>
-      dplyr::filter(variable == "..ard_total_n..") |>
-      dplyr::select(-all_missing_columns()),
-    ard_total_n(ADSL) |>
-      dplyr::select(-all_missing_columns())
-  )
-})
-
-test_that("ard_stack_hierarchical(denominator,total_n) messaging", {
-  # requesting total N without a denominator
-  expect_snapshot(
-    ard <- ADAE_small |>
-      ard_stack_hierarchical(
-        variables = c(AESOC, AEDECOD),
-        total_n = TRUE
-      )
-  )
-})
-
-test_that("ard_stack_hierarchical(id,denominator) messaging", {
-  # the denominator must be specified when using the `id` argument
+  # denominator arg must be specified
   expect_snapshot(
     error = TRUE,
     ard_stack_hierarchical(
@@ -285,7 +177,7 @@ test_that("ard_stack_hierarchical(id,denominator) messaging", {
   )
 })
 
-# test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the heirarchies
+# test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the hierarchies
 test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
   expect_silent(
     ard <- ard_stack_hierarchical(
@@ -331,5 +223,254 @@ test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
       rename_ard_columns(),
     ignore_attr = TRUE,
     ignore_function_env = TRUE
+  )
+})
+
+test_that("ard_stack_hierarchical(variables, include) messaging", {
+  expect_snapshot(
+    error = TRUE,
+    ard_stack_hierarchical(
+      ADAE_small,
+      variables = c(AESOC, AEDECOD),
+      include = AESOC,
+      by = TRTA,
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = USUBJID
+    )
+  )
+})
+
+test_that("ard_stack_hierarchical(by, overall) messaging", {
+  expect_snapshot(
+    ard <- ard_stack_hierarchical(
+      ADAE_small,
+      variables = c(AESOC, AEDECOD),
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = USUBJID,
+      overall = TRUE
+    )
+  )
+})
+
+# ard_stack_hierarchical_count() -----------------------------------------------
+test_that("ard_stack_hierarchical_count(variables)", {
+  # ensure that all nested variables appear in resulting ARD
+  expect_silent(
+    ard <-
+      ard_stack_hierarchical_count(
+        ADAE_small,
+        variables = c(AESOC, AEDECOD)
+      )
+  )
+
+  # check the number of rows is expected
+  expect_equal(
+    nrow(ard),
+    length(unique(ADAE_small$AESOC)) + length(unique(ADAE_small$AEDECOD))
+  )
+
+  # check AEDECOD match
+  expect_equal(
+    ard |> dplyr::filter(!is.na(group1)),
+    ard_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD))
+  )
+
+  # check AESOC match
+  expect_equal(
+    ard |> dplyr::filter(is.na(group1)) |> dplyr::select(-all_ard_group_n(1L)),
+    ard_hierarchical_count(ADAE_small, variables = AESOC)
+  )
+})
+
+test_that("ard_stack_hierarchical_count(by)", {
+  expect_silent(
+    ard <-
+      ard_stack_hierarchical_count(
+        ADAE_small,
+        variables = c(AESOC, AEDECOD),
+        by = TRTA
+      )
+  )
+
+  # check the number of rows is expected
+  expect_equal(
+    nrow(ard),
+    (length(unique(ADAE_small$AESOC)) + length(unique(ADAE_small$AEDECOD))) * length(unique(ADAE_small$TRTA))
+  )
+
+  # check AEDECOD match
+  expect_equal(
+    ard |> dplyr::filter(!is.na(group2)),
+    ard_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = TRTA) |>
+      cards::tidy_ard_row_order()
+  )
+
+  # check AESOC match
+  expect_equal(
+    ard |> dplyr::filter(is.na(group2)) |> dplyr::select(-all_ard_group_n(2L)),
+    ard_hierarchical_count(ADAE_small, variables = AESOC, by = TRTA) |>
+      cards::tidy_ard_row_order()
+  )
+})
+
+test_that("ard_stack_hierarchical_count(denominator) messaging", {
+  # when the wrong type is passed to the argument
+  expect_snapshot(
+    error = TRUE,
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = letters
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical_count(denominator) univariate tabulations", {
+  # test that we get the expected univariate by variable tabulations
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      dplyr::filter(variable == "TRTA") |>
+      dplyr::select(-all_missing_columns()),
+    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
+      dplyr::select(-all_missing_columns())
+  )
+
+
+  # everything still works when the by variable includes vars not in the denom data frame
+  expect_equal(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+      ) |>
+      dplyr::filter(variable == "TRTA") |>
+      dplyr::select(-all_missing_columns()),
+    ard_categorical(ADSL |> dplyr::rename(TRTA = TRT01A), variables = TRTA) |>
+      dplyr::select(-all_missing_columns())
+  )
+  expect_true(nrow(dplyr::filter(ard, variable == "AESEV")) == 0L)
+})
+
+test_that("ard_stack_hierarchical_count(denominator,total_n)", {
+  # check N is correct when denom is a data frame
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
+        total_n = TRUE
+      ) |>
+      dplyr::filter(variable == "..ard_total_n..") |>
+      dplyr::select(-all_missing_columns()),
+    ard_total_n(ADSL) |>
+      dplyr::select(-all_missing_columns())
+  )
+
+  # check N is correct when denom is an integer
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        denominator = nrow(ADSL),
+        total_n = TRUE
+      ) |>
+      dplyr::filter(variable == "..ard_total_n..") |>
+      dplyr::select(-all_missing_columns()),
+    ard_total_n(ADSL) |>
+      dplyr::select(-all_missing_columns())
+  )
+})
+
+test_that("ard_stack_hierarchical_count(denominator,total_n) messaging", {
+  # requesting total N without a denominator
+  expect_snapshot(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        total_n = TRUE
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical_count(overall, denominator) messaging", {
+  # requesting overall without a data frame denominator
+  expect_snapshot(
+    ard <- ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        overall = TRUE
+      )
+  )
+})
+
+test_that("ard_stack_hierarchical_count(overall)", {
+  # requesting overall without a data frame denominator
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        overall = TRUE
+      ) |>
+      dplyr::filter(!group1 %in% "TRTA" & !group2 %in% "TRTA" & !variable %in% "TRTA") |>
+      dplyr::select(-all_missing_columns()),
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      ) |>
+      dplyr::select(-all_missing_columns())
+  )
+})
+
+test_that("ard_stack_hierarchical_count(overall_row)", {
+  # requesting overall without a data frame denominator
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        overall_row = TRUE
+      ) |>
+      dplyr::filter(variable %in% "..ard_hierarchical_overall..") |>
+      dplyr::select(-all_missing_columns()),
+    ADAE_small |>
+      dplyr::mutate(..ard_hierarchical_overall.. = TRUE) |>
+      ard_stack_hierarchical_count(
+        variables = ..ard_hierarchical_overall..,
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      ) |>
+      dplyr::filter(variable %in% "..ard_hierarchical_overall..") |>
+      dplyr::select(-all_missing_columns())
+  )
+})
+
+
+test_that("ard_stack_hierarchical_count(attributes)", {
+  # requesting overall without a data frame denominator
+  expect_equal(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        attributes = TRUE
+      ) |>
+      dplyr::filter(context %in% "attributes") |>
+      dplyr::select(-all_missing_columns()),
+    ADAE_small |>
+      ard_attributes(variables = c(AESOC, AEDECOD, TRTA)) |>
+      dplyr::select(-all_missing_columns())
   )
 })

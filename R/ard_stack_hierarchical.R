@@ -2,12 +2,15 @@
 #'
 #' @description
 #' `r lifecycle::badge('experimental')`\cr
-#' Use this function to calculate multiple summaries of nested or hierarchical data
+#' Use these functions to calculate multiple summaries of nested or hierarchical data
 #' in a single call.
 #'
-#' When the `id` argument is specified, event rates and counts are calculated via
-#' `ard_hierarchical()`; otherwise, counts are calculated using `ard_hierarchical_count()`.
-#' See below for details on rate calculations when using the `id` argument.
+#' - `ard_stack_hierarchical()`: Calculates *rates* of events (e.g. adverse events)
+#'   utilizing the `denominator` and `id` arguments to identify the rows in `data`
+#'   to include in each rate calculation.
+#'
+#' - `ard_stack_hierarchical_count()`: Calculates *counts* of events utilizing
+#'   all rows for each tabulation.
 #'
 #' @details
 #' ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
@@ -20,11 +23,12 @@
 #'   The variables that are specified here and in the `include` argument
 #'   will have summary statistics calculated.
 #' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   an optional argument used to subset `data` to obtain the correct percentages.
-#'   When specified, `ard_hierarchical()` is used to calculate event rates. When
-#'   not specified, counts are returned via `ard_hierarchical_count()`.
+#'   argument used to subset `data` to identify rows in `data` to calculate
+#'   event rates in `ard_stack_hierarchical()`.
 #' @param denominator (`data.frame`, `integer`)\cr
-#'   an optional argument used to define the denominator and enhance the output.
+#'   used to define the denominator and enhance the output.
+#'   The argument is required for `ard_stack_hierarchical()` and optional
+#'   for `ard_stack_hierarchical_count()`.
 #'   - the univariate tabulations of the `by` variables are calculated with `denominator`,
 #'     when a data frame is passed, e.g. tabulation of the treatment assignment
 #'     counts that may appear in the header of a table.
@@ -50,7 +54,7 @@
 #'   Default is `FALSE`.
 #'
 #' @return an ARD data frame of class 'card'
-#' @export
+#' @name ard_stack_hierarchical
 #'
 #' @examples
 #' ard_stack_hierarchical(
@@ -60,11 +64,22 @@
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
 #'   id = USUBJID
 #' )
+#'
+#' ard_stack_hierarchical_count(
+#'   ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#' )
+NULL
+
+#' @rdname ard_stack_hierarchical
+#' @export
 ard_stack_hierarchical <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
-                                   denominator = NULL,
-                                   id = NULL,
+                                   id,
+                                   denominator,
                                    include = everything(),
                                    overall = FALSE,
                                    overall_row = FALSE,
@@ -73,7 +88,97 @@ ard_stack_hierarchical <- function(data,
                                    shuffle = FALSE) {
   set_cli_abort_call()
 
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(variables)
+  check_not_missing(id)
+  check_not_missing(denominator)
+  cards::process_selectors(data, id = {{ id }})
+
+  # denominator must a data frame, or integer
+  if (!is.data.frame(denominator) && !is_integerish(denominator)) {
+    cli::cli_abort(
+      "The {.arg denominator} argument must be a {.cls data.frame} or an {.cls integer}, not {.obj_type_friendly {denominator}}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  # check the id argument is not empty
+  if (is_empty(id)) {
+    cli::cli_abort("Argument {.arg id} cannot be empty.", call = get_cli_abort_call())
+  }
+
+  # create ARD -----------------------------------------------------------------
+  internal_stack_hierarchical(
+    data = data,
+    variables = {{ variables }},
+    by = {{ by }},
+    id = {{ id }},
+    denominator = denominator,
+    include = {{ include }},
+    overall = overall,
+    overall_row = overall_row,
+    attributes = attributes,
+    total_n = total_n,
+    shuffle = shuffle
+  )
+}
+
+#' @rdname ard_stack_hierarchical
+#' @export
+ard_stack_hierarchical_count <- function(data,
+                                         variables,
+                                         by = dplyr::group_vars(data),
+                                         denominator = NULL,
+                                         include = everything(),
+                                         overall = FALSE,
+                                         overall_row = FALSE,
+                                         attributes = FALSE,
+                                         total_n = FALSE,
+                                         shuffle = FALSE) {
+  set_cli_abort_call()
+
+  # check inputs ---------------------------------------------------------------
+  check_not_missing(variables)
+  # denominator must be empty, a data frame, or integer
+  if (!is_empty(denominator) && !is.data.frame(denominator) && !is_integerish(denominator)) {
+    cli::cli_abort(
+      "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.cls integer}, not {.obj_type_friendly {denominator}}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  # create ARD -----------------------------------------------------------------
+  internal_stack_hierarchical(
+    data = data,
+    variables = {{ variables }},
+    by = {{ by }},
+    id = NULL,
+    denominator = denominator,
+    include = {{ include }},
+    overall = overall,
+    overall_row = overall_row,
+    attributes = attributes,
+    total_n = total_n,
+    shuffle = shuffle
+  )
+}
+
+
+
+internal_stack_hierarchical <- function(data,
+                                        variables,
+                                        by = dplyr::group_vars(data),
+                                        id = NULL,
+                                        denominator = NULL,
+                                        include = everything(),
+                                        overall = FALSE,
+                                        overall_row = FALSE,
+                                        attributes = FALSE,
+                                        total_n = FALSE,
+                                        shuffle = FALSE) {
   # process inputs -------------------------------------------------------------
+  check_not_missing(data)
+  check_not_missing(variables)
   cards::process_selectors(data, variables = {{ variables }}, id = {{ id }}, by = {{ by }})
   cards::process_selectors(data[variables], include = {{ include }})
   check_scalar_logical(overall)
@@ -83,23 +188,6 @@ ard_stack_hierarchical <- function(data,
   check_scalar_logical(shuffle)
 
   # check inputs ---------------------------------------------------------------
-  # denominator must be empty, a data frame, or integer
-  if (!is_empty(denominator) && !is.data.frame(denominator) && !is_integerish(denominator)) {
-    cli::cli_abort(
-      "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.cls integer}, not {.obj_type_friendly {denominator}}.",
-      call = get_cli_abort_call()
-    )
-  }
-
-  # we use the denom arg to calculate rates
-  if (!is_empty(id) && is_empty(denominator)) {
-    cli::cli_abort(
-      "The {.arg denominator} must be specified when the {.arg id} argument is specified.",
-      call = get_cli_abort_call()
-    )
-  }
-
-
   # both variables and include must be specified
   if (is_empty(variables) || is_empty(include)) {
     cli::cli_abort(
@@ -111,7 +199,7 @@ ard_stack_hierarchical <- function(data,
   # the last `variables` variable should be included
   if (!utils::tail(variables, 1L) %in% include) {
     cli::cli_abort(
-      "The last column specified in the {.arg variables} ({.val {utils::tail(variables, 1L)}}) must be in the {.arg include} argument.",
+      "The last column specified in the {.arg variables} (i.e. {.val {utils::tail(variables, 1L)}}) must be in the {.arg include} argument.",
       call = get_cli_abort_call()
     )
   }
@@ -119,7 +207,15 @@ ard_stack_hierarchical <- function(data,
   if (is_empty(by) && isTRUE(overall)) {
     cli::cli_inform(
       c("The {.arg by} argument must be specified when using {.code overall=TRUE}.",
-        i = "Setting {.code ard_stack_hierarchical(overall=FALSE)}.")
+        i = "Setting {.code overall=FALSE}.")
+    )
+    overall <- FALSE
+  }
+
+  if (!is.data.frame(denominator) && isTRUE(overall)) {
+    cli::cli_inform(
+      c("The {.arg denominator} argument must be specified with a data frame when using {.code overall=TRUE}.",
+        i = "Setting {.code overall=FALSE}.")
     )
     overall <- FALSE
   }
@@ -127,7 +223,7 @@ ard_stack_hierarchical <- function(data,
   if (is_empty(denominator) && isTRUE(total_n)) {
     cli::cli_inform(
       c("The {.arg denominator} argument must be specified when using {.code total_n=TRUE}.",
-        i = "Setting {.code ard_stack_hierarchical(total_n=FALSE)}.")
+        i = "Setting {.code total_n=FALSE}.")
     )
     total_n <- FALSE
   }
@@ -149,7 +245,7 @@ ard_stack_hierarchical <- function(data,
     if (any(df_na_nan_denom)) {
       rows_with_na_denom <- apply(df_na_nan_denom, MARGIN = 1, any)
       cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na_denom)}} row{?s} from {.arg denominator} with
-                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, variables)}} column{?s}."))
+                            {.val {NA}} or {.val {NaN}} values in {.val {intersect(by, names(denominator))}} column{?s}."))
       denominator <- denominator[!rows_with_na_denom, ]
     }
   }

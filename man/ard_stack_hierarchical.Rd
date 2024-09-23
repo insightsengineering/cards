@@ -2,14 +2,28 @@
 % Please edit documentation in R/ard_stack_hierarchical.R
 \name{ard_stack_hierarchical}
 \alias{ard_stack_hierarchical}
+\alias{ard_stack_hierarchical_count}
 \title{Stacked Hierarchical ARD Statistics}
 \usage{
 ard_stack_hierarchical(
   data,
   variables,
   by = dplyr::group_vars(data),
+  id,
+  denominator,
+  include = everything(),
+  overall = FALSE,
+  overall_row = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE
+)
+
+ard_stack_hierarchical_count(
+  data,
+  variables,
+  by = dplyr::group_vars(data),
   denominator = NULL,
-  id = NULL,
   include = everything(),
   overall = FALSE,
   overall_row = FALSE,
@@ -31,8 +45,14 @@ will have summary statistics calculated.}
 variables to perform tabulations by. All combinations of the variables
 specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
+\item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+argument used to subset \code{data} to identify rows in \code{data} to calculate
+event rates in \code{ard_stack_hierarchical()}.}
+
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
-an optional argument used to define the denominator and enhance the output.
+used to define the denominator and enhance the output.
+The argument is required for \code{ard_stack_hierarchical()} and optional
+for \code{ard_stack_hierarchical_count()}.
 \itemize{
 \item the univariate tabulations of the \code{by} variables are calculated with \code{denominator},
 when a data frame is passed, e.g. tabulation of the treatment assignment
@@ -41,11 +61,6 @@ counts that may appear in the header of a table.
 calculate the event rates.
 \item if \code{total_n=TRUE}, the \code{denominator} argument is used to return the total N
 }}
-
-\item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-an optional argument used to subset \code{data} to obtain the correct percentages.
-When specified, \code{ard_hierarchical()} is used to calculate event rates. When
-not specified, counts are returned via \code{ard_hierarchical_count()}.}
 
 \item{include}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 Specify the subset a columns indicated in the \code{variables} argument for which
@@ -75,12 +90,15 @@ an ARD data frame of class 'card'
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
-Use this function to calculate multiple summaries of nested or hierarchical data
+Use these functions to calculate multiple summaries of nested or hierarchical data
 in a single call.
-
-When the \code{id} argument is specified, event rates and counts are calculated via
-\code{ard_hierarchical()}; otherwise, counts are calculated using \code{ard_hierarchical_count()}.
-See below for details on rate calculations when using the \code{id} argument.
+\itemize{
+\item \code{ard_stack_hierarchical()}: Calculates \emph{rates} of events (e.g. adverse events)
+utilizing the \code{denominator} and \code{id} arguments to identify the rows in \code{data}
+to include in each rate calculation.
+\item \code{ard_stack_hierarchical_count()}: Calculates \emph{counts} of events utilizing
+all rows for each tabulation.
+}
 }
 \details{
 ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
@@ -92,5 +110,12 @@ ard_stack_hierarchical(
   by = TRTA,
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
   id = USUBJID
+)
+
+ard_stack_hierarchical_count(
+  ADAE,
+  variables = c(AESOC, AEDECOD),
+  by = TRTA,
+  denominator = ADSL |> dplyr::rename(TRTA = ARM)
 )
 }
