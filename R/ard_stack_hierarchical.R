@@ -253,6 +253,20 @@ internal_stack_hierarchical <- function(data,
   # sort data if using `ard_hierarchical(id)` ----------------------------------
   if (!is_empty(id)) data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, variables)))) # styler: off
 
+  # print denom columns if not 100% clear which are used
+  if (!is_empty(id) && is.data.frame(denominator)) {
+    denom_cols <- intersect(by, names(denominator))
+    if (!setequal(by, denom_cols)) {
+      msg <-
+        ifelse(
+          is_empty(denom_cols),
+          "Denominator set by number of rows in {.arg denominator} data frame.",
+          "Denominator set by {.val {denom_cols}} column{?s} in {.arg denominator} data frame."
+        )
+      cli::cli_inform(c("i" = msg))
+    }
+  }
+
   # go about calculating the statistics within the variables -------------------
   # define index in `variables` that also appear in `include`
   which_include <- which(variables %in% include)

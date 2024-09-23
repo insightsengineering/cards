@@ -179,14 +179,26 @@ test_that("ard_stack_hierarchical(denominator) messaging", {
 
 # test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the hierarchies
 test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
-  expect_silent(
+  expect_message(
+    ard_stack_hierarchical(
+      ADAE_small,
+      variables = c(AESOC, AEDECOD),
+      by = c(AESEV),
+      id = USUBJID,
+      denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
+    ),
+    'Denominator set by number of rows in.*denominator.*data frame.' # styler: off
+  )
+
+  expect_message(
     ard <- ard_stack_hierarchical(
       ADAE_small,
       variables = c(AESOC, AEDECOD),
       by = c(TRTA, AESEV),
       id = USUBJID,
       denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
-    )
+    ),
+    'Denominator set by.*"TRTA".*column in .*denominator.*data frame.' # styler: off
   )
 
   # check the rates for AEDECOD are correct
