@@ -1,5 +1,6 @@
 #' Mock ARDs
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Create empty ARDs used to create mock tables or table shells.
 #'
 #' @param variables (`character` or named `list`)\cr
@@ -14,13 +15,27 @@
 #'   are character vectors of statistic names to appear in the ARD.
 #' @param by (named `list`)\cr
 #'   a named list where the list element is a vector of variable values.
+#' @param label (named `list`)\cr
+#'   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
 #'
 #' @return an ARD data frame of class 'card'
 #' @name mock
-#' @export
 #'
 #' @examples
-#' # To ADD
+#' mock_categorical(
+#'   variables =
+#'     list(
+#'       AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))
+#'     ),
+#'   by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+#' ) |>
+#'   apply_fmt_fn()
+#'
+#' mock_continuous(
+#'   variables = c("AGE", "BMIBL"),
+#'   by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+#' ) |>
+#'   apply_fmt_fn()
 NULL
 
 #' @rdname mock
@@ -79,6 +94,7 @@ mock_categorical <- function(variables,
   # merge the by ARD and the primary variable ARD ------------------------------
   merge(ard_by, ard_variables, by = NULL) |>
     as_card() |>
+    tidy_ard_row_order() |>
     tidy_ard_column_order()
 }
 
@@ -105,7 +121,6 @@ mock_continuous <- function(variables,
 
   # create ARD -----------------------------------------------------------------
   # build the ARD for the by variables
-  browser()
   ard_by <- .construct_by_variable_ard(by)
 
   # create ARD for the variables
@@ -135,6 +150,7 @@ mock_continuous <- function(variables,
   # merge the by ARD and the primary variable ARD ------------------------------
   merge(ard_by, ard_variables, by = NULL) |>
     as_card() |>
+    tidy_ard_row_order() |>
     tidy_ard_column_order()
 }
 
@@ -153,13 +169,13 @@ mock_dichotomous <- function(variables,
     error_msg = "The list values of {.arg variables} argument must be length {.val {1}}.",
   )
 
-  mock_dichotomous(variables = variables, statistic = statistic, by = by) |>
+  mock_categorical(variables = variables, statistic = statistic, by = by) |>
     dplyr::mutate(context = "dichotomous")
 }
 
 #' @rdname mock
 #' @export
-ard_missing <- function(variables,
+mock_missing <- function(variables,
                         statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
                         by = NULL) {
   set_cli_abort_call()
@@ -174,7 +190,7 @@ ard_missing <- function(variables,
     x = statistic,
     predicate = \(x) is.character(x) && all(x %in% c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")),
     error_msg = "The elements of the {.arg statistic} argument must be vector
-                 with one or more of {.val {c('N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss'}}."
+                 with one or more of {.val {c('N_obs', 'N_miss', 'N_nonmiss', 'p_miss', 'p_nonmiss')}}."
   )
 
   # build ARD ------------------------------------------------------------------

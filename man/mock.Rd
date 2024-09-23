@@ -5,7 +5,7 @@
 \alias{mock_categorical}
 \alias{mock_continuous}
 \alias{mock_dichotomous}
-\alias{ard_missing}
+\alias{mock_missing}
 \alias{mock_attributes}
 \alias{mock_total_n}
 \title{Mock ARDs}
@@ -28,7 +28,7 @@ mock_dichotomous(
   by = NULL
 )
 
-ard_missing(
+mock_missing(
   variables,
   statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
   by = NULL
@@ -53,13 +53,30 @@ are character vectors of statistic names to appear in the ARD.}
 
 \item{by}{(named \code{list})\cr
 a named list where the list element is a vector of variable values.}
+
+\item{label}{(named \code{list})\cr
+named list of variable labels, e.g. \code{list(cyl = "No. Cylinders")}.}
 }
 \value{
 an ARD data frame of class 'card'
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Create empty ARDs used to create mock tables or table shells.
 }
 \examples{
-# To ADD
+mock_categorical(
+  variables =
+    list(
+      AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))
+    ),
+  by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+) |>
+  apply_fmt_fn()
+
+mock_continuous(
+  variables = c("AGE", "BMIBL"),
+  by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+) |>
+  apply_fmt_fn()
 }

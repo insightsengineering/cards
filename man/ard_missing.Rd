@@ -5,13 +5,9 @@
 \alias{ard_missing.data.frame}
 \title{Missing ARD Statistics}
 \usage{
-ard_missing(
-  variables,
-  statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
-  by = NULL
-)
+ard_missing(data, ...)
 
-ard_missing.data.frame(
+\method{ard_missing}{data.frame}(
   data,
   variables,
   by = dplyr::group_vars(data),
@@ -22,8 +18,16 @@ ard_missing.data.frame(
 )
 }
 \arguments{
+\item{data}{(\code{data.frame})\cr
+a data frame}
+
+\item{...}{Arguments passed to methods.}
+
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to include in summaries. Default is \code{everything()}.}
+
+\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+results are tabulated by \strong{all combinations} of the columns specified.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -38,12 +42,6 @@ returns a named list of results is also acceptable, e.g.
 \code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
 will be less clear in this setting.}
 
-\item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-results are tabulated by \strong{all combinations} of the columns specified.}
-
-\item{data}{(\code{data.frame})\cr
-a data frame}
-
 \item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
@@ -55,8 +53,6 @@ a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
-
-\item{...}{Arguments passed to methods.}
 }
 \value{
 an ARD data frame of class 'card'

@@ -61,6 +61,9 @@ reference:
       - as_nested_list
       - get_ard_statistics
       - replace_null_statistic
+  - subtitle: "Table Shells"
+    contents:
+      - mock
   - subtitle: "Data Summary Functions"
     contents:
       - continuous_summary_fns
