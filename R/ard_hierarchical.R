@@ -27,9 +27,11 @@
 #'
 #' @examples
 #' ard_hierarchical(
-#'   data = ADAE,
+#'   data = ADAE |>
+#'     dplyr::slice_tail(n = 1L, by = c(USUBJID, TRTA, AESOC, AEDECOD)),
 #'   variables = c(AESOC, AEDECOD),
-#'   by = c(TRTA, AESEV),
+#'   by = TRTA,
+#'   id = USUBJID,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 #' )
 #'
