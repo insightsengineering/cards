@@ -63,6 +63,7 @@ an ARD data frame of class 'card'
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Create empty ARDs used to create mock tables or table shells.
+Where applicable, the formatting functions are set to return \code{'xx'} or \code{'xx.x'}.
 }
 \examples{
 mock_categorical(

@@ -2,6 +2,7 @@
 #'
 #' `r lifecycle::badge('experimental')`\cr
 #' Create empty ARDs used to create mock tables or table shells.
+#' Where applicable, the formatting functions are set to return `'xx'` or `'xx.x'`.
 #'
 #' @param variables (`character` or named `list`)\cr
 #'    a character vector of variable names for functions `mock_continuous()`,
