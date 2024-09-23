@@ -66,7 +66,7 @@ mock_categorical <- function(variables,
   ard_variables <-
     dplyr::tibble(
       variable = names(.env$variables),
-      variable_level = map(.data$variable, ~as.list(.env$variables[[.x]]))
+      variable_level = map(.data$variable, ~ as.list(.env$variables[[.x]]))
     ) |>
     tidyr::unnest(cols = "variable_level") |>
     dplyr::left_join(
@@ -101,8 +101,10 @@ mock_categorical <- function(variables,
 #' @rdname mock
 #' @export
 mock_continuous <- function(variables,
-                            statistic = everything() ~ c("N", "mean", "sd", "median",
-                                                          "p25", "p75", "min", "max"),
+                            statistic = everything() ~ c(
+                              "N", "mean", "sd", "median",
+                              "p25", "p75", "min", "max"
+                            ),
                             by = NULL) {
   set_cli_abort_call()
 
@@ -127,7 +129,7 @@ mock_continuous <- function(variables,
   ard_variables <-
     dplyr::tibble(
       variable = .env$variables,
-      stat_name = map(.data$variable, ~.env$statistic[[.x]])
+      stat_name = map(.data$variable, ~ .env$statistic[[.x]])
     ) |>
     tidyr::unnest(cols = "stat_name") |>
     .process_nested_list_as_df(
@@ -176,8 +178,8 @@ mock_dichotomous <- function(variables,
 #' @rdname mock
 #' @export
 mock_missing <- function(variables,
-                        statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
-                        by = NULL) {
+                         statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
+                         by = NULL) {
   set_cli_abort_call()
 
   # check/process inputs -------------------------------------------------------
@@ -233,17 +235,18 @@ check_named_list_and_vector_elements <- function(
     message = "The {.arg {arg_name}} argument must be a named list, and each element a vector of values.",
     arg_name = rlang::caller_arg(x),
     call = get_cli_abort_call(),
-    envir = rlang::current_env()
-) {
+    envir = rlang::current_env()) {
   # check input is a named list
   if (!is_empty(x) && (!is_named(x) || !is.list(x))) {
     cli::cli_abort(message = message, call = call, .envir = envir)
   }
 
-  check_list_elements(x = x,
-                      predicate = \(x) is_vector(x) && !is.list(x),
-                      error_msg = message,
-                      arg_name = arg_name)
+  check_list_elements(
+    x = x,
+    predicate = \(x) is_vector(x) && !is.list(x),
+    error_msg = message,
+    arg_name = arg_name
+  )
 }
 
 .empty_data_frame <- function(x) {

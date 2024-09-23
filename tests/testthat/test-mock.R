@@ -15,7 +15,7 @@ test_that("mock_categorical() messaging", {
     error = TRUE,
     mock_categorical(
       variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
-      statistic = ~c("NOTASTATISTIC")
+      statistic = ~ c("NOTASTATISTIC")
     )
   )
 })
@@ -37,7 +37,7 @@ test_that("mock_continuous() messaging", {
     error = TRUE,
     mock_continuous(
       variables = c("AGE", "BMIBL"),
-      statistic = ~ t.test
+      statistic = ~t.test
     )
   )
 })
@@ -80,7 +80,7 @@ test_that("mock_missing() messaging", {
     error = TRUE,
     mock_missing(
       variables = c("AGE", "BMIBL"),
-      statistic = ~ letters
+      statistic = ~letters
     )
   )
 })
