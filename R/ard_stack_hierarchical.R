@@ -13,8 +13,14 @@
 #'   all rows for each tabulation.
 #'
 #' @details
-#' ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
+#' To calculate event rates, the `ard_stack_hierarchical()` function identifies
+#' rows to include in the calculation.
+#' First, the primary data frame is sorted by the columns identified in
+#' the `id`, `by`, and `variables` arguments.
 #'
+#' As the function cycles over the variables specified in the `variables` argument,
+#' the data frame is grouped by `id`, `intersect(by, names(denominator))`, and `variables`
+#' utilizing the last row within each of the groups.
 #'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack

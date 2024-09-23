@@ -101,7 +101,14 @@ all rows for each tabulation.
 }
 }
 \details{
-ADD DETAILS ABOUT HOW THE DATA ARE SORTED AND SUBSETTED.
+To calculate event rates, the \code{ard_stack_hierarchical()} function identifies
+rows to include in the calculation.
+First, the primary data frame is sorted by the columns identified in
+the \code{id}, \code{by}, and \code{variables} arguments.
+
+As the function cycles over the variables specified in the \code{variables} argument,
+the data frame is grouped by \code{id}, \code{intersect(by, names(denominator))}, and \code{variables}
+utilizing the last row within each of the groups.
 }
 \examples{
 ard_stack_hierarchical(
