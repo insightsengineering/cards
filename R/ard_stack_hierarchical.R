@@ -213,7 +213,8 @@ internal_stack_hierarchical <- function(data,
   if (is_empty(by) && isTRUE(overall)) {
     cli::cli_inform(
       c("The {.arg by} argument must be specified when using {.code overall=TRUE}.",
-        i = "Setting {.code overall=FALSE}.")
+        i = "Setting {.code overall=FALSE}."
+      )
     )
     overall <- FALSE
   }
@@ -221,7 +222,8 @@ internal_stack_hierarchical <- function(data,
   if (!is.data.frame(denominator) && isTRUE(overall)) {
     cli::cli_inform(
       c("The {.arg denominator} argument must be specified with a data frame when using {.code overall=TRUE}.",
-        i = "Setting {.code overall=FALSE}.")
+        i = "Setting {.code overall=FALSE}."
+      )
     )
     overall <- FALSE
   }
@@ -229,7 +231,8 @@ internal_stack_hierarchical <- function(data,
   if (is_empty(denominator) && isTRUE(total_n)) {
     cli::cli_inform(
       c("The {.arg denominator} argument must be specified when using {.code total_n=TRUE}.",
-        i = "Setting {.code total_n=FALSE}.")
+        i = "Setting {.code total_n=FALSE}."
+      )
     )
     total_n <- FALSE
   }
@@ -247,7 +250,7 @@ internal_stack_hierarchical <- function(data,
   if (is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
     df_na_nan_denom <-
       is.na(denominator[intersect(by, names(denominator))]) |
-      apply(denominator[intersect(by, names(denominator))], MARGIN = 2, is.nan)
+        apply(denominator[intersect(by, names(denominator))], MARGIN = 2, is.nan)
     if (any(df_na_nan_denom)) {
       rows_with_na_denom <- apply(df_na_nan_denom, MARGIN = 1, any)
       cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na_denom)}} row{?s} from {.arg denominator} with
@@ -355,8 +358,7 @@ internal_stack_hierarchical <- function(data,
     lst_results <-
       lst_results |>
       append(ard_total_n(denominator) |> list())
-  }
-  else if (isTRUE(total_n) && is_integerish(denominator)) {
+  } else if (isTRUE(total_n) && is_integerish(denominator)) {
     lst_results <-
       lst_results |>
       append(
@@ -389,8 +391,7 @@ internal_stack_hierarchical <- function(data,
       variables = all_of(variables),
       by = all_of(by)
     )
-  }
-  else {
+  } else {
     ard_hierarchical(
       data = data |>
         dplyr::slice_tail(n = 1L, by = all_of(c(id, intersect(by, names(denominator)), variables))),

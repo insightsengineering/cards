@@ -66,8 +66,8 @@ test_that("ard_stack_hierarchical(variables) messaging removed obs", {
         by = TRTA,
         denominator =
           ADSL |>
-          dplyr::rename(TRTA = TRT01A) |>
-          dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA))
+            dplyr::rename(TRTA = TRT01A) |>
+            dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA))
       )
   )
 })
