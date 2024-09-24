@@ -45,7 +45,7 @@
 #'   Specify the subset a columns indicated in the `variables` argument for which
 #'   summary statistics will be returned. Default is `everything()`.
 #' @param overall (scalar `logical`)\cr logical indicating whether overall statistics
-#'   should be calculated (i.e. re-run all `ard_*()` calls with `by=NULL`).
+#'   should be calculated (i.e. repeat the operations with `by=NULL`).
 #'   Default is `FALSE`.
 #' @param overall_row (scalar `logical`)\cr logical indicating whether overall statistics
 #'   should be calculated across the columns listed in the `variables` argument.
