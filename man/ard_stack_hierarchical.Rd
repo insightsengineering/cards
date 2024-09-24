@@ -47,7 +47,7 @@ specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
 \item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 argument used to subset \code{data} to identify rows in \code{data} to calculate
-event rates in \code{ard_stack_hierarchical()}.}
+event rates in \code{ard_stack_hierarchical()}. See details below.}
 
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
 used to define the denominator and enhance the output.
@@ -67,7 +67,7 @@ Specify the subset a columns indicated in the \code{variables} argument for whic
 summary statistics will be returned. Default is \code{everything()}.}
 
 \item{overall}{(scalar \code{logical})\cr logical indicating whether overall statistics
-should be calculated (i.e. re-run all \verb{ard_*()} calls with \code{by=NULL}).
+should be calculated (i.e. repeat the operations with \code{by=NULL}).
 Default is \code{FALSE}.}
 
 \item{overall_row}{(scalar \code{logical})\cr logical indicating whether overall statistics
@@ -109,6 +109,13 @@ the \code{id}, \code{by}, and \code{variables} arguments.
 As the function cycles over the variables specified in the \code{variables} argument,
 the data frame is grouped by \code{id}, \code{intersect(by, names(denominator))}, and \code{variables}
 utilizing the last row within each of the groups.
+
+For example, if the call is
+\code{ard_stack_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), id = USUBJID)},
+then we'd first subset ADAE to be one row within the grouping \code{c(USUBJID, AESOC, AEDECOD)}
+to calculate the event rates in \code{'AEDECOD'}. We'd then repeat and
+subset ADAE to be one row within the grouping \code{c(USUBJID, AESOC)}
+to calculate the event rates in \code{'AESOC'}.
 }
 \examples{
 ard_stack_hierarchical(

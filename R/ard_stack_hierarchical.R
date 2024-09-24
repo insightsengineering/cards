@@ -22,6 +22,13 @@
 #' the data frame is grouped by `id`, `intersect(by, names(denominator))`, and `variables`
 #' utilizing the last row within each of the groups.
 #'
+#' For example, if the call is
+#' `ard_stack_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), id = USUBJID)`,
+#' then we'd first subset ADAE to be one row within the grouping `c(USUBJID, AESOC, AEDECOD)`
+#' to calculate the event rates in `'AEDECOD'`. We'd then repeat and
+#' subset ADAE to be one row within the grouping `c(USUBJID, AESOC)`
+#' to calculate the event rates in `'AESOC'`.
+#'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
@@ -30,7 +37,7 @@
 #'   will have summary statistics calculated.
 #' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   argument used to subset `data` to identify rows in `data` to calculate
-#'   event rates in `ard_stack_hierarchical()`.
+#'   event rates in `ard_stack_hierarchical()`. See details below.
 #' @param denominator (`data.frame`, `integer`)\cr
 #'   used to define the denominator and enhance the output.
 #'   The argument is required for `ard_stack_hierarchical()` and optional
@@ -221,7 +228,7 @@ internal_stack_hierarchical <- function(data,
 
   if (!is.data.frame(denominator) && isTRUE(overall)) {
     cli::cli_inform(
-      c("The {.arg denominator} argument must be specified with a data frame when using {.code overall=TRUE}.",
+      c("The {.arg denominator} argument must be specified as a data frame when using {.code overall=TRUE}.",
         i = "Setting {.code overall=FALSE}."
       )
     )
