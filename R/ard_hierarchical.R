@@ -69,6 +69,9 @@ ard_hierarchical.data.frame <- function(data,
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
+  
+  check_no_na_factor_levels(data)
+  check_factor_has_levels(data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -141,6 +144,9 @@ ard_hierarchical_count.data.frame <- function(data,
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
+  
+  check_no_na_factor_levels(data)
+  check_factor_has_levels(data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
