@@ -67,7 +67,7 @@ Specify the subset a columns indicated in the \code{variables} argument for whic
 summary statistics will be returned. Default is \code{everything()}.}
 
 \item{overall}{(scalar \code{logical})\cr logical indicating whether overall statistics
-should be calculated (i.e. repeat the operations with \code{by=NULL}).
+should be calculated (i.e. repeat the operations with \code{by=NULL} in \emph{most cases}, see below for details).
 Default is \code{FALSE}.}
 
 \item{overall_row}{(scalar \code{logical})\cr logical indicating whether overall statistics
@@ -100,7 +100,9 @@ to include in each rate calculation.
 all rows for each tabulation.
 }
 }
-\details{
+\section{Subsetting Data for Rate Calculations}{
+
+
 To calculate event rates, the \code{ard_stack_hierarchical()} function identifies
 rows to include in the calculation.
 First, the primary data frame is sorted by the columns identified in
@@ -117,6 +119,39 @@ to calculate the event rates in \code{'AEDECOD'}. We'd then repeat and
 subset ADAE to be one row within the grouping \code{c(USUBJID, AESOC)}
 to calculate the event rates in \code{'AESOC'}.
 }
+
+\section{Overall Argument}{
+
+When we set \code{overall=TRUE}, we wish to re-run our calculations removing the
+stratifying columns. For example, if we ran the code below, we results would
+include results with the code chunk being re-run with \code{by=NULL}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_stack_hierarchical(
+  data = ADAE,
+  variables = c(AESOC, AEDECOD),
+  by = TRTA,
+  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  overall = TRUE
+)
+}\if{html}{\out{</div>}}
+
+But there is another case to be aware of: when the \code{by} argument includes
+columns that are not present in the \code{denominator}, for example when tabulating
+results by AE grade or severity in addition to treatment assignment.
+In the example below, we're tabulating results by treatment assignment and
+AE severity. By specifying \code{overall=TRUE}, we will re-run the to get
+results with \code{by = AESEV} and again with \code{by = NULL}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_stack_hierarchical(
+  data = ADAE,
+  variables = c(AESOC, AEDECOD),
+  by = c(TRTA, AESEV),
+  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  overall = TRUE
+)
+}\if{html}{\out{</div>}}
+}
+
 \examples{
 ard_stack_hierarchical(
   ADAE,

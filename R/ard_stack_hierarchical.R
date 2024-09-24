@@ -12,7 +12,8 @@
 #' - `ard_stack_hierarchical_count()`: Calculates *counts* of events utilizing
 #'   all rows for each tabulation.
 #'
-#' @details
+#' @section Subsetting Data for Rate Calculations:
+#'
 #' To calculate event rates, the `ard_stack_hierarchical()` function identifies
 #' rows to include in the calculation.
 #' First, the primary data frame is sorted by the columns identified in
@@ -28,6 +29,38 @@
 #' to calculate the event rates in `'AEDECOD'`. We'd then repeat and
 #' subset ADAE to be one row within the grouping `c(USUBJID, AESOC)`
 #' to calculate the event rates in `'AESOC'`.
+#'
+#' @section Overall Argument:
+#' When we set `overall=TRUE`, we wish to re-run our calculations removing the
+#' stratifying columns. For example, if we ran the code below, we results would
+#' include results with the code chunk being re-run with `by=NULL`.
+#'
+#' ```r
+#' ard_stack_hierarchical(
+#'   data = ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   overall = TRUE
+#' )
+#' ```
+#'
+#' But there is another case to be aware of: when the `by` argument includes
+#' columns that are not present in the `denominator`, for example when tabulating
+#' results by AE grade or severity in addition to treatment assignment.
+#' In the example below, we're tabulating results by treatment assignment and
+#' AE severity. By specifying `overall=TRUE`, we will re-run the to get
+#' results with `by = AESEV` and again with `by = NULL`.
+#'
+#' ```r
+#' ard_stack_hierarchical(
+#'   data = ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = c(TRTA, AESEV),
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   overall = TRUE
+#' )
+#' ```
 #'
 #' @inheritParams ard_hierarchical
 #' @inheritParams ard_stack
@@ -52,7 +85,7 @@
 #'   Specify the subset a columns indicated in the `variables` argument for which
 #'   summary statistics will be returned. Default is `everything()`.
 #' @param overall (scalar `logical`)\cr logical indicating whether overall statistics
-#'   should be calculated (i.e. repeat the operations with `by=NULL`).
+#'   should be calculated (i.e. repeat the operations with `by=NULL` in _most cases_, see below for details).
 #'   Default is `FALSE`.
 #' @param overall_row (scalar `logical`)\cr logical indicating whether overall statistics
 #'   should be calculated across the columns listed in the `variables` argument.
@@ -318,6 +351,22 @@ internal_stack_hierarchical <- function(data,
           ) |>
             list()
         )
+
+      # if there are columns in `by` not present in `denominator`, re-run with `by = NULL`
+      if (!is_empty(setdiff(by, names(denominator)))) {
+        lst_results <-
+          lst_results |>
+          append(
+            .run_hierarchical_fun(
+              data = data,
+              variables = variables[seq_len(i)],
+              by = NULL,
+              denominator = denominator,
+              id = id
+            ) |>
+              list()
+          )
+      }
     }
   }
 

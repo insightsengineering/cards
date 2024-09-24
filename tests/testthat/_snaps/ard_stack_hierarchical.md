@@ -102,6 +102,36 @@
       ard <- ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD),
       by = TRTA, overall = TRUE)
     Message
-      The `denominator` argument must be specified with a data frame when using `overall=TRUE`.
+      The `denominator` argument must be specified as a data frame when using `overall=TRUE`.
       i Setting `overall=FALSE`.
+
+# ard_stack_hierarchical_count(overall)
+
+    Code
+      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), overall = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" &
+        !variable %in% "TRTA")
+    Message
+      {cards} data frame: 18 x 15
+    Output
+         group1 group1_level group2 group2_level group3 group3_level variable variable_level stat_name stat_label stat
+      1   AESEV         MILD   <NA>                <NA>                 AESOC      GENERAL …         n          n    4
+      2   AESEV         MILD   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      3   AESEV     MODERATE   <NA>                <NA>                 AESOC      GENERAL …         n          n    0
+      4   AESEV     MODERATE   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      5    <NA>                <NA>                <NA>                 AESOC      GENERAL …         n          n    4
+      6    <NA>                <NA>                <NA>                 AESOC      SKIN AND…         n          n    2
+      7   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      8   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      9   AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    1
+      10  AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    0
+      11  AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      12  AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      13  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    0
+      14  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    1
+      15  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      16  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      17  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD       ERYTHEMA         n          n    1
+      18  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD      PRURITUS…         n          n    1
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
 

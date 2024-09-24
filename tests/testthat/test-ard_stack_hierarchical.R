@@ -424,6 +424,7 @@ test_that("ard_stack_hierarchical_count(overall, denominator) messaging", {
 })
 
 test_that("ard_stack_hierarchical_count(overall)", {
+  withr::local_options(list(width = 250))
   # requesting overall without a data frame denominator
   expect_equal(
     ADAE_small |>
@@ -442,6 +443,19 @@ test_that("ard_stack_hierarchical_count(overall)", {
       ) |>
       dplyr::select(-all_missing_columns())
   )
+
+  # when the `by` variable includes columns not in `denominator`, ensure we get two sets of overall (by=AESEV and by=NULL)
+  # IF THIS EVER BREAKS BE VERY CAREFUL WE HAVE ALL 18 ROWS RETURNED!!!
+  expect_snapshot({
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        overall = TRUE
+      ) |>
+      dplyr::filter(!group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" & !variable %in% "TRTA")
+  })
 })
 
 test_that("ard_stack_hierarchical_count(overall_row)", {
