@@ -1,4 +1,4 @@
-# cards 0.2.2.9009
+# cards 0.2.2.9012
 
 * Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
 
@@ -11,6 +11,8 @@
 * The `ard_hierarchical_count()` function has been updated to match the behavior of `ard_hierarchical()` and results are now only returned for the last column listed in the `variables` arguments, rather than recursively counting all variables.
 
 * Added functions `ard_stack_hierarchical()` and  `ard_stack_hierarchical_count()` that ease the creation of ARDs for multiple nested or hierarchical structures. (#314)
+
+* Added functions `mock_continuous()`, `mock_categorical()`, `mock_dichotomous()`, `mock_missing()`, `mock_attributes()` to build ARDs in the absence of a data frame. Where applicable, the formatting functions are set to return `'xx'` or `'xx.x'` to aid in the construction of mock tables or table shells. (#256)
 
 # cards 0.2.2
 
