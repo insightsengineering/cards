@@ -71,3 +71,37 @@
       1      AGE     N_obs Number of Obs
       2    BMIBL     N_obs Vector Length
 
+# ard_missing() errors with incomplete factor columns
+
+    Code
+      ard_missing(dplyr::mutate(mtcars, am = factor(am)), variables = am)
+    Message
+      {cards} data frame: 5 x 8
+    Output
+        variable context stat_name stat_label stat fmt_fn
+      1       am missing     N_obs  Vector L…   32      0
+      2       am missing    N_miss  N Missing    0      0
+      3       am missing N_nonmiss  N Non-mi…   32      0
+      4       am missing    p_miss  % Missing    0   <fn>
+      5       am missing p_nonmiss  % Non-mi…    1   <fn>
+    Message
+      i 2 more variables: warning, error
+
+---
+
+    Code
+      ard_missing(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      variables = mpg)
+    Condition
+      Error in `ard_missing()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_missing(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), variables = mpg)
+    Condition
+      Error in `ard_missing()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+

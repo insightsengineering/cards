@@ -125,7 +125,7 @@ test_that("ard_complex() follows ard structure", {
   )
 })
 
-test_that("ard_complex errors with incorrect factor columns", {
+test_that("ard_complex() errors with incorrect factor columns", {
 
   # First check output is fine when there is a valid factor variable
   expect_snapshot(

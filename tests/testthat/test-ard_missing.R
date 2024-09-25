@@ -91,3 +91,34 @@ test_that("ard_missing() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_missing() errors with incomplete factor columns", {
+
+  # First check output is fine when there is a valid factor variable
+  expect_snapshot(
+    mtcars |>
+      dplyr::mutate(am = factor(am)) |>
+      ard_missing(variables = am)
+  )
+
+  # Check error when factors have no levels
+  # NOTE: Error only triggered when factor col with no levels is not the column
+  # passed to variables in ard_missing
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = character(0))) |>
+      ard_missing(variables = mpg)
+  )
+
+  # Check error when factor has NA level
+  # NOTE: Error only triggered when factor col with na level is not the column
+  # passed to variables in ard_missing
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
+      ard_missing(variables = mpg)
+  )
+
+})

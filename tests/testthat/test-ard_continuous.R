@@ -416,7 +416,7 @@ test_that("ard_continuous() follows ard structure", {
   )
 })
 
-test_that("ard_continuous errors with incomplete factor columns", {
+test_that("ard_continuous() errors with incomplete factor columns", {
 
   # First check output is fine when there is a valid factor variable
   expect_snapshot(

@@ -279,7 +279,7 @@ test_that("ard_hierarchical() follows ard structure", {
   )
 })
 
-test_that("ard_hierarchical errors with incomplete factor columns", {
+test_that("ard_hierarchical() errors with incomplete factor columns", {
 
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
@@ -313,7 +313,7 @@ test_that("ard_hierarchical errors with incomplete factor columns", {
 })
 
 
-test_that("ard_hierarchical_count errors with incomplete factor columns", {
+test_that("ard_hierarchical_count() errors with incomplete factor columns", {
 
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
