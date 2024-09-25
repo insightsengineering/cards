@@ -221,7 +221,8 @@ internal_stack_hierarchical <- function(data,
                                         overall_row = FALSE,
                                         attributes = FALSE,
                                         total_n = FALSE,
-                                        shuffle = FALSE) {
+                                        shuffle = FALSE,
+                                        include_uni_by_tab = TRUE) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -371,7 +372,7 @@ internal_stack_hierarchical <- function(data,
   }
 
   # add univariate tabulations of by variables ---------------------------------
-  if (is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
+  if (isTRUE(include_uni_by_tab) && is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
     lst_results <-
       lst_results |>
       append(
@@ -388,15 +389,27 @@ internal_stack_hierarchical <- function(data,
     lst_results <-
       lst_results |>
       append(
-        .run_hierarchical_fun(
-          data = data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE),
+        # need to use this call to also re-run for `overall=TRUE` when specified
+        rlang::call2(
+          "internal_stack_hierarchical",
+          data = expr(data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE)),
           variables = "..ard_hierarchical_overall..",
           by = by,
-          denominator = denominator,
-          id = id
+          id = id,
+          include = "..ard_hierarchical_overall..",
+          denominator = expr(denominator),
+          overall = overall,
+          overall_row = FALSE,
+          attributes = FALSE,
+          total_n = FALSE,
+          shuffle = FALSE,
+          include_uni_by_tab = FALSE
         ) |>
+          eval_tidy() |>
           list()
       )
+
+
   }
 
   # add attributes if requested ------------------------------------------------

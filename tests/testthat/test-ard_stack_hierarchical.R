@@ -66,8 +66,8 @@ test_that("ard_stack_hierarchical(variables) messaging removed obs", {
         by = TRTA,
         denominator =
           ADSL |>
-            dplyr::rename(TRTA = TRT01A) |>
-            dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA))
+          dplyr::rename(TRTA = TRT01A) |>
+          dplyr::mutate(TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA))
       )
   )
 })
@@ -479,6 +479,23 @@ test_that("ard_stack_hierarchical_count(overall_row)", {
       ) |>
       dplyr::filter(variable %in% "..ard_hierarchical_overall..") |>
       dplyr::select(-all_missing_columns())
+  )
+})
+
+test_that("ard_stack_hierarchical_count(overall,overall_row)", {
+  # ensuring we have an overall row grouped by TRTA, and across TRTA levels (nrow=4)
+  expect_snapshot(
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = AESOC,
+        by = TRTA,
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        overall_row = TRUE,
+        overall = TRUE
+      ) |>
+      dplyr::filter(variable == "..ard_hierarchical_overall..") |>
+      dplyr::select(all_ard_groups(), "variable", "stat_name", "stat") |>
+      as.data.frame()
   )
 })
 

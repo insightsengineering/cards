@@ -135,3 +135,18 @@
     Message
       i 4 more variables: context, fmt_fn, warning, error
 
+# ard_stack_hierarchical_count(overall,overall_row)
+
+    Code
+      as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(
+        ADAE_small, variables = AESOC, by = TRTA, denominator = dplyr::rename(ADSL,
+          TRTA = ARM), overall_row = TRUE, overall = TRUE), variable ==
+        "..ard_hierarchical_overall.."), all_ard_groups(), "variable", "stat_name",
+      "stat"))
+    Output
+        group1         group1_level                     variable stat_name stat
+      1   TRTA              Placebo ..ard_hierarchical_overall..         n    2
+      2   TRTA Xanomeline High Dose ..ard_hierarchical_overall..         n    2
+      3   TRTA  Xanomeline Low Dose ..ard_hierarchical_overall..         n    2
+      4   <NA>                 NULL ..ard_hierarchical_overall..         n    6
+
