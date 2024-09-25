@@ -247,6 +247,7 @@ test_that("ard_stack() works with namespaced functions", {
 })
 
 test_that("ard_stack() messaging", {
+  withr::local_options(list(width = 150))
   expect_snapshot(
     ard_stack(
       data = mtcars,
@@ -264,6 +265,7 @@ test_that("ard_stack() messaging", {
 })
 
 test_that("ard_stack() complex call error", {
+  withr::local_options(list(width = 150))
   expect_snapshot(
     {
       complex_call <- list()
@@ -291,6 +293,7 @@ test_that("ard_stack() follows ard structure", {
 })
 
 test_that("ard_stack(.by) messaging", {
+  withr::local_options(list(width = 150))
   mtcars2 <- mtcars
   mtcars2$am[1] <- NA
   mtcars2$vs[1] <- NA

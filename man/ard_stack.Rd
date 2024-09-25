@@ -46,7 +46,7 @@ logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
 }
 \value{
-a transformed ARD data frame (of class 'card' if \code{.shuffle = FALSE})
+an ARD data frame of class 'card'
 }
 \description{
 Stack multiple ARD calls sharing common input \code{data} and \code{by} variables.

@@ -66,15 +66,15 @@ the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 
-\item{id}{((\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr)
-an optional argument used to assert there are no duplicates with in the
-column(s) passed here. For example, if \code{id=USUBJID} is passed, we will
-add a check there are no duplicates in \code{data['USUBJID']}.}
+\item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+an optional argument used to assert there are no duplicates within
+the \code{c(id, variables)} columns.}
 }
 \value{
 an ARD data frame of class 'card'
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 \itemize{
@@ -118,9 +118,11 @@ be used as the updated \code{"N"} in the calculations.
 
 \examples{
 ard_hierarchical(
-  data = ADAE,
+  data = ADAE |>
+    dplyr::slice_tail(n = 1L, by = c(USUBJID, TRTA, AESOC, AEDECOD)),
   variables = c(AESOC, AEDECOD),
-  by = c(TRTA, AESEV),
+  by = TRTA,
+  id = USUBJID,
   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 )
 
