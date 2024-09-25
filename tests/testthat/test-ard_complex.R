@@ -124,3 +124,39 @@ test_that("ard_complex() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_complex errors with incorrect factor columns", {
+
+  # First check output is fine when there is a valid factor variable
+  expect_snapshot(
+    mtcars |>
+      dplyr::mutate(am = factor(am)) |>
+      ard_complex(
+        by = am,
+        variables = mpg,
+        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+  )
+
+  # Check error when factors have no levels
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = character(0))) |>
+      ard_complex(
+        by = am,
+        variables = mpg,
+        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+  )
+
+  # Check error when factor has NA level
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
+      ard_complex(
+        by = am,
+        variables = mpg,
+        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+  )
+
+})

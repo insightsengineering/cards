@@ -146,3 +146,48 @@
       1    NULL There was an error calculating the mean.
       2    NULL There was an error calculating the mean.
 
+# ard_continuous errors with incomplete factor columns
+
+    Code
+      ard_continuous(dplyr::mutate(mtcars, am = factor(am)), by = am, variables = mpg)
+    Message
+      {cards} data frame: 16 x 10
+    Output
+         group1 group1_level variable stat_name stat_label   stat
+      1      am            0      mpg         N          N     19
+      2      am            0      mpg      mean       Mean 17.147
+      3      am            0      mpg        sd         SD  3.834
+      4      am            0      mpg    median     Median   17.3
+      5      am            0      mpg       p25         Q1   14.7
+      6      am            0      mpg       p75         Q3   19.2
+      7      am            0      mpg       min        Min   10.4
+      8      am            0      mpg       max        Max   24.4
+      9      am            1      mpg         N          N     13
+      10     am            1      mpg      mean       Mean 24.392
+      11     am            1      mpg        sd         SD  6.167
+      12     am            1      mpg    median     Median   22.8
+      13     am            1      mpg       p25         Q1     21
+      14     am            1      mpg       p75         Q3   30.4
+      15     am            1      mpg       min        Min     15
+      16     am            1      mpg       max        Max   33.9
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
+---
+
+    Code
+      ard_continuous(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      by = am, variables = mpg)
+    Condition
+      Error in `ard_continuous()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_continuous(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), by = am, variables = mpg)
+    Condition
+      Error in `ard_continuous()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+

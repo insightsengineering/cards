@@ -71,3 +71,80 @@
     Output
       data frame with 0 columns and 0 rows
 
+# ard_hierarchical errors with incomplete factor columns
+
+    Code
+      ard_hierarchical(dplyr::mutate(mtcars, am = factor(am)), variables = c(vs, am))
+    Message
+      {cards} data frame: 12 x 11
+    Output
+         group1 group1_level variable variable_level stat_name stat_label stat
+      1      vs            0       am              0         n          n   12
+      2      vs            0       am              0         N          N   12
+      3      vs            0       am              0         p          %    1
+      4      vs            1       am              0         n          n    7
+      5      vs            1       am              0         N          N    7
+      6      vs            1       am              0         p          %    1
+      7      vs            0       am              1         n          n    6
+      8      vs            0       am              1         N          N    6
+      9      vs            0       am              1         p          %    1
+      10     vs            1       am              1         n          n    7
+      11     vs            1       am              1         N          N    7
+      12     vs            1       am              1         p          %    1
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
+---
+
+    Code
+      ard_hierarchical(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      variables = c(vs, am))
+    Condition
+      Error in `ard_hierarchical()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_hierarchical(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), variables = c(vs, am))
+    Condition
+      Error in `ard_hierarchical()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+
+# ard_hierarchical_count errors with incomplete factor columns
+
+    Code
+      ard_hierarchical_count(dplyr::mutate(mtcars, am = factor(am)), variables = c(vs,
+        am))
+    Message
+      {cards} data frame: 6 x 11
+    Output
+        group1 group1_level variable variable_level stat_name stat_label stat
+      1     vs            0       am              0         n          n   12
+      2     vs            1       am              0         n          n    7
+      3     vs            0       am              1         n          n    6
+      4     vs            1       am              1         n          n    7
+      5   <NA>                    vs              0         n          n   18
+      6   <NA>                    vs              1         n          n   14
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
+---
+
+    Code
+      ard_hierarchical_count(dplyr::mutate(mtcars, am = factor(am, levels = character(
+        0))), variables = c(vs, am))
+    Condition
+      Error in `ard_hierarchical_count()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_hierarchical_count(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1,
+        NA), exclude = NULL)), variables = c(vs, am))
+    Condition
+      Error in `ard_hierarchical_count()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+
