@@ -153,7 +153,10 @@ test_that("ard_hierarchical_count() works without by variables", {
   )
 
   expect_equal(
-    ard_heir_no_by |>
+    ard_hierarchical_count(
+      data = ADAE,
+      variables = AESOC
+    ) |>
       dplyr::filter(variable == "AESOC", variable_level == "CARDIAC DISORDERS") |>
       get_ard_statistics(.attributes = NULL),
     list(

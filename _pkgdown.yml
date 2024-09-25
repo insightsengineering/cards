@@ -32,6 +32,7 @@ reference:
       - ard_total_n
       - ard_complex
       - ard_stack
+      - ard_stack_hierarchical
 
   - subtitle: "Misc."
   -  contents:

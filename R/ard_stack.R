@@ -31,7 +31,7 @@
 #' @param .total_n (`logical`)\cr
 #'   logical indicating whether to include of `ard_total_n()` in the returned ARD.
 #'
-#' @return  a transformed ARD data frame (of class 'card' if `.shuffle = FALSE`)
+#' @return an ARD data frame of class 'card'
 #' @export
 #'
 #' @examples
