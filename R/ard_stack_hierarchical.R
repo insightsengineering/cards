@@ -87,8 +87,9 @@
 #' @param overall (scalar `logical`)\cr logical indicating whether overall statistics
 #'   should be calculated (i.e. repeat the operations with `by=NULL` in _most cases_, see below for details).
 #'   Default is `FALSE`.
-#' @param overall_row (scalar `logical`)\cr logical indicating whether overall statistics
-#'   should be calculated across the columns listed in the `variables` argument.
+#' @param over_variables (scalar `logical`)\cr
+#' logical indicating whether summary statistics
+#'   should be calculated over or across the columns listed in the `variables` argument.
 #'   Default is `FALSE`.
 #' @param attributes (scalar `logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
@@ -127,8 +128,9 @@ ard_stack_hierarchical <- function(data,
                                    id,
                                    denominator,
                                    include = everything(),
+                                   statistic = everything() ~ c("n", "N", "p"),
                                    overall = FALSE,
-                                   overall_row = FALSE,
+                                   over_variables = FALSE,
                                    attributes = FALSE,
                                    total_n = FALSE,
                                    shuffle = FALSE) {
@@ -161,8 +163,9 @@ ard_stack_hierarchical <- function(data,
     id = {{ id }},
     denominator = denominator,
     include = {{ include }},
+    statistic = statistic,
     overall = overall,
-    overall_row = overall_row,
+    over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
     shuffle = shuffle
@@ -177,7 +180,7 @@ ard_stack_hierarchical_count <- function(data,
                                          denominator = NULL,
                                          include = everything(),
                                          overall = FALSE,
-                                         overall_row = FALSE,
+                                         over_variables = FALSE,
                                          attributes = FALSE,
                                          total_n = FALSE,
                                          shuffle = FALSE) {
@@ -201,8 +204,9 @@ ard_stack_hierarchical_count <- function(data,
     id = NULL,
     denominator = denominator,
     include = {{ include }},
+    statistic = NULL,
     overall = overall,
-    overall_row = overall_row,
+    over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
     shuffle = shuffle
@@ -217,8 +221,9 @@ internal_stack_hierarchical <- function(data,
                                         id = NULL,
                                         denominator = NULL,
                                         include = everything(),
+                                        statistic = NULL,
                                         overall = FALSE,
-                                        overall_row = FALSE,
+                                        over_variables = FALSE,
                                         attributes = FALSE,
                                         total_n = FALSE,
                                         shuffle = FALSE,
@@ -229,7 +234,7 @@ internal_stack_hierarchical <- function(data,
   cards::process_selectors(data, variables = {{ variables }}, id = {{ id }}, by = {{ by }})
   cards::process_selectors(data[variables], include = {{ include }})
   check_scalar_logical(overall)
-  check_scalar_logical(overall_row)
+  check_scalar_logical(over_variables)
   check_scalar_logical(attributes)
   check_scalar_logical(total_n)
   check_scalar_logical(shuffle)
@@ -331,7 +336,8 @@ internal_stack_hierarchical <- function(data,
           variables = variables[seq_len(i)],
           by = by,
           denominator = denominator,
-          id = id
+          id = id,
+          statistic = statistic
         ) |>
           list()
       )
@@ -348,7 +354,8 @@ internal_stack_hierarchical <- function(data,
             variables = variables[seq_len(i)],
             by = setdiff(by, names(denominator)),
             denominator = denominator,
-            id = id
+            id = id,
+            statistic = statistic
           ) |>
             list()
         )
@@ -363,7 +370,8 @@ internal_stack_hierarchical <- function(data,
               variables = variables[seq_len(i)],
               by = NULL,
               denominator = denominator,
-              id = id
+              id = id,
+              statistic = statistic
             ) |>
               list()
           )
@@ -385,7 +393,7 @@ internal_stack_hierarchical <- function(data,
   }
 
   # add overall row if requested -----------------------------------------------
-  if (isTRUE(overall_row)) {
+  if (isTRUE(over_variables)) {
     lst_results <-
       lst_results |>
       append(
@@ -398,8 +406,9 @@ internal_stack_hierarchical <- function(data,
           id = id,
           include = "..ard_hierarchical_overall..",
           denominator = expr(denominator),
+          statistic = statistic,
           overall = overall,
-          overall_row = FALSE,
+          over_variables = FALSE,
           attributes = FALSE,
           total_n = FALSE,
           shuffle = FALSE,
@@ -451,7 +460,7 @@ internal_stack_hierarchical <- function(data,
 }
 
 # this function calculates either the counts or the rates of the events
-.run_hierarchical_fun <- function(data, variables, by, denominator, id) {
+.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
@@ -465,7 +474,8 @@ internal_stack_hierarchical <- function(data,
       variables = all_of(variables),
       by = all_of(by),
       denominator = denominator,
-      id = all_of(id)
+      id = all_of(id),
+      statistic = statistic
     )
   }
 }

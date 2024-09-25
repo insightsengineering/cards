@@ -135,12 +135,12 @@
     Message
       i 4 more variables: context, fmt_fn, warning, error
 
-# ard_stack_hierarchical_count(overall,overall_row)
+# ard_stack_hierarchical_count(overall,over_variables)
 
     Code
       as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(
         ADAE_small, variables = AESOC, by = TRTA, denominator = dplyr::rename(ADSL,
-          TRTA = ARM), overall_row = TRUE, overall = TRUE), variable ==
+          TRTA = ARM), over_variables = TRUE, overall = TRUE), variable ==
         "..ard_hierarchical_overall.."), all_ard_groups(), "variable", "stat_name",
       "stat"))
     Output

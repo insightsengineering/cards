@@ -12,8 +12,9 @@ ard_stack_hierarchical(
   id,
   denominator,
   include = everything(),
+  statistic = everything() ~ c("n", "N", "p"),
   overall = FALSE,
-  overall_row = FALSE,
+  over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
   shuffle = FALSE
@@ -26,7 +27,7 @@ ard_stack_hierarchical_count(
   denominator = NULL,
   include = everything(),
   overall = FALSE,
-  overall_row = FALSE,
+  over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
   shuffle = FALSE
@@ -66,12 +67,18 @@ calculate the event rates.
 Specify the subset a columns indicated in the \code{variables} argument for which
 summary statistics will be returned. Default is \code{everything()}.}
 
+\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
+a named list, a list of formulas,
+or a single formula where the list element one or more of  \code{c("n", "N", "p")}
+(or the RHS of a formula).}
+
 \item{overall}{(scalar \code{logical})\cr logical indicating whether overall statistics
 should be calculated (i.e. repeat the operations with \code{by=NULL} in \emph{most cases}, see below for details).
 Default is \code{FALSE}.}
 
-\item{overall_row}{(scalar \code{logical})\cr logical indicating whether overall statistics
-should be calculated across the columns listed in the \code{variables} argument.
+\item{over_variables}{(scalar \code{logical})\cr
+logical indicating whether summary statistics
+should be calculated over or across the columns listed in the \code{variables} argument.
 Default is \code{FALSE}.}
 
 \item{attributes}{(scalar \code{logical})\cr

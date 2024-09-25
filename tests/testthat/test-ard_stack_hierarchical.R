@@ -264,6 +264,26 @@ test_that("ard_stack_hierarchical(by, overall) messaging", {
   )
 })
 
+test_that("ard_stack_hierarchical(statistic)", {
+  expect_equal(
+    ard_stack_hierarchical(
+      ADAE,
+      variables = AESOC,
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = USUBJID,
+      statistic = everything() ~ "p"
+    ),
+    ard_stack_hierarchical(
+      ADAE,
+      variables = AESOC,
+      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      id = USUBJID,
+      statistic = everything() ~ c("n", "N", "p")
+    ) |>
+      dplyr::filter(stat_name %in% "p")
+  )
+})
+
 # ard_stack_hierarchical_count() -----------------------------------------------
 test_that("ard_stack_hierarchical_count(variables)", {
   # ensure that all nested variables appear in resulting ARD
@@ -423,6 +443,8 @@ test_that("ard_stack_hierarchical_count(overall, denominator) messaging", {
   )
 })
 
+
+
 test_that("ard_stack_hierarchical_count(overall)", {
   withr::local_options(list(width = 250))
   # requesting overall without a data frame denominator
@@ -458,7 +480,7 @@ test_that("ard_stack_hierarchical_count(overall)", {
   })
 })
 
-test_that("ard_stack_hierarchical_count(overall_row)", {
+test_that("ard_stack_hierarchical_count(over_variables)", {
   # requesting overall without a data frame denominator
   expect_equal(
     ADAE_small |>
@@ -466,7 +488,7 @@ test_that("ard_stack_hierarchical_count(overall_row)", {
         variables = c(AESOC, AEDECOD),
         by = TRTA,
         denominator = ADSL |> dplyr::rename(TRTA = ARM),
-        overall_row = TRUE
+        over_variables = TRUE
       ) |>
       dplyr::filter(variable %in% "..ard_hierarchical_overall..") |>
       dplyr::select(-all_missing_columns()),
@@ -482,7 +504,7 @@ test_that("ard_stack_hierarchical_count(overall_row)", {
   )
 })
 
-test_that("ard_stack_hierarchical_count(overall,overall_row)", {
+test_that("ard_stack_hierarchical_count(overall,over_variables)", {
   # ensuring we have an overall row grouped by TRTA, and across TRTA levels (nrow=4)
   expect_snapshot(
     ADAE_small |>
@@ -490,7 +512,7 @@ test_that("ard_stack_hierarchical_count(overall,overall_row)", {
         variables = AESOC,
         by = TRTA,
         denominator = ADSL |> dplyr::rename(TRTA = ARM),
-        overall_row = TRUE,
+        over_variables = TRUE,
         overall = TRUE
       ) |>
       dplyr::filter(variable == "..ard_hierarchical_overall..") |>
