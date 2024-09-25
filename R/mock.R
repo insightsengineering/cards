@@ -35,6 +35,8 @@
 #' mock_continuous(
 #'   variables = c("AGE", "BMIBL"),
 #'   by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+#'   # update the mock to report 'xx.xx' for standard deviations
+#'   update_ard_fmt_fn(variables = c("AGE", "BMIBL"), stat_names = "sd", fmt_fn = \(x) "xx.xx") |>
 #' ) |>
 #'   apply_fmt_fn()
 NULL
