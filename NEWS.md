@@ -1,4 +1,4 @@
-# cards 0.2.2.9010
+# cards 0.2.2.9011
 
 * Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
 
