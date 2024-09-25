@@ -408,8 +408,6 @@ internal_stack_hierarchical <- function(data,
           eval_tidy() |>
           list()
       )
-
-
   }
 
   # add attributes if requested ------------------------------------------------
