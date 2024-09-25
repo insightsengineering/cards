@@ -1,4 +1,4 @@
-# cards 0.2.2.9009
+# cards 0.2.2.9010
 
 * Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
 
@@ -7,6 +7,8 @@
 * Added functions `update_ard_fmt_fn()` and `update_ard_stat_label()` to update an ARD's formatting function and statistic label, respectively. (#253)
 
 * Added `rename_ard_columns(unlist)` argument, which unlists specified columns in the ARD data frame. (#313)
+
+* Added functions `mock_continuous()`, `mock_categorical()`, `mock_dichotomous()`, `mock_missing()`, `mock_attributes()` to build ARDs in the absence of a data frame. Where applicable, the formatting functions are set to return `'xx'` or `'xx.x'` to aid in the construction of mock tables or table shells. (#256)
 
 # cards 0.2.2
 
