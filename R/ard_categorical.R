@@ -409,7 +409,8 @@ ard_categorical.data.frame <- function(data,
         df_table,
         df_original_strata,
         by = strata
-      )
+      ) |>
+      dplyr::arrange(across(all_of(strata)))
   }
 
   df_table
