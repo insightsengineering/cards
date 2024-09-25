@@ -33,3 +33,73 @@
       Error in `ard_stack()`:
       ! `cards::ard_stack()` works with simple calls (`?rlang::call_name()`) and `complex_call$ard_continuous(variables = "mpg")` is not simple.
 
+# ard_stack(.by) messaging
+
+    Code
+      dplyr::filter(ard_stack(mtcars2, ard_continuous(variables = "mpg", statistic = ~
+        continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE, .overall = TRUE),
+      stat_name %in% "N")
+    Message
+      * Removing 1 row with NA or NaN values in "am" and "vs" columns.
+      {cards} data frame: 10 x 13
+    Output
+         group1 group1_level group2 group2_level        variable variable_level
+      1      am            0     vs            0             mpg               
+      2      am            0     vs            1             mpg               
+      3      am            1     vs            0             mpg               
+      4      am            1     vs            1             mpg               
+      5    <NA>                <NA>                          mpg               
+      6    <NA>                <NA>                           am              0
+      7    <NA>                <NA>                           am              1
+      8    <NA>                <NA>                           vs              0
+      9    <NA>                <NA>                           vs              1
+      10   <NA>                <NA>              ..ard_total_n..               
+         stat_name stat_label stat
+      1          N          N   12
+      2          N          N    7
+      3          N          N    5
+      4          N          N    7
+      5          N          N   31
+      6          N          N   31
+      7          N          N   31
+      8          N          N   31
+      9          N          N   31
+      10         N          N   31
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
+---
+
+    Code
+      dplyr::filter(ard_stack(mtcars3, ard_continuous(variables = "mpg", statistic = ~
+        continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE, .overall = TRUE),
+      stat_name %in% "N")
+    Message
+      * Removing 2 rows with NA or NaN values in "am" and "vs" columns.
+      {cards} data frame: 10 x 13
+    Output
+         group1 group1_level group2 group2_level        variable variable_level
+      1      am            0     vs            0             mpg               
+      2      am            0     vs            1             mpg               
+      3      am            1     vs            0             mpg               
+      4      am            1     vs            1             mpg               
+      5    <NA>                <NA>                          mpg               
+      6    <NA>                <NA>                           am              0
+      7    <NA>                <NA>                           am              1
+      8    <NA>                <NA>                           vs              0
+      9    <NA>                <NA>                           vs              1
+      10   <NA>                <NA>              ..ard_total_n..               
+         stat_name stat_label stat
+      1          N          N   12
+      2          N          N    7
+      3          N          N    4
+      4          N          N    7
+      5          N          N   30
+      6          N          N   30
+      7          N          N   30
+      8          N          N   30
+      9          N          N   30
+      10         N          N   30
+    Message
+      i 4 more variables: context, fmt_fn, warning, error
+
