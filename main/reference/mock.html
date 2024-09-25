@@ -11,7 +11,7 @@ Where applicable, the formatting functions are set to return 'xx' or 'xx.x'."><m
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.9010</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,17 +27,6 @@ Where applicable, the formatting functions are set to return 'xx' or 'xx.x'."><m
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -125,62 +114,7 @@ named list of variable labels, e.g. <code>list(cyl = "No. Cylinders")</code>.</p
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">mock_categorical</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  variables <span class="op">=</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      AGEGR1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;65"</span>, <span class="st">"65-80"</span>, <span class="st">"&gt;80"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;65"</span>, <span class="st">"65-80"</span>, <span class="st">"&gt;80"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="apply_fmt_fn.html">apply_fmt_fn</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 27 x 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable variable_level stat_name stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo   AGEGR1            &lt;65         n          n     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo   AGEGR1            &lt;65         p          %     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo   AGEGR1            &lt;65         N          N     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo   AGEGR1          65-80         n          n     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA      Placebo   AGEGR1          65-80         p          %     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA      Placebo   AGEGR1          65-80         N          N     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo   AGEGR1            &gt;80         n          n     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA      Placebo   AGEGR1            &gt;80         p          %     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA      Placebo   AGEGR1            &gt;80         N          N     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA    Xanomeli…   AGEGR1            &lt;65         n          n     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    stat_fmt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9        xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10       xx</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">mock_continuous</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGE"</span>, <span class="st">"BMIBL"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>TRTA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo"</span>, <span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="apply_fmt_fn.html">apply_fmt_fn</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 48 x 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name stat_label stat stat_fmt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo      AGE         N          N            xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo      AGE      mean       Mean          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo      AGE        sd         SD          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo      AGE    median     Median          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA      Placebo      AGE       p25         Q1          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA      Placebo      AGE       p75         Q3          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo      AGE       min        Min          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA      Placebo      AGE       max        Max          xx.x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…      AGE         N          N            xx</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA    Xanomeli…      AGE      mean       Mean          xx.x</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">38 more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
-</code></pre></div>
+
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
