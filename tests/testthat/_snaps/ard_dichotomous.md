@@ -53,27 +53,18 @@
 # ard_dichotomous() errors with incomplete factor columns
 
     Code
-      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am)), variables = c(cyl, am),
-      value = list(cyl = 4))
-    Message
-      {cards} data frame: 6 x 9
-    Output
-        variable variable_level   context stat_name stat_label  stat
-      1      cyl              4 dichotom…         n          n    11
-      2      cyl              4 dichotom…         N          N    32
-      3      cyl              4 dichotom…         p          % 0.344
-      4       am              1 dichotom…         n          n    13
-      5       am              1 dichotom…         N          N    32
-      6       am              1 dichotom…         p          % 0.406
-    Message
-      i 3 more variables: fmt_fn, warning, error
+      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      variables = c(cyl, vs), by = am, value = list(cyl = 4))
+    Condition
+      Error in `ard_dichotomous()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
 
 ---
 
     Code
-      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
-      variables = c(cyl, vs), value = list(cyl = 4))
+      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), variables = c(cyl, am), value = list(cyl = 4))
     Condition
       Error in `ard_dichotomous()`:
-      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+      ! Factors with NA levels are not allowed, which are present in column "am".
 

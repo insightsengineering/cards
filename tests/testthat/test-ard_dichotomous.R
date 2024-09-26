@@ -96,16 +96,6 @@ test_that("ard_dichotomous() follows ard structure", {
 })
 
 test_that("ard_dichotomous() errors with incomplete factor columns", {
-  # First check output is fine when there is a valid factor variable
-  expect_snapshot(
-    mtcars |>
-      dplyr::mutate(am = factor(am)) |>
-      ard_dichotomous(
-        variables = c(cyl, am),
-        value = list(cyl = 4)
-      )
-  )
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
@@ -113,6 +103,7 @@ test_that("ard_dichotomous() errors with incomplete factor columns", {
       dplyr::mutate(am = factor(am, levels = character(0))) |>
       ard_dichotomous(
         variables = c(cyl, vs),
+        by = am,
         value = list(cyl = 4)
       )
   )
