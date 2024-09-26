@@ -92,9 +92,6 @@ ard_continuous.data.frame <- function(data,
   )
   data <- dplyr::ungroup(data)
 
-  check_no_na_factor_levels(data[c(by, strata)])
-  check_factor_has_levels(data[c(by, strata)])
-
   process_formula_selectors(
     data[variables],
     statistic = statistic,
@@ -120,6 +117,13 @@ ard_continuous.data.frame <- function(data,
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
   }
+
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(by, strata)])
+  check_factor_has_levels(data[c(by, strata)])
+
+
 
   # calculate statistics -------------------------------------------------------
   df_nested <-

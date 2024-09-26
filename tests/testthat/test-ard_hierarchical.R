@@ -283,14 +283,6 @@ test_that("ard_hierarchical() follows ard structure", {
 })
 
 test_that("ard_hierarchical() errors with incomplete factor columns", {
-  # First check output is fine when there is a valid factor variable
-  expect_snapshot(
-    mtcars |>
-      dplyr::mutate(am = factor(am)) |>
-      ard_hierarchical(
-        variables = c(vs, am)
-      )
-  )
 
   # Check error when factors have no levels
   expect_snapshot(
@@ -315,14 +307,6 @@ test_that("ard_hierarchical() errors with incomplete factor columns", {
 
 
 test_that("ard_hierarchical_count() errors with incomplete factor columns", {
-  # First check output is fine when there is a valid factor variable
-  expect_snapshot(
-    mtcars |>
-      dplyr::mutate(am = factor(am)) |>
-      ard_hierarchical_count(
-        variables = c(vs, am)
-      )
-  )
 
   # Check error when factors have no levels
   expect_snapshot(

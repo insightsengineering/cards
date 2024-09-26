@@ -78,8 +78,6 @@ ard_complex.data.frame <- function(data,
   process_selectors(data, variables = {{ variables }})
   process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
-  check_no_na_factor_levels(data[c(by, strata)])
-  check_factor_has_levels(data[c(by, strata)])
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
@@ -90,6 +88,10 @@ ard_complex.data.frame <- function(data,
     "The following columns do not have {.arg statistic} defined: {.val {missing_statistics_vars}}." |>
       cli::cli_abort(call = get_cli_abort_call())
   }
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(by, strata)])
+  check_factor_has_levels(data[c(by, strata)])
 
   # calculate statistics -------------------------------------------------------
   # first set an option to be used internally within `ard_continuous()`

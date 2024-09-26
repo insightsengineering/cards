@@ -125,9 +125,6 @@ ard_categorical.data.frame <- function(data,
   data <- dplyr::ungroup(data)
   .check_whether_na_counts(data[variables])
 
-  check_no_na_factor_levels(data[c(variables, by, strata)])
-  check_factor_has_levels(data[c(variables, by, strata)])
-
   process_formula_selectors(
     data[variables],
     statistic = statistic,
@@ -156,6 +153,11 @@ ard_categorical.data.frame <- function(data,
       call = get_cli_abort_call()
     )
   }
+
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(variables, by, strata)])
+  check_factor_has_levels(data[c(variables, by, strata)])
 
   # calculating summary stats --------------------------------------------------
   # calculate tabulation statistics

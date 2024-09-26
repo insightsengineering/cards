@@ -81,9 +81,6 @@ ard_hierarchical.data.frame <- function(data,
   )
   data <- dplyr::ungroup(data)
 
-  check_no_na_factor_levels(data[c(variables, by)])
-  check_factor_has_levels(data[c(variables, by)])
-
   if (!is_empty(id) && anyDuplicated(data[c(id, variables)]) > 0L) {
     cli::cli_warn(c(
       "Duplicate rows found in data for the {.val {id}} column{?s}.",
@@ -95,6 +92,10 @@ ard_hierarchical.data.frame <- function(data,
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
   }
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(variables, by)])
+  check_factor_has_levels(data[c(variables, by)])
 
   # if denominator doesn't have all by, they need to be added ------------------
   if (!is.null(denominator) && is.data.frame(denominator) && !all(by %in% names(denominator))) {
@@ -150,13 +151,14 @@ ard_hierarchical_count.data.frame <- function(data,
   # process arguments ----------------------------------------------------------
   process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
-  check_no_na_factor_levels(data[c(variables, by)])
-  check_factor_has_levels(data[c(variables, by)])
-
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
   }
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(variables, by)])
+  check_factor_has_levels(data[c(variables, by)])
 
   # add dummy variable for counting --------------------------------------------
   data[["...ard_dummy_for_counting..."]] <- 1L
