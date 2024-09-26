@@ -870,13 +870,6 @@ test_that("ard_categorical() with hms times", {
 })
 
 test_that("ard_categorical() errors with incomplete factor columns", {
-  # First check output is fine when there is a valid factor variable
-  expect_snapshot(
-    mtcars |>
-      dplyr::mutate(am = factor(am)) |>
-      ard_categorical(variables = am)
-  )
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,

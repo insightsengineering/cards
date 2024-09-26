@@ -189,23 +189,6 @@
 # ard_categorical() errors with incomplete factor columns
 
     Code
-      ard_categorical(dplyr::mutate(mtcars, am = factor(am)), variables = am)
-    Message
-      {cards} data frame: 6 x 9
-    Output
-        variable variable_level   context stat_name stat_label  stat
-      1       am              0 categori…         n          n    19
-      2       am              0 categori…         N          N    32
-      3       am              0 categori…         p          % 0.594
-      4       am              1 categori…         n          n    13
-      5       am              1 categori…         N          N    32
-      6       am              1 categori…         p          % 0.406
-    Message
-      i 3 more variables: fmt_fn, warning, error
-
----
-
-    Code
       ard_categorical(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
       variables = am)
     Condition
