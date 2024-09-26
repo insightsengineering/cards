@@ -417,7 +417,6 @@ test_that("ard_continuous() follows ard structure", {
 })
 
 test_that("ard_continuous() errors with incomplete factor columns", {
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,

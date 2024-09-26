@@ -126,7 +126,6 @@ test_that("ard_complex() follows ard structure", {
 })
 
 test_that("ard_complex() errors with incorrect factor columns", {
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,

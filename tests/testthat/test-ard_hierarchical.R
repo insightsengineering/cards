@@ -283,7 +283,6 @@ test_that("ard_hierarchical() follows ard structure", {
 })
 
 test_that("ard_hierarchical() errors with incomplete factor columns", {
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
@@ -307,7 +306,6 @@ test_that("ard_hierarchical() errors with incomplete factor columns", {
 
 
 test_that("ard_hierarchical_count() errors with incomplete factor columns", {
-
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
