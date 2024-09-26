@@ -417,7 +417,6 @@ test_that("ard_continuous() follows ard structure", {
 })
 
 test_that("ard_continuous() errors with incomplete factor columns", {
-
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
     mtcars |>
@@ -425,7 +424,7 @@ test_that("ard_continuous() errors with incomplete factor columns", {
       ard_continuous(
         by = am,
         variables = mpg
-        )
+      )
   )
 
   # Check error when factors have no levels
@@ -449,5 +448,4 @@ test_that("ard_continuous() errors with incomplete factor columns", {
         variables = mpg
       )
   )
-
 })

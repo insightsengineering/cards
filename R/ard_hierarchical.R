@@ -71,9 +71,6 @@ ard_hierarchical.data.frame <- function(data,
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
-  
-  check_no_na_factor_levels(data)
-  check_factor_has_levels(data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(
@@ -83,6 +80,9 @@ ard_hierarchical.data.frame <- function(data,
     id = {{ id }}
   )
   data <- dplyr::ungroup(data)
+
+  check_no_na_factor_levels(data[c(variables, by)])
+  check_factor_has_levels(data[c(variables, by)])
 
   if (!is_empty(id) && anyDuplicated(data[c(id, variables)]) > 0L) {
     cli::cli_warn(c(
@@ -146,12 +146,12 @@ ard_hierarchical_count.data.frame <- function(data,
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
-  
-  check_no_na_factor_levels(data)
-  check_factor_has_levels(data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(data, variables = {{ variables }}, by = {{ by }})
+
+  check_no_na_factor_levels(data[c(variables, by)])
+  check_factor_has_levels(data[c(variables, by)])
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {

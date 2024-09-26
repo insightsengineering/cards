@@ -18,7 +18,6 @@ test_that("ard_total_n() follows ard structure", {
 })
 
 test_that("ard_total_n() errors with incomplete factor columns", {
-
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
     mtcars |>
@@ -41,5 +40,4 @@ test_that("ard_total_n() errors with incomplete factor columns", {
       dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
       ard_total_n()
   )
-
 })

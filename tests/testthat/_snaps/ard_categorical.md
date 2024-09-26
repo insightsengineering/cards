@@ -186,7 +186,7 @@
       Error in `ard_categorical()`:
       ! The `by` argument cannot include variables named "variable" and "variable_level".
 
-# ard_categorical errors with incomplete factor columns
+# ard_categorical() errors with incomplete factor columns
 
     Code
       ard_categorical(dplyr::mutate(mtcars, am = factor(am)), variables = am)

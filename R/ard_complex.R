@@ -73,14 +73,13 @@ ard_complex.data.frame <- function(data,
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
   check_not_missing(statistic)
-  
-  check_no_na_factor_levels(data)
-  check_factor_has_levels(data)
 
   # process inputs -------------------------------------------------------------
   process_selectors(data, variables = {{ variables }})
   process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
+  check_no_na_factor_levels(data[c(by, strata)])
+  check_factor_has_levels(data[c(by, strata)])
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())

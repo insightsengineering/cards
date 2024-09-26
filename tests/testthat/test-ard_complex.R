@@ -126,7 +126,6 @@ test_that("ard_complex() follows ard structure", {
 })
 
 test_that("ard_complex() errors with incorrect factor columns", {
-
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
     mtcars |>
@@ -134,7 +133,8 @@ test_that("ard_complex() errors with incorrect factor columns", {
       ard_complex(
         by = am,
         variables = mpg,
-        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+        statistic = list(mpg = list(mean = \(x, ...) mean(x)))
+      )
   )
 
   # Check error when factors have no levels
@@ -145,7 +145,8 @@ test_that("ard_complex() errors with incorrect factor columns", {
       ard_complex(
         by = am,
         variables = mpg,
-        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+        statistic = list(mpg = list(mean = \(x, ...) mean(x)))
+      )
   )
 
   # Check error when factor has NA level
@@ -156,7 +157,7 @@ test_that("ard_complex() errors with incorrect factor columns", {
       ard_complex(
         by = am,
         variables = mpg,
-        statistic = list(mpg = list(mean = \(x, ...) mean(x))))
+        statistic = list(mpg = list(mean = \(x, ...) mean(x)))
+      )
   )
-
 })

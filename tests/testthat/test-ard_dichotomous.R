@@ -96,7 +96,6 @@ test_that("ard_dichotomous() follows ard structure", {
 })
 
 test_that("ard_dichotomous() errors with incomplete factor columns", {
-
   # First check output is fine when there is a valid factor variable
   expect_snapshot(
     mtcars |>
@@ -128,5 +127,4 @@ test_that("ard_dichotomous() errors with incomplete factor columns", {
         value = list(cyl = 4)
       )
   )
-
 })

@@ -87,21 +87,3 @@
     Message
       i 2 more variables: warning, error
 
----
-
-    Code
-      ard_missing(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
-      variables = mpg)
-    Condition
-      Error in `ard_missing()`:
-      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
-
----
-
-    Code
-      ard_missing(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
-      exclude = NULL)), variables = mpg)
-    Condition
-      Error in `ard_missing()`:
-      ! Factors with NA levels are not allowed, which are present in column "am".
-

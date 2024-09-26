@@ -83,9 +83,6 @@ ard_continuous.data.frame <- function(data,
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
   .check_no_ard_columns(data)
-  
-  check_no_na_factor_levels(data)
-  check_factor_has_levels(data)
 
   # process arguments ----------------------------------------------------------
   process_selectors(data,
@@ -94,6 +91,9 @@ ard_continuous.data.frame <- function(data,
     strata = {{ strata }}
   )
   data <- dplyr::ungroup(data)
+
+  check_no_na_factor_levels(data[c(by, strata)])
+  check_factor_has_levels(data[c(by, strata)])
 
   process_formula_selectors(
     data[variables],

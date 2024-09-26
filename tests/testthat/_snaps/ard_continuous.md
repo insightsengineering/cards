@@ -146,7 +146,7 @@
       1    NULL There was an error calculating the mean.
       2    NULL There was an error calculating the mean.
 
-# ard_continuous errors with incomplete factor columns
+# ard_continuous() errors with incomplete factor columns
 
     Code
       ard_continuous(dplyr::mutate(mtcars, am = factor(am)), by = am, variables = mpg)
