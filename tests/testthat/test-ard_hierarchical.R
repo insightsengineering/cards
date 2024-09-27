@@ -281,3 +281,48 @@ test_that("ard_hierarchical() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_hierarchical() errors with incomplete factor columns", {
+  # Check error when factors have no levels
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = character(0))) |>
+      ard_hierarchical(
+        variables = c(vs, am)
+      )
+  )
+
+  # Check error when factor has NA level
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
+      ard_hierarchical(
+        variables = c(vs, am)
+      )
+  )
+})
+
+
+test_that("ard_hierarchical_count() errors with incomplete factor columns", {
+  # Check error when factors have no levels
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = character(0))) |>
+      ard_hierarchical_count(
+        variables = c(vs, am)
+      )
+  )
+
+  # Check error when factor has NA level
+  expect_snapshot(
+    error = TRUE,
+    mtcars |>
+      dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
+      ard_hierarchical_count(
+        variables = c(vs, am)
+      )
+  )
+})
