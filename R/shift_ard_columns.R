@@ -52,7 +52,8 @@ rename_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variable
       if (length(unlisted) != length(x[[unlist_var]])) {
         cli::cli_abort(
           c("Cannot unlist column {.val {unlist_var}}. The unlisted result is not the same length as the original.",
-            "i" = "This often occurs when the column contains {.code NULL} values."
+            "i" = "This often occurs when the column contains {.code NULL} values.",
+            if (unlist_var == "stat") c("*" = "Run {.fun cards::replace_null_statistic} to replace {.code NULL} values with {.val {NA}}.")
           ),
           call = get_cli_abort_call()
         )
