@@ -96,3 +96,12 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
 #> ℹ Use `print(n = ...)` to see more rows
 #> ℹ 4 more variables: context, fmt_fn, warning, error
 ```
+
+## Other Resources
+
+- [Posit 2024 pharmaverse
+  Workshop](https://posit-conf-2024.github.io/pharmaverse/#schedule):
+  Follow the link for “Analysis Results Datasets” in the schedule.
+
+- [2024 China Pharma R User Conference Keynote
+  Address](https://www.danieldsjoberg.com/china-pharma-keynote-2024/material.html)
