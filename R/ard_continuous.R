@@ -118,6 +118,13 @@ ard_continuous.data.frame <- function(data,
     return(dplyr::tibble() |> as_card())
   }
 
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(by, strata)])
+  check_factor_has_levels(data[c(by, strata)])
+
+
+
   # calculate statistics -------------------------------------------------------
   df_nested <-
     data |>

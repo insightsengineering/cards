@@ -50,3 +50,21 @@
       i A value of 100 was passed, but must be one of 4, 6, and 8.
       i To summarize this value, make the column a factor and include 100 as a level.
 
+# ard_dichotomous() errors with incomplete factor columns
+
+    Code
+      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      variables = c(cyl, vs), by = am, value = list(cyl = 4))
+    Condition
+      Error in `ard_dichotomous()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_dichotomous(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), variables = c(cyl, am), value = list(cyl = 4))
+    Condition
+      Error in `ard_dichotomous()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+
