@@ -1,5 +1,6 @@
 #' Hierarchical ARD Statistics
 #'
+#' `r lifecycle::badge('experimental')`\cr
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
 #' - `ard_hierarchical()` includes summaries for the last variable listed
@@ -14,10 +15,9 @@
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   variables to perform tabulations by. All combinations of the variables
 #'   specified here appear in results. Default is `dplyr::group_vars(data)`.
-#' @param id (([`tidy-select`][dplyr::dplyr_tidy_select])\cr)
-#'   an optional argument used to assert there are no duplicates with in the
-#'   column(s) passed here. For example, if `id=USUBJID` is passed, we will
-#'   add a check there are no duplicates in `data['USUBJID']`.
+#' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   an optional argument used to assert there are no duplicates within
+#'   the `c(id, variables)` columns.
 #' @inheritParams ard_categorical
 #'
 #' @return an ARD data frame of class 'card'
@@ -27,9 +27,11 @@
 #'
 #' @examples
 #' ard_hierarchical(
-#'   data = ADAE,
+#'   data = ADAE |>
+#'     dplyr::slice_tail(n = 1L, by = c(USUBJID, TRTA, AESOC, AEDECOD)),
 #'   variables = c(AESOC, AEDECOD),
-#'   by = c(TRTA, AESEV),
+#'   by = TRTA,
+#'   id = USUBJID,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 #' )
 #'
@@ -79,7 +81,7 @@ ard_hierarchical.data.frame <- function(data,
   )
   data <- dplyr::ungroup(data)
 
-  if (!is_empty(id) && anyDuplicated(data[id]) > 0L) {
+  if (!is_empty(id) && anyDuplicated(data[c(id, variables)]) > 0L) {
     cli::cli_warn(c(
       "Duplicate rows found in data for the {.val {id}} column{?s}.",
       "i" = "Percentages/Denominators are not correct."
@@ -143,11 +145,7 @@ ard_hierarchical_count.data.frame <- function(data,
   check_not_missing(variables)
 
   # process arguments ----------------------------------------------------------
-  process_selectors(
-    data,
-    variables = {{ variables }},
-    by = {{ by }}
-  )
+  process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
@@ -158,23 +156,16 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  seq_along(variables) |>
-    rev() |>
-    lapply(
-      function(i) {
-        ard_categorical(
-          data = data,
-          variables = "...ard_dummy_for_counting...",
-          by = all_of(by),
-          strata = all_of(variables[seq_len(i)]),
-          statistic = everything() ~ "n",
-          fmt_fn = fmt_fn,
-          stat_label = stat_label
-        ) |>
-          .rename_last_group_as_variable()
-      }
-    ) |>
-    bind_ard() |>
+  ard_categorical(
+    data = data,
+    variables = "...ard_dummy_for_counting...",
+    by = all_of(by),
+    strata = all_of(variables),
+    statistic = everything() ~ "n",
+    fmt_fn = fmt_fn,
+    stat_label = stat_label
+  ) |>
+    .rename_last_group_as_variable() |>
     dplyr::mutate(context = "hierarchical_count") |>
     as_card()
 }

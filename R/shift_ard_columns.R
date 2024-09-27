@@ -8,34 +8,72 @@
 #'   a data frame
 #' @param columns ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   Name of columns to coalesce together and rename.
+#' @param unlist ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   Columns to unlist. Often useful when performing visual inspection
+#'   of the results where the list-columns are more difficult to work with.
 #'
 #' @return data frame
 #' @export
 #'
 #' @examples
-#' data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
-#'
-#' rename_ard_columns(data)
-#' rename_ard_columns(data, columns = c("group1", "group1_level"))
-rename_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables())) {
+#' ADSL |>
+#'   ard_categorical(by = ARM, variables = AGEGR1) |>
+#'   apply_fmt_fn() |>
+#'   rename_ard_columns(unlist = c(stat, stat_fmt))
+rename_ard_columns <- function(x, columns = c(all_ard_groups(), all_ard_variables()), unlist = NULL) {
+  set_cli_abort_call()
   # check inputs ---------------------------------------------------------------
   check_not_missing(col)
 
   # process arguments ----------------------------------------------------------
-  process_selectors(x, columns = {{ columns }})
+  process_selectors(x, columns = {{ columns }}, unlist = {{ unlist }})
 
-  if (length(columns) == 0) {
+  if (is_empty(columns) && is_empty(unlist)) {
     return(x)
   }
 
-  # determine pairs of variables and levels ------------------------------------
-  column_pairs <- .pair_columns(x, columns)
+  # unlist columns -------------------------------------------------------------
+  if (!is_empty(unlist)) {
+    for (unlist_var in unlist) {
+      unlisted <-
+        eval_capture_conditions(unlist(x[[unlist_var]])) |>
+        captured_condition_as_error(
+          message = c(
+            "!" = "The following error occured while unlisting column {.val {unlist_var}}.",
+            "x" = "{condition}"
+          )
+        )
+      if (is.list(unlisted)) {
+        cli::cli_inform(c("Unable to unlist column {.val {unlist_var}}.",
+          "i" = "This often occurs when a list column contains elements that cannot coerced to a common type."
+        ))
+      }
 
-  # Sequentially coalesce/rename -----------------------------------------------
-  for (col_pair in column_pairs) {
-    x <- .shift_column_pair(x, col_pair)
+      if (length(unlisted) != length(x[[unlist_var]])) {
+        cli::cli_abort(
+          c("Cannot unlist column {.val {unlist_var}}. The unlisted result is not the same length as the original.",
+            "i" = "This often occurs when the column contains {.code NULL} values.",
+            if (unlist_var == "stat") c("*" = "Run {.fun cards::replace_null_statistic} to replace {.code NULL} values with {.val {NA}}.") # styler: off
+          ),
+          call = get_cli_abort_call()
+        )
+      }
+      x[[unlist_var]] <- unlisted
+    }
   }
 
+  # rename columns -------------------------------------------------------------
+  if (!is_empty(columns)) {
+    # determine pairs of variables and levels
+    column_pairs <- .pair_columns(x, columns)
+
+    # Sequentially coalesce/rename
+    for (col_pair in column_pairs) {
+      x <- .shift_column_pair(x, col_pair)
+    }
+  }
+
+  # return final ARD -----------------------------------------------------------
   x
 }
 

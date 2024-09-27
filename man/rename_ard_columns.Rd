@@ -4,7 +4,11 @@
 \alias{rename_ard_columns}
 \title{Rename ARD Columns}
 \usage{
-rename_ard_columns(x, columns = c(all_ard_groups(), all_ard_variables()))
+rename_ard_columns(
+  x,
+  columns = c(all_ard_groups(), all_ard_variables()),
+  unlist = NULL
+)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
@@ -12,6 +16,10 @@ a data frame}
 
 \item{columns}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 Name of columns to coalesce together and rename.}
+
+\item{unlist}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+Columns to unlist. Often useful when performing visual inspection
+of the results where the list-columns are more difficult to work with.}
 }
 \value{
 data frame
@@ -22,8 +30,8 @@ single column. The \code{group_level} or \code{variable_level} column is renamed
 the \code{group} or \code{variable} column, respectively.
 }
 \examples{
-data <- data.frame(group1 = "A", group1_level = "B", variable = "C", variable_level = "D")
-
-rename_ard_columns(data)
-rename_ard_columns(data, columns = c("group1", "group1_level"))
+ADSL |>
+  ard_categorical(by = ARM, variables = AGEGR1) |>
+  apply_fmt_fn() |>
+  rename_ard_columns(unlist = c(stat, stat_fmt))
 }

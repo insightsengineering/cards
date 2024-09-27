@@ -10,15 +10,15 @@ eval_capture_conditions(expr, data = NULL, env = caller_env())
 
 captured_condition_as_message(
   x,
-  type = c("error", "warning"),
   message = c("The following {type} occured:", x = "{condition}"),
+  type = c("error", "warning"),
   envir = rlang::current_env()
 )
 
 captured_condition_as_error(
   x,
-  type = c("error", "warning"),
   message = c("The following {type} occured:", x = "{condition}"),
+  type = c("error", "warning"),
   call = get_cli_abort_call(),
   envir = rlang::current_env()
 )
@@ -39,13 +39,13 @@ their own environments.}
 \item{x}{(\code{captured_condition})\cr
 a captured condition created by \code{eval_capture_conditions()}.}
 
-\item{type}{(\code{string})\cr
-the type of condition to return. Must be one of \code{'error'} or \code{'warning'}.}
-
 \item{message}{(\code{character})\cr
 message passed to \code{cli::cli_inform()} or \code{cli::cli_abort()}. The condition
 being printed is saved in an object named \code{condition}, which should be
 included in this message surrounded by curly brackets.}
+
+\item{type}{(\code{string})\cr
+the type of condition to return. Must be one of \code{'error'} or \code{'warning'}.}
 
 \item{envir}{Environment to evaluate the glue expressions in.}
 

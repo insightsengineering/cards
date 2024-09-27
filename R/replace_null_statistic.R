@@ -1,6 +1,6 @@
 #' Replace NULL Statistics with Specified Value
 #'
-#' When a statistical summary function errors, the `"statistic"` column will be
+#' When a statistical summary function errors, the `"stat"` column will be
 #' `NULL`. It is, however, sometimes useful to replace these values with a
 #' non-`NULL` value, e.g. `NA`.
 #'

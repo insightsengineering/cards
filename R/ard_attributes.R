@@ -41,6 +41,7 @@ ard_attributes.data.frame <- function(data,
                                       label = NULL,
                                       ...) {
   set_cli_abort_call()
+  check_dots_used()
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
