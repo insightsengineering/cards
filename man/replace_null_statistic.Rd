@@ -22,7 +22,7 @@ Default is \code{TRUE}, which applies to all rows.}
 an ARD data frame of class 'card'
 }
 \description{
-When a statistical summary function errors, the \code{"statistic"} column will be
+When a statistical summary function errors, the \code{"stat"} column will be
 \code{NULL}. It is, however, sometimes useful to replace these values with a
 non-\code{NULL} value, e.g. \code{NA}.
 }

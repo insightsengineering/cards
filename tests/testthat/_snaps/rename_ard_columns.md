@@ -44,4 +44,5 @@
       Error in `rename_ard_columns()`:
       ! Cannot unlist column "stat". The unlisted result is not the same length as the original.
       i This often occurs when the column contains `NULL` values.
+      * Run `cards::replace_null_statistic()` to replace `NULL` values with NA.
 
