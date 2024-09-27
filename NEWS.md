@@ -1,4 +1,4 @@
-# cards 0.2.2.9012
+# cards 0.2.2.9013
 
 * Add checks for factors with no levels, or any levels that are `NA` into `ard_*` functions (#255) 
 
