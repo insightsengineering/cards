@@ -154,6 +154,11 @@ ard_categorical.data.frame <- function(data,
     )
   }
 
+
+  # check factor levels --------------------------------------------------------
+  check_no_na_factor_levels(data[c(variables, by, strata)])
+  check_factor_has_levels(data[c(variables, by, strata)])
+
   # calculating summary stats --------------------------------------------------
   # calculate tabulation statistics
   df_result_tabulation <-

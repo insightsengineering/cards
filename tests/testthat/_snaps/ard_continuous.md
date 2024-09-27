@@ -146,3 +146,21 @@
       1    NULL There was an error calculating the mean.
       2    NULL There was an error calculating the mean.
 
+# ard_continuous() errors with incomplete factor columns
+
+    Code
+      ard_continuous(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      by = am, variables = mpg)
+    Condition
+      Error in `ard_continuous()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_continuous(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), by = am, variables = mpg)
+    Condition
+      Error in `ard_continuous()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
+
