@@ -93,10 +93,6 @@ ard_hierarchical.data.frame <- function(data,
     return(dplyr::tibble() |> as_card())
   }
 
-  # check factor levels --------------------------------------------------------
-  check_no_na_factor_levels(data[c(variables, by)])
-  check_factor_has_levels(data[c(variables, by)])
-
   # if denominator doesn't have all by, they need to be added ------------------
   if (!is.null(denominator) && is.data.frame(denominator) && !all(by %in% names(denominator))) {
     by_vars_not_present <- by |> setdiff(names(denominator))
@@ -155,10 +151,6 @@ ard_hierarchical_count.data.frame <- function(data,
   if (is_empty(variables)) {
     return(dplyr::tibble() |> as_card())
   }
-
-  # check factor levels --------------------------------------------------------
-  check_no_na_factor_levels(data[c(variables, by)])
-  check_factor_has_levels(data[c(variables, by)])
 
   # add dummy variable for counting --------------------------------------------
   data[["...ard_dummy_for_counting..."]] <- 1L

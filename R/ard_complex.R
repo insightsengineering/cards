@@ -89,10 +89,6 @@ ard_complex.data.frame <- function(data,
       cli::cli_abort(call = get_cli_abort_call())
   }
 
-  # check factor levels --------------------------------------------------------
-  check_no_na_factor_levels(data[c(by, strata)])
-  check_factor_has_levels(data[c(by, strata)])
-
   # calculate statistics -------------------------------------------------------
   # first set an option to be used internally within `ard_continuous()`
   # to calculate the statistics and pass multiple arguments to the
