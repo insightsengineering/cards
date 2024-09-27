@@ -108,8 +108,8 @@ bind_ard(
 
 The `ard_stack()` function provides a shortcut to perform the calculations above in a single step.
 
-In the example below, the `data` and `by` arguments are passed to each subsequent `ard_*()` function call.
-Moreover, we will also be returned the univariate tabulation of the `by` variable, which would be used to add counts to the header row of the table.
+In the example below, the `data` and `.by` arguments are passed to each subsequent `ard_*()` function call.
+Moreover, this will also return the univariate tabulation of the `.by` variable, which would be used to add counts to the header row of the table.
 
 ```{r}
 ard_stack(
@@ -260,6 +260,24 @@ All participant level summaries can be combined using `bind_ard()`.
 bind_ard(ard_subj_any, ard_subj_soc, ard_subj_pt)
 ```
 
+##### Shortcut
+
+The `ard_stack_hierarchical()` function provides a shortcut to perform the calculations above in a single step.
+
+In the example below, the `data` and `by` arguments are passed to each subsequent calculation. The function utilizes `USUBJID` (passed to the `id` argument) as the subject identifier for participant-level calculations, and `ADSL` is used to define the denominator. With `variables = c(AEBODSYS, AETERM)`, the function returns rates of adverse events by `AETERM` nested within `AESOC` as well as by `AESOC`. With `over_variables = TRUE`, the function also returns rates of any adverse event across all system organ classes and preferred terms. 
+
+```{r}
+ard_stack_hierarchical(
+  data = adae,
+  by = TRTA,
+  variables = c(AEBODSYS, AETERM),
+  statistic = everything() ~ c("n","p"),
+  denominator = adsl,
+  id = USUBJID,
+  over_variables = TRUE
+)
+```
+
 
 #### Event-level Summaries
 
@@ -307,14 +325,40 @@ ard_event_any <- ard_hierarchical_count(
 For AE counts within preferred term and system organ class by treatment group, we can use `ard_hierarchical()` specifying our nesting as such:
 
 ```{r}
-ard_event_socpt <- ard_hierarchical_count(
+ard_event_pt <- ard_hierarchical_count(
   data = adae,
   by = TRTA,
   variables = c(AEBODSYS, AETERM)
 )
 ```
+
+And we can repeat for AE counts within system organ class as such:
+```{r}
+ard_event_soc <- ard_hierarchical_count(
+  data = adae,
+  by = TRTA,
+  variables = AEBODSYS
+)
+```
  
 These event-level summaries can be combined using `bind_ard()`.
 ```{r}
-bind_ard(ard_event_any, ard_event_socpt)
+bind_ard(ard_event_any, ard_event_soc, ard_event_pt)
+```
+
+
+
+##### Shortcut
+
+The `ard_stack_hierarchical_count()` function provides a shortcut to perform the calculations above in a single step.
+
+In the example below, the `data` and `by` arguments are passed to each subsequent calculation.With `variables = c(AEBODSYS, AETERM)`, the function returns counts of adverse events by `AETERM` nested within `AESOC` as well as by `AESOC`. With `over_variables = TRUE`, the function also returns counts of any adverse event across all system organ classes and preferred terms. 
+
+```{r}
+ard_stack_hierarchical_count(
+  data = adae,
+  by = TRTA,
+  variables = c(AEBODSYS, AETERM), 
+  over_variables = TRUE
+)
 ```
