@@ -271,7 +271,7 @@ ard_stack_hierarchical(
   data = adae,
   by = TRTA,
   variables = c(AEBODSYS, AETERM),
-  statistic = everything() ~ c("n","p"),
+  statistic = everything() ~ c("n", "p"),
   denominator = adsl,
   id = USUBJID,
   over_variables = TRUE
@@ -358,7 +358,7 @@ In the example below, the `data` and `by` arguments are passed to each subsequen
 ard_stack_hierarchical_count(
   data = adae,
   by = TRTA,
-  variables = c(AEBODSYS, AETERM), 
+  variables = c(AEBODSYS, AETERM),
   over_variables = TRUE
 )
 ```
