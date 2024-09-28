@@ -1,7 +1,7 @@
 # ard_strata() works
 
     Code
-      ard_strata(ADSL, by = ARM, .f = ~ ard_continuous(.x, variables = AGE))
+      ard_strata(ADSL, .by = ARM, .f = ~ ard_continuous(.x, variables = AGE))
     Message
       {cards} data frame: 24 x 10
     Output
@@ -24,7 +24,7 @@
 ---
 
     Code
-      ard_strata(ADSL, strata = ARM, .f = ~ ard_continuous(.x, variables = AGE, by = AGEGR1))
+      ard_strata(ADSL, .strata = ARM, .f = ~ ard_continuous(.x, variables = AGE, by = AGEGR1))
     Message
       {cards} data frame: 72 x 12
     Output

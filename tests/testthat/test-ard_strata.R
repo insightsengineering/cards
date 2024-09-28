@@ -2,7 +2,7 @@ test_that("ard_strata() works", {
   expect_snapshot(
     ard_strata(
       ADSL,
-      by = ARM,
+      .by = ARM,
       .f = ~ard_continuous(.x, variables = AGE)
     )
   )
@@ -10,7 +10,7 @@ test_that("ard_strata() works", {
   expect_snapshot(
     ard_strata(
       ADSL,
-      strata = ARM,
+      .strata = ARM,
       .f = ~ard_continuous(.x, variables = AGE, by = AGEGR1)
     )
   )

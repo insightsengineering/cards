@@ -1,6 +1,7 @@
 #' Stratified ARD
 #'
 #' @description
+#' `r lifecycle::badge('experimental')`\cr
 #' General function for calculating ARD results within subgroups.
 #'
 #' While the examples below show use with other functions from the cards package,
@@ -9,7 +10,7 @@
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#' @param .by,.strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by/stratify by for calculation.
 #'   Arguments are similar, but with an important distinction:
 #'
@@ -32,20 +33,20 @@
 #'   by = ARM,
 #'   .f = ~ ard_continuous(.x, variables = AGE)
 #' )
-ard_strata <- function(data, by = NULL, strata = NULL, .f, ...) {
+ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
-  check_not_missing(data)
+  check_not_missing(.data)
   check_not_missing(.f)
-  check_data_frame(data)
+  check_data_frame(.data)
 
   # process inputs -------------------------------------------------------------
   .f <- rlang::as_function(x = .f, call = get_cli_abort_call())
-  process_selectors(data, by = {{ by }}, strata = {{ strata }})
+  process_selectors(.data, .by = {{ .by }}, .strata = {{ .strata }})
 
   # nest the data frame --------------------------------------------------------
-  df_nested_data <- nest_for_ard(data, by = by, strata = strata)
+  df_nested_data <- nest_for_ard(.data, by = .by, strata = .strata)
 
   # run fn on nested data frames -----------------------------------------------
   df_nested_data <- df_nested_data |>
@@ -70,8 +71,8 @@ ard_strata <- function(data, by = NULL, strata = NULL, .f, ...) {
   if (!is.infinite(max_group_n)) {
     new_group_colnames <-
       c(
-        paste0("group", seq_along(c(by, strata)) + 1L),
-        paste0("group", seq_along(c(by, strata)) + 1L, "_level")
+        paste0("group", seq_along(c(.by, .strata)) + 1L),
+        paste0("group", seq_along(c(.by, .strata)) + 1L, "_level")
       ) |>
       sort()
     names(df_nested_data)[seq_along(new_group_colnames)] <- new_group_colnames

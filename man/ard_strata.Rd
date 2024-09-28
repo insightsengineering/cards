@@ -4,13 +4,10 @@
 \alias{ard_strata}
 \title{Stratified ARD}
 \usage{
-ard_strata(data, by = NULL, strata = NULL, .f, ...)
+ard_strata(.data, .by = NULL, .strata = NULL, .f, ...)
 }
 \arguments{
-\item{data}{(\code{data.frame})\cr
-a data frame}
-
-\item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+\item{.by, .strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by/stratify by for calculation.
 Arguments are similar, but with an important distinction:
 
@@ -25,11 +22,15 @@ a function or a formula that can be coerced to a function with
 \code{rlang::as_function()} (similar to \code{purrr::map(.f)})}
 
 \item{...}{Additional arguments passed on to the \code{.f} function.}
+
+\item{data}{(\code{data.frame})\cr
+a data frame}
 }
 \value{
 an ARD data frame of class 'card'
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 General function for calculating ARD results within subgroups.
 
 While the examples below show use with other functions from the cards package,
