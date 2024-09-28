@@ -7,14 +7,17 @@
 ard_strata(.data, .by = NULL, .strata = NULL, .f, ...)
 }
 \arguments{
+\item{.data}{(\code{data.frame})\cr
+a data frame}
+
 \item{.by, .strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by/stratify by for calculation.
 Arguments are similar, but with an important distinction:
 
-\code{by}: results are tabulated by \strong{all combinations} of the columns specified,
+\code{.by}: results are tabulated by \strong{all combinations} of the columns specified,
 including unobserved combinations and unobserved factor levels.
 
-\code{strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
+\code{.strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
 columns specified.}
 
 \item{.f}{(\code{function}, \code{formula})\cr
@@ -22,9 +25,6 @@ a function or a formula that can be coerced to a function with
 \code{rlang::as_function()} (similar to \code{purrr::map(.f)})}
 
 \item{...}{Additional arguments passed on to the \code{.f} function.}
-
-\item{data}{(\code{data.frame})\cr
-a data frame}
 }
 \value{
 an ARD data frame of class 'card'

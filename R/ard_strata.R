@@ -8,17 +8,17 @@
 #' this function would primarily be used with the statistical functions in the
 #' cardx functions.
 #'
-#' @param data (`data.frame`)\cr
+#' @param .data (`data.frame`)\cr
 #'   a data frame
 #' @param .by,.strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by/stratify by for calculation.
 #'   Arguments are similar, but with an important distinction:
 #'
-#'   `by`: results are tabulated by **all combinations** of the columns specified,
-#'      including unobserved combinations and unobserved factor levels.
+#'   `.by`: results are tabulated by **all combinations** of the columns specified,
+#'       including unobserved combinations and unobserved factor levels.
 #'
-#'   `strata`: results are tabulated by **all _observed_ combinations** of the
-#'     columns specified.
+#'   `.strata`: results are tabulated by **all _observed_ combinations** of the
+#'      columns specified.
 #' @param .f (`function`, `formula`)\cr
 #'   a function or a formula that can be coerced to a function with
 #'   `rlang::as_function()` (similar to `purrr::map(.f)`)
