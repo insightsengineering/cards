@@ -2,9 +2,8 @@ test_that("ard_strata() works", {
   expect_snapshot(
     ard_strata(
       ADSL,
-      strata = ARM,
-      ard_continuous,
-      variables = AGE
+      by = ARM,
+      .f = ~ard_continuous(.x, variables = AGE)
     )
   )
 
@@ -12,21 +11,17 @@ test_that("ard_strata() works", {
     ard_strata(
       ADSL,
       strata = ARM,
-      ard_continuous,
-      variables = AGE,
-      by = AGEGR1
+      .f = ~ard_continuous(.x, variables = AGE, by = AGEGR1)
     )
   )
 })
 
-test_that("ard_strata(strata) messaging", {
-  expect_snapshot(
-    error = TRUE,
-    ard_strata(
-      ADSL,
-      strata = starts_with("xxxx"),
-      ard_continuous,
-      variables = AGE
-    )
+test_that("ard_strata(by,strata) when both empty", {
+  expect_equal(
+    ard_strata(ADSL, .f = ~ard_continuous(.x, variables = AGE)),
+    ard_continuous(ADSL, variables = AGE)
   )
 })
+
+
+

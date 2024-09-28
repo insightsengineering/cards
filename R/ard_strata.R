@@ -9,12 +9,19 @@
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame
-#' @param strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to stratify results by.
-#' @param .ard_fn (`function`, `formula`)\cr
+#' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   columns to tabulate by/stratify by for calculation.
+#'   Arguments are similar, but with an important distinction:
+#'
+#'   `by`: results are tabulated by **all combinations** of the columns specified,
+#'      including unobserved combinations and unobserved factor levels.
+#'
+#'   `strata`: results are tabulated by **all _observed_ combinations** of the
+#'     columns specified.
+#' @param .f (`function`, `formula`)\cr
 #'   a function or a formula that can be coerced to a function with
 #'   `rlang::as_function()` (similar to `purrr::map(.f)`)
-#' @param ... Additional arguments passed on to the `.ard_fn` function.
+#' @param ... Additional arguments passed on to the `.f` function.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -22,38 +29,27 @@
 #' @examples
 #' ard_strata(
 #'   ADSL,
-#'   strata = ARM,
-#'   ~ ard_continuous(.x, variables = AGE)
+#'   by = ARM,
+#'   .f = ~ ard_continuous(.x, variables = AGE)
 #' )
-#'
-#' ard_strata(
-#'   ADSL,
-#'   strata = ARM,
-#'   ard_continuous,
-#'   variables = AGE
-#' )
-ard_strata <- function(data, strata, .ard_fn, ...) {
+ard_strata <- function(data, by = NULL, strata = NULL, .f, ...) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(data)
-  check_not_missing(strata)
-  check_not_missing(.ard_fn)
+  check_not_missing(.f)
   check_data_frame(data)
 
   # process inputs -------------------------------------------------------------
-  .ard_fn <- rlang::as_function(x = .ard_fn, call = get_cli_abort_call())
-  process_selectors(data, strata = {{ strata }})
-  if (is_empty(strata)) {
-    cli::cli_abort("The {.arg strata} argument cannot be empty.", call = get_cli_abort_call())
-  }
+  .f <- rlang::as_function(x = .f, call = get_cli_abort_call())
+  process_selectors(data, by = {{ by }}, strata = {{ strata }})
 
   # nest the data frame --------------------------------------------------------
-  df_nested_data <- nest_for_ard(data, by = strata)
+  df_nested_data <- nest_for_ard(data, by = by, strata = strata)
 
   # run fn on nested data frames -----------------------------------------------
   df_nested_data <- df_nested_data |>
-    dplyr::mutate(ard = lapply(.data$data, .ard_fn, ...)) |>
+    dplyr::mutate(ard = lapply(.data$data, .f, ...)) |>
     dplyr::select(-"data")
 
   # rename grouping variables --------------------------------------------------
@@ -74,8 +70,8 @@ ard_strata <- function(data, strata, .ard_fn, ...) {
   if (!is.infinite(max_group_n)) {
     new_group_colnames <-
       c(
-        paste0("group", seq_along(strata) + 1L),
-        paste0("group", seq_along(strata) + 1L, "_level")
+        paste0("group", seq_along(c(by, strata)) + 1L),
+        paste0("group", seq_along(c(by, strata)) + 1L, "_level")
       ) |>
       sort()
     names(df_nested_data)[seq_along(new_group_colnames)] <- new_group_colnames

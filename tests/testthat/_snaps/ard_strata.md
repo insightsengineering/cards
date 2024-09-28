@@ -1,7 +1,7 @@
 # ard_strata() works
 
     Code
-      ard_strata(ADSL, strata = ARM, ard_continuous, variables = AGE)
+      ard_strata(ADSL, by = ARM, .f = ~ ard_continuous(.x, variables = AGE))
     Message
       {cards} data frame: 24 x 10
     Output
@@ -24,7 +24,7 @@
 ---
 
     Code
-      ard_strata(ADSL, strata = ARM, ard_continuous, variables = AGE, by = AGEGR1)
+      ard_strata(ADSL, strata = ARM, .f = ~ ard_continuous(.x, variables = AGE, by = AGEGR1))
     Message
       {cards} data frame: 72 x 12
     Output
@@ -43,12 +43,4 @@
       i 62 more rows
       i Use `print(n = ...)` to see more rows
       i 4 more variables: context, fmt_fn, warning, error
-
-# ard_strata(strata) messaging
-
-    Code
-      ard_strata(ADSL, strata = starts_with("xxxx"), ard_continuous, variables = AGE)
-    Condition
-      Error in `ard_strata()`:
-      ! The `strata` argument cannot be empty.
 
