@@ -10,4 +10,9 @@
       2     var1 attributes     class Variable Class         character
       3     var2 attributes     label Variable Label UPPERCASE LETTERS
       4     var2 attributes     class Variable Class         character
+                            fmt_fn warning error
+      1 .Primitive("as.character")    NULL  NULL
+      2 .Primitive("as.character")    NULL  NULL
+      3 .Primitive("as.character")    NULL  NULL
+      4 .Primitive("as.character")    NULL  NULL
 

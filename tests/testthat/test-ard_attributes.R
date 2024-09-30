@@ -14,3 +14,10 @@ test_that("ard_attributes() errors when there is no dataframe", {
     "There is no method for objects of class <character>."
   )
 })
+
+test_that("ard_attributes() follows ard structure", {
+  expect_silent(
+    ard_attributes(ADSL[c("AGE", "AGEGR1")]) |>
+      check_ard_structure(method = FALSE)
+  )
+})
