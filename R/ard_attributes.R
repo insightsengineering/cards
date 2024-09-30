@@ -86,7 +86,7 @@ ard_attributes.data.frame <- function(data,
       fmt_fn = list(as.character),
       warning = list(NULL),
       error = list(NULL)
-      ) |>
+    ) |>
     cards::tidy_ard_column_order() |>
     as_card()
 }
