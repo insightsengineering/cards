@@ -18,7 +18,9 @@ Arguments are similar, but with an important distinction:
 including unobserved combinations and unobserved factor levels.
 
 \code{.strata}: results are tabulated by \strong{all \emph{observed} combinations} of the
-columns specified.}
+columns specified.
+
+These argument \emph{should not} include any columns that appear in the \code{.f} argument.}
 
 \item{.f}{(\code{function}, \code{formula})\cr
 a function or a formula that can be coerced to a function with
