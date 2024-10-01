@@ -12,7 +12,15 @@
       4     var2 attributes     class Variable Class         character
                             fmt_fn warning error
       1 .Primitive("as.character")    NULL  NULL
-      2 .Primitive("as.character")    NULL  NULL
+      2                       NULL    NULL  NULL
       3 .Primitive("as.character")    NULL  NULL
-      4 .Primitive("as.character")    NULL  NULL
+      4                       NULL    NULL  NULL
+
+# ard_attributes() requires label as a named list
+
+    Code
+      ard_attributes(ADSL[c("AGE", "AGEGR1")], label = list("test"))
+    Condition
+      Error in `ard_attributes()`:
+      ! The `label` argument must be a named list with each element a string.
 

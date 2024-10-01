@@ -21,3 +21,12 @@ test_that("ard_attributes() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_attributes() requires label as a named list", {
+  expect_snapshot(
+    error = TRUE,
+    ard_attributes(ADSL[c("AGE", "AGEGR1")],
+      label = list("test")
+    )
+  )
+})
