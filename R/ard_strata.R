@@ -19,6 +19,8 @@
 #'
 #'   `.strata`: results are tabulated by **all _observed_ combinations** of the
 #'      columns specified.
+#'
+#'  These argument *should not* include any columns that appear in the `.f` argument.
 #' @param .f (`function`, `formula`)\cr
 #'   a function or a formula that can be coerced to a function with
 #'   `rlang::as_function()` (similar to `purrr::map(.f)`)
@@ -68,11 +70,11 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
     # if no grouping variables are present, this will return `-Inf`
     {suppressWarnings(max(..1 = .))} # styler: off
 
-  if (!is.infinite(max_group_n)) {
+  if (!is.infinite(max_group_n) && !is_empty(c(.by, .strata))) {
     new_group_colnames <-
       c(
-        paste0("group", seq_along(c(.by, .strata)) + 1L),
-        paste0("group", seq_along(c(.by, .strata)) + 1L, "_level")
+        paste0("group", seq_along(c(.by, .strata)) + max_group_n),
+        paste0("group", seq_along(c(.by, .strata)) + max_group_n, "_level")
       ) |>
       sort()
     names(df_nested_data)[seq_along(new_group_colnames)] <- new_group_colnames
