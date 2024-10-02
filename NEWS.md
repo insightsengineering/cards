@@ -1,4 +1,4 @@
-# cards 0.2.2.9015
+# cards 0.2.2.9016
 
 * Add columns `'fmt_fn'`, `'warning'`, and `'errors'` to `ard_attributes()` output. (#327)
 
