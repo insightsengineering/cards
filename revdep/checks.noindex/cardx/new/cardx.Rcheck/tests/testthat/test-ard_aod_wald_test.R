@@ -18,3 +18,11 @@ test_that("ard_aod_wald_test() works", {
       dplyr::select(c(context, error))
   )
 })
+
+test_that("ard_aod_wald_test() follows ard structure", {
+  expect_silent(
+    suppressWarnings(lm(AGE ~ ARM, data = cards::ADSL)) |>
+      ard_aod_wald_test() |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

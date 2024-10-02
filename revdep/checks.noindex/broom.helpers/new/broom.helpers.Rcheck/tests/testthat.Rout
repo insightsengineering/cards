@@ -26,37 +26,61 @@ The following object is masked from 'package:testthat':
 
 > 
 > test_check("broom.helpers")
-11 cases omitted due to missing values
-Stratified Independent Sampling design (with replacement)
-dpbc <- survey::svydesign(id = ~1, prob = ~1, strata = ~edema, data = survival::pbc)
-11 cases omitted due to missing values
-[ FAIL 0 | WARN 1 | SKIP 0 | PASS 774 ]
+[ FAIL 0 | WARN 0 | SKIP 96 | PASS 386 ]
 
-══ Warnings ════════════════════════════════════════════════════════════════════
-── Warning ('test-add_reference_rows.R:257:3'): tidy_add_reference_rows() works with glmmTMB::glmmTMB ──
-Package version inconsistency detected.
-glmmTMB was built with TMB version 1.9.10
-Current TMB version is 1.9.14
-Please re-install glmmTMB from source or restore original 'TMB' package (see '?reinstalling' for more information)
-Backtrace:
-     ▆
-  1. └─testthat::skip_if_not_installed("glmmTMB") at test-add_reference_rows.R:257:3
-  2.   └─base::requireNamespace(pkg, quietly = TRUE)
-  3.     ├─base::tryCatch(loadNamespace(package, ...), error = function(e) e)
-  4.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-  5.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-  6.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
-  7.     └─base::loadNamespace(package, ...)
-  8.       └─base (local) runHook(".onLoad", env, package.lib, package)
-  9.         ├─base::tryCatch(fun(libname, pkgname), error = identity)
- 10.         │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
- 11.         │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
- 12.         │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
- 13.         └─glmmTMB (local) fun(libname, pkgname)
- 14.           └─glmmTMB:::checkDepPackageVersion(dep_pkg = "TMB")
+══ Skipped tests (96) ══════════════════════════════════════════════════════════
+• On CRAN (96): 'test-add_coefficients_type.R:113:3',
+  'test-add_coefficients_type.R:122:3', 'test-add_contrasts.R:193:3',
+  'test-add_contrasts.R:204:3', 'test-add_contrasts.R:317:3',
+  'test-add_estimate_to_reference_rows.R:111:3',
+  'test-add_estimate_to_reference_rows.R:257:1',
+  'test-add_header_rows.R:158:3', 'test-add_header_rows.R:220:3',
+  'test-add_n.R:150:3', 'test-add_n.R:161:3', 'test-add_n.R:174:3',
+  'test-add_n.R:183:3', 'test-add_n.R:194:3',
+  'test-add_pairwise_contrasts.R:2:3', 'test-add_reference_rows.R:223:3',
+  'test-add_reference_rows.R:238:3', 'test-add_reference_rows.R:256:3',
+  'test-add_term_labels.R:231:3', 'test-add_term_labels.R:274:3',
+  'test-add_term_labels.R:289:1', 'test-add_variable_labels.R:176:3',
+  'test-add_variable_labels.R:189:3', 'test-attach_and_detach.R:22:3',
+  'test-disambiguate_terms.R:14:3', 'test-disambiguate_terms.R:47:3',
+  'test-identify_variables.R:255:3', 'test-identify_variables.R:288:3',
+  'test-identify_variables.R:587:3', 'test-identify_variables.R:616:3',
+  'test-marginal_tidiers.R:2:3', 'test-marginal_tidiers.R:35:3',
+  'test-marginal_tidiers.R:68:3', 'test-marginal_tidiers.R:101:3',
+  'test-marginal_tidiers.R:201:3', 'test-marginal_tidiers.R:264:3',
+  'test-marginal_tidiers.R:346:3', 'test-marginal_tidiers.R:356:3',
+  'test-marginal_tidiers.R:419:3', 'test-marginal_tidiers.R:481:3',
+  'test-marginal_tidiers.R:541:3', 'test-model_get_n.R:192:3',
+  'test-model_get_n.R:212:3', 'test-model_get_n.R:224:3',
+  'test-model_get_n.R:239:3', 'test-model_get_n.R:279:3',
+  'test-model_get_n.R:294:3', 'test-model_get_n.R:320:3',
+  'test-model_get_n.R:346:3', 'test-model_get_n.R:355:3',
+  'test-model_get_n.R:363:3', 'test-model_get_n.R:371:3',
+  'test-model_get_n.R:392:3', 'test-model_get_n.R:402:3',
+  'test-model_get_n.R:423:3', 'test-model_get_n.R:438:3',
+  'test-select_helpers.R:42:3', 'test-select_helpers.R:219:3',
+  'test-tidy_plus_plus.R:59:3', 'test-tidy_plus_plus.R:108:3',
+  'test-tidy_plus_plus.R:129:3', 'test-tidy_plus_plus.R:160:3',
+  'test-tidy_plus_plus.R:173:3', 'test-tidy_plus_plus.R:189:3',
+  'test-tidy_plus_plus.R:210:3', 'test-tidy_plus_plus.R:225:3',
+  'test-tidy_plus_plus.R:235:3', 'test-tidy_plus_plus.R:249:3',
+  'test-tidy_plus_plus.R:268:3', 'test-tidy_plus_plus.R:310:3',
+  'test-tidy_plus_plus.R:332:3', 'test-tidy_plus_plus.R:346:3',
+  'test-tidy_plus_plus.R:359:3', 'test-tidy_plus_plus.R:371:3',
+  'test-tidy_plus_plus.R:383:3', 'test-tidy_plus_plus.R:393:3',
+  'test-tidy_plus_plus.R:402:3', 'test-tidy_plus_plus.R:419:3',
+  'test-tidy_plus_plus.R:431:3', 'test-tidy_plus_plus.R:446:3',
+  'test-tidy_plus_plus.R:463:3', 'test-tidy_plus_plus.R:479:3',
+  'test-tidy_plus_plus.R:491:3', 'test-tidy_plus_plus.R:505:3',
+  'test-tidy_plus_plus.R:525:3', 'test-tidy_plus_plus.R:549:3',
+  'test-tidy_plus_plus.R:589:3', 'test-tidy_plus_plus.R:612:3',
+  'test-tidy_plus_plus.R:631:3', 'test-tidy_plus_plus.R:655:3',
+  'test-tidy_plus_plus.R:674:3', 'test-tidy_plus_plus.R:692:3',
+  'test-tidy_plus_plus.R:713:3', 'test-tidy_plus_plus.R:765:3',
+  'test-tidy_plus_plus.R:823:3', 'test-tidy_plus_plus.R:899:3'
 
-[ FAIL 0 | WARN 1 | SKIP 0 | PASS 774 ]
+[ FAIL 0 | WARN 0 | SKIP 96 | PASS 386 ]
 > 
 > proc.time()
    user  system elapsed 
- 91.509   6.044 103.966 
+ 22.401   0.613  27.042 

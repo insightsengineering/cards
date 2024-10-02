@@ -1,3 +1,4 @@
+skip_on_cran()
 skip_if_not(is_pkg_installed("cardx", reference_pkg = "gtsummary"))
 
 my_ttest <- function(data, variable, by, ...) {
@@ -241,4 +242,22 @@ test_that("add_stat() with tbl_svysummary()", {
   )
 })
 
+test_that("add_stat() with curly braces in errors/warnings", {
+  expect_snapshot({
+    curly_warning <- \(x, ...) {
+      warning("{curly} warning"); 10
+    }
+    tbl |>
+      add_stat(fns = ~ curly_warning) |>
+      as.data.frame()
+  })
 
+  expect_snapshot({
+    curly_error <- \(x, ...) {
+      stop("{curly} error")
+    }
+    tbl |>
+      add_stat(fns = ~ curly_error) |>
+      as.data.frame()
+  })
+})

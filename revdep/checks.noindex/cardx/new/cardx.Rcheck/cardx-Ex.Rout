@@ -87,12 +87,13 @@ Type 'q()' to quit R.
 +     fpc = ~fpc)
 > ard_attributes(data = dclus1, variables = c(sname, dname), label = list(sname = "School Name", 
 +     dname = "District Name"))
-{cards} data frame: 4 x 5
-  variable   context stat_name stat_label      stat
-1    sname attribut…     label  Variable… School N…
-2    sname attribut…     class  Variable… character
-3    dname attribut…     label  Variable… District…
-4    dname attribut…     class  Variable… character
+{cards} data frame: 4 x 8
+  variable   context stat_name stat_label      stat fmt_fn
+1    sname attribut…     label  Variable… School N…   <fn>
+2    sname attribut…     class  Variable… character   NULL
+3    dname attribut…     label  Variable… District…   <fn>
+4    dname attribut…     class  Variable… character   NULL
+ℹ 2 more variables: warning, error
 > ## End(Don't show)
 > 
 > 
@@ -399,6 +400,13 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ard_continuous_ci(mtcars, variables = c(mpg, hp), method = "wilcox.test")
++ ard_continuous_ci(mtcars, variables = mpg, by = am, method = "t.test")
++ ## Don't show: 
++ }) # examplesIf
 > ard_continuous_ci(mtcars, variables = c(mpg, hp), method = "wilcox.test")
 {cards} data frame: 24 x 8
    variable   context   stat_name stat_label      stat   warning
@@ -439,6 +447,7 @@ Type 'q()' to quit R.
 19     am            1      mpg          mu    H0 Mean         0
 20     am            1      mpg  conf.level  CI Confi…      0.95
 ℹ 4 more variables: context, fmt_fn, warning, error
+> ## End(Don't show)
 > 
 > 
 > 
@@ -775,7 +784,7 @@ Type 'q()' to quit R.
 + ## Don't show: 
 + }) # examplesIf
 > ard_regression(lm(AGE ~ ARM, data = cards::ADSL), add_estimate_to_reference_rows = TRUE)
-{cards} data frame: 43 x 7
+{cards} data frame: 43 x 9
    variable variable_level   context      stat_name stat_label      stat
 1       ARM        Placebo regressi…           term       term ARMPlace…
 2       ARM        Placebo regressi…      var_label      Label Descript…
@@ -789,7 +798,7 @@ Type 'q()' to quit R.
 10      ARM        Placebo regressi…          n_obs     N Obs.        86
 ℹ 33 more rows
 ℹ Use `print(n = ...)` to see more rows
-ℹ 1 more variable: fmt_fn
+ℹ 3 more variables: fmt_fn, warning, error
 > ## End(Don't show)
 > 
 > 
@@ -814,7 +823,7 @@ Type 'q()' to quit R.
 + ## Don't show: 
 + }) # examplesIf
 > ard_regression_basic(lm(AGE ~ ARM, data = cards::ADSL))
-{cards} data frame: 12 x 7
+{cards} data frame: 12 x 9
    variable variable_level   context stat_name stat_label   stat
 1       ARM      Xanomeli… regressi…  estimate  Coeffici… -0.828
 2       ARM      Xanomeli… regressi… std.error  Standard…  1.267
@@ -828,7 +837,7 @@ Type 'q()' to quit R.
 10      ARM      Xanomeli… regressi…   p.value    p-value  0.719
 11      ARM      Xanomeli… regressi…  conf.low  CI Lower… -2.039
 12      ARM      Xanomeli… regressi… conf.high  CI Upper…  2.953
-ℹ 1 more variable: fmt_fn
+ℹ 3 more variables: fmt_fn, warning, error
 > ## End(Don't show)
 > 
 > 
@@ -987,14 +996,14 @@ Type 'q()' to quit R.
 + ## Don't show: 
 + }) # examplesIf
 > ard_stats_aov(AGE ~ ARM, data = cards::ADSL)
-{cards} data frame: 5 x 7
-  variable   context stat_name stat_label   stat error
-1      ARM stats_aov     sumsq  Sum of S… 71.386      
-2      ARM stats_aov        df  Degrees …      2      
-3      ARM stats_aov    meansq  Mean of … 35.693      
-4      ARM stats_aov statistic  Statistic  0.523      
-5      ARM stats_aov   p.value    p-value  0.593      
-ℹ 1 more variable: warning
+{cards} data frame: 5 x 8
+  variable   context stat_name stat_label   stat fmt_fn
+1      ARM stats_aov     sumsq  Sum of S… 71.386      1
+2      ARM stats_aov        df  Degrees …      2      1
+3      ARM stats_aov    meansq  Mean of … 35.693      1
+4      ARM stats_aov statistic  Statistic  0.523      1
+5      ARM stats_aov   p.value    p-value  0.593      1
+ℹ 2 more variables: warning, error
 > ## End(Don't show)
 > 
 > 
@@ -1228,6 +1237,64 @@ Type 'q()' to quit R.
 4    ARM      AGE stats_on…   p.value    p-value      0.58
 5    ARM      AGE stats_on…    method     Method One-way …
 6    ARM      AGE stats_on… var.equal  var.equal     FALSE
+ℹ 3 more variables: fmt_fn, warning, error
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ard_stats_poisson_test")
+> ### * ard_stats_poisson_test
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ard_stats_poisson_test
+> ### Title: ARD Poisson Test
+> ### Aliases: ard_stats_poisson_test
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ # Exact test of rate parameter against null hypothesis
++ cards::ADTTE |>
++   ard_stats_poisson_test(variables = c(CNSR, AVAL))
++ 
++ # Comparison test of ratio of 2 rate parameters against null hypothesis
++ cards::ADTTE |>
++   dplyr::filter(TRTA %in% c("Placebo", "Xanomeline High Dose")) |>
++   ard_stats_poisson_test(by = TRTA, variables = c(CNSR, AVAL))
++ ## Don't show: 
++ }) # examplesIf
+> ard_stats_poisson_test(cards::ADTTE, variables = c(CNSR, AVAL))
+{cards} data frame: 10 x 8
+   variable   context   stat_name stat_label      stat fmt_fn
+1      AVAL stats_po…    estimate  Estimate…     0.006      1
+2      AVAL stats_po…   statistic  Number o…       102      1
+3      AVAL stats_po…     p.value    p-value         0      1
+4      AVAL stats_po…   parameter  Expected…     16853      1
+5      AVAL stats_po…    conf.low  CI Lower…     0.005      1
+6      AVAL stats_po…   conf.high  CI Upper…     0.007      1
+7      AVAL stats_po…      method     method Exact Po…   NULL
+8      AVAL stats_po… alternative  alternat… two.sided   NULL
+9      AVAL stats_po…  conf.level  CI Confi…      0.95      1
+10     AVAL stats_po…          mu    H0 Mean         1      1
+ℹ 2 more variables: warning, error
+> ard_stats_poisson_test(dplyr::filter(cards::ADTTE, TRTA %in% c("Placebo", 
++     "Xanomeline High Dose")), by = TRTA, variables = c(CNSR, AVAL))
+{cards} data frame: 10 x 9
+   group1 variable   context   stat_name stat_label      stat
+1    TRTA     AVAL stats_po…    estimate  Estimate…     0.768
+2    TRTA     AVAL stats_po…   statistic  Number o…        57
+3    TRTA     AVAL stats_po…     p.value    p-value     0.293
+4    TRTA     AVAL stats_po…   parameter  Expected…    61.078
+5    TRTA     AVAL stats_po…    conf.low  CI Lower…     0.466
+6    TRTA     AVAL stats_po…   conf.high  CI Upper…     1.306
+7    TRTA     AVAL stats_po…      method     method Comparis…
+8    TRTA     AVAL stats_po… alternative  alternat… two.sided
+9    TRTA     AVAL stats_po…  conf.level  CI Confi…      0.95
+10   TRTA     AVAL stats_po…          mu    H0 Mean         1
 ℹ 3 more variables: fmt_fn, warning, error
 > ## End(Don't show)
 > 
@@ -1838,6 +1905,37 @@ Loading required package: ggplot2
 
 detaching ‘package:survival’, ‘package:ggplot2’, ‘package:ggsurvfit’
 
+> nameEx("ard_total_n.survey.design")
+> ### * ard_total_n.survey.design
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ard_total_n.survey.design
+> ### Title: ARD Total N
+> ### Aliases: ard_total_n.survey.design
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (cardx:::is_pkg_installed("survey", reference_pkg = "cardx")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ svy_titanic <- survey::svydesign(~1, data = as.data.frame(Titanic), weights = ~Freq)
++ 
++ ard_total_n(svy_titanic)
++ ## Don't show: 
++ }) # examplesIf
+> svy_titanic <- survey::svydesign(~1, data = as.data.frame(Titanic), weights = ~Freq)
+> ard_total_n(svy_titanic)
+{cards} data frame: 2 x 8
+         variable context    stat_name stat_label stat fmt_fn
+1 ..ard_total_n.. total_n            N          N 2201   <fn>
+2 ..ard_total_n.. total_n N_unweighted  Unweight…   32   <fn>
+ℹ 2 more variables: warning, error
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
 > nameEx("construction_helpers")
 > ### * construction_helpers
 > 
@@ -1883,7 +1981,7 @@ detaching ‘package:survival’, ‘package:ggplot2’, ‘package:ggsurvfit’
 > dplyr::filter(ard_regression(construct_model(data = dplyr::rename(mtcars, 
 +     `M P G` = mpg), formula = reformulate2(c("M P G", "cyl"), response = "hp"), method = "lm")), 
 +     stat_name %in% c("term", "estimate", "p.value"))
-{cards} data frame: 6 x 6
+{cards} data frame: 6 x 8
   variable   context stat_name stat_label    stat fmt_fn
 1    M P G regressi…      term       term `M P G`   NULL
 2    M P G regressi…  estimate  Coeffici…  -2.775      1
@@ -1891,6 +1989,7 @@ detaching ‘package:survival’, ‘package:ggplot2’, ‘package:ggsurvfit’
 4      cyl regressi…      term       term     cyl   NULL
 5      cyl regressi…  estimate  Coeffici…  23.979      1
 6      cyl regressi…   p.value    p-value   0.003      1
+ℹ 2 more variables: warning, error
 > ## End(Don't show)
 > 
 > 
@@ -2081,6 +2180,53 @@ detaching ‘package:survival’, ‘package:ggplot2’, ‘package:ggsurvfit’
 3    SEX      AGE      method     method      object '…
 4    SEX      AGE alternative  Alternat…      object '…
 ℹ 3 more variables: context, fmt_fn, warning
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dot-format_poissontest_results")
+> ### * dot-format_poissontest_results
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: .format_poissontest_results
+> ### Title: Convert Poisson test to ARD
+> ### Aliases: .format_poissontest_results
+> ### Keywords: internal
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ cardx:::.format_poissontest_results(
++   by = "ARM",
++   variables = c("CNSR", "AVAL"),
++   lst_tidy =
++     cards::eval_capture_conditions(
++       stats::poisson.test(sum(cards::ADTTE[["CNSR"]]), sum(cards::ADTTE[["AVAL"]])) |>
++         broom::tidy()
++     )
++ )
++ ## Don't show: 
++ }) # examplesIf
+> cardx:::.format_poissontest_results(by = "ARM", variables = c("CNSR", 
++     "AVAL"), lst_tidy = cards::eval_capture_conditions(broom::tidy(stats::poisson.test(sum(cards::ADTTE[["CNSR"]]), 
++     sum(cards::ADTTE[["AVAL"]])))))
+{cards} data frame: 10 x 9
+   group1 variable   context   stat_name stat_label      stat
+1     ARM     AVAL stats_po…    estimate  Estimate…     0.006
+2     ARM     AVAL stats_po…   statistic  Number o…       102
+3     ARM     AVAL stats_po…     p.value    p-value         0
+4     ARM     AVAL stats_po…   parameter  Expected…     16853
+5     ARM     AVAL stats_po…    conf.low  CI Lower…     0.005
+6     ARM     AVAL stats_po…   conf.high  CI Upper…     0.007
+7     ARM     AVAL stats_po…      method     method Exact Po…
+8     ARM     AVAL stats_po… alternative  alternat… two.sided
+9     ARM     AVAL stats_po…  conf.level  CI Confi…      0.95
+10    ARM     AVAL stats_po…          mu    H0 Mean         1
+ℹ 3 more variables: fmt_fn, warning, error
 > ## End(Don't show)
 > 
 > 
@@ -2710,7 +2856,7 @@ Stratified Wilson Confidence Interval without continuity correction
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.299 0.203 8.699 0 0 
+Time elapsed:  5.431 0.204 8.057 0 0 
 > grDevices::dev.off()
 null device 
           1 

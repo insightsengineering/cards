@@ -84,3 +84,16 @@ test_that("ard_emmeans_mean_difference() works", {
       getElement("estimate")
   )
 })
+
+test_that("ard_emmeans_mean_difference() follows ard structure", {
+  expect_silent(
+    ard_emmeans_mean_difference(
+      data = mtcars,
+      formula = vs ~ am + mpg,
+      method = "glm",
+      method.args = list(family = binomial),
+      response_type = "dichotomous"
+    ) |>
+      cards::check_ard_structure()
+  )
+})

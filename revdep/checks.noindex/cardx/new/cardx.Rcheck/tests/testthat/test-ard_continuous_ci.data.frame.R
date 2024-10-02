@@ -1,4 +1,6 @@
 test_that("ard_continuous_ci.data.frame(method = 't.test')", {
+  skip_if_not(is_pkg_installed("broom", reference_pkg = "cardx"))
+
   expect_equal(
     ard_continuous_ci(
       mtcars,
@@ -15,6 +17,7 @@ test_that("ard_continuous_ci.data.frame(method = 't.test')", {
 })
 
 test_that("ard_continuous_ci.data.frame(method = 'wilcox.test')", {
+  skip_if_not(is_pkg_installed("broom", reference_pkg = "cardx"))
   expect_equal(
     ard_continuous_ci(
       mtcars,
@@ -28,5 +31,18 @@ test_that("ard_continuous_ci.data.frame(method = 'wilcox.test')", {
       conf.int = TRUE
     ) |>
       dplyr::select(-context)
+  )
+})
+
+test_that("ard_continuous_ci.data.frame() follows ard structure", {
+  skip_if_not(is_pkg_installed("broom", reference_pkg = "cardx"))
+
+  expect_silent(
+    ard_continuous_ci(
+      mtcars,
+      variables = mpg,
+      method = "wilcox.test"
+    ) |>
+      cards::check_ard_structure()
   )
 })

@@ -27,3 +27,10 @@ test_that("ard_aov() works", {
       as.data.frame()
   )
 })
+
+test_that("ard_stats_aov() follows ard structure", {
+  expect_silent(
+    ard_stats_aov(AGE ~ ARM, data = cards::ADSL) |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

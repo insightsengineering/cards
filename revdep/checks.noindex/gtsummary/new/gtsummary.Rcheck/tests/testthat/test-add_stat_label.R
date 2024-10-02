@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("add_stat_label(location='row') standard use", {
   tbl <- trial |> tbl_summary(by = trt)
 
@@ -37,6 +39,17 @@ test_that("add_stat_label(label) standard use", {
         statistic = all_continuous() ~ c("{median} ({p25}, {p75})", "{min} - {max}"),
       ) |>
       add_stat_label(label = age ~ c("Median (IQR)", "Range")) |>
+      as.data.frame()
+  )
+
+  # passing NA wont add labels to those variables
+  expect_snapshot(
+    trial |>
+      tbl_summary(type = age ~ 'continuous2', include = c(age, response), missing = "no") |>
+      add_stat_label(
+        label = list(all_continuous() ~ 'Median (IQR)', all_categorical() ~ NA_character_),
+        location = "row"
+      ) |>
       as.data.frame()
   )
 })

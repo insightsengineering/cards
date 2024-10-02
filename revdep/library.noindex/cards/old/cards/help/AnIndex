@@ -14,6 +14,7 @@ cards-package	cards-package
 .detect_msgs	dot-detect_msgs
 .eval_ard_calls	dot-eval_ard_calls
 .fill_grps_from_variables	dot-fill_grps_from_variables
+.fill_overall_grp_values	dot-fill_overall_grp_values
 .is_list_column_of_scalars	dot-is_list_column_of_scalars
 .is_named_list	dot-is_named_list
 .lst_results_as_df	dot-lst_results_as_df
@@ -30,11 +31,14 @@ cards-package	cards-package
 .unique_and_sorted	dot-unique_and_sorted
 ADAE	adam
 adam	adam
+add_calculated_row	add_calculated_row
 ADSL	adam
 ADTTE	adam
 alias_as_fmt_fn	alias_as_fmt_fn
 all_ard_groups	selectors
+all_ard_group_n	selectors
 all_ard_variables	selectors
+all_missing_columns	selectors
 all_of	reexports
 any_of	reexports
 apply_fmt_fn	apply_fmt_fn
@@ -57,6 +61,8 @@ ard_missing	ard_missing
 ard_missing.data.frame	ard_missing
 ard_stack	ard_stack
 ard_total_n	ard_total_n
+ard_total_n.data.frame	ard_total_n
+as_card	as_card
 as_nested_list	as_nested_list
 bind_ard	bind_ard
 cards	cards-package

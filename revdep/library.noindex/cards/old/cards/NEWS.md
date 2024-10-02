@@ -1,8 +1,32 @@
+# cards 0.2.2
+
+## New Features & Updates
+
+* Converted `ard_total_n()` to an S3 generic and added method `ard_total_n.data.frame()`.
+
+* Added the `bind_ard(.quiet)` argument to suppress messaging. (#299)
+
+* Improved ability of `shuffle_ard()` to populate missing group values where possible. (#306)
+
+* Added `apply_fmt_fn(replace)` argument. Use `replace=FALSE` to retain any previously formatted statistics in the `stat_fmt` column. (#285)
+
+* Added `bind_ard(.distinct)` argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (#286)
+
+## Bug Fixes
+
+* Fix in `print_ard_conditions()` when the variables were factors, which did not render properly in `cli::cli_format()`.
+
+* Bug fix in `print_ard_conditions()` and we can now print condition messages that contain curly brace pairs. (#309)
+
 # cards 0.2.1
 
 * Update in `ard_categorical()` to use `base::order()` instead of `dplyr::arrange()`, so the ordering of variables match the results from `base::table()` in some edge cases where sorted order was inconsistent.
 
 * Update in `ard_categorical()` to run `base::table()` output checks against coerced character columns. Previously, we relied on R to perform checks on the type it decided to check against (e.g. when it coerces to a common type). While the initial strategy worked in cases of Base R classes, there were some bespoke classes, such as times from {hms}, where Base R does not coerce as we expected.
+
+* Adding selectors `all_group_n()` and `all_missing_columns()`. (#272, #274)
+
+* Added new function `add_calculated_row()` for adding a new row of calculated statistic(s) that are a function of the other statistics in the ARD. (#275)
 
 # cards 0.2.0
 

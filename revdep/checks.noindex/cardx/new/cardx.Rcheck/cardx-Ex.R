@@ -223,8 +223,14 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
+## Don't show: 
+if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
+## End(Don't show)
 ard_continuous_ci(mtcars, variables = c(mpg, hp), method = "wilcox.test")
 ard_continuous_ci(mtcars, variables = mpg, by = am, method = "t.test")
+## Don't show: 
+}) # examplesIf
+## End(Don't show)
 
 
 
@@ -685,6 +691,35 @@ ard_stats_oneway_test(AGE ~ ARM, data = cards::ADSL)
 
 
 cleanEx()
+nameEx("ard_stats_poisson_test")
+### * ard_stats_poisson_test
+
+flush(stderr()); flush(stdout())
+
+### Name: ard_stats_poisson_test
+### Title: ARD Poisson Test
+### Aliases: ard_stats_poisson_test
+
+### ** Examples
+
+## Don't show: 
+if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
+## End(Don't show)
+# Exact test of rate parameter against null hypothesis
+cards::ADTTE |>
+  ard_stats_poisson_test(variables = c(CNSR, AVAL))
+
+# Comparison test of ratio of 2 rate parameters against null hypothesis
+cards::ADTTE |>
+  dplyr::filter(TRTA %in% c("Placebo", "Xanomeline High Dose")) |>
+  ard_stats_poisson_test(by = TRTA, variables = c(CNSR, AVAL))
+## Don't show: 
+}) # examplesIf
+## End(Don't show)
+
+
+
+cleanEx()
 nameEx("ard_stats_prop_test")
 ### * ard_stats_prop_test
 
@@ -990,6 +1025,30 @@ survfit(Surv_CNSR() ~ TRTA, data = cards::ADTTE) |>
 
 
 cleanEx()
+nameEx("ard_total_n.survey.design")
+### * ard_total_n.survey.design
+
+flush(stderr()); flush(stdout())
+
+### Name: ard_total_n.survey.design
+### Title: ARD Total N
+### Aliases: ard_total_n.survey.design
+
+### ** Examples
+
+## Don't show: 
+if (cardx:::is_pkg_installed("survey", reference_pkg = "cardx")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
+## End(Don't show)
+svy_titanic <- survey::svydesign(~1, data = as.data.frame(Titanic), weights = ~Freq)
+
+ard_total_n(svy_titanic)
+## Don't show: 
+}) # examplesIf
+## End(Don't show)
+
+
+
+cleanEx()
 nameEx("construction_helpers")
 ### * construction_helpers
 
@@ -1162,6 +1221,37 @@ cardx:::.format_moodtest_results(
   lst_tidy =
     cards::eval_capture_conditions(
       stats::mood.test(ADSL[["AGE"]] ~ ADSL[["SEX"]]) |>
+        broom::tidy()
+    )
+)
+## Don't show: 
+}) # examplesIf
+## End(Don't show)
+
+
+
+cleanEx()
+nameEx("dot-format_poissontest_results")
+### * dot-format_poissontest_results
+
+flush(stderr()); flush(stdout())
+
+### Name: .format_poissontest_results
+### Title: Convert Poisson test to ARD
+### Aliases: .format_poissontest_results
+### Keywords: internal
+
+### ** Examples
+
+## Don't show: 
+if (do.call(asNamespace("cardx")$is_pkg_installed, list(pkg = "broom", reference_pkg = "cardx"))) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
+## End(Don't show)
+cardx:::.format_poissontest_results(
+  by = "ARM",
+  variables = c("CNSR", "AVAL"),
+  lst_tidy =
+    cards::eval_capture_conditions(
+      stats::poisson.test(sum(cards::ADTTE[["CNSR"]]), sum(cards::ADTTE[["AVAL"]])) |>
         broom::tidy()
     )
 )

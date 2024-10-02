@@ -1,0 +1,90 @@
+
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+> # * https://testthat.r-lib.org/articles/special-files.html
+> 
+> library(testthat)
+> library(gtsummary)
+
+Attaching package: 'gtsummary'
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+> 
+> test_check("gtsummary")
+Starting 2 test processes
+[ FAIL 0 | WARN 0 | SKIP 84 | PASS 29 ]
+
+══ Skipped tests (84) ══════════════════════════════════════════════════════════
+• On CRAN (84): 'test-add_ci.tbl_summary.R:1:1',
+  'test-add_ci.tbl_svysummary.R:1:1', 'test-add_difference.tbl_summary.R:1:1',
+  'test-add_difference.tbl_svysummary.R:1:1', 'test-add_glance.R:1:1',
+  'test-add_global_p.R:1:1', 'test-add_global_p.tbl_regression.R:1:1',
+  'test-add_global_p.tbl_uvregression.R:1:1',
+  'test-add_n.tbl_regression.R:1:1', 'test-add_n.tbl_summary.R:1:1',
+  'test-add_n.tbl_survfit.R:1:1', 'test-add_n.tbl_svysummary.R:1:1',
+  'test-add_n.tbl_uvregression.R:1:1', 'test-add_nevent.tbl_regression.R:1:1',
+  'test-add_nevent.tbl_survfit.R:1:1',
+  'test-add_nevent.tbl_uvregression.R:1:1',
+  'test-add_overall.tbl_ard_summary.R:1:1',
+  'test-add_overall.tbl_continuous.R:1:1',
+  'test-add_overall.tbl_summary.R:1:1',
+  'test-add_overall.tbl_svysummary.R:1:1', 'test-add_p.tbl_continuous.R:1:1',
+  'test-add_p.tbl_cross.R:1:1', 'test-add_p.tbl_survfit.R:1:1',
+  'test-add_p.tbl_summary.R:1:1', 'test-add_p.tbl_svysummary.R:1:1',
+  'test-add_q.R:1:1', 'test-add_significance_stars.R:1:1',
+  'test-add_stat.R:1:1', 'test-add_stat_label.R:1:1',
+  'test-add_stat_label.tbl_svysummary.R:1:1', 'test-add_vif.R:1:1',
+  'test-as_flex_table.R:1:1', 'test-as_gt.R:1:1', 'test-as_hux_table.R:1:1',
+  'test-as_kable.R:1:1', 'test-as_kable_extra.R:1:1', 'test-as_tibble.R:1:1',
+  'test-bold_italicize_labels_levels.R:1:1', 'test-bold_p.R:1:1',
+  'test-combine_terms.R:1:1', 'test-custom_tidiers.R:1:1',
+  'test-gather_ard.R:1:1', 'test-inline_text.R:1:1', 'test-label_style.R:1:1',
+  'test-modify_caption.R:1:1', 'test-modify_column_alignment.R:1:1',
+  'test-modify_column_hide.R:1:1', 'test-modify_column_indent.R:1:1',
+  'test-modify_column_merge.R:1:1', 'test-modify_fmt_fun.R:1:1',
+  'test-modify_footnote.R:1:1', 'test-modify_header.R:1:1',
+  'test-modify_spanning_header.R:1:1', 'test-modify_table_body.R:1:1',
+  'test-plot.tbl_regression.R:1:1', 'test-modify_table_styling.R:1:1',
+  'test-plot.tbl_uvregression.R:1:1', 'test-remove_row_type.R:1:1',
+  'test-scoping_gtsummary.R:1:1', 'test-select_helpers.R:1:1',
+  'test-separate_p_footnotes.R:1:1', 'test-show_header_names.R:1:1',
+  'test-sort_filter_p.R:1:1', 'test-style_pvalue.R:49:3',
+  'test-tbl_ard_continuous.R:1:1', 'test-tbl_ard_summary.R:1:1',
+  'test-tbl_ard_wide_summary.R:1:1', 'test-tbl_butcher.R:1:1',
+  'test-tbl_continuous.R:1:1', 'test-tbl_cross.R:1:1',
+  'test-tbl_custom_summary.R:1:1', 'test-tbl_likert.R:1:1',
+  'test-tbl_merge.R:1:1', 'test-tbl_regression.R:1:1',
+  'test-tbl_regression_methods.R:1:1', 'test-tbl_split.R:1:1',
+  'test-tbl_strata.R:1:1', 'test-tbl_stack.R:1:1', 'test-tbl_survfit.R:1:1',
+  'test-tbl_summary.R:1:1', 'test-tbl_svysummary.R:1:1',
+  'test-tbl_uvregression.R:1:1', 'test-tbl_wide_summary.R:1:1',
+  'test-theme_gtsummary.R:1:1'
+
+[ FAIL 0 | WARN 0 | SKIP 84 | PASS 29 ]
+> 
+> proc.time()
+   user  system elapsed 
+  5.481   0.464   3.843 

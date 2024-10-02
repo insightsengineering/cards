@@ -4,11 +4,11 @@
 * R was compiled by
     Apple clang version 14.0.0 (clang-1400.0.29.202)
     GNU Fortran (GCC) 12.2.0
-* running under: macOS Ventura 13.4.1
+* running under: macOS Ventura 13.6.9
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘cardx/DESCRIPTION’ ... OK
-* this is package ‘cardx’ version ‘0.2.0’
+* this is package ‘cardx’ version ‘0.2.1’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -51,7 +51,6 @@
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
   Running ‘spelling.R’
-  Comparing ‘spelling.Rout’ to ‘spelling.Rout.save’ ... OK
   Running ‘testthat.R’
 * DONE
 Status: OK

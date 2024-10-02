@@ -1,6 +1,6 @@
 Package: cards
 Title: Analysis Results Data
-Version: 0.2.1.9018
+Version: 0.2.2.9017
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018")),
@@ -35,11 +35,11 @@ RoxygenNote: 7.3.2
 RemoteType: local
 RemoteUrl: /Users/sjobergd/Documents/GitHub/cards
 NeedsCompilation: no
-Packaged: 2024-09-01 22:49:16 UTC; sjobergd
+Packaged: 2024-10-02 20:52:33 UTC; sjobergd
 Author: Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>),
   Becca Krouse [aut],
   Emily de la Rua [aut],
   F. Hoffmann-La Roche AG [cph, fnd],
   GlaxoSmithKline Research & Development Limited [cph]
 Maintainer: Daniel D. Sjoberg <danield.sjoberg@gmail.com>
-Built: R 4.3.3; ; 2024-09-01 22:49:16 UTC; unix
+Built: R 4.3.3; ; 2024-10-02 20:52:33 UTC; unix

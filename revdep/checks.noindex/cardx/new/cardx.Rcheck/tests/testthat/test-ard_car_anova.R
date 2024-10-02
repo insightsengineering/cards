@@ -20,3 +20,11 @@ test_that("ard_car_anova() messaging", {
     ard_car_anova(mtcars)
   )
 })
+
+test_that("ard_car_anova() follows ard structure", {
+  expect_silent(
+    suppressWarnings(glm(vs ~ factor(cyl) + factor(am), data = mtcars, family = binomial)) |>
+      ard_car_anova(test.statistic = "Wald") |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

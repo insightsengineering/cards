@@ -25,7 +25,7 @@ test_that("ard_categorical_ci(variables)", {
 
   expect_equal(
     ard_categorical_ci(dclus1, variables = starts_with("xxxxxx")),
-    dplyr::tibble()
+    dplyr::tibble() |> cards::as_card()
   )
 
   # check all works with numeric variable
@@ -109,5 +109,12 @@ test_that("ard_categorical_ci(method)", {
     survey::svyciprop(~ I(both == "No"), design = dclus1, method = "likelihood", df = survey::degf(dclus1)) %>%
       {c(as.list(.), as.list(attr(., "ci")))} |> # styler: off
       set_names(c("estimate", "conf.low", "conf.high"))
+  )
+})
+
+test_that("ard_categorical_ci.survey.design() follows ard structure", {
+  expect_silent(
+    ard_categorical_ci(dclus1, variables = c(both, awards), method = "likelihood") |>
+      cards::check_ard_structure(method = TRUE)
   )
 })

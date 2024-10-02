@@ -68,3 +68,11 @@ test_that("ard_stats_mcnemar_test() works", {
   )
   expect_null(ard_stats_mcnemar_test_long$error |> unique() |> unlist())
 })
+
+test_that("ard_stats_mcnemar_test() follows ard structure", {
+  expect_silent(
+    cards::ADSL |>
+      ard_stats_mcnemar_test(by = SEX, variables = EFFFL) |>
+      cards::check_ard_structure()
+  )
+})

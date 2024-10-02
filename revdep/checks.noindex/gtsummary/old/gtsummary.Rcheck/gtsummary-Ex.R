@@ -281,6 +281,7 @@ flush(stderr()); flush(stdout())
 ### Name: add_n_summary
 ### Title: Add column with N
 ### Aliases: add_n_summary add_n.tbl_summary add_n.tbl_svysummary
+###   add_n.tbl_likert
 
 ### ** Examples
 
@@ -410,6 +411,49 @@ trial |>
     include = grade
   ) |>
   add_overall(last = TRUE)
+
+
+
+cleanEx()
+nameEx("add_overall_ard")
+### * add_overall_ard
+
+flush(stderr()); flush(stdout())
+
+### Name: add_overall_ard
+### Title: ARD add overall column
+### Aliases: add_overall_ard add_overall.tbl_ard_summary
+
+### ** Examples
+
+# Example 1 ----------------------------------
+# build primary table
+tbl <-
+  cards::ard_stack(
+    trial,
+    .by = trt,
+    cards::ard_continuous(variables = age),
+    cards::ard_categorical(variables = grade),
+    .missing = TRUE,
+    .attributes = TRUE,
+    .total_n = TRUE
+  ) |>
+  tbl_ard_summary(by = trt)
+
+# create ARD with overall results
+ard_overall <-
+  cards::ard_stack(
+    trial,
+    cards::ard_continuous(variables = age),
+    cards::ard_categorical(variables = grade),
+    .missing = TRUE,
+    .attributes = TRUE,
+    .total_n = TRUE
+  )
+
+# add an overall column
+tbl |>
+  add_overall(cards = ard_overall)
 
 
 
@@ -1349,6 +1393,54 @@ tbl <-
 
 
 cleanEx()
+nameEx("gather_ard")
+### * gather_ard
+
+flush(stderr()); flush(stdout())
+
+### Name: gather_ard
+### Title: Extract ARDs
+### Aliases: gather_ard
+
+### ** Examples
+
+## Don't show: 
+if (gtsummary:::is_pkg_installed('cardx', reference_pkg = 'gtsummary')) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
+## End(Don't show)
+tbl_summary(trial, by = trt, include = age) |>
+  add_overall() |>
+  add_p() |>
+  gather_ard()
+
+glm(response ~ trt, data = trial, family = binomial()) |>
+  tbl_regression() |>
+  gather_ard()
+## Don't show: 
+}) # examplesIf
+## End(Don't show)
+
+
+
+cleanEx()
+nameEx("glance_fun_s3")
+### * glance_fun_s3
+
+flush(stderr()); flush(stdout())
+
+### Name: glance_fun_s3
+### Title: Default glance function
+### Aliases: glance_fun_s3 glance_fun_s3.default glance_fun_s3.mira
+### Keywords: internal
+
+### ** Examples
+
+mod <- lm(age ~ trt, trial)
+
+glance_fun_s3(mod)
+
+
+
+cleanEx()
 nameEx("global_pvalue_fun")
 ### * global_pvalue_fun
 
@@ -2163,7 +2255,7 @@ bind_ard(
     # 'trt' is the column stratifying variable and needs to be listed first.
     by = c(trt, grade),
     variables = age
-  ) ,
+  ),
   # add univariate trt tabulation
   ard_categorical(
     trial,
@@ -2212,7 +2304,8 @@ ard_stack(
   ard_categorical(variables = "AGEGR1"),
   ard_continuous(variables = "AGE"),
   .attributes = TRUE,
-  .missing = TRUE
+  .missing = TRUE,
+  .total_n = TRUE
 ) |>
   tbl_ard_summary()
 
@@ -2222,7 +2315,8 @@ ard_stack(
   ard_categorical(variables = "AGEGR1"),
   ard_continuous(variables = "AGE"),
   .attributes = TRUE,
-  .missing = TRUE
+  .missing = TRUE,
+  .total_n = TRUE
 ) |>
   tbl_ard_summary(by = ARM)
 
@@ -2246,7 +2340,8 @@ ard_stack(
   trial,
   ard_continuous(variables = age),
   .missing = TRUE,
-  .attributes = TRUE
+  .attributes = TRUE,
+  .total_n = TRUE
 ) |>
   tbl_ard_wide_summary()
 
@@ -2255,7 +2350,8 @@ ard_stack(
   ard_dichotomous(variables = response),
   ard_categorical(variables = grade),
   .missing = TRUE,
-  .attributes = TRUE
+  .attributes = TRUE,
+  .total_n = TRUE
 ) |>
   tbl_ard_wide_summary()
 
@@ -2440,6 +2536,46 @@ trial |>
     overall_row = TRUE
   ) |>
   bold_labels()
+
+
+
+cleanEx()
+nameEx("tbl_likert")
+### * tbl_likert
+
+flush(stderr()); flush(stdout())
+
+### Name: tbl_likert
+### Title: Likert Summary
+### Aliases: tbl_likert
+
+### ** Examples
+
+levels <- c("Strongly Disagree", "Disagree", "Agree", "Strongly Agree")
+df_likert <- data.frame(
+  recommend_friend = sample(levels, size = 20, replace = TRUE) |> factor(levels = levels),
+  regret_purchase = sample(levels, size = 20, replace = TRUE) |> factor(levels = levels)
+)
+
+# Example 1 ----------------------------------
+tbl_likert_ex1 <-
+  df_likert |>
+  tbl_likert(include = c(recommend_friend, regret_purchase)) |>
+  add_n()
+tbl_likert_ex1
+
+# Example 2 ----------------------------------
+# Add continuous summary of the likert scores
+list(
+  tbl_likert_ex1,
+  tbl_wide_summary(
+    df_likert |> dplyr::mutate(dplyr::across(everything(), as.numeric)),
+    statistic = c("{mean}", "{sd}"),
+    type = ~"continuous",
+    include = c(recommend_friend, regret_purchase)
+  )
+) |>
+  tbl_merge(tab_spanner = FALSE)
 
 
 
@@ -2886,6 +3022,23 @@ trial |>
 
 # reset gtsummary themes
 reset_gtsummary_theme()
+
+
+
+cleanEx()
+nameEx("tibble_as_cli")
+### * tibble_as_cli
+
+flush(stderr()); flush(stdout())
+
+### Name: tibble_as_cli
+### Title: Print tibble with cli
+### Aliases: tibble_as_cli
+### Keywords: internal
+
+### ** Examples
+
+trial[1:3, ] |> dplyr::mutate_all(as.character) |> tibble_as_cli()
 
 
 

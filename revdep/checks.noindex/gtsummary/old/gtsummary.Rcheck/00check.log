@@ -4,11 +4,11 @@
 * R was compiled by
     Apple clang version 14.0.0 (clang-1400.0.29.202)
     GNU Fortran (GCC) 12.2.0
-* running under: macOS Ventura 13.4.1
+* running under: macOS Ventura 13.6.9
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘gtsummary/DESCRIPTION’ ... OK
-* this is package ‘gtsummary’ version ‘2.0.1’
+* this is package ‘gtsummary’ version ‘2.0.2’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -55,33 +55,117 @@
 * checking R/sysdata.rda ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... OK
+* checking examples ... ERROR
+Running examples in ‘gtsummary-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: add_ci
+> ### Title: Add CI Column
+> ### Aliases: add_ci add_ci.tbl_summary
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (gtsummary:::is_pkg_installed("cardx", reference_pkg = "gtsummary") && gtsummary:::is_pkg_installed("broom", reference_pkg = "cardx")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ # Example 1 ----------------------------------
++ trial |>
++   tbl_summary(
++     missing = "no",
++     statistic = all_continuous() ~ "{mean} ({sd})",
++     include = c(marker, response, trt)
++   ) |>
++   add_ci()
++ 
++ # Example 2 ----------------------------------
++ trial |>
++   select(response, grade) %>%
++   tbl_summary(
++     statistic = all_categorical() ~ "{p}%",
++     missing = "no",
++     include = c(response, grade)
++   ) |>
++   add_ci(pattern = "{stat} ({ci})") |>
++   modify_footnote(everything() ~ NA)
++ ## Don't show: 
++ }) # examplesIf
+> add_ci(tbl_summary(trial, missing = "no", statistic = all_continuous() ~ 
++     "{mean} ({sd})", include = c(marker, response, trt)))
+Error in `dplyr::mutate()`:
+ℹ In argument: `stat = as.character(...)`.
+Caused by error in `glue_data()`:
+! is.environment(.envir) is not TRUE
+Backtrace:
+     ▆
+  1. ├─(if (getRversion() >= "3.4") withAutoprint else force)(...)
+  2. │ └─base::source(...)
+  3. │   ├─base::withVisible(eval(ei, envir))
+  4. │   └─base::eval(ei, envir)
+  5. │     └─base::eval(ei, envir)
+  6. ├─gtsummary::add_ci(...)
+  7. │ └─gtsummary:::check_class(x, "gtsummary")
+  8. ├─gtsummary::tbl_summary(...)
+  9. │ ├─base::structure(...)
+ 10. │ ├─base::append(...)
+ 11. │ └─gtsummary::brdg_summary(...)
+ 12. │   ├─dplyr::left_join(...)
+ 13. │   ├─dplyr:::left_join.data.frame(...)
+ 14. │   │ └─dplyr::auto_copy(x, y, copy = copy)
+ 15. │   │   ├─dplyr::same_src(x, y)
+ 16. │   │   └─dplyr:::same_src.data.frame(x, y)
+ 17. │   │     └─base::is.data.frame(y)
+ 18. │   ├─dplyr::bind_rows(...)
+ 19. │   │ └─rlang::list2(...)
+ 20. │   └─gtsummary::pier_summary_continuous(...)
+ 21. │     ├─... %>% ...
+ 22. │     ├─dplyr::bind_rows(...)
+ 23. │     │ └─rlang::list2(...)
+ 24. │     ├─dplyr::group_map(...)
+ 25. │     └─dplyr:::group_map.data.frame(...)
+ 26. │       └─dplyr:::map2(chunks, group_keys, .f, ...)
+ 27. │         └─base::mapply(.f, .x, .y, MoreArgs = list(...), SIMPLIFY = FALSE)
+ 28. │           └─gtsummary (local) `<fn>`(dots[[1L]][[1L]], dots[[2L]][[1L]])
+ 29. │             ├─dplyr::mutate(...)
+ 30. │             └─dplyr:::mutate.data.frame(...)
+ 31. │               └─dplyr:::mutate_cols(.data, dplyr_quosures(...), by)
+ 32. │                 ├─base::withCallingHandlers(...)
+ 33. │                 └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
+ 34. │                   └─mask$eval_all_mutate(quo)
+ 35. │                     └─dplyr (local) eval()
+ 36. ├─dplyr::left_join(...)
+ 37. ├─dplyr:::left_join.data.frame(...)
+ 38. │ └─dplyr::auto_copy(x, y, copy = copy)
+ 39. │   ├─dplyr::same_src(x, y)
+ 40. │   └─dplyr:::same_src.data.frame(x, y)
+ 41. │     └─base::is.data.frame(y)
+ 42. ├─glue::glue(...)
+ 43. │ └─glue::glue_data(...)
+ 44. │   └─base::stopifnot(is.environment(.envir))
+ 45. │     └─base::stop(simpleError(msg, call = if (p <- sys.parent(1L)) sys.call(p)))
+ 46. └─dplyr (local) `<fn>`(`<smplErrr>`)
+ 47.   └─rlang::abort(message, class = error_class, parent = parent, call = error_call)
+Execution halted
 * checking for unstated dependencies in ‘tests’ ... OK
-* checking tests ... ERROR
+* checking tests ... OK
   Running ‘testthat.R’
-Running the tests in ‘tests/testthat.R’ failed.
-Last 13 lines of output:
-    Output
-            **Characteristic** **N** **log(HR)**  **95% CI** **p-value**
-  -   1                    Age   189        0.01  0.01, 0.01      <0.001
-  +   1                    Age   183        0.01  0.01, 0.01      <0.001
-  -   2 Chemotherapy Treatment   200        <NA>        <NA>        <NA>
-  +   2 Chemotherapy Treatment   193        <NA>        <NA>        <NA>
-      3                 Drug A  <NA>        <NA>        <NA>        <NA>
-      4                 Drug B  <NA>        0.29 -0.12, 0.70         0.2
-  
-  * Run `testthat::snapshot_accept('tbl_uvregression')` to accept the change.
-  * Run `testthat::snapshot_review('tbl_uvregression')` to interactively review the change.
-  
-  [ FAIL 1 | WARN 0 | SKIP 0 | PASS 1425 ]
-  Error: Test failures
-  Execution halted
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
-* checking running R code from vignettes ... OK
-  ‘gtsummary_definition.Rmd’ using ‘UTF-8’... OK
-  ‘inline_text.Rmd’ using ‘UTF-8’... OK
-  ‘themes.Rmd’ using ‘UTF-8’... OK
+* checking running R code from vignettes ... ERROR
+Errors in running code in vignettes:
+when running code in ‘gtsummary_definition.Rmd’
+  ...
++     tbl_regression() %>% bold_p(t = 0.5)
+
+> tbl_summary_ex <- trial %>% select(trt, age, grade, 
++     response) %>% tbl_summary(by = trt)
+
+  When sourcing ‘gtsummary_definition.R’:
+Error: ℹ In argument: `stat = as.character(...)`.
+Caused by error in `glue_data()`:
+! is.environment(.envir) is not TRUE
+Execution halted
+
+  ‘gtsummary_definition.Rmd’ using ‘UTF-8’... failed
 * checking re-building of vignette outputs ... SKIPPED
 * DONE
-Status: 1 ERROR
+Status: 2 ERRORs

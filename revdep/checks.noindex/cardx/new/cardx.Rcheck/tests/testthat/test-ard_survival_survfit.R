@@ -141,3 +141,12 @@ test_that("ard_survival_survfit() errors with stratified Cox model", {
       ard_survival_survfit()
   )
 })
+
+
+test_that("ard_survival_survfit() follows ard structure", {
+  expect_silent(
+    survival::survfit(survival::Surv(AVAL, CNSR) ~ TRTA, cards::ADTTE) |>
+      ard_survival_survfit(times = c(60, 180)) |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

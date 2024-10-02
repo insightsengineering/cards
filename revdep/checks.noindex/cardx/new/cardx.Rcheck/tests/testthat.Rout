@@ -26,8 +26,38 @@ The following object is masked from 'package:testthat':
     matches
 
 Starting 2 test processes
-[ FAIL 0 | WARN 0 | SKIP 0 | PASS 572 ]
+[ FAIL 0 | WARN 0 | SKIP 44 | PASS 494 ]
+
+══ Skipped tests (44) ══════════════════════════════════════════════════════════
+• On CRAN (44): 'test-ard_aod_wald_test.R:12:3',
+  'test-ard_attributes.survey.design.R:7:3', 'test-ard_car_vif.R:4:3',
+  'test-ard_car_vif.R:29:3', 'test-ard_car_anova.R:14:3',
+  'test-ard_car_anova.R:18:3', 'test-ard_categorical_ci.survey.design.R:7:3',
+  'test-ard_categorical.survey.design.R:428:3',
+  'test-ard_categorical.survey.design.R:1195:3',
+  'test-ard_continuous_ci.survey.design.R:7:3',
+  'test-ard_continuous_ci.survey.design.R:191:3',
+  'test-ard_dichotomous.survey.design.R:413:3',
+  'test-ard_effectsize_cohens_d.R:38:3', 'test-ard_effectsize_hedges_g.R:34:3',
+  'test-ard_proportion_ci.R:92:3', 'test-ard_proportion_ci.R:113:3',
+  'test-ard_regression.R:6:3', 'test-ard_regression.R:30:3',
+  'test-ard_regression.R:50:3', 'test-ard_regression_basic.R:12:3',
+  'test-ard_stats_aov.R:25:3', 'test-ard_stats_kruskal_test.R:22:3',
+  'test-ard_stats_mood_test.R:22:3', 'test-ard_stats_oneway_test.R:24:3',
+  'test-ard_stats_poisson_test.R:74:3', 'test-ard_survey_svychisq.R:28:3',
+  'test-ard_survey_svyranktest.R:18:3', 'test-ard_survival_survfit.R:4:3',
+  'test-ard_survival_survfit.R:15:3', 'test-ard_survival_survfit.R:26:3',
+  'test-ard_survival_survfit.R:37:3', 'test-ard_survival_survfit.R:57:3',
+  'test-ard_survival_survfit.R:91:3', 'test-ard_survival_survfit.R:102:3',
+  'test-ard_survival_survfit.R:137:3', 'test-ard_survival_survfit_diff.R:40:3',
+  'test-ard_total_n.survey.design.R:4:3', 'test-construction_helpers.R:4:3',
+  'test-construction_helpers.R:104:3', 'test-proportion_ci.R:12:3',
+  'test-proportion_ci.R:138:3', 'test-ard_continuous.survey.design.R:70:3',
+  'test-ard_continuous.survey.design.R:322:3',
+  'test-ard_continuous.survey.design.R:338:3'
+
+[ FAIL 0 | WARN 0 | SKIP 44 | PASS 494 ]
 > 
 > proc.time()
    user  system elapsed 
- 58.764   1.640  36.296 
+ 61.707   1.840  40.306 

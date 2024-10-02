@@ -30,23 +30,11 @@ test_that("ard_stats_chisq_test() works", {
   )
 })
 
-test_that("shuffle_ard fills missing group levels if the group is meaningful", {
-  adsl_sub <- cards::ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
 
-  expect_snapshot(
-    cards::bind_ard(
-      ard_stats_chisq_test(
-        data = adsl_sub,
-        by = "ARM",
-        variables = "AGEGR1"
-      ),
-      ard_stats_chisq_test(
-        data = adsl_sub,
-        by = "SEX",
-        variables = "AGEGR1"
-      )
-    ) |>
-      cards::shuffle_ard() |>
-      as.data.frame()
+test_that("ard_stats_chisq_test() follows ard structure", {
+  expect_silent(
+    cards::ADSL |>
+      ard_stats_chisq_test(by = ARM, variables = AGEGR1) |>
+      cards::check_ard_structure()
   )
 })

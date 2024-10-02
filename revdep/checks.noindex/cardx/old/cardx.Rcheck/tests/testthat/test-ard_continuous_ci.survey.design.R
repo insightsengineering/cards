@@ -35,7 +35,7 @@ test_that("ard_continuous_ci(variables)", {
 
   expect_equal(
     ard_continuous_ci(dclus1, variables = starts_with("xxxxxx")),
-    dplyr::tibble()
+    dplyr::tibble() |> cards::as_card()
   )
 
   # check NA values don't affect result
@@ -193,5 +193,12 @@ test_that("ard_continuous_ci() errors are captured", {
   )
   expect_snapshot(
     ard_continuous_ci(dclus1, variables = sch.wide, method = "svymedian.beta")
+  )
+})
+
+test_that("ard_continuous_ci.survey.design() follows ard structure", {
+  expect_silent(
+    ard_continuous_ci(dclus1, variables = c(api00, api99), df = 50) |>
+      cards::check_ard_structure(method = FALSE)
   )
 })

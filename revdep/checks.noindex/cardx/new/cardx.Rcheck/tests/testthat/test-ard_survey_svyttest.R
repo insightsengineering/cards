@@ -73,3 +73,17 @@ test_that("ard_survey_svyttest() messaging", {
     "group must be binary"
   )
 })
+
+test_that("ard_survey_svyttest() follows ard structure", {
+  data(api, package = "survey")
+  dclus2 <- survey::svydesign(id = ~ dnum + snum, fpc = ~ fpc1 + fpc2, data = apiclus2)
+  expect_silent(
+    ard_survey_svyttest(
+      dclus2,
+      variable = enroll,
+      by = comp.imp,
+      conf.level = 0.9
+    ) |>
+      cards::check_ard_structure()
+  )
+})

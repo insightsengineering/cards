@@ -1,7 +1,9 @@
+ADAE
 ADaM
 AE
 AEs
 ARD
+ARD's
 ARDs
 CDISC
 CMD
@@ -11,6 +13,7 @@ Hoffmann
 JSON
 Lifecycle
 ORCID
+Pharma
 Pre
 Rua
 SAS's
@@ -30,6 +33,7 @@ jsonlite
 mis
 nalysis
 namespaced
+pharmaverse
 pre
 quosures
 reproducibility
@@ -41,5 +45,6 @@ tidyselector
 tidyselectors
 univariable
 unlist
+unlists
 unnested
 unnests

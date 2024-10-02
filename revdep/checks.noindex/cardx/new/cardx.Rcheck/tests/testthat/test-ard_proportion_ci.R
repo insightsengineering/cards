@@ -119,3 +119,14 @@ test_that("ard_categorical_ci() messaging", {
     )
   )
 })
+
+test_that("ard_proportion_ci() follows ard structure", {
+  expect_silent(
+    ard_categorical_ci(
+      data = mtcars,
+      variables = c(am, vs),
+      method = "waldcc"
+    ) |>
+      cards::check_ard_structure()
+  )
+})

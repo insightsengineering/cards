@@ -3,13 +3,13 @@ skip_if_not(is_pkg_installed(c("broom.helpers", "withr", "survey", "survival"), 
 test_that("construct_model() works", {
   expect_snapshot(
     construct_model(
-      data = mtcars |> dplyr::rename(`M P G` = mpg),
-      formula = reformulate2(c("M P G", "cyl"), response = "hp"),
+      data = mtcars |> dplyr::rename(`M P G` = mpg, `c/yl` = cyl),
+      formula = reformulate2(c("M P G", "c/yl"), response = "hp"),
       method = "lm"
     ) |>
       ard_regression() |>
       as.data.frame() |>
-      dplyr::filter(stat_name %in% c("term", "estimate", "p.value"))
+      dplyr::filter(stat_name %in% c("term", "estimate"))
   )
 
   expect_equal(
@@ -26,7 +26,7 @@ test_that("construct_model() works", {
   )
 
   expect_equal(
-    cardx::bt("`a b`"),
+    bt("`a b`"),
     "`a b`"
   )
 

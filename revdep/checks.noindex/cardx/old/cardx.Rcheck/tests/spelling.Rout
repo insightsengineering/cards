@@ -21,8 +21,8 @@ Type 'q()' to quit R.
 +     skip_on_cran = TRUE
 +   )
 + }
-All Done!
+NULL
 > 
 > proc.time()
    user  system elapsed 
-  0.652   0.344   1.232 
+  0.082   0.022   0.105 

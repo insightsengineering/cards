@@ -39,3 +39,17 @@ test_that("exact values match for ard_svyranktest works", {
     ignore_attr = TRUE
   )
 })
+
+test_that("ard_survey_svyranktest() follows ard structure", {
+  data(api, package = "survey")
+  dclus2 <- survey::svydesign(id = ~ dnum + snum, fpc = ~ fpc1 + fpc2, data = apiclus2)
+  expect_silent(
+    ard_survey_svyranktest(
+      dclus2,
+      variable = enroll,
+      by = comp.imp,
+      test = "wilcoxon"
+    ) |>
+      cards::check_ard_structure()
+  )
+})

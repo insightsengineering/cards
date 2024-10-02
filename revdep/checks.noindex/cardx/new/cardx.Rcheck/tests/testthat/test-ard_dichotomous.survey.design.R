@@ -448,3 +448,19 @@ test_that("ard_dichotomous.survey.design() returns an error with erroneous input
     error = TRUE
   )
 })
+
+
+test_that("ard_dichotomous.survey.design() follows ard structure", {
+  svy_dicho <- survey::svydesign(ids = ~1, data = mtcars, weights = ~1)
+  svy_dicho$variables <- svy_dicho$variables |>
+    dplyr::mutate(across(c("cyl", "am", "vs"), as.factor))
+  expect_silent(
+    ard_dichotomous(svy_dicho,
+      by = vs,
+      variables = c(cyl, am),
+      value = list(cyl = 4),
+      denominator = "row"
+    ) |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

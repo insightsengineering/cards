@@ -29,3 +29,11 @@ test_that("ard_stats_fisher_test() works", {
       ard_stats_fisher_test(by = ARM, variables = c(AGEGR1, BMIBLGR1))
   )
 })
+
+test_that("ard_stats_fisher_test() follows ard structure", {
+  expect_silent(
+    cards::ADSL[1:20, ] |>
+      ard_stats_fisher_test(by = ARM, variables = AGEGR1) |>
+      cards::check_ard_structure()
+  )
+})

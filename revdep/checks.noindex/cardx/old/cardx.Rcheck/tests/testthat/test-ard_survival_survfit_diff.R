@@ -61,3 +61,12 @@ test_that("ard_survival_survfit_diff() messaging", {
       ard_survival_survfit_diff(times = c(25, 50))
   )
 })
+
+test_that("ard_survival_survfit_diff() follows ard structure", {
+  withr::local_package("survival")
+  sf <- survfit(Surv(AVAL, 1 - CNSR) ~ SEX, cards::ADTTE)
+  expect_silent(
+    ard_survival_survfit_diff(sf, times = c(25, 50)) |>
+      cards::check_ard_structure()
+  )
+})

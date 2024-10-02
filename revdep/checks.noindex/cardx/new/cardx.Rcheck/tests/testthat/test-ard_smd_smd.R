@@ -69,3 +69,11 @@ test_that("ard_smd_smd() error messaging", {
     "gref must be an integer within 2"
   )
 })
+
+test_that("ard_smd_smd() follows ard structure", {
+  expect_silent(
+    mtcars |>
+      ard_smd_smd(by = vs, variables = am, std.error = TRUE) |>
+      cards::check_ard_structure()
+  )
+})

@@ -85,3 +85,11 @@ test_that("ard_stats_prop_test() error messaging", {
     "The `by` column must have exactly 2 levels.\nThe levels are 4, 6, and 8"
   )
 })
+
+test_that("ard_stats_prop_test() follows ard structure", {
+  expect_silent(
+    mtcars |>
+      ard_stats_prop_test(by = vs, variables = am, conf.level = 0.90) |>
+      cards::check_ard_structure()
+  )
+})

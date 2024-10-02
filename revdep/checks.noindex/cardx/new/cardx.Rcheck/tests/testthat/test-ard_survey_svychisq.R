@@ -65,3 +65,17 @@ test_that("ard_survey_svychisq() works", {
     ard_svychisq[c("context", "stat_name", "stat_label", "stat")]
   )
 })
+
+test_that("ard_survey_svychisq() follows ard structure", {
+  data(api, package = "survey")
+  dclus2 <- survey::svydesign(id = ~ dnum + snum, fpc = ~ fpc1 + fpc2, data = apiclus2)
+  expect_silent(
+    ard_survey_svychisq(
+      dclus2,
+      variables = sch.wide,
+      by = comp.imp,
+      statistic = "F"
+    ) |>
+      cards::check_ard_structure()
+  )
+})

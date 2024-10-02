@@ -103,3 +103,12 @@ test_that("ard_missing.survey.design() works", {
       cards::get_ard_statistics(stat_name %in% "p_nonmiss") |> unlist() |> unname()
   )
 })
+
+test_that("ard_missing.survey.design() follows ard structure", {
+  data(api, package = "survey")
+  svy_titanic <- survey::svydesign(~1, data = as.data.frame(Titanic), weights = ~Freq)
+  expect_silent(
+    ard_missing(svy_titanic, variables = c(Class, Age), by = NULL) |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

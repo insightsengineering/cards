@@ -35,3 +35,11 @@ test_that("ard_stats_mood_test() works", {
       ard_stats_mood_test(by = SEX, variable = c(AGE, BMIBL))
   )
 })
+
+test_that("ard_stats_mood_test() follows ard structure", {
+  expect_silent(
+    cards::ADSL |>
+      ard_stats_mood_test(by = SEX, variable = AGE) |>
+      cards::check_ard_structure()
+  )
+})

@@ -60,3 +60,10 @@ test_that("ard_survival_survdiff() error messaging", {
     ard_survival_survdiff$error |> unique() |> grepl(pattern = "*'not_a_variable'*", x = _)
   )
 })
+
+test_that("ard_survival_survdiff() follows ard structure", {
+  expect_silent(
+    ard_survival_survdiff(survival::Surv(AVAL, CNSR) ~ TRTA, data = cards::ADTTE) |>
+      cards::check_ard_structure()
+  )
+})

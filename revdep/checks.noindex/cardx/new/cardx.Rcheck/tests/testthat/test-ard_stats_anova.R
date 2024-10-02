@@ -143,3 +143,14 @@ test_that("ard_stats_anova.data.frame() error messaging", {
       grepl(pattern = "^Argument `method` cannot be namespaced*", x = _)
   )
 })
+
+test_that("ard_stats_anova() follows ard structure", {
+  expect_silent(
+    anova(
+      lm(mpg ~ am, mtcars),
+      lm(mpg ~ am + hp, mtcars)
+    ) |>
+      ard_stats_anova() |>
+      cards::check_ard_structure()
+  )
+})

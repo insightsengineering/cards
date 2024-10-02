@@ -31,3 +31,11 @@ test_that("ard_vif() issues friendly messaging for incorrect object passed in/ca
     cards::ADSL |> ard_car_vif()
   )
 })
+
+test_that("ard_car_vif() follows ard structure", {
+  expect_silent(
+    lm(AGE ~ ARM + SEX, data = cards::ADSL) |>
+      ard_car_vif() |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

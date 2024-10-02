@@ -508,3 +508,13 @@ test_that("ard_continuous.survey.design() works when using generic names ", {
     ard_continuous(dclus2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
   )
 })
+
+test_that("ard_continuous.survey.design() follows ard structure", {
+  data(api, package = "survey")
+  dclus1 <- survey::svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+
+  expect_silent(
+    ard_continuous(dclus1, variables = c(cds, stype), by = snum) |>
+      cards::check_ard_structure(method = FALSE)
+  )
+})

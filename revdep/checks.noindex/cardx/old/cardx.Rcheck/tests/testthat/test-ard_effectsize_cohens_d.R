@@ -95,3 +95,26 @@ test_that("ard_effectsize_paired_cohens_d() works", {
     FALSE
   )
 })
+
+test_that("ard_effectsize_cohens_d() follows ard structure", {
+  expect_silent(
+    cards::ADSL |>
+      dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
+      ard_effectsize_cohens_d(by = ARM, variables = AGE, pooled_sd = FALSE) |>
+      cards::check_ard_structure()
+  )
+
+  # paired
+  ADSL_paired <-
+    cards::ADSL[c("ARM", "AGE")] |>
+    dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")) |>
+    dplyr::mutate(.by = ARM, USUBJID = dplyr::row_number()) |>
+    dplyr::group_by(USUBJID) |>
+    dplyr::filter(dplyr::n() > 1)
+
+  expect_silent(
+    ADSL_paired |>
+      ard_effectsize_paired_cohens_d(by = ARM, variable = AGE, id = USUBJID) |>
+      cards::check_ard_structure()
+  )
+})
