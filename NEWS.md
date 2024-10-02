@@ -1,4 +1,4 @@
-# cards 0.2.2.9016
+# cards 0.2.2.9017
 
 * Added `ard_strata()` function to ease the task of calculating ARDs stratified by one or more other categorical variables. (#273)
 
