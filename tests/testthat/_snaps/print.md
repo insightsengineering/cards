@@ -90,7 +90,7 @@
       {cards} data frame: 4 x 8
     Output
         variable   context stat_name stat_label                         stat fmt_fn
-      1      mpg attribut…     label  Variable…                          mpg   NULL
+      1      mpg attribut…     label  Variable…                          mpg   <fn>
       2      mpg attribut…     class  Variable…                      numeric   NULL
       3      mpg continuo…      mean       Mean                       20.091      1
       4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113      1
