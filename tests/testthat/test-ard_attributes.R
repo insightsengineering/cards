@@ -1,4 +1,7 @@
+skip_if_not(is_pkg_installed("withr"))
+
 test_that("ard_attributes() works", {
+  withr::local_options(list(width = 120))
   expect_snapshot({
     df <- dplyr::tibble(var1 = letters, var2 = LETTERS)
     attr(df$var1, "label") <- "Lowercase Letters"
