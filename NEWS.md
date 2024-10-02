@@ -68,7 +68,7 @@
 
 * Added `check_ard_structure(column_order, method)` arguments to the function to check for column ordering and whether result contains a `stat_name='method'` row.
 
-* Added the optional `ard_heirarchicial(id)` argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (#214)
+* Added the optional `ard_hierarchical(id)` argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (#214)
 
 * Improved messaging in `check_pkg_installed()` that incorporates the calling function name in the case of an error. (#205)
 
