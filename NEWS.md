@@ -1,5 +1,7 @@
 # cards 0.2.2.9015
 
+* Add columns `'fmt_fn'`, `'warning'`, and `'errors'` to `ard_attributes()` output. (#327)
+
 * Add checks for factors with no levels, or any levels that are `NA` into `ard_*` functions (#255) 
 
 * Any rows with `NA` or `NaN` values in the `.by` columns specified in `ard_stack()` are now removed from all calculations. (#320)
