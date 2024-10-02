@@ -413,8 +413,8 @@ internal_stack_hierarchical <- function(data,
           total_n = FALSE,
           shuffle = FALSE,
           include_uni_by_tab = FALSE
-        ) |>
-          eval_tidy() |>
+        ) %>%
+          {suppressMessages(eval_tidy(.))} |> # styler: off
           list()
       )
   }

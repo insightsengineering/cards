@@ -33,6 +33,7 @@ reference:
       - ard_complex
       - ard_stack
       - ard_stack_hierarchical
+      - ard_strata
 
   - subtitle: "Misc."
   -  contents:
