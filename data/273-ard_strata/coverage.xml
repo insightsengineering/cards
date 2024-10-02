@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.982808022922636" branch-rate="0" lines-covered="2401" lines-valid="2443" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-02 18:47:29.454621">
+<coverage line-rate="0.982815057283142" branch-rate="0" lines-covered="2402" lines-valid="2444" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-10-02 18:58:54.687192">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.982808022922636" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.982815057283142" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -2871,6 +2871,7 @@
                 <line number="84" hits="5" branch="false"/>
                 <line number="85" hits="5" branch="false"/>
                 <line number="86" hits="5" branch="false"/>
+                <line number="87" hits="5" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -2907,6 +2908,7 @@
             <line number="84" hits="5" branch="false"/>
             <line number="85" hits="5" branch="false"/>
             <line number="86" hits="5" branch="false"/>
+            <line number="87" hits="5" branch="false"/>
           </lines>
         </class>
         <class name="ard_total_n.R" filename="R/ard_total_n.R" line-rate="1" branch-rate="0" complexity="0">
@@ -4571,9 +4573,9 @@
           <methods>
             <method name="all_ard_groups" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="35" hits="1714" branch="false"/>
-                <line number="37" hits="1714" branch="false"/>
-                <line number="38" hits="1500" branch="false"/>
+                <line number="35" hits="1719" branch="false"/>
+                <line number="37" hits="1719" branch="false"/>
+                <line number="38" hits="1505" branch="false"/>
                 <line number="40" hits="214" branch="false"/>
                 <line number="41" hits="97" branch="false"/>
                 <line number="43" hits="117" branch="false"/>
@@ -4582,9 +4584,9 @@
             </method>
             <method name="all_ard_variables" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="51" hits="1418" branch="false"/>
-                <line number="53" hits="1418" branch="false"/>
-                <line number="54" hits="1274" branch="false"/>
+                <line number="51" hits="1423" branch="false"/>
+                <line number="53" hits="1423" branch="false"/>
+                <line number="54" hits="1279" branch="false"/>
                 <line number="56" hits="144" branch="false"/>
                 <line number="57" hits="100" branch="false"/>
                 <line number="59" hits="44" branch="false"/>
@@ -4614,16 +4616,16 @@
             </method>
           </methods>
           <lines>
-            <line number="35" hits="1714" branch="false"/>
-            <line number="37" hits="1714" branch="false"/>
-            <line number="38" hits="1500" branch="false"/>
+            <line number="35" hits="1719" branch="false"/>
+            <line number="37" hits="1719" branch="false"/>
+            <line number="38" hits="1505" branch="false"/>
             <line number="40" hits="214" branch="false"/>
             <line number="41" hits="97" branch="false"/>
             <line number="43" hits="117" branch="false"/>
             <line number="44" hits="117" branch="false"/>
-            <line number="51" hits="1418" branch="false"/>
-            <line number="53" hits="1418" branch="false"/>
-            <line number="54" hits="1274" branch="false"/>
+            <line number="51" hits="1423" branch="false"/>
+            <line number="53" hits="1423" branch="false"/>
+            <line number="54" hits="1279" branch="false"/>
             <line number="56" hits="144" branch="false"/>
             <line number="57" hits="100" branch="false"/>
             <line number="59" hits="44" branch="false"/>
@@ -5213,21 +5215,21 @@
           <methods>
             <method name="tidy_ard_column_order" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="32" hits="1038" branch="false"/>
-                <line number="34" hits="1038" branch="false"/>
-                <line number="35" hits="1038" branch="false"/>
-                <line number="36" hits="1038" branch="false"/>
-                <line number="38" hits="1038" branch="false"/>
-                <line number="39" hits="1038" branch="false"/>
-                <line number="40" hits="1038" branch="false"/>
-                <line number="41" hits="1038" branch="false"/>
-                <line number="42" hits="1038" branch="false"/>
-                <line number="43" hits="1038" branch="false"/>
-                <line number="44" hits="1038" branch="false"/>
-                <line number="45" hits="1038" branch="false"/>
-                <line number="46" hits="1038" branch="false"/>
-                <line number="47" hits="1038" branch="false"/>
-                <line number="48" hits="1038" branch="false"/>
+                <line number="32" hits="1043" branch="false"/>
+                <line number="34" hits="1043" branch="false"/>
+                <line number="35" hits="1043" branch="false"/>
+                <line number="36" hits="1043" branch="false"/>
+                <line number="38" hits="1043" branch="false"/>
+                <line number="39" hits="1043" branch="false"/>
+                <line number="40" hits="1043" branch="false"/>
+                <line number="41" hits="1043" branch="false"/>
+                <line number="42" hits="1043" branch="false"/>
+                <line number="43" hits="1043" branch="false"/>
+                <line number="44" hits="1043" branch="false"/>
+                <line number="45" hits="1043" branch="false"/>
+                <line number="46" hits="1043" branch="false"/>
+                <line number="47" hits="1043" branch="false"/>
+                <line number="48" hits="1043" branch="false"/>
               </lines>
             </method>
             <method name="tidy_ard_row_order" signature="" line-rate="1" branch-rate="0" complexity="0">
@@ -5246,21 +5248,21 @@
             </method>
           </methods>
           <lines>
-            <line number="32" hits="1038" branch="false"/>
-            <line number="34" hits="1038" branch="false"/>
-            <line number="35" hits="1038" branch="false"/>
-            <line number="36" hits="1038" branch="false"/>
-            <line number="38" hits="1038" branch="false"/>
-            <line number="39" hits="1038" branch="false"/>
-            <line number="40" hits="1038" branch="false"/>
-            <line number="41" hits="1038" branch="false"/>
-            <line number="42" hits="1038" branch="false"/>
-            <line number="43" hits="1038" branch="false"/>
-            <line number="44" hits="1038" branch="false"/>
-            <line number="45" hits="1038" branch="false"/>
-            <line number="46" hits="1038" branch="false"/>
-            <line number="47" hits="1038" branch="false"/>
-            <line number="48" hits="1038" branch="false"/>
+            <line number="32" hits="1043" branch="false"/>
+            <line number="34" hits="1043" branch="false"/>
+            <line number="35" hits="1043" branch="false"/>
+            <line number="36" hits="1043" branch="false"/>
+            <line number="38" hits="1043" branch="false"/>
+            <line number="39" hits="1043" branch="false"/>
+            <line number="40" hits="1043" branch="false"/>
+            <line number="41" hits="1043" branch="false"/>
+            <line number="42" hits="1043" branch="false"/>
+            <line number="43" hits="1043" branch="false"/>
+            <line number="44" hits="1043" branch="false"/>
+            <line number="45" hits="1043" branch="false"/>
+            <line number="46" hits="1043" branch="false"/>
+            <line number="47" hits="1043" branch="false"/>
+            <line number="48" hits="1043" branch="false"/>
             <line number="55" hits="85" branch="false"/>
             <line number="57" hits="85" branch="false"/>
             <line number="60" hits="85" branch="false"/>
