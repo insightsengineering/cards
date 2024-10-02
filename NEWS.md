@@ -1,4 +1,6 @@
-# cards 0.2.2.9015
+# cards 0.2.2.9016
+
+* Add columns `'fmt_fn'`, `'warning'`, and `'errors'` to `ard_attributes()` output. (#327)
 
 * Add checks for factors with no levels, or any levels that are `NA` into `ard_*` functions (#255) 
 

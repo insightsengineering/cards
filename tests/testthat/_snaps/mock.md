@@ -131,13 +131,15 @@
     Code
       mock_attributes(label = list(AGE = "Age", BMIBL = "Baseline BMI"))
     Message
-      {cards} data frame: 4 x 5
+      {cards} data frame: 4 x 8
     Output
-        variable   context stat_name stat_label      stat
-      1      AGE attribut…     label  Variable…       Age
-      2      AGE attribut…     class  Variable…   logical
-      3    BMIBL attribut…     label  Variable… Baseline…
-      4    BMIBL attribut…     class  Variable…   logical
+        variable   context stat_name stat_label      stat fmt_fn
+      1      AGE attribut…     label  Variable…       Age   <fn>
+      2      AGE attribut…     class  Variable…   logical   NULL
+      3    BMIBL attribut…     label  Variable… Baseline…   <fn>
+      4    BMIBL attribut…     class  Variable…   logical   NULL
+    Message
+      i 2 more variables: warning, error
 
 # mock_attributes() messaging
 
