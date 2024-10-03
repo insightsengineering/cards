@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.9017</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2.9018</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,17 +23,6 @@
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div></li>
-<!-- end dropdown for versions -->
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -48,9 +37,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.2.9017" id="cards-0229017">cards 0.2.2.9017<a class="anchor" aria-label="anchor" href="#cards-0229017"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.2.9018" id="cards-0229018">cards 0.2.2.9018<a class="anchor" aria-label="anchor" href="#cards-0229018"></a></h2>
 <div class="section level3">
-<h3 id="new-features--updates-0-2-2-9017">New Features &amp; Updates<a class="anchor" aria-label="anchor" href="#new-features--updates-0-2-2-9017"></a></h3>
+<h3 id="new-features--updates-0-2-2-9018">New Features &amp; Updates<a class="anchor" aria-label="anchor" href="#new-features--updates-0-2-2-9018"></a></h3>
 <ul><li><p>Added functions <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code> that ease the creation of ARDs for multiple nested or hierarchical structures. (<a href="https://github.com/insightsengineering/cards/issues/314" class="external-link">#314</a>)</p></li>
 <li><p>Added functions <code><a href="../reference/update_ard.html">update_ard_fmt_fn()</a></code> and <code><a href="../reference/update_ard.html">update_ard_stat_label()</a></code> to update an ARD’s formatting function and statistic label, respectively. (<a href="https://github.com/insightsengineering/cards/issues/253" class="external-link">#253</a>)</p></li>
 <li><p>Added <code>rename_ard_columns(unlist)</code> argument, which unlists specified columns in the ARD data frame. (<a href="https://github.com/insightsengineering/cards/issues/313" class="external-link">#313</a>)</p></li>
@@ -59,7 +48,7 @@
 <li><p>Added functions for printing results from <code><a href="../reference/eval_capture_conditions.html">eval_capture_conditions()</a></code>. Captured conditions can be printed as either errors or messages with <code><a href="../reference/eval_capture_conditions.html">captured_condition_as_error()</a></code> and <code><a href="../reference/eval_capture_conditions.html">captured_condition_as_message()</a></code>, respectively. (<a href="https://github.com/insightsengineering/cards/issues/282" class="external-link">#282</a>)</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="other-updates-0-2-2-9017">Other Updates<a class="anchor" aria-label="anchor" href="#other-updates-0-2-2-9017"></a></h3>
+<h3 id="other-updates-0-2-2-9018">Other Updates<a class="anchor" aria-label="anchor" href="#other-updates-0-2-2-9018"></a></h3>
 <ul><li><p>The <code><a href="../reference/ard_hierarchical.html">ard_hierarchical_count()</a></code> function has been updated to match the behavior of <code><a href="../reference/ard_hierarchical.html">ard_hierarchical()</a></code> and results are now only returned for the last column listed in the <code>variables</code> arguments, rather than recursively counting all variables.</p></li>
 <li><p>Add columns <code>'fmt_fn'</code>, <code>'warning'</code>, and <code>'errors'</code> to <code><a href="../reference/ard_attributes.html">ard_attributes()</a></code> output. (<a href="https://github.com/insightsengineering/cards/issues/327" class="external-link">#327</a>)</p></li>
 <li><p>Add checks for factors with no levels, or any levels that are <code>NA</code> into <code>ard_*</code> functions (<a href="https://github.com/insightsengineering/cards/issues/255" class="external-link">#255</a>)</p></li>
@@ -98,7 +87,7 @@
 <li><p>Added new function <code><a href="../reference/ard_total_n.html">ard_total_n()</a></code> for calculating the total N in a data frame. (<a href="https://github.com/insightsengineering/cards/issues/236" class="external-link">#236</a>)</p></li>
 <li><p>Added the <code>nest_for_ard(include_data)</code> argument to either include or exclude the subsetted data frames in a list-column in the returned tibble.</p></li>
 <li><p>Added <code>check_ard_structure(column_order, method)</code> arguments to the function to check for column ordering and whether result contains a <code>stat_name='method'</code> row.</p></li>
-<li><p>Added the optional <code>ard_heirarchicial(id)</code> argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (<a href="https://github.com/insightsengineering/cards/issues/214" class="external-link">#214</a>)</p></li>
+<li><p>Added the optional <code>ard_hierarchical(id)</code> argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (<a href="https://github.com/insightsengineering/cards/issues/214" class="external-link">#214</a>)</p></li>
 <li><p>Improved messaging in <code><a href="../reference/check_pkg_installed.html">check_pkg_installed()</a></code> that incorporates the calling function name in the case of an error. (<a href="https://github.com/insightsengineering/cards/issues/205" class="external-link">#205</a>)</p></li>
 <li><p>Updated <code><a href="../reference/check_pkg_installed.html">is_pkg_installed()</a></code> and <code><a href="../reference/check_pkg_installed.html">check_pkg_installed()</a></code> to allow checks for more than package at a time. The <code><a href="../reference/check_pkg_installed.html">get_min_version_required()</a></code> function has also been updated to return a tibble instead of a list with attributes. (<a href="https://github.com/insightsengineering/cards/issues/201" class="external-link">#201</a>)</p></li>
 <li><p>Styling from the {cli} package are now removed from errors and warnings when they are captured with <code><a href="../reference/eval_capture_conditions.html">eval_capture_conditions()</a></code>. Styling is removed with <code><a href="https://cli.r-lib.org/reference/ansi_strip.html" class="external-link">cli::ansi_strip()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/129" class="external-link">#129</a>)</p></li>
