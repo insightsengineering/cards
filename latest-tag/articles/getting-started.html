@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,7 @@
           aria-expanded="false" aria-haspopup="true"
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
@@ -78,7 +79,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Getting Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.2.2/vignettes/articles/getting-started.Rmd" class="external-link"><code>vignettes/articles/getting-started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.3.0/vignettes/articles/getting-started.Rmd" class="external-link"><code>vignettes/articles/getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started.Rmd</code></div>
     </div>
 
@@ -595,7 +596,7 @@ N = 84</span></th>
 <tr>
 <td headers="label" class="gt_row gt_left">    &lt;65</td>
 <td headers="stat_1" class="gt_row gt_right">14 (16%)</td>
-<td headers="stat_2" class="gt_row gt_right">8 (9.5%)</td>
+<td headers="stat_2" class="gt_row gt_right">8 (10%)</td>
 <td headers="stat_3" class="gt_row gt_right">11 (13%)</td>
 </tr>
 <tr>
@@ -729,10 +730,10 @@ checks for our results.</p>
 </h4>
 <p>The <code><a href="../reference/ard_stack.html">ard_stack()</a></code> function provides a shortcut to perform
 the calculations above in a single step.</p>
-<p>In the example below, the <code>data</code> and <code>by</code>
+<p>In the example below, the <code>data</code> and <code>.by</code>
 arguments are passed to each subsequent <code>ard_*()</code> function
-call. Moreover, we will also be returned the univariate tabulation of
-the <code>by</code> variable, which would be used to add counts to the
+call. Moreover, this will also return the univariate tabulation of the
+<code>.by</code> variable, which would be used to add counts to the
 header row of the table.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ard_stack.html">ard_stack</a></span><span class="op">(</span></span>
@@ -1429,6 +1430,59 @@ preferred terms within system organ classes.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1514 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<div class="section level5">
+<h5 id="shortcut-1">Shortcut<a class="anchor" aria-label="anchor" href="#shortcut-1"></a>
+</h5>
+<p>The <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> function provides a
+shortcut to perform the calculations above in a single step.</p>
+<p>In the example below, the <code>data</code> and <code>by</code>
+arguments are passed to each subsequent calculation. The function
+utilizes <code>USUBJID</code> (passed to the <code>id</code> argument)
+as the subject identifier for participant-level calculations, and
+<code>ADSL</code> is used to define the denominator. With
+<code>variables = c(AEBODSYS, AETERM)</code>, the function returns rates
+of adverse events by <code>AETERM</code> nested within
+<code>AESOC</code> as well as by <code>AESOC</code>. With
+<code>over_variables = TRUE</code>, the function also returns rates of
+any adverse event across all system organ classes and preferred
+terms.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AEBODSYS</span>, <span class="va">AETERM</span><span class="op">)</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"p"</span><span class="op">)</span>,</span>
+<span>  denominator <span class="op">=</span> <span class="va">adsl</span>,</span>
+<span>  id <span class="op">=</span> <span class="va">USUBJID</span>,</span>
+<span>  over_variables <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 1533 x 13</span></span></span>
+<span><span class="co">#&gt;    group1 group1_level group2 group2_level variable variable_level stat_name</span></span>
+<span><span class="co">#&gt; 1    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
+<span><span class="co">#&gt; 2    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         p</span></span>
+<span><span class="co">#&gt; 3    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CONGENIT…         n</span></span>
+<span><span class="co">#&gt; 4    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CONGENIT…         p</span></span>
+<span><span class="co">#&gt; 5    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EAR AND …         n</span></span>
+<span><span class="co">#&gt; 6    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EAR AND …         p</span></span>
+<span><span class="co">#&gt; 7    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EYE DISO…         n</span></span>
+<span><span class="co">#&gt; 8    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EYE DISO…         p</span></span>
+<span><span class="co">#&gt; 9    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      GASTROIN…         n</span></span>
+<span><span class="co">#&gt; 10   TRTA      Placebo   &lt;NA&gt;              AEBODSYS      GASTROIN…         p</span></span>
+<span><span class="co">#&gt;    stat_label  stat</span></span>
+<span><span class="co">#&gt; 1           n    12</span></span>
+<span><span class="co">#&gt; 2           %  0.14</span></span>
+<span><span class="co">#&gt; 3           n     0</span></span>
+<span><span class="co">#&gt; 4           %     0</span></span>
+<span><span class="co">#&gt; 5           n     1</span></span>
+<span><span class="co">#&gt; 6           % 0.012</span></span>
+<span><span class="co">#&gt; 7           n     2</span></span>
+<span><span class="co">#&gt; 8           % 0.023</span></span>
+<span><span class="co">#&gt; 9           n    17</span></span>
+<span><span class="co">#&gt; 10          % 0.198</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">1523 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+</div>
 </div>
 <div class="section level4">
 <h4 id="event-level-summaries">Event-level Summaries<a class="anchor" aria-label="anchor" href="#event-level-summaries"></a>
@@ -1993,7 +2047,7 @@ need to count AEs overall, by system organ class, and by preferred term
 hierarchy, this is equivalent to <code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> with
 <code>statistic = ~ "n"</code>. We can rename the counts so they are
 distinguishable when stacked with the participate level counts.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># overall</span></span>
 <span><span class="va">ard_event_any</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
@@ -2002,42 +2056,97 @@ distinguishable when stacked with the participate level counts.</p>
 <p>For AE counts within preferred term and system organ class by
 treatment group, we can use <code><a href="../reference/ard_hierarchical.html">ard_hierarchical()</a></code> specifying
 our nesting as such:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ard_event_socpt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ard_event_pt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
 <span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AEBODSYS</span>, <span class="va">AETERM</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>And we can repeat for AE counts within system organ class as
+such:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ard_event_soc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ard_hierarchical.html">ard_hierarchical_count</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
+<span>  variables <span class="op">=</span> <span class="va">AEBODSYS</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>These event-level summaries can be combined using
 <code><a href="../reference/bind_ard.html">bind_ard()</a></code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/bind_ard.html">bind_ard</a></span><span class="op">(</span><span class="va">ard_event_any</span>, <span class="va">ard_event_socpt</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/bind_ard.html">bind_ard</a></span><span class="op">(</span><span class="va">ard_event_any</span>, <span class="va">ard_event_soc</span>, <span class="va">ard_event_pt</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 762 x 13</span></span></span>
-<span><span class="co">#&gt;    group1 group1_level   group2 group2_level variable variable_level stat_name</span></span>
-<span><span class="co">#&gt; 1    &lt;NA&gt;                  &lt;NA&gt;                  TRTA        Placebo         n</span></span>
-<span><span class="co">#&gt; 2    &lt;NA&gt;                  &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
-<span><span class="co">#&gt; 3    &lt;NA&gt;                  &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
-<span><span class="co">#&gt; 4    TRTA      Placebo AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 5    TRTA    Xanomeli… AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 6    TRTA    Xanomeli… AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 7    TRTA      Placebo AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 8    TRTA    Xanomeli… AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 9    TRTA    Xanomeli… AEBODSYS    GASTROIN…   AETERM      ABDOMINA…         n</span></span>
-<span><span class="co">#&gt; 10   TRTA      Placebo AEBODSYS    SURGICAL…   AETERM      ACROCHOR…         n</span></span>
+<span><span class="co">#&gt;    group1 group1_level group2 group2_level variable variable_level stat_name</span></span>
+<span><span class="co">#&gt; 1    &lt;NA&gt;                &lt;NA&gt;                  TRTA        Placebo         n</span></span>
+<span><span class="co">#&gt; 2    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
+<span><span class="co">#&gt; 3    &lt;NA&gt;                &lt;NA&gt;                  TRTA      Xanomeli…         n</span></span>
+<span><span class="co">#&gt; 4    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
+<span><span class="co">#&gt; 5    TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
+<span><span class="co">#&gt; 6    TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
+<span><span class="co">#&gt; 7    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CONGENIT…         n</span></span>
+<span><span class="co">#&gt; 8    TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CONGENIT…         n</span></span>
+<span><span class="co">#&gt; 9    TRTA    Xanomeli…   &lt;NA&gt;              AEBODSYS      CONGENIT…         n</span></span>
+<span><span class="co">#&gt; 10   TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EAR AND …         n</span></span>
 <span><span class="co">#&gt;    stat_label stat</span></span>
 <span><span class="co">#&gt; 1           n  281</span></span>
 <span><span class="co">#&gt; 2           n  433</span></span>
 <span><span class="co">#&gt; 3           n  412</span></span>
-<span><span class="co">#&gt; 4           n    0</span></span>
-<span><span class="co">#&gt; 5           n    1</span></span>
-<span><span class="co">#&gt; 6           n    0</span></span>
-<span><span class="co">#&gt; 7           n    1</span></span>
+<span><span class="co">#&gt; 4           n   26</span></span>
+<span><span class="co">#&gt; 5           n   30</span></span>
+<span><span class="co">#&gt; 6           n   30</span></span>
+<span><span class="co">#&gt; 7           n    0</span></span>
 <span><span class="co">#&gt; 8           n    2</span></span>
-<span><span class="co">#&gt; 9           n    3</span></span>
-<span><span class="co">#&gt; 10          n    0</span></span>
+<span><span class="co">#&gt; 9           n    1</span></span>
+<span><span class="co">#&gt; 10          n    2</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">752 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+<div class="section level5">
+<h5 id="shortcut-2">Shortcut<a class="anchor" aria-label="anchor" href="#shortcut-2"></a>
+</h5>
+<p>The <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code> function provides a
+shortcut to perform the calculations above in a single step.</p>
+<p>In the example below, the <code>data</code> and <code>by</code>
+arguments are passed to each subsequent calculation.With
+<code>variables = c(AEBODSYS, AETERM)</code>, the function returns
+counts of adverse events by <code>AETERM</code> nested within
+<code>AESOC</code> as well as by <code>AESOC</code>. With
+<code>over_variables = TRUE</code>, the function also returns counts of
+any adverse event across all system organ classes and preferred
+terms.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">adae</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">TRTA</span>,</span>
+<span>  variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">AEBODSYS</span>, <span class="va">AETERM</span><span class="op">)</span>,</span>
+<span>  over_variables <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 762 x 13</span></span></span>
+<span><span class="co">#&gt;    group1 group1_level group2 group2_level variable variable_level stat_name</span></span>
+<span><span class="co">#&gt; 1    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CARDIAC …         n</span></span>
+<span><span class="co">#&gt; 2    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      CONGENIT…         n</span></span>
+<span><span class="co">#&gt; 3    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EAR AND …         n</span></span>
+<span><span class="co">#&gt; 4    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      EYE DISO…         n</span></span>
+<span><span class="co">#&gt; 5    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      GASTROIN…         n</span></span>
+<span><span class="co">#&gt; 6    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      GENERAL …         n</span></span>
+<span><span class="co">#&gt; 7    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      HEPATOBI…         n</span></span>
+<span><span class="co">#&gt; 8    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      IMMUNE S…         n</span></span>
+<span><span class="co">#&gt; 9    TRTA      Placebo   &lt;NA&gt;              AEBODSYS      INFECTIO…         n</span></span>
+<span><span class="co">#&gt; 10   TRTA      Placebo   &lt;NA&gt;              AEBODSYS      INJURY, …         n</span></span>
+<span><span class="co">#&gt;    stat_label stat</span></span>
+<span><span class="co">#&gt; 1           n   26</span></span>
+<span><span class="co">#&gt; 2           n    0</span></span>
+<span><span class="co">#&gt; 3           n    2</span></span>
+<span><span class="co">#&gt; 4           n    5</span></span>
+<span><span class="co">#&gt; 5           n   26</span></span>
+<span><span class="co">#&gt; 6           n   46</span></span>
+<span><span class="co">#&gt; 7           n    1</span></span>
+<span><span class="co">#&gt; 8           n    0</span></span>
+<span><span class="co">#&gt; 9           n   35</span></span>
+<span><span class="co">#&gt; 10          n    9</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">752 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

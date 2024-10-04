@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,7 @@
           aria-expanded="false" aria-haspopup="true"
           id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
@@ -78,7 +79,7 @@
       </dl><dl><dt>
 
           <code><a href="ard_hierarchical.html">ard_hierarchical()</a></code> <code><a href="ard_hierarchical.html">ard_hierarchical_count()</a></code>
-
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
         <dd>Hierarchical ARD Statistics</dd>
       </dl><dl><dt>
@@ -111,6 +112,18 @@
 
         </dt>
         <dd>Stack ARDs</dd>
+      </dl><dl><dt>
+
+          <code><a href="ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> <code><a href="ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Stacked Hierarchical ARD Statistics</dd>
+      </dl><dl><dt>
+
+          <code><a href="ard_strata.html">ard_strata()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Stratified ARD</dd>
       </dl></div><div class="section level2">
 
       <h3 id="misc-">Misc.<a class="anchor" aria-label="anchor" href="#misc-"></a></h3>
@@ -169,6 +182,12 @@
 
         </dt>
         <dd>Apply Formatting Functions</dd>
+      </dl><dl><dt>
+
+          <code><a href="update_ard.html">update_ard_fmt_fn()</a></code> <code><a href="update_ard.html">update_ard_stat_label()</a></code>
+
+        </dt>
+        <dd>Update ARDs</dd>
       </dl><dl><dt>
 
           <code><a href="process_selectors.html">process_selectors()</a></code> <code><a href="process_selectors.html">process_formula_selectors()</a></code> <code><a href="process_selectors.html">fill_formula_selectors()</a></code> <code><a href="process_selectors.html">compute_formula_selector()</a></code> <code><a href="process_selectors.html">check_list_elements()</a></code> <code><a href="process_selectors.html">cards_select()</a></code>
@@ -260,6 +279,23 @@
         <dd>Replace NULL Statistics with Specified Value</dd>
       </dl></div><div class="section level2">
 
+      <h3 id="table-shells">Table Shells<a class="anchor" aria-label="anchor" href="#table-shells"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="mock.html">mock_categorical()</a></code> <code><a href="mock.html">mock_continuous()</a></code> <code><a href="mock.html">mock_dichotomous()</a></code> <code><a href="mock.html">mock_missing()</a></code> <code><a href="mock.html">mock_attributes()</a></code> <code><a href="mock.html">mock_total_n()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Mock ARDs</dd>
+      </dl></div><div class="section level2">
+
       <h3 id="data-summary-functions">Data Summary Functions<a class="anchor" aria-label="anchor" href="#data-summary-functions"></a></h3>
 
 
@@ -300,8 +336,8 @@
         <dd>ARD Selectors</dd>
       </dl><dl><dt>
 
-          <code><a href="eval_capture_conditions.html">eval_capture_conditions()</a></code>
-
+          <code><a href="eval_capture_conditions.html">eval_capture_conditions()</a></code> <code><a href="eval_capture_conditions.html">captured_condition_as_message()</a></code> <code><a href="eval_capture_conditions.html">captured_condition_as_error()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
         <dd>Evaluate and Capture Conditions</dd>
       </dl><dl><dt>
