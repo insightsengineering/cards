@@ -21,8 +21,10 @@ test_that("check_pkg_installed() works", {
       compare = ">="
     )
   )
+
+  # checking that the function still works when there is no reference package.
   expect_equal(
-    get_min_version_required("brms"),
+    get_min_version_required("brms", ref = NULL),
     dplyr::tibble(
       reference_pkg = NA_character_, reference_pkg_version = NA_character_,
       dependency_type = NA_character_, pkg = "brms", version = NA_character_,
@@ -30,7 +32,7 @@ test_that("check_pkg_installed() works", {
     )
   )
   expect_equal(
-    get_min_version_required("dplyr"),
+    get_min_version_required("dplyr", ref = NULL),
     dplyr::tibble(
       reference_pkg = NA_character_, reference_pkg_version = NA_character_,
       dependency_type = NA_character_, pkg = "dplyr", version = NA_character_,
