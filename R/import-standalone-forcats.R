@@ -1,10 +1,11 @@
 # Standalone file: do not edit by hand
-# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R>
+# Source: <https://github.com/insightsengineering/standalone/blob/main/R/standalone-forcats.R>
 # ----------------------------------------------------------------------
 #
 # ---
+# repo: insightsengineering/standalone
 # file: standalone-forcats.R
-# last-updated: 2024-01-24
+# last-updated: 2024-06-05
 # license: https://unlicense.org
 # imports:
 # ---
@@ -34,6 +35,40 @@ fct_inorder <- function(f, ordered = NA) {
     ordered = ifelse(is.na(ordered), is.ordered(f), ordered)
   )
 }
+
+fct_rev <- function(f) {
+  if (!inherits(f, "factor")) f <- factor(f)
+
+  factor(
+    f,
+    levels = rev(levels(f)),
+    ordered = is.ordered(f)
+  )
+}
+
+fct_expand <- function(f, ..., after = Inf) {
+  if (!inherits(f, "factor")) f <- factor(f)
+
+  old_levels <- levels(f)
+  new_levels <-
+    old_levels |>
+    append(values = setdiff(c(...), old_levels), after = after)
+  factor(f, levels = new_levels)
+}
+
+fct_na_value_to_level <- function(f, level = NA) {
+  if (!inherits(f, "factor")) f <- factor(f)
+
+  # make NA an explicit level
+  f <- addNA(f, ifany = FALSE)
+
+  # replace NA level with the string passed in `level` argument
+  if (!is.na(level)) levels(f)[is.na(levels(f))] <- level
+
+  f
+}
+
+
 
 # nocov end
 # styler: on
