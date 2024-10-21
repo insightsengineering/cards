@@ -44,13 +44,13 @@
 #'   location of `R` library trees to search through, see [utils::packageDescription()].
 #'
 #' @details
-#' The `ref` argument (`pkg` in `get_pkg_dependencies`) uses `packageName()` as a default, which returns the package in
+#' The `ref` argument (`pkg` in `get_pkg_dependencies`) uses `utils::packageName()` as a default, which returns the package in
 #' which the current environment or function is run from. The current environment is determined via `parent.frame()`.
 #'
-#' If, for example, `get_min_version_required("dplyr", ref = packageName())` is run within a `cards` function, and this
+#' If, for example, `get_min_version_required("dplyr", ref = utils::packageName())` is run within a `cards` function, and this
 #' function is then called within a function of the `cardx` package, the minimum version returned by the
 #' `get_min_version_required` call will return the version required by the `cards` package. If run within a test file,
-#' `packageName()` returns the package of the current test. Within Roxygen `@examplesIf` calls, `packageName()` will
+#' `utils::packageName()` returns the package of the current test. Within Roxygen `@examplesIf` calls, `utils::packageName()` will
 #' returns the package of the current example.
 #'
 #' @return `is_pkg_installed()` and `check_pkg_installed()` returns a logical or error,
@@ -74,7 +74,7 @@ NULL
 #' @keywords internal
 #' @noRd
 check_pkg_installed <- function(pkg,
-                                ref = packageName(),
+                                ref = utils::packageName(),
                                 call = get_cli_abort_call()) {
   if (!is.character(ref) && !is.null(ref)) cli::cli_abort("{.arg ref} must be a string.")
 
@@ -97,7 +97,7 @@ check_pkg_installed <- function(pkg,
 #' @keywords internal
 #' @noRd
 is_pkg_installed <- function(pkg,
-                             ref = packageName()) {
+                             ref = utils::packageName()) {
   if (!is.character(ref) && !is.null(ref)) cli::cli_abort("{.arg ref} must be a string.")
 
   # get min version data -------------------------------------------------------
@@ -121,7 +121,7 @@ is_pkg_installed <- function(pkg,
 #'   name of the package the function will search for dependencies from.
 #'
 #' @noRd
-get_pkg_dependencies <- function(pkg = packageName(), lib.loc = NULL) {
+get_pkg_dependencies <- function(pkg = utils::packageName(), lib.loc = NULL) {
   if (!is.character(pkg) && !is.null(pkg)) cli::cli_abort("{.arg pkg} must be a string.")
 
   if (rlang::is_empty(pkg)) {
@@ -180,7 +180,7 @@ get_pkg_dependencies <- function(pkg = packageName(), lib.loc = NULL) {
 #' @inheritParams check_pkg_installed
 #' @keywords internal
 #' @noRd
-get_min_version_required <- function(pkg, ref = packageName(), lib.loc = NULL) {
+get_min_version_required <- function(pkg, ref = utils::packageName(), lib.loc = NULL) {
   if (!is.character(ref) && !is.null(ref)) cli::cli_abort("{.arg ref} must be a string.")
 
   # if no package reference, return a df with just the pkg names
