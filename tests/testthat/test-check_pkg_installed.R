@@ -22,7 +22,7 @@ test_that("check_pkg_installed() works", {
     )
   )
   expect_equal(
-    get_min_version_required("brms", reference_pkg = NULL),
+    get_min_version_required("brms"),
     dplyr::tibble(
       reference_pkg = NA_character_, reference_pkg_version = NA_character_,
       dependency_type = NA_character_, pkg = "brms", version = NA_character_,
@@ -30,7 +30,7 @@ test_that("check_pkg_installed() works", {
     )
   )
   expect_equal(
-    get_min_version_required("dplyr", reference_pkg = NULL),
+    get_min_version_required("dplyr"),
     dplyr::tibble(
       reference_pkg = NA_character_, reference_pkg_version = NA_character_,
       dependency_type = NA_character_, pkg = "dplyr", version = NA_character_,
