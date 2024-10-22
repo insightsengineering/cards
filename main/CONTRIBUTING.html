@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +23,6 @@
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
-
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
@@ -78,20 +77,20 @@
 <code>import-standalone-purrr.R</code>: <a href="https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R" class="external-link uri">https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R</a>
 </li>
 <li>
-<code>import-standalone-forcats.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R</a>
+<code>import-standalone-forcats.R</code> <a href="https://github.com/insightsengineering/standalone/blob/main/R/standalone-forcats.R" class="external-link uri">https://github.com/insightsengineering/standalone/blob/main/R/standalone-forcats.R</a>
 </li>
 <li>
-<code>import-standalone-stringr.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R</a>
+<code>import-standalone-stringr.R</code> <a href="https://github.com/insightsengineering/standalone/blob/main/R/standalone-stringr.R" class="external-link uri">https://github.com/insightsengineering/standalone/blob/main/R/standalone-stringr.R</a>
 </li>
 <li>
-<code>import-standalone-checks.R</code> <a href="https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R" class="external-link uri">https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R</a>
+<code>import-standalone-checks.R</code> <a href="https://github.com/insightsengineering/standalone/blob/main/R/standalone-checks.R" class="external-link uri">https://github.com/insightsengineering/standalone/blob/main/R/standalone-checks.R</a>
 </li>
 </ul><p>After the update has been made, you can copy the file into the repo with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"r-lib/rlang"</span>, file <span class="op">=</span> <span class="st">"purrr"</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"forcats"</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"stringr"</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"ddsjoberg/standalone"</span>, file <span class="op">=</span> <span class="st">"checks"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"insightsengineering/standalone"</span>, file <span class="op">=</span> <span class="st">"forcats"</span><span class="op">)</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"insightsengineering/standalone"</span>, file <span class="op">=</span> <span class="st">"stringr"</span><span class="op">)</span></span>
+<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_standalone.html" class="external-link">use_standalone</a></span><span class="op">(</span><span class="st">"insightsengineering/standalone"</span>, file <span class="op">=</span> <span class="st">"checks"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
