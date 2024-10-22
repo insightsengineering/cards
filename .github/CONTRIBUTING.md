@@ -69,17 +69,17 @@ The `"checks"` script is a series of functions to check the argument values supp
 Do not make changes to these files directly: rather, update these files in their source location.
 
 - `import-standalone-purrr.R`: https://github.com/r-lib/rlang/blob/main/R/standalone-purrr.R
-- `import-standalone-forcats.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-forcats.R
-- `import-standalone-stringr.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-stringr.R
-- `import-standalone-checks.R` https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R
+- `import-standalone-forcats.R` https://github.com/insightsengineering/standalone/blob/main/R/standalone-forcats.R
+- `import-standalone-stringr.R` https://github.com/insightsengineering/standalone/blob/main/R/standalone-stringr.R
+- `import-standalone-checks.R` https://github.com/insightsengineering/standalone/blob/main/R/standalone-checks.R
 
 After the update has been made, you can copy the file into the repo with 
 
 ```r
 usethis::use_standalone("r-lib/rlang", file = "purrr")
-usethis::use_standalone("ddsjoberg/standalone", file = "forcats")
-usethis::use_standalone("ddsjoberg/standalone", file = "stringr")
-usethis::use_standalone("ddsjoberg/standalone", file = "checks")
+usethis::use_standalone("insightsengineering/standalone", file = "forcats")
+usethis::use_standalone("insightsengineering/standalone", file = "stringr")
+usethis::use_standalone("insightsengineering/standalone", file = "checks")
 ```
 
 ## Scope
