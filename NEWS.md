@@ -1,4 +1,4 @@
-# cards 0.3.0.9001
+# cards 0.3.0.9002
 
 * No longer exporting functions `check_pkg_installed()`, `is_pkg_installed()`, `get_min_version_required()`, `get_pkg_dependencies()`. These functions are now internal-only. (#330)
 
