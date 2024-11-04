@@ -4,6 +4,8 @@
 
 * No longer exporting functions `check_pkg_installed()`, `is_pkg_installed()`, `get_min_version_required()`, `get_pkg_dependencies()`. These functions are now internal-only. (#330)
 
+* Improved messaging in `print_ard_conditions()` when the calling function is namespaced. (#348)
+
 # cards 0.3.0
 
 ## New Features & Updates
