@@ -34,6 +34,7 @@ tidy_ard_column_order <- function(x) {
   group_cols <- dplyr::select(x, all_ard_groups()) |>
     names() |>
     sort()
+  group_cols <- group_cols[order(str_extract_all(group_cols, "\\d+") |> unlist() |> as.integer())]
 
   dplyr::select(
     x,
