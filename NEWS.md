@@ -6,6 +6,8 @@
 
 * Improved messaging in `print_ard_conditions()` when the calling function is namespaced. (#348)
 
+* Updated print method for `'card'` objects so extraneous columns are never printed by default.
+
 # cards 0.3.0
 
 ## New Features & Updates
