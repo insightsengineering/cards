@@ -32,7 +32,7 @@
 #' @examples
 #' ard_strata(
 #'   ADSL,
-#'   by = ARM,
+#'   .by = ARM,
 #'   .f = ~ ard_continuous(.x, variables = AGE)
 #' )
 ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
