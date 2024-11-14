@@ -5,7 +5,7 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to tabulate by/stratify by for tabulation.
+#'   columns to use for grouping or stratifying the table output.
 #'   Arguments are similar, but with an important distinction:
 #'
 #'   `by`: results are tabulated by **all combinations** of the columns specified,
