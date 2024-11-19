@@ -18,7 +18,7 @@ Specify this \emph{optional} argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to tabulate by/stratify by for tabulation.
+columns to use for grouping or stratifying the table output.
 Arguments are similar, but with an important distinction:
 
 \code{by}: results are tabulated by \strong{all combinations} of the columns specified,
