@@ -1,0 +1,60 @@
+---
+title: "Creating ARDs with statistical methods"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The basic functions offered by {cards} can create a wide variety of ARDs. However, sometimes we may need to include the outputs from more complicated statistical methods in our ARDs. In this vignette we'll look at a few different ways to implement the output from these statistical methods.
+
+## {cardx}
+
+The {cardx} package is an extension of {cards}. The idea is that {cards} provides the core functions to create ARDs, while {cardx} contains a large number of extensions that implement various, commonly used statistical methods. There are a large number of extensions for a wide variery of extensions, including (but not limited to):
+* rbmi
+* emmeans
+* ...
+
+
+When looking to include the output from a statistical method your first port of call should be to see if it has already been implemented in {cardx}. You can find the full list of available functions [here](https://insightsengineering.github.io/cardx/main/reference/index.html).
+
+
+As an example, let's consider a simple t-test to compare the mean age (variable `AGE`) across two treatments arms (`ARM`).
+
+In {cardx} we have the function `ard_stats_t_test`
+
+```{r cardx}
+pharmaverseadam::adsl |>
+  dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
+  cardx::ard_stats_t_test(by = ARM, variables = AGE)
+```
+
+In the output we see all of the different outputs from the t-test; the mean difference, confidence interval limits and p-value. It's also really useful to see the functions inputs, for example we can see that we didn't use equal variances as the `stat` is `FALSE` for `stat_name` `var.equal`. This is useful for re-use, if we need to run the test again we can use the ARD to see what options we need to use to recreate the result. 
+
+#### But what do we do if the statistical method that we want to use hasn't been implemented already in {cardx}?
+
+## Implementing a 'tidy' stats method
+
+Firstly, this implementation is made much easier for us by the `broom::tidy` function. The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble. We can then pass the output of `broom::tidy` through to the `statistic` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
+
+Let's extend our t-test example from above. This time we want to carry out a one-sample t-test. This isn't implemented in {cardx} (it is now but let's just pretend...). We can just pass the code to carry out the one-sample t-test and pass the output through `broom::tidy` to the `statistic` argument like so:
+
+```{r tidy-stats-method}
+pharmaverseadam::adsl |> 
+  dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
+  cards::ard_continuous(
+    variables = AGE,
+    statistic = everything() ~ list(t_test = \(x) t.test(x) |> broom::tidy())
+  ) |> 
+  dplyr::mutate(context = "t_test_one_sample")
+```
+
+Over 100 different statistical methods implemented in R are able to be 'tidied' using `broom::tidy`. However, the method you aim to use might not be, or the current `broom::tidy` implementation might not contain the information that you need to be in your ARD. In that case we'll have to format the output ourselves.
+
+## Implementing a 'non-tidy' stats method
+
+
+NEED TO LOOK THROUGH {cardx} FUNCTIONS FOR AN EXAMPLE
