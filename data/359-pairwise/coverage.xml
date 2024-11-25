@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.983179815778935" branch-rate="0" lines-covered="2455" lines-valid="2497" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-11-25 21:34:02.37972">
+<coverage line-rate="0.983193277310924" branch-rate="0" lines-covered="2457" lines-valid="2499" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2024-11-25 21:49:09.293751">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.983179815778935" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.983193277310924" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -2192,8 +2192,8 @@
                 <line number="74" hits="4" branch="false"/>
                 <line number="75" hits="4" branch="false"/>
                 <line number="77" hits="4" branch="false"/>
-                <line number="80" hits="4" branch="false"/>
-                <line number="81" hits="4" branch="false"/>
+                <line number="78" hits="4" branch="false"/>
+                <line number="79" hits="4" branch="false"/>
                 <line number="82" hits="4" branch="false"/>
                 <line number="83" hits="4" branch="false"/>
                 <line number="84" hits="4" branch="false"/>
@@ -2202,7 +2202,9 @@
                 <line number="87" hits="4" branch="false"/>
                 <line number="88" hits="4" branch="false"/>
                 <line number="89" hits="4" branch="false"/>
-                <line number="92" hits="3" branch="false"/>
+                <line number="90" hits="4" branch="false"/>
+                <line number="91" hits="4" branch="false"/>
+                <line number="94" hits="3" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -2240,8 +2242,8 @@
             <line number="74" hits="4" branch="false"/>
             <line number="75" hits="4" branch="false"/>
             <line number="77" hits="4" branch="false"/>
-            <line number="80" hits="4" branch="false"/>
-            <line number="81" hits="4" branch="false"/>
+            <line number="78" hits="4" branch="false"/>
+            <line number="79" hits="4" branch="false"/>
             <line number="82" hits="4" branch="false"/>
             <line number="83" hits="4" branch="false"/>
             <line number="84" hits="4" branch="false"/>
@@ -2250,7 +2252,9 @@
             <line number="87" hits="4" branch="false"/>
             <line number="88" hits="4" branch="false"/>
             <line number="89" hits="4" branch="false"/>
-            <line number="92" hits="3" branch="false"/>
+            <line number="90" hits="4" branch="false"/>
+            <line number="91" hits="4" branch="false"/>
+            <line number="94" hits="3" branch="false"/>
           </lines>
         </class>
         <class name="ard_stack_hierarchical.R" filename="R/ard_stack_hierarchical.R" line-rate="0.995689655172414" branch-rate="0" complexity="0">
