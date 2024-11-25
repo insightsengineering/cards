@@ -30,7 +30,7 @@ a data frame}
 columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to tabulate by/stratify by for tabulation.
+columns to use for grouping or stratifying the table output.
 Arguments are similar, but with an important distinction:
 
 \code{by}: results are tabulated by \strong{all combinations} of the columns specified,
