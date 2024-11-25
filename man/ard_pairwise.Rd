@@ -37,7 +37,7 @@ ard_pairwise(
     ard_complex(
       df,
       variables = AGE,
-      statistic = ~list(ttest = \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")])
+      statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")])
     )
   },
   include = "Placebo" # only include comparisons to the "Placebo" group
