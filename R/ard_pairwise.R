@@ -26,7 +26,7 @@
 #'     ard_complex(
 #'       df,
 #'       variables = AGE,
-#'       statistic = ~list(ttest = \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")])
+#'       statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")])
 #'     )
 #'   },
 #'   include = "Placebo" # only include comparisons to the "Placebo" group
@@ -59,7 +59,7 @@ ard_pairwise <- function(data, variable, .f, include = NULL) {
   # identify all pairwise values in `variable` ---------------------------------
   mtx_pairs <- variable_levels |> utils::combn(m = 2)
   lst_pairs <- seq_len(ncol(mtx_pairs)) |> lapply(FUN = \(x) mtx_pairs[, x])
-  lst_pairs <- lst_pairs[map_lgl(lst_pairs, ~any(.x %in% include))] # exclude pairs that were not requested
+  lst_pairs <- lst_pairs[map_lgl(lst_pairs, ~ any(.x %in% include))] # exclude pairs that were not requested
 
   # create data subsets including the pairs ------------------------------------
   lst_df_subsets <-
@@ -74,7 +74,9 @@ ard_pairwise <- function(data, variable, .f, include = NULL) {
       }
     ) |>
     # set names for returned list including the pair levels
-    stats::setNames(map_chr(lst_pairs, ~as.character(.x) |> shQuote(type = "csh") |> paste(collapse = " vs. ")))
+    stats::setNames(map_chr(lst_pairs, ~ as.character(.x) |>
+      shQuote(type = "csh") |>
+      paste(collapse = " vs. ")))
 
   # perform analysis -----------------------------------------------------------
   lst_ard <-
@@ -91,4 +93,3 @@ ard_pairwise <- function(data, variable, .f, include = NULL) {
   # return result --------------------------------------------------------------
   lst_ard
 }
-

@@ -6,7 +6,7 @@ test_that("ard_pairwise() works", {
       ard_pairwise(
         ADSL,
         variable = ARM,
-        .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn)),
+        .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
         include = "Placebo" # only include comparisons to the "Placebo" group
       )
   )
@@ -17,7 +17,7 @@ test_that("ard_pairwise() works", {
     ard_complex(
       ADSL |> dplyr::filter(ARM %in% c("Placebo", "Xanomeline High Dose")),
       variables = AGE,
-      statistic = ~list(ttest = ttest_fn)
+      statistic = ~ list(ttest = ttest_fn)
     )
   )
 
@@ -26,7 +26,7 @@ test_that("ard_pairwise() works", {
     ard_complex(
       ADSL |> dplyr::filter(ARM %in% c("Placebo", "Xanomeline Low Dose")),
       variables = AGE,
-      statistic = ~list(ttest = ttest_fn)
+      statistic = ~ list(ttest = ttest_fn)
     )
   )
 })
@@ -41,7 +41,7 @@ test_that("ard_pairwise(variable)", {
       ) |>
       ard_pairwise(
         variable = ARM,
-        .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn))
+        .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn))
       )
   )
   expect_equal(names(lst_ard), "'Placebo' vs. 'Unobserved Level'")
@@ -56,7 +56,7 @@ test_that("ard_pairwise(variable) messaging", {
     ard_pairwise(
       ADSL,
       variable = c(ARM, AGEGR1),
-      .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn))
+      .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn))
     )
   )
 
@@ -65,7 +65,7 @@ test_that("ard_pairwise(variable) messaging", {
     ard_pairwise(
       ADSL,
       variable = NOT_A_COLUMN,
-      .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn))
+      .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn))
     )
   )
 })
@@ -76,7 +76,7 @@ test_that("ard_pairwise(include)", {
       ard_pairwise(
         ADSL,
         variable = ARM,
-        .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn)),
+        .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
         include = "Placebo" # only include comparisons to the "Placebo" group
       )
   )
@@ -100,7 +100,7 @@ test_that("ard_pairwise(include) messaging", {
     ard_pairwise(
       ADSL,
       variable = ARM,
-      .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn)),
+      .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
       include = "NOT_A_LEVEL"
     )
   )
@@ -111,7 +111,7 @@ test_that("ard_pairwise(include) messaging", {
     ard_pairwise(
       ADSL,
       variable = ARM,
-      .f = \(df) ard_complex(df, variables = AGE, statistic = ~list(ttest = ttest_fn)),
+      .f = \(df) ard_complex(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
       include = mtcars
     )
   )
