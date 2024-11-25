@@ -6,7 +6,7 @@
 #'   a data frame
 #' @param variable ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   Column to perform pairwise analyses for.
-#' @param .f (`function`)
+#' @param .f (`function`)\cr
 #'   a function that creates ARDs. The function accepts a single argument and
 #'   a subset of `data` will be passed including the two levels of `variable`
 #'   for the pairwise analysis.
