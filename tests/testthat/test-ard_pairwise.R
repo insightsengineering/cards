@@ -1,4 +1,4 @@
-ttest_fn <- \(x, data, ...) t.test(x ~ data$ARM) |> broom::tidy()
+ttest_fn <- \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")]
 
 test_that("ard_pairwise() works", {
   expect_silent(
