@@ -13,7 +13,7 @@ a data frame}
 \item{variable}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 Column to perform pairwise analyses for.}
 
-\item{.f}{(\code{function})
+\item{.f}{(\code{function})\cr
 a function that creates ARDs. The function accepts a single argument and
 a subset of \code{data} will be passed including the two levels of \code{variable}
 for the pairwise analysis.}
