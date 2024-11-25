@@ -1,5 +1,7 @@
 # cards 0.3.0.9002
 
+* Added function `ard_pairwise()` to ease the calculations of pairwise analyses. (#359)
+
 * The `tidy_ard_column_order()` now correctly orders grouping columns when there are 10+ groups. This also corrects an issue in the hierarchical functions where the ordering of the variables matters. (#352)
 
 * No longer exporting functions `check_pkg_installed()`, `is_pkg_installed()`, `get_min_version_required()`, `get_pkg_dependencies()`. These functions are now internal-only. (#330)
