@@ -33,12 +33,12 @@ reference:
       - ard_complex
       - ard_stack
       - ard_stack_hierarchical
-      - ard_strata
 
   - subtitle: "Misc."
   -  contents:
+      - ard_strata
+      - ard_pairwise
       - ard_attributes
-
 
   - title: "ARD Utilities"
   - subtitle: "Construct ARDs"
