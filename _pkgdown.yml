@@ -57,6 +57,7 @@ reference:
       - label_cards
       - rename_ard_columns
       - add_calculated_row
+      - as_cards_fn
   - subtitle: "Wrangle ARD"
     contents:
       - shuffle_ard

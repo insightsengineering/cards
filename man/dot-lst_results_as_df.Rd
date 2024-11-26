@@ -4,7 +4,7 @@
 \alias{.lst_results_as_df}
 \title{Prepare Results as Data Frame}
 \usage{
-.lst_results_as_df(x, variable, fun_name)
+.lst_results_as_df(x, variable, fun_name, fun)
 }
 \arguments{
 \item{x}{(named \code{list})\cr
