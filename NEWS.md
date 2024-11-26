@@ -1,4 +1,4 @@
-# cards 0.3.0.9003
+# cards 0.3.0.9004
 
 * The `tidy_ard_column_order()` now correctly orders grouping columns when there are 10+ groups. This also corrects an issue in the hierarchical functions where the ordering of the variables matters. (#352)
 
