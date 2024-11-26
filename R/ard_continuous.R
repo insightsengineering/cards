@@ -320,7 +320,7 @@ ard_continuous.data.frame <- function(data,
       dplyr::as_tibble() |>
       dplyr::mutate(
         stat_name =
-          # if the function is a "cards_fn" AND the result is missing, use the provided placeholder stat names
+        # if the function is a "cards_fn" AND the result is missing, use the provided placeholder stat names
           case_switch(
             is_empty(.env$x$result) && is_cards_fn(.env$fun) ~ list(get_cards_fn_stat_names(.env$fun)),
             .default = .env$fun_name

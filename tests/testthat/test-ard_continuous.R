@@ -445,25 +445,28 @@ test_that("ard_continuous() with `as_cards_fn()` inputs", {
   ttest_works <-
     as_cards_fn(
       \(x) t.test(x)[c("statistic", "p.value")],
-      stat_names = c('statistic', 'p.value')
+      stat_names = c("statistic", "p.value")
     )
   ttest_error <-
     as_cards_fn(
-      \(x) {t.test(x)[c("statistic", "p.value")]; stop("Intentional Error")},
-      stat_names = c('statistic', 'p.value')
+      \(x) {
+        t.test(x)[c("statistic", "p.value")]
+        stop("Intentional Error")
+      },
+      stat_names = c("statistic", "p.value")
     )
 
   # the result is the same when there is no error
   expect_equal(
-    ard_continuous(mtcars, variables = mpg, statistic = ~list(ttest = ttest_works)),
-    ard_continuous(mtcars, variables = mpg, statistic = ~list(ttest = \(x) t.test(x)[c("statistic", "p.value")]))
+    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
+    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")]))
   )
 
   # when there is an error, we get the same structure back
   expect_equal(
-    ard_continuous(mtcars, variables = mpg, statistic = ~list(ttest = ttest_error)) |>
+    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
       dplyr::pull("stat_name"),
-    ard_continuous(mtcars, variables = mpg, statistic = ~list(ttest = \(x) t.test(x)[c("statistic", "p.value")])) |>
+    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")])) |>
       dplyr::pull("stat_name")
   )
 })
