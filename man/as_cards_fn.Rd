@@ -32,25 +32,28 @@ an ARD with the correct structure when the results cannot be calculated.
 ttest_works <-
   as_cards_fn(
     \(x) t.test(x)[c("statistic", "p.value")],
-    stat_names = c('statistic', 'p.value')
+    stat_names = c("statistic", "p.value")
   )
 ard_continuous(
   mtcars,
   variables = mpg,
-  statistic = ~list(ttest = ttest_works)
+  statistic = ~ list(ttest = ttest_works)
 )
 
 # When there is an error and we use `as_card_fn()`,
 #   we will see the same structure as when there is no error
 ttest_error <-
   as_cards_fn(
-    \(x) {t.test(x)[c("statistic", "p.value")]; stop("Intentional Error")},
-    stat_names = c('statistic', 'p.value')
+    \(x) {
+      t.test(x)[c("statistic", "p.value")]
+      stop("Intentional Error")
+    },
+    stat_names = c("statistic", "p.value")
   )
 ard_continuous(
   mtcars,
   variables = mpg,
-  statistic = ~list(ttest = ttest_error)
+  statistic = ~ list(ttest = ttest_error)
 )
 
 # if we don't use `as_card_fn()` and there is an error,
@@ -58,6 +61,9 @@ ard_continuous(
 ard_continuous(
   mtcars,
   variables = mpg,
-  statistic = ~list(ttest = \(x) {t.test(x)[c("statistic", "p.value")]; stop("Intentional Error")})
+  statistic = ~ list(ttest = \(x) {
+    t.test(x)[c("statistic", "p.value")]
+    stop("Intentional Error")
+  })
 )
 }
