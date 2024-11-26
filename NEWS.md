@@ -1,4 +1,4 @@
-# cards 0.3.0.9005
+# cards 0.3.0.9006
 
 * Added function `ard_pairwise()` to ease the calculations of pairwise analyses. (#359)
 
