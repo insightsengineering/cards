@@ -1,4 +1,6 @@
-# cards 0.3.0.9004
+# cards 0.3.0.9005
+
+* Added function `ard_pairwise()` to ease the calculations of pairwise analyses. (#359)
 
 * Added functions `as_cards_fn()`, `is_cards_fn()`, and `get_cards_fn_stat_names()`. These functions assist is creating functions with attributes enumerating the expected results.
 
