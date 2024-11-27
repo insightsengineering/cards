@@ -1,18 +1,26 @@
 # cards 0.3.0.9006
 
-* Added function `ard_pairwise()` to ease the calculations of pairwise analyses. (#359)
+## New Features and Functions
 
 * Added functions `as_cards_fn()`, `is_cards_fn()`, and `get_cards_fn_stat_names()`. These functions assist is creating functions with attributes enumerating the expected results.
 
 * Updated `ard_continuous()` and `ard_complex()` to return full ARDs when functions passed are created with `as_cards_fn()`: instead of a single row output, we get a long ARD with rows for each of the expected statistic names. (#316)
 
-* The `tidy_ard_column_order()` now correctly orders grouping columns when there are 10+ groups. This also corrects an issue in the hierarchical functions where the ordering of the variables matters. (#352)
+* Added function `ard_pairwise()` to ease the calculations of pairwise analyses. (#359)
 
-* No longer exporting functions `check_pkg_installed()`, `is_pkg_installed()`, `get_min_version_required()`, `get_pkg_dependencies()`. These functions are now internal-only. (#330)
+## Other Updates
 
 * Improved messaging in `print_ard_conditions()` when the calling function is namespaced. (#348)
 
 * Updated print method for `'card'` objects so extraneous columns are never printed by default.
+
+## Lifecycle Changes
+
+* No longer exporting functions `check_pkg_installed()`, `is_pkg_installed()`, `get_min_version_required()`, `get_pkg_dependencies()`. These functions are now internal-only. (#330)
+
+## Bug Fixes
+
+* The `tidy_ard_column_order()` now correctly orders grouping columns when there are 10+ groups. This also corrects an issue in the hierarchical functions where the ordering of the variables matters. (#352)
 
 # cards 0.3.0
 
