@@ -38,7 +38,7 @@ cardx functions.">
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +61,7 @@ cardx functions.">
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
@@ -71,17 +72,6 @@ cardx functions.">
 </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div>
-</li>
-<!-- end dropdown for versions -->
-
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -94,7 +84,7 @@ cardx functions.">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Stratified ARD</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.3.0/R/ard_strata.R" class="external-link"><code>R/ard_strata.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.4.0/R/ard_strata.R" class="external-link"><code>R/ard_strata.R</code></a></small>
       <div class="d-none name"><code>ard_strata.Rd</code></div>
     </div>
 
@@ -162,20 +152,24 @@ a function or a formula that can be coerced to a function with
 </h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ard_strata</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">ADSL</span>,</span></span>
-<span class="r-in"><span>  by <span class="op">=</span> <span class="va">ARM</span>,</span></span>
+<span class="r-in"><span>  .by <span class="op">=</span> <span class="va">ARM</span>,</span></span>
 <span class="r-in"><span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">.x</span>, variables <span class="op">=</span> <span class="va">AGE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 8 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label   stat fmt_fn</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N    254      0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…      mean       Mean 75.087      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE continuo…        sd         SD  8.246      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE continuo…    median     Median     77      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE continuo…       p25         Q1     70      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE continuo…       p75         Q3     81      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE continuo…       min        Min     51      1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE continuo…       max        Max     89      1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 24 x 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level variable stat_name stat_label   stat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo      AGE         N          N     86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo      AGE      mean       Mean 75.209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo      AGE        sd         SD   8.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      Placebo      AGE    median     Median     76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      Placebo      AGE       p25         Q1     69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM      Placebo      AGE       p75         Q3     82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM      Placebo      AGE       min        Min     52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM      Placebo      AGE       max        Max     89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…      AGE         N          N     84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM    Xanomeli…      AGE      mean       Mean 74.381</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">14 more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

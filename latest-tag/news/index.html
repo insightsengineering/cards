@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
@@ -61,17 +62,6 @@
 </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.1">v0.2.1</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.0">v0.2.0</a>
-<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.1.0">v0.1.0</a> </div>
-</li>
-<!-- end dropdown for versions -->
-
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/insightsengineering/cards/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -84,9 +74,45 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.3.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.4.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.0" id="cards-040">cards 0.4.0<a class="anchor" aria-label="anchor" href="#cards-040"></a>
+</h2>
+<p class="text-muted">CRAN release: 2024-11-27</p>
+<div class="section level3">
+<h3 id="new-features-and-functions-0-4-0">New Features and Functions<a class="anchor" aria-label="anchor" href="#new-features-and-functions-0-4-0"></a>
+</h3>
+<ul>
+<li><p>Added functions <code><a href="../reference/as_cards_fn.html">as_cards_fn()</a></code>, <code><a href="../reference/as_cards_fn.html">is_cards_fn()</a></code>, and <code><a href="../reference/as_cards_fn.html">get_cards_fn_stat_names()</a></code>. These functions assist is creating functions with attributes enumerating the expected results.</p></li>
+<li><p>Updated <code><a href="../reference/ard_continuous.html">ard_continuous()</a></code> and <code><a href="../reference/ard_complex.html">ard_complex()</a></code> to return full ARDs when functions passed are created with <code><a href="../reference/as_cards_fn.html">as_cards_fn()</a></code>: instead of a single row output, we get a long ARD with rows for each of the expected statistic names. (<a href="https://github.com/insightsengineering/cards/issues/316" class="external-link">#316</a>)</p></li>
+<li><p>Added function <code><a href="../reference/ard_pairwise.html">ard_pairwise()</a></code> to ease the calculations of pairwise analyses. (<a href="https://github.com/insightsengineering/cards/issues/359" class="external-link">#359</a>)</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="other-updates-0-4-0">Other Updates<a class="anchor" aria-label="anchor" href="#other-updates-0-4-0"></a>
+</h3>
+<ul>
+<li><p>Improved messaging in <code><a href="../reference/print_ard_conditions.html">print_ard_conditions()</a></code> when the calling function is namespaced. (<a href="https://github.com/insightsengineering/cards/issues/348" class="external-link">#348</a>)</p></li>
+<li><p>Updated print method for <code>'card'</code> objects so extraneous columns are never printed by default.</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="lifecycle-changes-0-4-0">Lifecycle Changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-0-4-0"></a>
+</h3>
+<ul>
+<li>No longer exporting functions <code>check_pkg_installed()</code>, <code>is_pkg_installed()</code>, <code>get_min_version_required()</code>, <code>get_pkg_dependencies()</code>. These functions are now internal-only. (<a href="https://github.com/insightsengineering/cards/issues/330" class="external-link">#330</a>)</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="bug-fixes-0-4-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-4-0"></a>
+</h3>
+<ul>
+<li>The <code><a href="../reference/tidy_ard_order.html">tidy_ard_column_order()</a></code> now correctly orders grouping columns when there are 10+ groups. This also corrects an issue in the hierarchical functions where the ordering of the variables matters. (<a href="https://github.com/insightsengineering/cards/issues/352" class="external-link">#352</a>)</li>
+</ul>
+</div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="cards-030">cards 0.3.0<a class="anchor" aria-label="anchor" href="#cards-030"></a>
 </h2>
@@ -163,8 +189,8 @@
 <li><p>Added the <code>nest_for_ard(include_data)</code> argument to either include or exclude the subsetted data frames in a list-column in the returned tibble.</p></li>
 <li><p>Added <code>check_ard_structure(column_order, method)</code> arguments to the function to check for column ordering and whether result contains a <code>stat_name='method'</code> row.</p></li>
 <li><p>Added the optional <code>ard_hierarchical(id)</code> argument. When provided we check for duplicates across the column(s) supplied here. If duplicates are found, the user is warned that the percentages and denominators are not correct. (<a href="https://github.com/insightsengineering/cards/issues/214" class="external-link">#214</a>)</p></li>
-<li><p>Improved messaging in <code><a href="../reference/check_pkg_installed.html">check_pkg_installed()</a></code> that incorporates the calling function name in the case of an error. (<a href="https://github.com/insightsengineering/cards/issues/205" class="external-link">#205</a>)</p></li>
-<li><p>Updated <code><a href="../reference/check_pkg_installed.html">is_pkg_installed()</a></code> and <code><a href="../reference/check_pkg_installed.html">check_pkg_installed()</a></code> to allow checks for more than package at a time. The <code><a href="../reference/check_pkg_installed.html">get_min_version_required()</a></code> function has also been updated to return a tibble instead of a list with attributes. (<a href="https://github.com/insightsengineering/cards/issues/201" class="external-link">#201</a>)</p></li>
+<li><p>Improved messaging in <code>check_pkg_installed()</code> that incorporates the calling function name in the case of an error. (<a href="https://github.com/insightsengineering/cards/issues/205" class="external-link">#205</a>)</p></li>
+<li><p>Updated <code>is_pkg_installed()</code> and <code>check_pkg_installed()</code> to allow checks for more than package at a time. The <code>get_min_version_required()</code> function has also been updated to return a tibble instead of a list with attributes. (<a href="https://github.com/insightsengineering/cards/issues/201" class="external-link">#201</a>)</p></li>
 <li><p>Styling from the {cli} package are now removed from errors and warnings when they are captured with <code><a href="../reference/eval_capture_conditions.html">eval_capture_conditions()</a></code>. Styling is removed with <code><a href="https://cli.r-lib.org/reference/ansi_strip.html" class="external-link">cli::ansi_strip()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/129" class="external-link">#129</a>)</p></li>
 </ul>
 </div>
