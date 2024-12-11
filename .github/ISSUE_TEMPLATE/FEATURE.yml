@@ -2,9 +2,6 @@
 name: ✨ Feature Request
 description: Request or propose a new feature
 title: 'Feature Request: <Description>'
-labels: ''
-assignees: ''
-
 ---
 
 Do not use this form to ask a question, or ask for assistance. Instead, ask on <https://stackoverflow.com/> using the `r-cards` tag.

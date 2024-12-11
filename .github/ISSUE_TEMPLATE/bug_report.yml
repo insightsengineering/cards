@@ -1,10 +1,7 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+description: Create a report to help us improve
 title: 'Bug Report: <Describe bug>'
-labels: ''
-assignees: ''
-
 ---
 
 Do not use this form to ask a question, or ask for assistance. Instead, ask on <https://stackoverflow.com/> using the `r-cards` tag.
