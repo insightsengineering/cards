@@ -118,8 +118,32 @@ pharmaverseadam::adsl |>
   )
 ```
 
-In the output we see that we only get 4 rows of output, the error has been stored in the `error` column but `stat_name` and `stat_label` now just take the list name of "wilcox" that we define in the statistic argument. This could have unintended effects in downstream code, we may be relying on the stat_name and stat_label having values of method and p-value, or just that the output has 2 rows per treatment arm.
+In the output we see that we only get 4 rows of output, the error has been stored in the `error` column but `stat_name` and `stat_label` now just take the list name of "wilcox" that we define in the statistic argument. This could have unintended effects in downstream code, we may be relying on the `stat_name` and `stat_label` having values of "method" and "p-value", or just that the output has 2 rows per treatment arm.
 
 To handle this we can specify the expected results from our function, so that even if we encounter an error during the code run we can be assured that the output will be of a consistent format so as not to impact downstream code.
 
 Here's an example of how to specify the expected output using `as_cards_fn`:
+
+```{r as_cards_fn}
+wilcox_one_var_error <- as_cards_fn(function(x) {
+  stop("AN ERROR!")
+  
+  wilcox_results <- wilcox.test(x,
+                                mu = median(x))
+  
+  return(wilcox_results[c("method", "p.value")])
+  
+},
+stat_names = c("method", "p.value"))
+
+pharmaverseadam::adsl |> 
+  cards::ard_continuous(
+    variables = AGE,
+    by = ARM,
+    statistic = ~ list(wilcox = wilcox_one_var_error)
+  )
+```
+
+Our function becomes the first argument to `as_cards_fn`, then the second argument is `stat_names` where we specify the expected names of the output list.
+
+In the output shown here, the `error` column is still populated with the error. However, now we have the expected 8 rows and we can see that the `stat_name` and `stat_label` match the values specified in the `stat_names` argument in the `as_cards_fn()` - helping us to avoid problems in code that relies in this output.
