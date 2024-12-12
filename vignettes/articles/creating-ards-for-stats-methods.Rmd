@@ -9,14 +9,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-The basic functions offered by {cards} can create a wide variety of ARDs. However, sometimes we may need to include the outputs from more complicated statistical methods in our ARDs. In this vignette we'll look at a few different ways to implement the output from these statistical methods.
+The basic functions offered by {cards} can create a wide variety of ARDs. However, sometimes we may need to include the outputs from more complicated statistical methods in our ARDs. In this article we'll look at a few different ways to implement the output from these statistical methods.
 
 ## {cardx}
 
-The {cardx} package is an extension of {cards}. The idea is that {cards} provides the core functions to create ARDs, while {cardx} contains a large number of extensions that implement various, commonly used statistical methods. There are a large number of extensions for a wide variery of extensions, including (but not limited to):
-* rbmi
-* emmeans
-* ...
+The {cardx} package is an extension of {cards}. The idea is that {cards} provides the core functions to create ARDs, while {cardx} contains a large number of extensions that implement various, commonly used statistical methods. There are a large number of extensions for a wide variety of methods, including (but not limited to):
+
+* ANOVA
+* Chi-squared Test
+* t-test
+* LS Mean Difference
+* Survival Estimates and Differences
 
 
 When looking to include the output from a statistical method your first port of call should be to see if it has already been implemented in {cardx}. You can find the full list of available functions [here](https://insightsengineering.github.io/cardx/main/reference/index.html).
@@ -34,11 +37,15 @@ pharmaverseadam::adsl |>
 
 In the output we see all of the different outputs from the t-test; the mean difference, confidence interval limits and p-value. It's also really useful to see the functions inputs, for example we can see that we didn't use equal variances as the `stat` is `FALSE` for `stat_name` `var.equal`. This is useful for re-use, if we need to run the test again we can use the ARD to see what options we need to use to recreate the result. 
 
-#### But what do we do if the statistical method that we want to use hasn't been implemented already in {cardx}?
+# But what do we do if the statistical method that we want to use hasn't been implemented already in {cardx}?
 
-## Implementing a 'tidy' stats method
+Implementing a new statistical method in {cards} to output an ARD of it's results and inputs is really easy, all we need to do is write a function that outputs all of the information we want to include as a named list! 
 
-Firstly, this implementation is made much easier for us by the `broom::tidy` function. The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble. We can then pass the output of `broom::tidy` through to the `statistic` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
+We'll first look at how `broom::tidy` can make this even easier for us, then will also give an example on how to implement from scratch.
+
+## Implementing a a stats method using `broom::tidy`
+
+The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble (which is just  fancy named list!). We can then pass the output of `broom::tidy` through to the `statistic` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
 
 Let's extend our t-test example from above. This time we want to carry out a one-sample t-test. This isn't implemented in {cardx} (it is now but let's just pretend...). We can just pass the code to carry out the one-sample t-test and pass the output through `broom::tidy` to the `statistic` argument like so:
 
@@ -54,7 +61,65 @@ pharmaverseadam::adsl |>
 
 Over 100 different statistical methods implemented in R are able to be 'tidied' using `broom::tidy`. However, the method you aim to use might not be, or the current `broom::tidy` implementation might not contain the information that you need to be in your ARD. In that case we'll have to format the output ourselves.
 
-## Implementing a 'non-tidy' stats method
+## Implementing a new stats method from scratch
 
+As we mentioned above, we just need to define a function which carries out or required statistical method and outputs a named list of the information we wish to include in the ARD.
 
-NEED TO LOOK THROUGH {cardx} FUNCTIONS FOR AN EXAMPLE
+As an example, let's write a function which carries out a Wilcoxon signed rank test over one variable using the function `wilcox.test`. As an output we just want to record the method and the p-value.
+
+```{r wilcox-function}
+wilcox_one_var <- function(x){
+  
+  wilcox_results <- wilcox.test(x,
+                                mu = median(x))
+  
+  return(
+    wilcox_results[c("method", "p.value")]
+  )
+  
+}
+```
+
+Let's now use this function when creating an ARD with {cards}. Remember we just need the statistic to be a named list, so we'll call our function inside a named list. We also don't need to specify any arguments, in this case it will pick up that the one variable `x` corresponds to the data we are testing, in this case `AGE` for the individual treatment arms.
+
+```{r wilcox-with-cards}
+pharmaverseadam::adsl |> 
+  cards::ard_continuous(
+    variables = AGE,
+    by = ARM,
+    statistic = ~ list(wilcox = wilcox_one_var)
+  )
+```
+We see here that we get an output of 8 rows, 2 rows (one for the method, and one for the p-value) for each of the 4 treatment arms.
+
+# Handling errors
+
+Let's consider what happens when we encounter an error in our statisical method.
+
+```{r wilcox-fn-error}
+wilcox_one_var_error <- function(x){
+  
+  stop("AN ERROR!")
+  
+  wilcox_results <- wilcox.test(x,
+                                mu = median(x))
+  
+  return(
+    wilcox_results[c("method", "p.value")]
+  )
+  
+}
+
+pharmaverseadam::adsl |> 
+  cards::ard_continuous(
+    variables = AGE,
+    by = ARM,
+    statistic = ~ list(wilcox = wilcox_one_var_error)
+  )
+```
+
+In the output we see that we only get 4 rows of output, the error has been stored in the `error` column but `stat_name` and `stat_label` now just take the list name of "wilcox" that we define in the statistic argument. This could have unintended effects in downstream code, we may be relying on the stat_name and stat_label having values of method and p-value, or just that the output has 2 rows per treatment arm.
+
+To handle this we can specify the expected results from our function, so that even if we encounter an error during the code run we can be assured that the output will be of a consistent format so as not to impact downstream code.
+
+Here's an example of how to specify the expected output using `as_cards_fn`:
