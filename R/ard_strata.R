@@ -32,7 +32,7 @@
 #' @examples
 #' ard_strata(
 #'   ADSL,
-#'   by = ARM,
+#'   .by = ARM,
 #'   .f = ~ ard_continuous(.x, variables = AGE)
 #' )
 ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
@@ -52,7 +52,7 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
 
   # run fn on nested data frames -----------------------------------------------
   df_nested_data <- df_nested_data |>
-    dplyr::mutate(ard = lapply(.data$data, .f, ...)) |>
+    dplyr::mutate(ard = map(.data$data, .f, ...)) |>
     dplyr::select(-"data")
 
   # rename grouping variables --------------------------------------------------

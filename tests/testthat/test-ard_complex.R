@@ -150,3 +150,33 @@ test_that("ard_complex() errors with incorrect factor columns", {
       )
   )
 })
+
+test_that("ard_complex() with `as_cards_fn()` inputs", {
+  ttest_works <-
+    as_cards_fn(
+      \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")],
+      stat_names = c("statistic", "p.value")
+    )
+  ttest_error <-
+    as_cards_fn(
+      \(x, data, ...) {
+        t.test(x ~ data$am)[c("statistic", "p.value")]
+        stop("Intentional Error")
+      },
+      stat_names = c("statistic", "p.value")
+    )
+
+  # the result is the same when there is no error
+  expect_equal(
+    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
+    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")]))
+  )
+
+  # when there is an error, we get the same structure back
+  expect_equal(
+    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
+      dplyr::pull("stat_name"),
+    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")])) |>
+      dplyr::pull("stat_name")
+  )
+})
