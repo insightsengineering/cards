@@ -5,7 +5,7 @@
 #'
 #' - `tidy_ard_column_order()` relocates columns of the ARD to the standard order.
 #'
-#' - `tidy_ard_row_order()` orders rows of ARD according to variables, groups, and
+#' - `tidy_ard_row_order()` orders rows of ARD according to groups and
 #'   strata, while retaining the order of the input ARD.
 #'
 #' @param x (`data.frame`)\cr
@@ -55,14 +55,10 @@ tidy_ard_column_order <- function(x) {
 tidy_ard_row_order <- function(x) {
   set_cli_abort_call()
 
-  check_class(x, cls = "card")
-
   # get columns that dictate ordering
   cols <- x |>
     dplyr::select(
-      all_ard_variables("names"),
-      all_ard_groups("names"),
-      all_ard_groups("levels")
+      all_ard_groups(c("names", "levels"))
     ) |>
     names()
 

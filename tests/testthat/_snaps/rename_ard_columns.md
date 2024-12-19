@@ -10,13 +10,13 @@
        1 Placebo    65-80  catego~ n         n          42     42       <int>  <NULL> 
        2 Placebo    65-80  catego~ N         N          86     86       <int>  <NULL> 
        3 Placebo    65-80  catego~ p         %           0.488 48.8     <fn>   <NULL> 
-       4 Xanomelin~ 65-80  catego~ n         n          55     55       <int>  <NULL> 
-       5 Xanomelin~ 65-80  catego~ N         N          84     84       <int>  <NULL> 
-       6 Xanomelin~ 65-80  catego~ p         %           0.655 65.5     <fn>   <NULL> 
-       7 Xanomelin~ 65-80  catego~ n         n          47     47       <int>  <NULL> 
-       8 Xanomelin~ 65-80  catego~ N         N          84     84       <int>  <NULL> 
-       9 Xanomelin~ 65-80  catego~ p         %           0.560 56.0     <fn>   <NULL> 
-      10 Placebo    <65    catego~ n         n          14     14       <int>  <NULL> 
+       4 Placebo    <65    catego~ n         n          14     14       <int>  <NULL> 
+       5 Placebo    <65    catego~ N         N          86     86       <int>  <NULL> 
+       6 Placebo    <65    catego~ p         %           0.163 16.3     <fn>   <NULL> 
+       7 Placebo    >80    catego~ n         n          30     30       <int>  <NULL> 
+       8 Placebo    >80    catego~ N         N          86     86       <int>  <NULL> 
+       9 Placebo    >80    catego~ p         %           0.349 34.9     <fn>   <NULL> 
+      10 Xanomelin~ 65-80  catego~ n         n          55     55       <int>  <NULL> 
       # i 17 more rows
       # i 1 more variable: error <list>
 

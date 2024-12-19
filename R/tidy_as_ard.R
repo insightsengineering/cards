@@ -112,5 +112,6 @@ tidy_as_ard <- function(lst_tidy,
     !!!lst_ard_columns,
   ) |>
     tidy_ard_column_order() |>
+    tidy_ard_row_order() |>
     as_card()
 }
