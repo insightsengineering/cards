@@ -8,14 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  docs:
-    name: Pkgdown Docs 📚
-    needs: release
-    uses: insightsengineering/r.pkg.template/.github/workflows/pkgdown.yaml@main
-    secrets:
-      REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
-    with:
-      default-landing-page: latest-tag
   validation:
     name: R Package Validation report 📃
     needs: release
@@ -29,7 +21,7 @@ jobs:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
   build:
     name: Build package and reports 🎁
-    needs: [release, docs]
+    needs: [release]
     uses: insightsengineering/r.pkg.template/.github/workflows/build-check-install.yaml@main
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
@@ -47,7 +39,7 @@ jobs:
       skip-r-cmd-install: true
   coverage:
     name: Coverage 📔
-    needs: [release, docs]
+    needs: [release]
     uses: insightsengineering/r.pkg.template/.github/workflows/test-coverage.yaml@main
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
