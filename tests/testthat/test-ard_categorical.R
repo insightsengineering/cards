@@ -886,3 +886,36 @@ test_that("ard_categorical() errors with incomplete factor columns", {
       ard_categorical(variables = am)
   )
 })
+
+test_that("ard_categorical() ordering for multiple strata",{
+
+  adae_mini <- ADAE |>
+    dplyr::select(USUBJID, TRTA, AESOC, AEDECOD) |>
+    dplyr::filter(AESOC %in% unique(AESOC)[1:4]) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(AEDECOD %in% unique(AEDECOD)[1:5]) |>
+    dplyr::ungroup()
+
+  res_actual <- ard_categorical(
+    adae_mini |> unique() |> dplyr::mutate(any_ae = TRUE),
+    strata = c(AESOC, AEDECOD),
+    by = TRTA,
+    variables = any_ae
+  ) |>
+    dplyr::select(group2_level, group3_level) |>
+    tidyr::unnest(everything()) |>
+    unique()
+
+
+  expect_equal(
+    res_actual,
+    adae_mini |>
+      dplyr::select(group2_level = AESOC, group3_level = AEDECOD) |>
+      unique() |>
+      dplyr::arrange(group2_level, group3_level),
+    ignore_attr = TRUE
+  )
+})
+
+
+
