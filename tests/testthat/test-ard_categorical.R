@@ -887,8 +887,7 @@ test_that("ard_categorical() errors with incomplete factor columns", {
   )
 })
 
-test_that("ard_categorical() ordering for multiple strata",{
-
+test_that("ard_categorical() ordering for multiple strata", {
   adae_mini <- ADAE |>
     dplyr::select(USUBJID, TRTA, AESOC, AEDECOD) |>
     dplyr::filter(AESOC %in% unique(AESOC)[1:4]) |>
@@ -916,6 +915,3 @@ test_that("ard_categorical() ordering for multiple strata",{
     ignore_attr = TRUE
   )
 })
-
-
-

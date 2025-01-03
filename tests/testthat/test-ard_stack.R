@@ -101,7 +101,6 @@ test_that("ard_stack() adding overalls", {
       ard_continuous(data = mtcars, variables = "mpg"),
       ard_dichotomous(data = mtcars, variables = "vs"),
       ard_categorical(data = mtcars, variables = "cyl"),
-
       .update = TRUE,
       .order = TRUE
     )
