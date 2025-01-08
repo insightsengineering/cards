@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.svg" align="right" height="120" alt="cards website" /></a>
+# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
 
 <!-- badges: start -->
 
@@ -52,7 +52,7 @@ devtools::install_github("insightsengineering/cards")
 ## Extensions
 
 [<img
-src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.svg"
+src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png"
 style="float: right" width="120" alt="cardx website" />](https://insightsengineering.github.io/cardx/)
 
 The {cards} package exports three types of functions:
