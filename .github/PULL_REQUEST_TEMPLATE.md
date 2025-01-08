@@ -26,3 +26,24 @@ When the branch is ready to be merged:
 - [ ] **All** GitHub Action workflows pass with a :white_check_mark:
 - [ ] Approve Pull Request
 - [ ] Merge the PR. Please use "Squash and merge" or "Rebase and merge".
+
+_Optional Reverse Dependency Checks_:
+
+- Install `checked` with `pak::pak("Genentech/checked")` or `pak::pak("checked")`
+- Check dev versions of `cardx`, `gtsummary`, and `tfrmt` which are in the `ddsjoberg` R Universe
+
+  ```shell
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org'))"
+  ```
+
+- Check CRAN reverse dependencies but run tests skipped on CRAN
+
+  ```shell
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', repos = 'https://cloud.r-project.org')"
+  ```
+
+- Check CRAN reverse dependencies in a CRAN-like environment
+
+  ```shell
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = FALSE), checked.check_build_args = '--as-cran'); checked::check_rev_deps(path = '.', repos = 'https://cloud.r-project.org')"
+  ```
