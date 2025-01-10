@@ -98,7 +98,7 @@ print_ard_conditions <- function(x) {
   # and finally, print the messages
   cli::cli_inform(
     "The following {cli_color_fun(paste0(msg_type, 's'))} were returned during
-       {.fun {error_call(get_cli_abort_call()) |> as.list() |> getElement(1L)}}:"
+       {.fun {error_call(get_cli_abort_call()) |> rlang::call_name()}}:"
   )
 
   for (i in seq_len(nrow(ard_msg))) {

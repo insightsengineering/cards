@@ -261,7 +261,8 @@ ard_continuous.data.frame <- function(data,
                       )
                     ),
                   variable = variable,
-                  fun_name = fun_name
+                  fun_name = fun_name,
+                  fun = fun
                 )
               }
             ) |>
@@ -300,7 +301,7 @@ ard_continuous.data.frame <- function(data,
 #' })
 #'
 #' cards:::.lst_results_as_df(msgs, "result", "mean")
-.lst_results_as_df <- function(x, variable, fun_name) {
+.lst_results_as_df <- function(x, variable, fun_name, fun) {
   # unnesting results if needed
   if (.is_named_list(x$result, allow_df = TRUE)) {
     if (is.data.frame(x$result)) x$result <- unclass(x$result)
@@ -317,7 +318,15 @@ ard_continuous.data.frame <- function(data,
     df_ard <-
       map(x, list) |>
       dplyr::as_tibble() |>
-      dplyr::mutate(stat_name = .env$fun_name)
+      dplyr::mutate(
+        stat_name =
+        # if the function is a "cards_fn" AND the result is missing, use the provided placeholder stat names
+          case_switch(
+            is_empty(.env$x$result) && is_cards_fn(.env$fun) ~ list(get_cards_fn_stat_names(.env$fun)),
+            .default = .env$fun_name
+          )
+      ) |>
+      tidyr::unnest("stat_name")
   }
 
   df_ard |>

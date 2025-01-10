@@ -1,9 +1,9 @@
 # Standalone file: do not edit by hand
-# Source: <https://github.com/ddsjoberg/standalone/blob/main/R/standalone-checks.R>
+# Source: <https://github.com/insightsengineering/standalone/blob/main/R/standalone-checks.R>
 # ----------------------------------------------------------------------
 #
 # ---
-# repo: ddsjoberg/standalone
+# repo: insightsengineering/standalone
 # file: standalone-checks.R
 # last-updated: 2024-05-04
 # license: https://unlicense.org

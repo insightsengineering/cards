@@ -37,6 +37,15 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
 
   # remove columns -------------------------------------------------------------
   if (arg_match(columns) %in% "auto") {
+    x_print <-
+      dplyr::select(
+        x_print, all_ard_groups(), all_ard_variables(),
+        any_of(c(
+          "context", "stat_name", "stat_label", "stat", "stat_fmt",
+          "fmt_fn", "warning", "error"
+        ))
+      )
+
     # remove warning and error columns if nothing to report
     if (ncol(x_print) > n_col && "warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
       x_print[["warning"]] <- NULL
