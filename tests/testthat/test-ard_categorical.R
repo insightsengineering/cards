@@ -344,6 +344,7 @@ test_that("ard_categorical(denominator='cell') works", {
 })
 
 test_that("ard_categorical(denominator='row') works", {
+  withr::local_options(list(width = 120))
   expect_error(
     ard_crosstab_row <- ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "row"),
     NA
