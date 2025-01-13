@@ -10,11 +10,14 @@ test_that("rename_ard_columns(columns)", {
 })
 
 test_that("rename_ard_columns(unlist)", {
+  withr::local_options(list(width = 120))
   expect_snapshot(
     ADSL |>
       ard_categorical(by = ARM, variables = AGEGR1) |>
       apply_fmt_fn() |>
-      rename_ard_columns(unlist = c(stat, stat_fmt))
+      rename_ard_columns(unlist = c(stat, stat_fmt)) |>
+      as.data.frame() |>
+      dplyr::select(-c(fmt_fn, warning, error))
   )
 })
 

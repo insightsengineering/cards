@@ -1,5 +1,6 @@
 test_that("tidy_ard_row_order() works", {
   skip_if_not(is_pkg_installed("withr"))
+  withr::local_options(list(width = 120))
   withr::local_seed(1)
 
   # ensure rows are ordered within descending groups but not variables
