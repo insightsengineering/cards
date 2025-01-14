@@ -99,6 +99,7 @@ ard_attributes.data.frame <- function(data,
       error = list(NULL)
     ) |>
     cards::tidy_ard_column_order() |>
+    tidy_ard_row_order() |>
     as_card()
 }
 

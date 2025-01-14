@@ -175,6 +175,7 @@ ard_continuous.data.frame <- function(data,
   df_results |>
     dplyr::mutate(context = "continuous") |>
     tidy_ard_column_order() |>
+    tidy_ard_row_order() |>
     as_card()
 }
 

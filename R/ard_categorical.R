@@ -201,6 +201,7 @@ ard_categorical.data.frame <- function(data,
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() |>
+    tidy_ard_row_order() |>
     as_card()
 }
 
@@ -410,11 +411,12 @@ ard_categorical.data.frame <- function(data,
     }
 
     df_table <-
-      dplyr::right_join(
+      dplyr::left_join(
+        df_original_strata |> dplyr::arrange(across(all_of(strata))),
         df_table,
-        df_original_strata,
         by = strata
-      )
+      ) |>
+      dplyr::select(all_of(names(df_table)))
   }
 
   df_table

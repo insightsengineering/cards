@@ -28,9 +28,9 @@
       {cards} data frame: 1 x 15
     Output
         group1 group1_level group2 group2_level group3 group3_level variable
-      1   TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…  AEDECOD
+      1   TRTA      Placebo  AESEV         MILD  AESOC    CARDIAC …  AEDECOD
         variable_level stat_name stat_label stat
-      1      ABDOMINA…         n          n    0
+      1      ATRIAL F…         n          n    0
     Message
       i 4 more variables: context, fmt_fn, warning, error
 
@@ -48,9 +48,9 @@
       {cards} data frame: 1 x 15
     Output
         group1 group1_level group2 group2_level group3 group3_level variable
-      1   TRTA      Placebo  AESEV         MILD  AESOC    GASTROIN…  AEDECOD
+      1   TRTA      Placebo  AESEV         MILD  AESOC    CARDIAC …  AEDECOD
         variable_level stat_name stat_label stat
-      1      ABDOMINA…         n          n    0
+      1      ATRIAL F…         n          n    0
     Message
       i 4 more variables: context, fmt_fn, warning, error
 
