@@ -886,3 +886,227 @@ test_that("ard_categorical() errors with incomplete factor columns", {
       ard_categorical(variables = am)
   )
 })
+
+
+test_that("ard_categorical(denominator='column') with cumulative counts", {
+  # check cumulative stats work without `by/strata`
+  expect_silent(
+    ard <-
+      ard_categorical(
+        ADSL,
+        variables = "AGEGR1",
+        statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
+      )
+  )
+  # test the final cum n matches the nrow()
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name == "n_cum", variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))) |>
+      dplyr::pull(stat) |>
+      unlist(),
+    nrow(ADSL)
+  )
+  # test the final cum p is 1
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name == "p_cum", variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))) |>
+      dplyr::pull(stat) |>
+      unlist(),
+    1
+  )
+  # check the cum n is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "n_cum") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1) |>
+      cumsum() |>
+      as.list()
+  )
+  # check the cum p is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "p_cum") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1) |>
+      prop.table() |>
+      cumsum() |>
+      as.list()
+  )
+
+  # check cumulative stats work with `by`
+  expect_silent(
+    ard <-
+      ard_categorical(
+        ADSL,
+        variables = "AGEGR1",
+        by = ARM,
+        statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
+      )
+  )
+  # check the cum n is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "n_cum", group1_level == "Placebo") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1[ADSL$ARM == "Placebo"]) |>
+      cumsum() |>
+      as.list()
+  )
+  # check the cum p is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "p_cum", group1_level == "Placebo") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1[ADSL$ARM == "Placebo"]) |>
+      prop.table() |>
+      cumsum() |>
+      as.list()
+  )
+
+  # check with by & strata
+  expect_silent(
+    ard <-
+      ard_categorical(
+        ADSL,
+        variables = "AGEGR1",
+        by = ARM,
+        strata = SEX,
+        statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
+      )
+  )
+  # check the cum n is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "n_cum", group1_level == "Placebo", group2_level == "F") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1[ADSL$ARM == "Placebo" & ADSL$SEX == "F"]) |>
+      cumsum() |>
+      as.list()
+  )
+  # check the cum p is correct
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% "p_cum", group1_level == "Placebo", group2_level == "F") |>
+      dplyr::select(variable_level, stat) |>
+      deframe(),
+    table(ADSL$AGEGR1[ADSL$ARM == "Placebo" & ADSL$SEX == "F"]) |>
+      prop.table() |>
+      cumsum() |>
+      as.list()
+  )
+
+  # function works when only `n_cum` requested
+  expect_equal(
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      statistic = everything() ~ "n_cum"
+    ),
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
+    ) |>
+      dplyr::filter(stat_name == "n_cum")
+  )
+  # function works when only `p_cum` requested
+  expect_equal(
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      statistic = everything() ~ "p_cum"
+    ),
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
+    ) |>
+      dplyr::filter(stat_name == "p_cum")
+  )
+})
+
+test_that("ard_categorical(denominator='row') with cumulative counts", {
+  # check cumulative stats work without `by/strata`
+  expect_silent(
+    ard <-
+      ard_categorical(
+        ADSL,
+        variables = "AGEGR1",
+        statistic = everything() ~ c("n", "p", "n_cum", "p_cum"),
+        denominator = "row"
+      )
+  )
+  # when no by, the n and n_cum should be the same
+  expect_true(
+    ard |>
+      dplyr::filter(stat_name %in% c("n", "n_cum")) |>
+      dplyr::mutate(
+        .by = all_ard_variables(),
+        check_equal = unlist(stat) == unlist(stat)[1]
+      ) |>
+      dplyr::pull(check_equal) |>
+      unique()
+  )
+  # when no by, the p and p_cum should be the same and equal to 1
+  expect_equal(
+    ard |>
+      dplyr::filter(stat_name %in% c("p", "p_cum")) |>
+      dplyr::pull(stat) |>
+      unlist() |>
+      unique(),
+    1
+  )
+
+  # check cumulative stats work with `by`
+  expect_silent(
+    ard <-
+      ard_categorical(
+        ADSL,
+        variables = "AGEGR1",
+        by = SEX,
+        statistic = everything() ~ c("n", "p", "n_cum", "p_cum"),
+        denominator = "row"
+      )
+  )
+  # check row n_cum
+  expect_equal(
+    ard |>
+      dplyr::filter(variable_level %in% "<65", stat_name == "n_cum") |>
+      dplyr::select(group1_level, stat) |>
+      deframe(),
+    table(ADSL$SEX[ADSL$AGEGR1 == "<65"]) |>
+      cumsum() |>
+      as.list()
+  )
+  # check row p_cum
+  expect_equal(
+    ard |>
+      dplyr::filter(variable_level %in% "<65", stat_name == "p_cum") |>
+      dplyr::select(group1_level, stat) |>
+      deframe(),
+    table(ADSL$SEX[ADSL$AGEGR1 == "<65"]) |>
+      prop.table() |>
+      cumsum() |>
+      as.list()
+  )
+})
+
+test_that("ard_categorical() with cumulative counts messaging", {
+  # cumulative counts/percents only available when `denominator=c('column', 'row')`
+  expect_snapshot(
+    error = TRUE,
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      by = SEX,
+      statistic = everything() ~ c("n", "p", "n_cum", "p_cum"),
+      denominator = NULL
+    )
+  )
+})
