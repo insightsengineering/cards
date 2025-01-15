@@ -47,7 +47,7 @@
 #' The argument expects one of the following inputs:
 #' - a data frame. Any columns in the data frame that overlap with the `by`/`strata`
 #'   columns will be used to calculate the new `"N"`.
-#' - an integer. This single integer will be used as the new `"N"`
+#' - an integer. This single integer will be used as the new `"N"`.
 #' - a string: one of `"column"`, `"row"`, or `"cell"`. `"column"` is equivalent
 #'   to `denominator=NULL`. `"row"` gives 'row' percentages where `by`/`strata`
 #'   columns are the 'top' of a cross table, and the variables are the rows.

@@ -90,7 +90,7 @@ The argument expects one of the following inputs:
 \itemize{
 \item a data frame. Any columns in the data frame that overlap with the \code{by}/\code{strata}
 columns will be used to calculate the new \code{"N"}.
-\item an integer. This single integer will be used as the new \code{"N"}
+\item an integer. This single integer will be used as the new \code{"N"}.
 \item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}. \code{"column"} is equivalent
 to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
 columns are the 'top' of a cross table, and the variables are the rows.
