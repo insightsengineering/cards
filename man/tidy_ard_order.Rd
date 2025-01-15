@@ -21,7 +21,7 @@ an ARD data frame of class 'card'
 ARD functions for relocating columns and rows to the standard order.
 \itemize{
 \item \code{tidy_ard_column_order()} relocates columns of the ARD to the standard order.
-\item \code{tidy_ard_row_order()} orders rows of ARD according to variables, groups, and
+\item \code{tidy_ard_row_order()} orders rows of ARD according to groups and
 strata, while retaining the order of the input ARD.
 }
 }

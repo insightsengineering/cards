@@ -196,13 +196,13 @@ test_that("ard_categorical() with strata and by arguments", {
       dplyr::pull(stat) |>
       getElement(1),
     (ADAE_small |>
-      dplyr::filter(
-        AESOC %in% "EYE DISORDERS",
-        AELLT %in% "EYES SWOLLEN",
-        TRTA %in% "Placebo",
-        AESEV %in% "MILD"
-      ) |>
-      nrow()) /
+       dplyr::filter(
+         AESOC %in% "EYE DISORDERS",
+         AELLT %in% "EYES SWOLLEN",
+         TRTA %in% "Placebo",
+         AESEV %in% "MILD"
+       ) |>
+       nrow()) /
       (ADSL |> dplyr::filter(ARM %in% "Placebo") |> nrow())
   )
 
@@ -344,6 +344,7 @@ test_that("ard_categorical(denominator='cell') works", {
 })
 
 test_that("ard_categorical(denominator='row') works", {
+  withr::local_options(list(width = 120))
   expect_error(
     ard_crosstab_row <- ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "row"),
     NA
@@ -887,7 +888,6 @@ test_that("ard_categorical() errors with incomplete factor columns", {
   )
 })
 
-
 test_that("ard_categorical(denominator='column') with cumulative counts", {
   # check cumulative stats work without `by/strata`
   expect_silent(
@@ -1108,5 +1108,34 @@ test_that("ard_categorical() with cumulative counts messaging", {
       statistic = everything() ~ c("n", "p", "n_cum", "p_cum"),
       denominator = NULL
     )
+  )
+})
+
+test_that("ard_categorical() ordering for multiple strata", {
+  adae_mini <- ADAE |>
+    dplyr::select(USUBJID, TRTA, AESOC, AEDECOD) |>
+    dplyr::filter(AESOC %in% unique(AESOC)[1:4]) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(AEDECOD %in% unique(AEDECOD)[1:5]) |>
+    dplyr::ungroup()
+
+  res_actual <- ard_categorical(
+    adae_mini |> unique() |> dplyr::mutate(any_ae = TRUE),
+    strata = c(AESOC, AEDECOD),
+    by = TRTA,
+    variables = any_ae
+  ) |>
+    dplyr::select(group2_level, group3_level) |>
+    tidyr::unnest(everything()) |>
+    unique()
+
+
+  expect_equal(
+    res_actual,
+    adae_mini |>
+      dplyr::select(group2_level = AESOC, group3_level = AEDECOD) |>
+      unique() |>
+      dplyr::arrange(group2_level, group3_level),
+    ignore_attr = TRUE
   )
 })

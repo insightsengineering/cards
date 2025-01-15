@@ -23,6 +23,7 @@ test_that("ARD helpers messaging", {
 })
 
 test_that("bind_ard() .order argument works", {
+  withr::local_options(list(width = 120))
   withr::local_seed(1123)
   expect_snapshot(
     bind_ard(
