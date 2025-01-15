@@ -371,16 +371,23 @@ ard_categorical.data.frame <- function(data,
     x <- x |>
       dplyr::mutate(
         .by = any_of(c(by, strata)),
-        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]], cumsum(.data$...ard_n...)),
-        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]], cumsum(.data$...ard_p...))
+        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_n...)
+        ),
+        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_p...)
+        )
       )
-  }
-  else if (denominator %in% "row") {
+  } else if (denominator %in% "row") {
     x <- x |>
       dplyr::mutate(
         .by = any_of(variable),
-        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]], cumsum(.data$...ard_n...)),
-        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]], cumsum(.data$...ard_p...))
+        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_n...)
+        ),
+        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_p...)
+        )
       )
   }
 
