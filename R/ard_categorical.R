@@ -47,7 +47,7 @@
 #' The argument expects one of the following inputs:
 #' - a string: one of `"column"`, `"row"`, or `"cell"`.
 #'     - `"column"`, the default, returns percentages where the sum is equal to
-#'        one within the variable after the data frame as been subset with `by`/`strata`.
+#'        one within the variable after the data frame has been subset with `by`/`strata`.
 #'     - `"row"` gives 'row' percentages where `by`/`strata` columns are the 'top'
 #'        of a cross table, and the variables are the rows. This is well-defined
 #'        for a single `by` or `strata` variable, and care must be taken when there
