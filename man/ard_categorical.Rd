@@ -42,8 +42,8 @@ Arguments may be used in conjunction with one another.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p")}
-(or the RHS of a formula).}
+or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
+(on the RHS of a formula).}
 
 \item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
 Specify this argument to change the denominator,
@@ -86,7 +86,7 @@ The argument expects one of the following inputs:
 \item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}.
 \itemize{
 \item \code{"column"}, the default, returns percentages where the sum is equal to
-one within the variable after the data frame as been subset with \code{by}/\code{strata}.
+one within the variable after the data frame has been subset with \code{by}/\code{strata}.
 \item \code{"row"} gives 'row' percentages where \code{by}/\code{strata} columns are the 'top'
 of a cross table, and the variables are the rows. This is well-defined
 for a single \code{by} or \code{strata} variable, and care must be taken when there

@@ -38,8 +38,8 @@ e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p")}
-(or the RHS of a formula).}
+or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
+(on the RHS of a formula).}
 }
 \value{
 an ARD data frame of class 'card'
