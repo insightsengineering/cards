@@ -17,7 +17,7 @@
 #'   Arguments may be used in conjunction with one another.
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Default is `everything()`.
-#' @param denominator (`data.frame`, `integer`)\cr
+#' @param denominator (`data.frame`, `integer`, `string`)\cr
 #'   Specify this *optional* argument to change the denominator,
 #'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
 #' @param statistic ([`formula-list-selector`][syntax])\cr
@@ -42,7 +42,7 @@
 #' of the rates of various observed adverse events, you may need to update the
 #' denominator to the number of enrolled subjects.
 #'
-#' In such cases, use the `denominator` argument to specify a new definition
+#' In such cases, use the `denominator` argument is used to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
 #' The argument expects one of the following inputs:
 #' - a data frame. Any columns in the data frame that overlap with the `by`/`strata`
