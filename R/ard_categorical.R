@@ -350,7 +350,7 @@ ard_categorical.data.frame <- function(data,
 
 
 
-.add_cum_count_stats <- function(x, df_result_tabulation, variable, by, strata, denominator, tab_stats) {
+.add_cum_count_stats <- function(x, variable, by, strata, denominator, tab_stats) {
   # if no cumulative stats were requested, return the object
   if (!any(c("p_cum", "n_cum") %in% tab_stats[["tabulation"]])) {
     return(x)
