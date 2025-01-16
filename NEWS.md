@@ -2,6 +2,8 @@
 
 * Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
 
+* Added functions `rename_ard_groups_shift()` and `rename_ard_groups_reverse()` for renaming the grouping variables in the ARD. (#344)
+
 # cards 0.4.0
 
 ## New Features and Functions
