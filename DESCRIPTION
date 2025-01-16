@@ -32,7 +32,7 @@ Suggests:
     testthat (>= 3.2.0),
     withr (>= 3.0.0)
 Config/Needs/check: hms
-Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt,
+Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt, gt, fontawesome,
     insightsengineering/nesttemplate
 Config/testthat/edition: 3
 Config/testthat/parallel: true
