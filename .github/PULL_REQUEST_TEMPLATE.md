@@ -33,17 +33,17 @@ _Optional Reverse Dependency Checks_:
 - Check dev versions of `cardx`, `gtsummary`, and `tfrmt` which are in the `ddsjoberg` R Universe
 
   ```shell
-  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org'))"
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', n = parallel::detectCores() - 2L, repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org'))"
   ```
 
 - Check CRAN reverse dependencies but run tests skipped on CRAN
 
   ```shell
-  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', repos = 'https://cloud.r-project.org')"
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = TRUE)); checked::check_rev_deps(path = '.', n = parallel::detectCores() - 2, repos = 'https://cloud.r-project.org')"
   ```
 
 - Check CRAN reverse dependencies in a CRAN-like environment
 
   ```shell
-  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = FALSE), checked.check_build_args = '--as-cran'); checked::check_rev_deps(path = '.', repos = 'https://cloud.r-project.org')"
+  Rscript -e "options(checked.check_envvars = c(NOT_CRAN = FALSE), checked.check_build_args = '--as-cran'); checked::check_rev_deps(path = '.', n = parallel::detectCores() - 2, repos = 'https://cloud.r-project.org')"
   ```

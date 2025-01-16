@@ -32,14 +32,14 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{denominator}{(\code{data.frame}, \code{integer})\cr
-Specify this \emph{optional} argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
+\item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
+Specify this argument to change the denominator,
+e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p")}
-(or the RHS of a formula).}
+or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
+(on the RHS of a formula).}
 }
 \value{
 an ARD data frame of class 'card'
