@@ -64,6 +64,7 @@ reference:
       - as_nested_list
       - get_ard_statistics
       - replace_null_statistic
+      - rename_ard_groups
   - subtitle: "Table Shells"
     contents:
       - mock
