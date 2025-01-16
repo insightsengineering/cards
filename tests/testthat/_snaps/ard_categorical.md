@@ -184,3 +184,12 @@
       Error in `ard_categorical()`:
       ! Factors with NA levels are not allowed, which are present in column "am".
 
+# ard_categorical() with cumulative counts messaging
+
+    Code
+      ard_categorical(ADSL, variables = "AGEGR1", by = SEX, statistic = everything() ~
+        c("n", "p", "n_cum", "p_cum"), denominator = NULL)
+    Condition
+      Error in `ard_categorical()`:
+      ! The `denominator` argument must be one of "column" and "row" when cumulative statistics "n_cum" or "p_cum" are specified, which were requested for variable `AGEGR1`.
+
