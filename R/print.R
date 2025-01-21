@@ -149,7 +149,13 @@ format.card <- function(x, ...) {
     dplyr::mutate(
       across(
         .cols = c(all_ard_groups("levels"), all_ard_variables("levels")),
-        .fns = \(lvl) map(lvl, ~if(is.factor(.x)) as.character(.x) else .x)
+        .fns = \(lvl) {
+          map(lvl, \(.x) {
+            if(is.factor(.x)) as.character(.x)
+            else .x
+          }
+          )
+        }
       )
     )
 
