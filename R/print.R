@@ -20,11 +20,15 @@
 #'   not used
 #'
 #' @return an ARD data frame of class 'card' (invisibly)
-#' @export
+#' @name print
 #'
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
+NULL
+
+#' @rdname print
+#' @export
 print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
   set_cli_abort_call()
 
@@ -135,4 +139,20 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
     ))
   }
   invisible(x)
+}
+
+#' @rdname print
+#' @export
+format.card <- function(x, ...) {
+  # convert factors to character, so they don't appear as integers in the View()
+  x |>
+    dplyr::mutate(
+      across(
+        .cols = c(all_ard_groups("levels"), all_ard_variables("levels")),
+        .fns = \(lvl) map(lvl, ~if(is.factor(.x)) as.character(.x) else .x)
+      )
+    )
+
+  # finish default data frame formatting
+  format(as.data.frame(x))
 }
