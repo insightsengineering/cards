@@ -63,12 +63,12 @@ This isn't implemented in {cardx} (it is now but let's just pretend...).
 We can just pass the code to carry out the one-sample t-test and pass the output through `broom::tidy` to the `statistic` argument like so:
 
 ```{r tidy-stats-method}
-pharmaverseadam::adsl |> 
+pharmaverseadam::adsl |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cards::ard_continuous(
     variables = AGE,
     statistic = everything() ~ list(t_test = \(x) t.test(x) |> broom::tidy())
-  ) |> 
+  ) |>
   dplyr::mutate(context = "t_test_one_sample")
 ```
 
@@ -92,7 +92,7 @@ Remember we just need the statistic to be a named list, so we'll call our functi
 We also don't need to specify any arguments, in this case it will pick up that the one variable `x` corresponds to the data we are testing, in this case `AGE` for the individual treatment arms.
 
 ```{r wilcox-with-cards}
-pharmaverseadam::adsl |> 
+pharmaverseadam::adsl |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
@@ -106,20 +106,19 @@ We see here that we get an output of 8 rows, 2 rows (one for the method, and one
 Let's consider what happens when we encounter an error in our statistical method.
 
 ```{r wilcox-fn-error}
-wilcox_one_var_error <- function(x){
-  
+wilcox_one_var_error <- function(x) {
   stop("AN ERROR!")
-  
+
   wilcox_results <- wilcox.test(x,
-                                mu = median(x))
-  
+    mu = median(x)
+  )
+
   return(
     wilcox_results[c("method", "p.value")]
   )
-  
 }
 
-pharmaverseadam::adsl |> 
+pharmaverseadam::adsl |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
@@ -135,18 +134,20 @@ To handle this we can specify the expected results from our function, so that ev
 Here's an example of how to specify the expected output using `as_cards_fn`:
 
 ```{r as_cards_fn}
-wilcox_one_var_error <- as_cards_fn(function(x) {
-  stop("AN ERROR!")
-  
-  wilcox_results <- wilcox.test(x,
-                                mu = median(x))
-  
-  return(wilcox_results[c("method", "p.value")])
-  
-},
-stat_names = c("method", "p.value"))
+wilcox_one_var_error <- as_cards_fn(
+  function(x) {
+    stop("AN ERROR!")
 
-pharmaverseadam::adsl |> 
+    wilcox_results <- wilcox.test(x,
+      mu = median(x)
+    )
+
+    return(wilcox_results[c("method", "p.value")])
+  },
+  stat_names = c("method", "p.value")
+)
+
+pharmaverseadam::adsl |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
