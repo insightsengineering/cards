@@ -42,7 +42,7 @@
 #' of the rates of various observed adverse events, you may need to update the
 #' denominator to the number of enrolled subjects.
 #'
-#' In such cases, use the `denominator` argument is used to specify a new definition
+#' In such cases, the `denominator` argument is used to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
 #' The argument expects one of the following inputs:
 #' - a string: one of `"column"`, `"row"`, or `"cell"`.

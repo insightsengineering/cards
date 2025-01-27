@@ -84,7 +84,7 @@ as the denominator in this calculation. For example, in a calculation
 of the rates of various observed adverse events, you may need to update the
 denominator to the number of enrolled subjects.
 
-In such cases, use the \code{denominator} argument is used to specify a new definition
+In such cases, the \code{denominator} argument is used to specify a new definition
 of \code{"N"}, and subsequently \code{"p"}.
 The argument expects one of the following inputs:
 \itemize{
