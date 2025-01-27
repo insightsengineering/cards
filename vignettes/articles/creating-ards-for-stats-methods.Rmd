@@ -84,16 +84,7 @@ As an example, let's write a function which carries out a Wilcoxon signed rank t
 As an output we just want to record the method and the p-value.
 
 ```{r wilcox-function}
-wilcox_one_var <- function(x){
-  
-  wilcox_results <- wilcox.test(x,
-                                mu = median(x))
-  
-  return(
-    wilcox_results[c("method", "p.value")]
-  )
-  
-}
+wilcox_one_var <- \(x) wilcox.test(x)[c("method", "p.value")]
 ```
 
 Let's now use this function when creating an ARD with {cards}.
