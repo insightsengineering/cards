@@ -32,15 +32,9 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-<<<<<<< HEAD
-\item{denominator}{(\code{data.frame}, \code{integer}, \code{string})\cr
-Specify this \emph{optional} argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
-=======
 \item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
 Specify this argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
->>>>>>> main
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
