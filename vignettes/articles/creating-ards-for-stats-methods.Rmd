@@ -55,6 +55,8 @@ We'll first look at how `broom::tidy` can make this even easier for us, then wil
 The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble (which is just  fancy named list!).
 We can then pass the output of `broom::tidy` through to the `statistic` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
 
+Please note that we can only use the `broom::tidy` output directly, as we see in the below example, when the output from `broom::tidy` is a tibble with a single row.
+
 Let's extend our t-test example from above.
 This time we want to carry out a one-sample t-test.
 This isn't implemented in {cardx} (it is now but let's just pretend...).
