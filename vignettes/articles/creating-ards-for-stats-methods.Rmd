@@ -109,13 +109,7 @@ Let's consider what happens when we encounter an error in our statistical method
 wilcox_one_var_error <- function(x) {
   stop("AN ERROR!")
 
-  wilcox_results <- wilcox.test(x,
-    mu = median(x)
-  )
-
-  return(
-    wilcox_results[c("method", "p.value")]
-  )
+  return(wilcox.test(x)[c("method", "p.value")])
 }
 
 pharmaverseadam::adsl |>
@@ -138,11 +132,7 @@ wilcox_one_var_error <- as_cards_fn(
   function(x) {
     stop("AN ERROR!")
 
-    wilcox_results <- wilcox.test(x,
-      mu = median(x)
-    )
-
-    return(wilcox_results[c("method", "p.value")])
+    return(wilcox.test(x)[c("method", "p.value")])
   },
   stat_names = c("method", "p.value")
 )
