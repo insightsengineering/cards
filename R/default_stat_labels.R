@@ -21,6 +21,8 @@ default_stat_labels <- function() {
     n = "n",
     N = "N",
     p = "%",
+    n_cum = "Cumulative n",
+    p_cum = "Cumulative %",
     N_obs = "Vector Length",
     N_miss = "N Missing",
     N_nonmiss = "N Non-missing",
