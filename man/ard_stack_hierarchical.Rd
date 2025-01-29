@@ -17,7 +17,8 @@ ard_stack_hierarchical(
   over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
-  shuffle = FALSE
+  shuffle = FALSE,
+  sort = NULL
 )
 
 ard_stack_hierarchical_count(
@@ -30,7 +31,8 @@ ard_stack_hierarchical_count(
   over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
-  shuffle = FALSE
+  shuffle = FALSE,
+  sort = NULL
 )
 }
 \arguments{
@@ -91,6 +93,16 @@ logical indicating whether to include of \code{ard_total_n(denominator)} in the 
 \item{shuffle}{(scalar \code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
+
+\item{sort}{(\code{string} or \code{NULL})\cr
+Specifies sorting to perform. Values must be one of:
+\itemize{
+\item \code{"alphanumeric"} - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
+by \code{variable_label} text.
+\item \code{"descending"} - within each hierarchical section of the ARD, frequency sums are calculated for each row and rows
+are sorted in descending order by sum.
+Default is \code{NULL} (no sorting performed).
+}}
 }
 \value{
 an ARD data frame of class 'card'
@@ -172,6 +184,7 @@ ard_stack_hierarchical_count(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  sort = "alphanumeric"
 )
 }

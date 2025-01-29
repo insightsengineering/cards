@@ -99,6 +99,13 @@
 #' @param shuffle (scalar `logical`)\cr
 #'   logical indicating whether to perform `shuffle_ard()` on the final result.
 #'   Default is `FALSE`.
+#' @param sort (`string` or `NULL`)\cr
+#'   Specifies sorting to perform. Values must be one of:
+#'   - `"alphanumeric"` - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
+#'     by `variable_label` text.
+#'   - `"descending"` - within each hierarchical section of the ARD, frequency sums are calculated for each row and rows
+#'     are sorted in descending order by sum.
+#'   Default is `NULL` (no sorting performed).
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_stack_hierarchical
@@ -116,7 +123,8 @@
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   sort = "alphanumeric"
 #' )
 NULL
 
@@ -133,7 +141,8 @@ ard_stack_hierarchical <- function(data,
                                    over_variables = FALSE,
                                    attributes = FALSE,
                                    total_n = FALSE,
-                                   shuffle = FALSE) {
+                                   shuffle = FALSE,
+                                   sort = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -168,7 +177,8 @@ ard_stack_hierarchical <- function(data,
     over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
-    shuffle = shuffle
+    shuffle = shuffle,
+    sort = sort
   )
 }
 
@@ -183,7 +193,8 @@ ard_stack_hierarchical_count <- function(data,
                                          over_variables = FALSE,
                                          attributes = FALSE,
                                          total_n = FALSE,
-                                         shuffle = FALSE) {
+                                         shuffle = FALSE,
+                                         sort = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -209,7 +220,8 @@ ard_stack_hierarchical_count <- function(data,
     over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
-    shuffle = shuffle
+    shuffle = shuffle,
+    sort = sort
   )
 }
 
@@ -227,7 +239,8 @@ internal_stack_hierarchical <- function(data,
                                         attributes = FALSE,
                                         total_n = FALSE,
                                         shuffle = FALSE,
-                                        include_uni_by_tab = TRUE) {
+                                        include_uni_by_tab = TRUE,
+                                        sort = NULL) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -281,6 +294,13 @@ internal_stack_hierarchical <- function(data,
       )
     )
     total_n <- FALSE
+  }
+
+  if (!sort %in% c("descending", "alphanumeric")) {
+    cli::cli_abort(
+      "The {.arg sort} argument must be either {.val descending} or {.val alphanumeric}.",
+      call = get_cli_abort_call()
+    )
   }
 
   # drop missing values --------------------------------------------------------
@@ -455,6 +475,71 @@ internal_stack_hierarchical <- function(data,
     result <- shuffle_ard(result)
   }
 
+  if (!is.null(sort)) {
+    browser()
+
+    overall <- "..ard_hierarchical_overall.." %in% result$variable
+    outer_cols <- sapply(
+      result |> dplyr::select(cards::all_ard_groups("names")),
+      function(x) dplyr::last(unique(stats::na.omit(x)))
+    )
+    inner_col <- setdiff(
+      result$variable,
+      result |> dplyr::select(cards::all_ard_groups("names")) |> unlist() |> unique()
+    )
+
+    # keep summary rows at the top of each sub-section
+    rep_str <- " "
+
+    if (sort == "alphanumeric") {
+      # sort by label -------------------------------------------------------------------------------
+      sort_cols <- c(result |> dplyr::select(cards::all_ard_groups("levels")) |> names(), "inner_var", "label")
+
+      result <- result |>
+        dplyr::rowwise() |>
+        dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+        dplyr::ungroup() |>
+        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+        dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
+        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., paste0("^", rep_str, "$"), NA))) |>
+        dplyr::select(-"inner_var")
+    } else {
+      # get row sums --------------------------------------------------------------------------------
+      result <- .append_hierarchy_row_sums(result, .stat = "n")
+
+      # append outer hierarchy level sums in each row to sort at all levels -------------------------
+      for (g in names(outer_cols)) {
+        result <- result |> dplyr::group_by(across(all_of(c(g, paste0(g, "_level")))), .add = TRUE)
+        result <- result |>
+          dplyr::left_join(
+            result |>
+              dplyr::summarize(!!paste0("sum_", g) := dplyr::first(.data$sum_row)),
+            by = result |> dplyr::group_vars()
+          )
+      }
+
+      # summary rows remain at the top of each sub-section
+      result <- result |>
+        dplyr::ungroup() |>
+        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+        dplyr::rowwise() |>
+        dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+        dplyr::ungroup()
+
+      # sort by row sum -----------------------------------------------------------------------------
+      sort_cols <- c(rbind(
+        result |> dplyr::select(cards::all_ard_groups("names")) |> names(),
+        result |> dplyr::select(starts_with("sum_group")) |> names(),
+        result |> dplyr::select(cards::all_ard_groups("levels")) |> names()
+      ), "inner_var", "sum_row", "label")
+
+      result <- result |>
+        dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>
+        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., "^ $", NA))) |>
+        dplyr::select(-starts_with("sum_"), -"inner_var")
+    }
+  }
+
   # return final result --------------------------------------------------------
   result
 }
@@ -479,3 +564,93 @@ internal_stack_hierarchical <- function(data,
     )
   }
 }
+
+.append_hierarchy_row_sums <- function(x, .stat) {
+  cards <- x
+
+  if (!.stat %in% cards$stat_name) {
+    cli::cli_abort(
+      "The {.arg .stat} argument is {.val {(.stat)}} but this statistic is not present in {.arg x}. For all valid
+      statistic options see the {.val stat_name} column of {.code x}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  by_cols <- if (ncol(x |> dplyr::select(starts_with("stat_"))) > 1) c("group1", "group1_level") else NA
+  outer_cols <- sapply(
+    x |> dplyr::select(cards::all_ard_groups("names")),
+    function(x) dplyr::last(unique(stats::na.omit(x)))
+  )
+
+  # update logical variable_level entries from overall row to character
+  cards$variable_level[cards$variable == "..ard_hierarchical_overall.."] <- "OVERALL" |> as.list()
+  browser()
+
+  # extract row sums ------------------------------------------------------------------------------
+  cards <- cards |>
+    dplyr::filter(.data$stat_name == .stat, .data$variable %in% x$variable) |>
+    dplyr::group_by(across(c(cards::all_ard_groups(), cards::all_ard_variables(), -all_of(by_cols)))) |>
+    dplyr::summarise(sum_row = sum(unlist(.data$stat))) |>
+    dplyr::ungroup() |>
+    dplyr::rename(label = "variable_level") |>
+    tidyr::unnest(cols = everything())
+
+  # match cards names to x -------------------------------------------------------------
+  if (length(by_cols) > 2) {
+    names(cards)[grep("group", names(cards))] <- x |>
+      dplyr::select(cards::all_ard_groups()) |>
+      names()
+  }
+  cards[cards$variable == "..ard_hierarchical_overall..", 1] <- "..ard_hierarchical_overall.."
+
+  # fill in NAs to align cards layout with x -------------------------------------------
+  cards <- cards |>
+    dplyr::rowwise() |>
+    dplyr::mutate(across(
+      cards::all_ard_groups(),
+      ~ if (is.na(.x) && !grepl("_level", dplyr::cur_column()) && .data$variable == outer_cols[dplyr::cur_column()]) {
+        .data$variable
+      } else if (is.na(.x) && .data$variable %in% outer_cols[gsub("_level", "", dplyr::cur_column())]) {
+        .data$label
+      } else {
+        .x
+      }
+    ))
+
+  # for any variables not in include, calculate group sums ----------------------------------------
+  if (!all(outer_cols %in% cards$variable)) {
+    gp_vars <- outer_cols[outer_cols %in% setdiff(outer_cols, cards$variable)]
+    gp_cols <- names(gp_vars)
+
+    cli::cli_inform(
+      "Not all hierarchy variables present in the ARD were included in the {.arg include} argument.
+      These variables ({gp_vars}) do not have event rate data available so the total sum of the event
+      rates for this hierarchy section will be used instead. To use event rates for all sections of the ARD,
+      set {.code include = everything()} when creating your ARD via {.fun ard_stack_hierarchical}."
+    )
+
+    for (i in seq_along(gp_cols)) {
+      cards <- cards |>
+        dplyr::bind_rows(
+          cards |>
+            dplyr::filter(.data$variable != "..ard_hierarchical_overall..") |>
+            dplyr::group_by(across(c(gp_cols[1:i], paste0(gp_cols[1:i], "_level")))) |>
+            dplyr::summarize(sum_row = sum(.data$sum_row)) |>
+            dplyr::mutate(
+              variable = .data[[gp_cols[i]]],
+              label = .data[[paste0(gp_cols[i], "_level")]]
+            )
+        )
+    }
+  }
+
+  # append row sums to x ---------------------------------------------------------------
+  x <- x |>
+    dplyr::left_join(
+      cards,
+      by = c(cards |> dplyr::select(-"sum_row") |> names())
+    )
+
+  x
+}
+
