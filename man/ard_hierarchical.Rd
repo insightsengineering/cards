@@ -47,12 +47,20 @@ specified here appear in results. Default is \code{dplyr::group_vars(data)}.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p")}
-(or the RHS of a formula).}
+or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
+(on the RHS of a formula).}
 
 \item{denominator}{(\code{data.frame}, \code{integer})\cr
-Specify this \emph{optional} argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
+used to define the denominator and enhance the output.
+The argument is required for \code{ard_hierarchical()} and optional
+for \code{ard_hierarchical_count()}.
+\itemize{
+\item the univariate tabulations of the \code{by} variables are calculated with \code{denominator},
+when a data frame is passed, e.g. tabulation of the treatment assignment
+counts that may appear in the header of a table.
+\item the \code{denominator} argument must be specified when \code{id} is used to
+calculate the event rates.
+}}
 
 \item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -86,36 +94,6 @@ variables, e.g. \code{variables=c(AESOC, AEDECOD)} summarizes \code{AEDECOD} nes
 in \code{AESOC}, and also summarizes the counts of \code{AESOC}.
 }
 }
-\section{Denominators}{
-
-By default, the \code{ard_categorical()} function returns the statistics \code{"n"}, \code{"N"}, and
-\code{"p"}, where little \code{"n"} are the counts for the variable levels, and big \code{"N"} is
-the number of non-missing observations. The default calculation for the
-percentage is merely \code{p = n/N}.
-
-However, it is sometimes necessary to provide a different \code{"N"} to use
-as the denominator in this calculation. For example, in a calculation
-of the rates of various observed adverse events, you may need to update the
-denominator to the number of enrolled subjects.
-
-In such cases, use the \code{denominator} argument to specify a new definition
-of \code{"N"}, and subsequently \code{"p"}.
-The argument expects one of the following inputs:
-\itemize{
-\item a data frame. Any columns in the data frame that overlap with the \code{by}/\code{strata}
-columns will be used to calculate the new \code{"N"}.
-\item an integer. This single integer will be used as the new \code{"N"}
-\item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}. \code{"column"} is equivalent
-to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
-columns are the 'top' of a cross table, and the variables are the rows.
-\code{"cell"} gives percentages where the denominator is the number of non-missing
-rows in the source data frame.
-\item a structured data frame. The data frame will include columns from \code{by}/\code{strata}.
-The last column must be named \code{"...ard_N..."}. The integers in this column will
-be used as the updated \code{"N"} in the calculations.
-}
-}
-
 \examples{
 ard_hierarchical(
   data = ADAE |>
