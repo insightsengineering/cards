@@ -20,7 +20,7 @@ a numeric vector
 Rounds the values in its first argument to the specified number of
 decimal places (default 0). Importantly, \code{round5()} \strong{does not} use Base R's
 "round to even" default. Standard rounding methods are implemented, for example,
-\code{round5(0.5) = 1}.
+\code{cards::round5(0.5) = 1}, whereas \code{base::round(0.5) = 0}.
 }
 \details{
 Function inspired by \code{janitor::round_half_up()}.
