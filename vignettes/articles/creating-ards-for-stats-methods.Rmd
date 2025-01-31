@@ -35,7 +35,7 @@ As an example, let's consider a simple t-test to compare the mean age (variable 
 In {cardx} we have the function `ard_stats_t_test`
 
 ```{r cardx}
-pharmaverseadam::adsl |>
+cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cardx::ard_stats_t_test(by = ARM, variables = AGE)
 ```
@@ -63,7 +63,7 @@ This isn't implemented in {cardx} (it is now but let's just pretend...).
 We can just pass the code to carry out the one-sample t-test and pass the output through `broom::tidy` to the `statistic` argument like so:
 
 ```{r tidy-stats-method}
-pharmaverseadam::adsl |>
+cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cards::ard_continuous(
     variables = AGE,
@@ -92,7 +92,7 @@ Remember we just need the statistic to be a named list, so we'll call our functi
 We also don't need to specify any arguments, in this case it will pick up that the one variable `x` corresponds to the data we are testing, in this case `AGE` for the individual treatment arms.
 
 ```{r wilcox-with-cards}
-pharmaverseadam::adsl |>
+cards::ADSL |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
@@ -112,7 +112,7 @@ wilcox_one_var_error <- function(x) {
   return(wilcox.test(x)[c("method", "p.value")])
 }
 
-pharmaverseadam::adsl |>
+cards::ADSL |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
@@ -128,7 +128,7 @@ To handle this we can specify the expected results from our function, so that ev
 Here's an example of how to specify the expected output using `as_cards_fn`:
 
 ```{r as_cards_fn}
-wilcox_one_var_error <- as_cards_fn(
+wilcox_one_var_error <- cards::as_cards_fn(
   function(x) {
     stop("AN ERROR!")
 
@@ -137,7 +137,7 @@ wilcox_one_var_error <- as_cards_fn(
   stat_names = c("method", "p.value")
 )
 
-pharmaverseadam::adsl |>
+cards::ADSL |>
   cards::ard_continuous(
     variables = AGE,
     by = ARM,
