@@ -90,7 +90,7 @@ dplyr::tribble(
   gt::fmt_url(
     columns = url_slides,
     rows = !is.na(url_slides),
-    label = fontawesome::fa("scroll", fill = "#808080")
+    label = fontawesome::fa("display", fill = "#808080")
   ) |>
   gt::fmt_url(
     columns = url_video,
