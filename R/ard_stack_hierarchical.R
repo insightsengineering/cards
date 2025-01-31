@@ -357,7 +357,8 @@ internal_stack_hierarchical <- function(data,
           by = by,
           denominator = denominator,
           id = id,
-          statistic = statistic
+          statistic = statistic,
+          sort = sort
         ) |>
           list()
       )
@@ -476,67 +477,189 @@ internal_stack_hierarchical <- function(data,
   }
 
   if (!is.null(sort)) {
-    browser()
-
-    overall <- "..ard_hierarchical_overall.." %in% result$variable
+    by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
     outer_cols <- sapply(
-      result |> dplyr::select(cards::all_ard_groups("names")),
+      result |> select(cards::all_ard_groups("names"), -by_cols),
       function(x) dplyr::last(unique(stats::na.omit(x)))
     )
-    inner_col <- setdiff(
-      result$variable,
-      result |> dplyr::select(cards::all_ard_groups("names")) |> unlist() |> unique()
-    )
 
-    # keep summary rows at the top of each sub-section
-    rep_str <- " "
+    if (sort == "descending") {
+      # result <- result |>
+      #   dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., " "))) |>
+      #   dplyr::rowwise() |>
+      #   dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+      #   dplyr::ungroup()
 
-    if (sort == "alphanumeric") {
-      # sort by label -------------------------------------------------------------------------------
-      sort_cols <- c(result |> dplyr::select(cards::all_ard_groups("levels")) |> names(), "inner_var", "label")
+      # result <- result |>
+      #   dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
 
-      result <- result |>
-        dplyr::rowwise() |>
-        dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
-        dplyr::ungroup() |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
-        dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., paste0("^", rep_str, "$"), NA))) |>
-        dplyr::select(-"inner_var")
-    } else {
-      # get row sums --------------------------------------------------------------------------------
-      result <- .append_hierarchy_row_sums(result, .stat = "n")
+      overall <- "..ard_hierarchical_overall.." %in% result$variable
+      outer_cols <- sapply(
+        result |> select(cards::all_ard_groups("names"), -by_cols),
+        function(x) dplyr::last(unique(stats::na.omit(x)))
+      )
+      inner_col <- setdiff(
+        result$variable,
+        result |> select(cards::all_ard_groups("names")) |> unlist() |> unique()
+      )
 
+      # keep summary rows at the top of each sub-section
+      rep_str <- " "
+
+      if (sort == "alphanumeric") {
+        # sort by label -------------------------------------------------------------------------------
+        sort_cols <- c(result |> select(cards::all_ard_groups("levels")) |> names(), "inner_var", "label")
+
+        result <- result |>
+          dplyr::rowwise() |>
+          dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+          dplyr::ungroup() |>
+          dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+          dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
+          dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., paste0("^", rep_str, "$"), NA))) |>
+          select(-"inner_var")
+      } else {
+        # get row sums --------------------------------------------------------------------------------
+        # result <- .append_hierarchy_row_sums(result, .stat = "n")
+        browser()
+#
+#         # append outer hierarchy level sums in each row to sort at all levels -------------------------
+#         for (g in names(outer_cols)) {
+#           result <- result |> dplyr::group_by(across(all_of(c(g, paste0(g, "_level")))), .add = TRUE)
+#           browser()
+#           result <- result |>
+#             dplyr::left_join(
+#               result |>
+#                 dplyr::summarize(!!paste0("sum_", g) := dplyr::sum(.data$sum_row)),
+#               by = result |> dplyr::group_vars()
+#             )
+#         }
+#
+#         # summary rows remain at the top of each sub-section
+#         result <- result |>
+#           dplyr::ungroup() |>
+#           dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ tidyr::replace_na(., rep_str))) |>
+#           dplyr::rowwise() |>
+#           dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+#           dplyr::ungroup()
+#
+#         # sort by row sum -----------------------------------------------------------------------------
+#         sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
+#           result |> select(cards::all_ard_groups("names"), -by_cols) |> names(),
+#           result |> select(starts_with("sum_group")) |> names(),
+#           result |> select(cards::all_ard_groups("levels"), -by_cols) |> names()
+#         ), "inner_var", "sum_row", "variable_level")
+#
+#         result <- result |>
+#           dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>
+#           dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., "^ $", NA))) |>
+#           select(-starts_with("sum_"), -"inner_var")
+#       }
       # append outer hierarchy level sums in each row to sort at all levels -------------------------
       for (g in names(outer_cols)) {
-        result <- result |> dplyr::group_by(across(all_of(c(g, paste0(g, "_level")))), .add = TRUE)
+        g_lvl <- paste0(g, "_level")
         result <- result |>
+          # tidyr::unnest(all_of(c(!!g, !!g_lvl))) |>
+          # dplyr::mutate(across(c(!!g, !!g_lvl), .fns = ~ replace_na(., " "))) |>
+          dplyr::group_by(across(all_of(c(g, g_lvl))), .add = TRUE)
+        gps <- result |> dplyr::group_vars()
+        result <- result |>
+          # dplyr::mutate(across(g_lvl, .fn = ~ tidyr::replace_na(., " "))) |>
           dplyr::left_join(
             result |>
-              dplyr::summarize(!!paste0("sum_", g) := dplyr::first(.data$sum_row)),
-            by = result |> dplyr::group_vars()
-          )
+              ungroup() |>
+              # select(-by_cols) |>
+              filter(variable == outer_cols[[g]]) |>
+              select(gps, -by_cols, -g, -g_lvl, all_ard_variables(), sum_row) |>
+              rename(
+                !!g := variable,
+                !!g_lvl := variable_level,
+                !!paste0("sum_", g) := sum_row
+              ) |>
+              distinct(),
+            # result |>
+            #   dplyr::summarize(!!paste0("sum_", g) := sum(.data$sum_row)),
+            by = gps
+          ) |>
+          mutate(across(starts_with("sum_group"), .fns = ~ coalesce(., sum_row))) #|>
       }
-
-      # summary rows remain at the top of each sub-section
       result <- result |>
-        dplyr::ungroup() |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
-        dplyr::rowwise() |>
-        dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
-        dplyr::ungroup()
+        ungroup() #|>
+        # mutate(across(starts_with("sum_group"), .fns = ~ coalesce(., sum_row))) #|>
+        # mutate(across(all_ard_groups("names"), .fns = ~ coalesce(., sum_row)))
 
-      # sort by row sum -----------------------------------------------------------------------------
-      sort_cols <- c(rbind(
-        result |> dplyr::select(cards::all_ard_groups("names")) |> names(),
-        result |> dplyr::select(starts_with("sum_group")) |> names(),
-        result |> dplyr::select(cards::all_ard_groups("levels")) |> names()
-      ), "inner_var", "sum_row", "label")
+      sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
+        result |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
+        result |> dplyr::select(all_ard_groups("names"), -by_cols) |> names(),
+        result |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
+      ), "sum_row", "variable_level")
 
       result <- result |>
-        dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., "^ $", NA))) |>
-        dplyr::select(-starts_with("sum_"), -"inner_var")
+        dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ tidyr::replace_na(., " "))) |>
+        dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>#str_replace(., "^ $", NA))) |>
+        select(-starts_with("sum_"))
+    # }
+
+    # overall <- "..ard_hierarchical_overall.." %in% result$variable
+    # outer_cols <- sapply(
+    #   result |> dplyr::select(cards::all_ard_groups("names")),
+    #   function(x) dplyr::last(unique(stats::na.omit(x)))
+    # )
+    # inner_col <- setdiff(
+    #   result$variable,
+    #   result |> dplyr::select(cards::all_ard_groups("names")) |> unlist() |> unique()
+    # )
+    #
+    # # keep summary rows at the top of each sub-section
+    # rep_str <- " "
+    #
+    # if (sort == "alphanumeric") {
+    #   # sort by label -------------------------------------------------------------------------------
+    #   sort_cols <- c(result |> dplyr::select(cards::all_ard_groups("levels")) |> names(), "inner_var", "label")
+    #
+    #   result <- result |>
+    #     dplyr::rowwise() |>
+    #     dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+    #     dplyr::ungroup() |>
+    #     dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+    #     dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
+    #     dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., paste0("^", rep_str, "$"), NA))) |>
+    #     dplyr::select(-"inner_var")
+    # } else {
+    #   # get row sums --------------------------------------------------------------------------------
+    #   result <- .append_hierarchy_row_sums(result, .stat = "n")
+    #
+    #   # append outer hierarchy level sums in each row to sort at all levels -------------------------
+    #   for (g in names(outer_cols)) {
+    #     result <- result |> dplyr::group_by(across(all_of(c(g, paste0(g, "_level")))), .add = TRUE)
+    #     result <- result |>
+    #       dplyr::left_join(
+    #         result |>
+    #           dplyr::summarize(!!paste0("sum_", g) := dplyr::first(.data$sum_row)),
+    #         by = result |> dplyr::group_vars()
+    #       )
+    #   }
+    #
+    #   # summary rows remain at the top of each sub-section
+    #   result <- result |>
+    #     dplyr::ungroup() |>
+    #     dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+    #     dplyr::rowwise() |>
+    #     dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
+    #     dplyr::ungroup()
+    #
+    #   # sort by row sum -----------------------------------------------------------------------------
+    #   sort_cols <- c(rbind(
+    #     result |> dplyr::select(cards::all_ard_groups("names")) |> names(),
+    #     result |> dplyr::select(starts_with("sum_group")) |> names(),
+    #     result |> dplyr::select(cards::all_ard_groups("levels")) |> names()
+    #   ), "inner_var", "sum_row", "label")
+    #
+    #   result <- result |>
+    #     dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>
+    #     dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., "^ $", NA))) |>
+    #     dplyr::select(-starts_with("sum_"), -"inner_var")
+    }
     }
   }
 
@@ -545,12 +668,13 @@ internal_stack_hierarchical <- function(data,
 }
 
 # this function calculates either the counts or the rates of the events
-.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic) {
+.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic, sort) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
       variables = all_of(variables),
-      by = all_of(by)
+      by = all_of(by),
+      sort = sort
     )
   } else {
     ard_hierarchical(
@@ -560,97 +684,70 @@ internal_stack_hierarchical <- function(data,
       by = all_of(by),
       denominator = denominator,
       id = all_of(id),
-      statistic = statistic
+      statistic = statistic,
+      sort = sort
     )
   }
 }
 
-.append_hierarchy_row_sums <- function(x, .stat) {
-  cards <- x
-
-  if (!.stat %in% cards$stat_name) {
-    cli::cli_abort(
-      "The {.arg .stat} argument is {.val {(.stat)}} but this statistic is not present in {.arg x}. For all valid
-      statistic options see the {.val stat_name} column of {.code x}.",
-      call = get_cli_abort_call()
-    )
-  }
-
-  by_cols <- if (ncol(x |> dplyr::select(starts_with("stat_"))) > 1) c("group1", "group1_level") else NA
-  outer_cols <- sapply(
-    x |> dplyr::select(cards::all_ard_groups("names")),
-    function(x) dplyr::last(unique(stats::na.omit(x)))
-  )
-
-  # update logical variable_level entries from overall row to character
-  cards$variable_level[cards$variable == "..ard_hierarchical_overall.."] <- "OVERALL" |> as.list()
-  browser()
-
-  # extract row sums ------------------------------------------------------------------------------
-  cards <- cards |>
-    dplyr::filter(.data$stat_name == .stat, .data$variable %in% x$variable) |>
-    dplyr::group_by(across(c(cards::all_ard_groups(), cards::all_ard_variables(), -all_of(by_cols)))) |>
-    dplyr::summarise(sum_row = sum(unlist(.data$stat))) |>
-    dplyr::ungroup() |>
-    dplyr::rename(label = "variable_level") |>
-    tidyr::unnest(cols = everything())
-
-  # match cards names to x -------------------------------------------------------------
-  if (length(by_cols) > 2) {
-    names(cards)[grep("group", names(cards))] <- x |>
-      dplyr::select(cards::all_ard_groups()) |>
-      names()
-  }
-  cards[cards$variable == "..ard_hierarchical_overall..", 1] <- "..ard_hierarchical_overall.."
-
-  # fill in NAs to align cards layout with x -------------------------------------------
-  cards <- cards |>
-    dplyr::rowwise() |>
-    dplyr::mutate(across(
-      cards::all_ard_groups(),
-      ~ if (is.na(.x) && !grepl("_level", dplyr::cur_column()) && .data$variable == outer_cols[dplyr::cur_column()]) {
-        .data$variable
-      } else if (is.na(.x) && .data$variable %in% outer_cols[gsub("_level", "", dplyr::cur_column())]) {
-        .data$label
-      } else {
-        .x
-      }
-    ))
-
-  # for any variables not in include, calculate group sums ----------------------------------------
-  if (!all(outer_cols %in% cards$variable)) {
-    gp_vars <- outer_cols[outer_cols %in% setdiff(outer_cols, cards$variable)]
-    gp_cols <- names(gp_vars)
-
-    cli::cli_inform(
-      "Not all hierarchy variables present in the ARD were included in the {.arg include} argument.
-      These variables ({gp_vars}) do not have event rate data available so the total sum of the event
-      rates for this hierarchy section will be used instead. To use event rates for all sections of the ARD,
-      set {.code include = everything()} when creating your ARD via {.fun ard_stack_hierarchical}."
-    )
-
-    for (i in seq_along(gp_cols)) {
-      cards <- cards |>
-        dplyr::bind_rows(
-          cards |>
-            dplyr::filter(.data$variable != "..ard_hierarchical_overall..") |>
-            dplyr::group_by(across(c(gp_cols[1:i], paste0(gp_cols[1:i], "_level")))) |>
-            dplyr::summarize(sum_row = sum(.data$sum_row)) |>
-            dplyr::mutate(
-              variable = .data[[gp_cols[i]]],
-              label = .data[[paste0(gp_cols[i], "_level")]]
-            )
-        )
-    }
-  }
-
-  # append row sums to x ---------------------------------------------------------------
-  x <- x |>
-    dplyr::left_join(
-      cards,
-      by = c(cards |> dplyr::select(-"sum_row") |> names())
-    )
-
-  x
-}
-
+# .append_hierarchy_row_sums <- function(x, .stat) {
+#   cards <- x
+#
+#   if (!.stat %in% cards$stat_name) {
+#     cli::cli_abort(
+#       "The {.arg .stat} argument is {.val {(.stat)}} but this statistic is not present in {.arg x}. For all valid
+#       statistic options see the {.val stat_name} column of {.code x}.",
+#       call = get_cli_abort_call()
+#     )
+#   }
+#
+#   by_cols <- if (ncol(x |> dplyr::select(starts_with("stat_"))) > 1) c("group1", "group1_level") else NA
+#   outer_cols <- sapply(
+#     x |> dplyr::select(cards::all_ard_groups("names")),
+#     function(x) dplyr::last(unique(stats::na.omit(x)))
+#   )
+#
+#   # update logical variable_level entries from overall row to character
+#   cards$variable_level[cards$variable == "..ard_hierarchical_overall.."] <- "OVERALL" |> as.list()
+#   browser()
+#
+#   # extract row sums ------------------------------------------------------------------------------
+#   cards <- cards |>
+#     dplyr::filter(.data$stat_name == .stat, .data$variable %in% x$variable) |>
+#     dplyr::group_by(across(c(cards::all_ard_groups(), cards::all_ard_variables(), -all_of(by_cols)))) |>
+#     dplyr::summarise(sum_row = sum(unlist(.data$stat))) |>
+#     dplyr::ungroup() |>
+#     tidyr::unnest(cols = everything())
+#
+#   # match cards names to x -------------------------------------------------------------
+#   if (length(by_cols) > 2) {
+#     names(cards)[grep("group", names(cards))] <- x |>
+#       dplyr::select(cards::all_ard_groups()) |>
+#       names()
+#   }
+#   cards[cards$variable == "..ard_hierarchical_overall..", 1] <- "..ard_hierarchical_overall.."
+#
+#   # fill in NAs to align cards layout with x -------------------------------------------
+#   cards <- cards |>
+#     dplyr::rowwise() |>
+#     dplyr::mutate(across(
+#       cards::all_ard_groups(),
+#       ~ if (is.na(.x) && !grepl("_level", dplyr::cur_column()) && .data$variable == outer_cols[dplyr::cur_column()]) {
+#         .data$variable
+#       } else if (is.na(.x) && .data$variable %in% outer_cols[gsub("_level", "", dplyr::cur_column())]) {
+#         .data$variable_level
+#       } else {
+#         .x
+#       }
+#     ))
+#
+#   # append row sums to x ---------------------------------------------------------------
+#   x <- x |>
+#     dplyr::left_join(
+#       cards,
+#       by = c(cards |> dplyr::select(-"sum_row") |> names())
+#     )
+#
+#   x
+# }
+#

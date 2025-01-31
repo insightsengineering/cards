@@ -137,6 +137,7 @@ ard_hierarchical_count.data.frame <- function(data,
                                               by = dplyr::group_vars(data),
                                               fmt_fn = NULL,
                                               stat_label = everything() ~ default_stat_labels(),
+                                              sort = NULL,
                                               ...) {
   set_cli_abort_call()
   check_dots_used()
@@ -156,7 +157,7 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  ard_categorical(
+  df_result <- ard_categorical(
     data = data,
     variables = "...ard_dummy_for_counting...",
     by = all_of(by),
@@ -168,6 +169,38 @@ ard_hierarchical_count.data.frame <- function(data,
     .rename_last_group_as_variable() |>
     dplyr::mutate(context = "hierarchical_count") |>
     as_card()
+
+  if (!is.null(sort) && sort == "descending") {
+    by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
+    df_sums <- df_result |>
+      dplyr::filter(.data$stat_name == "n") |>
+      dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols))))
+    gp_vars <- df_sums |> dplyr::group_vars()
+    cur_gp <- paste0("sum_group", length(by) + length(variables))
+    df_sums <- df_sums |>
+      dplyr::summarise(
+        sum_row = sum(unlist(.data$stat))#,
+        # !!cur_gp := sum(unlist(.data$stat))
+      ) #|>
+      # dplyr::summarize(!!cur_gp := dplyr::first(.data$sum_row)) |>
+      # dplyr::ungroup() |>
+      # dplyr::rename(label = "variable_level") |>
+      # tidyr::unnest(cols = everything())
+
+    df_result <- df_result |>
+      dplyr::left_join(
+        df_sums,
+        # result |>
+          # dplyr::summarize(!!paste0("sum_", g) := dplyr::first(.data$sum_row)),
+        by = gp_vars
+      )
+
+    # df_result <- df_result |>
+      # dplyr::group_by(across(c(all_ard_groups("levels"), all_ard_variables("levels"), -dplyr::all_of(by_cols)))) |>
+      # dplyr::summarize(!!paste0("sum_", g) := dplyr::first(.data$sum_row))
+  }
+
+  df_result
 }
 
 #' Rename Last Group to Variable
