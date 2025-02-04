@@ -296,9 +296,19 @@ internal_stack_hierarchical <- function(data,
     total_n <- FALSE
   }
 
-  if (!sort %in% c("descending", "alphanumeric")) {
+  if (!is.null(sort) && !sort %in% c("descending", "alphanumeric")) {
     cli::cli_abort(
       "The {.arg sort} argument must be either {.val descending} or {.val alphanumeric}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  if (sort == "descending" && FALSE) {#!"n" %in% statistic) {
+    cli::cli_abort(
+      paste(
+        "If {.code sort='descending'} then {.val n} must be included in {.arg statistic} for all variables in order to",
+        "calculate the frequency sums used for sorting.",
+      ),
       call = get_cli_abort_call()
     )
   }
@@ -471,40 +481,57 @@ internal_stack_hierarchical <- function(data,
     cards::tidy_ard_column_order() |>
     cards::tidy_ard_row_order()
 
-  # shuffle if requested -------------------------------------------------------
-  if (isTRUE(shuffle)) {
-    result <- shuffle_ard(result)
-  }
-
+  # sort results if requested --------------------------------------------------
   if (!is.null(sort)) {
     by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
     outer_cols <- sapply(
-      result |> select(cards::all_ard_groups("names"), -by_cols),
+      result |> dplyr::select(cards::all_ard_groups("names"), -by_cols),
       function(x) dplyr::last(unique(stats::na.omit(x)))
     )
 
     if (sort == "alphanumeric") {
-      inner_col <- setdiff(
-        result$variable,
-        result |> select(cards::all_ard_groups("names")) |> unlist() |> unique()
+      # sort_cols <- c(paste0("sort_", result |> dplyr::select(all_ard_groups(), -by_cols) |> names()), "variable_level")
+      sort_cols <- c(
+        result |> dplyr::select(all_ard_groups(), -by_cols[c(FALSE, TRUE)]) |> names(),
+        "variable", "variable_level"
       )
 
-      # keep summary rows at the top of each sub-section
-      rep_str <- " "
-
-      # sort by label -------------------------------------------------------------------------------
-      sort_cols <- c(result |> select(cards::all_ard_groups("levels")) |> names(), "inner_var", "label")
-
-      result <- result |>
-        dplyr::rowwise() |>
-        dplyr::mutate(inner_var = if (!.data$variable %in% inner_col) rep_str else .data$variable) |>
-        dplyr::ungroup() |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ tidyr::replace_na(., rep_str))) |>
+      # sort alphanumerically --------------------------------------------------
+      idx_sorted <- result |>
+        dplyr::mutate(idx = dplyr::row_number()) |>
+        dplyr::mutate(variable = fct_inorder(.data$variable)) |>
+        dplyr::group_by(.data$variable) |>
+        dplyr::group_split() |>
+        map(function(dat) {
+          cur_var <- dat$variable |> unique() |> as.character()
+          grp_match <- names(which(outer_cols == cur_var))
+          if (length(grp_match) > 0) {
+            dat |>
+              dplyr::mutate(
+                !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
+                !!paste0(grp_match, "_level") := ifelse(is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]),
+                variable = " "
+              )
+          } else {
+            dat
+          }
+        }) |>
+        dplyr::bind_rows() |>
+        dplyr::mutate(variable = as.character(.data$variable)) |>
+        dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., " "))) |>
         dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
-        dplyr::mutate(across(cards::all_ard_groups(), .fns = ~ str_replace(., paste0("^", rep_str, "$"), NA))) |>
-        select(-"inner_var")
+        dplyr::pull(idx)
+
+      result <- result[idx_sorted, ]
     } else {
-      # append outer hierarchy level sums in each row to sort at all levels -------------------------
+      # append row sums (sums across all `by` variables) to each row of ARD
+      browser()
+      result <- result |>
+        dplyr::filter(.data$stat_name == "n", !variable %in% by) |>
+        dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+        dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat)))
+
+      # append outer hierarchy level sums in each row to sort at all levels
       for (g in names(outer_cols)) {
         g_lvl <- paste0(g, "_level")
         result <- result |>
@@ -514,21 +541,21 @@ internal_stack_hierarchical <- function(data,
         result <- result |>
           dplyr::left_join(
             result |>
-              ungroup() |>
-              filter(variable == outer_cols[[g]]) |>
-              select(gps, -by_cols, -g, -g_lvl, all_ard_variables(), sum_row) |>
-              rename(
+              dplyr::ungroup() |>
+              dplyr::filter(variable == outer_cols[[g]]) |>
+              dplyr::select(gps, -by_cols, -g, -g_lvl, all_ard_variables(), sum_row) |>
+              dplyr::rename(
                 !!g := variable,
                 !!g_lvl := variable_level,
                 !!paste0("sum_", g) := sum_row
               ) |>
-              distinct(),
+              dplyr::distinct(),
             by = gps
           ) |>
-          mutate(across(starts_with("sum_group"), .fns = ~ coalesce(., sum_row)))
+          dplyr::mutate(across(starts_with("sum_group"), .fns = ~ dplyr::coalesce(., sum_row)))
       }
 
-      result <- result |> ungroup()
+      result <- dplyr::ungroup(result)
 
       sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
         result |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
@@ -536,16 +563,22 @@ internal_stack_hierarchical <- function(data,
         result |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
       ), "sum_row", "variable_level")
 
+      # sort by descending row sum ---------------------------------------------
       result <- result |>
         dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ tidyr::replace_na(., " "))) |>
-        dplyr::arrange(across(all_of(sort_cols), ~ if (is.numeric(.x)) dplyr::desc(.x) else .x)) |>
+        dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
         dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ str_replace(., "^ $", NA))) |>
-        select(-starts_with("sum_"))
+        dplyr::select(-starts_with("sum_"))
     }
   }
 
+  # shuffle if requested -------------------------------------------------------
+  if (isTRUE(shuffle)) {
+    result <- shuffle_ard(result)
+  }
+
   # return final result --------------------------------------------------------
-  result
+  result |> as_card()
 }
 
 # this function calculates either the counts or the rates of the events
