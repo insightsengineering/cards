@@ -489,87 +489,92 @@ internal_stack_hierarchical <- function(data,
       function(x) dplyr::last(unique(stats::na.omit(x)))
     )
 
+    # reformat data to sort on grouping columns
+    result_sort <- result |>
+      dplyr::mutate(idx = dplyr::row_number()) |>
+      dplyr::mutate(variable = fct_inorder(.data$variable)) |>
+      dplyr::group_by(.data$variable) |>
+      dplyr::group_split() |>
+      # propagate variable/variable_level to their relevant grouping columns
+      map(function(dat) {
+        cur_var <- dat$variable |> unique() |> as.character()
+        grp_match <- names(which(outer_cols == cur_var))
+        if (length(grp_match) > 0) {
+          dat |>
+            dplyr::mutate(
+              !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
+              !!paste0(grp_match, "_level") := ifelse(
+                is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
+              ),
+              variable = if (sort == "alphanumeric") " " else .data$variable
+            )
+        } else {
+          dat
+        }
+      }) |>
+      dplyr::bind_rows() |>
+      dplyr::mutate(variable = as.character(.data$variable)) |>
+      # summary rows remain at the top of each sub-section
+      dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., " ")))
+
     if (sort == "alphanumeric") {
-      # sort_cols <- c(paste0("sort_", result |> dplyr::select(all_ard_groups(), -by_cols) |> names()), "variable_level")
       sort_cols <- c(
         result |> dplyr::select(all_ard_groups(), -by_cols[c(FALSE, TRUE)]) |> names(),
         "variable", "variable_level"
       )
 
-      # sort alphanumerically --------------------------------------------------
-      idx_sorted <- result |>
-        dplyr::mutate(idx = dplyr::row_number()) |>
-        dplyr::mutate(variable = fct_inorder(.data$variable)) |>
-        dplyr::group_by(.data$variable) |>
-        dplyr::group_split() |>
-        map(function(dat) {
-          cur_var <- dat$variable |> unique() |> as.character()
-          grp_match <- names(which(outer_cols == cur_var))
-          if (length(grp_match) > 0) {
-            dat |>
-              dplyr::mutate(
-                !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
-                !!paste0(grp_match, "_level") := ifelse(is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]),
-                variable = " "
-              )
-          } else {
-            dat
-          }
-        }) |>
-        dplyr::bind_rows() |>
-        dplyr::mutate(variable = as.character(.data$variable)) |>
-        dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., " "))) |>
+      # sort alphanumerically and pull index order
+      idx_sorted <- result_sort |>
         dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
         dplyr::pull(idx)
-
-      result <- result[idx_sorted, ]
     } else {
-      # append row sums (sums across all `by` variables) to each row of ARD
-      browser()
-      result <- result |>
+      # calculate outer hierarchy level sums
+      gp_sums <- result_sort |>
+        dplyr::mutate(idx = dplyr::row_number()) |>
         dplyr::filter(.data$stat_name == "n", !variable %in% by) |>
-        dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
-        dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat)))
+        dplyr::group_by(across(c(all_ard_groups(), -all_of(by_cols)))) |>
+        dplyr::summarise(
+          "sum_gp" = sum(unlist(.data$stat))
+        )
 
-      # append outer hierarchy level sums in each row to sort at all levels
+      # append associated outer hierarchy level sums for each row
       for (g in names(outer_cols)) {
         g_lvl <- paste0(g, "_level")
-        result <- result |>
-          dplyr::group_by(across(all_of(c(g, g_lvl))), .add = TRUE)
-        gps <- result |> dplyr::group_vars()
-
-        result <- result |>
+        idx_var <- which(names(gp_sums) == g_lvl)
+        idx_cols <- c(1:which(names(gp_sums) == g_lvl), ncol(gp_sums))
+        idx_rows <- if (length(idx_cols) < ncol(gp_sums)) {
+          which(gp_sums[idx_var + 1] == " ")
+        } else {
+          which(gp_sums[idx_var - 1] != " ")
+        }
+        cur_gps <- gp_sums[idx_rows, idx_cols]
+        result_sort <- result_sort |>
           dplyr::left_join(
-            result |>
-              dplyr::ungroup() |>
-              dplyr::filter(variable == outer_cols[[g]]) |>
-              dplyr::select(gps, -by_cols, -g, -g_lvl, all_ard_variables(), sum_row) |>
-              dplyr::rename(
-                !!g := variable,
-                !!g_lvl := variable_level,
-                !!paste0("sum_", g) := sum_row
-              ) |>
-              dplyr::distinct(),
-            by = gps
-          ) |>
-          dplyr::mutate(across(starts_with("sum_group"), .fns = ~ dplyr::coalesce(., sum_row)))
+            cur_gps |> dplyr::rename(!!paste0("sum_", g) := sum_gp),
+            by = names(cur_gps) |> head(-1)
+          )
       }
 
-      result <- dplyr::ungroup(result)
+      # append row sums for every row
+      result_sort <- result_sort |>
+        dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+        dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
 
       sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
-        result |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
-        result |> dplyr::select(all_ard_groups("names"), -by_cols) |> names(),
-        result |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
+        result_sort |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
+        result_sort |> dplyr::select(all_ard_groups("names"), -by_cols) |> names(),
+        result_sort |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
       ), "sum_row", "variable_level")
 
-      # sort by descending row sum ---------------------------------------------
-      result <- result |>
-        dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ tidyr::replace_na(., " "))) |>
+      # sort by descending row sum and pull index order
+      idx_sorted <- result_sort |>
         dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
-        dplyr::mutate(across(cards::all_ard_groups("names"), .fns = ~ str_replace(., "^ $", NA))) |>
-        dplyr::select(-starts_with("sum_"))
+        dplyr::select(-starts_with("sum_")) |>
+        dplyr::pull(idx)
     }
+
+    # rearrange result df into sorted order
+    result <- result[idx_sorted, ]
   }
 
   # shuffle if requested -------------------------------------------------------
