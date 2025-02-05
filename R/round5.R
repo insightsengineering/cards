@@ -3,7 +3,7 @@
 #' Rounds the values in its first argument to the specified number of
 #' decimal places (default 0). Importantly, `round5()` **does not** use Base R's
 #' "round to even" default. Standard rounding methods are implemented, for example,
-#' `round5(0.5) = 1`.
+#' `cards::round5(0.5) = 1`, whereas `base::round(0.5) = 0`.
 #'
 #' @details
 #' Function inspired by `janitor::round_half_up()`.
