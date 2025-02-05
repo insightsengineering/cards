@@ -20,6 +20,7 @@ ard_hierarchical_count(data, ...)
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels(),
   id = NULL,
+  sort = NULL,
   ...
 )
 
@@ -29,6 +30,7 @@ ard_hierarchical_count(data, ...)
   by = dplyr::group_vars(data),
   fmt_fn = NULL,
   stat_label = everything() ~ default_stat_labels(),
+  sort = NULL,
   ...
 )
 }

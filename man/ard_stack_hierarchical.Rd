@@ -177,7 +177,8 @@ ard_stack_hierarchical(
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
-  id = USUBJID
+  id = USUBJID,
+  sort = "descending"
 )
 
 ard_stack_hierarchical_count(

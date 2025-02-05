@@ -116,7 +116,8 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
-#'   id = USUBJID
+#'   id = USUBJID,
+#'   sort = "descending"
 #' )
 #'
 #' ard_stack_hierarchical_count(
@@ -529,33 +530,21 @@ internal_stack_hierarchical <- function(data,
         dplyr::pull(idx)
     } else {
       # calculate outer hierarchy level sums
-      gp_sums <- result_sort |>
-        dplyr::mutate(idx = dplyr::row_number()) |>
-        dplyr::filter(.data$stat_name == "n", !variable %in% by) |>
-        dplyr::group_by(across(c(all_ard_groups(), -all_of(by_cols)))) |>
-        dplyr::summarise(
-          "sum_gp" = sum(unlist(.data$stat))
-        )
-
-      # append associated outer hierarchy level sums for each row
+      g_vars <- c()
       for (g in names(outer_cols)) {
-        g_lvl <- paste0(g, "_level")
-        idx_var <- which(names(gp_sums) == g_lvl)
-        idx_cols <- c(1:which(names(gp_sums) == g_lvl), ncol(gp_sums))
-        idx_rows <- if (length(idx_cols) < ncol(gp_sums)) {
-          which(gp_sums[idx_var + 1] == " ")
-        } else {
-          which(gp_sums[idx_var - 1] != " ")
-        }
-        cur_gps <- gp_sums[idx_rows, idx_cols]
-        result_sort <- result_sort |>
-          dplyr::left_join(
-            cur_gps |> dplyr::rename(!!paste0("sum_", g) := sum_gp),
-            by = names(cur_gps) |> head(-1)
+        g_vars <- c(g_vars, g, paste0(g, "_level"))
+        g_sums <- result_sort |>
+          dplyr::filter(.data$stat_name == "n", variable == outer_cols[g]) |>
+          dplyr::group_by(across(g_vars)) |>
+          dplyr::summarize(
+            !!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == "n"]))
           )
+
+        # append outer hierarchy level sums to each row
+        result_sort <- result_sort |> dplyr::left_join(g_sums, by = g_vars)
       }
 
-      # append row sums for every row
+      # append row sums for every row (across by variables)
       result_sort <- result_sort |>
         dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
         dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
@@ -569,7 +558,6 @@ internal_stack_hierarchical <- function(data,
       # sort by descending row sum and pull index order
       idx_sorted <- result_sort |>
         dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
-        dplyr::select(-starts_with("sum_")) |>
         dplyr::pull(idx)
     }
 
