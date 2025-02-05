@@ -103,8 +103,9 @@
 #'   Specifies sorting to perform. Values must be one of:
 #'   - `"alphanumeric"` - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
 #'     by `variable_label` text.
-#'   - `"descending"` - within each hierarchical section of the ARD, frequency sums are calculated for each row and rows
-#'     are sorted in descending order by sum.
+#'   - `"descending"` - within each hierarchical section of the ARD, frequency (`n`) sums are calculated for each row
+#'     and rows are sorted in descending order by sum. If `sort = "descending"`, `"n"` must be included in `statistic`
+#'     for all variables.
 #'   Default is `NULL` (no sorting performed).
 #'
 #' @return an ARD data frame of class 'card'
@@ -490,33 +491,10 @@ internal_stack_hierarchical <- function(data,
       function(x) dplyr::last(unique(stats::na.omit(x)))
     )
 
-    # reformat data to sort on grouping columns
+    # reformat result for sorting
     result_sort <- result |>
-      dplyr::mutate(idx = dplyr::row_number()) |>
-      dplyr::mutate(variable = fct_inorder(.data$variable)) |>
-      dplyr::group_by(.data$variable) |>
-      dplyr::group_split() |>
-      # propagate variable/variable_level to their relevant grouping columns
-      map(function(dat) {
-        cur_var <- dat$variable |> unique() |> as.character()
-        grp_match <- names(which(outer_cols == cur_var))
-        if (length(grp_match) > 0) {
-          dat |>
-            dplyr::mutate(
-              !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
-              !!paste0(grp_match, "_level") := ifelse(
-                is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
-              ),
-              variable = if (sort == "alphanumeric") " " else .data$variable
-            )
-        } else {
-          dat
-        }
-      }) |>
-      dplyr::bind_rows() |>
-      dplyr::mutate(variable = as.character(.data$variable)) |>
-      # summary rows remain at the top of each sub-section
-      dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., " ")))
+      .ard_reformat_sort(outer_cols) |>
+      dplyr::mutate(idx = dplyr::row_number())
 
     if (sort == "alphanumeric") {
       sort_cols <- c(
@@ -524,7 +502,7 @@ internal_stack_hierarchical <- function(data,
         "variable", "variable_level"
       )
 
-      # sort alphanumerically and pull index order
+      # sort alphanumerically and get index order
       idx_sorted <- result_sort |>
         dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
         dplyr::pull(idx)
@@ -538,7 +516,7 @@ internal_stack_hierarchical <- function(data,
         result_sort |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
       ), "sum_row", "variable_level")
 
-      # sort by descending row sum and pull index order
+      # sort by descending row sum and get index order
       idx_sorted <- result_sort |>
         dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
         dplyr::pull(idx)
@@ -563,8 +541,7 @@ internal_stack_hierarchical <- function(data,
     ard_hierarchical_count(
       data = data,
       variables = all_of(variables),
-      by = all_of(by),
-      sort = sort
+      by = all_of(by)
     )
   } else {
     ard_hierarchical(
@@ -574,10 +551,38 @@ internal_stack_hierarchical <- function(data,
       by = all_of(by),
       denominator = denominator,
       id = all_of(id),
-      statistic = statistic,
-      sort = sort
+      statistic = statistic
     )
   }
+}
+
+# this function reformats a hierarchical ARD for sorting
+.ard_reformat_sort <- function(df, outer_cols) {
+  df |>
+    dplyr::mutate(variable = fct_inorder(.data$variable)) |>
+    dplyr::group_by(.data$variable) |>
+    dplyr::group_split() |>
+    # fill in variable/variable_level in their corresponding grouping columns
+    map(function(dat) {
+      cur_var <- dat$variable |> unique() |> as.character()
+      grp_match <- names(which(outer_cols == cur_var))
+      if (length(grp_match) > 0) {
+        dat |>
+          dplyr::mutate(
+            !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
+            !!paste0(grp_match, "_level") := ifelse(
+              is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
+            ),
+            variable = if (sort == "alphanumeric") " " else .data$variable
+          )
+      } else {
+        dat
+      }
+    }) |>
+    dplyr::bind_rows() |>
+    dplyr::mutate(variable = as.character(.data$variable)) |>
+    # summary rows remain at the top of each sub-section when sorting
+    dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., " ")))
 }
 
 # this function calculates and appends n sums for each hierarchy level section/row (across by variables)

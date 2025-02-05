@@ -99,8 +99,9 @@ Specifies sorting to perform. Values must be one of:
 \itemize{
 \item \code{"alphanumeric"} - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
 by \code{variable_label} text.
-\item \code{"descending"} - within each hierarchical section of the ARD, frequency sums are calculated for each row and rows
-are sorted in descending order by sum.
+\item \code{"descending"} - within each hierarchical section of the ARD, frequency (\code{n}) sums are calculated for each row
+and rows are sorted in descending order by sum. If \code{sort = "descending"}, \code{"n"} must be included in \code{statistic}
+for all variables.
 Default is \code{NULL} (no sorting performed).
 }}
 }

@@ -72,7 +72,6 @@ ard_hierarchical.data.frame <- function(data,
                                         denominator = NULL, fmt_fn = NULL,
                                         stat_label = everything() ~ default_stat_labels(),
                                         id = NULL,
-                                        sort = NULL,
                                         ...) {
   set_cli_abort_call()
   check_dots_used()
@@ -145,7 +144,6 @@ ard_hierarchical_count.data.frame <- function(data,
                                               by = dplyr::group_vars(data),
                                               fmt_fn = NULL,
                                               stat_label = everything() ~ default_stat_labels(),
-                                              sort = NULL,
                                               ...) {
   set_cli_abort_call()
   check_dots_used()
