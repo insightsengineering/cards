@@ -369,8 +369,7 @@ internal_stack_hierarchical <- function(data,
           by = by,
           denominator = denominator,
           id = id,
-          statistic = statistic,
-          sort = sort
+          statistic = statistic
         ) |>
           list()
       )
@@ -536,7 +535,7 @@ internal_stack_hierarchical <- function(data,
 }
 
 # this function calculates either the counts or the rates of the events
-.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic, sort) {
+.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
