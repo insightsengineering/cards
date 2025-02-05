@@ -529,25 +529,7 @@ internal_stack_hierarchical <- function(data,
         dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
         dplyr::pull(idx)
     } else {
-      # calculate outer hierarchy level sums
-      g_vars <- c()
-      for (g in names(outer_cols)) {
-        g_vars <- c(g_vars, g, paste0(g, "_level"))
-        g_sums <- result_sort |>
-          dplyr::filter(.data$stat_name == "n", variable == outer_cols[g]) |>
-          dplyr::group_by(across(g_vars)) |>
-          dplyr::summarize(
-            !!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == "n"]))
-          )
-
-        # append outer hierarchy level sums to each row
-        result_sort <- result_sort |> dplyr::left_join(g_sums, by = g_vars)
-      }
-
-      # append row sums for every row (across by variables)
-      result_sort <- result_sort |>
-        dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
-        dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
+      result_sort <- result_sort |> .append_hierarchy_sums(by_cols, outer_cols)
 
       sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
         result_sort |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
@@ -595,4 +577,29 @@ internal_stack_hierarchical <- function(data,
       sort = sort
     )
   }
+}
+
+# this function calculates and appends n sums for each hierarchy level section/row (across by variables)
+.append_hierarchy_sums <- function(df, by_cols, outer_cols) {
+  # calculate outer hierarchy level sums
+  g_vars <- c()
+  for (g in names(outer_cols)) {
+    g_vars <- c(g_vars, g, paste0(g, "_level"))
+    g_sums <- df |>
+      dplyr::filter(.data$stat_name == "n", variable == outer_cols[g]) |>
+      dplyr::group_by(across(g_vars)) |>
+      dplyr::summarize(
+        !!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == "n"]))
+      )
+
+    # append outer hierarchy level sums to each row
+    df <- df |> dplyr::left_join(g_sums, by = g_vars)
+  }
+
+  # append row sums for every row (across by variables)
+  df <- df |>
+    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+    dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
+
+  df
 }
