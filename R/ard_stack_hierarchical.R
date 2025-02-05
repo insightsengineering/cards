@@ -485,14 +485,13 @@ internal_stack_hierarchical <- function(data,
   # sort results if requested --------------------------------------------------
   if (!is.null(sort)) {
     by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
-    outer_cols <- sapply(
-      result |> dplyr::select(cards::all_ard_groups("names"), -by_cols),
-      function(x) dplyr::last(unique(stats::na.omit(x)))
-    )
+    outer_cols <- variables |>
+      head(-1) |>
+      setNames(result |> dplyr::select(cards::all_ard_groups("names"), -by_cols) |> names())
 
     # reformat result for sorting
     result_sort <- result |>
-      .ard_reformat_sort(outer_cols) |>
+      .ard_reformat_sort(sort, outer_cols) |>
       dplyr::mutate(idx = dplyr::row_number())
 
     if (sort == "alphanumeric") {
@@ -556,7 +555,7 @@ internal_stack_hierarchical <- function(data,
 }
 
 # this function reformats a hierarchical ARD for sorting
-.ard_reformat_sort <- function(df, outer_cols) {
+.ard_reformat_sort <- function(df, sort, outer_cols) {
   df |>
     dplyr::mutate(variable = fct_inorder(.data$variable)) |>
     dplyr::group_by(.data$variable) |>
