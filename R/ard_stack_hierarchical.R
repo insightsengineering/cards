@@ -529,6 +529,7 @@ internal_stack_hierarchical <- function(data,
         dplyr::arrange(across(all_of(sort_cols), ~ .x)) |>
         dplyr::pull(idx)
     } else {
+      # calculate sums for each hierarchy level section/row
       result_sort <- result_sort |> .append_hierarchy_sums(by_cols, outer_cols)
 
       sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
@@ -581,8 +582,9 @@ internal_stack_hierarchical <- function(data,
 
 # this function calculates and appends n sums for each hierarchy level section/row (across by variables)
 .append_hierarchy_sums <- function(df, by_cols, outer_cols) {
-  # calculate outer hierarchy level sums
   g_vars <- c()
+
+  # calculate sums at each outer hierarchy level
   for (g in names(outer_cols)) {
     g_vars <- c(g_vars, g, paste0(g, "_level"))
     g_sums <- df |>
@@ -592,7 +594,7 @@ internal_stack_hierarchical <- function(data,
         !!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == "n"]))
       )
 
-    # append outer hierarchy level sums to each row
+    # append sums to each row
     df <- df |> dplyr::left_join(g_sums, by = g_vars)
   }
 
