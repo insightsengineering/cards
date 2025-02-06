@@ -144,7 +144,8 @@ ard_stack_hierarchical <- function(data,
                                    attributes = FALSE,
                                    total_n = FALSE,
                                    shuffle = FALSE,
-                                   sort = NULL) {
+                                   sort = NULL,
+                                   filter = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -180,7 +181,8 @@ ard_stack_hierarchical <- function(data,
     attributes = attributes,
     total_n = total_n,
     shuffle = shuffle,
-    sort = sort
+    sort = sort,
+    filter = filter
   )
 }
 
@@ -196,7 +198,8 @@ ard_stack_hierarchical_count <- function(data,
                                          attributes = FALSE,
                                          total_n = FALSE,
                                          shuffle = FALSE,
-                                         sort = NULL) {
+                                         sort = NULL,
+                                         filter = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -223,7 +226,8 @@ ard_stack_hierarchical_count <- function(data,
     attributes = attributes,
     total_n = total_n,
     shuffle = shuffle,
-    sort = sort
+    sort = sort,
+    filter = filter
   )
 }
 
@@ -242,7 +246,8 @@ internal_stack_hierarchical <- function(data,
                                         total_n = FALSE,
                                         shuffle = FALSE,
                                         include_uni_by_tab = TRUE,
-                                        sort = NULL) {
+                                        sort = NULL,
+                                        filter = NULL) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -524,6 +529,20 @@ internal_stack_hierarchical <- function(data,
     result <- result[idx_sorted, ]
   }
 
+    browser()
+  filter <- enquo(filter)
+  # filter if requested --------------------------------------------------------
+  if (tryCatch(!is.null(eval_tidy(filter)), error = \(x) TRUE)) {
+    by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
+    result <- result |>
+      dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
+      tidyr::pivot_wider(names_from = stat_name, values_from = stat, values_fn = unlist) |>
+      # dplyr::summarize(across(any_of(c("n", "N", "p")), ~ sum(., na.rm = TRUE)))
+      dplyr::summarize(
+        keep = {{ filter }}
+      )
+  }
+
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
     result <- shuffle_ard(result)
@@ -604,7 +623,7 @@ internal_stack_hierarchical <- function(data,
   # append row sums for every row (across by variables)
   df <- df |>
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
-    dplyr::reframe(across(.cols = everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
+    dplyr::reframe(across(everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == "n"])))
 
   df
 }
