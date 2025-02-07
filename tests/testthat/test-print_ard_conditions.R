@@ -66,6 +66,36 @@ test_that("print_ard_conditions() works", {
   })
 })
 
+test_that("print_ard_conditions(condition_type)", {
+  # expected warnings as warnings
+  expect_snapshot(
+    ard_continuous(
+      ADSL,
+      variables = AGE,
+      statistic = ~ list(mean_warning = \(x) {
+        warning("warn1")
+        warning("warn2")
+        mean(x)
+      })
+    ) |>
+      print_ard_conditions(condition_type = "identity")
+  )
+
+  # expected warnings as warnings
+  expect_snapshot(
+    error = TRUE,
+    ard_continuous(
+      ADSL,
+      variables = AGE,
+      statistic = ~ list(
+        mean = \(x) mean(x),
+        err_fn = \(x) stop("'tis an error")
+      )
+    ) |>
+      print_ard_conditions(condition_type = "identity")
+  )
+})
+
 test_that("print_ard_conditions() no error when 'error'/'warning' columns not present", {
   expect_snapshot(
     ard_continuous(

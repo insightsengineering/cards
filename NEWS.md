@@ -4,6 +4,8 @@
 
 * Added functions `rename_ard_groups_shift()` and `rename_ard_groups_reverse()` for renaming the grouping variables in the ARD. (#344)
 
+* Added the `print_ard_conditions(condition_type)` argument, which allows users to select to return conditions as messages (the default), or have warnings returned as warnings and errors as errors. (#386)
+
 # cards 0.4.0
 
 ## New Features and Functions
