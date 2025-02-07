@@ -76,8 +76,7 @@ test_that("print_ard_conditions(condition_type)", {
         warning("warn1")
         warning("warn2")
         mean(x)
-      }
-      )
+      })
     ) |>
       print_ard_conditions(condition_type = "identity")
   )
