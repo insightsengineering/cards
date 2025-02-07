@@ -124,3 +124,17 @@ test_that("apply_fmt_fn(replace)", {
     apply_fmt_fn(ard, replace = TRUE)
   )
 })
+
+test_that("apply_fmt_fn(round_fun)", {
+  # check that we "round-to-even" when the round() function is passed
+  expect_equal(
+    data.frame(x = c(T, F)) |>
+      ard_categorical(variables = everything(), statistic = ~"p") |>
+      update_ard_fmt_fn(stat_names = "p", fmt_fn = 0) |>
+      apply_fmt_fn(round_fun = round) |>
+      dplyr::pull(stat_fmt) |>
+      unique() |>
+      unlist(),
+    "0"
+  )
+})

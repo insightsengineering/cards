@@ -4,7 +4,7 @@
 \alias{apply_fmt_fn}
 \title{Apply Formatting Functions}
 \usage{
-apply_fmt_fn(x, replace = FALSE)
+apply_fmt_fn(x, replace = FALSE, round_fun = round5)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
@@ -13,6 +13,9 @@ an ARD data frame of class 'card'}
 \item{replace}{(scalar \code{logical})\cr
 logical indicating whether to replace values in the \code{'stat_fmt'} column (if present).
 Default is \code{FALSE}.}
+
+\item{round_fun}{(\code{function})\cr
+function used to round numeric values. Default is \code{\link{round5}}}
 }
 \value{
 an ARD data frame of class 'card'

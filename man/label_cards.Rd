@@ -4,7 +4,7 @@
 \alias{label_cards}
 \title{Generate Formatting Function}
 \usage{
-label_cards(digits = 1, scale = 1, width = NULL)
+label_cards(digits = 1, scale = 1, width = NULL, round_fun = round5)
 }
 \arguments{
 \item{digits}{(\code{integer})\cr
@@ -18,6 +18,9 @@ this quantity}
 \item{width}{(\code{integer})\cr
 a non-negative integer specifying the minimum width of the
 returned formatted values}
+
+\item{round_fun}{(\code{function})\cr
+function used to round numeric values. Default is \code{\link{round5}}}
 }
 \value{
 a function

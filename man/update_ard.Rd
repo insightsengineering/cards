@@ -34,7 +34,8 @@ character vector of the statistic names (i.e. values from \code{x$stat_name}) to
 apply the update.}
 
 \item{fmt_fn}{(\code{function})\cr
-a function or alias recognized by \code{alias_as_fmt_fn()}.}
+a function or alias recognized by \code{alias_as_fmt_fn()}.
+\emph{The validity of this input is not checked until \code{alias_as_fmt_fn()} is run.}}
 
 \item{filter}{(\code{expression})\cr
 an expression that evaluates to a logical vector identifying rows in \code{x}

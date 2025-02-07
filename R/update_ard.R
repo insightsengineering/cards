@@ -16,6 +16,7 @@
 #'   apply the update.
 #' @param fmt_fn (`function`)\cr
 #'   a function or alias recognized by `alias_as_fmt_fn()`.
+#'   *The validity of this input is not checked until `alias_as_fmt_fn()` is run.*
 #' @param stat_label (`function`)\cr
 #'   a string of the updated statistic label.
 #' @param filter (`expression`)\cr
@@ -81,7 +82,7 @@ update_ard_fmt_fn <- function(x, variables = everything(), stat_names, fmt_fn, f
   }
 
   # update ARD with new fmt_fn -------------------------------------------------
-  x$fmt_fn[idx1 & idx2] <- list(alias_as_fmt_fn(fmt_fn))
+  x$fmt_fn[idx1 & idx2] <- list(fmt_fn)
 
   # return ard -----------------------------------------------------------------
   x
