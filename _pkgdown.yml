@@ -79,6 +79,7 @@ reference:
       - print_ard_conditions
       - round5
       - print.card
+      - cards.options
 
   - title: "Data"
     contents:
