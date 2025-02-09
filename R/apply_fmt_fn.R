@@ -185,8 +185,7 @@ label_round <- function(digits = 1, scale = 1, width = NULL) {
 }
 
 .get_round_fun <- function() {
-  switch(
-    getOption("cards.round_type", default = "round-half-up"),
+  switch(getOption("cards.round_type", default = "round-half-up"),
     "round-half-up" = round5,
     "round-to-even" = round
   ) %||%

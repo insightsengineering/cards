@@ -17,7 +17,8 @@ label_cards <- function(...) {
   # dependency, and I don't think anyone has used this function
   cli::cli_warn(
     c("The {.fun label_cards} function has been renamed to {.fun label_round}.",
-      "x" = "Please update your code immediately.")
+      "x" = "Please update your code immediately."
+    )
   )
 
   label_round(...)
