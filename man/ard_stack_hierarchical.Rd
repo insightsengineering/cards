@@ -96,7 +96,6 @@ Default is \code{FALSE}.}
 an ARD data frame of class 'card'
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Use these functions to calculate multiple summaries of nested or hierarchical data
 in a single call.
 \itemize{

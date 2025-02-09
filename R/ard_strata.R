@@ -1,7 +1,6 @@
 #' Stratified ARD
 #'
 #' @description
-#' `r lifecycle::badge('experimental')`\cr
 #' General function for calculating ARD results within subgroups.
 #'
 #' While the examples below show use with other functions from the cards package,

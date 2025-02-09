@@ -78,7 +78,6 @@ reference:
       - eval_capture_conditions
       - print_ard_conditions
       - round5
-      - print.card
 
   - title: "Data"
     contents:

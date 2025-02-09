@@ -1,6 +1,5 @@
 #' Complex ARD Summaries
 #'
-#' `r lifecycle::badge('experimental')`\cr
 #' Function is similar to [ard_continuous()], but allows for more complex
 #' summaries. While `ard_continuous(statistic)` only allows for a univariable
 #' function, `ard_complex(statistic)` can handle more complex data summaries.
