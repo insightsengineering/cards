@@ -4,7 +4,7 @@
 \alias{alias_as_fmt_fn}
 \title{Convert Alias to Function}
 \usage{
-alias_as_fmt_fn(x, variable, stat_name, round_fun = round5)
+alias_as_fmt_fn(x, variable, stat_name)
 }
 \arguments{
 \item{x}{(\code{integer}, \code{string}, or \code{function})\cr
@@ -13,9 +13,6 @@ a non-negative integer, string alias, or function}
 \item{variable}{(\code{character})\cr the variable whose statistic is to be formatted}
 
 \item{stat_name}{(\code{character})\cr the name of the statistic that is to be formatted}
-
-\item{round_fun}{(\code{function})\cr
-function used to round numeric values. Default is \code{\link{round5}}}
 }
 \value{
 a function

@@ -8,8 +8,6 @@
 #' @param replace (scalar `logical`)\cr
 #'   logical indicating whether to replace values in the `'stat_fmt'` column (if present).
 #'   Default is `FALSE`.
-#' @param round_fun (`function`)\cr
-#'   function used to round numeric values. Default is [`round5`]
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -17,9 +15,8 @@
 #' @examples
 #' ard_continuous(ADSL, variables = "AGE") |>
 #'   apply_fmt_fn()
-apply_fmt_fn <- function(x, replace = FALSE, round_fun = round5) {
+apply_fmt_fn <- function(x, replace = FALSE) {
   set_cli_abort_call()
-  check_class(round_fun, cls = "function")
 
   check_class(x, cls = "card")
   check_scalar_logical(replace)
@@ -43,7 +40,7 @@ apply_fmt_fn <- function(x, replace = FALSE, round_fun = round5) {
           function(stat, variable, stat_name, fn, stat_fmt) {
             if (!is.null(fn) && is.null(stat_fmt)) {
               tryCatch(
-                do.call(alias_as_fmt_fn(fn, variable, stat_name, round_fun = round_fun), args = list(stat)),
+                do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat)),
                 error = \(e) {
                   cli::cli_abort(
                     c("There was an error applying the formatting function to
@@ -63,8 +60,6 @@ apply_fmt_fn <- function(x, replace = FALSE, round_fun = round5) {
     )
 }
 
-
-
 #' Convert Alias to Function
 #'
 #' @description
@@ -80,7 +75,6 @@ apply_fmt_fn <- function(x, replace = FALSE, round_fun = round5) {
 #' spaces that are added to the result.
 #' If the string ends in `"%"`, results are scaled by 100 before rounding.
 #'
-#' @inheritParams apply_fmt_fn
 #' @param x (`integer`, `string`, or `function`)\cr
 #'   a non-negative integer, string alias, or function
 #' @param variable (`character`)\cr the variable whose statistic is to be formatted
@@ -92,14 +86,14 @@ apply_fmt_fn <- function(x, replace = FALSE, round_fun = round5) {
 #' @examples
 #' alias_as_fmt_fn(1)
 #' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, variable, stat_name, round_fun = round5) {
+alias_as_fmt_fn <- function(x, variable, stat_name) {
   set_cli_abort_call()
 
   if (is.function(x)) {
     return(x)
   }
   if (is_integerish(x) && x >= 0L) {
-    return(label_cards(digits = as.integer(x), round_fun = round_fun))
+    return(label_round(digits = as.integer(x)))
   }
   if (is_string(x)) {
     .check_fmt_string(x, variable, stat_name)
@@ -116,7 +110,7 @@ alias_as_fmt_fn <- function(x, variable, stat_name, round_fun = round5) {
       )
     width <- nchar(x) - endsWith(x, "%")
 
-    return(label_cards(digits = decimal_n, scale = scale, width = width))
+    return(label_round(digits = decimal_n, scale = scale, width = width))
   }
 
   # if the above conditions are not met, return an error -----------------------
@@ -145,7 +139,6 @@ alias_as_fmt_fn <- function(x, variable, stat_name, round_fun = round5) {
 #'
 #' Returns a function with the requested rounding and scaling schema.
 #'
-#' @inheritParams apply_fmt_fn
 #' @param digits (`integer`)\cr
 #'   a non-negative integer specifying the number of decimal places
 #'   round statistics to
@@ -160,10 +153,12 @@ alias_as_fmt_fn <- function(x, variable, stat_name, round_fun = round5) {
 #' @export
 #'
 #' @examples
-#' label_cards(2)(pi)
-#' label_cards(1, scale = 100)(pi)
-#' label_cards(2, width = 5)(pi)
-label_cards <- function(digits = 1, scale = 1, width = NULL, round_fun = round5) {
+#' label_round(2)(pi)
+#' label_round(1, scale = 100)(pi)
+#' label_round(2, width = 5)(pi)
+label_round <- function(digits = 1, scale = 1, width = NULL) {
+  round_fun <- .get_round_fun()
+
   function(x) {
     # round and scale vector
     res <-
@@ -188,6 +183,20 @@ label_cards <- function(digits = 1, scale = 1, width = NULL, round_fun = round5)
     res
   }
 }
+
+.get_round_fun <- function() {
+  switch(
+    getOption("cards.round_type", default = "round-half-up"),
+    "round-half-up" = round5,
+    "round-to-even" = round
+  ) %||%
+    cli::cli_abort(
+      "The {.arg cards.round_type} {.emph option} must be one of
+         {.val {c('round-half-up', 'round-to-even')}}.",
+      call = get_cli_abort_call()
+    )
+}
+
 
 #' Check 'xx' Format Structure
 #'
