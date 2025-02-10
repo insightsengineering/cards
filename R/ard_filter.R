@@ -45,6 +45,7 @@ ard_filter <- function(x, filter) {
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
+  check_not_missing(filter)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
@@ -53,6 +54,13 @@ ard_filter <- function(x, filter) {
     )
   }
   filter <- enquo(filter)
+  if (!quo_is_call(filter)) {
+    cli::cli_abort(
+      "{.arg filter} must be an expression.",
+      call = get_cli_abort_call()
+    )
+  }
+
   if (!all(all.vars(filter) %in% x$stat_name)) {
     var_miss <- setdiff(all.vars(filter), x$stat_name)
     cli::cli_abort(
