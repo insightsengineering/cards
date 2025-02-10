@@ -107,22 +107,6 @@
 #'     and rows are sorted in descending order by sum. If `sort = "descending"`, `"n"` must be included in `statistic`
 #'     for all variables.
 #'   Default is `NULL` (no sorting performed).
-#' @param filter (`expression`)\cr an expression that is used to filter rows of the hierarchical ARD. See details in the
-#'   Filtering section below.
-#'
-#' @section Filtering:
-#' The `filter` argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements
-#' provided as an expression. Rows can be filtered on the values of any of the possible statistics (`n`, `p`, and `N`)
-#' provided they are included at least once in the ARD. For each entry that does not meet the filtering requirement,
-#' all statistics corresponding to that entry will be removed from the ARD. In addition to filtering on individual
-#' statistic values, filters can be applied across the hierarchical row (i.e. across all `by` variable values) by using
-#' aggregate functions such as `sum()` and `mean()`.
-#'
-#' Some examples of possible filters:
-#' - `filter = n > 5`
-#' - `filter = n == 2 & p < 0.05`
-#' - `filter = sum(n) > 4`
-#' - `filter = mean(n) > 4 | n > 3`
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_stack_hierarchical
@@ -143,15 +127,6 @@
 #'   by = TRTA,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
 #'   sort = "alphanumeric"
-#' )
-#'
-#' ard_stack_hierarchical(
-#'   ADAE,
-#'   variables = c(AESOC, AEDECOD),
-#'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
-#'   id = USUBJID,
-#'   filter = sum(n) > 3
 #' )
 NULL
 
@@ -552,47 +527,13 @@ internal_stack_hierarchical <- function(data,
     result <- result[idx_sorted, ]
   }
 
-  # filter if requested --------------------------------------------------------
-  filter <- enquo(filter)
-  if (!quo_is_null(filter)) {
-    if (!all(all.vars(filter) %in% result$stat_name)) {
-      var_miss <- setdiff(all.vars(filter), result$stat_name)
-      cli::cli_abort(
-        paste(
-          "The expression provided as {.arg filter} includes condition{?s} for statistic{?s} {.val {var_miss}} which",
-          "{?is/are} not present in the ARD."
-        ),
-        call = get_cli_abort_call()
-      )
-      return(dplyr::tibble() |> as_card())
-    }
-    by_cols <- paste0("group", seq_along(length(by)), c("", "_level"))
-
-    # reshape result so each stat is in its own column
-    result_f <- result |>
-      dplyr::mutate(idx = dplyr::row_number()) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat, idx) |>
-      tidyr::pivot_wider(
-        id_cols = c(all_ard_groups(), all_ard_variables()),
-        names_from = stat_name,
-        values_from = stat,
-        values_fn = unlist,
-        unused_fn = list
-      )
-
-    # get indices of rows that meet the filter condition
-    f_idx <- result_f |>
-      dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
-      dplyr::group_map(\(.df, .g) .df[["idx"]][eval_tidy(filter, data = .df)]) |>
-      unlist()
-
-    result <- result[f_idx, ]
-  }
-
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
     result <- shuffle_ard(result)
   }
+
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(by = by, variables = variables)
 
   # return final result --------------------------------------------------------
   result |> as_card()

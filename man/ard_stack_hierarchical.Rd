@@ -106,9 +106,6 @@ and rows are sorted in descending order by sum. If \code{sort = "descending"}, \
 for all variables.
 Default is \code{NULL} (no sorting performed).
 }}
-
-\item{filter}{(\code{expression})\cr an expression that is used to filter rows of the hierarchical ARD. See details in the
-Filtering section below.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -177,24 +174,6 @@ results with \code{by = AESEV} and again with \code{by = NULL}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Filtering}{
-
-The \code{filter} argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements
-provided as an expression. Rows can be filtered on the values of any of the possible statistics (\code{n}, \code{p}, and \code{N})
-provided they are included at least once in the ARD. For each entry that does not meet the filtering requirement,
-all statistics corresponding to that entry will be removed from the ARD. In addition to filtering on individual
-statistic values, filters can be applied across the hierarchical row (i.e. across all \code{by} variable values) by using
-aggregate functions such as \code{sum()} and \code{mean()}.
-
-Some examples of possible filters:
-\itemize{
-\item \code{filter = n > 5}
-\item \code{filter = n == 2 & p < 0.05}
-\item \code{filter = sum(n) > 4}
-\item \code{filter = mean(n) > 4 | n > 3}
-}
-}
-
 \examples{
 ard_stack_hierarchical(
   ADAE,
@@ -211,14 +190,5 @@ ard_stack_hierarchical_count(
   by = TRTA,
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
   sort = "alphanumeric"
-)
-
-ard_stack_hierarchical(
-  ADAE,
-  variables = c(AESOC, AEDECOD),
-  by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
-  id = USUBJID,
-  filter = sum(n) > 3
 )
 }
