@@ -61,6 +61,11 @@
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
 #'   be used as the updated `"N"` in the calculations.
 #'
+#' Lastly, when the `p` statistic is returned, the proportion is returned---bounded by `[0, 1]`.
+#' However, the default function to format the statistic scales the proportion by 100
+#' and the percentage is returned which matches the default statistic label of `'%'`.
+#' To get the formatted values, pass the ARD to `apply_fmt_fn()`.
+#'
 #' @section Other Statistics:
 #' In some cases, you may need other kinds of statistics for categorical variables.
 #' Despite the name, `ard_continuous()` can be used to obtain these statistics.

@@ -1,6 +1,5 @@
 #' Hierarchical ARD Statistics
 #'
-#' `r lifecycle::badge('experimental')`\cr
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
 #' - `ard_hierarchical()` includes summaries for the last variable listed

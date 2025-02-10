@@ -29,10 +29,14 @@ See guide on [how to create a great issue](https://code-review.tidyverse.org/iss
 
 *  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
 
+* Note for your first contribution you will need to accept the [Individual Contributor License Agreement](https://github.com/insightsengineering/.github/blob/main/CLA.md). To do so please leave a comment stating "I have read the CLA Document and I hereby sign the CLA" on the Pull Request.
+
 ### Code Style
 
 *   New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
     You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.  
+    
+    * To apply the appropriate style with styler please use `styler:::style_active_pkg()`
 
 *  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.  
 

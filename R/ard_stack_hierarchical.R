@@ -1,7 +1,6 @@
 #' Stacked Hierarchical ARD Statistics
 #'
 #' @description
-#' `r lifecycle::badge('experimental')`\cr
 #' Use these functions to calculate multiple summaries of nested or hierarchical data
 #' in a single call.
 #'
