@@ -64,6 +64,35 @@
       The following errors were returned during `tbl_summary()`:
       x For variable `AGE` and "err_fn" statistic: 'tis an error
 
+# print_ard_conditions(condition_type)
+
+    Code
+      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
+        mean_warning = function(x) {
+          warning("warn1")
+          warning("warn2")
+          mean(x)
+        })), condition_type = "identity")
+    Message
+      The following warnings were returned during `print_ard_conditions()`:
+    Condition
+      Warning:
+      ! For variable `AGE` and "mean_warning" statistic: warn1
+      Warning:
+      ! For variable `AGE` and "mean_warning" statistic: warn2
+
+---
+
+    Code
+      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
+        mean = function(x) mean(x), err_fn = function(x) stop("'tis an error"))),
+      condition_type = "identity")
+    Message
+      The following errors were returned during `print_ard_conditions()`:
+    Condition
+      Error in `print_ard_conditions()`:
+      x For variable `AGE` and "err_fn" statistic: 'tis an error
+
 # print_ard_conditions() no error when 'error'/'warning' columns not present
 
     Code

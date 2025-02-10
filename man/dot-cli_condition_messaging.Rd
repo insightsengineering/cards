@@ -4,7 +4,7 @@
 \alias{.cli_condition_messaging}
 \title{Print Condition Messages Saved in an ARD}
 \usage{
-.cli_condition_messaging(x, msg_type)
+.cli_condition_messaging(x, msg_type, condition_type)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr

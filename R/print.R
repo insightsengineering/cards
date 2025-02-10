@@ -21,6 +21,7 @@
 #'
 #' @return an ARD data frame of class 'card' (invisibly)
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
