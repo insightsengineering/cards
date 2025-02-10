@@ -101,6 +101,11 @@ columns will be used to calculate the new \code{"N"}.
 The last column must be named \code{"...ard_N..."}. The integers in this column will
 be used as the updated \code{"N"} in the calculations.
 }
+
+Lastly, when the \code{p} statistic is returned, the proportion is returned---bounded by \verb{[0, 1]}.
+However, the default function to format the statistic scales the proportion by 100
+and the percentage is returned which matches the default statistic label of \code{'\%'}.
+To get the formatted values, pass the ARD to \code{apply_fmt_fn()}.
 }
 
 \section{Other Statistics}{
