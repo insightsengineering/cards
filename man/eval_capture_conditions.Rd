@@ -57,7 +57,6 @@ Execution environment of currently running function. Default is
 a named list
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 \strong{\code{eval_capture_conditions()}}
 
 Evaluates an expression while also capturing error and warning conditions.

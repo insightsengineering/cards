@@ -32,7 +32,6 @@ a function or a formula that can be coerced to a function with
 an ARD data frame of class 'card'
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 General function for calculating ARD results within subgroups.
 
 While the examples below show use with other functions from the cards package,
