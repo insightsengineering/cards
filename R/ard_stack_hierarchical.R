@@ -553,15 +553,16 @@ internal_stack_hierarchical <- function(data,
   }
 
   # filter if requested --------------------------------------------------------
-  filter <- enexpr(filter)
+  filter <- enquo(filter)
   if (!quo_is_null(filter)) {
     if (!all(all.vars(filter) %in% result$stat_name)) {
       var_miss <- setdiff(all.vars(filter), result$stat_name)
-      cli::cli_inform(
+      cli::cli_abort(
         paste(
           "The expression provided as {.arg filter} includes condition{?s} for statistic{?s} {.val {var_miss}} which",
-          "is not present in the ARD. Since no rows meet the filter requirements, an empty ARD is returned."
-        )
+          "{?is/are} not present in the ARD."
+        ),
+        call = get_cli_abort_call()
       )
       return(dplyr::tibble() |> as_card())
     }
