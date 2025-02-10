@@ -52,7 +52,12 @@ We'll first look at how `broom::tidy` can make this even easier for us, then wil
 
 ## Implementing a a stats method using `broom::tidy`
 
-The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble (which is just  fancy named list!).
+Normally, when a user uses the `statistic` argument inside a {cards} function, they will pass a function which returns a scalar value. 
+However, we also allow for functions that return named lists, where the names from the list will then be used as the statistic names.
+Since data frames or tibbles are just named lists with a little more formatting, we can pass a function to `statistic` which returns a single row data frame or tibble and the behavior will be the same.
+Each column of the table gives the name of the statistic via its column name, and then the corresponding value. 
+
+The majority of commonly used statistical methods outputs are able to be passed through `broom::tidy`, which will convert the output into a tibble.
 We can then pass the output of `broom::tidy` through to the `statistic` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
 
 Please note that we can only use the `broom::tidy` output directly, as we see in the below example, when the output from `broom::tidy` is a tibble with a single row.
@@ -71,6 +76,13 @@ cards::ADSL |>
   ) |>
   dplyr::mutate(context = "t_test_one_sample")
 ```
+
+In the above chunk of code, if we focus on what we pass to the `statistic` argument:
+
+* `everything()` means we want to run this test on all columns passed to `variables`
+* `t.test(x)` is the function which carries out the statistical test, in this case with the default arguments.
+* We pipe the output of `t.test(x)` into `broom::tidy()` which converts the output of the test into a tibble (which is just a named list remember!)
+* The function we've defined (`\(x) t.test(x) |> broom::tidy()`) itself needs to be included in a named list, where here we've chosen to use the label `'t_test'` which will be picked up by the context column.
 
 Over 100 different statistical methods implemented in R are able to be 'tidied' using `broom::tidy`.
 However, the method you aim to use might not be, or the current `broom::tidy` implementation might not contain the information that you need to be in your ARD.

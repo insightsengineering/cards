@@ -2,7 +2,6 @@
 #'
 #' @description
 #'
-#' `r lifecycle::badge('experimental')`\cr
 #' **`eval_capture_conditions()`**
 #'
 #' Evaluates an expression while also capturing error and warning conditions.
