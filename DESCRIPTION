@@ -33,7 +33,7 @@ Suggests:
     withr (>= 3.0.0)
 Config/Needs/coverage: hms
 Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt, cardx, 
-    insightsengineering/nesttemplate
+    gt, fontawesome, insightsengineering/nesttemplate
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
