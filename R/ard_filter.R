@@ -24,7 +24,7 @@
 #' - `filter = mean(n) > 4 | n > 3`
 #'
 #' @return an ARD data frame of class 'card'
-#' @seealso [ard_stack_hierarchical()]
+#' @seealso [ard_sort()]
 #' @name ard_filter
 #'
 #' @examplesIf (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))
@@ -60,7 +60,6 @@ ard_filter <- function(x, filter) {
       call = get_cli_abort_call()
     )
   }
-
   if (!all(all.vars(filter) %in% x$stat_name)) {
     var_miss <- setdiff(all.vars(filter), x$stat_name)
     cli::cli_abort(
@@ -70,12 +69,11 @@ ard_filter <- function(x, filter) {
       ),
       call = get_cli_abort_call()
     )
-    return(dplyr::tibble() |> as_card())
   }
 
   by_cols <- paste0("group", seq_along(length(attributes(x)$args$by)), c("", "_level"))
 
-  # reshape x so each stat is in its own column
+  # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
     dplyr::mutate(idx = dplyr::row_number()) |>
     dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat, idx) |>
@@ -87,7 +85,7 @@ ard_filter <- function(x, filter) {
       unused_fn = list
     )
 
-  # get indices of rows that meet the filter condition
+  # apply filter ---------------------------------------------------------------------------------
   f_idx <- x_f |>
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
     dplyr::group_map(\(.df, .g) .df[["idx"]][eval_tidy(filter, data = .df)]) |>

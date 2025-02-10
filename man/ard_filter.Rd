@@ -50,5 +50,5 @@ ard_stack_hierarchical(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}
+\code{\link[=ard_sort]{ard_sort()}}
 }
