@@ -5,7 +5,7 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to include in summaries. Default is `everything()`.
+#'   columns to include in summaries.
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by/stratify by for summary statistic
 #'   calculation. Arguments are similar, but with an important distinction:
