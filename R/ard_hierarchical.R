@@ -1,6 +1,5 @@
 #' Hierarchical ARD Statistics
 #'
-#' `r lifecycle::badge('experimental')`\cr
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
 #' - `ard_hierarchical()` includes summaries for the last variable listed
@@ -18,12 +17,19 @@
 #' @param id ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   an optional argument used to assert there are no duplicates within
 #'   the `c(id, variables)` columns.
+#' @param denominator (`data.frame`, `integer`)\cr
+#'   used to define the denominator and enhance the output.
+#'   The argument is required for `ard_hierarchical()` and optional
+#'   for `ard_hierarchical_count()`.
+#'   - the univariate tabulations of the `by` variables are calculated with `denominator`,
+#'     when a data frame is passed, e.g. tabulation of the treatment assignment
+#'     counts that may appear in the header of a table.
+#'   - the `denominator` argument must be specified when `id` is used to
+#'     calculate the event rates.
 #' @inheritParams ard_categorical
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_hierarchical
-#'
-#' @inheritSection ard_categorical Denominators
 #'
 #' @examples
 #' ard_hierarchical(

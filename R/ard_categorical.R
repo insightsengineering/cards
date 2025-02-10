@@ -17,13 +17,13 @@
 #'   Arguments may be used in conjunction with one another.
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to include in summaries. Default is `everything()`.
-#' @param denominator (`data.frame`, `integer`)\cr
-#'   Specify this *optional* argument to change the denominator,
-#'   e.g. the `"N"` statistic. Default is `NULL`. See below for details.
+#' @param denominator (`string`, `data.frame`, `integer`)\cr
+#'   Specify this argument to change the denominator,
+#'   e.g. the `"N"` statistic. Default is `'column'`. See below for details.
 #' @param statistic ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
-#'   or a single formula where the list element one or more of  `c("n", "N", "p")`
-#'   (or the RHS of a formula).
+#'   or a single formula where the list element one or more of  `c("n", "N", "p", "n_cum", "p_cum")`
+#'   (on the RHS of a formula).
 #' @param stat_label ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas, or a single formula where
 #'   the list element is either a named list or a list of formulas defining the
@@ -45,17 +45,26 @@
 #' In such cases, use the `denominator` argument to specify a new definition
 #' of `"N"`, and subsequently `"p"`.
 #' The argument expects one of the following inputs:
+#' - a string: one of `"column"`, `"row"`, or `"cell"`.
+#'     - `"column"`, the default, returns percentages where the sum is equal to
+#'        one within the variable after the data frame has been subset with `by`/`strata`.
+#'     - `"row"` gives 'row' percentages where `by`/`strata` columns are the 'top'
+#'        of a cross table, and the variables are the rows. This is well-defined
+#'        for a single `by` or `strata` variable, and care must be taken when there
+#'        are more to ensure the the results are as you expect.
+#'   - `"cell"` gives percentages where the denominator is the number of non-missing
+#'        rows in the source data frame.
 #' - a data frame. Any columns in the data frame that overlap with the `by`/`strata`
 #'   columns will be used to calculate the new `"N"`.
 #' - an integer. This single integer will be used as the new `"N"`
-#' - a string: one of `"column"`, `"row"`, or `"cell"`. `"column"` is equivalent
-#'   to `denominator=NULL`. `"row"` gives 'row' percentages where `by`/`strata`
-#'   columns are the 'top' of a cross table, and the variables are the rows.
-#'   `"cell"` gives percentages where the denominator is the number of non-missing
-#'   rows in the source data frame.
 #' - a structured data frame. The data frame will include columns from `by`/`strata`.
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
 #'   be used as the updated `"N"` in the calculations.
+#'
+#' Lastly, when the `p` statistic is returned, the proportion is returned---bounded by `[0, 1]`.
+#' However, the default function to format the statistic scales the proportion by 100
+#' and the percentage is returned which matches the default statistic label of `'%'`.
+#' To get the formatted values, pass the ARD to `apply_fmt_fn()`.
 #'
 #' @section Other Statistics:
 #' In some cases, you may need other kinds of statistics for categorical variables.
@@ -104,7 +113,7 @@ ard_categorical.data.frame <- function(data,
                                        by = dplyr::group_vars(data),
                                        strata = NULL,
                                        statistic = everything() ~ c("n", "p", "N"),
-                                       denominator = NULL,
+                                       denominator = "column",
                                        fmt_fn = NULL,
                                        stat_label = everything() ~ default_stat_labels(),
                                        ...) {
@@ -137,8 +146,8 @@ ard_categorical.data.frame <- function(data,
   )
   check_list_elements(
     x = statistic,
-    predicate = \(x) is.character(x) && all(x %in% c("n", "p", "N")),
-    error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N')}}"
+    predicate = \(x) is.character(x) && all(x %in% c("n", "p", "N", "n_cum", "p_cum")),
+    error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N', 'n_cum', 'p_cum')}}"
   )
 
   # return empty ARD if no variables selected ----------------------------------
@@ -201,6 +210,7 @@ ard_categorical.data.frame <- function(data,
   df_result_final |>
     dplyr::mutate(context = "categorical") |>
     tidy_ard_column_order() |>
+    tidy_ard_row_order() |>
     as_card()
 }
 
@@ -246,7 +256,7 @@ ard_categorical.data.frame <- function(data,
         imap(
           statistics_tabulation,
           function(x, variable) {
-            if (any(c("N", "p") %in% x[["tabulation"]])) {
+            if (any(c("N", "p", "p_cum") %in% x[["tabulation"]])) {
               TRUE
             } else {
               NULL
@@ -281,7 +291,7 @@ ard_categorical.data.frame <- function(data,
               ))
             }
         }
-        if ("p" %in% tab_stats[["tabulation"]]) {
+        if (any(c("p", "p_cum") %in% tab_stats[["tabulation"]])) {
           df_result_tabulation <-
             df_result_tabulation |>
             dplyr::mutate(
@@ -289,14 +299,24 @@ ard_categorical.data.frame <- function(data,
             )
         }
 
+        df_result_tabulation <-
+          .add_cum_count_stats(
+            df_result_tabulation,
+            variable = variable,
+            by = by,
+            strata = strata,
+            denominator = denominator,
+            tab_stats = tab_stats
+          )
+
         df_result_tabulation |>
           .nesting_rename_ard_columns(variable = variable, by = by, strata = strata) |>
           dplyr::mutate(
-            across(any_of(c("...ard_n...", "...ard_N...", "...ard_p...")), as.list),
+            across(any_of(c("...ard_n...", "...ard_N...", "...ard_p...", "...ard_n_cum...", "...ard_p_cum...")), as.list),
             across(c(matches("^group[0-9]+_level$"), any_of("variable_level")), as.list)
           ) |>
           tidyr::pivot_longer(
-            cols = any_of(c("...ard_n...", "...ard_N...", "...ard_p...")),
+            cols = any_of(c("...ard_n...", "...ard_N...", "...ard_p...", "...ard_n_cum...", "...ard_p_cum...")),
             names_to = "stat_name",
             values_to = "stat"
           ) |>
@@ -331,6 +351,52 @@ ard_categorical.data.frame <- function(data,
       }
     }
   )
+}
+
+
+
+.add_cum_count_stats <- function(x, variable, by, strata, denominator, tab_stats) {
+  # if no cumulative stats were requested, return the object
+  if (!any(c("p_cum", "n_cum") %in% tab_stats[["tabulation"]])) {
+    return(x)
+  }
+
+  # to return cumulative stats, the denominator must be 'column' or 'row'
+  if (!is_string(denominator) || !denominator %in% c("column", "row")) {
+    cli::cli_abort(
+      "The {.arg denominator} argument must be one of {.val {c(\"column\", \"row\")}}
+       when cumulative statistics {.val n_cum} or {.val p_cum} are specified, which
+       were requested for variable {.var {variable}}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  # calculate the cumulative statistics
+  if (denominator %in% "column") {
+    x <- x |>
+      dplyr::mutate(
+        .by = any_of(c(by, strata)),
+        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_n...)
+        ),
+        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_p...)
+        )
+      )
+  } else if (denominator %in% "row") {
+    x <- x |>
+      dplyr::mutate(
+        .by = any_of(variable),
+        ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_n...)
+        ),
+        ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
+          cumsum(.data$...ard_p...)
+        )
+      )
+  }
+
+  x
 }
 
 #' Results from `table()` as Data Frame
@@ -410,11 +476,12 @@ ard_categorical.data.frame <- function(data,
     }
 
     df_table <-
-      dplyr::right_join(
+      dplyr::left_join(
+        df_original_strata |> dplyr::arrange(across(all_of(strata))),
         df_table,
-        df_original_strata,
         by = strata
-      )
+      ) |>
+      dplyr::select(all_of(names(df_table)))
   }
 
   df_table

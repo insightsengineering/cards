@@ -47,12 +47,12 @@ which returns the largest/last value after a sort.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p")}
-(or the RHS of a formula).}
+or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
+(on the RHS of a formula).}
 
-\item{denominator}{(\code{data.frame}, \code{integer})\cr
-Specify this \emph{optional} argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{NULL}. See below for details.}
+\item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
+Specify this argument to change the denominator,
+e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
 
 \item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
@@ -88,18 +88,29 @@ In such cases, use the \code{denominator} argument to specify a new definition
 of \code{"N"}, and subsequently \code{"p"}.
 The argument expects one of the following inputs:
 \itemize{
+\item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}.
+\itemize{
+\item \code{"column"}, the default, returns percentages where the sum is equal to
+one within the variable after the data frame has been subset with \code{by}/\code{strata}.
+\item \code{"row"} gives 'row' percentages where \code{by}/\code{strata} columns are the 'top'
+of a cross table, and the variables are the rows. This is well-defined
+for a single \code{by} or \code{strata} variable, and care must be taken when there
+are more to ensure the the results are as you expect.
+\item \code{"cell"} gives percentages where the denominator is the number of non-missing
+rows in the source data frame.
+}
 \item a data frame. Any columns in the data frame that overlap with the \code{by}/\code{strata}
 columns will be used to calculate the new \code{"N"}.
 \item an integer. This single integer will be used as the new \code{"N"}
-\item a string: one of \code{"column"}, \code{"row"}, or \code{"cell"}. \code{"column"} is equivalent
-to \code{denominator=NULL}. \code{"row"} gives 'row' percentages where \code{by}/\code{strata}
-columns are the 'top' of a cross table, and the variables are the rows.
-\code{"cell"} gives percentages where the denominator is the number of non-missing
-rows in the source data frame.
 \item a structured data frame. The data frame will include columns from \code{by}/\code{strata}.
 The last column must be named \code{"...ard_N..."}. The integers in this column will
 be used as the updated \code{"N"} in the calculations.
 }
+
+Lastly, when the \code{p} statistic is returned, the proportion is returned---bounded by \verb{[0, 1]}.
+However, the default function to format the statistic scales the proportion by 100
+and the percentage is returned which matches the default statistic label of \code{'\%'}.
+To get the formatted values, pass the ARD to \code{apply_fmt_fn()}.
 }
 
 \examples{

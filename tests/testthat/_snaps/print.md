@@ -32,13 +32,13 @@
       1     ARM      Placebo   AGEGR1          65-80         n          n    42
       2     ARM      Placebo   AGEGR1          65-80         N          N    86
       3     ARM      Placebo   AGEGR1          65-80         p          % 0.488
-      4     ARM    Xanomeli…   AGEGR1          65-80         n          n    55
-      5     ARM    Xanomeli…   AGEGR1          65-80         N          N    84
-      6     ARM    Xanomeli…   AGEGR1          65-80         p          % 0.655
-      7     ARM    Xanomeli…   AGEGR1          65-80         n          n    47
-      8     ARM    Xanomeli…   AGEGR1          65-80         N          N    84
-      9     ARM    Xanomeli…   AGEGR1          65-80         p          %  0.56
-      10    ARM      Placebo   AGEGR1            <65         n          n    14
+      4     ARM      Placebo   AGEGR1            <65         n          n    14
+      5     ARM      Placebo   AGEGR1            <65         N          N    86
+      6     ARM      Placebo   AGEGR1            <65         p          % 0.163
+      7     ARM      Placebo   AGEGR1            >80         n          n    30
+      8     ARM      Placebo   AGEGR1            >80         N          N    86
+      9     ARM      Placebo   AGEGR1            >80         p          % 0.349
+      10    ARM    Xanomeli…   AGEGR1          65-80         n          n    55
     Message
       i 17 more rows
       i Use `print(n = ...)` to see more rows
