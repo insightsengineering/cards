@@ -88,7 +88,14 @@ ard_filter <- function(x, filter) {
   # apply filter ---------------------------------------------------------------------------------
   f_idx <- x_f |>
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
-    dplyr::group_map(\(.df, .g) .df[["idx"]][eval_tidy(filter, data = .df)]) |>
+    dplyr::group_map(\(.df, .g) {
+      # only filter rows for innermost variable
+      if (variable == dplyr::last(attributes(x)$args$variables)) {
+        .df[["idx"]][eval_tidy(filter, data = .df)]
+      } else {
+        .df[["idx"]]
+      }
+    }) |>
     unlist()
 
   x[f_idx, ]
