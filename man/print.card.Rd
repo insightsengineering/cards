@@ -38,3 +38,4 @@ Print method for objects of class 'card'
 ard_categorical(ADSL, variables = AGEGR1) |>
   print()
 }
+\keyword{internal}
