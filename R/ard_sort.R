@@ -63,8 +63,8 @@ ard_sort <- function(x, sort = "alphanumeric") {
 
   by_cols <- paste0("group", seq_along(length(attributes(x)$args$by)), c("", "_level"))
   outer_cols <- attributes(x)$args$variables |>
-    head(-1) |>
-    setNames(x |> dplyr::select(cards::all_ard_groups("names"), -by_cols) |> names())
+    utils::head(-1) |>
+    stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -by_cols) |> names())
 
   # reformat ARD for sorting ---------------------------------------------------------------------
   x_sort <- x |>
@@ -81,12 +81,16 @@ ard_sort <- function(x, sort = "alphanumeric") {
     # sort alphanumerically and get index order
     idx_sorted <- x_sort |>
       dplyr::arrange(across(all_of(sort_cols), ~.x)) |>
-      dplyr::pull(idx)
+      dplyr::pull("idx")
   } else {
     # descending sort ----------------------------------------------------------------------------
-    n_all <- all(attributes(x)$args$variables %in% (x |> dplyr::filter(stat_name == "n") |> dplyr::pull(variable)))
+    n_all <- all(
+      attributes(x)$args$variables %in% (x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable"))
+    )
     if (!n_all) {
-      p_all <- all(attributes(x)$args$variables %in% (x |> dplyr::filter(stat_name == "p") |> dplyr::pull(variable)))
+      p_all <- all(
+        attributes(x)$args$variables %in% (x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable"))
+      )
       if (!p_all) {
         cli::cli_abort(
           paste(
@@ -111,7 +115,7 @@ ard_sort <- function(x, sort = "alphanumeric") {
     # sort by descending row sum and get index order
     idx_sorted <- x_sort |>
       dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
-      dplyr::pull(idx)
+      dplyr::pull("idx")
   }
 
   x[idx_sorted, ]
@@ -156,7 +160,7 @@ ard_sort <- function(x, sort = "alphanumeric") {
   for (g in names(outer_cols)) {
     g_vars <- c(g_vars, g, paste0(g, "_level"))
     g_sums <- x |>
-      dplyr::filter(.data$stat_name == sort_stat, variable == outer_cols[g]) |>
+      dplyr::filter(.data$stat_name == sort_stat, .data$variable == outer_cols[g]) |>
       dplyr::group_by(across(g_vars)) |>
       dplyr::summarize(
         !!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == sort_stat]))

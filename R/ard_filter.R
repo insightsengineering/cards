@@ -76,7 +76,7 @@ ard_filter <- function(x, filter) {
   # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
     dplyr::mutate(idx = dplyr::row_number()) |>
-    dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat, idx) |>
+    dplyr::select(all_ard_groups(), all_ard_variables(), "stat_name", "stat", "idx") |>
     tidyr::pivot_wider(
       id_cols = c(all_ard_groups(), all_ard_variables()),
       names_from = stat_name,
@@ -90,7 +90,7 @@ ard_filter <- function(x, filter) {
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
     dplyr::group_map(\(.df, .g) {
       # only filter rows for innermost variable
-      if (variable == dplyr::last(attributes(x)$args$variables)) {
+      if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
         .df[["idx"]][eval_tidy(filter, data = .df)]
       } else {
         .df[["idx"]]
