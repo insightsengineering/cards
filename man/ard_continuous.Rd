@@ -25,7 +25,7 @@ a data frame}
 \item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries. Default is \code{everything()}.}
+columns to include in summaries.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by/stratify by for summary statistic
