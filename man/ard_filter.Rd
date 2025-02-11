@@ -24,10 +24,12 @@ This function is used to filter stacked hierarchical ARDs.
 \details{
 The \code{filter} argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements
 provided as an expression. Rows can be filtered on the values of any of the possible statistics (\code{n}, \code{p}, and \code{N})
-provided they are included at least once in the ARD. For each entry that does not meet the filtering requirement,
-all statistics corresponding to that entry will be removed from the ARD. In addition to filtering on individual
-statistic values, filters can be applied across the hierarchical row (i.e. across all \code{by} variable values) by using
-aggregate functions such as \code{sum()} and \code{mean()}.
+provided they are included at least once in the ARD, as well as the values of any \code{by} variables. For each entry that
+does not meet the filtering requirement, all statistics corresponding to that entry will be removed from the ARD.
+Filtering is only applied to rows that correspond to the innermost variable in the hierarchy - all outer variable
+(summary) rows will be kept. In addition to filtering on individual statistic values, filters can be applied across
+the hierarchical row (i.e. across all \code{by} variable values) by using aggregate functions such as \code{sum()} and
+\code{mean()}.
 
 Some examples of possible filters:
 \itemize{
@@ -35,6 +37,7 @@ Some examples of possible filters:
 \item \code{filter = n == 2 & p < 0.05}
 \item \code{filter = sum(n) > 4}
 \item \code{filter = mean(n) > 4 | n > 3}
+\item \code{filter = any(n > 2 & TRTA == "Xanomeline High Dose")}
 }
 }
 \examples{
