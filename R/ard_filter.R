@@ -5,9 +5,9 @@
 #' This function is used to filter stacked hierarchical ARDs.
 #'
 #' @param x (`card`)\cr
-#'   A stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
-#' @param filter (`expression`)\cr an expression that is used to filter rows of the hierarchical ARD. See details in the
-#'   Filtering section below.
+#'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
+#' @param filter (`expression`)\cr an expression that is used to filter rows of the hierarchical ARD. See the Details
+#'   section below for more details.
 #'
 #' @details
 #' The `filter` argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements

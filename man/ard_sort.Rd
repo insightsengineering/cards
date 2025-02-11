@@ -4,14 +4,14 @@
 \alias{ard_sort}
 \title{Sort Stacked Hierarchical ARDs}
 \usage{
-ard_sort(x, sort = "alphanumeric")
+ard_sort(x, sort = "descending")
 }
 \arguments{
 \item{x}{(\code{card})\cr
-A stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
+a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
 
-\item{sort}{(\code{string} or \code{NULL})\cr
-type of sorting to perform. Values must be one of:
+\item{sort}{(\code{string})\cr
+type of sorting to perform. Value must be one of:
 \itemize{
 \item \code{"alphanumeric"} - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
 by \code{variable_label} text.
@@ -19,8 +19,9 @@ by \code{variable_label} text.
 sorted in descending order by sum. If \code{sort = "descending"}, the \code{n} statistic is used to calculate row sums if
 included in \code{statistic} for all variables, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present in \code{x} for
 all variables, an error will occur.
-Defaults to \code{"alphanumeric"}.
-}}
+}
+
+Defaults to \code{"descending"}.}
 }
 \value{
 an ARD data frame of class 'card'

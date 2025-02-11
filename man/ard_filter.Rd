@@ -8,10 +8,10 @@ ard_filter(x, filter)
 }
 \arguments{
 \item{x}{(\code{card})\cr
-A stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
+a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
 
-\item{filter}{(\code{expression})\cr an expression that is used to filter rows of the hierarchical ARD. See details in the
-Filtering section below.}
+\item{filter}{(\code{expression})\cr an expression that is used to filter rows of the hierarchical ARD. See the Details
+section below for more details.}
 }
 \value{
 an ARD data frame of class 'card'

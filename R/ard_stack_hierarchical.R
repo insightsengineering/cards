@@ -453,7 +453,7 @@ internal_stack_hierarchical <- function(data,
   }
 
   # append attributes used for sorting/filtering -------------------------------
-  attr(result, "args") <- list(by = by, variables = variables)
+  attr(result, "args") <- list(by = by, variables = variables, include = include)
 
   # return final result --------------------------------------------------------
   result |> as_card()
