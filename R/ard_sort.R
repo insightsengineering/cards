@@ -67,7 +67,7 @@ ard_sort <- function(x, sort = "descending") {
   by_cols <- paste0("group", seq_along(length(x_args$by)), c("", "_level"))
   outer_cols <- x_args$variables |>
     utils::head(-1) |>
-    stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -by_cols) |> names())
+    stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -all_of(by_cols)) |> names())
 
   # reformat ARD for sorting ---------------------------------------------------------------------
   x_sort <- x |>
@@ -77,7 +77,7 @@ ard_sort <- function(x, sort = "descending") {
   if (sort == "alphanumeric") {
     # alphanumeric sort --------------------------------------------------------------------------
     sort_cols <- c(
-      x |> dplyr::select(all_ard_groups(), -by_cols[c(FALSE, TRUE)]) |> names(),
+      x |> dplyr::select(all_ard_groups(), -all_of(by_cols[c(FALSE, TRUE)])) |> names(),
       "variable", "variable_level"
     )
 
@@ -106,9 +106,9 @@ ard_sort <- function(x, sort = "descending") {
     x_sort <- x_sort |> .append_hierarchy_sums(by_cols, outer_cols, x_args$include, sort_stat)
 
     sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
-      x_sort |> dplyr::select(all_ard_groups("names"), -by_cols) |> names(),
+      x_sort |> dplyr::select(all_ard_groups("names"), -all_of(by_cols)) |> names(),
       x_sort |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
-      x_sort |> dplyr::select(all_ard_groups("levels"), -by_cols) |> names()
+      x_sort |> dplyr::select(all_ard_groups("levels"), -all_of(by_cols)) |> names()
     ), "variable", "sum_row", "variable_level")
 
     # sort by descending row sum and get index order
@@ -176,7 +176,7 @@ ard_sort <- function(x, sort = "descending") {
     }
     g_sums <- x |>
       dplyr::filter(.data$stat_name == sort_stat, .data[[var_nm]] == next_incl) |>
-      dplyr::group_by(across(g_vars)) |>
+      dplyr::group_by(across(all_of(g_vars))) |>
       dplyr::summarize(!!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == sort_stat])))
 
     # append sums to each row
