@@ -151,8 +151,7 @@ ard_sort <- function(x, sort = "descending") {
             group1 = "..overall..",
             variable_level = list("..overall..")
           )
-      }
-      else {
+      } else {
         dat
       }
     }) |>

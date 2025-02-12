@@ -1,7 +1,7 @@
 # ard_sort() works
 
     Code
-      print(dplyr::select(ard, all_ard_groups(), all_ard_variables()), n = 50)
+      print(dplyr::select(ard_s, all_ard_groups(), all_ard_variables()), n = 50)
     Message
       {cards} data frame: 234 x 8
     Output
