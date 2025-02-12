@@ -1,0 +1,199 @@
+#' Sort Stacked Hierarchical ARDs
+#'
+#' @description `r lifecycle::badge('experimental')`\cr
+#'
+#' This function is used to sort stacked hierarchical ARDs.
+#'
+#' @param x (`card`)\cr
+#'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
+#' @param sort (`string`)\cr
+#'   type of sorting to perform. Value must be one of:
+#'   - `"alphanumeric"` - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
+#'     by `variable_label` text.
+#'   - `"descending"` - within each hierarchical section of the ARD, count sums are calculated for each row and rows are
+#'     sorted in descending order by sum. If `sort = "descending"`, the `n` statistic is used to calculate row sums if
+#'     included in `statistic` for all variables, otherwise `p` is used. If neither `n` nor `p` are present in `x` for
+#'     all variables, an error will occur.
+#'
+#'   Defaults to `"descending"`.
+#'
+#' @return an ARD data frame of class 'card'
+#' @seealso [ard_filter()]
+#' @name ard_sort
+#'
+#' @examplesIf (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))
+#' ard_stack_hierarchical(
+#'   ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   id = USUBJID
+#' ) |>
+#'   ard_sort()
+#'
+#' ard_stack_hierarchical_count(
+#'   ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#' ) |>
+#'   ard_sort("descending")
+NULL
+
+#' @rdname ard_sort
+#' @export
+ard_sort <- function(x, sort = "descending") {
+  set_cli_abort_call()
+
+  # check and process inputs ---------------------------------------------------------------------
+  check_not_missing(x)
+  check_not_missing(sort)
+  check_class(x, "card")
+  check_string(sort)
+  if (!"args" %in% names(attributes(x))) {
+    cli::cli_abort(
+      "Sorting is only available for stacked hierarchical ARDs created using {.fun ard_stack_hierarchical}.",
+      call = get_cli_abort_call()
+    )
+  }
+  if (!sort %in% c("descending", "alphanumeric")) {
+    cli::cli_abort(
+      "The {.arg sort} argument must be either {.val descending} or {.val alphanumeric}.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  x_args <- attributes(x)$args
+  by_cols <- paste0("group", seq_along(length(x_args$by)), c("", "_level"))
+  outer_cols <- x_args$variables |>
+    utils::head(-1) |>
+    stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -all_of(by_cols)) |> names())
+
+  # reformat ARD for sorting ---------------------------------------------------------------------
+  x_sort <- x |>
+    dplyr::mutate(idx = dplyr::row_number()) |>
+    .ard_reformat_sort(sort, outer_cols)
+
+  if (sort == "alphanumeric") {
+    # alphanumeric sort --------------------------------------------------------------------------
+    sort_cols <- c(
+      x |> dplyr::select(all_ard_groups(), -all_of(by_cols[c(FALSE, TRUE)])) |> names(),
+      "variable", "variable_level"
+    )
+
+    # sort alphanumerically and get index order
+    idx_sorted <- x_sort |>
+      dplyr::arrange(across(all_of(sort_cols), ~.x)) |>
+      dplyr::pull("idx")
+  } else {
+    # descending sort ----------------------------------------------------------------------------
+    # all variables in x have n or p stat present (not required if filtered out first)
+    n_all <- length(setdiff(
+      intersect(x_args$include, x$variable), x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")
+    )) == 0
+    if (!n_all) {
+      p_all <- length(setdiff(
+        intersect(x_args$include, x$variable), x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")
+      )) == 0
+      if (!p_all) {
+        cli::cli_abort(
+          paste(
+            "If {.code sort='descending'} then either {.val n} or {.val p} must be present in {.arg x} for all",
+            "variables in order to calculate the count sums used for sorting."
+          ),
+          call = get_cli_abort_call()
+        )
+      }
+    }
+    sort_stat <- if (n_all) "n" else "p"
+
+    # calculate sums for each hierarchy level section/row
+    x_sort <- x_sort |> .append_hierarchy_sums(by_cols, outer_cols, x_args$include, sort_stat)
+
+    sort_cols <- c(by_cols[c(TRUE, FALSE)], rbind(
+      x_sort |> dplyr::select(all_ard_groups("names"), -all_of(by_cols)) |> names(),
+      x_sort |> dplyr::select(dplyr::starts_with("sum_group")) |> names(),
+      x_sort |> dplyr::select(all_ard_groups("levels"), -all_of(by_cols)) |> names()
+    ), "variable", "sum_row", "variable_level")
+
+    # sort by descending row sum and get index order
+    idx_sorted <- x_sort |>
+      dplyr::arrange(across(all_of(sort_cols), .fns = ~ (if (is.numeric(.x)) dplyr::desc(.x) else .x))) |>
+      dplyr::pull("idx")
+  }
+
+  x[idx_sorted, ]
+}
+
+# this function reformats a hierarchical ARD for sorting
+.ard_reformat_sort <- function(x, sort, outer_cols) {
+  x |>
+    dplyr::group_by(.data$variable) |>
+    dplyr::group_split() |>
+    # fill in variable/variable_level in their corresponding grouping columns
+    map(function(dat) {
+      cur_var <- dat$variable |>
+        unique() |>
+        as.character()
+      grp_match <- names(which(outer_cols == cur_var))
+      if (length(grp_match) > 0) {
+        dat |>
+          dplyr::mutate(
+            !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
+            !!paste0(grp_match, "_level") := ifelse(
+              is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
+            ),
+            variable = if (sort == "alphanumeric") "..empty.." else .data$variable
+          )
+      } else if (cur_var == "..ard_hierarchical_overall..") {
+        dat |>
+          dplyr::mutate(
+            group1 = "..overall..",
+            variable_level = list("..overall..")
+          )
+      } else {
+        dat
+      }
+    }) |>
+    dplyr::bind_rows() |>
+    tidyr::unnest(all_of(c(cards::all_ard_groups("levels"), cards::all_ard_variables("levels")))) |>
+    # summary rows remain at the top of each sub-section when sorting
+    dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., "..empty..")))
+}
+
+# this function calculates and appends n sums for each hierarchy level section/row (across by variables)
+.append_hierarchy_sums <- function(x, by_cols, outer_cols, include, sort_stat) {
+  g_vars <- c()
+
+  # calculate sums at each outer hierarchy level
+  for (g in names(outer_cols)) {
+    g_vars <- c(g_vars, g, paste0(g, "_level"))
+
+    # if variable not in include, use the sums from the next variable available
+    if (outer_cols[g] %in% include) {
+      next_incl <- outer_cols[g]
+      var_nm <- "variable"
+    } else {
+      inner_var <- dplyr::last(include)
+      next_incl <- intersect(c(outer_cols[which(names(outer_cols) == g):length(outer_cols)], inner_var), include)[1]
+      var_nm <- if (next_incl == inner_var) "variable" else names(outer_cols)[which(outer_cols == next_incl)]
+    }
+    g_sums <- x |>
+      dplyr::filter(.data$stat_name == sort_stat, .data[[var_nm]] == next_incl) |>
+      dplyr::group_by(across(all_of(g_vars))) |>
+      dplyr::summarize(!!paste0("sum_", g) := sum(unlist(.data$stat[.data$stat_name == sort_stat])))
+
+    # append sums to each row
+    x <- x |> dplyr::left_join(g_sums, by = g_vars)
+
+    # remove variable name for outer hierarchy variables
+    x$variable[x$variable == outer_cols[g]] <- "..empty.."
+  }
+
+  # append row sums for every row (across by variables)
+  x <- x |>
+    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+    dplyr::reframe(across(everything()), sum_row = sum(unlist(.data$stat[.data$stat_name == sort_stat])))
+
+  x
+}
