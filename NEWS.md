@@ -1,4 +1,4 @@
-# cards 0.4.0.9027
+# cards 0.4.0.9028
 
 * Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
 
