@@ -424,7 +424,7 @@ ard_continuous.data.frame <- function(data,
               return(fmt_fn)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
-              return(label_cards(digits = 1, scale = 100))
+              return(label_round(digits = 1, scale = 100))
             }
             if (is.integer(stat)) {
               return(0L)
