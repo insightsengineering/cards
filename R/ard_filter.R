@@ -90,10 +90,10 @@ ard_filter <- function(x, filter) {
 
   # apply filter ---------------------------------------------------------------------------------
   f_idx <- x_f |>
-    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -by_cols))) |>
+    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
     dplyr::group_map(\(.df, .g) {
-      # allow filtering on by variable levels
-      names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- .df[1, names(.df)[names(.df) == by_cols[c(TRUE, FALSE)]]]
+      # allow filtering on `by` variable levels
+      names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- attributes(x)$args$by
 
       # only filter rows for innermost variable
       if (.g$variable == dplyr::last(attributes(x)$args$variables)) {

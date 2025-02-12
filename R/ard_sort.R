@@ -87,9 +87,14 @@ ard_sort <- function(x, sort = "descending") {
       dplyr::pull("idx")
   } else {
     # descending sort ----------------------------------------------------------------------------
-    n_all <- all(x_args$include %in% (x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")))
+    # all variables in x have n or p stat present (not required if filtered out first)
+    n_all <- length(setdiff(
+      intersect(x_args$include, x$variable), x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")
+    )) == 0
     if (!n_all) {
-      p_all <- all(x_args$include %in% (x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")))
+      p_all <- length(setdiff(
+        intersect(x_args$include, x$variable), x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")
+      )) == 0
       if (!p_all) {
         cli::cli_abort(
           paste(

@@ -15,8 +15,11 @@ ard <- ard_stack_hierarchical(
 test_that("ard_sort() works", {
   withr::local_options(width = 200)
 
-  expect_silent(ard <- ard_sort(ard))
-  expect_snapshot(ard |> dplyr::select(all_ard_groups(), all_ard_variables()) |> print(n = 50))
+  expect_silent(ard_s <- ard_sort(ard))
+  expect_snapshot(ard_s |> dplyr::select(all_ard_groups(), all_ard_variables()) |> print(n = 50))
+
+  # works after filtering
+  expect_silent(ard_s <- ard |> ard_filter(n > 20) |> ard_sort())
 })
 
 test_that("ard_sort(sort = 'descending') works", {
