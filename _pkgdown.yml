@@ -69,7 +69,7 @@ reference:
       - default_stat_labels
       - check_ard_structure
       - alias_as_fmt_fn
-      - label_cards
+      - label_round
       - rename_ard_columns
       - add_calculated_row
       - as_cards_fn
@@ -93,6 +93,7 @@ reference:
       - eval_capture_conditions
       - print_ard_conditions
       - round5
+      - cards.options
 
   - title: "Data"
     contents:

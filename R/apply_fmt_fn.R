@@ -60,8 +60,6 @@ apply_fmt_fn <- function(x, replace = FALSE) {
     )
 }
 
-
-
 #' Convert Alias to Function
 #'
 #' @description
@@ -95,7 +93,7 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
     return(x)
   }
   if (is_integerish(x) && x >= 0L) {
-    return(label_cards(digits = as.integer(x)))
+    return(label_round(digits = as.integer(x)))
   }
   if (is_string(x)) {
     .check_fmt_string(x, variable, stat_name)
@@ -112,7 +110,7 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
       )
     width <- nchar(x) - endsWith(x, "%")
 
-    return(label_cards(digits = decimal_n, scale = scale, width = width))
+    return(label_round(digits = decimal_n, scale = scale, width = width))
   }
 
   # if the above conditions are not met, return an error -----------------------
@@ -155,17 +153,19 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
 #' @export
 #'
 #' @examples
-#' label_cards(2)(pi)
-#' label_cards(1, scale = 100)(pi)
-#' label_cards(2, width = 5)(pi)
-label_cards <- function(digits = 1, scale = 1, width = NULL) {
+#' label_round(2)(pi)
+#' label_round(1, scale = 100)(pi)
+#' label_round(2, width = 5)(pi)
+label_round <- function(digits = 1, scale = 1, width = NULL) {
+  round_fun <- .get_round_fun()
+
   function(x) {
     # round and scale vector
     res <-
       ifelse(
         is.na(x),
         NA_character_,
-        format(round5(x * scale, digits = digits), nsmall = digits) |> str_trim()
+        format(round_fun(x * scale, digits = digits), nsmall = digits) |> str_trim()
       )
 
 
@@ -183,6 +183,19 @@ label_cards <- function(digits = 1, scale = 1, width = NULL) {
     res
   }
 }
+
+.get_round_fun <- function() {
+  switch(getOption("cards.round_type", default = "round-half-up"),
+    "round-half-up" = round5,
+    "round-to-even" = round
+  ) %||%
+    cli::cli_abort(
+      "The {.arg cards.round_type} {.emph option} must be one of
+         {.val {c('round-half-up', 'round-to-even')}}.",
+      call = get_cli_abort_call()
+    )
+}
+
 
 #' Check 'xx' Format Structure
 #'

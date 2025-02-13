@@ -5,7 +5,7 @@
 #' @param data (`data.frame`)\cr
 #'   a data frame
 #' @param variables ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
-#'   columns to include in summaries. Default is `everything()`.
+#'   columns to include in summaries.
 #' @param by,strata ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to tabulate by/stratify by for summary statistic
 #'   calculation. Arguments are similar, but with an important distinction:
@@ -424,7 +424,7 @@ ard_continuous.data.frame <- function(data,
               return(fmt_fn)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
-              return(label_cards(digits = 1, scale = 100))
+              return(label_round(digits = 1, scale = 100))
             }
             if (is.integer(stat)) {
               return(0L)
