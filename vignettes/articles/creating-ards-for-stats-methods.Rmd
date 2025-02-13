@@ -91,7 +91,7 @@ In that case we'll have to format the output ourselves.
 
 ## Without `broom::tidy()`
 
-As mentioned above, we need to define a function which carries out or required statistical method and outputs a named list of the information we wish to include in the ARD.
+As mentioned above, we need to define a function which carries out our required statistical method and outputs a named list of the information we wish to include in the ARD.
 
 As an example, let's write a function which carries out a Wilcoxon signed rank test over one variable using the function `wilcox.test`.
 As an output we just want to record the method and the p-value.
