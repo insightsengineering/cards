@@ -6,11 +6,26 @@ template:
 
 navbar:
   structure:
-    left: [intro, reference, articles, news]
+    left:  [intro, reference, tutorials, news]
     right: [search, github]
-    github:
-      icon: fa-github
-      href: https://github.com/insightsengineering/cards
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: "Getting Started"
+      href: articles/getting-started.html
+    - text: "Creating New ARDs"
+      href: articles/creating-ards.html
+    - text: "Other ARD Representations"
+      href: articles/structures.html
+  - text: News
+    href: news/index.html
+  github:
+    icon: fa-github
+    href: https://github.com/insightsengineering/cards
 
 # development:
 #   mode: auto
