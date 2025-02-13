@@ -64,10 +64,14 @@ ard_sort <- function(x, sort = "descending") {
   }
 
   x_args <- attributes(x)$args
-  by_cols <- paste0("group", seq_along(length(x_args$by)), c("", "_level"))
-  outer_cols <- x_args$variables |>
-    utils::head(-1) |>
-    stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -all_of(by_cols)) |> names())
+  by_cols <- if (length(x_args$by) > 0) paste0("group", seq_along(length(x_args$by)), c("", "_level")) else NULL
+  outer_cols <- if (length(x_args$variables) > 1) {
+    x_args$variables |>
+      utils::head(-1) |>
+      stats::setNames(x |> dplyr::select(cards::all_ard_groups("names"), -all_of(by_cols)) |> names())
+  } else {
+    NULL
+  }
 
   # reformat ARD for sorting ---------------------------------------------------------------------
   x_sort <- x |>
