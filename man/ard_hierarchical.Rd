@@ -83,7 +83,7 @@ an ARD data frame of class 'card'
 }
 \description{
 \emph{Functions \code{ard_hierarchical()} and \code{ard_hierarchical_count()} are primarily helper
-functions for \code{ard_stack_hierarchical()} and \code{ard_stack_hierarchical_count()},
+functions for \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} and \code{\link[=ard_stack_hierarchical_count]{ard_stack_hierarchical_count()}},
 meaning that it will be rare a user needs to call
 \code{ard_hierarchical()}/\code{ard_hierarchical_count()} directly.}
 
