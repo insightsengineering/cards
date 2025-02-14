@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.9825" branch-rate="0" lines-covered="2751" lines-valid="2800" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-02-13 03:36:34.607289">
+<coverage line-rate="0.982506247768654" branch-rate="0" lines-covered="2752" lines-valid="2801" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-02-14 00:37:00.471037">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.9825" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.982506247768654" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -2035,7 +2035,8 @@
                 <line number="103" hits="10" branch="false"/>
                 <line number="104" hits="10" branch="false"/>
                 <line number="105" hits="10" branch="false"/>
-                <line number="107" hits="10" branch="false"/>
+                <line number="106" hits="10" branch="false"/>
+                <line number="108" hits="10" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -2086,7 +2087,8 @@
             <line number="103" hits="10" branch="false"/>
             <line number="104" hits="10" branch="false"/>
             <line number="105" hits="10" branch="false"/>
-            <line number="107" hits="10" branch="false"/>
+            <line number="106" hits="10" branch="false"/>
+            <line number="108" hits="10" branch="false"/>
           </lines>
         </class>
         <class name="ard_hierarchical.R" filename="R/ard_hierarchical.R" line-rate="1" branch-rate="0" complexity="0">
