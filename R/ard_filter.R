@@ -102,7 +102,8 @@ ard_filter <- function(x, filter) {
         .df[["idx"]]
       }
     }) |>
-    unlist()
+    unlist() |>
+    sort()
 
   x[f_idx, ]
 }

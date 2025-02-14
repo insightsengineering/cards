@@ -5,17 +5,17 @@
     Message
       {cards} data frame: 84 x 15
     Output
-         group1 group1_level group2 group2_level group3 group3_level variable variable_level stat_name stat_label  stat
-      1    TRTA      Placebo    SEX            F   <NA>                  RACE      BLACK OR…         n          n     3
-      2    TRTA      Placebo    SEX            F   <NA>                  RACE      BLACK OR…         N          N     5
-      3    TRTA      Placebo    SEX            F   <NA>                  RACE      BLACK OR…         p          %   0.6
-      4    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         n          n     4
-      5    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         N          N     6
-      6    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         p          % 0.667
-      7    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         n          n     3
-      8    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         N          N     6
-      9    TRTA    Xanomeli…    SEX            F   <NA>                  RACE      BLACK OR…         p          %   0.5
-      10   TRTA      Placebo    SEX            F   <NA>                  RACE          WHITE         n          n    10
+         group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
+      1    TRTA      Placebo   <NA>                <NA>                                       SEX              F         n          n    13
+      2    TRTA      Placebo   <NA>                <NA>                                       SEX              F         N          N    53
+      3    TRTA      Placebo   <NA>                <NA>                                       SEX              F         p          % 0.245
+      4    TRTA      Placebo   <NA>                <NA>                                       SEX              M         n          n    13
+      5    TRTA      Placebo   <NA>                <NA>                                       SEX              M         N          N    33
+      6    TRTA      Placebo   <NA>                <NA>                                       SEX              M         p          % 0.394
+      7    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
+      8    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         N          N    86
+      9    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         p          % 0.302
+      10   TRTA      Placebo    SEX            F   <NA>                                      RACE      BLACK OR…         n          n     3
     Message
       i 74 more rows
       i Use `print(n = ...)` to see more rows
