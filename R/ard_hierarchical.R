@@ -1,5 +1,11 @@
 #' Hierarchical ARD Statistics
 #'
+#' @description
+#' _Functions `ard_hierarchical()` and `ard_hierarchical_count()` are primarily helper
+#' functions for `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`,
+#' meaning that it will be rare a user needs to call
+#' `ard_hierarchical()`/`ard_hierarchical_count()` directly._
+#'
 #' Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 #' nested within AE system organ class.
 #' - `ard_hierarchical()` includes summaries for the last variable listed

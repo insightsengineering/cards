@@ -82,6 +82,11 @@ the \code{c(id, variables)} columns.}
 an ARD data frame of class 'card'
 }
 \description{
+\emph{Functions \code{ard_hierarchical()} and \code{ard_hierarchical_count()} are primarily helper
+functions for \code{ard_stack_hierarchical()} and \code{ard_stack_hierarchical_count()},
+meaning that it will be rare a user needs to call
+\code{ard_hierarchical()}/\code{ard_hierarchical_count()} directly.}
+
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 \itemize{
