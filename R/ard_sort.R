@@ -87,7 +87,7 @@ ard_sort <- function(x, sort = "descending") {
 
     # sort alphanumerically and get index order
     idx_sorted <- x_sort |>
-      dplyr::arrange(pick(sort_cols)) |>
+      dplyr::arrange(dplyr::pick(all_of(sort_cols))) |>
       dplyr::pull("idx")
   } else {
     # descending sort ----------------------------------------------------------------------------
