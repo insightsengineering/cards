@@ -6,7 +6,7 @@
 #' - `tidy_ard_column_order()` relocates columns of the ARD to the standard order.
 #'
 #' - `tidy_ard_row_order()` orders rows of ARD according to groups and
-#'   strata, while retaining the order of the input ARD.
+#'   strata (group 1, then group2, etc), while retaining the column order of the input ARD.
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
@@ -31,11 +31,16 @@ NULL
 tidy_ard_column_order <- function(x) {
   set_cli_abort_call()
 
-  group_cols <- dplyr::select(x, all_ard_groups()) |>
-    names() |>
-    sort()
-  group_cols <- group_cols[order(str_extract_all(group_cols, "\\d+") |> unlist() |> as.integer())]
+  # specify the ordering the grouping variables
+  group_cols <-
+    data.frame(colname = dplyr::select(x, all_ard_groups()) |> names()) |>
+    dplyr::arrange(
+      dplyr::desc(as.integer(unlist(str_extract_all(.data$colname, "\\d+")))),
+      .data$colname
+    ) |>
+    dplyr::pull("colname")
 
+  # selecting the columns in the tidy order
   dplyr::select(
     x,
     all_of(group_cols),
@@ -57,10 +62,15 @@ tidy_ard_row_order <- function(x) {
 
   # get columns that dictate ordering
   cols <- x |>
-    dplyr::select(
-      all_ard_groups(c("names", "levels"))
-    ) |>
+    dplyr::select(all_ard_groups(c("names", "levels"))) |>
     names()
+  if (!is_empty(cols)) {
+    max_group_n <- as.integer(unlist(str_extract_all(cols, "\\d+"))) |> max()
+    cols <-
+      map(seq_len(max_group_n), ~c(paste0("group", .x), paste0("group", .x, "_level"))) |>
+      unlist() |>
+      intersect(cols)
+  }
 
   # perform the ordering
   x |> dplyr::arrange(across(all_of(cols), .fns = function(x) match(x, unique(x))))

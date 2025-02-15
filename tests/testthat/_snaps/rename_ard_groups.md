@@ -6,8 +6,8 @@
     Message
       {cards} data frame: 1 x 4
     Output
-        group2 group2_level group3 group3_level
-      1    SEX            F    ARM      Placebo
+        group3 group3_level group2 group2_level
+      1    ARM      Placebo    SEX            F
 
 # rename_ard_groups_shift() messaging
 
@@ -19,8 +19,8 @@
       i Is this the shift you had planned?
       {cards} data frame: 1 x 4
     Output
-        group0 group0_level group1 group1_level
-      1    SEX            F    ARM      Placebo
+        group1 group1_level group0 group0_level
+      1    ARM      Placebo    SEX            F
 
 # rename_ard_groups_reverse()
 
@@ -30,6 +30,6 @@
     Message
       {cards} data frame: 1 x 4
     Output
-        group1 group1_level group2 group2_level
-      1    ARM      Placebo    SEX            F
+        group2 group2_level group1 group1_level
+      1    SEX            F    ARM      Placebo
 

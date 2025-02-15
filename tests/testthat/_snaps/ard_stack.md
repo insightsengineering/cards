@@ -40,11 +40,11 @@
       * Removing 1 row with NA or NaN values in "am" and "vs" columns.
       {cards} data frame: 10 x 13
     Output
-         group1 group1_level group2 group2_level        variable variable_level stat_name stat_label stat
-      1      am            0     vs            0             mpg                        N          N   12
-      2      am            0     vs            1             mpg                        N          N    7
-      3      am            1     vs            0             mpg                        N          N    5
-      4      am            1     vs            1             mpg                        N          N    7
+         group2 group2_level group1 group1_level        variable variable_level stat_name stat_label stat
+      1      vs            0     am            0             mpg                        N          N   12
+      2      vs            1     am            0             mpg                        N          N    7
+      3      vs            0     am            1             mpg                        N          N    5
+      4      vs            1     am            1             mpg                        N          N    7
       5    <NA>                <NA>                          mpg                        N          N   31
       6    <NA>                <NA>                           am              0         N          N   31
       7    <NA>                <NA>                           am              1         N          N   31
@@ -63,11 +63,11 @@
       * Removing 2 rows with NA or NaN values in "am" and "vs" columns.
       {cards} data frame: 10 x 13
     Output
-         group1 group1_level group2 group2_level        variable variable_level stat_name stat_label stat
-      1      am            0     vs            0             mpg                        N          N   12
-      2      am            0     vs            1             mpg                        N          N    7
-      3      am            1     vs            0             mpg                        N          N    4
-      4      am            1     vs            1             mpg                        N          N    7
+         group2 group2_level group1 group1_level        variable variable_level stat_name stat_label stat
+      1      vs            0     am            0             mpg                        N          N   12
+      2      vs            1     am            0             mpg                        N          N    7
+      3      vs            0     am            1             mpg                        N          N    4
+      4      vs            1     am            1             mpg                        N          N    7
       5    <NA>                <NA>                          mpg                        N          N   30
       6    <NA>                <NA>                           am              0         N          N   30
       7    <NA>                <NA>                           am              1         N          N   30

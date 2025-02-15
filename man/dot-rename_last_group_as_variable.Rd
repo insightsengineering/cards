@@ -4,7 +4,7 @@
 \alias{.rename_last_group_as_variable}
 \title{Rename Last Group to Variable}
 \usage{
-.rename_last_group_as_variable(df_result)
+.rename_last_group_as_variable(df_result, by, variables)
 }
 \arguments{
 \item{df_result}{(\code{data.frame})\cr

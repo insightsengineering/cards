@@ -53,27 +53,27 @@
       as.data.frame(dplyr::slice(dplyr::select(res_multi_1, -c(fmt_fn, warning, error)),
       1:20))
     Output
-                       TRT01A SEX                             RACE ETHNIC  AGE
-      1               Placebo   F AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      2               Placebo   F AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      3               Placebo   F AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      4               Placebo   F        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      5               Placebo   F        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      6               Placebo   F        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      7               Placebo   F                            WHITE   <NA> <NA>
-      8               Placebo   F                            WHITE   <NA> <NA>
-      9               Placebo   F                            WHITE   <NA> <NA>
-      10              Placebo   M AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      11              Placebo   M AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      12              Placebo   M AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      13              Placebo   M        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      14              Placebo   M        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      15              Placebo   M        BLACK OR AFRICAN AMERICAN   <NA> <NA>
-      16              Placebo   M                            WHITE   <NA> <NA>
-      17              Placebo   M                            WHITE   <NA> <NA>
-      18              Placebo   M                            WHITE   <NA> <NA>
-      19 Xanomeline High Dose   F AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
-      20 Xanomeline High Dose   F AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+         SEX               TRT01A                             RACE ETHNIC  AGE
+      1    F              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      2    F              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      3    F              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      4    F              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      5    F              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      6    F              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      7    F              Placebo                            WHITE   <NA> <NA>
+      8    F              Placebo                            WHITE   <NA> <NA>
+      9    F              Placebo                            WHITE   <NA> <NA>
+      10   M              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      11   M              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      12   M              Placebo AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      13   M              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      14   M              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      15   M              Placebo        BLACK OR AFRICAN AMERICAN   <NA> <NA>
+      16   M              Placebo                            WHITE   <NA> <NA>
+      17   M              Placebo                            WHITE   <NA> <NA>
+      18   M              Placebo                            WHITE   <NA> <NA>
+      19   F Xanomeline High Dose AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
+      20   F Xanomeline High Dose AMERICAN INDIAN OR ALASKA NATIVE   <NA> <NA>
              context stat_name stat_label       stat
       1  categorical         n          n          0
       2  categorical         N          N         53
