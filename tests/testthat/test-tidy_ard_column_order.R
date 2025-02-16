@@ -35,7 +35,7 @@ test_that("tidy_ard_column_order() works", {
       "group8", "group8_level",
       "group9", "group9_level",
       "group10", "group10_level",
-       "variable", "variable_level"
+      "variable", "variable_level"
     )
   )
 })

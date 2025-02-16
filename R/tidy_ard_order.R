@@ -76,7 +76,7 @@ tidy_ard_row_order <- function(x) {
   if (!is_empty(cols)) {
     max_group_n <- as.integer(unlist(str_extract_all(cols, "\\d+"))) |> max()
     cols <-
-      map(seq_len(max_group_n), ~c(paste0("group", .x), paste0("group", .x, "_level"))) |>
+      map(seq_len(max_group_n), ~ c(paste0("group", .x), paste0("group", .x, "_level"))) |>
       unlist() |>
       intersect(cols)
   }

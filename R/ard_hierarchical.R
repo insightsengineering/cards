@@ -203,7 +203,7 @@ ard_hierarchical_count.data.frame <- function(data,
   df_result |>
     dplyr::select(-all_ard_variables()) |>
     dplyr::rename(
-    variable = all_ard_group_n(n = length(c(by, variables)), types = "names"),
-    variable_level = all_ard_group_n(n = length(c(by, variables)), types = "levels")
-  )
+      variable = all_ard_group_n(n = length(c(by, variables)), types = "names"),
+      variable_level = all_ard_group_n(n = length(c(by, variables)), types = "levels")
+    )
 }
