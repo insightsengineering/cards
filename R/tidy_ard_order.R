@@ -10,6 +10,11 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
+#' @param group_order (`string`)\cr
+#'   specifies the ordering of the grouping variables.
+#'   Must be one of `c("ascending", "descending")`.
+#'   Default is `"ascending"`, where grouping variables begin with `"group1"` variables,
+#'   followed by `"group2"` variables, etc.
 #'
 #' @return an ARD data frame of class 'card'
 #' @name tidy_ard_order
@@ -28,14 +33,18 @@ NULL
 
 #' @rdname tidy_ard_order
 #' @export
-tidy_ard_column_order <- function(x) {
+tidy_ard_column_order <- function(x, group_order = c("ascending", "descending")) {
   set_cli_abort_call()
+  group_order <- arg_match(group_order)
 
   # specify the ordering the grouping variables
   group_cols <-
     data.frame(colname = dplyr::select(x, all_ard_groups()) |> names()) |>
     dplyr::arrange(
-      dplyr::desc(as.integer(unlist(str_extract_all(.data$colname, "\\d+")))),
+      case_switch(
+        group_order == "ascending" ~ as.integer(unlist(str_extract_all(.data$colname, "\\d+"))),
+        group_order == "descending" ~ dplyr::desc(as.integer(unlist(str_extract_all(.data$colname, "\\d+"))))
+      ),
       .data$colname
     ) |>
     dplyr::pull("colname")

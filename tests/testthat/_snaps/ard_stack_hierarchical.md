@@ -113,25 +113,25 @@
     Message
       {cards} data frame: 18 x 15
     Output
-         group3 group3_level group2 group2_level group1 group1_level variable variable_level stat_name stat_label stat
-      1    <NA>                <NA>               AESEV         MILD    AESOC      GENERAL …         n          n    4
-      2    <NA>                <NA>               AESEV         MILD    AESOC      SKIN AND…         n          n    1
-      3    <NA>               AESOC    GENERAL …  AESEV         MILD  AEDECOD      APPLICAT…         n          n    2
-      4    <NA>               AESOC    GENERAL …  AESEV         MILD  AEDECOD      APPLICAT…         n          n    2
-      5    <NA>               AESOC    SKIN AND…  AESEV         MILD  AEDECOD       ERYTHEMA         n          n    1
-      6    <NA>               AESOC    SKIN AND…  AESEV         MILD  AEDECOD      PRURITUS…         n          n    0
-      7    <NA>                <NA>               AESEV     MODERATE    AESOC      GENERAL …         n          n    0
-      8    <NA>                <NA>               AESEV     MODERATE    AESOC      SKIN AND…         n          n    1
-      9    <NA>               AESOC    GENERAL …  AESEV     MODERATE  AEDECOD      APPLICAT…         n          n    0
-      10   <NA>               AESOC    GENERAL …  AESEV     MODERATE  AEDECOD      APPLICAT…         n          n    0
-      11   <NA>               AESOC    SKIN AND…  AESEV     MODERATE  AEDECOD       ERYTHEMA         n          n    0
-      12   <NA>               AESOC    SKIN AND…  AESEV     MODERATE  AEDECOD      PRURITUS…         n          n    1
+         group1 group1_level group2 group2_level group3 group3_level variable variable_level stat_name stat_label stat
+      1   AESEV         MILD   <NA>                <NA>                 AESOC      GENERAL …         n          n    4
+      2   AESEV         MILD   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      3   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      4   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      5   AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    1
+      6   AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    0
+      7   AESEV     MODERATE   <NA>                <NA>                 AESOC      GENERAL …         n          n    0
+      8   AESEV     MODERATE   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      9   AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      10  AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      11  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    0
+      12  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    1
       13   <NA>                <NA>                <NA>                 AESOC      GENERAL …         n          n    4
       14   <NA>                <NA>                <NA>                 AESOC      SKIN AND…         n          n    2
-      15   <NA>                <NA>               AESOC    GENERAL …  AEDECOD      APPLICAT…         n          n    2
-      16   <NA>                <NA>               AESOC    GENERAL …  AEDECOD      APPLICAT…         n          n    2
-      17   <NA>                <NA>               AESOC    SKIN AND…  AEDECOD       ERYTHEMA         n          n    1
-      18   <NA>                <NA>               AESOC    SKIN AND…  AEDECOD      PRURITUS…         n          n    1
+      15  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      16  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      17  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD       ERYTHEMA         n          n    1
+      18  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD      PRURITUS…         n          n    1
     Message
       i 4 more variables: context, fmt_fn, warning, error
 

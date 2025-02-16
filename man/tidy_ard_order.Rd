@@ -6,13 +6,19 @@
 \alias{tidy_ard_row_order}
 \title{Standard Order of ARD}
 \usage{
-tidy_ard_column_order(x)
+tidy_ard_column_order(x, group_order = c("ascending", "descending"))
 
 tidy_ard_row_order(x)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 an ARD data frame of class 'card'}
+
+\item{group_order}{(\code{string})\cr
+specifies the ordering of the grouping variables.
+Must be one of \code{c("ascending", "descending")}.
+Default is \code{"ascending"}, where grouping variables begin with \code{"group1"} variables,
+followed by \code{"group2"} variables, etc.}
 }
 \value{
 an ARD data frame of class 'card'
