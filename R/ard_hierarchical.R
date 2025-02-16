@@ -198,12 +198,12 @@ ard_hierarchical_count.data.frame <- function(data,
 #' @examples
 #' data <- data.frame(x = 1, y = 2, group1 = 3, group2 = 4)
 #'
-#' cards:::.rename_last_group_as_variable(data)
+#' cards:::.rename_last_group_as_variable(data, by = "ARM", variables = "AESOC")
 .rename_last_group_as_variable <- function(df_result, by, variables) {
   df_result |>
     dplyr::select(-all_ard_variables()) |>
     dplyr::rename(
-    variable = all_ard_group_n(n = length(c(by, variables)), type = "names"),
-    variable_level = all_ard_group_n(n = length(c(by, variables)), type = "levels")
+    variable = all_ard_group_n(n = length(c(by, variables)), types = "names"),
+    variable_level = all_ard_group_n(n = length(c(by, variables)), types = "levels")
   )
 }
