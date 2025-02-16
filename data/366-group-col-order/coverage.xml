@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.981551204819277" branch-rate="0" lines-covered="2607" lines-valid="2656" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-02-16 16:21:18.701155">
+<coverage line-rate="0.981920903954802" branch-rate="0" lines-covered="2607" lines-valid="2655" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-02-16 22:57:23.118071">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.981551204819277" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.981920903954802" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -3576,23 +3576,21 @@
             <method name="label_cards" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
                 <line number="15" hits="0" branch="false"/>
+                <line number="16" hits="0" branch="false"/>
+                <line number="17" hits="0" branch="false"/>
                 <line number="18" hits="0" branch="false"/>
                 <line number="19" hits="0" branch="false"/>
-                <line number="20" hits="0" branch="false"/>
                 <line number="21" hits="0" branch="false"/>
-                <line number="22" hits="0" branch="false"/>
-                <line number="24" hits="0" branch="false"/>
               </lines>
             </method>
           </methods>
           <lines>
             <line number="15" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="17" hits="0" branch="false"/>
             <line number="18" hits="0" branch="false"/>
             <line number="19" hits="0" branch="false"/>
-            <line number="20" hits="0" branch="false"/>
             <line number="21" hits="0" branch="false"/>
-            <line number="22" hits="0" branch="false"/>
-            <line number="24" hits="0" branch="false"/>
           </lines>
         </class>
         <class name="eval_capture_conditions.R" filename="R/eval_capture_conditions.R" line-rate="1" branch-rate="0" complexity="0">
