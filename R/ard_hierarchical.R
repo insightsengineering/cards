@@ -139,8 +139,7 @@ ard_hierarchical.data.frame <- function(data,
 
   # return ard -----------------------------------------------------------------
   df_result |>
-    dplyr::mutate(context = "hierarchical") |>
-    tidy_ard_column_order()
+    dplyr::mutate(context = "hierarchical")
 }
 
 #' @rdname ard_hierarchical
@@ -180,7 +179,6 @@ ard_hierarchical_count.data.frame <- function(data,
   ) |>
     .rename_last_group_as_variable(by = by, variables = variables) |>
     dplyr::mutate(context = "hierarchical_count") |>
-    tidy_ard_column_order() |>
     as_card()
 }
 
