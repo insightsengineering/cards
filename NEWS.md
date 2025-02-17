@@ -14,6 +14,8 @@
 
 ## Other Updates
 
+* A new article has been added detailing how to create new ARD functions.
+
 * Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
 
 ## Lifecycle Updates
