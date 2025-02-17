@@ -8,8 +8,11 @@
 
 We checked 3 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 0 new problems
+ * We saw 1 new problems
  * We failed to check 0 packages
+ 
+The new problem occurred in the cardx package. 
+I maintain that package and have an updated version ready to send to CRAN as soon as this package is accepted.
 
 ## R CMD check results
 
