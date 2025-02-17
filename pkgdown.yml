@@ -1,10 +1,11 @@
-pandoc: '3.4'
+pandoc: 3.6.2
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  articles/creating-ards: creating-ards.html
   articles/getting-started: getting-started.html
   articles/structures: structures.html
-last_built: 2024-11-27T15:54Z
+last_built: 2025-02-17T21:15Z
 urls:
   reference: https://insightsengineering.github.io/cards/latest-tag/reference
   article: https://insightsengineering.github.io/cards/latest-tag/articles

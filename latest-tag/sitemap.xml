@@ -2,6 +2,7 @@
 <url><loc>https://insightsengineering.github.io/cards/404.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/CONTRIBUTING.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/PULL_REQUEST_TEMPLATE.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/articles/creating-ards.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/articles/getting-started.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/articles/index.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/articles/structures.html</loc></url>
@@ -29,8 +30,10 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/as_nested_list.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/bind_ard.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/cards-package.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/cards.options.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/check_ard_structure.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/default_stat_labels.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/deprecated.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-calculate_stats_as_ard.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-calculate_tabulation_statistics.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-check_dichotomous_value.html</loc></url>
@@ -63,7 +66,7 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/eval_capture_conditions.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/get_ard_statistics.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/index.html</loc></url>
-<url><loc>https://insightsengineering.github.io/cards/reference/label_cards.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/label_round.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/maximum_variable_value.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/mock.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/nest_for_ard.html</loc></url>
@@ -72,6 +75,7 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/process_selectors.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/reexports.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/rename_ard_columns.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/rename_ard_groups.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/replace_null_statistic.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/round5.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/selectors.html</loc></url>

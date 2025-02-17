@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Add Default Formatting Functions — .default_fmt_fn">
 <meta name="description" content="Add Default Formatting Functions">
 <meta property="og:description" content="Add Default Formatting Functions">
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,20 +41,23 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       <div><li class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-versions">Versions</a>
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.0">v0.5.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
@@ -78,7 +81,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add Default Formatting Functions</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.4.0/R/ard_continuous.R" class="external-link"><code>R/ard_continuous.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.5.0/R/ard_continuous.R" class="external-link"><code>R/ard_continuous.R</code></a></small>
       <div class="d-none name"><code>dot-default_fmt_fn.Rd</code></div>
     </div>
 
@@ -123,13 +126,13 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo   AGEGR1          65-80         n          n    42</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo   AGEGR1          65-80         N          N    86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo   AGEGR1          65-80         p          % 0.488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM    Xanomeli…   AGEGR1          65-80         n          n    55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM    Xanomeli…   AGEGR1          65-80         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…   AGEGR1          65-80         p          % 0.655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…   AGEGR1          65-80         n          n    47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…   AGEGR1          65-80         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…   AGEGR1          65-80         p          %  0.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      Placebo   AGEGR1            &lt;65         n          n    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      Placebo   AGEGR1            &lt;65         n          n    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      Placebo   AGEGR1            &lt;65         N          N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM      Placebo   AGEGR1            &lt;65         p          % 0.163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM      Placebo   AGEGR1            &gt;80         n          n    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM      Placebo   AGEGR1            &gt;80         N          N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM      Placebo   AGEGR1            &gt;80         p          % 0.349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM    Xanomeli…   AGEGR1          65-80         n          n    55</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>

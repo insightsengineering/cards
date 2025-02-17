@@ -15,10 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Hierarchical ARD Statistics — ard_hierarchical">
-<meta name="description" content="
+<meta name="description" content="Functions ard_hierarchical() and ard_hierarchical_count() are primarily helper
+functions for ard_stack_hierarchical() and ard_stack_hierarchical_count(),
+meaning that it will be rare a user needs to call
+ard_hierarchical()/ard_hierarchical_count() directly.
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 ard_hierarchical() includes summaries for the last variable listed
@@ -29,7 +32,10 @@ variables, e.g. variables=c(AESOC, AEDECOD) summarizes AEDECOD nested
 in AESOC, and also summarizes the counts of AESOC.
 
 ">
-<meta property="og:description" content="
+<meta property="og:description" content="Functions ard_hierarchical() and ard_hierarchical_count() are primarily helper
+functions for ard_stack_hierarchical() and ard_stack_hierarchical_count(),
+meaning that it will be rare a user needs to call
+ard_hierarchical()/ard_hierarchical_count() directly.
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 ard_hierarchical() includes summaries for the last variable listed
@@ -52,7 +58,7 @@ in AESOC, and also summarizes the counts of AESOC.
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,20 +67,23 @@ in AESOC, and also summarizes the counts of AESOC.
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       <div><li class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-versions">Versions</a>
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.0">v0.5.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
@@ -98,13 +107,16 @@ in AESOC, and also summarizes the counts of AESOC.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Hierarchical ARD Statistics</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.4.0/R/ard_hierarchical.R" class="external-link"><code>R/ard_hierarchical.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.5.0/R/ard_hierarchical.R" class="external-link"><code>R/ard_hierarchical.R</code></a></small>
       <div class="d-none name"><code>ard_hierarchical.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a><br>
-Performs hierarchical or nested tabulations, e.g. tabulates AE terms
+    <p><em>Functions <code>ard_hierarchical()</code> and <code>ard_hierarchical_count()</code> are primarily helper
+functions for <code><a href="ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code>,
+meaning that it will be rare a user needs to call
+<code>ard_hierarchical()</code>/<code>ard_hierarchical_count()</code> directly.</em></p>
+<p>Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.</p>
 <ul>
 <li><p><code>ard_hierarchical()</code> includes summaries for the last variable listed
@@ -181,15 +193,25 @@ specified here appear in results. Default is <code>dplyr::group_vars(data)</code
 </dt>
 <dd><p>(<code><a href="syntax.html">formula-list-selector</a></code>)<br>
 a named list, a list of formulas,
-or a single formula where the list element one or more of  <code>c("n", "N", "p")</code>
-(or the RHS of a formula).</p></dd>
+or a single formula where the list element one or more of  <code>c("n", "N", "p", "n_cum", "p_cum")</code>
+(on the RHS of a formula).</p></dd>
 
 
 <dt id="arg-denominator">denominator<a class="anchor" aria-label="anchor" href="#arg-denominator"></a>
 </dt>
-<dd><p>(<code>data.frame</code>, <code>integer</code>)<br>
-Specify this <em>optional</em> argument to change the denominator,
-e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
+<dd>
+<p>(<code>data.frame</code>, <code>integer</code>)<br>
+used to define the denominator and enhance the output.
+The argument is required for <code>ard_hierarchical()</code> and optional
+for <code>ard_hierarchical_count()</code>.</p>
+<ul>
+<li><p>the univariate tabulations of the <code>by</code> variables are calculated with <code>denominator</code>,
+when a data frame is passed, e.g. tabulation of the treatment assignment
+counts that may appear in the header of a table.</p></li>
+<li><p>the <code>denominator</code> argument must be specified when <code>id</code> is used to
+calculate the event rates.</p></li>
+</ul>
+</dd>
 
 
 <dt id="arg-fmt-fn">fmt_fn<a class="anchor" aria-label="anchor" href="#arg-fmt-fn"></a>
@@ -223,36 +245,6 @@ the <code>c(id, variables)</code> columns.</p></dd>
 </h2>
     <p>an ARD data frame of class 'card'</p>
     </div>
-    <div class="section level2">
-    <h2 id="denominators">Denominators<a class="anchor" aria-label="anchor" href="#denominators"></a>
-</h2>
-
-
-<p>By default, the <code><a href="ard_categorical.html">ard_categorical()</a></code> function returns the statistics <code>"n"</code>, <code>"N"</code>, and
-<code>"p"</code>, where little <code>"n"</code> are the counts for the variable levels, and big <code>"N"</code> is
-the number of non-missing observations. The default calculation for the
-percentage is merely <code>p = n/N</code>.</p>
-<p>However, it is sometimes necessary to provide a different <code>"N"</code> to use
-as the denominator in this calculation. For example, in a calculation
-of the rates of various observed adverse events, you may need to update the
-denominator to the number of enrolled subjects.</p>
-<p>In such cases, use the <code>denominator</code> argument to specify a new definition
-of <code>"N"</code>, and subsequently <code>"p"</code>.
-The argument expects one of the following inputs:</p>
-<ul>
-<li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
-columns will be used to calculate the new <code>"N"</code>.</p></li>
-<li><p>an integer. This single integer will be used as the new <code>"N"</code></p></li>
-<li><p>a string: one of <code>"column"</code>, <code>"row"</code>, or <code>"cell"</code>. <code>"column"</code> is equivalent
-to <code>denominator=NULL</code>. <code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code>
-columns are the 'top' of a cross table, and the variables are the rows.
-<code>"cell"</code> gives percentages where the denominator is the number of non-missing
-rows in the source data frame.</p></li>
-<li><p>a structured data frame. The data frame will include columns from <code>by</code>/<code>strata</code>.
-The last column must be named <code>"...ard_N..."</code>. The integers in this column will
-be used as the updated <code>"N"</code> in the calculations.</p></li>
-</ul>
-</div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a>
@@ -267,26 +259,26 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 2178 x 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         N</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL H…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL H…         N</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL H…         p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIOVEN…         n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    stat_label  stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           N    86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           %     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           n     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           % 0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9           %     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           % 0.012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           n     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           %     0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           % 0.012</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10          n     1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2168 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
@@ -299,27 +291,27 @@ be used as the updated <code>"N"</code> in the calculations.</p></li>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 726 x 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    group1 group1_level group2 group2_level variable variable_level stat_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA    Xanomeli…  AESOC    GASTROIN…  AEDECOD      ABDOMINA…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA    Xanomeli…  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA    Xanomeli…  AESOC    SURGICAL…  AEDECOD      ACROCHOR…         n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    SKIN AND…  AEDECOD      ACTINIC …         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL F…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIAL H…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIOVEN…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      ATRIOVEN…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      BRADYCAR…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      BUNDLE B…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      BUNDLE B…         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      CARDIAC …         n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   TRTA      Placebo  AESOC    CARDIAC …  AEDECOD      CARDIAC …         n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    stat_label stat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           n    1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3           n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           n    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4           n    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5           n    2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           n    3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           n    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           n    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           n    2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9           n    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10          n    0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          n    1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">716 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>

@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Categorical ARD Statistics — ard_categorical">
 <meta name="description" content="Compute Analysis Results Data (ARD) for categorical summary statistics.">
 <meta property="og:description" content="Compute Analysis Results Data (ARD) for categorical summary statistics.">
@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,20 +41,23 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       <div><li class="nav-item dropdown">
     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-versions">Versions</a>
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.0">v0.5.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.3.0">v0.3.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.2.2">v0.2.2</a>
@@ -78,7 +81,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Categorical ARD Statistics</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.4.0/R/ard_categorical.R" class="external-link"><code>R/ard_categorical.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.5.0/R/ard_categorical.R" class="external-link"><code>R/ard_categorical.R</code></a></small>
       <div class="d-none name"><code>ard_categorical.Rd</code></div>
     </div>
 
@@ -98,7 +101,7 @@
 <span>  by <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">group_vars</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
 <span>  strata <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n"</span>, <span class="st">"p"</span>, <span class="st">"N"</span><span class="op">)</span>,</span>
-<span>  denominator <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  denominator <span class="op">=</span> <span class="st">"column"</span>,</span>
 <span>  fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stat_label <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="default_stat_labels.html">default_stat_labels</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -146,15 +149,15 @@ columns specified.</p>
 </dt>
 <dd><p>(<code><a href="syntax.html">formula-list-selector</a></code>)<br>
 a named list, a list of formulas,
-or a single formula where the list element one or more of  <code>c("n", "N", "p")</code>
-(or the RHS of a formula).</p></dd>
+or a single formula where the list element one or more of  <code>c("n", "N", "p", "n_cum", "p_cum")</code>
+(on the RHS of a formula).</p></dd>
 
 
 <dt id="arg-denominator">denominator<a class="anchor" aria-label="anchor" href="#arg-denominator"></a>
 </dt>
-<dd><p>(<code>data.frame</code>, <code>integer</code>)<br>
-Specify this <em>optional</em> argument to change the denominator,
-e.g. the <code>"N"</code> statistic. Default is <code>NULL</code>. See below for details.</p></dd>
+<dd><p>(<code>string</code>, <code>data.frame</code>, <code>integer</code>)<br>
+Specify this argument to change the denominator,
+e.g. the <code>"N"</code> statistic. Default is <code>'column'</code>. See below for details.</p></dd>
 
 
 <dt id="arg-fmt-fn">fmt_fn<a class="anchor" aria-label="anchor" href="#arg-fmt-fn"></a>
@@ -198,19 +201,31 @@ denominator to the number of enrolled subjects.</p>
 of <code>"N"</code>, and subsequently <code>"p"</code>.
 The argument expects one of the following inputs:</p>
 <ul>
+<li>
+<p>a string: one of <code>"column"</code>, <code>"row"</code>, or <code>"cell"</code>.</p>
+<ul>
+<li><p><code>"column"</code>, the default, returns percentages where the sum is equal to
+one within the variable after the data frame has been subset with <code>by</code>/<code>strata</code>.</p></li>
+<li><p><code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code> columns are the 'top'
+of a cross table, and the variables are the rows. This is well-defined
+for a single <code>by</code> or <code>strata</code> variable, and care must be taken when there
+are more to ensure the the results are as you expect.</p></li>
+<li><p><code>"cell"</code> gives percentages where the denominator is the number of non-missing
+rows in the source data frame.</p></li>
+</ul>
+</li>
 <li><p>a data frame. Any columns in the data frame that overlap with the <code>by</code>/<code>strata</code>
 columns will be used to calculate the new <code>"N"</code>.</p></li>
 <li><p>an integer. This single integer will be used as the new <code>"N"</code></p></li>
-<li><p>a string: one of <code>"column"</code>, <code>"row"</code>, or <code>"cell"</code>. <code>"column"</code> is equivalent
-to <code>denominator=NULL</code>. <code>"row"</code> gives 'row' percentages where <code>by</code>/<code>strata</code>
-columns are the 'top' of a cross table, and the variables are the rows.
-<code>"cell"</code> gives percentages where the denominator is the number of non-missing
-rows in the source data frame.</p></li>
 <li><p>a structured data frame. The data frame will include columns from <code>by</code>/<code>strata</code>.
 The last column must be named <code>"...ard_N..."</code>. The integers in this column will
 be used as the updated <code>"N"</code> in the calculations.</p></li>
 </ul>
-</div>
+<p>Lastly, when the <code>p</code> statistic is returned, the proportion is returned—bounded by <code>[0, 1]</code>.
+However, the default function to format the statistic scales the proportion by 100
+and the percentage is returned which matches the default statistic label of <code>'%'</code>.
+To get the formatted values, pass the ARD to <code><a href="apply_fmt_fn.html">apply_fmt_fn()</a></code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="other-statistics">Other Statistics<a class="anchor" aria-label="anchor" href="#other-statistics"></a>
 </h2>
@@ -247,13 +262,13 @@ Despite the name, <code><a href="ard_continuous.html">ard_continuous()</a></code
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     ARM      Placebo   AGEGR1          65-80         n          n    42</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     ARM      Placebo   AGEGR1          65-80         N          N    86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     ARM      Placebo   AGEGR1          65-80         p          % 0.488</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM    Xanomeli…   AGEGR1          65-80         n          n    55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM    Xanomeli…   AGEGR1          65-80         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM    Xanomeli…   AGEGR1          65-80         p          % 0.655</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM    Xanomeli…   AGEGR1          65-80         n          n    47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM    Xanomeli…   AGEGR1          65-80         N          N    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM    Xanomeli…   AGEGR1          65-80         p          %  0.56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM      Placebo   AGEGR1            &lt;65         n          n    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     ARM      Placebo   AGEGR1            &lt;65         n          n    14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     ARM      Placebo   AGEGR1            &lt;65         N          N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     ARM      Placebo   AGEGR1            &lt;65         p          % 0.163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     ARM      Placebo   AGEGR1            &gt;80         n          n    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     ARM      Placebo   AGEGR1            &gt;80         N          N    86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     ARM      Placebo   AGEGR1            &gt;80         p          % 0.349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    ARM    Xanomeli…   AGEGR1          65-80         n          n    55</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">17 more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">Use `print(n = ...)` to see more rows</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
@@ -267,13 +282,13 @@ Despite the name, <code><a href="ard_continuous.html">ard_continuous()</a></code
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 9 x 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   group1 group1_level variable variable_level stat_name stat_label stat</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    ARM      Placebo   AGEGR1          65-80         n          n   42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM    Xanomeli…   AGEGR1          65-80         n          n   55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM    Xanomeli…   AGEGR1          65-80         n          n   47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM      Placebo   AGEGR1            &lt;65         n          n   14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    ARM      Placebo   AGEGR1            &lt;65         n          n   14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    ARM      Placebo   AGEGR1            &gt;80         n          n   30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    ARM    Xanomeli…   AGEGR1          65-80         n          n   55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    ARM    Xanomeli…   AGEGR1            &lt;65         n          n   11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM    Xanomeli…   AGEGR1            &lt;65         n          n    8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM      Placebo   AGEGR1            &gt;80         n          n   30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM    Xanomeli…   AGEGR1            &gt;80         n          n   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    ARM    Xanomeli…   AGEGR1            &gt;80         n          n   18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    ARM    Xanomeli…   AGEGR1          65-80         n          n   47</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    ARM    Xanomeli…   AGEGR1            &lt;65         n          n    8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9    ARM    Xanomeli…   AGEGR1            &gt;80         n          n   29</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">4 more variables: context, fmt_fn, warning, error</span></span>
 </code></pre></div>
