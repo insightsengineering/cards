@@ -42,7 +42,8 @@ test_that("ard_stack_hierarchical(variables)", {
       variables = AESOC,
       id = USUBJID,
       denominator = ADSL |> dplyr::rename(TRTA = TRT01A)
-    )
+    ),
+    ignore_function_env = TRUE
   )
 })
 

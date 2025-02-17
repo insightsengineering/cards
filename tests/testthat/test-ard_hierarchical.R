@@ -351,9 +351,15 @@ test_that("ard_hierarchical_count() provides correct results with 10+ groups", {
     dplyr::select(ard, all_ard_groups(), all_ard_variables()) |>
       names(),
     c(
-      "group1", "group1_level", "group2", "group2_level", "group3", "group3_level",
-      "group4", "group4_level", "group5", "group5_level", "group6", "group6_level",
-      "group7", "group7_level", "group8", "group8_level", "group9", "group9_level",
+      "group1", "group1_level",
+      "group2", "group2_level",
+      "group3", "group3_level",
+      "group4", "group4_level",
+      "group5", "group5_level",
+      "group6", "group6_level",
+      "group7", "group7_level",
+      "group8", "group8_level",
+      "group9", "group9_level",
       "variable", "variable_level"
     )
   )

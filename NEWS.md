@@ -1,12 +1,22 @@
 # cards 0.4.0.9032
 
-* Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
+## New Features and Functions
 
 * Added functions `rename_ard_groups_shift()` and `rename_ard_groups_reverse()` for renaming the grouping variables in the ARD. (#344)
 
+* Added an option to specify the default rounding in the package: `cards.round_type`. See `?cards.options` for details. (#384)
+
 * Added the `print_ard_conditions(condition_type)` argument, which allows users to select to return conditions as messages (the default), or have warnings returned as warnings and errors as errors. (#386)
 
-* Added an option to specify the default rounding in the package: `cards.round_type`. See `?cards.options` for details. (#384)
+* Added the `all_ard_group_n(types)` argument to allow separate selection of `groupX` and `groupX_level` columns.
+
+* Added the `tidy_ard_column_order(group_order)` argument that allows users to specify whether the grouping variables are listed in ascending order (the default) or descending order. The output of `ard_strata()` now calls `tidy_ard_column_order(group_order="descending")`.
+
+## Other Updates
+
+* Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
+
+## Lifecycle Updates
 
 * Function `label_cards()` has been renamed to `label_round()`, which more clearly communicates that is returns a rounding function.
 

@@ -34,7 +34,7 @@ ADSL |>
     statistic = AGE ~ c("{median} ({p25}, {p75})", "{mean} ({sd})", "{min} - {max}"),
     value = SEX ~ "F",
     label = list(SEX = "Female", AGEGR1 = "Age Group"),
-    digits = ~list(p = cards::label_round(digits = 1, scale = 100, width = 4))
+    digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4))
   ) |>
   gtsummary::add_stat_label() |>
   gtsummary::bold_labels() |>
@@ -143,7 +143,7 @@ adsl <- ADSL |>
 # subset to Treatment emergent AES
 adae <- ADAE |>
   # keep the most reported AEs for a smaller table
-  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y") 
+  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y")
 ```
 
 #### Participant-level summaries
@@ -151,19 +151,19 @@ adae <- ADAE |>
 A common type of AE table contains participant-level summaries.  Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
 
 ```{r, echo=FALSE, message=FALSE}
-ADAE |> 
-  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y") |> 
+ADAE |>
+  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y") |>
   gtsummary::tbl_hierarchical(
     by = TRTA,
     variables = c(AEBODSYS, AEDECOD),
     id = USUBJID,
     denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
     overall_row = TRUE,
-    digits = ~list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
+    digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
     label = list(..ard_hierarchical_overall.. = "Any Adverse Event")
   ) |>
-  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |> 
-  gtsummary::as_gt() |> 
+  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |>
+  gtsummary::as_gt() |>
   gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
   gt::opt_table_font(stack = "monospace-code")
 ```
@@ -193,18 +193,18 @@ We will need to count AEs overall, by system organ class, and by preferred term 
 
 
 ```{r, echo=FALSE, message=FALSE}
-ADAE |> 
-  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y") |> 
+ADAE |>
+  dplyr::filter(.by = AETERM, dplyr::n() > 25, TRTEMFL == "Y") |>
   gtsummary::tbl_hierarchical_count(
     by = TRTA,
     variables = c(AEBODSYS, AEDECOD),
     denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
     overall_row = TRUE,
-    digits = ~list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
+    digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
     label = list(..ard_hierarchical_overall.. = "Total Number of Adverse Events")
   ) |>
-  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |> 
-  gtsummary::as_gt() |> 
+  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |>
+  gtsummary::as_gt() |>
   gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
   gt::opt_table_font(stack = "monospace-code")
 ```
