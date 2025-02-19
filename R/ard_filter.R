@@ -7,7 +7,7 @@
 #' @param x (`card`)\cr
 #'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
 #' @param filter (`expression`)\cr an expression that is used to filter rows of the hierarchical ARD. See the Details
-#'   section below for more details.
+#'   section below for more information.
 #'
 #' @details
 #' The `filter` argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements
@@ -22,7 +22,7 @@
 #' Some examples of possible filters:
 #' - `filter = n > 5`
 #' - `filter = n == 2 & p < 0.05`
-#' - `filter = sum(n) > 4`
+#' - `filter = sum(n) >= 4`
 #' - `filter = mean(n) > 4 | n > 3`
 #' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")`
 #'

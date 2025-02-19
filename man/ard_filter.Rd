@@ -11,7 +11,7 @@ ard_filter(x, filter)
 a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
 
 \item{filter}{(\code{expression})\cr an expression that is used to filter rows of the hierarchical ARD. See the Details
-section below for more details.}
+section below for more information.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -35,7 +35,7 @@ Some examples of possible filters:
 \itemize{
 \item \code{filter = n > 5}
 \item \code{filter = n == 2 & p < 0.05}
-\item \code{filter = sum(n) > 4}
+\item \code{filter = sum(n) >= 4}
 \item \code{filter = mean(n) > 4 | n > 3}
 \item \code{filter = any(n > 2 & TRTA == "Xanomeline High Dose")}
 }
