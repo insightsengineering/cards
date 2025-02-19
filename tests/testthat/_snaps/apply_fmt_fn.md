@@ -71,13 +71,3 @@
     Message
       i 4 more variables: context, fmt_fn, warning, error
 
-# apply_fmt_fn(round_type) messaging
-
-    Code
-      apply_fmt_fn(update_ard_fmt_fn(ard_categorical(data.frame(x = c(T, F)),
-      variables = everything(), statistic = ~"p"), stat_names = "p", fmt_fn = 0),
-      round_type = "not_a_value")
-    Condition
-      Error in `apply_fmt_fn()`:
-      ! `round_type` must be one of "round-half-up" or "round-to-even", not "not_a_value".
-

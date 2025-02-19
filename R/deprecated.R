@@ -12,13 +12,10 @@ NULL
 #' @rdname deprecated
 #' @export
 label_cards <- function(...) {
-  set_cli_abort_call()
-  # not using the cute {lifecycle} functions so we didn't need to add it as a
-  # dependency, and I don't think anyone has used this function
-  cli::cli_warn(
-    c("The {.fun label_cards} function has been renamed to {.fun label_round}.",
-      "x" = "Please update your code immediately."
-    )
+  lifecycle::deprecate_soft(
+    when = "0.5.0",
+    what = "cards::label_cards()",
+    with = "label_round()"
   )
 
   label_round(...)

@@ -83,5 +83,5 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   df_nested_data |>
     tidyr::unnest(cols = all_of("ard")) |>
     as_card() |>
-    tidy_ard_column_order()
+    tidy_ard_column_order(group_order = "descending")
 }

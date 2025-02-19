@@ -4,7 +4,7 @@
 \alias{.rename_last_group_as_variable}
 \title{Rename Last Group to Variable}
 \usage{
-.rename_last_group_as_variable(df_result)
+.rename_last_group_as_variable(df_result, by, variables)
 }
 \arguments{
 \item{df_result}{(\code{data.frame})\cr
@@ -20,6 +20,6 @@ renamed to \code{variable} and \code{variable_level} before being returned.
 \examples{
 data <- data.frame(x = 1, y = 2, group1 = 3, group2 = 4)
 
-cards:::.rename_last_group_as_variable(data)
+cards:::.rename_last_group_as_variable(data, by = "ARM", variables = "AESOC")
 }
 \keyword{internal}
