@@ -6,6 +6,7 @@ ARD
 ARD's
 ARDs
 CDISC
+CDISC’s
 CMD
 Codecov
 GlaxoSmithKline
@@ -14,6 +15,8 @@ IEC
 JSON
 Lifecycle
 ORCID
+PHUSE
+Pharma
 Pre
 Rua
 SAS's
@@ -22,6 +25,7 @@ YAML
 ata
 cardx
 cli
+conf
 de
 env
 esult
@@ -33,6 +37,7 @@ jsonlite
 mis
 nalysis
 namespaced
+pharmaverse
 pre
 quosures
 reproducibility
