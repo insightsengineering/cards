@@ -10,8 +10,9 @@ ard_filter(x, filter)
 \item{x}{(\code{card})\cr
 a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
 
-\item{filter}{(\code{expression})\cr an expression that is used to filter rows of the hierarchical ARD. See the Details
-section below for more information.}
+\item{filter}{(\code{expression})\cr
+an expression that is used to filter rows of the hierarchical ARD. See the Details
+section below.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -26,7 +27,7 @@ The \code{filter} argument can be used to filter out rows of a hierarchical ARD 
 provided as an expression. Rows can be filtered on the values of any of the possible statistics (\code{n}, \code{p}, and \code{N})
 provided they are included at least once in the ARD, as well as the values of any \code{by} variables. For each entry that
 does not meet the filtering requirement, all statistics corresponding to that entry will be removed from the ARD.
-Filtering is only applied to rows that correspond to the innermost variable in the hierarchy - all outer variable
+Filtering is only applied to rows that correspond to the innermost variable in the hierarchy---all outer variable
 (summary) rows will be kept. In addition to filtering on individual statistic values, filters can be applied across
 the hierarchical row (i.e. across all \code{by} variable values) by using aggregate functions such as \code{sum()} and
 \code{mean()}.
@@ -42,14 +43,26 @@ Some examples of possible filters:
 }
 \examples{
 \dontshow{if ((identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-ard_stack_hierarchical(
+# create a base AE ARD
+ard <- ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
   id = USUBJID
-) |>
-  ard_filter(sum(n) > 3)
+)
+
+# Example 1 ----------------------------------
+# Keep AEs that have more than 3 observed across the TRTA groups
+ard_filter(ard, sum(n) > 3)
+
+# Example 2 ----------------------------------
+# Keep AEs where at least one TRTA group has more than 3 AEs observed
+ard_filter(ard, n > 3)
+
+# Example 3 ----------------------------------
+# Keep AEs that have an overall prevalence of greater than 5\%
+ard_filter(ard, sum(n) / sum(N) > 0.05)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
