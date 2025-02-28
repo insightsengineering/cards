@@ -83,7 +83,7 @@ test_that("filter_ard_hierarchical() works when some variables not included in x
   expect_silent(filter_ard_hierarchical(ard, n > 10))
 })
 
-test_that("filter_ard_hierarchical() works with overall=TRUE", {
+test_that("filter_ard_hierarchical() works with overall data", {
   ard_overall <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),

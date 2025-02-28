@@ -31,6 +31,11 @@ an ARD data frame of class 'card'
 
 This function is used to sort stacked hierarchical ARDs.
 }
+\note{
+If overall data is present in \code{x} (i.e. the ARD was created with \code{ard_stack_hierarchical(overall=TRUE)}), the
+overall data will be sorted last within each variable group (i.e. after any other rows with the same combination of
+variable levels).
+}
 \examples{
 \dontshow{if ((identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ard_stack_hierarchical(
@@ -40,7 +45,7 @@ ard_stack_hierarchical(
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
   id = USUBJID
 ) |>
-  sort_ard_hierarchical()
+  sort_ard_hierarchical("alphanumeric")
 
 ard_stack_hierarchical_count(
   ADAE,

@@ -21,6 +21,11 @@
 #' @seealso [filter_ard_hierarchical()]
 #' @name sort_ard_hierarchical
 #'
+#' @note
+#' If overall data is present in `x` (i.e. the ARD was created with `ard_stack_hierarchical(overall=TRUE)`), the
+#' overall data will be sorted last within each variable group (i.e. after any other rows with the same combination of
+#' variable levels).
+#'
 #' @examplesIf (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))
 #' ard_stack_hierarchical(
 #'   ADAE,

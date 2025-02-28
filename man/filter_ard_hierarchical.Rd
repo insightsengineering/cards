@@ -32,13 +32,26 @@ Filtering is only applied to rows that correspond to the innermost variable in t
 the hierarchical row (i.e. across all \code{by} variable values) by using aggregate functions such as \code{sum()} and
 \code{mean()}.
 
+If data for overall statistics is present in the ARD (\code{ard_stack_hierarchical(overall=TRUE)}), this data will not be
+used in any filters (i.e. \code{sum(n)} will not include the overall \code{n} in a given group). To filter on overall
+statistics use the \code{sum()} function in your filter instead (i.e. \code{sum(n)} is equal to the "overall" \code{n} across \code{by}
+variable groups).
+
+If no \code{by} variables were used (i.e. \code{ard_stack_hierarchical(by=NULL)}), the only grouping performed prior to
+filtering will be grouping all statistics together for each combination of variable levels, i.e. filters will be
+applied independently to each combination of variable levels.
+
 Some examples of possible filters:
 \itemize{
-\item \code{filter = n > 5}
-\item \code{filter = n == 2 & p < 0.05}
-\item \code{filter = sum(n) >= 4}
-\item \code{filter = mean(n) > 4 | n > 3}
-\item \code{filter = any(n > 2 & TRTA == "Xanomeline High Dose")}
+\item \code{filter = n > 5} - keep AEs from variable groups where at least one level in the group has more than 3 AEs observed
+\item \code{filter = n == 2 & p < 0.05} - keep AEs from variable groups where at least one level in the group has exactly 2
+AEs observed \emph{and} at least one level in the variable group has a prevalence of less than 5\%
+\item \code{filter = sum(n) >= 4} - keep AEs from variable groups where at least 4 AEs are observed across the group
+\item \code{filter = mean(n) > 4 | n > 3} - keep AEs from variable groups where an average of least 4 AEs is observed across
+the levels of the group \emph{or} at least one level in the variable group has more than 3 AEs observed
+\item \code{filter = any(n > 2 & TRTA == "Xanomeline High Dose")} - keep AEs from variable groups where more than 2 AEs
+are observed in a row from the variable group where the \code{by} variable is \code{TRTA} and the level of \code{TRTA} is
+\code{"Xanomeline High Dose"}.
 }
 }
 \examples{
@@ -53,11 +66,11 @@ ard <- ard_stack_hierarchical(
 )
 
 # Example 1 ----------------------------------
-# Keep AEs that have more than 3 observed across the TRTA groups
+# Keep AEs from TRTA groups where more than 3 AEs are observed across the group
 filter_ard_hierarchical(ard, sum(n) > 3)
 
 # Example 2 ----------------------------------
-# Keep AEs where at least one TRTA group has more than 3 AEs observed
+# Keep AEs where at least one level in the TRTA group has more than 3 AEs observed
 filter_ard_hierarchical(ard, n > 3)
 
 # Example 3 ----------------------------------
