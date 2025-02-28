@@ -29,7 +29,7 @@
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
 #'   id = USUBJID
 #' ) |>
-#'   sort_ard_hierarchical()
+#'   sort_ard_hierarchical("alphanumeric")
 #'
 #' ard_stack_hierarchical_count(
 #'   ADAE,
@@ -76,7 +76,7 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
   # reformat ARD for sorting ---------------------------------------------------------------------
   x_sort <- x |>
     dplyr::mutate(idx = dplyr::row_number()) |>
-    .ard_reformat_sort(sort, outer_cols)
+    .ard_reformat_sort(sort, x_args$by, outer_cols)
 
   if (sort == "alphanumeric") {
     # alphanumeric sort --------------------------------------------------------------------------
@@ -126,12 +126,32 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
       dplyr::pull("idx")
   }
 
-  x[idx_sorted, ]
+  x <- x[idx_sorted, ]
+
+  # keep attributes at bottom of ARD
+  idx_attr <- x$context == "attributes"
+  x <- dplyr::bind_rows(x[!idx_attr, ], x[idx_attr, ])
+
+  x
 }
 
 # this function reformats a hierarchical ARD for sorting
-.ard_reformat_sort <- function(x, sort, outer_cols) {
-  x |>
+.ard_reformat_sort <- function(x, sort, by, outer_cols) {
+  # reformat data from overall column (if present)
+  browser()
+  is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  if (sum(is_overall_col) > 0) {
+    x_overall_col <- x[is_overall_col, ] |>
+      cards::rename_ard_groups_shift(shift = length(by)) |>
+      dplyr::mutate(
+        group1 = if (length(by) > 1) by[1] else group1,
+        group1_level = if (length(by) > 1) list("..overall..") else group1_level
+      ) |>
+      dplyr::select(any_of(names(x)))
+    x <- dplyr::bind_rows(x[!is_overall_col, ], x_overall_col)
+  }
+
+  x <- x |>
     dplyr::group_by(.data$variable) |>
     dplyr::group_split() |>
     # fill in variable/variable_level in their corresponding grouping columns
@@ -155,6 +175,12 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
             group1 = "..overall..",
             variable_level = list("..overall..")
           )
+      } else if (cur_var == "..ard_total_n..") {
+        dat |>
+          dplyr::mutate(
+            group1 = "..empty..",
+            variable = NA
+          )
       } else {
         dat
       }
@@ -163,6 +189,8 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
     tidyr::unnest(all_of(c(cards::all_ard_groups("levels"), cards::all_ard_variables("levels")))) |>
     # summary rows remain at the top of each sub-section when sorting
     dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., "..empty..")))
+
+  x
 }
 
 # this function calculates and appends n sums for each hierarchy level section/row (across by variables)
