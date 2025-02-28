@@ -12,19 +12,19 @@ ard <- ard_stack_hierarchical(
   over_variables = TRUE
 )
 
-test_that("ard_sort() works", {
+test_that("sort_ard_hierarchical() works", {
   withr::local_options(width = 200)
 
-  expect_silent(ard_s <- ard_sort(ard))
+  expect_silent(ard_s <- sort_ard_hierarchical(ard))
   expect_snapshot(ard_s |> dplyr::select(all_ard_groups(), all_ard_variables()) |> print(n = 50))
 
   # works after filtering
-  expect_silent(ard_s <- ard |> ard_filter(n > 20) |> ard_sort())
+  expect_silent(ard_s <- ard |> filter_ard_hierarchical(n > 20) |> sort_ard_hierarchical())
 })
 
-test_that("ard_sort(sort = 'descending') works", {
+test_that("sort_ard_hierarchical(sort = 'descending') works", {
   # descending count (default)
-  expect_silent(ard <- ard_sort(ard))
+  expect_silent(ard <- sort_ard_hierarchical(ard))
   expect_equal(
     ard |>
       dplyr::filter(variable == "SEX") |>
@@ -59,8 +59,8 @@ test_that("ard_sort(sort = 'descending') works", {
   )
 })
 
-test_that("ard_sort(sort = 'alphanumeric') works", {
-  expect_silent(ard <- ard_sort(ard, sort = "alphanumeric"))
+test_that("sort_ard_hierarchical(sort = 'alphanumeric') works", {
+  expect_silent(ard <- sort_ard_hierarchical(ard, sort = "alphanumeric"))
 
   expect_equal(
     ard |>
@@ -96,7 +96,7 @@ test_that("ard_sort(sort = 'alphanumeric') works", {
   )
 })
 
-test_that("ard_sort() works when there is no overall row in x", {
+test_that("sort_ard_hierarchical() works when there is no overall row in x", {
   ard_no_overall <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
@@ -107,27 +107,27 @@ test_that("ard_sort() works when there is no overall row in x", {
   )
 
   # sort = 'descending'
-  expect_silent(ard_no_overall <- ard_sort(ard_no_overall))
+  expect_silent(ard_no_overall <- sort_ard_hierarchical(ard_no_overall))
   expect_equal(
     ard_no_overall |> dplyr::select(all_ard_groups(), all_ard_variables()),
     ard |>
-      ard_sort() |>
+      sort_ard_hierarchical() |>
       dplyr::select(all_ard_groups(), all_ard_variables()) |>
       dplyr::filter(variable != "..ard_hierarchical_overall..")
   )
 
   # sort = 'alphanumeric'
-  expect_silent(ard_no_overall <- ard_sort(ard_no_overall, sort = "alphanumeric"))
+  expect_silent(ard_no_overall <- sort_ard_hierarchical(ard_no_overall, sort = "alphanumeric"))
   expect_equal(
     ard_no_overall |> dplyr::select(all_ard_groups(), all_ard_variables()),
     ard |>
-      ard_sort("alphanumeric") |>
+      sort_ard_hierarchical("alphanumeric") |>
       dplyr::select(all_ard_groups(), all_ard_variables()) |>
       dplyr::filter(variable != "..ard_hierarchical_overall..")
   )
 })
 
-test_that("ard_sort() works with only one variable in x", {
+test_that("sort_ard_hierarchical() works with only one variable in x", {
   ard_single <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = AETERM,
@@ -138,7 +138,7 @@ test_that("ard_sort() works with only one variable in x", {
   )
 
   # sort = 'descending'
-  expect_silent(ard_single <- ard_sort(ard_single))
+  expect_silent(ard_single <- sort_ard_hierarchical(ard_single))
   expect_equal(
     ard_single |>
       dplyr::filter(variable == "AETERM") |>
@@ -152,7 +152,7 @@ test_that("ard_sort() works with only one variable in x", {
   )
 
   # sort = 'alphanumeric'
-  expect_silent(ard_single <- ard_sort(ard_single, sort = "alphanumeric"))
+  expect_silent(ard_single <- sort_ard_hierarchical(ard_single, sort = "alphanumeric"))
   expect_equal(
     ard_single |>
       dplyr::filter(variable == "AETERM") |>
@@ -163,7 +163,7 @@ test_that("ard_sort() works with only one variable in x", {
   )
 })
 
-test_that("ard_sort() works when some variables not included in x", {
+test_that("sort_ard_hierarchical() works when some variables not included in x", {
   ard_incl <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
@@ -176,17 +176,17 @@ test_that("ard_sort() works when some variables not included in x", {
 
   expect_equal(
     ard_incl |>
-      ard_sort() |>
+      sort_ard_hierarchical() |>
       dplyr::select(all_ard_groups(), all_ard_variables()),
     ard |>
-      ard_sort() |>
+      sort_ard_hierarchical() |>
       dplyr::filter(variable != "RACE") |>
       dplyr::select(all_ard_groups(), all_ard_variables()),
     ignore_attr = TRUE
   )
 })
 
-test_that("ard_sort() works when sorting using p instead of n", {
+test_that("sort_ard_hierarchical() works when sorting using p instead of n", {
   ard <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
@@ -196,7 +196,7 @@ test_that("ard_sort() works when sorting using p instead of n", {
     statistic = everything() ~ "p"
   )
 
-  expect_silent(ard_p <- ard_sort(ard))
+  expect_silent(ard_p <- sort_ard_hierarchical(ard))
 
   ard <- ard_stack_hierarchical(
     data = ADAE_subset,
@@ -208,16 +208,16 @@ test_that("ard_sort() works when sorting using p instead of n", {
   )
 })
 
-test_that("ard_sort() error messaging works", {
+test_that("sort_ard_hierarchical() error messaging works", {
   # invalid x input
   expect_snapshot(
-    ard_sort(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")),
+    sort_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")),
     error = TRUE
   )
 
   # invalid sort input
   expect_snapshot(
-    ard_sort(ard, sort = "no_sorting"),
+    sort_ard_hierarchical(ard, sort = "no_sorting"),
     error = TRUE
   )
 
@@ -232,7 +232,7 @@ test_that("ard_sort() error messaging works", {
   )
 
   expect_snapshot(
-    ard_sort(ard),
+    sort_ard_hierarchical(ard),
     error = TRUE
   )
 })

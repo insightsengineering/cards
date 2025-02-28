@@ -18,8 +18,8 @@
 #'   Defaults to `"descending"`.
 #'
 #' @return an ARD data frame of class 'card'
-#' @seealso [ard_filter()]
-#' @name ard_sort
+#' @seealso [filter_ard_hierarchical()]
+#' @name sort_ard_hierarchical
 #'
 #' @examplesIf (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))
 #' ard_stack_hierarchical(
@@ -29,7 +29,7 @@
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
 #'   id = USUBJID
 #' ) |>
-#'   ard_sort()
+#'   sort_ard_hierarchical()
 #'
 #' ard_stack_hierarchical_count(
 #'   ADAE,
@@ -37,12 +37,12 @@
 #'   by = TRTA,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
 #' ) |>
-#'   ard_sort("descending")
+#'   sort_ard_hierarchical("descending")
 NULL
 
-#' @rdname ard_sort
+#' @rdname sort_ard_hierarchical
 #' @export
-ard_sort <- function(x, sort = "descending") {
+sort_ard_hierarchical <- function(x, sort = "descending") {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------

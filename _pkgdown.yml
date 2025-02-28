@@ -75,8 +75,8 @@ reference:
       - as_cards_fn
   - subtitle: "Wrangle ARD"
     contents:
-      - ard_filter
-      - ard_sort
+      - filter_ard_hierarchical
+      - sort_ard_hierarchical
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics

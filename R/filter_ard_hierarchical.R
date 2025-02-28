@@ -28,8 +28,8 @@
 #' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")`
 #'
 #' @return an ARD data frame of class 'card'
-#' @seealso [ard_sort()]
-#' @name ard_filter
+#' @seealso [sort_ard_hierarchical()]
+#' @name filter_ard_hierarchical
 #'
 #' @examplesIf (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))
 #' # create a base AE ARD
@@ -43,20 +43,20 @@
 #'
 #' # Example 1 ----------------------------------
 #' # Keep AEs that have more than 3 observed across the TRTA groups
-#' ard_filter(ard, sum(n) > 3)
+#' filter_ard_hierarchical(ard, sum(n) > 3)
 #'
 #' # Example 2 ----------------------------------
 #' # Keep AEs where at least one TRTA group has more than 3 AEs observed
-#' ard_filter(ard, n > 3)
+#' filter_ard_hierarchical(ard, n > 3)
 #'
 #' # Example 3 ----------------------------------
 #' # Keep AEs that have an overall prevalence of greater than 5%
-#' ard_filter(ard, sum(n) / sum(N) > 0.05)
+#' filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
 NULL
 
-#' @rdname ard_filter
+#' @rdname filter_ard_hierarchical
 #' @export
-ard_filter <- function(x, filter) {
+filter_ard_hierarchical <- function(x, filter) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
