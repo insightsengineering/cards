@@ -83,6 +83,27 @@ test_that("filter_ard_hierarchical() works when some variables not included in x
   expect_silent(filter_ard_hierarchical(ard, n > 10))
 })
 
+test_that("filter_ard_hierarchical() works with overall=TRUE", {
+  ard_overall <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    id = USUBJID,
+    over_variables = TRUE,
+    overall = TRUE
+  )
+
+  expect_equal(
+    ard_overall |>
+      filter_ard_hierarchical(n > 5) |>
+      nrow(),
+    ard |>
+      filter_ard_hierarchical(n > 5) |>
+      nrow()
+  )
+})
+
 test_that("filter_ard_hierarchical() error messaging works", {
   # invalid x input
   expect_snapshot(

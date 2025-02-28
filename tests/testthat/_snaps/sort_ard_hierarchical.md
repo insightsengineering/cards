@@ -1,4 +1,4 @@
-# ard_sort() works
+# sort_ard_hierarchical() works
 
     Code
       print(dplyr::select(ard_s, all_ard_groups(), all_ard_variables()), n = 50)
@@ -60,27 +60,27 @@
       i 184 more rows
       i Use `print(n = ...)` to see more rows
 
-# ard_sort() error messaging works
+# sort_ard_hierarchical() error messaging works
 
     Code
-      ard_sort(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"))
+      sort_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"))
     Condition
-      Error in `ard_sort()`:
+      Error in `sort_ard_hierarchical()`:
       ! Sorting is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()`.
 
 ---
 
     Code
-      ard_sort(ard, sort = "no_sorting")
+      sort_ard_hierarchical(ard, sort = "no_sorting")
     Condition
-      Error in `ard_sort()`:
+      Error in `sort_ard_hierarchical()`:
       ! The `sort` argument must be either "descending" or "alphanumeric".
 
 ---
 
     Code
-      ard_sort(ard)
+      sort_ard_hierarchical(ard)
     Condition
-      Error in `ard_sort()`:
+      Error in `sort_ard_hierarchical()`:
       ! If `sort='descending'` then either "n" or "p" must be present in `x` for all variables in order to calculate the count sums used for sorting.
 

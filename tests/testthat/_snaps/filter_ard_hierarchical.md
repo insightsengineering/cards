@@ -1,4 +1,4 @@
-# ard_filter() works
+# filter_ard_hierarchical() works
 
     Code
       ard_f
@@ -21,27 +21,28 @@
       i Use `print(n = ...)` to see more rows
       i 4 more variables: context, fmt_fn, warning, error
 
-# ard_filter() error messaging works
+# filter_ard_hierarchical() error messaging works
 
     Code
-      ard_filter(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"), n > 10)
+      filter_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+      n > 10)
     Condition
-      Error in `ard_filter()`:
+      Error in `filter_ard_hierarchical()`:
       ! Filtering is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()`.
 
 ---
 
     Code
-      ard_filter(ard, 10)
+      filter_ard_hierarchical(ard, 10)
     Condition
-      Error in `ard_filter()`:
+      Error in `filter_ard_hierarchical()`:
       ! `filter` must be an expression.
 
 ---
 
     Code
-      ard_filter(ard, A > 5)
+      filter_ard_hierarchical(ard, A > 5)
     Condition
-      Error in `ard_filter()`:
+      Error in `filter_ard_hierarchical()`:
       ! The expression provided as `filter` includes condition for statistic or `by` variable "A" which is not present in the ARD.
 

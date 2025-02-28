@@ -138,14 +138,13 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
 # this function reformats a hierarchical ARD for sorting
 .ard_reformat_sort <- function(x, sort, by, outer_cols) {
   # reformat data from overall column (if present)
-  browser()
   is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
-  if (sum(is_overall_col) > 0) {
+  if (sum(is_overall_col) > 0 && length(by) > 0) {
     x_overall_col <- x[is_overall_col, ] |>
       cards::rename_ard_groups_shift(shift = length(by)) |>
       dplyr::mutate(
-        group1 = if (length(by) > 1) by[1] else group1,
-        group1_level = if (length(by) > 1) list("..overall..") else group1_level
+        group1 = by[1],
+        group1_level = list("..overall..")
       ) |>
       dplyr::select(any_of(names(x)))
     x <- dplyr::bind_rows(x[!is_overall_col, ], x_overall_col)
