@@ -4,21 +4,23 @@
 #'
 #' This function is used to filter stacked hierarchical ARDs.
 #'
+#' For the purposes of this function, we define a "variable group" as a combination of ARD rows grouped by the
+#' combination of all their variable levels, but excluding any `by` variables.
+#'
 #' @param x (`card`)\cr
 #'   a stacked hierarchical ARD of class `'card'` created using [`ard_stack_hierarchical()`].
 #' @param filter (`expression`)\cr
-#'   an expression that is used to filter rows of the hierarchical ARD. See the Details
-#'   section below.
+#'   an expression that is used to filter variable groups of the hierarchical ARD. See the Details section below.
 #'
 #' @details
-#' The `filter` argument can be used to filter out rows of a hierarchical ARD which do not meet the requirements
-#' provided as an expression. Rows can be filtered on the values of any of the possible statistics (`n`, `p`, and `N`)
-#' provided they are included at least once in the ARD, as well as the values of any `by` variables. For each entry that
-#' does not meet the filtering requirement, all statistics corresponding to that entry will be removed from the ARD.
-#' Filtering is only applied to rows that correspond to the innermost variable in the hierarchy---all outer variable
-#' (summary) rows will be kept. In addition to filtering on individual statistic values, filters can be applied across
-#' the hierarchical row (i.e. across all `by` variable values) by using aggregate functions such as `sum()` and
-#' `mean()`.
+#' The `filter` argument can be used to filter out variable groups of a hierarchical ARD which do not meet the
+#' requirements provided as an expression. Variable groups can be filtered on the values of any of the possible
+#' statistics (`n`, `p`, and `N`) provided they are included at least once in the ARD, as well as the values of any
+#' `by` variables. For each variable group that does not meet the filtering requirement, all statistics (rows)
+#' corresponding to that group will be removed from the ARD. Filtering is only applied to rows that correspond to the
+#' innermost variable in the hierarchy -- all outer variable (summary) rows will be kept. In addition to filtering on
+#' individual statistic values, filters can be applied across the variable group (i.e. across all `by` variable values)
+#' by using aggregate functions such as `sum()` and `mean()`.
 #'
 #' If data for overall statistics is present in the ARD (`ard_stack_hierarchical(overall=TRUE)`), this data will not be
 #' used in any filters (i.e. `sum(n)` will not include the overall `n` in a given group). To filter on overall
@@ -37,7 +39,7 @@
 #' - `filter = mean(n) > 4 | n > 3` - keep AEs from variable groups where an average of least 4 AEs is observed across
 #'   the levels of the group _or_ at least one level in the variable group has more than 3 AEs observed
 #' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")` - keep AEs from variable groups where more than 2 AEs
-#'   are observed in a row from the variable group where the `by` variable is `TRTA` and the level of `TRTA` is
+#'   are observed in a record from the variable group where the `by` variable is `TRTA` and the level of `TRTA` is
 #'   `"Xanomeline High Dose"`.
 #'
 #' @return an ARD data frame of class 'card'

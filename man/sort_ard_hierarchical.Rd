@@ -13,12 +13,12 @@ a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard
 \item{sort}{(\code{string})\cr
 type of sorting to perform. Value must be one of:
 \itemize{
-\item \code{"alphanumeric"} - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
+\item \code{"alphanumeric"} - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
 by \code{variable_label} text.
-\item \code{"descending"} - within each hierarchical section of the ARD, count sums are calculated for each row and rows are
-sorted in descending order by sum. If \code{sort = "descending"}, the \code{n} statistic is used to calculate row sums if
-included in \code{statistic} for all variables, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present in \code{x} for
-all variables, an error will occur.
+\item \code{"descending"} - within each variable group of the ARD, count sums are calculated for each group and groups are
+sorted in descending order by sum. If \code{sort = "descending"}, the \code{n} statistic is used to calculate variable
+group sums if included in \code{statistic} for all variables, otherwise \code{p} is used. If neither \code{n} nor \code{p} are
+present in \code{x} for all variables, an error will occur.
 }
 
 Defaults to \code{"descending"}.}
@@ -30,6 +30,9 @@ an ARD data frame of class 'card'
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 
 This function is used to sort stacked hierarchical ARDs.
+
+For the purposes of this function, we define a "variable group" as a combination of ARD rows grouped by the
+combination of all their variable levels, but excluding any \code{by} variables.
 }
 \note{
 If overall data is present in \code{x} (i.e. the ARD was created with \code{ard_stack_hierarchical(overall=TRUE)}), the

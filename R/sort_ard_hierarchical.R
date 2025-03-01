@@ -4,16 +4,19 @@
 #'
 #' This function is used to sort stacked hierarchical ARDs.
 #'
+#' For the purposes of this function, we define a "variable group" as a combination of ARD rows grouped by the
+#' combination of all their variable levels, but excluding any `by` variables.
+#'
 #' @param x (`card`)\cr
 #'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
 #' @param sort (`string`)\cr
 #'   type of sorting to perform. Value must be one of:
-#'   - `"alphanumeric"` - within each hierarchical section of the ARD, rows are ordered alphanumerically (i.e. A to Z)
+#'   - `"alphanumeric"` - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
 #'     by `variable_label` text.
-#'   - `"descending"` - within each hierarchical section of the ARD, count sums are calculated for each row and rows are
-#'     sorted in descending order by sum. If `sort = "descending"`, the `n` statistic is used to calculate row sums if
-#'     included in `statistic` for all variables, otherwise `p` is used. If neither `n` nor `p` are present in `x` for
-#'     all variables, an error will occur.
+#'   - `"descending"` - within each variable group of the ARD, count sums are calculated for each group and groups are
+#'     sorted in descending order by sum. If `sort = "descending"`, the `n` statistic is used to calculate variable
+#'     group sums if included in `statistic` for all variables, otherwise `p` is used. If neither `n` nor `p` are
+#'     present in `x` for all variables, an error will occur.
 #'
 #'   Defaults to `"descending"`.
 #'
@@ -191,7 +194,7 @@ sort_ard_hierarchical <- function(x, sort = "descending") {
     }) |>
     dplyr::bind_rows() |>
     tidyr::unnest(all_of(c(cards::all_ard_groups("levels"), cards::all_ard_variables("levels")))) |>
-    # summary rows remain at the top of each sub-section when sorting
+    # summary row groups remain at the top of each sub-section when sorting
     dplyr::mutate(across(c(all_ard_groups("names")), .fns = ~ tidyr::replace_na(., "..empty..")))
 
   x
