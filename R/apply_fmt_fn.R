@@ -103,7 +103,7 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
         !grepl("\\.", x),
         0L,
         gsub("%", "", x) |> # remove percent sign if it is there
-          strsplit("xx.xx", split = ".", fixed = TRUE) |> # split string at decimal place
+          strsplit(split = ".", fixed = TRUE) |> # split string at decimal place
           unlist() %>%
           `[`(2) %>% # get the string after the period
           {ifelse(is.na(.), 0L, nchar(.))} # styler: off
