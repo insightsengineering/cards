@@ -29,8 +29,9 @@ The \code{filter} argument can be used to filter out variable groups of a hierar
 requirements provided as an expression. Variable groups can be filtered on the values of any of the possible
 statistics (\code{n}, \code{p}, and \code{N}) provided they are included at least once in the ARD, as well as the values of any
 \code{by} variables. For each variable group that does not meet the filtering requirement, all statistics (rows)
-corresponding to that group will be removed from the ARD. Filtering is only applied to rows that correspond to the
-innermost variable in the hierarchy -- all outer variable (summary) rows will be kept. In addition to filtering on
+corresponding to that group will be removed from the ARD. Filtering is only applied to variable groups that
+correspond to the innermost variable in the hierarchy -- all outer (summary) variable groups will be kept (e.g.
+variable groups that correspond to an SOC and all of its AEs, not a single AE). In addition to filtering on
 individual statistic values, filters can be applied across the variable group (i.e. across all \code{by} variable values)
 by using aggregate functions such as \code{sum()} and \code{mean()}.
 
