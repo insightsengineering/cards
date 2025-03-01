@@ -1,4 +1,4 @@
-# cards 0.5.0.9001
+# cards 0.5.0.9002
 
 * Small update to account for a change in R-devel.
 
