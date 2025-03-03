@@ -1,6 +1,9 @@
 #' Build ARD from Tidier
 #'
 #' @description
+#' `r lifecycle::badge("questioning")`\cr
+#' *Function is questioning because we think a better solution may be `ard_continuous()` + `ard_formals()`.*
+#'
 #' Function converts a model's one-row tidy data frame into an ARD structure.
 #' The tidied data frame must have been constructed with
 #' [eval_capture_conditions()].
@@ -26,6 +29,7 @@
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' # example how one may create a fisher.test() ARD function

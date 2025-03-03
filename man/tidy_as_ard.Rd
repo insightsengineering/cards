@@ -39,6 +39,9 @@ named list of values that will be added to the ARD data frame.}
 an ARD data frame of class 'card'
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}\cr
+\emph{Function is questioning because we think a better solution may be \code{ard_continuous()} + \code{ard_formals()}.}
+
 Function converts a model's one-row tidy data frame into an ARD structure.
 The tidied data frame must have been constructed with
 \code{\link[=eval_capture_conditions]{eval_capture_conditions()}}.
@@ -74,3 +77,4 @@ my_ard_fishertest <- function(data, by, variable, ...) {
 
 my_ard_fishertest(mtcars, by = "am", variable = "vs")
 }
+\keyword{internal}
