@@ -29,20 +29,29 @@ The \code{filter} argument can be used to filter out variable groups of a hierar
 requirements provided as an expression. Variable groups can be filtered on the values of any of the possible
 statistics (\code{n}, \code{p}, and \code{N}) provided they are included at least once in the ARD, as well as the values of any
 \code{by} variables. For each variable group that does not meet the filtering requirement, all statistics (rows)
-corresponding to that group will be removed from the ARD. Filtering is only applied to variable groups that
-correspond to the innermost variable in the hierarchy -- all outer (summary) variable groups will be kept (e.g.
-variable groups that correspond to an SOC and all of its AEs, not a single AE). In addition to filtering on
-individual statistic values, filters can be applied across the variable group (i.e. across all \code{by} variable values)
-by using aggregate functions such as \code{sum()} and \code{mean()}.
+corresponding to that group will be removed from the ARD. In addition to filtering on individual statistic values,
+filters can be applied across the variable group (i.e. across all \code{by} variable values) by using aggregate functions
+such as \code{sum()} and \code{mean()}. Filtering is only applied to variable groups that correspond to the innermost variable
+in the hierarchy -- all outer (summary) variable groups will be kept.
+
+For example, consider an ARD created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} with \code{variables = c(AESOC, AEDECOD)} and
+\code{by = ARM} to summarize adverse events (AEs) by system organ class (SOC) in each treatment arm. Each
+"variable group" will be comprised of all rows corresponding to a unique SOC/AE combination in any treatment arm. If
+a filter of \code{n > 3} is applied, each variable group will be checked for at least one row that corresponds to the
+\code{n} statistic and has a value greater than 3, and if any row satisfies the filter condition then all rows from the
+variable group (i.e. all statistics & treatment groups) will be retained in the ARD. Any overall or "outer" variable
+groups that count \emph{all} AEs corresponding to a unique SOC are kept whether or not the filter condition is met within
+the variable group.
 
 If data for overall statistics is present in the ARD (\code{ard_stack_hierarchical(overall=TRUE)}), this data will not be
 used in any filters (i.e. \code{sum(n)} will not include the overall \code{n} in a given group). To filter on overall
-statistics use the \code{sum()} function in your filter instead (i.e. \code{sum(n)} is equal to the "overall" \code{n} across \code{by}
-variable groups).
+statistics use the \code{sum()} function in your filter instead (i.e. \code{sum(n)} is equal to the "overall" \code{n} across any
+\code{by} variables).
 
 If no \code{by} variables were used (i.e. \code{ard_stack_hierarchical(by=NULL)}), the only grouping performed prior to
 filtering will be grouping all statistics together for each combination of variable levels, i.e. filters will be
-applied independently to each combination of variable levels.
+applied independently to each combination of variable levels. Using the previous example of an ARD of AEs by SOC,
+if \code{by=NULL} then each "variable group" will contain all rows corresponding to a unique SOC/AE combination.
 
 Some examples of possible filters:
 \itemize{

@@ -17,20 +17,29 @@
 #' requirements provided as an expression. Variable groups can be filtered on the values of any of the possible
 #' statistics (`n`, `p`, and `N`) provided they are included at least once in the ARD, as well as the values of any
 #' `by` variables. For each variable group that does not meet the filtering requirement, all statistics (rows)
-#' corresponding to that group will be removed from the ARD. Filtering is only applied to variable groups that
-#' correspond to the innermost variable in the hierarchy -- all outer (summary) variable groups will be kept (e.g.
-#' variable groups that correspond to an SOC and all of its AEs, not a single AE). In addition to filtering on
-#' individual statistic values, filters can be applied across the variable group (i.e. across all `by` variable values)
-#' by using aggregate functions such as `sum()` and `mean()`.
+#' corresponding to that group will be removed from the ARD. In addition to filtering on individual statistic values,
+#' filters can be applied across the variable group (i.e. across all `by` variable values) by using aggregate functions
+#' such as `sum()` and `mean()`. Filtering is only applied to variable groups that correspond to the innermost variable
+#' in the hierarchy -- all outer (summary) variable groups will be kept.
+#'
+#' For example, consider an ARD created using [ard_stack_hierarchical()] with `variables = c(AESOC, AEDECOD)` and
+#' `by = ARM` to summarize adverse events (AEs) by system organ class (SOC) in each treatment arm. Each
+#' "variable group" will be comprised of all rows corresponding to a unique SOC/AE combination in any treatment arm. If
+#' a filter of `n > 3` is applied, each variable group will be checked for at least one row that corresponds to the
+#' `n` statistic and has a value greater than 3, and if any row satisfies the filter condition then all rows from the
+#' variable group (i.e. all statistics & treatment groups) will be retained in the ARD. Any overall or "outer" variable
+#' groups that count _all_ AEs corresponding to a unique SOC are kept whether or not the filter condition is met within
+#' the variable group.
 #'
 #' If data for overall statistics is present in the ARD (`ard_stack_hierarchical(overall=TRUE)`), this data will not be
 #' used in any filters (i.e. `sum(n)` will not include the overall `n` in a given group). To filter on overall
-#' statistics use the `sum()` function in your filter instead (i.e. `sum(n)` is equal to the "overall" `n` across `by`
-#' variable groups).
+#' statistics use the `sum()` function in your filter instead (i.e. `sum(n)` is equal to the "overall" `n` across any
+#' `by` variables).
 #'
 #' If no `by` variables were used (i.e. `ard_stack_hierarchical(by=NULL)`), the only grouping performed prior to
 #' filtering will be grouping all statistics together for each combination of variable levels, i.e. filters will be
-#' applied independently to each combination of variable levels.
+#' applied independently to each combination of variable levels. Using the previous example of an ARD of AEs by SOC,
+#' if `by=NULL` then each "variable group" will contain all rows corresponding to a unique SOC/AE combination.
 #'
 #' Some examples of possible filters:
 #' - `filter = n > 5` - keep AEs from variable groups where at least one level in the group has more than 3 AEs observed
