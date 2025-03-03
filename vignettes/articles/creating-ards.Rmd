@@ -186,7 +186,7 @@ However, now we have the expected 8 rows and we can see that the `stat_name` and
 # Formalizing Your Function
 
 If you are writing function that will be used multiple times, for example adding it to a package, you may want to include the function's arguments in the returned ARD.
-Returning the arguments improves the tracability of the ARD, and requires combining the function's default arguments (the formals) and any argument passed by the user.
+Returning the arguments improves the traceability of the ARD, and requires combining the function's default arguments (the formals) and any argument passed by the user.
 The `ard_formals()` function helps combine these results.
 
 In the example below, we expand out one-sample t-test example with the argument values passed to `t.test(...)`
@@ -195,13 +195,15 @@ In the example below, we expand out one-sample t-test example with the argument 
 my_ard_one_sample_t_test <- function(data, variable, ...) {
   # define function to calculate results
   t_test_fun <- function(x) t.test(x, ...) |> broom::tidy()
-  t_test_fun <- 
+  t_test_fun <-
     cards::as_cards_fn(
-      t_test_fun, 
-      c("estimate", "statistic", "p.value", "parameter", 
-        "conf.low", "conf.high", "method", "alternative")
+      t_test_fun,
+      c(
+        "estimate", "statistic", "p.value", "parameter",
+        "conf.low", "conf.high", "method", "alternative"
+      )
     )
-  
+
   # create the ARD of results
   ard_results <-
     cards::ard_continuous(
@@ -211,16 +213,16 @@ my_ard_one_sample_t_test <- function(data, variable, ...) {
     ) |>
     dplyr::mutate(context = "t_test_one_sample")
 
-  # ard of argument values 
+  # ard of argument values
   ard_arguments <-
     cards::ard_formals(
       fun = asNamespace("stats")[["t.test.default"]],
       arg_names = c("mu", "paired", "var.equal", "conf.level"),
       passed_args = rlang::dots_list(...)
     )
-  
+
   # combine ARDs and fill arguments with missing information
-  dplyr::bind_rows(ard_results, ard_arguments) |> 
+  dplyr::bind_rows(ard_results, ard_arguments) |>
     dplyr::mutate(dplyr::across(c(variable, context), dplyr::first))
 }
 
@@ -228,7 +230,7 @@ cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   my_ard_one_sample_t_test(
     variable = "AGE",
-    var.equal = TRUE, 
+    var.equal = TRUE,
     conf.level = 0.90
   )
 ```
