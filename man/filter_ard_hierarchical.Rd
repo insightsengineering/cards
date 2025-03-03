@@ -35,7 +35,7 @@ such as \code{sum()} and \code{mean()}. Filtering is only applied to variable gr
 in the hierarchy -- all outer (summary) variable groups will be kept.
 
 For example, consider an ARD created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} with \code{variables = c(AESOC, AEDECOD)} and
-\code{by = ARM} to summarize adverse events (AEs) by system organ class (SOC) in each treatment arm. Each
+\code{by = ARM} to summarize adverse events (AEs) in each system organ class (SOC) by treatment arm. Each
 "variable group" will be comprised of all rows corresponding to a unique SOC/AE combination in any treatment arm. If
 a filter of \code{n > 3} is applied, each variable group will be checked for at least one row that corresponds to the
 \code{n} statistic and has a value greater than 3, and if any row satisfies the filter condition then all rows from the
