@@ -1,5 +1,7 @@
 # cards 0.5.1.9001
 
+* Added function `ard_formals()` to assist in adding a function's formals, that is, the arguments with their default values, along with user-passed arguments into an ARD structure.
+
 # cards 0.5.1
 
 * Small update to account for a change in R-devel.
