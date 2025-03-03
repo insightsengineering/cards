@@ -64,7 +64,6 @@ reference:
       - apply_fmt_fn
       - update_ard
       - process_selectors
-      -
       - ard_formals
       - nest_for_ard
       - default_stat_labels
