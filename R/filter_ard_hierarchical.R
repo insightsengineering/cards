@@ -40,15 +40,15 @@
 #' |DIARRHOEA                      |  9 (10%)  |             4 (4.8%)  |            5 (6.0%)  |
 #' |VOMITING                       | 3 (3.5%)  |             7 (8.3%)  |            3 (3.6%)  |
 #'
-#' Filters applied to the summary statistics of the innermost variable in the hierarchies---`AEDECOD`
+#' Filters are applied to the summary statistics of the innermost variable in the hierarchy---`AEDECOD`
 #'   in this case.
 #' If any of the summary statistics meet the filter requirement for any of the treatment groups,
 #'   the entire row is retained.
 #' For example, if `filter = n >= 9` were passed, the criteria would be met for DIARRHOEA
 #'   as the Placebo group observed 9 AEs and as a result the summary statistics for the other
-#'   treatment groups are retained as well.
+#'   treatment groups would be retained as well.
 #' Conversely, no treatment groups' summary statistics satisfy the filter requirement
-#'   for VOMITING and all rows associated with this AE will be removed.
+#'   for VOMITING so all rows associated with this AE would be removed.
 #'
 #' In addition to filtering on individual statistic values, filters can be applied
 #'   across the treatment groups (i.e. across all `by` variable values) by using
@@ -62,10 +62,10 @@
 #' Some examples of possible filters:
 #' - `filter = n > 5`: keep AEs where one of the treatment groups observed more than 5 AEs
 #' - `filter = n == 2 & p < 0.05`: keep AEs where one of the treatment groups observed exactly 2
-#'    AEs observed _and_ the proportion is less than 5%
-#' - `filter = sum(n) >= 4`: keep AEs where there were 4 or more observed across the treatment groups
-#' - `filter = mean(n) > 4 | n > 3`: keep AEs where there were mean number of AEs is 4 or more
-#'    across the treatment groups or one of the treatment groups observed more than 3 AEs
+#'    AEs _and_ one of the treatment groups observed a proportion less than 5%
+#' - `filter = sum(n) >= 4`: keep AEs where there were 4 or more AEs observed across the treatment groups
+#' - `filter = mean(n) > 4 | n > 3`: keep AEs where the mean number of AEs is 4 or more across the
+#'   treatment groups _or_ one of the treatment groups observed more than 3 AEs
 #' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")`: keep AEs where the
 #'    `"Xanomeline High Dose"` treatment group observed more than 2 AEs
 #'
