@@ -13,44 +13,62 @@
 #'   an expression that is used to filter variable groups of the hierarchical ARD. See the Details section below.
 #'
 #' @details
-#' The `filter` argument can be used to filter out variable groups of a hierarchical ARD which do not meet the
-#' requirements provided as an expression. Variable groups can be filtered on the values of any of the possible
-#' statistics (`n`, `p`, and `N`) provided they are included at least once in the ARD, as well as the values of any
-#' `by` variables. For each variable group that does not meet the filtering requirement, all statistics (rows)
-#' corresponding to that group will be removed from the ARD. In addition to filtering on individual statistic values,
-#' filters can be applied across the variable group (i.e. across all `by` variable values) by using aggregate functions
-#' such as `sum()` and `mean()`. Filtering is only applied to variable groups that correspond to the innermost variable
-#' in the hierarchy -- all outer (summary) variable groups will be kept.
+#' The `filter` argument can be used to filter out variable groups of a hierarchical
+#'   ARD which do not meet the requirements provided as an expression.
+#' Variable groups can be filtered on the values of any of the possible
+#'   statistics (`n`, `p`, and `N`) provided they are included at least once
+#'   in the ARD, as well as the values of any `by` variables.
 #'
-#' For example, consider an ARD created using [ard_stack_hierarchical()] with `variables = c(AESOC, AEDECOD)` and
-#' `by = ARM` to summarize adverse events (AEs) in each system organ class (SOC) by treatment arm. Each
-#' "variable group" will be comprised of all rows corresponding to a unique SOC/AE combination in any treatment arm. If
-#' a filter of `n > 3` is applied, each variable group will be checked for at least one row that corresponds to the
-#' `n` statistic and has a value greater than 3, and if any row satisfies the filter condition then all rows from the
-#' variable group (i.e. all statistics & treatment groups) will be retained in the ARD. Any overall or "outer" variable
-#' groups that count _all_ AEs corresponding to a unique SOC are kept whether or not the filter condition is met within
-#' the variable group.
+#' To illustrate how the function works, consider the typical example below
+#'   where the AE summaries are provided by treatment group.
 #'
-#' If data for overall statistics is present in the ARD (`ard_stack_hierarchical(overall=TRUE)`), this data will not be
-#' used in any filters (i.e. `sum(n)` will not include the overall `n` in a given group). To filter on overall
-#' statistics use the `sum()` function in your filter instead (i.e. `sum(n)` is equal to the "overall" `n` across any
-#' `by` variables).
+#' ```r
+#' ADAE |>
+#'   dplyr::filter(AESOC == "GASTROINTESTINAL DISORDERS",
+#'                 AEDECOD %in% c("VOMITING", "DIARRHOEA")) |>
+#'   ard_stack_hierarchical(
+#'     variables = c(AESOC, AEDECOD),
+#'     by = TRTA,
+#'     denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'     id = USUBJID
+#'   )
+#' ```
 #'
-#' If no `by` variables were used (i.e. `ard_stack_hierarchical(by=NULL)`), the only grouping performed prior to
-#' filtering will be grouping all statistics together for each combination of variable levels, i.e. filters will be
-#' applied independently to each combination of variable levels. Using the previous example of an ARD of AEs by SOC,
-#' if `by=NULL` then each "variable group" will contain all rows corresponding to a unique SOC/AE combination.
+#' |**SOC** / AE                   |  Placebo  | Xanomeline High Dose  | Xanomeline Low Dose  |
+#' |:------------------------------|----------:|----------------------:|---------------------:|
+#' |__GASTROINTESTINAL DISORDERS__ | 11 (13%)  |             10 (12%)  |            8 (9.5%)  |
+#' |DIARRHOEA                      |  9 (10%)  |             4 (4.8%)  |            5 (6.0%)  |
+#' |VOMITING                       | 3 (3.5%)  |             7 (8.3%)  |            3 (3.6%)  |
+#'
+#' Filters applied to the summary statistics of the innermost variable in the hierarchies---`AEDECOD`
+#'   in this case.
+#' If any of the summary statistics meet the filter requirement for any of the treatment groups,
+#'   the entire row is retained.
+#' For example, if `filter = n >= 9` were passed, the criteria would be met for DIARRHOEA
+#'   as the Placebo group observed 9 AEs and as a result the summary statistics for the other
+#'   treatment groups are retained as well.
+#' Conversely, no treatment groups' summary statistics satisfy the filter requirement
+#'   for VOMITING and all rows associated with this AE will be removed.
+#'
+#' In addition to filtering on individual statistic values, filters can be applied
+#'   across the treatment groups (i.e. across all `by` variable values) by using
+#'   aggregate functions such as `sum()` and `mean()`.
+#' A value of `filter = sum(n) >= 18` retains AEs where the sum of the number
+#'   of AEs across the treatment groups is greater than or equal to 18.
+#'
+#' If `ard_stack_hierarchical(overall=TRUE)` was run, the overall column is
+#'   __not__ considered in any filtering.
 #'
 #' Some examples of possible filters:
-#' - `filter = n > 5` - keep AEs from variable groups where at least one level in the group has more than 3 AEs observed
-#' - `filter = n == 2 & p < 0.05` - keep AEs from variable groups where at least one level in the group has exactly 2
-#'   AEs observed _and_ at least one level in the variable group has a prevalence of less than 5%
-#' - `filter = sum(n) >= 4` - keep AEs from variable groups where at least 4 AEs are observed across the group
-#' - `filter = mean(n) > 4 | n > 3` - keep AEs from variable groups where an average of least 4 AEs is observed across
-#'   the levels of the group _or_ at least one level in the variable group has more than 3 AEs observed
-#' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")` - keep AEs from variable groups where more than 2 AEs
-#'   are observed in a record from the variable group where the `by` variable is `TRTA` and the level of `TRTA` is
-#'   `"Xanomeline High Dose"`.
+#' - `filter = n > 5`: keep AEs where one of the treatment groups observed more than 5 AEs
+#' - `filter = n == 2 & p < 0.05`: keep AEs where one of the treatment groups observed exactly 2
+#'    AEs observed _and_ the proportion is less than 5%
+#' - `filter = sum(n) >= 4`: keep AEs where there were 4 or more observed across the treatment groups
+#' - `filter = mean(n) > 4 | n > 3`: keep AEs where there were mean number of AEs is 4 or more
+#'    across the treatment groups or one of the treatment groups observed more than 3 AEs
+#' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")`: keep AEs where the
+#'    `"Xanomeline High Dose"` treatment group observed more than 2 AEs
+#'
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [sort_ard_hierarchical()]
