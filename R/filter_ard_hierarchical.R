@@ -117,7 +117,7 @@ filter_ard_hierarchical <- function(x, filter) {
 
   # ignore "overall" data
   is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
-  if (length(by) > 0  && sum(is_overall) > 0) {
+  if (length(by) > 0 && sum(is_overall) > 0) {
     x <- x[!is_overall, ]
   }
 
