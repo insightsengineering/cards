@@ -12,7 +12,7 @@
 #' @param sort (`string`)\cr
 #'   type of sorting to perform. Value must be one of:
 #'   - `"alphanumeric"` - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
-#'     by `variable_label` text.
+#'     by `variable_level` text.
 #'   - `"descending"` - within each variable group of the ARD, count sums are calculated for each group and groups are
 #'     sorted in descending order by sum. If `sort = "descending"`, the `n` statistic is used to calculate variable
 #'     group sums if included in `statistic` for all variables, otherwise `p` is used. If neither `n` nor `p` are

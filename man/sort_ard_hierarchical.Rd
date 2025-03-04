@@ -14,7 +14,7 @@ a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard
 type of sorting to perform. Value must be one of:
 \itemize{
 \item \code{"alphanumeric"} - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
-by \code{variable_label} text.
+by \code{variable_level} text.
 \item \code{"descending"} - within each variable group of the ARD, count sums are calculated for each group and groups are
 sorted in descending order by sum. If \code{sort = "descending"}, the \code{n} statistic is used to calculate variable
 group sums if included in \code{statistic} for all variables, otherwise \code{p} is used. If neither \code{n} nor \code{p} are
