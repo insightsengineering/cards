@@ -181,7 +181,9 @@ filter_ard_hierarchical <- function(x, filter, keep_empty_summary = FALSE) {
     if (!dplyr::last(ard_args$variables) %in% x$variable) {
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
-      names(outer_cols) <- x |> dplyr::select(all_ard_groups("names"), -all_of(by_cols)) |> names()
+      names(outer_cols) <- x |>
+        dplyr::select(all_ard_groups("names"), -all_of(by_cols)) |>
+        names()
       x_no_sum <- x |>
         dplyr::mutate(idx = dplyr::row_number()) |>
         .ard_reformat_sort("no_sort", ard_args$by, outer_cols)
