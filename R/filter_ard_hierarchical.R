@@ -4,16 +4,17 @@
 #'
 #' This function is used to filter stacked hierarchical ARDs.
 #'
-#' For the purposes of this function, we define a "variable group" as a combination of ARD rows grouped by the
-#' combination of all their variable levels, but excluding any `by` variables.
+#' For the purposes of this function, we define a "variable group" as a combination of ARD rows
+#' grouped by the combination of all their variable levels, but excluding any `by` variables.
 #'
 #' @param x (`card`)\cr
 #'   a stacked hierarchical ARD of class `'card'` created using [`ard_stack_hierarchical()`].
 #' @param filter (`expression`)\cr
-#'   an expression that is used to filter variable groups of the hierarchical ARD. See the Details section below.
+#'   an expression that is used to filter variable groups of the hierarchical ARD. See the
+#'   Details section below.
 #' @param keep_empty_summary (scalar `logical`)\cr
-#'   Logical argument indicating whether to retain summary rows corresponding to hierarchy sections that have had
-#'   all rows filtered out. Default is `FALSE`.
+#'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
+#'   sections that have had all rows filtered out. Default is `FALSE`.
 #'
 #' @details
 #' The `filter` argument can be used to filter out variable groups of a hierarchical

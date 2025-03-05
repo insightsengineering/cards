@@ -11,11 +11,12 @@ filter_ard_hierarchical(x, filter, keep_empty_summary = FALSE)
 a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
 
 \item{filter}{(\code{expression})\cr
-an expression that is used to filter variable groups of the hierarchical ARD. See the Details section below.}
+an expression that is used to filter variable groups of the hierarchical ARD. See the
+Details section below.}
 
 \item{keep_empty_summary}{(scalar \code{logical})\cr
-Logical argument indicating whether to retain summary rows corresponding to hierarchy sections that have had
-all rows filtered out. Default is \code{FALSE}.}
+Logical argument indicating whether to retain summary rows corresponding to hierarchy
+sections that have had all rows filtered out. Default is \code{FALSE}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -25,8 +26,8 @@ an ARD data frame of class 'card'
 
 This function is used to filter stacked hierarchical ARDs.
 
-For the purposes of this function, we define a "variable group" as a combination of ARD rows grouped by the
-combination of all their variable levels, but excluding any \code{by} variables.
+For the purposes of this function, we define a "variable group" as a combination of ARD rows
+grouped by the combination of all their variable levels, but excluding any \code{by} variables.
 }
 \details{
 The \code{filter} argument can be used to filter out variable groups of a hierarchical
