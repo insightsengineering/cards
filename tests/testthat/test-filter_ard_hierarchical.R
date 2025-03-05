@@ -17,7 +17,7 @@ test_that("filter_ard_hierarchical() works", {
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n > 10))
   expect_snapshot(ard_f)
-  expect_equal(nrow(ard_f), 84)
+  expect_equal(nrow(ard_f), 39)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p > 0.05))
   expect_equal(nrow(ard_f), 171)
@@ -25,16 +25,16 @@ test_that("filter_ard_hierarchical() works", {
 
 test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n == 2 & p < 0.05))
-  expect_equal(nrow(ard_f), 90)
+  expect_equal(nrow(ard_f), 45)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 4))
-  expect_equal(nrow(ard_f), 162)
+  expect_equal(nrow(ard_f), 144)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, mean(n) > 4 | n > 3))
-  expect_equal(nrow(ard_f), 135)
+  expect_equal(nrow(ard_f), 108)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, any(n > 5 & TRTA == "Xanomeline High Dose")))
-  expect_equal(nrow(ard_f), 117)
+  expect_equal(nrow(ard_f), 90)
 })
 
 test_that("filter_ard_hierarchical() returns only summary rows when all rows filtered out", {
@@ -54,6 +54,43 @@ test_that("filter_ard_hierarchical() returns only summary rows when all rows fil
   )
 
   expect_true(all(ard_f$variable == "TRTA"))
+})
+
+test_that("filter_ard_hierarchical(keep_empty_summary) works", {
+  ard <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AEBODSYS, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    id = USUBJID
+  )
+
+  # keep summary rows
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 10, keep_empty_summary = TRUE))
+  expect_equal(nrow(ard_f), 270)
+
+  # remove summary rows
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 10))
+  expect_equal(nrow(ard_f), 153)
+
+  # all inner rows removed (only header rows remain)
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 1000))
+  expect_equal(nrow(ard_f), 9)
+
+  ard_noincl <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AEBODSYS, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    id = USUBJID,
+    include = AETERM
+  )
+
+  # no summary rows to remove
+  expect_silent(ard_f <- filter_ard_hierarchical(ard_noincl, sum(n) > 10))
+  expect_silent(ard_f_keep <- filter_ard_hierarchical(ard_noincl, sum(n) > 10, keep_empty_summary = TRUE))
+  expect_equal(nrow(ard_f), 72)
+  expect_identical(ard_f, ard_f_keep)
 })
 
 test_that("filter_ard_hierarchical() works with only one variable in x", {
@@ -120,6 +157,12 @@ test_that("filter_ard_hierarchical() error messaging works", {
   # invalid filter parameters
   expect_snapshot(
     filter_ard_hierarchical(ard, A > 5),
+    error = TRUE
+  )
+
+  # invalid keep_empty_summary input
+  expect_snapshot(
+    filter_ard_hierarchical(ard, n > 1, keep_empty_summary = NULL),
     error = TRUE
   )
 })
