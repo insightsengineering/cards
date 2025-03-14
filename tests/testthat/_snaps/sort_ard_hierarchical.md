@@ -74,7 +74,7 @@
       sort_ard_hierarchical(ard, sort = "no_sorting")
     Condition
       Error in `sort_ard_hierarchical()`:
-      ! The `sort` argument must be either "descending" or "alphanumeric".
+      ! `sort` must be one of "descending" or "alphanumeric", not "no_sorting".
 
 ---
 

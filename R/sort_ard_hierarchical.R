@@ -50,26 +50,20 @@ NULL
 
 #' @rdname sort_ard_hierarchical
 #' @export
-sort_ard_hierarchical <- function(x, sort = "descending") {
+sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(sort)
   check_class(x, "card")
-  check_string(sort)
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
       "Sorting is only available for stacked hierarchical ARDs created using {.fun ard_stack_hierarchical}.",
       call = get_cli_abort_call()
     )
   }
-  if (!sort %in% c("descending", "alphanumeric")) {
-    cli::cli_abort(
-      "The {.arg sort} argument must be either {.val descending} or {.val alphanumeric}.",
-      call = get_cli_abort_call()
-    )
-  }
+  sort <- arg_match(sort, error_call = get_cli_abort_call())
 
   x_args <- attributes(x)$args
   by_cols <- if (length(x_args$by) > 0) paste0("group", seq_along(length(x_args$by)), c("", "_level")) else NULL

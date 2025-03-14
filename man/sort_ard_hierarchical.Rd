@@ -4,7 +4,7 @@
 \alias{sort_ard_hierarchical}
 \title{Sort Stacked Hierarchical ARDs}
 \usage{
-sort_ard_hierarchical(x, sort = "descending")
+sort_ard_hierarchical(x, sort = c("descending", "alphanumeric"))
 }
 \arguments{
 \item{x}{(\code{card})\cr
