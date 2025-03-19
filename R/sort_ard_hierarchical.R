@@ -8,7 +8,8 @@
 #' combination of all their variable levels, but excluding any `by` variables.
 #'
 #' @param x (`card`)\cr
-#'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()].
+#'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()] or
+#'   [`ard_stack_hierarchical_count()`].
 #' @param sort (`string`)\cr
 #'   type of sorting to perform. Value must be one of:
 #'   - `"alphanumeric"` - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)

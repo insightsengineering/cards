@@ -8,7 +8,8 @@ filter_ard_hierarchical(x, filter, keep_empty = FALSE)
 }
 \arguments{
 \item{x}{(\code{card})\cr
-a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
+a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} or
+\code{\link[=ard_stack_hierarchical_count]{ard_stack_hierarchical_count()}}.}
 
 \item{filter}{(\code{expression})\cr
 an expression that is used to filter variable groups of the hierarchical ARD. See the

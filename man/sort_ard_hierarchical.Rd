@@ -8,7 +8,8 @@ sort_ard_hierarchical(x, sort = c("descending", "alphanumeric"))
 }
 \arguments{
 \item{x}{(\code{card})\cr
-a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}}.}
+a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} or
+\code{\link[=ard_stack_hierarchical_count]{ard_stack_hierarchical_count()}}.}
 
 \item{sort}{(\code{string})\cr
 type of sorting to perform. Value must be one of:

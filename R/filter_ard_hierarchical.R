@@ -8,7 +8,8 @@
 #' grouped by the combination of all their variable levels, but excluding any `by` variables.
 #'
 #' @param x (`card`)\cr
-#'   a stacked hierarchical ARD of class `'card'` created using [`ard_stack_hierarchical()`].
+#'   a stacked hierarchical ARD of class `'card'` created using [`ard_stack_hierarchical()`] or
+#'   [`ard_stack_hierarchical_count()`].
 #' @param filter (`expression`)\cr
 #'   an expression that is used to filter variable groups of the hierarchical ARD. See the
 #'   Details section below.
