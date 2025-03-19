@@ -109,7 +109,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(filter)
-  check_logical(keep_empty)
+  check_scalar_logical(keep_empty)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
