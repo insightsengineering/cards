@@ -64,6 +64,9 @@
 #' If `ard_stack_hierarchical(overall=TRUE)` was run, the overall column is
 #'   __not__ considered in any filtering.
 #'
+#' If `ard_stack_hierarchical(over_variables=TRUE)` was run, any overall statistics are kept regardless
+#' of filtering.
+#'
 #' Some examples of possible filters:
 #' - `filter = n > 5`: keep AEs where one of the treatment groups observed more than 5 AEs
 #' - `filter = n == 2 & p < 0.05`: keep AEs where one of the treatment groups observed exactly 2

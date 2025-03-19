@@ -76,6 +76,9 @@ of AEs across the treatment groups is greater than or equal to 18.
 If \code{ard_stack_hierarchical(overall=TRUE)} was run, the overall column is
 \strong{not} considered in any filtering.
 
+If \code{ard_stack_hierarchical(over_variables=TRUE)} was run, any overall statistics are kept regardless
+of filtering.
+
 Some examples of possible filters:
 \itemize{
 \item \code{filter = n > 5}: keep AEs where one of the treatment groups observed more than 5 AEs
