@@ -66,7 +66,7 @@
       sort_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"))
     Condition
       Error in `sort_ard_hierarchical()`:
-      ! Sorting is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()`.
+      ! Sorting is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
 
 ---
 

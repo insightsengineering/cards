@@ -117,7 +117,10 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
-      "Filtering is only available for stacked hierarchical ARDs created using {.fun ard_stack_hierarchical}.",
+      paste(
+        "Filtering is only available for stacked hierarchical ARDs created using",
+        "{.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}."
+      ),
       call = get_cli_abort_call()
     )
   }

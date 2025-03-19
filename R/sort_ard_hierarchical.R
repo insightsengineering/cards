@@ -60,7 +60,10 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
-      "Sorting is only available for stacked hierarchical ARDs created using {.fun ard_stack_hierarchical}.",
+      paste(
+        "Sorting is only available for stacked hierarchical ARDs created using",
+        "{.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}."
+      ),
       call = get_cli_abort_call()
     )
   }
