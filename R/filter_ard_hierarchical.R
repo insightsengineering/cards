@@ -122,7 +122,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   filter <- enquo(filter)
   if (!quo_is_call(filter)) {
     cli::cli_abort(
-      "{.arg filter} must be an expression.",
+      "The {.arg filter} argument must be an expression.",
       call = get_cli_abort_call()
     )
   }

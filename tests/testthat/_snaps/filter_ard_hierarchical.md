@@ -36,7 +36,7 @@
       filter_ard_hierarchical(ard, 10)
     Condition
       Error in `filter_ard_hierarchical()`:
-      ! `filter` must be an expression.
+      ! The `filter` argument must be an expression.
 
 ---
 
