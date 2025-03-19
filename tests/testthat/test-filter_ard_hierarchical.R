@@ -37,6 +37,24 @@ test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_equal(nrow(ard_f), 90)
 })
 
+test_that("filter_ard_hierarchical() works with ard_stack_hierarchical_count() results", {
+  withr::local_options(width = 200)
+
+  ard <- ard_stack_hierarchical_count(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    over_variables = TRUE
+  )
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, n > 10))
+  expect_equal(nrow(ard_f), 32)
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 15))
+  expect_equal(nrow(ard_f), 42)
+})
+
 test_that("filter_ard_hierarchical() returns only summary rows when all rows filtered out", {
   ard <- ard_stack_hierarchical(
     data = ADAE_subset,
