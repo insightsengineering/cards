@@ -12,7 +12,7 @@
 #' @param filter (`expression`)\cr
 #'   an expression that is used to filter variable groups of the hierarchical ARD. See the
 #'   Details section below.
-#' @param keep_empty_summary (scalar `logical`)\cr
+#' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
 #'
@@ -93,8 +93,8 @@
 #' filter_ard_hierarchical(ard, sum(n) > 3)
 #'
 #' # Example 2 ----------------------------------
-#' # Keep AEs where at least one level in the TRTA group has more than 3 AEs observed & keep all summary rows
-#' filter_ard_hierarchical(ard, n > 3, keep_empty_summary = TRUE)
+#' # Keep AEs where at least one level in the TRTA group has more than 3 AEs observed
+#' filter_ard_hierarchical(ard, n > 3)
 #'
 #' # Example 3 ----------------------------------
 #' # Keep AEs that have an overall prevalence of greater than 5%
@@ -103,13 +103,13 @@ NULL
 
 #' @rdname filter_ard_hierarchical
 #' @export
-filter_ard_hierarchical <- function(x, filter, keep_empty_summary = FALSE) {
+filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(filter)
-  check_logical(keep_empty_summary)
+  check_logical(keep_empty)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
@@ -176,7 +176,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty_summary = FALSE) {
   x <- x[f_idx, ]
 
   # remove summary rows from empty sections if requested
-  if (!keep_empty_summary && length(ard_args$include) > 1) {
+  if (!keep_empty && length(ard_args$include) > 1) {
     outer_cols <- ard_args$variables |> utils::head(-1)
     # if all rows filtered out remove all summary rows - only overall/header rows left
     if (!dplyr::last(ard_args$variables) %in% x$variable) {

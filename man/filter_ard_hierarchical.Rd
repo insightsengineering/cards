@@ -4,7 +4,7 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-filter_ard_hierarchical(x, filter, keep_empty_summary = FALSE)
+filter_ard_hierarchical(x, filter, keep_empty = FALSE)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -14,7 +14,7 @@ a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard
 an expression that is used to filter variable groups of the hierarchical ARD. See the
 Details section below.}
 
-\item{keep_empty_summary}{(scalar \code{logical})\cr
+\item{keep_empty}{(scalar \code{logical})\cr
 Logical argument indicating whether to retain summary rows corresponding to hierarchy
 sections that have had all rows filtered out. Default is \code{FALSE}.}
 }
@@ -103,8 +103,8 @@ ard <- ard_stack_hierarchical(
 filter_ard_hierarchical(ard, sum(n) > 3)
 
 # Example 2 ----------------------------------
-# Keep AEs where at least one level in the TRTA group has more than 3 AEs observed & keep all summary rows
-filter_ard_hierarchical(ard, n > 3, keep_empty_summary = TRUE)
+# Keep AEs where at least one level in the TRTA group has more than 3 AEs observed
+filter_ard_hierarchical(ard, n > 3)
 
 # Example 3 ----------------------------------
 # Keep AEs that have an overall prevalence of greater than 5\%

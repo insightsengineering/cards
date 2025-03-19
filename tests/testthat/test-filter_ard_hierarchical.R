@@ -56,7 +56,7 @@ test_that("filter_ard_hierarchical() returns only summary rows when all rows fil
   expect_true(all(ard_f$variable == "TRTA"))
 })
 
-test_that("filter_ard_hierarchical(keep_empty_summary) works", {
+test_that("filter_ard_hierarchical(keep_empty) works", {
   ard <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(SEX, RACE, AEBODSYS, AETERM),
@@ -66,7 +66,7 @@ test_that("filter_ard_hierarchical(keep_empty_summary) works", {
   )
 
   # keep summary rows
-  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 10, keep_empty_summary = TRUE))
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 10, keep_empty = TRUE))
   expect_equal(nrow(ard_f), 270)
 
   # remove summary rows
@@ -88,7 +88,7 @@ test_that("filter_ard_hierarchical(keep_empty_summary) works", {
 
   # no summary rows to remove
   expect_silent(ard_f <- filter_ard_hierarchical(ard_noincl, sum(n) > 10))
-  expect_silent(ard_f_keep <- filter_ard_hierarchical(ard_noincl, sum(n) > 10, keep_empty_summary = TRUE))
+  expect_silent(ard_f_keep <- filter_ard_hierarchical(ard_noincl, sum(n) > 10, keep_empty = TRUE))
   expect_equal(nrow(ard_f), 72)
   expect_identical(ard_f, ard_f_keep)
 })
@@ -160,9 +160,9 @@ test_that("filter_ard_hierarchical() error messaging works", {
     error = TRUE
   )
 
-  # invalid keep_empty_summary input
+  # invalid keep_empty input
   expect_snapshot(
-    filter_ard_hierarchical(ard, n > 1, keep_empty_summary = NULL),
+    filter_ard_hierarchical(ard, n > 1, keep_empty = NULL),
     error = TRUE
   )
 })

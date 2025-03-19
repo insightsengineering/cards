@@ -49,8 +49,8 @@
 ---
 
     Code
-      filter_ard_hierarchical(ard, n > 1, keep_empty_summary = NULL)
+      filter_ard_hierarchical(ard, n > 1, keep_empty = NULL)
     Condition
       Error in `filter_ard_hierarchical()`:
-      ! The `keep_empty_summary` argument must be class <logical>, not NULL.
+      ! The `keep_empty` argument must be class <logical>, not NULL.
 
