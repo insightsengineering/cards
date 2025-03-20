@@ -16,4 +16,14 @@ test_that("nest_for_ard() works", {
       nrow(),
     16L
   )
+
+  # check order of lgl variables (see Issue #411)
+  expect_equal(
+    mtcars |>
+      dplyr::mutate(am = as.logical(am)) |>
+      nest_for_ard(by = "am", include_data = FALSE) |>
+      dplyr::pull(group1_level) |>
+      unlist(),
+    c(FALSE, TRUE)
+  )
 })
