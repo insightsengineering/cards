@@ -10,8 +10,11 @@
 #'   When, for example, the `'group1_level'` does not exist, the values of the
 #'   new column are filled with the values in the `fill` argument.
 #'   Default is `c(all_ard_groups("names"), all_ard_variables("names"))`.
-#' @param fill (scalar)\cr
+#' @param fill (scalar/glue)\cr
 #'   a scalar to fill column values when the variable does not have levels.
+#'   If a character is passed, then it is processed with `glue::glue()`
+#'   where the `colname` element is available to inject into the string,
+#'   e.g. `'Overall {colname}'` may resolve to `'Overall AGE'` for an AGE column.
 #'   Default is `'Overall'`.
 #' @param unlist `r lifecycle::badge("deprecated")`
 #'
@@ -30,7 +33,7 @@
 #' ADSL |>
 #'   ard_continuous(by = ARM, variables = AGE) |>
 #'   apply_fmt_fn() |>
-#'   rename_ard_columns() |>
+#'   rename_ard_columns(fill = "Overall {colname}") |>
 #'   unlist_ard_columns()
 rename_ard_columns <- function(x,
                                columns = c(all_ard_groups("names"), all_ard_variables("names")),
@@ -95,10 +98,17 @@ rename_ard_columns <- function(x,
             df[[paste0(v, "_level")]] <- list(NULL)
           }
 
+          fill_glued <-
+            case_switch(
+              is.character(fill) ~
+                glue::glue_data(.x = lst_group[v] |> set_names("colname"), fill) |> as.character(),
+              .default = fill
+            )
+
           # replace null values
           df[[lst_group[[v]]]] <-
             df[[paste0(v, "_level")]] |>
-            map(~.x %||% fill)
+            map(~.x %||% fill_glued)
           df[[paste0(v, "_level")]] <- NULL
         }
 
