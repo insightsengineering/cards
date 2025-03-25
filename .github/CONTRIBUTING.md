@@ -91,6 +91,10 @@ usethis::use_standalone("insightsengineering/standalone", file = "checks")
 The {cards} package exports basic functions for creating ARDs (such as, univariate continuous summaries, tabulations, etc.), and utilities for creating/working with ARDs.
 All new functions to create ARDs will live in the [{cardx}](https://github.com/insightsengineering/cardx) package.
 
+## Deprecation Cycle
+
+In the {cards} package we soft deprecate for 6 months, then warn for an additional 6 months, then defunct for 6 more months for a total of 18 months.
+
 ## Code of Conduct
 
 Please note that the cards project is released with a
