@@ -58,7 +58,8 @@ rename_ard_columns <- function(x,
     cli::cli_abort(
       c("The {.arg column} argument may only select columns using {.code all_ard_groups(\"names\")}
        and {.code all_ard_variables(\"names\")}",
-        "i" = "{cli::qty(bad_columns)} Column{?s} {.val {bad_columns}} {?is/are} not a valid selection."),
+        "i" = "{cli::qty(bad_columns)} Column{?s} {.val {bad_columns}} {?is/are} not a valid selection."
+      ),
       call = get_cli_abort_call()
     )
   }
@@ -66,8 +67,10 @@ rename_ard_columns <- function(x,
   # separate selected names from levels
   column_names <- x |>
     dplyr::select(
-      intersect(c(all_ard_groups("names"), all_ard_variables("names")),
-                all_of(columns))
+      intersect(
+        c(all_ard_groups("names"), all_ard_variables("names")),
+        all_of(columns)
+      )
     ) |>
     names()
   all_new_names <- x[column_names] |>
@@ -109,7 +112,7 @@ rename_ard_columns <- function(x,
           # replace null values
           df[[lst_group[[v]]]] <-
             df[[paste0(v, "_level")]] |>
-            map(~.x %||% fill_glued)
+            map(~ .x %||% fill_glued)
           df[[paste0(v, "_level")]] <- NULL
         }
 
@@ -122,6 +125,6 @@ rename_ard_columns <- function(x,
     dplyr::select(-"...ard_row_order...") |>
     dplyr::mutate(
       # replace NULL values with NA, then unlist
-      across(all_of(all_new_names), ~map(., \(value) value %||% NA) |> unlist())
+      across(all_of(all_new_names), ~ map(., \(value) value %||% NA) |> unlist())
     )
 }

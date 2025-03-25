@@ -27,7 +27,6 @@ test_that("rename_ard_columns(columns)", {
     ard_categorical(ADSL, variables = ARM) |>
       rename_ard_columns()
   )
-
 })
 
 test_that("rename_ard_columns(columns) messsaging", {

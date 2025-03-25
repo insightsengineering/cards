@@ -34,7 +34,7 @@ unlist_ard_columns <- function(x,
   # first replace any NULL values with the fill value --------------------------
   x <- x |>
     dplyr::mutate(
-      across(all_of(columns), ~map(., \(value) value %||% .env$fill))
+      across(all_of(columns), ~ map(., \(value) value %||% .env$fill))
     )
 
   # unlist the columns ---------------------------------------------------------

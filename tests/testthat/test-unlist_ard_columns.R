@@ -31,6 +31,6 @@ test_that("unlist_ard_columns() messaging", {
         stat = ifelse(dplyr::row_number() == 1L, list(matrix(1:4)), stat)
       ) |>
       unlist_ard_columns(columns = "stat"),
-    'Cannot unlist column'
+    "Cannot unlist column"
   )
 })
