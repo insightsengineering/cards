@@ -47,5 +47,6 @@ unlist_ard_columns <- function(x,
     x[[var]] <- var_unlisted
   }
 
+  # return unlisted object -----------------------------------------------------
   x
 }

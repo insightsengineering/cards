@@ -43,7 +43,8 @@ rename_ard_columns <- function(x,
     lifecycle::deprecate_warn(
       when = "0.6.0",
       what = "cards::rename_ard_columns(unlist)",
-      with = "unlist_ard_columns()"
+      with = "unlist_ard_columns()",
+      details = "Argument has been ignored."
     )
   }
   set_cli_abort_call()
@@ -55,8 +56,9 @@ rename_ard_columns <- function(x,
     bad_columns <-
       setdiff(columns, dplyr::select(x, all_ard_groups("names"), all_ard_variables("names")) |> names())
     cli::cli_abort(
-      "The {.arg column} argument may only select columns using {.code all_ard_groups(\"names\")}
-       and {.code all_ard_variables(\"names\")}, not columns {.val {bad_columns}}.",
+      c("The {.arg column} argument may only select columns using {.code all_ard_groups(\"names\")}
+       and {.code all_ard_variables(\"names\")}",
+        "i" = "{cli::qty(bad_columns)} Column{?s} {.val {bad_columns}} {?is/are} not a valid selection."),
       call = get_cli_abort_call()
     )
   }
