@@ -1,6 +1,6 @@
 #' Rename ARD Variables
 #'
-#' Rename the grouping and variable columns to their original columns names.
+#' Rename the grouping and variable columns to their original column names.
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
