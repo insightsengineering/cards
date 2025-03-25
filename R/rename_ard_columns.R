@@ -40,7 +40,7 @@ rename_ard_columns <- function(x,
                                fill = "Overall", unlist = NULL) {
   # check inputs ---------------------------------------------------------------
   if (!missing(unlist)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.0",
       what = "cards::rename_ard_columns(unlist)",
       with = "unlist_ard_columns()"
@@ -80,7 +80,6 @@ rename_ard_columns <- function(x,
       "New column name(s) {.val {protected_names}} cannot be added, because they are already present.",
       call = get_cli_abort_call()
     )
-
   }
 
   x |>
@@ -112,7 +111,7 @@ rename_ard_columns <- function(x,
           df[[paste0(v, "_level")]] <- NULL
         }
 
-        df |> dplyr::select(-any_of(columns))
+        df |> dplyr::select(-any_of(c(columns, paste0(columns, "_level"))))
       }
     ) |>
     dplyr::bind_rows() |>

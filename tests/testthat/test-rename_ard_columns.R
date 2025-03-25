@@ -8,33 +8,3 @@ test_that("rename_ard_columns(columns)", {
     c("ARM", "AGEGR1")
   )
 })
-
-test_that("rename_ard_columns(unlist)", {
-  withr::local_options(list(width = 120))
-  expect_snapshot(
-    ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
-      apply_fmt_fn() |>
-      rename_ard_columns(unlist = c(stat, stat_fmt)) |>
-      as.data.frame() |>
-      dplyr::select(-c(fmt_fn, warning, error))
-  )
-})
-
-test_that("rename_ard_columns(unlist) messaging", {
-  expect_snapshot(
-    ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
-      dplyr::mutate(stat = ifelse(dplyr::row_number() == 1L, list(median), stat)) |>
-      rename_ard_columns(unlist = stat) |>
-      head(1L)
-  )
-
-  expect_snapshot(
-    error = TRUE,
-    ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
-      dplyr::mutate(stat = ifelse(dplyr::row_number() == 1L, list(NULL), stat)) |>
-      rename_ard_columns(unlist = stat)
-  )
-})

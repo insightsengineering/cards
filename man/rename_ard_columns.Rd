@@ -35,7 +35,7 @@ Default is \code{'Overall'}.}
 data frame
 }
 \description{
-Rename the grouping and variable columns to their original columns names.
+Rename the grouping and variable columns to their original column names.
 }
 \examples{
 # Example 1 ----------------------------------
