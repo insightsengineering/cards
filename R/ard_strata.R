@@ -1,7 +1,6 @@
 #' Stratified ARD
 #'
 #' @description
-#' `r lifecycle::badge('experimental')`\cr
 #' General function for calculating ARD results within subgroups.
 #'
 #' While the examples below show use with other functions from the cards package,
@@ -84,5 +83,5 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   df_nested_data |>
     tidyr::unnest(cols = all_of("ard")) |>
     as_card() |>
-    tidy_ard_column_order()
+    tidy_ard_column_order(group_order = "descending")
 }

@@ -25,7 +25,7 @@ a data frame}
 \item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries. Default is \code{everything()}.}
+columns to include in summaries.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to tabulate by/stratify by for summary statistic
@@ -73,7 +73,6 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 an ARD data frame of class 'card'
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 Function is similar to \code{\link[=ard_continuous]{ard_continuous()}}, but allows for more complex
 summaries. While \code{ard_continuous(statistic)} only allows for a univariable
 function, \code{ard_complex(statistic)} can handle more complex data summaries.

@@ -8,8 +8,10 @@ ARDs
 CDISC
 CMD
 Codecov
+DIARRHOEA
 GlaxoSmithKline
 Hoffmann
+IEC
 JSON
 Lifecycle
 ORCID
@@ -17,6 +19,7 @@ Pre
 Rua
 SAS's
 SDTM
+Xanomeline
 YAML
 ata
 cardx
@@ -38,6 +41,7 @@ reproducibility
 reusability
 sd
 tibble
+tibbles
 tidyselect
 tidyselector
 tidyselectors
@@ -46,3 +50,4 @@ unlist
 unlists
 unnested
 unnests
+wilcox

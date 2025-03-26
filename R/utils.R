@@ -31,8 +31,8 @@
     )
   }
   if (inherits(x, "logical")) {
-    if (useNA == "no") return(c(TRUE, FALSE))
-    else return(c(TRUE, FALSE, NA))
+    if (useNA == "no") return(c(FALSE, TRUE))
+    else return(c(FALSE, TRUE, NA))
   }
 
   # otherwise, return a simple unique and sort of the vector

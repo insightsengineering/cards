@@ -53,6 +53,17 @@ test_that("apply_fmt_fn() works with xx specification", {
   )
 
   expect_equal(
+    ard_fmt_checks |>
+      dplyr::mutate(
+        fmt_fn = list("xx.xxx", "xx.xxx")
+      ) |>
+      apply_fmt_fn() |>
+      dplyr::pull(stat_fmt) |>
+      unlist(),
+    c("20.091", " 6.027")
+  )
+
+  expect_equal(
     ard_categorical(
       data = mtcars,
       variables = am,

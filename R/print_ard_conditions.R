@@ -5,6 +5,10 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
+#' @param condition_type (`string`)\cr
+#'   indicates how warnings and errors are returned.
+#'   Default is `"inform"` where all are returned as messages.
+#'   When `"identity"`, errors are returned as errors and warnings as warnings.
 #'
 #' @return returns invisible if check is successful, throws all condition messages if not.
 #' @export
@@ -13,15 +17,16 @@
 #' # passing a character variable for numeric summary
 #' ard_continuous(ADSL, variables = AGEGR1) |>
 #'   print_ard_conditions()
-print_ard_conditions <- function(x) {
+print_ard_conditions <- function(x, condition_type = c("inform", "identity")) {
+  # check inputs ---------------------------------------------------------------
   set_cli_abort_call()
-
   check_class(x, cls = "card")
+  condition_type <- rlang::arg_match(condition_type, call = get_cli_abort_call())
 
   # print condition messages ---------------------------------------------------
   # styler: off
-  if ("error" %in% names(x)) .cli_condition_messaging(x, msg_type = "error")
-  if ("warning" %in% names(x)) .cli_condition_messaging(x, msg_type = "warning")
+  if ("error" %in% names(x)) .cli_condition_messaging(x, msg_type = "error", condition_type = condition_type)
+  if ("warning" %in% names(x)) .cli_condition_messaging(x, msg_type = "warning", condition_type = condition_type)
   # styler: on
 
   invisible()
@@ -45,7 +50,7 @@ print_ard_conditions <- function(x) {
 #' )
 #'
 #' cards:::.cli_condition_messaging(ard, msg_type = "error")
-.cli_condition_messaging <- function(x, msg_type) {
+.cli_condition_messaging <- function(x, msg_type, condition_type) {
   set_cli_abort_call()
 
   # filter the ARD for the rows with messages to print
@@ -101,8 +106,18 @@ print_ard_conditions <- function(x) {
        {.fun {error_call(get_cli_abort_call()) |> rlang::call_name()}}:"
   )
 
+  # set cli message function
+  # styler: off
+  if (condition_type == "inform") cli_msg_fn <- cli::cli_inform
+  else if (condition_type == "identity" && msg_type == "warning") cli_msg_fn <- cli::cli_warn
+  else if (condition_type == "identity" && msg_type == "error") {
+    cli_msg_fn <- \(message, ...) cli::cli_abort(message = message, ..., call = get_cli_abort_call())
+  }
+  # styler: on
+
+
   for (i in seq_len(nrow(ard_msg))) {
-    cli::cli_inform(
+    cli_msg_fn(
       paste(
         glue::glue(
           "For variable {ard_msg$cli_variable_msg[[i]]} ",

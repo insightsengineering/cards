@@ -1,8 +1,38 @@
-# cards 0.4.0.9024
+# cards 0.5.1.9006
+
+* Added functions `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to sort & filter ARDs created using `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`. (#301)
+
+* Added function `ard_formals()` to assist in adding a function's formals, that is, the arguments with their default values, along with user-passed arguments into an ARD structure.
+
+* Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
+
+# cards 0.5.1
+
+* Small update to account for a change in R-devel.
+
+# cards 0.5.0
+
+## New Features and Functions
+
+* Added functions `rename_ard_groups_shift()` and `rename_ard_groups_reverse()` for renaming the grouping variables in the ARD. (#344)
+
+* Added an option to specify the default rounding in the package: `cards.round_type`. See `?cards.options` for details. (#384)
+
+* Added the `print_ard_conditions(condition_type)` argument, which allows users to select to return conditions as messages (the default), or have warnings returned as warnings and errors as errors. (#386)
+
+* Added the `all_ard_group_n(types)` argument to allow separate selection of `groupX` and `groupX_level` columns.
+
+* Added the `tidy_ard_column_order(group_order)` argument that allows users to specify whether the grouping variables are listed in ascending order (the default) or descending order. The output of `ard_strata()` now calls `tidy_ard_column_order(group_order="descending")`.
+
+## Other Updates
+
+* A new article has been added detailing how to create new ARD functions.
 
 * Results are now sorted in a consistent manner, by descending groups and strata. (#342, #326)
 
-* Added functions `rename_ard_groups_shift()` and `rename_ard_groups_reverse()` for renaming the grouping variables in the ARD. (#344)
+## Lifecycle Updates
+
+* Function `label_cards()` has been renamed to `label_round()`, which more clearly communicates that is returns a rounding function.
 
 # cards 0.4.0
 

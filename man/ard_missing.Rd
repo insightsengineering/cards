@@ -24,7 +24,7 @@ a data frame}
 \item{...}{Arguments passed to methods.}
 
 \item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries. Default is \code{everything()}.}
+columns to include in summaries.}
 
 \item{by}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 results are tabulated by \strong{all combinations} of the columns specified.}

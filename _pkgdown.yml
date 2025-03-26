@@ -6,11 +6,26 @@ template:
 
 navbar:
   structure:
-    left: [intro, reference, articles, news]
+    left:  [intro, reference, tutorials, news]
     right: [search, github]
-    github:
-      icon: fa-github
-      href: https://github.com/insightsengineering/cards
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: "Getting Started"
+      href: articles/getting-started.html
+    - text: "Creating New ARDs"
+      href: articles/creating-ards.html
+    - text: "Other ARD Representations"
+      href: articles/structures.html
+  - text: News
+    href: news/index.html
+  github:
+    icon: fa-github
+    href: https://github.com/insightsengineering/cards
 
 # development:
 #   mode: auto
@@ -49,17 +64,19 @@ reference:
       - apply_fmt_fn
       - update_ard
       - process_selectors
-      - tidy_as_ard
+      - ard_formals
       - nest_for_ard
       - default_stat_labels
       - check_ard_structure
       - alias_as_fmt_fn
-      - label_cards
+      - label_round
       - rename_ard_columns
       - add_calculated_row
       - as_cards_fn
   - subtitle: "Wrangle ARD"
     contents:
+      - filter_ard_hierarchical
+      - sort_ard_hierarchical
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
@@ -78,7 +95,7 @@ reference:
       - eval_capture_conditions
       - print_ard_conditions
       - round5
-      - print.card
+      - cards.options
 
   - title: "Data"
     contents:

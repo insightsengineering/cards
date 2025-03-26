@@ -82,7 +82,11 @@ the \code{c(id, variables)} columns.}
 an ARD data frame of class 'card'
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
+\emph{Functions \code{ard_hierarchical()} and \code{ard_hierarchical_count()} are primarily helper
+functions for \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} and \code{\link[=ard_stack_hierarchical_count]{ard_stack_hierarchical_count()}},
+meaning that it will be rare a user needs to call
+\code{ard_hierarchical()}/\code{ard_hierarchical_count()} directly.}
+
 Performs hierarchical or nested tabulations, e.g. tabulates AE terms
 nested within AE system organ class.
 \itemize{

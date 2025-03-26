@@ -12,7 +12,7 @@ all_ard_groups(types = c("names", "levels"))
 
 all_ard_variables(types = c("names", "levels"))
 
-all_ard_group_n(n)
+all_ard_group_n(n, types = c("names", "levels"))
 
 all_missing_columns()
 }

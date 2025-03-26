@@ -63,9 +63,15 @@ all_ard_variables <- function(types = c("names", "levels")) {
 
 #' @export
 #' @rdname selectors
-all_ard_group_n <- function(n) {
+all_ard_group_n <- function(n, types = c("names", "levels")) {
+  types <- arg_match(types, values = c("names", "levels"), multiple = TRUE)
+
+  group_cols <- character(0L)
+  if ("names" %in% types) group_cols <- c(group_cols, paste0("group", n)) # styler: off
+  if ("levels" %in% types) group_cols <- c(group_cols, paste0("group", n, "_level")) # styler: off
+
   check_integerish(n)
-  any_of(sort(c(paste0("group", n), paste0("group", n, "_level"))))
+  any_of(sort(group_cols))
 }
 
 #' @export

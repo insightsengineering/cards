@@ -1,7 +1,6 @@
 #' Stacked Hierarchical ARD Statistics
 #'
 #' @description
-#' `r lifecycle::badge('experimental')`\cr
 #' Use these functions to calculate multiple summaries of nested or hierarchical data
 #' in a single call.
 #'
@@ -212,8 +211,6 @@ ard_stack_hierarchical_count <- function(data,
     shuffle = shuffle
   )
 }
-
-
 
 internal_stack_hierarchical <- function(data,
                                         variables,
@@ -455,8 +452,11 @@ internal_stack_hierarchical <- function(data,
     result <- shuffle_ard(result)
   }
 
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(by = by, variables = variables, include = include)
+
   # return final result --------------------------------------------------------
-  result
+  result |> as_card()
 }
 
 # this function calculates either the counts or the rates of the events
