@@ -3,6 +3,8 @@ title: "Talks and Presentations"
 output: html_document
 ---
 
+## Other Resources
+
 ```{r, echo=FALSE}
 dplyr::tribble(
   ~venue, ~title, ~url_slides, ~url_video,
