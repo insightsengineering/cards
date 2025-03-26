@@ -3,6 +3,9 @@ title: "Talks and Presentations"
 output: github_document
 ---
 
+```{r child='../README.Rmd'}
+```
+
 ## Other Resources
 
 ```{r, echo=FALSE}
