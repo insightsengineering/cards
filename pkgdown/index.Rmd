@@ -1,6 +1,6 @@
 ---
 title: "Talks and Presentations"
-output: html_document
+output: github_document
 ---
 
 ## Other Resources
