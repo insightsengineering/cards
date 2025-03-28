@@ -71,6 +71,7 @@ reference:
       - alias_as_fmt_fn
       - label_round
       - rename_ard_columns
+      - unlist_ard_columns
       - add_calculated_row
       - as_cards_fn
   - subtitle: "Wrangle ARD"
