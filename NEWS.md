@@ -1,4 +1,6 @@
-# cards 0.5.1.9006
+# cards 0.5.1.9007
+
+* Added new function `unlist_ard_columns()`. (#391)
 
 * Added functions `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to sort & filter ARDs created using `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`. (#301)
 
