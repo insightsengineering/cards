@@ -1,0 +1,181 @@
+---
+title: "long_tables_AEs.qmd"
+format: html
+editor: visual
+---
+
+# ARDs from long tables
+
+```{r,output=FALSE}
+# source("../shared.R") #NVS server requirement, please ignore
+library(dplyr)
+library(cards)
+```
+
+## Use of cards with long tables and hierachical grouping
+
+In this example we demonstrate how to use cards to perform a grouping with multiple variables and summary stats for categorical variables from long tables. Here, we define long tables as tables with multiple rows per subject (e.g. multiple records per subject).
+
+In this example we'll use the `ADAE` dataset and simulate generated counts of AEs grouped by the body system or organ class `AEBODSYS` and then grouped by the AE term using the dictionary derived variable `AEDECOD`.
+
+### dyplr approach: group by treatment and parameter name and get stats on values
+
+For context, let's first compute this using `dplyr`. Note that this doesn't provide an ARD format and valid but unobserved groups will be dropped. However, for subsequent rendering we'd likely prefer to include these groups with null stats. For e.g. if the Placebo group has no observed "Cardiac Disorders / Atrial Fibrillation" group we want to include this with a null entry.
+
+```{r}
+ae_terms_by_bodsys <- ADAE |>
+  group_by(AEBODSYS) |>
+  summarise(n = n_distinct(AEDECOD))
+print("The max possible set of combinations:")
+print(sum(ae_terms_by_bodsys$n))
+
+print("Expected nrow for our our ARD - 3 statistics (N,n,p) and 3 treatments:")
+print(sum(3 * 3 * ae_terms_by_bodsys$n))
+
+print("Expected nrow for our our ARD - 3 statistics (N,n,p), 3 treatments and totals:")
+print(sum(4 * 3 * ae_terms_by_bodsys$n))
+```
+
+```{r}
+dplyr_ae_stats <- ADAE |>
+  group_by(TRTA, AEBODSYS, AEDECOD) |>
+  summarise(n = n()) |>
+  mutate(p = n / sum(n)) |>
+  mutate(N = sum(n, na.rm = TRUE))
+
+print("Number of rows (observed only):")
+print(3 * nrow(dplyr_ae_stats))
+```
+
+### cards approach: ard_categorical
+
+We first we use the `ard_categorical` function but not that all combinations of the AE term and body systems or organ class is provided whereas we would prefer to restrict this just to the groups that exist.
+
+```{r}
+ard_ae_by_cat <- ard_categorical(
+  data = ADAE,
+  by = c(TRTA, AEBODSYS),
+  variables = "AEDECOD",
+  denominator = ADSL
+) |>
+  shuffle_ard()
+
+print(nrow(ard_ae_by_cat))
+```
+
+Next we use `strata` for the grouping. This has the effect of dropping the combinations of `TRTA` and `AEBODSYS` that are not observed. However, as is expected, it doesn't impact the combinations relating to `AEBODSYS` and `AEDECOD`.
+
+```{r}
+ard_ae_strata_cat <- ard_categorical(
+  data = ADAE,
+  strata = c(TRTA, AEBODSYS),
+  variables = "AEDECOD",
+  denominator = ADSL
+) |>
+  shuffle_ard()
+
+print(nrow(ard_ae_strata_cat))
+```
+
+### cards approach: ard_hierachical
+
+Using the hierarchical functionality in `cards` provides an ARD with with all valid combinations regardless of whether these are observed.
+
+```{r}
+ard_ae_hierachical <- ard_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD),
+  by = TRTA,
+  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+) |>
+  shuffle_ard()
+
+print(nrow(ard_ae_hierachical))
+```
+
+### cards approach: ard_stack
+
+Now we want to also include a group that gives the overall stats (i.e. dropping the TRTA grouping). This is close to what we want albeit with some post-processing required.
+
+```{r}
+ard_ae_hierachical_stack <- ard_stack(
+  data = ADAE,
+  ard_hierarchical(c(AEBODSYS, AEDECOD),
+    denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  ),
+  .by = TRTA,
+  .overall = TRUE
+) |>
+  shuffle_ard() |>
+  mutate(TRTA = ifelse(is.na(TRTA), "Total", TRTA)) # risky? what if TRTA was missing for another reason
+
+print(nrow(ard_ae_hierachical_stack))
+```
+
+### cards approach: ard_stack_hierachical
+
+When using `ard_stack_hierachical` as we have specified below, the AEDECOD terms are not retained and therefore the we can't map the stats to the AE terms.
+
+Is there an error/ omission in our usage?
+
+```{r}
+ard_ae_stack_hierachical <- ard_stack_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD),
+  id = USUBJID,
+  by = TRTA,
+  over_variables = TRUE,
+  overall = TRUE,
+  total_n = TRUE,
+  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+)
+print(nrow(ard_ae_stack_hierachical))
+```
+
+### cards approach: bind_ard and ard_hierachical
+
+Let's use `bind_ard` and call `ard_hierachical` twice: with and without the grouping by treatment; this is so we can get the stats across all treatments (i.e. overall).
+
+Scenario 1: no post-processing, the grouping cols are misaligned in the final ARD, i.e. group_1: AEBODSYS for the totals and group_1:TRTA for the grouped by treatment
+
+```{r}
+ard_ae_bind_grouped <- ard_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD),
+  by = TRTA
+)
+
+ard_ae_bind_ungrouped <- ard_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD)
+)
+
+ard_ae_bind_v1 <- bind_ard(
+  ard_ae_bind_grouped,
+  ard_ae_bind_ungrouped
+)
+
+print(nrow(ard_ae_bind_v1))
+```
+
+Scenario 2: post-processing using `shuffle_ard`. Requires more investigation:
+
+```{r}
+ard_ae_bind_grouped <- ard_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD),
+  by = TRTA
+) |>
+  shuffle_ard()
+
+ard_ae_bind_ungrouped <- ard_hierarchical(
+  data = ADAE,
+  variables = c(AEBODSYS, AEDECOD)
+) |>
+  shuffle_ard()
+
+ard_ae_bind_v2 <- bind_ard(
+  ard_ae_bind_grouped,
+  ard_ae_bind_ungrouped
+)
+```
