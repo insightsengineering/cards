@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.9008</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">unlist_ard_columns</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.list</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">any_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"warning"</span>, <span class="st">"error"</span>, <span class="st">"fmt_fn"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NA</span></span>
+<span>  fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  fct_as_chr <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -71,6 +72,14 @@ columns to unlist. Default is
 <dd><p>(scalar)<br>
 scalar to fill NULL values with before unlisting (if they are present).
 Default is <code>NA</code>.</p></dd>
+
+
+<dt id="arg-fct-as-chr">fct_as_chr<a class="anchor" aria-label="anchor" href="#arg-fct-as-chr"></a></dt>
+<dd><p>(scalar <code>logical</code>)<br>
+When <code>TRUE</code>, factor elements will be converted to character before unlisting.
+When the column being unlisted contains mixed types of classes, the
+factor elements are often converted to the unerlying interger value instead
+of retaining the label. Default is <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
