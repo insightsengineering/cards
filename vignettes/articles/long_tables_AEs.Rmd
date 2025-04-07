@@ -1,20 +1,24 @@
 ---
 title: "long_tables_AEs.qmd"
-format: html
-editor: visual
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 # ARDs from long tables
 
 ```{r,output=FALSE}
-# source("../shared.R") #NVS server requirement, please ignore
 library(dplyr)
 library(cards)
 ```
 
 ## Use of cards with long tables and hierachical grouping
 
-In this example we demonstrate how to use cards to perform a grouping with multiple variables and summary stats for categorical variables from long tables. Here, we define long tables as tables with multiple rows per subject (e.g. multiple records per subject).
+In this example we demonstrate how to use cards to perform a grouping with multiple variables and summary stats for categorical variables from long tables. Here, we define long tables as tables with multiple rows per subject (i.e. multiple records per subject).
 
 In this example we'll use the `ADAE` dataset and simulate generated counts of AEs grouped by the body system or organ class `AEBODSYS` and then grouped by the AE term using the dictionary derived variable `AEDECOD`.
 
@@ -49,7 +53,7 @@ print(3 * nrow(dplyr_ae_stats))
 
 ### cards approach: ard_categorical
 
-We first we use the `ard_categorical` function but not that all combinations of the AE term and body systems or organ class is provided whereas we would prefer to restrict this just to the groups that exist.
+We first use the `ard_categorical` function but note that all combinations of the AE term and body systems or organ class is provided whereas we would prefer to restrict this just to the groups that exist.
 
 ```{r}
 ard_ae_by_cat <- ard_categorical(
@@ -79,7 +83,7 @@ print(nrow(ard_ae_strata_cat))
 
 ### cards approach: ard_hierachical
 
-Using the hierarchical functionality in `cards` provides an ARD with with all valid combinations regardless of whether these are observed.
+Using the hierarchical functionality in `cards` provides an ARD with all valid combinations regardless of whether these are observed.
 
 ```{r}
 ard_ae_hierachical <- ard_hierarchical(
@@ -114,7 +118,7 @@ print(nrow(ard_ae_hierachical_stack))
 
 ### cards approach: ard_stack_hierachical
 
-When using `ard_stack_hierachical` as we have specified below, the AEDECOD terms are not retained and therefore the we can't map the stats to the AE terms.
+When using `ard_stack_hierachical` as we have specified below, the AEDECOD terms are not retained and therefore we can't map the stats to the AE terms.
 
 Is there an error/ omission in our usage?
 
@@ -136,7 +140,7 @@ print(nrow(ard_ae_stack_hierachical))
 
 Let's use `bind_ard` and call `ard_hierachical` twice: with and without the grouping by treatment; this is so we can get the stats across all treatments (i.e. overall).
 
-Scenario 1: no post-processing, the grouping cols are misaligned in the final ARD, i.e. group_1: AEBODSYS for the totals and group_1:TRTA for the grouped by treatment
+Using no post-processing, the grouping cols are misaligned in the final ARD, i.e. group_1: AEBODSYS for the totals and group_1:TRTA for the grouped by treatment
 
 ```{r}
 ard_ae_bind_grouped <- ard_hierarchical(
@@ -158,24 +162,3 @@ ard_ae_bind_v1 <- bind_ard(
 print(nrow(ard_ae_bind_v1))
 ```
 
-Scenario 2: post-processing using `shuffle_ard`. Requires more investigation:
-
-```{r}
-ard_ae_bind_grouped <- ard_hierarchical(
-  data = ADAE,
-  variables = c(AEBODSYS, AEDECOD),
-  by = TRTA
-) |>
-  shuffle_ard()
-
-ard_ae_bind_ungrouped <- ard_hierarchical(
-  data = ADAE,
-  variables = c(AEBODSYS, AEDECOD)
-) |>
-  shuffle_ard()
-
-ard_ae_bind_v2 <- bind_ard(
-  ard_ae_bind_grouped,
-  ard_ae_bind_ungrouped
-)
-```
