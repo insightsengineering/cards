@@ -7,7 +7,8 @@
 unlist_ard_columns(
   x,
   columns = c(where(is.list), -any_of(c("warning", "error", "fmt_fn"))),
-  fill = NA
+  fill = NA,
+  fct_as_chr = TRUE
 )
 }
 \arguments{
@@ -21,6 +22,12 @@ columns to unlist. Default is
 \item{fill}{(scalar)\cr
 scalar to fill NULL values with before unlisting (if they are present).
 Default is \code{NA}.}
+
+\item{fct_as_chr}{(scalar \code{logical})\cr
+When \code{TRUE}, factor elements will be converted to character before unlisting.
+When the column being unlisted contains mixed types of classes, the
+factor elements are often converted to the unerlying interger value instead
+of retaining the label. Default is \code{TRUE}.}
 }
 \value{
 a data frame
