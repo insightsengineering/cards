@@ -26,7 +26,7 @@ Default is \code{NA}.}
 \item{fct_as_chr}{(scalar \code{logical})\cr
 When \code{TRUE}, factor elements will be converted to character before unlisting.
 When the column being unlisted contains mixed types of classes, the
-factor elements are often converted to the unerlying interger value instead
+factor elements are often converted to the underlying integer value instead
 of retaining the label. Default is \code{TRUE}.}
 }
 \value{
