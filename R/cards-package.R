@@ -10,5 +10,5 @@ NULL
 utils::globalVariables(c(".", "!<-", "parse_expr<-"))
 
 release_bullets <- function() {
-  c("Build `pkgdown/index.Rmd`")
+  c("Installl package and re-build `pkgdown/index.Rmd`")
 }
