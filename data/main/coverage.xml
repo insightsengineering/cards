@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.981786941580756" branch-rate="0" lines-covered="2857" lines-valid="2910" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-07 16:51:39.663977">
+<coverage line-rate="0.981449673651666" branch-rate="0" lines-covered="2857" lines-valid="2911" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-08 20:17:44.447432">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.981786941580756" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.981449673651666" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -3469,6 +3469,18 @@
             <line number="97" hits="48" branch="false"/>
             <line number="98" hits="8" branch="false"/>
             <line number="102" hits="48" branch="false"/>
+          </lines>
+        </class>
+        <class name="cards-package.R" filename="R/cards-package.R" line-rate="0" branch-rate="0" complexity="0">
+          <methods>
+            <method name="release_bullets" signature="" line-rate="0" branch-rate="0" complexity="0">
+              <lines>
+                <line number="13" hits="0" branch="false"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="0" branch="false"/>
           </lines>
         </class>
         <class name="check_ard_structure.R" filename="R/check_ard_structure.R" line-rate="0.846153846153846" branch-rate="0" complexity="0">
