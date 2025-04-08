@@ -8,3 +8,7 @@
 NULL
 
 utils::globalVariables(c(".", "!<-", "parse_expr<-"))
+
+release_bullets <- function() {
+  c("Build `pkgdown/index.Rmd`")
+}
