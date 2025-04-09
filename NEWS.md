@@ -8,6 +8,8 @@
 
 * Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
 
+* Updated `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()` to automatically sort results alphanumerically. (#423)
+
 # cards 0.5.1
 
 * Small update to account for a change in R-devel.
