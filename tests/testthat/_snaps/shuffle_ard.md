@@ -81,15 +81,14 @@
 ---
 
     Code
-      as.data.frame(shuffle_ard(dplyr::filter(bind_ard(ard_categorical(ADSL, by = ARM, variables = AGEGR1), ard_categorical(ADSL, variables = AGEGR1), ard_continuous(ADSL, by = SEX, variables = AGE),
-      ard_continuous(ADSL, variables = AGE)), dplyr::row_number() <= 5L)))
+      as.data.frame(shuffle_ard(bind_ard(dplyr::slice(ard_categorical(ADSL, by = ARM, variables = AGEGR1), 1), dplyr::slice(ard_categorical(ADSL, variables = AGEGR1), 1), dplyr::slice(ard_continuous(ADSL,
+        by = SEX, variables = AGE), 1), dplyr::slice(ard_continuous(ADSL, variables = AGE), 1))))
     Output
-            ARM variable label     context stat_name       stat
-      1 Placebo   AGEGR1 65-80 categorical         n 42.0000000
-      2 Placebo   AGEGR1 65-80 categorical         N 86.0000000
-      3 Placebo   AGEGR1 65-80 categorical         p  0.4883721
-      4 Placebo   AGEGR1   <65 categorical         n 14.0000000
-      5 Placebo   AGEGR1   <65 categorical         N 86.0000000
+                ARM         SEX variable label     context stat_name stat
+      1     Placebo        <NA>   AGEGR1 65-80 categorical         n   42
+      2 Overall ARM        <NA>   AGEGR1 65-80 categorical         n  144
+      3        <NA> Overall SEX      AGE     N  continuous         N  254
+      4        <NA>           F      AGE     N  continuous         N  143
 
 # shuffle_ard fills missing group levels if the group is meaningful for cardx output
 

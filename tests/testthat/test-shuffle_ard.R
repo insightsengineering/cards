@@ -103,12 +103,11 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   # mix of group variables - fills overall only if variable has been calculated by group elsewhere
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = ARM, variables = AGEGR1),
-      ard_categorical(ADSL, variables = AGEGR1),
-      ard_continuous(ADSL, by = SEX, variables = AGE),
-      ard_continuous(ADSL, variables = AGE)
+      ard_categorical(ADSL, by = ARM, variables = AGEGR1) |> dplyr::slice(1),
+      ard_categorical(ADSL, variables = AGEGR1) |> dplyr::slice(1),
+      ard_continuous(ADSL, by = SEX, variables = AGE) |> dplyr::slice(1),
+      ard_continuous(ADSL, variables = AGE) |> dplyr::slice(1)
     ) |>
-      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard() |>
       as.data.frame()
   )
