@@ -455,6 +455,9 @@ internal_stack_hierarchical <- function(data,
   # append attributes used for sorting/filtering -------------------------------
   attr(result, "args") <- list(by = by, variables = variables, include = include)
 
+  # sort ARD alphanumerically --------------------------------------------------
+  result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+
   # return final result --------------------------------------------------------
   result |> as_card()
 }
