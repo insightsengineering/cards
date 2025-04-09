@@ -6,16 +6,16 @@
       {cards} data frame: 39 x 15
     Output
          group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
-      1    TRTA      Placebo   <NA>                <NA>                                       SEX              M         n          n    13
-      2    TRTA      Placebo   <NA>                <NA>                                       SEX              M         N          N    33
-      3    TRTA      Placebo   <NA>                <NA>                                       SEX              M         p          % 0.394
-      4    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
-      5    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         N          N    86
-      6    TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         p          % 0.302
-      7    TRTA      Placebo    SEX            M   <NA>                                      RACE          WHITE         n          n    12
-      8    TRTA      Placebo    SEX            M   <NA>                                      RACE          WHITE         N          N    30
-      9    TRTA      Placebo    SEX            M   <NA>                                      RACE          WHITE         p          %   0.4
-      10   TRTA    Xanomeli…   <NA>                <NA>                                       SEX              M         n          n    24
+      1    <NA>                <NA>                <NA>                                      TRTA        Placebo         n          n    86
+      2    <NA>                <NA>                <NA>                                      TRTA        Placebo         N          N   254
+      3    <NA>                <NA>                <NA>                                      TRTA        Placebo         p          % 0.339
+      4    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         n          n    84
+      5    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         N          N   254
+      6    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
+      7    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         n          n    84
+      8    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         N          N   254
+      9    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
+      10   TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
     Message
       i 29 more rows
       i Use `print(n = ...)` to see more rows
