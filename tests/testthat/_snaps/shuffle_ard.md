@@ -64,7 +64,7 @@
       1 Placebo              AGE      continuous mean      75.2 
       2 Xanomeline High Dose AGE      continuous mean      74.4 
       3 Xanomeline Low Dose  AGE      continuous mean      75.7 
-      4 <NA>                 AGE      <NA>       p          0.05
+      4 Overall ARM          AGE      <NA>       p          0.05
 
 ---
 
@@ -73,10 +73,10 @@
         stat = list(0.05))), dplyr::row_number() <= 5L))
     Output
       # A tibble: 2 x 5
-        ARM     variable context    stat_name  stat
-        <chr>   <chr>    <chr>      <chr>     <dbl>
-      1 <NA>    AGE      continuous mean      75.1 
-      2 Overall AGE      <NA>       p          0.05
+        ARM         variable context    stat_name  stat
+        <chr>       <chr>    <chr>      <chr>     <dbl>
+      1 <NA>        AGE      continuous mean      75.1 
+      2 Overall ARM AGE      <NA>       p          0.05
 
 ---
 
@@ -95,9 +95,9 @@
     Code
       as.data.frame(shuffle_ard(ard_cardx))
     Output
-            ARM     SEX variable          context stat_name       stat
-      1 Overall    <NA>   AGEGR1 stats_chisq_test statistic 5.07944167
-      2 Overall    <NA>   AGEGR1 stats_chisq_test   p.value 0.07888842
-      3    <NA> Overall   AGEGR1 stats_chisq_test statistic 1.03944200
-      4    <NA> Overall   AGEGR1 stats_chisq_test   p.value 0.59468644
+                ARM         SEX variable          context stat_name       stat
+      1 Overall ARM        <NA>   AGEGR1 stats_chisq_test statistic 5.07944167
+      2 Overall ARM        <NA>   AGEGR1 stats_chisq_test   p.value 0.07888842
+      3        <NA> Overall SEX   AGEGR1 stats_chisq_test statistic 1.03944200
+      4        <NA> Overall SEX   AGEGR1 stats_chisq_test   p.value 0.59468644
 

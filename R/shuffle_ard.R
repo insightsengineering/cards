@@ -51,16 +51,17 @@ shuffle_ard <- function(x, trim = TRUE) {
 
   # process the data/variable info
   dat_cards_grps_processed <- dat_cards_grps |>
-    # unlist the list-columns
+    .check_var_nms(vars_protected = names(dat_cards_stats)) |>
+    rename_ard_columns(columns = all_ard_groups("names"), fill = "Overall {colname}") |>
+    # coerce everything to character
     dplyr::mutate(
       dplyr::across(
-        where(.is_list_column_of_scalars),
-        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_) |>
-          unlist()
+        -.cards_idx,
+        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
       )
     ) |>
-    .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    rename_ard_columns(columns = all_ard_groups("names")) |>
+    # unlist the list-columns
+    unlist_ard_columns() |>
     .fill_grps_from_variables()
 
   # join together again
