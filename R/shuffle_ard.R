@@ -59,10 +59,7 @@ shuffle_ard <- function(x, trim = TRUE) {
         -.cards_idx,
         ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
       )
-    ) |>
-    # unlist the list-columns
-    unlist_ard_columns() |>
-    .fill_grps_from_variables()
+    )
 
   # join together again
   dat_cards_out <- dplyr::left_join(
@@ -71,15 +68,11 @@ shuffle_ard <- function(x, trim = TRUE) {
     by = ".cards_idx"
   )
 
-  # fill stat_label -> variable_level if exists
-  if ("stat_label" %in% names(dat_cards_out)) {
-    dat_cards_out <- dat_cards_out |>
-      dplyr::mutate(dplyr::across(any_of("variable_level"), ~ dplyr::coalesce(.x, stat_label)))
-  }
-
   dat_cards_out <- dat_cards_out |>
+    # unlist the list-columns
+    unlist_ard_columns() |>
+    .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    dplyr::rename(any_of(c(label = "variable_level"))) |>
     dplyr::arrange(".cards_idx") |>
     dplyr::select(-".cards_idx")
 
@@ -114,22 +107,11 @@ shuffle_ard <- function(x, trim = TRUE) {
 .trim_ard <- function(x) {
   check_data_frame(x)
 
+  # detect any warning/error messages and notify user
+  .detect_msgs(x, "warning", "error")
   # flatten ard table for easier viewing ---------------------------------------
   x |>
-    # detect any warning/error messages and notify user
-    .detect_msgs("warning", "error") |>
-    # filter to numeric statistic values
-    dplyr::filter(map_lgl(
-      .data$stat,
-      \(x) is.null(x) || (length(x) == 1L && (is.numeric(x) || is.na(x)))
-    )) |>
-    # unlist the list-columns
-    dplyr::mutate(stat = lapply(
-      .data$stat,
-      \(x) if (!is.null(x) && !is.na(x)) x else NA_real_
-    ) |> unlist() |> unname()) |>
-    # remove the formatting functions / warning / error
-    dplyr::select(-where(is.list), -any_of("stat_label"))
+    dplyr::select(-c("fmt_fn","warning", "error"))
 }
 
 
@@ -142,8 +124,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   a data frame
 #' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   columns to search within
-#'
-#' @return a data frame
 #' @keywords internal
 #'
 #' @examples
@@ -171,8 +151,6 @@ shuffle_ard <- function(x, trim = TRUE) {
       cli::cli_inform("{.val {var}} column contains messages that will be removed.")
     }
   })
-
-  x
 }
 
 #' Check Variable Names
