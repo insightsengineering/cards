@@ -1,0 +1,542 @@
+
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # This file is part of the standard setup for testthat.
+> # It is recommended that you do not modify it.
+> #
+> # Where should you do additional test configuration?
+> # Learn more about the roles of various files in:
+> # * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+> # * https://testthat.r-lib.org/articles/special-files.html
+> 
+> library(testthat)
+> library(broom.helpers)
+
+Attaching package: 'broom.helpers'
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+> 
+> test_check("broom.helpers")
+
+Attaching package: 'gtsummary'
+
+The following objects are masked from 'package:broom.helpers':
+
+    all_categorical, all_continuous, all_contrasts, all_dichotomous,
+    all_interaction, all_intercepts
+
+The following object is masked from 'package:testthat':
+
+    matches
+
+boundary (singular) fit: see help('isSingular')
+
+Attaching package: 'MASS'
+
+The following object is masked from 'package:gtsummary':
+
+    select
+
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+i Sum contrasts are not supported for 'multinom' models.
+Reference row of variable 'stage' remained unchanged.
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+x Variable(s) 'factor(cyl)' were incorrectly requested to be printed on a single row.
+boundary (singular) fit: see help('isSingular')
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+x `aaa`, `bbb`, and `ccc` terms have not been found in `x`.
+x `aaa`, `bbb`, and `ccc` terms have not been found in `x`.
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+x There was an error calling `tidy_fun()`. Most likely, this is because the
+function supplied in `tidy_fun=` was misspelled, does not exist, is not
+compatible with your object, or was missing necessary arguments (e.g. `conf.level=` or `conf.int=`). See error message below.
+x `tidy_disambiguate_terms()` has already been applied. x has been returned unchanged.
+boundary (singular) fit: see help('isSingular')
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+x Unable to identify the list of variables.
+
+This is usually due to an error calling `stats::model.frame(x)`or `stats::model.matrix(x)`.
+It could be the case if that type of model does not implement these methods.
+Rarely, this error may occur if the model object was created within
+a functional programming framework (e.g. using `lappy()`, `purrr::map()`, etc.).
+x Unable to identify the list of variables.
+
+This is usually due to an error calling `stats::model.frame(x)`or `stats::model.matrix(x)`.
+It could be the case if that type of model does not implement these methods.
+Rarely, this error may occur if the model object was created within
+a functional programming framework (e.g. using `lappy()`, `purrr::map()`, etc.).
+11 cases omitted due to missing values
+boundary (singular) fit: see help('isSingular')
+! `broom::tidy()` failed to tidy the model.
+! `tidy_parameters()` also failed.
+x Sorry, `model_parameters()` failed with the following error (possible
+class `character` not supported):
+
+$ operator is invalid for atomic vectors
+x Unable to identify the list of variables.
+
+This is usually due to an error calling `stats::model.frame(x)`or `stats::model.matrix(x)`.
+It could be the case if that type of model does not implement these methods.
+Rarely, this error may occur if the model object was created within
+a functional programming framework (e.g. using `lappy()`, `purrr::map()`, etc.).
+x Unable to identify the list of variables.
+
+This is usually due to an error calling `stats::model.frame(x)`or `stats::model.matrix(x)`.
+It could be the case if that type of model does not implement these methods.
+Rarely, this error may occur if the model object was created within
+a functional programming framework (e.g. using `lappy()`, `purrr::map()`, etc.).
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+Package 'merDeriv' needs to be installed to compute confidence intervals
+  for random effect parameters.
+Loading required package: Matrix
+Stratified Independent Sampling design (with replacement)
+dpbc <- survey::svydesign(id = ~1, prob = ~1, strata = ~edema, data = d)
+
+Re-fitting to get Hessian
+
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+11 cases omitted due to missing values
+x Unable to identify the list of variables.
+
+This is usually due to an error calling `stats::model.frame(x)`or `stats::model.matrix(x)`.
+It could be the case if that type of model does not implement these methods.
+Rarely, this error may occur if the model object was created within
+a functional programming framework (e.g. using `lappy()`, `purrr::map()`, etc.).
+x There was an error calling `tidy_fun()`. Most likely, this is because the
+function supplied in `tidy_fun=` was misspelled, does not exist, is not
+compatible with your object, or was missing necessary arguments (e.g. `conf.level=` or `conf.int=`). See error message below.
+Confidence intervals only available for parametric terms.
+Confidence intervals only available for parametric terms.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+Confidence intervals only available for parametric terms.
+Confidence intervals only available for parametric terms.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+Confidence intervals only available for parametric terms.
+Confidence intervals only available for parametric terms.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+Loading required package: stats4
+Loading required package: splines
+
+Attaching package: 'VGAM'
+
+The following objects are masked from 'package:ordinal':
+
+    dgumbel, dlgamma, pgumbel, plgamma, qgumbel, rgumbel, wine
+
+i <vglm> model detected.
+v `tidy_vgam()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_vgam` to quiet these messages.
+i <vglm> model detected.
+v `tidy_vgam()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_vgam` to quiet these messages.
+i <vglm> model detected.
+v `tidy_vgam()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_vgam` to quiet these messages.
+i <vglm> model detected.
+v `tidy_vgam()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_vgam` to quiet these messages.
+The exogenous variable 'disp' has been removed because of collinearity (see $collin.var).
+Running model...
+Done!
+Loading required package: gnm
+
+Attaching package: 'multgee'
+
+The following object is masked from 'package:MASS':
+
+    housing
+
+i multgee model detected.
+v `tidy_multgee()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_multgee` to quiet these messages.
+i multgee model detected.
+v `tidy_multgee()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_multgee` to quiet these messages.
+Classes and Methods for R originally developed in the
+Political Science Computational Laboratory
+Department of Political Science
+Stanford University (2002-2015),
+by and under the direction of Simon Jackman.
+hurdle and zeroinfl functions by Achim Zeileis.
+v `tidy_zeroinfl()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_zeroinfl` to quiet these messages.
+v `tidy_zeroinfl()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_zeroinfl` to quiet these messages.
+i <zeroinfl> model detected.
+v `tidy_zeroinfl()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_zeroinfl` to quiet these messages.
+i <hurdle> model detected.
+v `tidy_zeroinfl()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_zeroinfl` to quiet these messages.
+i `exponentiate = TRUE` not valid for betareg with `broom::tidy()()`.
+v `tidy_parameters(component = "all")` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+i `exponentiate = TRUE` not valid for betareg with `broom::tidy()()`.
+v `tidy_parameters(component = "all")` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+i `exponentiate = TRUE` not valid for betareg with `broom::tidy()()`.
+v `tidy_parameters(component = "all")` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+! `broom::tidy()` failed to tidy the model.
+v `tidy_parameters()` used instead.
+i Add `tidy_fun = broom.helpers::tidy_parameters` to quiet these messages.
+mmrm() registered as emmeans extension
+-- Model Registration ------------------------------------------- mmrm 0.3.14 --
+v mmrm::mmrm()
+[ FAIL 0 | WARN 7 | SKIP 0 | PASS 807 ]
+
+══ Warnings ════════════════════════════════════════════════════════════════════
+── Warning ('test-group_by.R:71:3'): tidy_group_by() works with nnet::multinom ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"group_by"` instead of `.data$group_by`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_equal(x, tidy_group_by(tidy_group_by(x), group_by = NULL)) at test-group_by.R:71:3
+  2. │ └─testthat::quasi_label(enquo(expected), expected.label, arg = "expected")
+  3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
+  4. └─broom.helpers::tidy_group_by(tidy_group_by(x), group_by = NULL)
+  5.   ├─dplyr::select(x, -.data$group_by)
+  6.   └─dplyr:::select.data.frame(x, -.data$group_by)
+  7.     └─tidyselect::eval_select(expr(c(...)), data = .data, error_call = error_call)
+  8.       └─tidyselect:::eval_select_impl(...)
+  9.         ├─tidyselect:::with_subscript_errors(...)
+ 10.         │ └─base::withCallingHandlers(...)
+ 11.         └─tidyselect:::vars_select_eval(...)
+ 12.           └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 13.             └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 14.               └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 15.                 └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 16.                   └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 17.                     └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:586:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"term"` instead of `.data$term`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod)) at test-tidy_plus_plus.R:586:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = FALSE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::rename(res, original_term = .data$term)
+ 26.         └─dplyr:::rename.data.frame(res, original_term = .data$term)
+ 27.           └─tidyselect::eval_rename(expr(c(...)), .data)
+ 28.             └─tidyselect:::rename_impl(...)
+ 29.               └─tidyselect:::eval_select_impl(...)
+ 30.                 ├─tidyselect:::with_subscript_errors(...)
+ 31.                 │ └─base::withCallingHandlers(...)
+ 32.                 └─tidyselect:::vars_select_eval(...)
+ 33.                   └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 35.                       └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 36.                         └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 37.                           └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 38.                             └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:586:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"component"` instead of `.data$component`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod)) at test-tidy_plus_plus.R:586:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = FALSE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::select(res, -.data$component, -.data$group)
+ 26.         └─dplyr:::select.data.frame(res, -.data$component, -.data$group)
+ 27.           └─tidyselect::eval_select(expr(c(...)), data = .data, error_call = error_call)
+ 28.             └─tidyselect:::eval_select_impl(...)
+ 29.               ├─tidyselect:::with_subscript_errors(...)
+ 30.               │ └─base::withCallingHandlers(...)
+ 31.               └─tidyselect:::vars_select_eval(...)
+ 32.                 └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 33.                   └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 35.                       └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 36.                         └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 37.                           └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:586:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"group"` instead of `.data$group`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod)) at test-tidy_plus_plus.R:586:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = FALSE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::select(res, -.data$component, -.data$group)
+ 26.         └─dplyr:::select.data.frame(res, -.data$component, -.data$group)
+ 27.           └─tidyselect::eval_select(expr(c(...)), data = .data, error_call = error_call)
+ 28.             └─tidyselect:::eval_select_impl(...)
+ 29.               ├─tidyselect:::with_subscript_errors(...)
+ 30.               │ └─base::withCallingHandlers(...)
+ 31.               └─tidyselect:::vars_select_eval(...)
+ 32.                 └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 33.                   └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 35.                       └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 36.                         └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 37.                           └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:592:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"term"` instead of `.data$term`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod, exponentiate = TRUE)) at test-tidy_plus_plus.R:592:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod, exponentiate = TRUE)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = TRUE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::rename(res, original_term = .data$term)
+ 26.         └─dplyr:::rename.data.frame(res, original_term = .data$term)
+ 27.           └─tidyselect::eval_rename(expr(c(...)), .data)
+ 28.             └─tidyselect:::rename_impl(...)
+ 29.               └─tidyselect:::eval_select_impl(...)
+ 30.                 ├─tidyselect:::with_subscript_errors(...)
+ 31.                 │ └─base::withCallingHandlers(...)
+ 32.                 └─tidyselect:::vars_select_eval(...)
+ 33.                   └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 35.                       └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 36.                         └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 37.                           └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 38.                             └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:602:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"term"` instead of `.data$term`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod, exponentiate = TRUE)) at test-tidy_plus_plus.R:602:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod, exponentiate = TRUE)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = TRUE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::rename(res, original_term = .data$term)
+ 26.         └─dplyr:::rename.data.frame(res, original_term = .data$term)
+ 27.           └─tidyselect::eval_rename(expr(c(...)), .data)
+ 28.             └─tidyselect:::rename_impl(...)
+ 29.               └─tidyselect:::eval_select_impl(...)
+ 30.                 ├─tidyselect:::with_subscript_errors(...)
+ 31.                 │ └─base::withCallingHandlers(...)
+ 32.                 └─tidyselect:::vars_select_eval(...)
+ 33.                   └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 35.                       └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 36.                         └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 37.                           └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 38.                             └─tidyselect:::call_kind(expr, context_mask, error_call)
+── Warning ('test-tidy_plus_plus.R:613:3'): tidy_plus_plus() works with VGAM::vglm ──
+Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+i Please use `"term"` instead of `.data$term`
+Backtrace:
+     ▆
+  1. ├─testthat::expect_no_error(res <- tidy_plus_plus(mod, exponentiate = TRUE)) at test-tidy_plus_plus.R:613:3
+  2. │ └─testthat:::expect_no_(...)
+  3. │   └─testthat:::quasi_capture(enquo(object), NULL, capture)
+  4. │     ├─testthat (local) .capture(...)
+  5. │     │ └─rlang::try_fetch(...)
+  6. │     │   ├─base::tryCatch(...)
+  7. │     │   │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  8. │     │   │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  9. │     │   │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 10. │     │   └─base::withCallingHandlers(...)
+ 11. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 12. └─broom.helpers::tidy_plus_plus(mod, exponentiate = TRUE)
+ 13.   └─broom.helpers::tidy_and_attach(...)
+ 14.     ├─base::tryCatch(...)
+ 15.     │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.     │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.     │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.     ├─broom.helpers::tidy_attach_model(...)
+ 19.     │ ├─broom.helpers:::.order_tidy_columns(dplyr::as_tibble(x))
+ 20.     │ │ └─dplyr::select(...)
+ 21.     │ └─dplyr::as_tibble(x)
+ 22.     ├─base::do.call(tidy_fun, tidy_args)
+ 23.     └─broom.helpers (local) `<fn>`(x = `<vglm>`, conf.int = TRUE, conf.level = 0.95, exponentiate = TRUE)
+ 24.       └─broom.helpers::tidy_vgam(...)
+ 25.         ├─dplyr::rename(res, original_term = .data$term)
+ 26.         └─dplyr:::rename.data.frame(res, original_term = .data$term)
+ 27.           └─tidyselect::eval_rename(expr(c(...)), .data)
+ 28.             └─tidyselect:::rename_impl(...)
+ 29.               └─tidyselect:::eval_select_impl(...)
+ 30.                 ├─tidyselect:::with_subscript_errors(...)
+ 31.                 │ └─base::withCallingHandlers(...)
+ 32.                 └─tidyselect:::vars_select_eval(...)
+ 33.                   └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+ 34.                     └─tidyselect:::eval_c(expr, data_mask, context_mask)
+ 35.                       └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+ 36.                         └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+ 37.                           └─tidyselect:::expr_kind(expr, context_mask, error_call)
+ 38.                             └─tidyselect:::call_kind(expr, context_mask, error_call)
+
+[ FAIL 0 | WARN 7 | SKIP 0 | PASS 807 ]
+> 
+> proc.time()
+   user  system elapsed 
+120.303  19.129 224.734 

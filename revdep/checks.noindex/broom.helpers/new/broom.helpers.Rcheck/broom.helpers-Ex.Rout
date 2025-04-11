@@ -1,0 +1,2062 @@
+
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "broom.helpers"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('broom.helpers')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("assert_package")
+> ### * assert_package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: assert_package
+> ### Title: Check a package installation status or minimum required version
+> ### Aliases: assert_package .assert_package .get_package_dependencies
+> ###   .get_all_packages_dependencies .get_min_version_required
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_compute_terms_contributions")
+> ### * model_compute_terms_contributions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_compute_terms_contributions
+> ### Title: Compute a matrix of terms contributions
+> ### Aliases: model_compute_terms_contributions
+> ###   model_compute_terms_contributions.default
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_assign")
+> ### * model_get_assign
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_assign
+> ### Title: Get the assign attribute of model matrix of a model
+> ### Aliases: model_get_assign model_get_assign.default
+> ###   model_get_assign.vglm model_get_assign.model_fit
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_assign()
+[1] 0 1 2 2
+attr(,"model_matrix")
+                    (Intercept)  mpg factor(cyl)6 factor(cyl)8
+Mazda RX4                     1 21.0            1            0
+Mazda RX4 Wag                 1 21.0            1            0
+Datsun 710                    1 22.8            0            0
+Hornet 4 Drive                1 21.4            1            0
+Hornet Sportabout             1 18.7            0            1
+Valiant                       1 18.1            1            0
+Duster 360                    1 14.3            0            1
+Merc 240D                     1 24.4            0            0
+Merc 230                      1 22.8            0            0
+Merc 280                      1 19.2            1            0
+Merc 280C                     1 17.8            1            0
+Merc 450SE                    1 16.4            0            1
+Merc 450SL                    1 17.3            0            1
+Merc 450SLC                   1 15.2            0            1
+Cadillac Fleetwood            1 10.4            0            1
+Lincoln Continental           1 10.4            0            1
+Chrysler Imperial             1 14.7            0            1
+Fiat 128                      1 32.4            0            0
+Honda Civic                   1 30.4            0            0
+Toyota Corolla                1 33.9            0            0
+Toyota Corona                 1 21.5            0            0
+Dodge Challenger              1 15.5            0            1
+AMC Javelin                   1 15.2            0            1
+Camaro Z28                    1 13.3            0            1
+Pontiac Firebird              1 19.2            0            1
+Fiat X1-9                     1 27.3            0            0
+Porsche 914-2                 1 26.0            0            0
+Lotus Europa                  1 30.4            0            0
+Ford Pantera L                1 15.8            0            1
+Ferrari Dino                  1 19.7            1            0
+Maserati Bora                 1 15.0            0            1
+Volvo 142E                    1 21.4            0            0
+attr(,"model_matrix")attr(,"assign")
+[1] 0 1 2 2
+attr(,"model_matrix")attr(,"contrasts")
+attr(,"model_matrix")attr(,"contrasts")$`factor(cyl)`
+[1] "contr.treatment"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_coefficients_type")
+> ### * model_get_coefficients_type
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_coefficients_type
+> ### Title: Get coefficient type
+> ### Aliases: model_get_coefficients_type
+> ###   model_get_coefficients_type.default model_get_coefficients_type.glm
+> ###   model_get_coefficients_type.negbin model_get_coefficients_type.geeglm
+> ###   model_get_coefficients_type.fixest model_get_coefficients_type.biglm
+> ###   model_get_coefficients_type.glmerMod
+> ###   model_get_coefficients_type.clogit model_get_coefficients_type.polr
+> ###   model_get_coefficients_type.multinom
+> ###   model_get_coefficients_type.svyolr model_get_coefficients_type.clm
+> ###   model_get_coefficients_type.clmm model_get_coefficients_type.coxph
+> ###   model_get_coefficients_type.crr model_get_coefficients_type.tidycrr
+> ###   model_get_coefficients_type.cch model_get_coefficients_type.model_fit
+> ###   model_get_coefficients_type.LORgee model_get_coefficients_type.vglm
+> ###   model_get_coefficients_type.vgam
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_coefficients_type()
+[1] "generic"
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> glm(Survived ~ Class + Age * Sex, data = df, weights = df$n, family = binomial) |>
++   model_get_coefficients_type()
+[1] "logistic"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_contrasts")
+> ### * model_get_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_contrasts
+> ### Title: Get contrasts used in the model
+> ### Aliases: model_get_contrasts model_get_contrasts.model_fit
+> ###   model_get_contrasts.zeroinfl model_get_contrasts.hurdle
+> ###   model_get_contrasts.betareg
+> 
+> ### ** Examples
+> 
+> glm(
++   am ~ mpg + factor(cyl),
++   data = mtcars,
++   family = binomial,
++   contrasts = list(`factor(cyl)` = contr.sum)
++ ) |>
++   model_get_contrasts()
+$`factor(cyl)`
+  [,1] [,2]
+4    1    0
+6    0    1
+8   -1   -1
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_model")
+> ### * model_get_model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_model
+> ### Title: Get the model from model objects
+> ### Aliases: model_get_model model_get_model.default model_get_model.mira
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_model()
+
+Call:
+lm(formula = hp ~ mpg + factor(cyl), data = mtcars)
+
+Coefficients:
+ (Intercept)           mpg  factor(cyl)6  factor(cyl)8  
+     171.349        -3.327        16.623        88.105  
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_model_frame")
+> ### * model_get_model_frame
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_model_frame
+> ### Title: Get the model frame of a model
+> ### Aliases: model_get_model_frame model_get_model_frame.default
+> ###   model_get_model_frame.coxph model_get_model_frame.svycoxph
+> ###   model_get_model_frame.survreg model_get_model_frame.biglm
+> ###   model_get_model_frame.model_fit model_get_model_frame.fixest
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_model_frame() |>
++   head()
+                   hp  mpg factor(cyl)
+Mazda RX4         110 21.0           6
+Mazda RX4 Wag     110 21.0           6
+Datsun 710         93 22.8           4
+Hornet 4 Drive    110 21.4           6
+Hornet Sportabout 175 18.7           8
+Valiant           105 18.1           6
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_model_matrix")
+> ### * model_get_model_matrix
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_model_matrix
+> ### Title: Get the model matrix of a model
+> ### Aliases: model_get_model_matrix model_get_model_matrix.default
+> ###   model_get_model_matrix.multinom model_get_model_matrix.clm
+> ###   model_get_model_matrix.brmsfit model_get_model_matrix.glmmTMB
+> ###   model_get_model_matrix.plm model_get_model_matrix.biglm
+> ###   model_get_model_matrix.model_fit model_get_model_matrix.fixest
+> ###   model_get_model_matrix.LORgee model_get_model_matrix.betareg
+> ###   model_get_model_matrix.cch model_get_model_matrix.vglm
+> ###   model_get_model_matrix.vgam
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_model_matrix() |>
++   head()
+                  (Intercept)  mpg factor(cyl)6 factor(cyl)8
+Mazda RX4                   1 21.0            1            0
+Mazda RX4 Wag               1 21.0            1            0
+Datsun 710                  1 22.8            0            0
+Hornet 4 Drive              1 21.4            1            0
+Hornet Sportabout           1 18.7            0            1
+Valiant                     1 18.1            1            0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_n")
+> ### * model_get_n
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_n
+> ### Title: Get the number of observations
+> ### Aliases: model_get_n model_get_n.default model_get_n.glm
+> ###   model_get_n.glmerMod model_get_n.multinom model_get_n.LORgee
+> ###   model_get_n.coxph model_get_n.survreg model_get_n.model_fit
+> ###   model_get_n.tidycrr
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl) + disp:hp, mtcars) |>
++   model_get_n()
+# A tibble: 6 × 2
+  term         n_obs
+  <chr>        <dbl>
+1 (Intercept)     32
+2 mpg             32
+3 factor(cyl)6     7
+4 factor(cyl)8    14
+5 hp:disp         32
+6 factor(cyl)4    11
+> 
+> mod <- glm(
++   response ~ stage * grade + trt,
++   gtsummary::trial,
++   family = binomial,
++   contrasts = list(stage = contr.sum, grade = contr.treatment(3, 2), trt = "contr.SAS")
++ )
+> mod |> model_get_n()
+# A tibble: 16 × 3
+   term          n_obs n_event
+   <chr>         <dbl>   <dbl>
+ 1 (Intercept)     193      61
+ 2 stage1           52      18
+ 3 stage2           52      13
+ 4 stage3           40      15
+ 5 grade1           67      21
+ 6 grade3           63      21
+ 7 trtDrug A        95      28
+ 8 stage1:grade1    17       6
+ 9 stage2:grade1    17       4
+10 stage3:grade1    18       7
+11 stage1:grade3    13       6
+12 stage2:grade3    19       5
+13 stage3:grade3    13       4
+14 stage4           49      15
+15 grade2           63      19
+16 trtDrug B        98      33
+> 
+> ## Not run: 
+> ##D mod <- glm(
+> ##D   Survived ~ Class * Age + Sex,
+> ##D   data = Titanic |> as.data.frame(),
+> ##D   weights = Freq, family = binomial
+> ##D )
+> ##D mod |> model_get_n()
+> ##D 
+> ##D d <- dplyr::as_tibble(Titanic) |>
+> ##D   dplyr::group_by(Class, Sex, Age) |>
+> ##D   dplyr::summarise(
+> ##D     n_survived = sum(n * (Survived == "Yes")),
+> ##D     n_dead = sum(n * (Survived == "No"))
+> ##D   )
+> ##D mod <- glm(cbind(n_survived, n_dead) ~ Class * Age + Sex, data = d, family = binomial)
+> ##D mod |> model_get_n()
+> ##D 
+> ##D mod <- glm(response ~ age + grade * trt, gtsummary::trial, family = poisson)
+> ##D mod |> model_get_n()
+> ##D 
+> ##D mod <- glm(
+> ##D   response ~ trt * grade + offset(ttdeath),
+> ##D   gtsummary::trial,
+> ##D   family = poisson
+> ##D )
+> ##D mod |> model_get_n()
+> ##D 
+> ##D dont
+> ##D df <- survival::lung |> dplyr::mutate(sex = factor(sex))
+> ##D mod <- survival::coxph(survival::Surv(time, status) ~ ph.ecog + age + sex, data = df)
+> ##D mod |> model_get_n()
+> ##D 
+> ##D mod <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
+> ##D mod |> model_get_n()
+> ##D 
+> ##D mod <- lme4::glmer(response ~ trt * grade + (1 | stage),
+> ##D   family = binomial, data = gtsummary::trial
+> ##D )
+> ##D mod |> model_get_n()
+> ##D 
+> ##D mod <- lme4::glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
+> ##D   family = binomial, data = lme4::cbpp
+> ##D )
+> ##D mod |> model_get_n()
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_nlevels")
+> ### * model_get_nlevels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_nlevels
+> ### Title: Get the number of levels for each factor used in 'xlevels'
+> ### Aliases: model_get_nlevels model_get_nlevels.default
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_nlevels()
+# A tibble: 1 × 2
+  variable    var_nlevels
+  <chr>             <int>
+1 factor(cyl)           3
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_offset")
+> ### * model_get_offset
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_offset
+> ### Title: Get model offset
+> ### Aliases: model_get_offset model_get_offset.default
+> 
+> ### ** Examples
+> 
+> mod <- glm(
++   response ~ trt + offset(log(ttdeath)),
++   gtsummary::trial,
++   family = poisson
++ )
+> mod |> model_get_offset()
+  [1] 3.178054 3.178054 3.178054 2.870169 2.799109 2.749832 3.178054 2.913980
+  [9] 3.178054 2.354228 3.178054 3.178054 2.663053 2.556452 3.121483 2.164472
+ [17] 3.178054 2.721953 3.178054 3.178054 3.178054 3.178054 2.828496 3.173460
+ [25] 1.843719 2.758109 3.178054 3.178054 2.737609 2.858193 3.178054 3.039749
+ [33] 3.178054 3.178054 3.178054 2.527327 3.178054 2.746630 2.890372 2.891482
+ [41] 2.520113 2.493205 3.178054 2.857619 3.178054 3.178054 3.178054 2.500616
+ [49] 2.304583 2.903069 2.343727 3.178054 3.178054 2.962175 2.502255 2.671386
+ [57] 2.962175 2.318458 2.576422 2.314514 3.178054 3.125444 3.178054 3.096934
+ [65] 3.178054 3.026261 3.145445 1.998774 3.178054 3.178054 3.178054 3.178054
+ [73] 3.178054 2.955951 1.983756 3.173041 2.786861 3.178054 2.643334 3.178054
+ [81] 3.178054 3.178054 2.799717 3.170106 3.178054 2.910719 2.437116 3.041661
+ [89] 1.673351 3.132010 2.335052 3.178054 3.178054 2.676903 2.951780 3.178054
+ [97] 3.053529 2.776954 2.299581 3.178054 3.178054 2.983153 2.813611 2.414126
+[105] 2.906354 3.178054 2.865624 2.859340 3.178054 3.129389 2.615935 3.178054
+[113] 3.178054 2.859913 3.178054 3.178054 3.178054 3.178054 3.178054 2.564949
+[121] 2.275214 2.750471 3.178054 1.261298 3.013081 3.153163 2.801541 3.178054
+[129] 3.178054 2.684440 2.879760 3.178054 3.083285 3.178054 3.178054 2.540026
+[137] 3.178054 3.178054 3.178054 3.178054 2.309561 3.178054 3.178054 3.178054
+[145] 3.012098 3.178054 3.178054 3.060115 2.536075 2.571084 3.178054 2.714695
+[153] 3.002708 2.356126 3.178054 3.178054 3.178054 3.178054 3.161247 3.178054
+[161] 2.994732 2.744061 3.166319 3.109507 2.972464 2.807594 3.178054 3.178054
+[169] 3.178054 3.086943 3.178054 2.528126 3.178054 2.695978 2.800933 3.178054
+[177] 2.223542 2.877512 3.178054 3.178054 2.294553 2.782539 2.352327 3.035434
+[185] 3.178054 2.799717 3.178054 3.109061 3.178054 3.072693 3.178054 2.986187
+[193] 3.178054
+attr(,"label")
+[1] "Months to Death/Censor"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_pairwise_contrasts")
+> ### * model_get_pairwise_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_pairwise_contrasts
+> ### Title: Get pairwise comparison of the levels of a categorical variable
+> ### Aliases: model_get_pairwise_contrasts
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("emmeans", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_response")
+> ### * model_get_response
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_response
+> ### Title: Get model response
+> ### Aliases: model_get_response model_get_response.default
+> ###   model_get_response.glm model_get_response.glmerMod
+> ###   model_get_response.model_fit
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl) + disp:hp, mtcars) |>
++   model_get_response()
+          Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+                110                 110                  93                 110 
+  Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+                175                 105                 245                  62 
+           Merc 230            Merc 280           Merc 280C          Merc 450SE 
+                 95                 123                 123                 180 
+         Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+                180                 180                 205                 215 
+  Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+                230                  66                  52                  65 
+      Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+                 97                 150                 150                 245 
+   Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+                175                  66                  91                 113 
+     Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+                264                 175                 335                 109 
+> 
+> mod <- glm(
++   response ~ stage * grade + trt,
++   gtsummary::trial,
++   family = binomial,
++   contrasts = list(stage = contr.sum, grade = contr.treatment(3, 2), trt = "contr.SAS")
++ )
+> mod |> model_get_response()
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+  0   1   0   1   1   0   0   0   0   0   0   1   0   0   0   0   1   0   0   0 
+ 21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  37  38  39  40  41 
+  0   0   0   0   0   0   1   0   0   1   1   0   0   1   0   0   1   0   0   0 
+ 42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58  59  60  61 
+  1   0   1   1   1   1   0   0   0   0   0   0   0   0   0   1   0   1   1   0 
+ 62  63  64  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80  81  82 
+  0   0   0   0   1   1   0   0   1   0   0   0   1   0   0   0   0   0   0   1 
+ 83  84  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102 
+  0   0   0   1   0   1   0   0   0   0   1   1   1   0   0   0   0   0   0   0 
+104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 
+  0   0   1   0   0   0   0   1   1   0   0   1   1   0   0   0   0   1   0   0 
+124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 140 141 142 143 144 
+  0   0   1   1   0   0   0   1   0   0   0   1   0   1   1   1   1   1   0   1 
+145 146 147 148 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 
+  0   0   1   0   1   0   0   0   0   0   0   0   0   0   1   0   0   1   1   0 
+166 167 168 169 170 171 172 173 174 175 176 177 178 180 181 182 183 184 185 186 
+  0   0   1   0   1   0   1   0   1   1   1   0   1   0   1   0   0   1   0   1 
+187 188 189 190 191 192 193 194 196 197 198 199 200 
+  0   0   0   0   0   0   0   0   0   1   1   0   0 
+attr(,"label")
+[1] "Tumor Response"
+> 
+> mod <- glm(
++   Survived ~ Class * Age + Sex,
++   data = Titanic |> as.data.frame(),
++   weights = Freq,
++   family = binomial
++ )
+> mod |> model_get_response()
+ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
+ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  1  1  0  1  1  1  0  1  1 
+27 28 29 30 31 32 
+ 1  1  1  1  1  1 
+> 
+> d <- dplyr::as_tibble(Titanic) |>
++   dplyr::group_by(Class, Sex, Age) |>
++   dplyr::summarise(
++     n_survived = sum(n * (Survived == "Yes")),
++     n_dead = sum(n * (Survived == "No"))
++   )
+`summarise()` has grouped output by 'Class', 'Sex'. You can override using the
+`.groups` argument.
+> mod <- glm(cbind(n_survived, n_dead) ~ Class * Age + Sex, data = d, family = binomial, y = FALSE)
+> mod |> model_get_response()
+         1          2          3          4          5          6          7 
+0.97222222 1.00000000 0.32571429 1.00000000 0.86021505 1.00000000 0.08333333 
+         8          9         10         11         12         13         14 
+1.00000000 0.46060606 0.45161290 0.16233766 0.27083333 0.86956522 0.00000000 
+        15         16 
+0.22273782 0.00000000 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_response_variable")
+> ### * model_get_response_variable
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_response_variable
+> ### Title: Get the name of the response variable
+> ### Aliases: model_get_response_variable
+> ###   model_get_response_variable.default
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl) + disp:hp, mtcars) |>
++   model_get_response_variable()
+[1] "hp"
+> 
+> mod <- glm(
++   response ~ stage * grade + trt,
++   gtsummary::trial,
++   family = binomial
++ )
+> mod |> model_get_response_variable()
+[1] "response"
+> 
+> mod <- glm(
++   Survived ~ Class * Age + Sex,
++   data = Titanic |> as.data.frame(),
++   weights = Freq,
++   family = binomial
++ )
+> mod |> model_get_response_variable()
+[1] "Survived"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_terms")
+> ### * model_get_terms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_terms
+> ### Title: Get the terms of a model
+> ### Aliases: model_get_terms model_get_terms.default
+> ###   model_get_terms.brmsfit model_get_terms.glmmTMB
+> ###   model_get_terms.model_fit model_get_terms.betareg model_get_terms.cch
+> ###   model_get_terms.fixest
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_terms()
+hp ~ mpg + factor(cyl)
+attr(,"variables")
+list(hp, mpg, factor(cyl))
+attr(,"factors")
+            mpg factor(cyl)
+hp            0           0
+mpg           1           0
+factor(cyl)   0           1
+attr(,"term.labels")
+[1] "mpg"         "factor(cyl)"
+attr(,"order")
+[1] 1 1
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+attr(,"predvars")
+list(hp, mpg, factor(cyl))
+attr(,"dataClasses")
+         hp         mpg factor(cyl) 
+  "numeric"   "numeric"    "factor" 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_weights")
+> ### * model_get_weights
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_weights
+> ### Title: Get sampling weights used by a model
+> ### Aliases: model_get_weights model_get_weights.default
+> ###   model_get_weights.svyglm model_get_weights.svrepglm
+> ###   model_get_weights.model_fit
+> 
+> ### ** Examples
+> 
+> mod <- lm(Sepal.Length ~ Sepal.Width, iris)
+> mod |> model_get_weights()
+  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+[112] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+[149] 1 1
+> 
+> mod <- lm(hp ~ mpg + factor(cyl) + disp:hp, mtcars, weights = mtcars$gear)
+> mod |> model_get_weights()
+ [1] 4 4 4 3 3 3 3 4 4 4 4 3 3 3 3 3 3 4 4 4 3 3 3 3 3 4 5 5 5 5 5 4
+> 
+> mod <- glm(
++   response ~ stage * grade + trt,
++   gtsummary::trial,
++   family = binomial
++ )
+> mod |> model_get_weights()
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  37  38  39  40  41 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58  59  60  61 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 62  63  64  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80  81  82 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+ 83  84  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 140 141 142 143 144 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+145 146 147 148 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+166 167 168 169 170 171 172 173 174 175 176 177 178 180 181 182 183 184 185 186 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1 
+187 188 189 190 191 192 193 194 196 197 198 199 200 
+  1   1   1   1   1   1   1   1   1   1   1   1   1 
+> 
+> mod <- glm(
++   Survived ~ Class * Age + Sex,
++   data = Titanic |> as.data.frame(),
++   weights = Freq,
++   family = binomial
++ )
+> mod |> model_get_weights()
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+  0   0  35   0   0   0  17   0 118 154 387 670   4  13  89   3   5  11  13   0 
+ 21  22  23  24  25  26  27  28  29  30  31  32 
+  1  13  14   0  57  14  75 192 140  80  76  20 
+> 
+> d <- dplyr::as_tibble(Titanic) |>
++   dplyr::group_by(Class, Sex, Age) |>
++   dplyr::summarise(
++     n_survived = sum(n * (Survived == "Yes")),
++     n_dead = sum(n * (Survived == "No"))
++   )
+`summarise()` has grouped output by 'Class', 'Sex'. You can override using the
+`.groups` argument.
+> mod <- glm(cbind(n_survived, n_dead) ~ Class * Age + Sex, data = d, family = binomial)
+> mod |> model_get_weights()
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16 
+144   1 175   5  93  13 168  11 165  31 462  48  23   0 862   0 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_get_xlevels")
+> ### * model_get_xlevels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_get_xlevels
+> ### Title: Get xlevels used in the model
+> ### Aliases: model_get_xlevels model_get_xlevels.default
+> ###   model_get_xlevels.lmerMod model_get_xlevels.glmerMod
+> ###   model_get_xlevels.felm model_get_xlevels.brmsfit
+> ###   model_get_xlevels.glmmTMB model_get_xlevels.plm
+> ###   model_get_xlevels.model_fit
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl), mtcars) |>
++   model_get_xlevels()
+$`factor(cyl)`
+[1] "4" "6" "8"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_identify_variables")
+> ### * model_identify_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_identify_variables
+> ### Title: Identify for each coefficient of a model the corresponding
+> ###   variable
+> ### Aliases: model_identify_variables model_identify_variables.default
+> ###   model_identify_variables.lavaan model_identify_variables.aov
+> ###   model_identify_variables.clm model_identify_variables.clmm
+> ###   model_identify_variables.gam model_identify_variables.model_fit
+> ###   model_identify_variables.logitr
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> glm(
++   Survived ~ Class + Age * Sex,
++   data = df, weights = df$n,
++   family = binomial
++ ) |>
++   model_identify_variables()
+# A tibble: 7 × 5
+  term             variable var_class var_nlevels var_type   
+  <chr>            <chr>    <chr>           <int> <chr>      
+1 (Intercept)      <NA>     <NA>               NA intercept  
+2 Class2nd         Class    character           4 categorical
+3 Class3rd         Class    character           4 categorical
+4 ClassCrew        Class    character           4 categorical
+5 AgeChild         Age      character           2 dichotomous
+6 SexMale          Sex      character           2 dichotomous
+7 AgeChild:SexMale Age:Sex  <NA>               NA interaction
+> 
+> lm(
++   Sepal.Length ~ poly(Sepal.Width, 2) + Species,
++   data = iris,
++   contrasts = list(Species = contr.sum)
++ ) |>
++   model_identify_variables()
+# A tibble: 5 × 5
+  term                  variable    var_class var_nlevels var_type   
+  <chr>                 <chr>       <chr>           <int> <chr>      
+1 (Intercept)           <NA>        <NA>               NA intercept  
+2 poly(Sepal.Width, 2)1 Sepal.Width nmatrix.2          NA continuous 
+3 poly(Sepal.Width, 2)2 Sepal.Width nmatrix.2          NA continuous 
+4 Species1              Species     factor              3 categorical
+5 Species2              Species     factor              3 categorical
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_list_contrasts")
+> ### * model_list_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_list_contrasts
+> ### Title: List contrasts used by a model
+> ### Aliases: model_list_contrasts model_list_contrasts.default
+> 
+> ### ** Examples
+> 
+> glm(
++   am ~ mpg + factor(cyl),
++   data = mtcars,
++   family = binomial,
++   contrasts = list(`factor(cyl)` = contr.sum)
++ ) |>
++   model_list_contrasts()
+# A tibble: 1 × 4
+  variable    contrasts reference contrasts_type
+  <chr>       <chr>         <int> <chr>         
+1 factor(cyl) contr.sum         3 sum           
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_list_higher_order_variables")
+> ### * model_list_higher_order_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_list_higher_order_variables
+> ### Title: List higher order variables of a model
+> ### Aliases: model_list_higher_order_variables
+> ###   model_list_higher_order_variables.default
+> 
+> ### ** Examples
+> 
+> lm(hp ~ mpg + factor(cyl) + disp:hp, mtcars) |>
++   model_list_higher_order_variables()
+[1] "mpg"         "factor(cyl)" "hp:disp"    
+> 
+> mod <- glm(
++   response ~ stage * grade + trt:stage,
++   gtsummary::trial,
++   family = binomial
++ )
+> mod |> model_list_higher_order_variables()
+[1] "stage:grade" "stage:trt"  
+> 
+> mod <- glm(
++   Survived ~ Class * Age + Sex,
++   data = Titanic |> as.data.frame(),
++   weights = Freq,
++   family = binomial
++ )
+> mod |> model_list_higher_order_variables()
+[1] "Sex"       "Class:Age"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_list_terms_levels")
+> ### * model_list_terms_levels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_list_terms_levels
+> ### Title: List levels of categorical terms
+> ### Aliases: model_list_terms_levels model_list_terms_levels.default
+> 
+> ### ** Examples
+> 
+> glm(
++   am ~ mpg + factor(cyl),
++   data = mtcars,
++   family = binomial,
++   contrasts = list(`factor(cyl)` = contr.sum)
++ ) |>
++   model_list_terms_levels()
+# A tibble: 3 × 11
+  variable    contrasts_type term     level level_rank reference reference_level
+  <chr>       <chr>          <chr>    <chr>      <int> <lgl>     <chr>          
+1 factor(cyl) sum            factor(… 4              1 FALSE     8              
+2 factor(cyl) sum            factor(… 6              2 FALSE     8              
+3 factor(cyl) sum            factor(… 8              3 TRUE      8              
+# ℹ 4 more variables: var_label <chr>, var_nlevels <int>, dichotomous <lgl>,
+#   label <glue>
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> 
+> mod <- glm(
++   Survived ~ Class + Age + Sex,
++   data = df, weights = df$n, family = binomial,
++   contrasts = list(Age = contr.sum, Class = "contr.helmert")
++ )
+> mod |> model_list_terms_levels()
+# A tibble: 4 × 11
+  variable contrasts_type term      level  level_rank reference reference_level
+  <chr>    <chr>          <chr>     <chr>       <int> <lgl>     <chr>          
+1 Age      sum            Age1      Adult           1 FALSE     Child          
+2 Age      sum            Age2      Child           2 TRUE      Child          
+3 Sex      treatment      SexFemale Female          1 TRUE      Female         
+4 Sex      treatment      SexMale   Male            2 FALSE     Female         
+# ℹ 4 more variables: var_label <chr>, var_nlevels <int>, dichotomous <lgl>,
+#   label <glue>
+> mod |> model_list_terms_levels("{level} vs {reference_level}")
+# A tibble: 4 × 11
+  variable contrasts_type term      level  level_rank reference reference_level
+  <chr>    <chr>          <chr>     <chr>       <int> <lgl>     <chr>          
+1 Age      sum            Age1      Adult           1 FALSE     Child          
+2 Age      sum            Age2      Child           2 TRUE      Child          
+3 Sex      treatment      SexFemale Female          1 TRUE      Female         
+4 Sex      treatment      SexMale   Male            2 FALSE     Female         
+# ℹ 4 more variables: var_label <chr>, var_nlevels <int>, dichotomous <lgl>,
+#   label <glue>
+> mod |> model_list_terms_levels("{variable} [{level} - {reference_level}]")
+# A tibble: 4 × 11
+  variable contrasts_type term      level  level_rank reference reference_level
+  <chr>    <chr>          <chr>     <chr>       <int> <lgl>     <chr>          
+1 Age      sum            Age1      Adult           1 FALSE     Child          
+2 Age      sum            Age2      Child           2 TRUE      Child          
+3 Sex      treatment      SexFemale Female          1 TRUE      Female         
+4 Sex      treatment      SexMale   Male            2 FALSE     Female         
+# ℹ 4 more variables: var_label <chr>, var_nlevels <int>, dichotomous <lgl>,
+#   label <glue>
+> mod |> model_list_terms_levels(
++   "{ifelse(reference, level, paste(level, '-', reference_level))}"
++ )
+# A tibble: 4 × 11
+  variable contrasts_type term      level  level_rank reference reference_level
+  <chr>    <chr>          <chr>     <chr>       <int> <lgl>     <chr>          
+1 Age      sum            Age1      Adult           1 FALSE     Child          
+2 Age      sum            Age2      Child           2 TRUE      Child          
+3 Sex      treatment      SexFemale Female          1 TRUE      Female         
+4 Sex      treatment      SexMale   Male            2 FALSE     Female         
+# ℹ 4 more variables: var_label <chr>, var_nlevels <int>, dichotomous <lgl>,
+#   label <glue>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model_list_variables")
+> ### * model_list_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model_list_variables
+> ### Title: List all the variables used in a model
+> ### Aliases: model_list_variables model_list_variables.default
+> ###   model_list_variables.lavaan model_list_variables.logitr
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("gtsummary", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scope_tidy")
+> ### * scope_tidy
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scope_tidy
+> ### Title: Scoping a tidy tibble allowing to tidy select
+> ### Aliases: scope_tidy
+> 
+> ### ** Examples
+> 
+> mod <- lm(Sepal.Length ~ Sepal.Width * Species, data = iris)
+> tt <- mod |> tidy_and_attach() |> tidy_add_contrasts()
+> 
+> scope_tidy(tt) |> str()
+tibble [1 × 4] (S3: tbl_df/tbl/data.frame)
+ $ (Intercept)        : logi NA
+  ..- attr(*, "gtsummary.var_type")= chr "intercept"
+ $ Sepal.Width        : num NA
+  ..- attr(*, "gtsummary.var_type")= chr "continuous"
+  ..- attr(*, "gtsummary.var_class")= Named chr "numeric"
+  .. ..- attr(*, "names")= chr "Sepal.Width"
+ $ Species            : Factor w/ 0 levels: NA
+  ..- attr(*, "gtsummary.var_type")= chr "categorical"
+  ..- attr(*, "gtsummary.var_class")= Named chr "factor"
+  .. ..- attr(*, "names")= chr "Species"
+  ..- attr(*, "gtsummary.contrasts_type")= chr "treatment"
+ $ Sepal.Width:Species: logi NA
+  ..- attr(*, "gtsummary.var_type")= chr "interaction"
+> scope_tidy(tt, data = model_get_model_frame(mod)) |> str()
+'data.frame':	150 obs. of  3 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+  ..- attr(*, "gtsummary.var_type")= chr "continuous"
+  ..- attr(*, "gtsummary.var_class")= Named chr "numeric"
+  .. ..- attr(*, "names")= chr "Sepal.Width"
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+  ..- attr(*, "gtsummary.var_type")= chr "categorical"
+  ..- attr(*, "gtsummary.var_class")= Named chr "factor"
+  .. ..- attr(*, "names")= chr "Species"
+  ..- attr(*, "gtsummary.contrasts_type")= chr "treatment"
+ - attr(*, "terms")=Classes 'terms', 'formula'  language Sepal.Length ~ Sepal.Width * Species
+  .. ..- attr(*, "variables")= language list(Sepal.Length, Sepal.Width, Species)
+  .. ..- attr(*, "factors")= int [1:3, 1:3] 0 1 0 0 0 1 0 1 1
+  .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. ..$ : chr [1:3] "Sepal.Length" "Sepal.Width" "Species"
+  .. .. .. ..$ : chr [1:3] "Sepal.Width" "Species" "Sepal.Width:Species"
+  .. ..- attr(*, "term.labels")= chr [1:3] "Sepal.Width" "Species" "Sepal.Width:Species"
+  .. ..- attr(*, "order")= int [1:3] 1 1 2
+  .. ..- attr(*, "intercept")= int 1
+  .. ..- attr(*, "response")= int 1
+  .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. ..- attr(*, "predvars")= language list(Sepal.Length, Sepal.Width, Species)
+  .. ..- attr(*, "dataClasses")= Named chr [1:3] "numeric" "numeric" "factor"
+  .. .. ..- attr(*, "names")= chr [1:3] "Sepal.Length" "Sepal.Width" "Species"
+> 
+> scope_tidy(tt) |> dplyr::select(dplyr::starts_with("Se")) |> names()
+[1] "Sepal.Width"         "Sepal.Width:Species"
+> scope_tidy(tt) |> dplyr::select(where(is.factor)) |> names()
+[1] "Species"
+> scope_tidy(tt) |> dplyr::select(all_continuous()) |> names()
+[1] "Sepal.Width"
+> scope_tidy(tt) |> dplyr::select(all_contrasts()) |> names()
+[1] "Species"
+> scope_tidy(tt) |> dplyr::select(all_interaction()) |> names()
+[1] "Sepal.Width:Species"
+> scope_tidy(tt) |> dplyr::select(all_intercepts()) |> names()
+[1] "(Intercept)"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("select_helpers")
+> ### * select_helpers
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: select_helpers
+> ### Title: Select helper functions
+> ### Aliases: select_helpers all_continuous all_categorical all_dichotomous
+> ###   all_interaction all_ran_pars all_ran_vals all_intercepts
+> ###   all_contrasts
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("emmeans", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("seq_range")
+> ### * seq_range
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: seq_range
+> ### Title: Sequence generation between min and max
+> ### Aliases: seq_range
+> 
+> ### ** Examples
+> 
+> seq_range(iris$Petal.Length)
+ [1] 1.000000 1.245833 1.491667 1.737500 1.983333 2.229167 2.475000 2.720833
+ [9] 2.966667 3.212500 3.458333 3.704167 3.950000 4.195833 4.441667 4.687500
+[17] 4.933333 5.179167 5.425000 5.670833 5.916667 6.162500 6.408333 6.654167
+[25] 6.900000
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_coefficients_type")
+> ### * tidy_add_coefficients_type
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_coefficients_type
+> ### Title: Add coefficients type and label as attributes
+> ### Aliases: tidy_add_coefficients_type
+> 
+> ### ** Examples
+> 
+> ex1 <- lm(hp ~ mpg + factor(cyl), mtcars) |>
++   tidy_and_attach() |>
++   tidy_add_coefficients_type()
+> attr(ex1, "coefficients_type")
+[1] "generic"
+> attr(ex1, "coefficients_label")
+[1] "Beta"
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> ex2 <- glm(
++   Survived ~ Class + Age * Sex,
++   data = df,
++   weights = df$n,
++   family = binomial
++ ) |>
++   tidy_and_attach(exponentiate = TRUE) |>
++   tidy_add_coefficients_type()
+> attr(ex2, "coefficients_type")
+[1] "logistic"
+> attr(ex2, "coefficients_label")
+[1] "OR"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_contrasts")
+> ### * tidy_add_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_contrasts
+> ### Title: Add contrasts type for categorical variables
+> ### Aliases: tidy_add_contrasts
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> 
+> glm(
++   Survived ~ Class + Age + Sex,
++   data = df, weights = df$n, family = binomial,
++   contrasts = list(Age = contr.sum, Class = "contr.helmert")
++ ) |>
++   tidy_and_attach() |>
++   tidy_add_contrasts()
+# A tibble: 6 × 13
+  term        variable   var_class var_type var_nlevels contrasts contrasts_type
+  <chr>       <chr>      <chr>     <chr>          <int> <chr>     <chr>         
+1 (Intercept) (Intercep… <NA>      interce…          NA <NA>      <NA>          
+2 Class1      Class      character categor…           4 contr.he… helmert       
+3 Class2      Class      character categor…           4 contr.he… helmert       
+4 Class3      Class      character categor…           4 contr.he… helmert       
+5 Age1        Age        character dichoto…           2 contr.sum sum           
+6 SexMale     Sex        character dichoto…           2 contr.tr… treatment     
+# ℹ 6 more variables: estimate <dbl>, std.error <dbl>, statistic <dbl>,
+#   p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_estimate_to_reference_rows")
+> ### * tidy_add_estimate_to_reference_rows
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_estimate_to_reference_rows
+> ### Title: Add an estimate value to references rows for categorical
+> ###   variables
+> ### Aliases: tidy_add_estimate_to_reference_rows
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (require("gtsummary") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+Loading required package: gtsummary
+
+Attaching package: ‘gtsummary’
+
+The following objects are masked from ‘package:broom.helpers’:
+
+    all_categorical, all_continuous, all_contrasts, all_dichotomous,
+    all_interaction, all_intercepts
+
+Loading required package: emmeans
+Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:emmeans’, ‘package:gtsummary’
+
+> nameEx("tidy_add_header_rows")
+> ### * tidy_add_header_rows
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_header_rows
+> ### Title: Add header rows variables with several terms
+> ### Aliases: tidy_add_header_rows
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("gtsummary", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_n")
+> ### * tidy_add_n
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_n
+> ### Title: Add the (weighted) number of observations
+> ### Aliases: tidy_add_n
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_pairwise_contrasts")
+> ### * tidy_add_pairwise_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_pairwise_contrasts
+> ### Title: Add pairwise contrasts for categorical variables
+> ### Aliases: tidy_add_pairwise_contrasts
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("emmeans", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_reference_rows")
+> ### * tidy_add_reference_rows
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_reference_rows
+> ### Title: Add references rows for categorical variables
+> ### Aliases: tidy_add_reference_rows
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("gtsummary", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_term_labels")
+> ### * tidy_add_term_labels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_term_labels
+> ### Title: Add term labels
+> ### Aliases: tidy_add_term_labels
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_add_variable_labels")
+> ### * tidy_add_variable_labels
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_add_variable_labels
+> ### Title: Add variable labels
+> ### Aliases: tidy_add_variable_labels
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes"))) |>
++   labelled::set_variable_labels(
++     Class = "Passenger's class",
++     Sex = "Sex"
++   )
+> 
+> glm(Survived ~ Class * Age * Sex, data = df, weights = df$n, family = binomial) |>
++   tidy_and_attach() |>
++   tidy_add_variable_labels(
++     labels = list(
++       "(Intercept)" ~ "Custom intercept",
++       Sex ~ "Gender",
++       "Class:Age" ~ "Custom label"
++     )
++   )
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+Warning: glm.fit: algorithm did not converge
+Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+# A tibble: 16 × 12
+   term     variable var_label var_class var_type var_nlevels estimate std.error
+   <chr>    <chr>    <chr>     <chr>     <chr>          <int>    <dbl>     <dbl>
+ 1 (Interc… (Interc… Custom i… <NA>      interce…          NA   3.56       0.507
+ 2 Class2nd Class    Passenge… character categor…           4  -1.74       0.589
+ 3 Class3rd Class    Passenge… character categor…           4  -3.71       0.531
+ 4 ClassCr… Class    Passenge… character categor…           4  -1.66       0.800
+ 5 AgeChild Age      Age       character dichoto…           2  11.0      883.   
+ 6 SexMale  Sex      Gender    character dichoto…           2  -4.28       0.532
+ 7 Class2n… Class:A… Custom l… <NA>      interac…          NA   3.53    1066.   
+ 8 Class3r… Class:A… Custom l… <NA>      interac…          NA -11.0      883.   
+ 9 ClassCr… Class:A… Custom l… <NA>      interac…          NA  NA         NA    
+10 Class2n… Class:S… Passenge… <NA>      interac…          NA   0.0680     0.671
+11 Class3r… Class:S… Passenge… <NA>      interac…          NA   2.80       0.569
+12 ClassCr… Class:S… Passenge… <NA>      interac…          NA   1.14       0.820
+13 AgeChil… Age:Sex  Age * Ge… <NA>      interac…          NA   5.25    1091.   
+14 Class2n… Class:A… Passenge… <NA>      interac…          NA  -1.19    1383.   
+15 Class3r… Class:A… Passenge… <NA>      interac…          NA  -4.57    1091.   
+16 ClassCr… Class:A… Passenge… <NA>      interac…          NA  NA         NA    
+# ℹ 4 more variables: statistic <dbl>, p.value <dbl>, conf.low <dbl>,
+#   conf.high <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_all_effects")
+> ### * tidy_all_effects
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_all_effects
+> ### Title: Marginal Predictions at the mean with 'effects::allEffects()'
+> ### Aliases: tidy_all_effects
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("effects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_attach_model")
+> ### * tidy_attach_model
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_attach_model
+> ### Title: Attach a full model to the tibble of model terms
+> ### Aliases: tidy_attach_model tidy_and_attach tidy_get_model
+> ###   tidy_detach_model
+> 
+> ### ** Examples
+> 
+> mod <- lm(Sepal.Length ~ Sepal.Width + Species, data = iris)
+> tt <- mod |>
++   tidy_and_attach(conf.int = TRUE)
+> tt
+# A tibble: 4 × 7
+  term              estimate std.error statistic  p.value conf.low conf.high
+  <chr>                <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)          2.25      0.370      6.09 9.57e- 9    1.52       2.98
+2 Sepal.Width          0.804     0.106      7.56 4.19e-12    0.593      1.01
+3 Speciesversicolor    1.46      0.112     13.0  3.48e-26    1.24       1.68
+4 Speciesvirginica     1.95      0.100     19.5  2.09e-42    1.75       2.14
+> tidy_get_model(tt)
+
+Call:
+lm(formula = Sepal.Length ~ Sepal.Width + Species, data = iris)
+
+Coefficients:
+      (Intercept)        Sepal.Width  Speciesversicolor   Speciesvirginica  
+           2.2514             0.8036             1.4587             1.9468  
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_avg_comparisons")
+> ### * tidy_avg_comparisons
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_avg_comparisons
+> ### Title: Marginal Contrasts with 'marginaleffects::avg_comparisons()'
+> ### Aliases: tidy_avg_comparisons
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("marginaleffects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_avg_slopes")
+> ### * tidy_avg_slopes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_avg_slopes
+> ### Title: Marginal Slopes / Effects with 'marginaleffects::avg_slopes()'
+> ### Aliases: tidy_avg_slopes
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("marginaleffects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_disambiguate_terms")
+> ### * tidy_disambiguate_terms
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_disambiguate_terms
+> ### Title: Disambiguate terms
+> ### Aliases: tidy_disambiguate_terms
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_ggpredict")
+> ### * tidy_ggpredict
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_ggpredict
+> ### Title: Marginal Predictions with 'ggeffects::ggpredict()'
+> ### Aliases: tidy_ggpredict
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("ggeffects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_group_by")
+> ### * tidy_group_by
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_group_by
+> ### Title: Group results by selected columns
+> ### Aliases: tidy_group_by auto_group_by
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (require("nnet")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ mod <- multinom(Species ~ Petal.Width + Petal.Length, data = iris)
++ mod |> tidy_and_attach() |> tidy_group_by()
++ 
++ mod |>
++   tidy_and_attach() |>
++   tidy_group_by(group_labels = c(versicolor = "harlequin blueflag"))
++ 
++ mod |> tidy_and_attach() |> tidy_group_by(group_by = NULL)
++ 
++ mod |>
++   tidy_and_attach() |>
++   tidy_identify_variables() |>
++   tidy_group_by(group_by = variable)
++ ## Don't show: 
++ }) # examplesIf
+Loading required package: nnet
+> mod <- multinom(Species ~ Petal.Width + Petal.Length, data = iris)
+# weights:  12 (6 variable)
+initial  value 164.791843 
+iter  10 value 12.657828
+iter  20 value 10.374056
+iter  30 value 10.330881
+iter  40 value 10.306926
+iter  50 value 10.300057
+iter  60 value 10.296452
+iter  70 value 10.294046
+iter  80 value 10.292029
+iter  90 value 10.291154
+iter 100 value 10.289505
+final  value 10.289505 
+stopped after 100 iterations
+> tidy_group_by(tidy_and_attach(mod))
+# A tibble: 6 × 9
+  group_by y.level term  estimate std.error statistic p.value conf.low conf.high
+  <fct>    <chr>   <chr>    <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 versico… versic… (Int…   -22.8       44.4   -0.514    0.607   -110.       64.2
+2 versico… versic… Peta…     7.88      81.0    0.0973   0.923   -151.      167. 
+3 versico… versic… Peta…     6.92      37.6    0.184    0.854    -66.7      80.6
+4 virgini… virgin… (Int…   -67.8       46.4   -1.46     0.144   -159.       23.1
+5 virgini… virgin… Peta…    18.3       81.1    0.225    0.822   -141.      177. 
+6 virgini… virgin… Peta…    12.6       37.7    0.336    0.737    -61.2      86.5
+> tidy_group_by(tidy_and_attach(mod), group_labels = c(versicolor = "harlequin blueflag"))
+# A tibble: 6 × 9
+  group_by y.level term  estimate std.error statistic p.value conf.low conf.high
+  <fct>    <chr>   <chr>    <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 harlequ… versic… (Int…   -22.8       44.4   -0.514    0.607   -110.       64.2
+2 harlequ… versic… Peta…     7.88      81.0    0.0973   0.923   -151.      167. 
+3 harlequ… versic… Peta…     6.92      37.6    0.184    0.854    -66.7      80.6
+4 virgini… virgin… (Int…   -67.8       46.4   -1.46     0.144   -159.       23.1
+5 virgini… virgin… Peta…    18.3       81.1    0.225    0.822   -141.      177. 
+6 virgini… virgin… Peta…    12.6       37.7    0.336    0.737    -61.2      86.5
+> tidy_group_by(tidy_and_attach(mod), group_by = NULL)
+# A tibble: 6 × 8
+  y.level    term        estimate std.error statistic p.value conf.low conf.high
+  <chr>      <chr>          <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 versicolor (Intercept)   -22.8       44.4   -0.514    0.607   -110.       64.2
+2 versicolor Petal.Width     7.88      81.0    0.0973   0.923   -151.      167. 
+3 versicolor Petal.Leng…     6.92      37.6    0.184    0.854    -66.7      80.6
+4 virginica  (Intercept)   -67.8       46.4   -1.46     0.144   -159.       23.1
+5 virginica  Petal.Width    18.3       81.1    0.225    0.822   -141.      177. 
+6 virginica  Petal.Leng…    12.6       37.7    0.336    0.737    -61.2      86.5
+> tidy_group_by(tidy_identify_variables(tidy_and_attach(mod)), group_by = variable)
+# A tibble: 6 × 13
+  group_by     y.level    term  variable var_class var_type var_nlevels estimate
+  <fct>        <chr>      <chr> <chr>    <chr>     <chr>          <int>    <dbl>
+1 (Intercept)  versicolor (Int… (Interc… <NA>      interce…          NA   -22.8 
+2 (Intercept)  virginica  (Int… (Interc… <NA>      interce…          NA   -67.8 
+3 Petal.Width  versicolor Peta… Petal.W… numeric   continu…          NA     7.88
+4 Petal.Width  virginica  Peta… Petal.W… numeric   continu…          NA    18.3 
+5 Petal.Length versicolor Peta… Petal.L… numeric   continu…          NA     6.92
+6 Petal.Length virginica  Peta… Petal.L… numeric   continu…          NA    12.6 
+# ℹ 5 more variables: std.error <dbl>, statistic <dbl>, p.value <dbl>,
+#   conf.low <dbl>, conf.high <dbl>
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:nnet’
+
+> nameEx("tidy_identify_variables")
+> ### * tidy_identify_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_identify_variables
+> ### Title: Identify the variable corresponding to each model coefficient
+> ### Aliases: tidy_identify_variables
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived, c("No", "Yes")))
+> glm(
++   Survived ~ Class + Age * Sex,
++   data = df,
++   weights = df$n,
++   family = binomial
++ ) |>
++   tidy_and_attach() |>
++   tidy_identify_variables()
+# A tibble: 7 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 Class2nd  Class    character categor…           4   -1.03      0.200    -5.17 
+3 Class3rd  Class    character categor…           4   -1.81      0.176   -10.3  
+4 ClassCrew Class    character categor…           4   -0.803     0.160    -5.03 
+5 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+6 SexMale   Sex      character dichoto…           2   -2.62      0.151   -17.3  
+7 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433     4.39 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> 
+> lm(
++   Sepal.Length ~ poly(Sepal.Width, 2) + Species,
++   data = iris,
++   contrasts = list(Species = contr.sum)
++ ) |>
++   tidy_and_attach(conf.int = TRUE) |>
++   tidy_identify_variables()
+# A tibble: 5 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA   5.84      0.0359   163.   
+2 poly(Sep… Sepal.W… nmatrix.2 continu…          NA   4.27      0.568      7.52 
+3 poly(Sep… Sepal.W… nmatrix.2 continu…          NA  -0.0720    0.447     -0.161
+4 Species1  Species  factor    categor…           3  -1.13      0.0647   -17.5  
+5 Species2  Species  factor    categor…           3   0.324     0.0593     5.46 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_marginal_contrasts")
+> ### * tidy_marginal_contrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_marginal_contrasts
+> ### Title: Marginal Contrasts with 'marginaleffects::avg_comparisons()'
+> ### Aliases: tidy_marginal_contrasts variables_to_contrast
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("marginaleffects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_marginal_predictions")
+> ### * tidy_marginal_predictions
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_marginal_predictions
+> ### Title: Marginal Predictions with 'marginaleffects::avg_predictions()'
+> ### Aliases: tidy_marginal_predictions variables_to_predict
+> ###   plot_marginal_predictions
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("marginaleffects", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ # example code
++ 
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_margins")
+> ### * tidy_margins
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_margins
+> ### Title: Average Marginal Effects with 'margins::margins()'
+> ### Aliases: tidy_margins
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("margins", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_multgee")
+> ### * tidy_multgee
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_multgee
+> ### Title: Tidy a 'multgee' model
+> ### Aliases: tidy_multgee
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("multgee", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_parameters")
+> ### * tidy_parameters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_parameters
+> ### Title: Tidy a model with parameters package
+> ### Aliases: tidy_parameters
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("parameters", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_plus_plus")
+> ### * tidy_plus_plus
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_plus_plus
+> ### Title: Tidy a model and compute additional informations
+> ### Aliases: tidy_plus_plus
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (require("gtsummary") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+Loading required package: gtsummary
+
+Attaching package: ‘gtsummary’
+
+The following objects are masked from ‘package:broom.helpers’:
+
+    all_categorical, all_continuous, all_contrasts, all_dichotomous,
+    all_interaction, all_intercepts
+
+Loading required package: emmeans
+Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:emmeans’, ‘package:gtsummary’
+
+> nameEx("tidy_remove_intercept")
+> ### * tidy_remove_intercept
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_remove_intercept
+> ### Title: Remove intercept(s)
+> ### Aliases: tidy_remove_intercept
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived))
+> glm(Survived ~ Class + Age + Sex, data = df, weights = df$n, family = binomial) |>
++   tidy_and_attach() |>
++   tidy_remove_intercept()
+# A tibble: 5 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 Class2nd  Class    character categor…           4   -1.02      0.196     -5.19
+2 Class3rd  Class    character categor…           4   -1.78      0.172    -10.4 
+3 ClassCrew Class    character categor…           4   -0.858     0.157     -5.45
+4 AgeChild  Age      character dichoto…           2    1.06      0.244      4.35
+5 SexMale   Sex      character dichoto…           2   -2.42      0.140    -17.2 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_select_variables")
+> ### * tidy_select_variables
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_select_variables
+> ### Title: Select variables to keep/drop
+> ### Aliases: tidy_select_variables
+> 
+> ### ** Examples
+> 
+> df <- Titanic |>
++   dplyr::as_tibble() |>
++   dplyr::mutate(Survived = factor(Survived))
+> res <-
++   glm(Survived ~ Class + Age * Sex, data = df, weights = df$n, family = binomial) |>
++   tidy_and_attach() |>
++   tidy_identify_variables()
+> 
+> res
+# A tibble: 7 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 Class2nd  Class    character categor…           4   -1.03      0.200    -5.17 
+3 Class3rd  Class    character categor…           4   -1.81      0.176   -10.3  
+4 ClassCrew Class    character categor…           4   -0.803     0.160    -5.03 
+5 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+6 SexMale   Sex      character dichoto…           2   -2.62      0.151   -17.3  
+7 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433     4.39 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables()
+# A tibble: 7 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 Class2nd  Class    character categor…           4   -1.03      0.200    -5.17 
+3 Class3rd  Class    character categor…           4   -1.81      0.176   -10.3  
+4 ClassCrew Class    character categor…           4   -0.803     0.160    -5.03 
+5 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+6 SexMale   Sex      character dichoto…           2   -2.62      0.151   -17.3  
+7 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433     4.39 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = "Class")
+# A tibble: 4 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176     12.4 
+2 Class2nd  Class    character categor…           4   -1.03      0.200     -5.17
+3 Class3rd  Class    character categor…           4   -1.81      0.176    -10.3 
+4 ClassCrew Class    character categor…           4   -0.803     0.160     -5.03
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = -c("Age", "Sex"))
+# A tibble: 5 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176     12.4 
+2 Class2nd  Class    character categor…           4   -1.03      0.200     -5.17
+3 Class3rd  Class    character categor…           4   -1.81      0.176    -10.3 
+4 ClassCrew Class    character categor…           4   -0.803     0.160     -5.03
+5 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433      4.39
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = starts_with("A"))
+# A tibble: 3 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+3 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433     4.39 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = all_categorical())
+# A tibble: 6 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 Class2nd  Class    character categor…           4   -1.03      0.200    -5.17 
+3 Class3rd  Class    character categor…           4   -1.81      0.176   -10.3  
+4 ClassCrew Class    character categor…           4   -0.803     0.160    -5.03 
+5 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+6 SexMale   Sex      character dichoto…           2   -2.62      0.151   -17.3  
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = all_dichotomous())
+# A tibble: 3 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+3 SexMale   Sex      character dichoto…           2   -2.62      0.151   -17.3  
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(include = all_interaction())
+# A tibble: 2 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA     2.18     0.176     12.4 
+2 AgeChild… Age:Sex  <NA>      interac…          NA     1.90     0.433      4.39
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> res |> tidy_select_variables(
++   include = c("Age", all_categorical(dichotomous = FALSE), all_interaction())
++ )
+# A tibble: 6 × 11
+  term      variable var_class var_type var_nlevels estimate std.error statistic
+  <chr>     <chr>    <chr>     <chr>          <int>    <dbl>     <dbl>     <dbl>
+1 (Interce… (Interc… <NA>      interce…          NA    2.18      0.176    12.4  
+2 AgeChild  Age      character dichoto…           2   -0.110     0.335    -0.328
+3 Class2nd  Class    character categor…           4   -1.03      0.200    -5.17 
+4 Class3rd  Class    character categor…           4   -1.81      0.176   -10.3  
+5 ClassCrew Class    character categor…           4   -0.803     0.160    -5.03 
+6 AgeChild… Age:Sex  <NA>      interac…          NA    1.90      0.433     4.39 
+# ℹ 3 more variables: p.value <dbl>, conf.low <dbl>, conf.high <dbl>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_vgam")
+> ### * tidy_vgam
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_vgam
+> ### Title: Tidy a 'vglm' or a 'vgam' model
+> ### Aliases: tidy_vgam
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("VGAM", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tidy_zeroinfl")
+> ### * tidy_zeroinfl
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tidy_zeroinfl
+> ### Title: Tidy a 'zeroinfl' or a 'hurdle' model
+> ### Aliases: tidy_zeroinfl
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> if (.assert_package("pscl", boolean = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)({ # examplesIf
++ ## End(Don't show)
++ ## Don't show: 
++ }) # examplesIf
+> ## End(Don't show)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  4.066 0.282 6.413 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
