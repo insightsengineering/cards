@@ -1,4 +1,4 @@
-# cards 0.5.1.9014
+# cards 0.6.0
 
 ## New Features and Functions
 
