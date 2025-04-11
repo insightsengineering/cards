@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.983298538622129" branch-rate="0" lines-covered="2826" lines-valid="2874" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-11 16:36:58.781677">
+<coverage line-rate="0.983292725374173" branch-rate="0" lines-covered="2825" lines-valid="2873" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-11 16:57:46.026749">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.983298538622129" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.983292725374173" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="1" branch-rate="0" complexity="0">
           <methods>
@@ -6287,18 +6287,17 @@
                 <line number="51" hits="22" branch="false"/>
                 <line number="52" hits="22" branch="false"/>
                 <line number="53" hits="22" branch="false"/>
-                <line number="54" hits="22" branch="false"/>
+                <line number="55" hits="1" branch="false"/>
+                <line number="56" hits="1" branch="false"/>
                 <line number="57" hits="1" branch="false"/>
                 <line number="58" hits="1" branch="false"/>
-                <line number="59" hits="1" branch="false"/>
-                <line number="60" hits="1" branch="false"/>
-                <line number="65" hits="23" branch="false"/>
-                <line number="66" hits="74" branch="false"/>
-                <line number="67" hits="74" branch="false"/>
-                <line number="68" hits="1" branch="false"/>
-                <line number="69" hits="1" branch="false"/>
-                <line number="71" hits="73" branch="false"/>
-                <line number="75" hits="23" branch="false"/>
+                <line number="63" hits="23" branch="false"/>
+                <line number="64" hits="74" branch="false"/>
+                <line number="65" hits="74" branch="false"/>
+                <line number="66" hits="1" branch="false"/>
+                <line number="67" hits="1" branch="false"/>
+                <line number="69" hits="73" branch="false"/>
+                <line number="73" hits="23" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -6319,18 +6318,17 @@
             <line number="51" hits="22" branch="false"/>
             <line number="52" hits="22" branch="false"/>
             <line number="53" hits="22" branch="false"/>
-            <line number="54" hits="22" branch="false"/>
+            <line number="55" hits="1" branch="false"/>
+            <line number="56" hits="1" branch="false"/>
             <line number="57" hits="1" branch="false"/>
             <line number="58" hits="1" branch="false"/>
-            <line number="59" hits="1" branch="false"/>
-            <line number="60" hits="1" branch="false"/>
-            <line number="65" hits="23" branch="false"/>
-            <line number="66" hits="74" branch="false"/>
-            <line number="67" hits="74" branch="false"/>
-            <line number="68" hits="1" branch="false"/>
-            <line number="69" hits="1" branch="false"/>
-            <line number="71" hits="73" branch="false"/>
-            <line number="75" hits="23" branch="false"/>
+            <line number="63" hits="23" branch="false"/>
+            <line number="64" hits="74" branch="false"/>
+            <line number="65" hits="74" branch="false"/>
+            <line number="66" hits="1" branch="false"/>
+            <line number="67" hits="1" branch="false"/>
+            <line number="69" hits="73" branch="false"/>
+            <line number="73" hits="23" branch="false"/>
           </lines>
         </class>
         <class name="update_ard.R" filename="R/update_ard.R" line-rate="1" branch-rate="0" complexity="0">
