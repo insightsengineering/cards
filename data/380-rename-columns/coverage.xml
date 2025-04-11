@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.983292725374173" branch-rate="0" lines-covered="2825" lines-valid="2873" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-11 16:57:46.026749">
+<coverage line-rate="0.983292725374173" branch-rate="0" lines-covered="2825" lines-valid="2873" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-04-11 17:27:18.113003">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -3418,7 +3418,7 @@
                 <line number="92" hits="1" branch="false"/>
                 <line number="93" hits="1" branch="false"/>
                 <line number="97" hits="47" branch="false"/>
-                <line number="98" hits="8" branch="false"/>
+                <line number="98" hits="7" branch="false"/>
                 <line number="102" hits="47" branch="false"/>
               </lines>
             </method>
@@ -3469,7 +3469,7 @@
             <line number="92" hits="1" branch="false"/>
             <line number="93" hits="1" branch="false"/>
             <line number="97" hits="47" branch="false"/>
-            <line number="98" hits="8" branch="false"/>
+            <line number="98" hits="7" branch="false"/>
             <line number="102" hits="47" branch="false"/>
           </lines>
         </class>
@@ -5419,9 +5419,9 @@
           <methods>
             <method name="all_ard_groups" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="35" hits="2941" branch="false"/>
-                <line number="37" hits="2941" branch="false"/>
-                <line number="38" hits="2553" branch="false"/>
+                <line number="35" hits="2940" branch="false"/>
+                <line number="37" hits="2940" branch="false"/>
+                <line number="38" hits="2552" branch="false"/>
                 <line number="40" hits="388" branch="false"/>
                 <line number="41" hits="247" branch="false"/>
                 <line number="43" hits="141" branch="false"/>
@@ -5466,9 +5466,9 @@
             </method>
           </methods>
           <lines>
-            <line number="35" hits="2941" branch="false"/>
-            <line number="37" hits="2941" branch="false"/>
-            <line number="38" hits="2553" branch="false"/>
+            <line number="35" hits="2940" branch="false"/>
+            <line number="37" hits="2940" branch="false"/>
+            <line number="38" hits="2552" branch="false"/>
             <line number="40" hits="388" branch="false"/>
             <line number="41" hits="247" branch="false"/>
             <line number="43" hits="141" branch="false"/>
@@ -6126,17 +6126,17 @@
             </method>
             <method name="tidy_ard_row_order" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="70" hits="698" branch="false"/>
-                <line number="73" hits="698" branch="false"/>
-                <line number="74" hits="698" branch="false"/>
-                <line number="75" hits="698" branch="false"/>
-                <line number="76" hits="698" branch="false"/>
-                <line number="77" hits="486" branch="false"/>
-                <line number="78" hits="486" branch="false"/>
-                <line number="79" hits="486" branch="false"/>
-                <line number="80" hits="486" branch="false"/>
-                <line number="81" hits="486" branch="false"/>
-                <line number="85" hits="698" branch="false"/>
+                <line number="70" hits="697" branch="false"/>
+                <line number="73" hits="697" branch="false"/>
+                <line number="74" hits="697" branch="false"/>
+                <line number="75" hits="697" branch="false"/>
+                <line number="76" hits="697" branch="false"/>
+                <line number="77" hits="485" branch="false"/>
+                <line number="78" hits="485" branch="false"/>
+                <line number="79" hits="485" branch="false"/>
+                <line number="80" hits="485" branch="false"/>
+                <line number="81" hits="485" branch="false"/>
+                <line number="85" hits="697" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -6164,17 +6164,17 @@
             <line number="61" hits="1275" branch="false"/>
             <line number="62" hits="1275" branch="false"/>
             <line number="63" hits="1275" branch="false"/>
-            <line number="70" hits="698" branch="false"/>
-            <line number="73" hits="698" branch="false"/>
-            <line number="74" hits="698" branch="false"/>
-            <line number="75" hits="698" branch="false"/>
-            <line number="76" hits="698" branch="false"/>
-            <line number="77" hits="486" branch="false"/>
-            <line number="78" hits="486" branch="false"/>
-            <line number="79" hits="486" branch="false"/>
-            <line number="80" hits="486" branch="false"/>
-            <line number="81" hits="486" branch="false"/>
-            <line number="85" hits="698" branch="false"/>
+            <line number="70" hits="697" branch="false"/>
+            <line number="73" hits="697" branch="false"/>
+            <line number="74" hits="697" branch="false"/>
+            <line number="75" hits="697" branch="false"/>
+            <line number="76" hits="697" branch="false"/>
+            <line number="77" hits="485" branch="false"/>
+            <line number="78" hits="485" branch="false"/>
+            <line number="79" hits="485" branch="false"/>
+            <line number="80" hits="485" branch="false"/>
+            <line number="81" hits="485" branch="false"/>
+            <line number="85" hits="697" branch="false"/>
           </lines>
         </class>
         <class name="tidy_as_ard.R" filename="R/tidy_as_ard.R" line-rate="1" branch-rate="0" complexity="0">
