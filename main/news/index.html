@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.9013</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,21 +39,30 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.1.9012" id="cards-0519012">cards 0.5.1.9012<a class="anchor" aria-label="anchor" href="#cards-0519012"></a></h2>
-<ul><li>
+<h2 class="pkg-version" data-toc-text="0.5.1.9013" id="cards-0519013">cards 0.5.1.9013<a class="anchor" aria-label="anchor" href="#cards-0519013"></a></h2>
+<div class="section level3">
+<h3 id="new-features-and-functions-0-5-1-9013">New Features and Functions<a class="anchor" aria-label="anchor" href="#new-features-and-functions-0-5-1-9013"></a></h3>
+<ul><li><p>Added functions <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> and <code><a href="../reference/filter_ard_hierarchical.html">filter_ard_hierarchical()</a></code> to sort &amp; filter ARDs created using <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/301" class="external-link">#301</a>)</p></li>
+<li><p>Updated <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code> to automatically sort results alphanumerically. (<a href="https://github.com/insightsengineering/cards/issues/423" class="external-link">#423</a>)</p></li>
+<li><p>Added new function <code><a href="../reference/unlist_ard_columns.html">unlist_ard_columns()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/391" class="external-link">#391</a>)</p></li>
+<li>
 <p>Updated function <code><a href="../reference/rename_ard_columns.html">rename_ard_columns()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/380" class="external-link">#380</a>)</p>
 <ul><li><p>The function no longer coerces values to character.</p></li>
 <li><p>The <code>fill</code> argument has been added to specify a value to fill in the new column when there are no levels associated with the variables (e.g. continuous summaries).</p></li>
 <li><p>The <code>unlist</code> argument has been deprecated in favor of using the new <code><a href="../reference/unlist_ard_columns.html">unlist_ard_columns()</a></code> function.</p></li>
 <li><p>The function no longer accepts generic data frames: inputs must be a data frame of class <code>card</code>.</p></li>
 </ul></li>
-<li><p>Added new function <code><a href="../reference/unlist_ard_columns.html">unlist_ard_columns()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/391" class="external-link">#391</a>)</p></li>
-<li><p>Added functions <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> and <code><a href="../reference/filter_ard_hierarchical.html">filter_ard_hierarchical()</a></code> to sort &amp; filter ARDs created using <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/301" class="external-link">#301</a>)</p></li>
 <li><p>Added function <code><a href="../reference/ard_formals.html">ard_formals()</a></code> to assist in adding a function’s formals, that is, the arguments with their default values, along with user-passed arguments into an ARD structure.</p></li>
-<li><p>Fixed sorting order of logical variables in <code><a href="../reference/nest_for_ard.html">nest_for_ard()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/411" class="external-link">#411</a>)</p></li>
-<li><p>The <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> function no longer outputs a <code>'label'</code> column, and instead retains the original <code>'variable'</code> level from the cards object. It also no longer trims rows with non-numeric stats values. (<a href="https://github.com/insightsengineering/cards/issues/416" class="external-link">#416</a>)</p></li>
-<li><p>Updated <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical_count()</a></code> to automatically sort results alphanumerically. (<a href="https://github.com/insightsengineering/cards/issues/423" class="external-link">#423</a>)</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-5-1-9013">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-1-9013"></a></h3>
+<ul><li>Fixed sorting order of logical variables in <code><a href="../reference/nest_for_ard.html">nest_for_ard()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/411" class="external-link">#411</a>)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="lifecycle-changes-0-5-1-9013">Lifecycle Changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-0-5-1-9013"></a></h3>
+<ul><li>The <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> function no longer outputs a <code>'label'</code> column, and instead retains the original <code>'variable'</code> level from the cards object. It also no longer trims rows with non-numeric stats values. (<a href="https://github.com/insightsengineering/cards/issues/416" class="external-link">#416</a>)</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="cards-051">cards 0.5.1<a class="anchor" aria-label="anchor" href="#cards-051"></a></h2><p class="text-muted">CRAN release: 2025-03-01</p>
 <ul><li>Small update to account for a change in R-devel.</li>
