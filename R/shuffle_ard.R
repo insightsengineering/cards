@@ -313,20 +313,3 @@ shuffle_ard <- function(x, trim = TRUE) {
     x
   }
 }
-
-#' List Column as a Vector Predicate
-#'
-#' A predicate function to check whether a column is a list and can be
-#' represented as a vector.
-#'
-#' @param x (`any`)\cr
-#'   column to check
-#'
-#' @return a logical
-#' @keywords internal
-#'
-#' @examples
-#' cards:::.is_list_column_of_scalars(as.list(1:5))
-.is_list_column_of_scalars <- function(x) {
-  is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
-}
