@@ -1,5 +1,4 @@
 ---
-title: "Talks and Presentations"
 output: github_document
 ---
 
