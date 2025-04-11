@@ -18,6 +18,7 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_complex.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_continuous.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_dichotomous.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/ard_formals.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_hierarchical.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_missing.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_pairwise.html</loc></url>
@@ -49,21 +50,19 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-eval_ard_calls.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-fill_grps_from_variables.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-fill_overall_grp_values.html</loc></url>
-<url><loc>https://insightsengineering.github.io/cards/reference/dot-is_list_column_of_scalars.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-is_named_list.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-lst_results_as_df.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-nesting_rename_ard_columns.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-one_row_ard_to_nested_list.html</loc></url>
-<url><loc>https://insightsengineering.github.io/cards/reference/dot-pair_columns.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-process_denominator.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-process_nested_list_as_df.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-purrr_list_flatten.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-rename_last_group_as_variable.html</loc></url>
-<url><loc>https://insightsengineering.github.io/cards/reference/dot-shift_column_pair.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-table_as_df.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-trim_ard.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/dot-unique_and_sorted.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/eval_capture_conditions.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/filter_ard_hierarchical.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/get_ard_statistics.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/index.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/label_round.html</loc></url>
@@ -80,10 +79,12 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/round5.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/selectors.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/shuffle_ard.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/sort_ard_hierarchical.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/summary_functions.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/syntax.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/tidy_ard_order.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/tidy_as_ard.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/unlist_ard_columns.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/update_ard.html</loc></url>
 </urlset>
 

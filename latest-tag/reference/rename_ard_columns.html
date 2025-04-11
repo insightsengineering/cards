@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Rename ARD Columns — rename_ard_columns • cards</title>
+<title>Rename ARD Variables — rename_ard_columns • cards</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,13 +17,9 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Rename ARD Columns — rename_ard_columns">
-<meta name="description" content="This function combines a pair of group/group_level or variable/variable_level columns into a
-single column. The group_level or variable_level column is renamed according to the value of
-the group or variable column, respectively.">
-<meta property="og:description" content="This function combines a pair of group/group_level or variable/variable_level columns into a
-single column. The group_level or variable_level column is renamed according to the value of
-the group or variable column, respectively.">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Rename ARD Variables — rename_ard_columns">
+<meta name="description" content="Rename the grouping and variable columns to their original column names.">
+<meta property="og:description" content="Rename the grouping and variable columns to their original column names.">
 <meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
@@ -36,7 +32,7 @@ the group or variable column, respectively.">
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +57,7 @@ the group or variable column, respectively.">
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.0">v0.5.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.4.0">v0.4.0</a>
@@ -85,15 +82,13 @@ the group or variable column, respectively.">
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Rename ARD Columns</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.5.1/R/shift_ard_columns.R" class="external-link"><code>R/shift_ard_columns.R</code></a></small>
+      <img src="../logo.png" class="logo" alt=""><h1>Rename ARD Variables</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.6.0/R/rename_ard_columns.R" class="external-link"><code>R/rename_ard_columns.R</code></a></small>
       <div class="d-none name"><code>rename_ard_columns.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>This function combines a pair of <code>group</code>/<code>group_level</code> or <code>variable</code>/<code>variable_level</code> columns into a
-single column. The <code>group_level</code> or <code>variable_level</code> column is renamed according to the value of
-the <code>group</code> or <code>variable</code> column, respectively.</p>
+    <p>Rename the grouping and variable columns to their original column names.</p>
     </div>
 
     <div class="section level2">
@@ -101,7 +96,8 @@ the <code>group</code> or <code>variable</code> column, respectively.</p>
 </h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rename_ard_columns</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="selectors.html">all_ard_groups</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="selectors.html">all_ard_variables</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="selectors.html">all_ard_groups</a></span><span class="op">(</span><span class="st">"names"</span><span class="op">)</span>, <span class="fu"><a href="selectors.html">all_ard_variables</a></span><span class="op">(</span><span class="st">"names"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  fill <span class="op">=</span> <span class="st">"{colname}"</span>,</span>
 <span>  unlist <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -115,20 +111,32 @@ the <code>group</code> or <code>variable</code> column, respectively.</p>
 <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a>
 </dt>
 <dd><p>(<code>data.frame</code>)<br>
-a data frame</p></dd>
+an ARD data frame of class 'card'</p></dd>
 
 
 <dt id="arg-columns">columns<a class="anchor" aria-label="anchor" href="#arg-columns"></a>
 </dt>
 <dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-Name of columns to coalesce together and rename.</p></dd>
+columns to rename, e.g. selecting columns <code>c('group1', 'group2', 'variable')</code>
+will rename <code>'group1_level'</code> to the name of the variable found in <code>'group1'</code>.
+When, for example, the <code>'group1_level'</code> does not exist, the values of the
+new column are filled with the values in the <code>fill</code> argument.
+Default is <code>c(all_ard_groups("names"), all_ard_variables("names"))</code>.</p></dd>
+
+
+<dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a>
+</dt>
+<dd><p>(scalar/glue)<br>
+a scalar to fill column values when the variable does not have levels.
+If a character is passed, then it is processed with <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue::glue()</a></code>
+where the <code>colname</code> element is available to inject into the string,
+e.g. <code>'Overall {colname}'</code> may resolve to <code>'Overall AGE'</code> for an AGE column.
+Default is <code>'{colname}'</code>.</p></dd>
 
 
 <dt id="arg-unlist">unlist<a class="anchor" aria-label="anchor" href="#arg-unlist"></a>
 </dt>
-<dd><p>(<code><a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html" class="external-link">tidy-select</a></code>)<br>
-Columns to unlist. Often useful when performing visual inspection
-of the results where the list-columns are more difficult to work with.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 </dl>
 </div>
@@ -141,10 +149,12 @@ of the results where the list-columns are more difficult to work with.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a>
 </h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example 1 ----------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="ard_categorical.html">ard_categorical</a></span><span class="op">(</span>by <span class="op">=</span> <span class="va">ARM</span>, variables <span class="op">=</span> <span class="va">AGEGR1</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="apply_fmt_fn.html">apply_fmt_fn</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">rename_ard_columns</span><span class="op">(</span>unlist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">stat</span>, <span class="va">stat_fmt</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">rename_ard_columns</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="unlist_ard_columns.html">unlist_ard_columns</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 27 × 10</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ARM        AGEGR1 context stat_name stat_label   stat stat_fmt fmt_fn warning</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span>
@@ -160,6 +170,27 @@ of the results where the list-columns are more difficult to work with.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Xanomelin… 65-80  catego… n         n          55     55       <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 17 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: error &lt;list&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example 2 ----------------------------------</span></span></span>
+<span class="r-in"><span><span class="va">ADSL</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span>by <span class="op">=</span> <span class="va">ARM</span>, variables <span class="op">=</span> <span class="va">AGE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="apply_fmt_fn.html">apply_fmt_fn</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">rename_ard_columns</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Overall {colname}"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="unlist_ard_columns.html">unlist_ard_columns</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 24 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ARM   AGE   context stat_name stat_label  stat stat_fmt fmt_fn warning error </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Plac… Over… contin… N         N          86    86       <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Plac… Over… contin… mean      Mean       75.2  75.2     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Plac… Over… contin… sd        SD          8.59 8.6      <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Plac… Over… contin… median    Median     76    76.0     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Plac… Over… contin… p25       Q1         69    69.0     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Plac… Over… contin… p75       Q3         82    82.0     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Plac… Over… contin… min       Min        52    52.0     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Plac… Over… contin… max       Max        89    89.0     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Xano… Over… contin… N         N          84    84       <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Xano… Over… contin… mean      Mean       74.4  74.4     <span style="color: #949494;">&lt;int&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span>  <span style="color: #949494;">&lt;NULL&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
