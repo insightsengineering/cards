@@ -1,5 +1,15 @@
 # cards 0.5.1.9012
 
+* Updated function `rename_ard_columns()`. (#380)
+
+    * The function no longer coerces values to character.
+
+    * The `fill` argument has been added to specify a value to fill in the new column when there are no levels associated with the variables (e.g. continuous summaries).
+
+    * The `unlist` argument has been deprecated in favor of using the new `unlist_ard_columns()` function.
+
+    * The function no longer accepts generic data frames: inputs must be a data frame of class `card`.
+    
 * Added new function `unlist_ard_columns()`. (#391)
 
 * Added functions `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to sort & filter ARDs created using `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`. (#301)

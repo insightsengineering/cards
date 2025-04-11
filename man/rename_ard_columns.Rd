@@ -7,7 +7,7 @@
 rename_ard_columns(
   x,
   columns = c(all_ard_groups("names"), all_ard_variables("names")),
-  fill = "Overall",
+  fill = "{colname}",
   unlist = NULL
 )
 }
@@ -27,7 +27,7 @@ a scalar to fill column values when the variable does not have levels.
 If a character is passed, then it is processed with \code{glue::glue()}
 where the \code{colname} element is available to inject into the string,
 e.g. \code{'Overall {colname}'} may resolve to \code{'Overall AGE'} for an AGE column.
-Default is \code{'Overall'}.}
+Default is \code{'{colname}'}.}
 
 \item{unlist}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }

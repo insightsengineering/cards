@@ -15,7 +15,7 @@
 #'   If a character is passed, then it is processed with `glue::glue()`
 #'   where the `colname` element is available to inject into the string,
 #'   e.g. `'Overall {colname}'` may resolve to `'Overall AGE'` for an AGE column.
-#'   Default is `'Overall'`.
+#'   Default is `'{colname}'`.
 #' @param unlist `r lifecycle::badge("deprecated")`
 #'
 #' @return data frame
@@ -37,7 +37,7 @@
 #'   unlist_ard_columns()
 rename_ard_columns <- function(x,
                                columns = c(all_ard_groups("names"), all_ard_variables("names")),
-                               fill = "Overall", unlist = NULL) {
+                               fill = "{colname}", unlist = NULL) {
   # check inputs ---------------------------------------------------------------
   if (!missing(unlist)) {
     lifecycle::deprecate_warn(
