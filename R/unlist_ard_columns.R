@@ -48,12 +48,10 @@ unlist_ard_columns <- function(x,
           ~ map(., \(value) {
             if (inherits(value, "factor")) value <- as.character(value) # styler: off
             value %||% .env$fill
-          }
-          )
+          })
         )
       )
-  }
-  else {
+  } else {
     x <- x |>
       dplyr::mutate(
         across(all_of(columns), ~ map(., \(value) value %||% .env$fill))

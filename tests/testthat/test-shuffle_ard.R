@@ -190,5 +190,4 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       shuffle_ard() |>
       as.data.frame()
   )
-
 })
