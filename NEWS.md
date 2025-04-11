@@ -1,5 +1,15 @@
 # cards 0.5.1.9012
 
+* Updated function `rename_ard_columns()`. (#380)
+
+    * The function no longer coerces values to character.
+
+    * The `fill` argument has been added to specify a value to fill in the new column when there are no levels associated with the variables (e.g. continuous summaries).
+
+    * The `unlist` argument has been deprecated in favor of using the new `unlist_ard_columns()` function.
+
+    * The function no longer accepts generic data frames: inputs must be a data frame of class `card`.
+    
 * Added new function `unlist_ard_columns()`. (#391)
 
 * Added functions `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to sort & filter ARDs created using `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`. (#301)
@@ -7,6 +17,8 @@
 * Added function `ard_formals()` to assist in adding a function's formals, that is, the arguments with their default values, along with user-passed arguments into an ARD structure.
 
 * Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
+
+* The `shuffle_ard()` function no longer outputs a `'label'` column, and instead retains the original `'variable'` level from the cards object. It also no longer trims rows with non-numeric stats values. (#416)
 
 * Updated `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()` to automatically sort results alphanumerically. (#423)
 
