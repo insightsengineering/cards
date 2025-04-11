@@ -56,7 +56,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     # coerce everything to character
     dplyr::mutate(
       dplyr::across(
-        -.cards_idx,
+        -".cards_idx",
         ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
       )
     )
