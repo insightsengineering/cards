@@ -103,12 +103,11 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
   # mix of group variables - fills overall only if variable has been calculated by group elsewhere
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = ARM, variables = AGEGR1),
-      ard_categorical(ADSL, variables = AGEGR1),
-      ard_continuous(ADSL, by = SEX, variables = AGE),
-      ard_continuous(ADSL, variables = AGE)
+      ard_categorical(ADSL, by = ARM, variables = AGEGR1) |> dplyr::slice(1),
+      ard_categorical(ADSL, variables = AGEGR1) |> dplyr::slice(1),
+      ard_continuous(ADSL, by = SEX, variables = AGE) |> dplyr::slice(1),
+      ard_continuous(ADSL, variables = AGE) |> dplyr::slice(1)
     ) |>
-      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard() |>
       as.data.frame()
   )
@@ -117,7 +116,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
 test_that("shuffle_ard doesn't trim off NULL/NA values", {
   # mix of char NA, NULL values
   res <- suppressMessages(
-    data.frame(x = rep_len(NA_character_, 10)) |>
+    data.frame(x = rep_len(NA, 10)) |>
       ard_continuous(
         variables = x,
         statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
@@ -126,25 +125,8 @@ test_that("shuffle_ard doesn't trim off NULL/NA values", {
       dplyr::pull(stat)
   )
 
-  # check that all rows present and result is a numeric vector
+  # check that all rows present
   expect_length(res, 3)
-  expect_equal(class(res), "numeric")
-})
-
-test_that("shuffle_ard trims statistics with length > 1", {
-  expect_equal(
-    ard_continuous(
-      ADSL,
-      variables = AGE,
-      statistic = list(AGE = list(
-        long_result = \(x) 1:3,
-        long_list_result = \(x) list(1:3)
-      ))
-    ) |>
-      shuffle_ard() |>
-      nrow(),
-    0L
-  )
 })
 
 test_that("shuffle_ard coerces all factor groups/variables to character", {
@@ -167,7 +149,7 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
 
   # correct coersion
   expect_equal(
-    sort(unique(res$label)),
+    sort(unique(res$variable_level)),
     sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC)))
   )
 })
@@ -209,19 +191,4 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       as.data.frame()
   )
 
-  # adsl_sub <- ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
-  # bind_ard(
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "ARM",
-  #     variables = "AGEGR1"
-  #   ),
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "SEX",
-  #     variables = "AGEGR1"
-  #   )
-  # ) |>
-  #   dplyr::filter(stat_name %in% c("statistic", "p.value")) |>
-  #   dput()
 })

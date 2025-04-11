@@ -8,6 +8,8 @@
 
 * Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
 
+* The `shuffle_ard()` function no longer outputs a `'label'` column, and instead retains the original `'variable'` level from the cards object. It also no longer trims rows with non-numeric stats values. (#416)
+
 # cards 0.5.1
 
 * Small update to account for a change in R-devel.
