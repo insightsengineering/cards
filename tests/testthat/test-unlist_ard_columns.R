@@ -34,3 +34,31 @@ test_that("unlist_ard_columns() messaging", {
     "Cannot unlist column"
   )
 })
+
+test_that("unlist_ard_columns(fct_as_chr)", {
+  # check that a mixed-type column has factors converted to character by default.
+  expect_true(
+    cards::ADSL |>
+      dplyr::mutate(ARM = factor(ARM)) |>
+      ard_stack(
+        ard_continuous(variables = AGE),
+        .by = ARM
+      ) |>
+      unlist_ard_columns() |>
+      dplyr::pull("group1_level") |>
+      is.character()
+  )
+
+  # check fct_to_chr = FALSE
+  expect_true(
+    cards::ADSL |>
+      dplyr::mutate(ARM = factor(ARM)) |>
+      ard_stack(
+        ard_continuous(variables = AGE),
+        .by = ARM
+      ) |>
+      unlist_ard_columns(fct_as_chr = FALSE) |>
+      dplyr::pull("group1_level") |>
+      is.integer()
+  )
+})

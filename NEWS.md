@@ -1,4 +1,4 @@
-# cards 0.5.1.9006
+# cards 0.5.1.9012
 
 * Added new function `unlist_ard_columns()`. (#391)
 
@@ -9,6 +9,8 @@
 * Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
 
 * The `shuffle_ard()` function no longer outputs a `'label'` column, and instead retains the original `'variable'` level from the cards object. It also no longer trims rows with non-numeric stats values. (#416)
+
+* Updated `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()` to automatically sort results alphanumerically. (#423)
 
 # cards 0.5.1
 

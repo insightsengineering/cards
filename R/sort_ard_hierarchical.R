@@ -71,6 +71,14 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
 
   x_args <- attributes(x)$args
   by_cols <- if (length(x_args$by) > 0) paste0("group", seq_along(length(x_args$by)), c("", "_level")) else NULL
+
+  # for calculations by highest severity, innermost variable is extracted from by
+  if (length(x_args$by) > 1) {
+    x_args$variables <- c(x_args$variables, x_args$by[-1])
+    x_args$include <- c(x_args$include, x_args$by[-1])
+    x_args$by <- x_args$by[-1]
+  }
+
   outer_cols <- if (length(x_args$variables) > 1) {
     x_args$variables |>
       utils::head(-1) |>
@@ -144,7 +152,7 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
 # this function reformats a hierarchical ARD for sorting
 .ard_reformat_sort <- function(x, sort, by, outer_cols) {
   # reformat data from overall column (if present)
-  is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x %in% by)) || x$context == "attributes")
   if (sum(is_overall_col) > 0 && length(by) > 0) {
     x_overall_col <- x[is_overall_col, ] |>
       cards::rename_ard_groups_shift(shift = length(by)) |>
@@ -184,7 +192,8 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
         dat |>
           dplyr::mutate(
             group1 = "..empty..",
-            variable = NA
+            group1_level = list(NA),
+            variable = NA,
           )
       } else {
         dat
