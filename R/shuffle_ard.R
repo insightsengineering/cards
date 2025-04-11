@@ -73,7 +73,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     unlist_ard_columns() |>
     .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    dplyr::arrange(".cards_idx") |>
+    dplyr::arrange(.data$.cards_idx) |>
     dplyr::select(-".cards_idx")
 
   if (trim) {

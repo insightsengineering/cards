@@ -209,10 +209,9 @@ test_that("ard_stack() .shuffle argument", {
     bind_ard(
       ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
       ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
       ard_continuous(data = mtcars, variables = "mpg"),
       ard_dichotomous(data = mtcars, variables = "vs"),
-      .order = TRUE
+      ard_categorical(data = mtcars, variables = "cyl")
     ) |>
       shuffle_ard()
   )
