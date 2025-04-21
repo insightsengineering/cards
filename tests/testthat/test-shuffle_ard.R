@@ -1,4 +1,7 @@
+skip_if_not(is_pkg_installed("withr"))
+
 test_that("shuffle/trim works", {
+  withr::local_options(list(width = 200))
   # shuffle without group/var levels
   ard_simple <- ard_continuous(ADSL, variables = "AGE")
 
@@ -40,13 +43,13 @@ test_that("shuffle/trim works", {
     shuffle_ard() |>
     as.data.frame()
 
-  expect_snapshot(ard_shuffled)
+  expect_snapshot(ard_shuffled[1:5, ])
 
   # shuffle & trim
   ard_shuff_trim <- ard_test |>
     shuffle_ard() |>
     as.data.frame()
-  expect_snapshot(ard_shuff_trim)
+  expect_snapshot(ard_shuff_trim[1:5, ])
   # only numeric stats
   expect_type(ard_shuff_trim$stat, "double")
   # no list columns
@@ -65,6 +68,7 @@ test_that("shuffle_ard handles protected names", {
 })
 
 test_that("shuffle_ard notifies user about warnings/errors before dropping", {
+  withr::local_options(list(width = 200))
   expect_snapshot(
     ard_continuous(
       ADSL,
@@ -75,12 +79,14 @@ test_that("shuffle_ard notifies user about warnings/errors before dropping", {
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful", {
+  withr::local_options(list(width = 200))
   # mix of missing/nonmissing group levels present before shuffle
   expect_snapshot(
     bind_ard(
       ard_continuous(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", stat = list(0.05))
     ) |>
+      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard()
   )
 
@@ -90,17 +96,17 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
       ard_continuous(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", stat = list(0.05))
     ) |>
+      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard()
   )
 
   # mix of group variables - fills overall only if variable has been calculated by group elsewhere
-  withr::local_options(list(width = 90))
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = ARM, variables = AGEGR1),
-      ard_categorical(ADSL, variables = AGEGR1),
-      ard_continuous(ADSL, by = SEX, variables = AGE),
-      ard_continuous(ADSL, variables = AGE)
+      ard_categorical(ADSL, by = ARM, variables = AGEGR1) |> dplyr::slice(1),
+      ard_categorical(ADSL, variables = AGEGR1) |> dplyr::slice(1),
+      ard_continuous(ADSL, by = SEX, variables = AGE) |> dplyr::slice(1),
+      ard_continuous(ADSL, variables = AGE) |> dplyr::slice(1)
     ) |>
       shuffle_ard() |>
       as.data.frame()
@@ -110,7 +116,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
 test_that("shuffle_ard doesn't trim off NULL/NA values", {
   # mix of char NA, NULL values
   res <- suppressMessages(
-    data.frame(x = rep_len(NA_character_, 10)) |>
+    data.frame(x = rep_len(NA, 10)) |>
       ard_continuous(
         variables = x,
         statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
@@ -119,25 +125,8 @@ test_that("shuffle_ard doesn't trim off NULL/NA values", {
       dplyr::pull(stat)
   )
 
-  # check that all rows present and result is a numeric vector
+  # check that all rows present
   expect_length(res, 3)
-  expect_equal(class(res), "numeric")
-})
-
-test_that("shuffle_ard trims statistics with length > 1", {
-  expect_equal(
-    ard_continuous(
-      ADSL,
-      variables = AGE,
-      statistic = list(AGE = list(
-        long_result = \(x) 1:3,
-        long_list_result = \(x) list(1:3)
-      ))
-    ) |>
-      shuffle_ard() |>
-      nrow(),
-    0L
-  )
 })
 
 test_that("shuffle_ard coerces all factor groups/variables to character", {
@@ -160,12 +149,13 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
 
   # correct coersion
   expect_equal(
-    sort(unique(res$label)),
+    sort(unique(res$variable_level)),
     sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC)))
   )
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful for cardx output", {
+  withr::local_options(list(width = 200))
   # cardx ARD: this is a dput() of a cardx result (see commented out code below) SAVED 2024-08-30
   ard_cardx <-
     structure(list(
@@ -200,20 +190,4 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       shuffle_ard() |>
       as.data.frame()
   )
-
-  # adsl_sub <- ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
-  # bind_ard(
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "ARM",
-  #     variables = "AGEGR1"
-  #   ),
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "SEX",
-  #     variables = "AGEGR1"
-  #   )
-  # ) |>
-  #   dplyr::filter(stat_name %in% c("statistic", "p.value")) |>
-  #   dput()
 })

@@ -115,22 +115,22 @@
     Output
          group1 group1_level group2 group2_level group3 group3_level variable variable_level stat_name stat_label stat
       1   AESEV         MILD   <NA>                <NA>                 AESOC      GENERAL …         n          n    4
-      2   AESEV         MILD   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
-      3   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      2   AESEV     MODERATE   <NA>                <NA>                 AESOC      GENERAL …         n          n    0
+      3    <NA>                <NA>                <NA>                 AESOC      GENERAL …         n          n    4
       4   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
-      5   AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    1
-      6   AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    0
-      7   AESEV     MODERATE   <NA>                <NA>                 AESOC      GENERAL …         n          n    0
-      8   AESEV     MODERATE   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
-      9   AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
-      10  AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
-      11  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    0
-      12  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    1
-      13   <NA>                <NA>                <NA>                 AESOC      GENERAL …         n          n    4
-      14   <NA>                <NA>                <NA>                 AESOC      SKIN AND…         n          n    2
-      15  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
-      16  AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
-      17  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD       ERYTHEMA         n          n    1
+      5   AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      6   AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      7   AESEV         MILD  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    2
+      8   AESEV     MODERATE  AESOC    GENERAL …   <NA>               AEDECOD      APPLICAT…         n          n    0
+      9   AESOC    GENERAL …   <NA>                <NA>               AEDECOD      APPLICAT…         n          n    2
+      10  AESEV         MILD   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      11  AESEV     MODERATE   <NA>                <NA>                 AESOC      SKIN AND…         n          n    1
+      12   <NA>                <NA>                <NA>                 AESOC      SKIN AND…         n          n    2
+      13  AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    1
+      14  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD       ERYTHEMA         n          n    0
+      15  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD       ERYTHEMA         n          n    1
+      16  AESEV         MILD  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    0
+      17  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    1
       18  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD      PRURITUS…         n          n    1
     Message
       i 4 more variables: context, fmt_fn, warning, error

@@ -212,8 +212,6 @@ ard_stack_hierarchical_count <- function(data,
   )
 }
 
-
-
 internal_stack_hierarchical <- function(data,
                                         variables,
                                         by = dplyr::group_vars(data),
@@ -454,8 +452,14 @@ internal_stack_hierarchical <- function(data,
     result <- shuffle_ard(result)
   }
 
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(by = by, variables = variables, include = include)
+
+  # sort ARD alphanumerically --------------------------------------------------
+  result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+
   # return final result --------------------------------------------------------
-  result
+  result |> as_card()
 }
 
 # this function calculates either the counts or the rates of the events

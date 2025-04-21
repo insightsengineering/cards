@@ -71,10 +71,13 @@ reference:
       - alias_as_fmt_fn
       - label_round
       - rename_ard_columns
+      - unlist_ard_columns
       - add_calculated_row
       - as_cards_fn
   - subtitle: "Wrangle ARD"
     contents:
+      - filter_ard_hierarchical
+      - sort_ard_hierarchical
       - shuffle_ard
       - as_nested_list
       - get_ard_statistics
