@@ -54,6 +54,7 @@ reference:
       - ard_strata
       - ard_pairwise
       - ard_attributes
+      - ard_identity
 
   - title: "ARD Utilities"
   - subtitle: "Construct ARDs"
