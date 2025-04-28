@@ -37,5 +37,3 @@ ard_identity <- function(x, variable, context = "identity") {
       context = .env$context
     )
 }
-
-
