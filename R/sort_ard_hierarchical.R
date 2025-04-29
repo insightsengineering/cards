@@ -70,14 +70,7 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
   sort <- arg_match(sort, error_call = get_cli_abort_call())
 
   x_args <- attributes(x)$args
-  by_cols <- if (length(x_args$by) > 0) paste0("group", seq_along(length(x_args$by)), c("", "_level")) else NULL
-
-  # for calculations by highest severity, innermost variable is extracted from by
-  if (length(x_args$by) > 1) {
-    x_args$variables <- c(x_args$variables, x_args$by[-1])
-    x_args$include <- c(x_args$include, x_args$by[-1])
-    x_args$by <- x_args$by[-1]
-  }
+  by_cols <- if (length(x_args$by) > 0) paste0("group", rep(seq_len(length(x_args$by)), each = 2), c("", "_level")) else NULL
 
   outer_cols <- if (length(x_args$variables) > 1) {
     x_args$variables |>
@@ -152,7 +145,7 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
 # this function reformats a hierarchical ARD for sorting
 .ard_reformat_sort <- function(x, sort, by, outer_cols) {
   # reformat data from overall column (if present)
-  is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x %in% by)) || x$context == "attributes")
+  is_overall_col <- apply(x, 1, function(x) !isTRUE(any(x == by[1])) || x$context == "attributes")
   if (sum(is_overall_col) > 0 && length(by) > 0) {
     x_overall_col <- x[is_overall_col, ] |>
       cards::rename_ard_groups_shift(shift = length(by)) |>
@@ -178,7 +171,9 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
           dplyr::mutate(
             !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
             !!paste0(grp_match, "_level") := ifelse(
-              is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
+              is.na(dat[[grp_match]]),
+              if (is.logical(unlist(dat$variable_level))) list(NA) else dat$variable_level,
+              dat[[paste0(grp_match, "_level")]]
             ),
             variable = if (sort == "alphanumeric") "..empty.." else .data$variable
           )
