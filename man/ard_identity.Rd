@@ -7,8 +7,9 @@
 ard_identity(x, variable, context = "identity")
 }
 \arguments{
-\item{x}{(named \code{list})\cr
-named list of results. Names are the statistic names, and the values
+\item{x}{(named \code{list}/\code{data.frame})\cr
+named list of results or a data frame.
+Names are the statistic names, and the values
 are the statistic values. These comprise the \code{"stat_name"} and \code{"stat"}
 columns in the returned ARD.}
 
@@ -28,5 +29,5 @@ but in an ARD format.
 }
 \examples{
 t.test(formula = AGE ~ 1, data = ADSL)[c("statistic", "parameter", "p.value")] |>
-  ard_identity(variable = "AGE", context = "ard_onesample_t_test")
+  ard_identity(variable = "AGE", context = "onesample_t_test")
 }
