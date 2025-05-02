@@ -1,12 +1,26 @@
 test_that("ard_identity() works", {
   ttest_result <- t.test(formula = AGE ~ 1, data = ADSL)
+  lst_result <- ttest_result[c("statistic", "parameter", "p.value")]
 
   # here we convert a named list to an ARD, then back to a list to ensure accurate conversion
   expect_equal(
-    ttest_result[c("statistic", "parameter", "p.value")] |>
+    ard_identity(lst_result, variable = "AGE", context = "ard_onesample_t_test") |>
+      get_ard_statistics(),
+    lst_result[c("statistic", "parameter", "p.value")]
+  )
+  expect_equal(
+    as.data.frame(lst_result) |>
       ard_identity(variable = "AGE", context = "ard_onesample_t_test") |>
       get_ard_statistics(),
-    ttest_result[c("statistic", "parameter", "p.value")]
+    lst_result[c("statistic", "parameter", "p.value")],
+    ignore_attr = TRUE
+  )
+
+  expect_silent(
+    as.data.frame(lst_result) %>%
+      {dplyr::bind_rows(., ., .)} |> #styler: off
+      ard_identity(variable = "AGE", context = "ard_onesample_t_test") |>
+      get_ard_statistics()
   )
 })
 

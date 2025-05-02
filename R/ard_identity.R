@@ -3,8 +3,9 @@
 #' Function ingests pre-calculated statistics and returns the identical results,
 #' but in an ARD format.
 #'
-#' @param x (named `list`)\cr
-#'   named list of results. Names are the statistic names, and the values
+#' @param x (named `list`/`data.frame`)\cr
+#'   named list of results or a data frame.
+#'   Names are the statistic names, and the values
 #'   are the statistic values. These comprise the `"stat_name"` and `"stat"`
 #'   columns in the returned ARD.
 #' @param variable (`string`)\cr
@@ -18,11 +19,11 @@
 #'
 #' @examples
 #' t.test(formula = AGE ~ 1, data = ADSL)[c("statistic", "parameter", "p.value")] |>
-#'   ard_identity(variable = "AGE", context = "ard_onesample_t_test")
+#'   ard_identity(variable = "AGE", context = "onesample_t_test")
 ard_identity <- function(x, variable, context = "identity") {
   # check inputs ---------------------------------------------------------------
   set_cli_abort_call()
-  check_class(x, "list")
+  check_class(x, c("list", "data.frame"))
   check_named(x)
   check_string(variable)
   check_string(context)
