@@ -14,6 +14,7 @@
 #'   - `full_data`: the full data frame
 #'   - `by`: character vector of the `by` variables
 #'   - `strata`: character vector of the `strata` variables
+#'
 #'   It is unlikely any one function will need _all_ of the above elements,
 #'   and it's recommended the function passed accepts `...` so that any unused
 #'   arguments will be properly ignored. The `...` also allows this function
