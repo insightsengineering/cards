@@ -6,8 +6,7 @@
 #'
 #' @section cards.round_type:
 #' There are two types of rounding types in the \{cards\} package that are implemented
-#' in `label_round()`, `alias_as_fmt_fn()`, and `apply_fmt_fn()` functions' `round_type`
-#' argument.
+#' in `label_round()`, `alias_as_fmt_fn()`, and `apply_fmt_fn()` functions.
 #'
 #' - `'round-half-up'` (_default_): rounding method where values exactly halfway
 #'    between two numbers are rounded to the larger in magnitude number.
