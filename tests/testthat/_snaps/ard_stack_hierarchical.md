@@ -138,15 +138,36 @@
 # ard_stack_hierarchical_count(overall,over_variables)
 
     Code
-      as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(
-        ADAE_small, variables = AESOC, by = TRTA, denominator = dplyr::rename(ADSL,
-          TRTA = ARM), over_variables = TRUE, overall = TRUE), variable ==
-        "..ard_hierarchical_overall.."), all_ard_groups(), "variable", "stat_name",
-      "stat"))
+      as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = AESOC, by = TRTA, denominator = dplyr::rename(ADSL, TRTA = ARM), over_variables = TRUE, overall = TRUE), variable == "..ard_hierarchical_overall.."),
+      all_ard_groups(), "variable", "stat_name", "stat"))
     Output
         group1         group1_level                     variable stat_name stat
       1   TRTA              Placebo ..ard_hierarchical_overall..         n    2
       2   TRTA Xanomeline High Dose ..ard_hierarchical_overall..         n    2
       3   TRTA  Xanomeline Low Dose ..ard_hierarchical_overall..         n    2
       4   <NA>                 NULL ..ard_hierarchical_overall..         n    6
+
+---
+
+    Code
+      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), overall = TRUE, over_variables = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in%
+        "TRTA" & !variable %in% "TRTA")
+    Message
+      {cards} data frame: 21 x 15
+    Output
+         group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label stat
+      1   AESEV         MILD   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    5
+      2   AESEV     MODERATE   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    1
+      3    <NA>                <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    6
+      4   AESEV         MILD   <NA>                <NA>                                     AESOC      GENERAL …         n          n    4
+      5   AESEV     MODERATE   <NA>                <NA>                                     AESOC      GENERAL …         n          n    0
+      6    <NA>                <NA>                <NA>                                     AESOC      GENERAL …         n          n    4
+      7   AESEV         MILD  AESOC    GENERAL …   <NA>                                   AEDECOD      APPLICAT…         n          n    2
+      8   AESEV     MODERATE  AESOC    GENERAL …   <NA>                                   AEDECOD      APPLICAT…         n          n    0
+      9   AESOC    GENERAL …   <NA>                <NA>                                   AEDECOD      APPLICAT…         n          n    2
+      10  AESEV         MILD  AESOC    GENERAL …   <NA>                                   AEDECOD      APPLICAT…         n          n    2
+    Message
+      i 11 more rows
+      i Use `print(n = ...)` to see more rows
+      i 4 more variables: context, fmt_fn, warning, error
 

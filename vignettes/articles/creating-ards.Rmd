@@ -209,7 +209,7 @@ my_ard_one_sample_t_test <- function(data, variable, ...) {
     cards::ard_continuous(
       data = data,
       variables = {{ variable }},
-      statistic = everything() ~ list(t_test = \(x) t.test(x, ...) |> broom::tidy())
+      statistic = everything() ~ list(t_test = t_test_fun)
     ) |>
     dplyr::mutate(context = "t_test_one_sample")
 

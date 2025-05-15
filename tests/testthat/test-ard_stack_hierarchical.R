@@ -547,6 +547,7 @@ test_that("ard_stack_hierarchical_count(over_variables)", {
 })
 
 test_that("ard_stack_hierarchical_count(overall,over_variables)", {
+  withr::local_options(list(width = 250))
   # ensuring we have an overall row grouped by TRTA, and across TRTA levels (nrow=4)
   expect_snapshot(
     ADAE_small |>
@@ -561,6 +562,19 @@ test_that("ard_stack_hierarchical_count(overall,over_variables)", {
       dplyr::select(all_ard_groups(), "variable", "stat_name", "stat") |>
       as.data.frame()
   )
+
+  # both `overall=TRUE` and `over_variables=TRUE` work together with multiple `by` variables present
+  expect_snapshot({
+    ADAE_small |>
+      ard_stack_hierarchical_count(
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |> dplyr::rename(TRTA = ARM),
+        overall = TRUE,
+        over_variables = TRUE
+      ) |>
+      dplyr::filter(!group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" & !variable %in% "TRTA")
+  })
 })
 
 
