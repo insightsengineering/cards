@@ -9,8 +9,7 @@ See below for options available in the \{cards\} package
 \section{cards.round_type}{
 
 There are two types of rounding types in the \{cards\} package that are implemented
-in \code{label_round()}, \code{alias_as_fmt_fn()}, and \code{apply_fmt_fn()} functions' \code{round_type}
-argument.
+in \code{label_round()}, \code{alias_as_fmt_fn()}, and \code{apply_fmt_fn()} functions.
 \itemize{
 \item \code{'round-half-up'} (\emph{default}): rounding method where values exactly halfway
 between two numbers are rounded to the larger in magnitude number.

@@ -1,4 +1,4 @@
-# cards 0.6.0.9005
+# cards 0.6.0.9006
 
 * Added new function `ard_identity()` for saving pre-calculated statistics in an ARD format. (#379)
 
