@@ -49,13 +49,14 @@ and rows in which \code{"variable"} is \code{NA} have been removed.
 \item \code{full_data}: the full data frame
 \item \code{by}: character vector of the \code{by} variables
 \item \code{strata}: character vector of the \code{strata} variables
+}
+
 It is unlikely any one function will need \emph{all} of the above elements,
 and it's recommended the function passed accepts \code{...} so that any unused
 arguments will be properly ignored. The \code{...} also allows this function
 to perhaps be updated in the future with more passed arguments. For example,
 if one needs a second variable from the data frame, the function inputs
-may look like: \code{foo(x, data, ...)}
-}}
+may look like: \code{foo(x, data, ...)}}
 
 \item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,

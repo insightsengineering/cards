@@ -178,7 +178,9 @@ sort_ard_hierarchical <- function(x, sort = c("descending", "alphanumeric")) {
           dplyr::mutate(
             !!grp_match := ifelse(is.na(dat[[grp_match]]), cur_var, dat[[grp_match]]),
             !!paste0(grp_match, "_level") := ifelse(
-              is.na(dat[[grp_match]]), dat$variable_level, dat[[paste0(grp_match, "_level")]]
+              is.na(dat[[grp_match]]),
+              if (is.logical(unlist(dat$variable_level))) list(NA) else dat$variable_level,
+              dat[[paste0(grp_match, "_level")]]
             ),
             variable = if (sort == "alphanumeric") "..empty.." else .data$variable
           )
