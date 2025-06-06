@@ -4,7 +4,7 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-filter_ard_hierarchical(x, filter, keep_empty = FALSE)
+filter_ard_hierarchical(x, filter, keep_empty = FALSE, diff_by = NULL)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -18,6 +18,20 @@ Details section below.}
 \item{keep_empty}{(scalar \code{logical})\cr
 Logical argument indicating whether to retain summary rows corresponding to hierarchy
 sections that have had all rows filtered out. Default is \code{FALSE}.}
+
+\item{diff_by}{(\code{character})\cr
+a vector of length 2 or more containing names of the levels of the \code{by} variable from \code{x} to compute the
+\emph{difference} of when filtering. The first element specified will be used as the reference group to which each of
+the other (comparison) groups will be compared. If this argument is specified, the statistic given in \code{filter} will
+be computed in each variable group separately for each value of \code{diff_by} and then the absolute difference of
+reference group with each of the comparison groups is compared to determine whether the variable group should be
+filtered out. If any of the difference values meet the filtering criteria, the variable group is kept. If \code{NULL}
+(default), the filter will be applied as usual without considering differences. Aggregate functions should not be
+used in \code{filter} when \code{diff_by} is specified.
+
+For example, if \code{filter = n / N > 0.05} and \code{diff_by = c("ARM X", "ARM Y", "ARM Z")}, statistic \code{n / N} will be
+computed within variable groups for each value of \code{diff_by} - say \code{stat_X}, \code{stat_Y}, and \code{stat_Z} - and then each
+variable group will be kept only if \code{abs(stat_X - stat_Y) > 0.05} \emph{or} \code{abs(stat_X - stat_Z) > 0.05}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -113,6 +127,11 @@ filter_ard_hierarchical(ard, n > 3)
 # Example 3 ----------------------------------
 # Keep AEs that have an overall prevalence of greater than 5\%
 filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+
+# Example 4 ----------------------------------
+# Keep AEs that have a difference in prevalence of greater than 3\% between group with
+# `TRTA = "Xanomeline High Dose"` and group with `TRTA = "Xanomeline Low Dose"`
+filter_ard_hierarchical(ard, n / N > 0.03, diff_by = c("Xanomeline High Dose", "Xanomeline Low Dose"))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
