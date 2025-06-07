@@ -16,7 +16,19 @@
 #' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
+#' @param diff_by (`character`)\cr
+#'   a vector of length 2 or more containing names of the levels of the `by` variable from `x` to compute the
+#'   _difference_ of when filtering. The first element specified will be used as the reference group to which each of
+#'   the other (comparison) groups will be compared. If this argument is specified, the statistic given in `filter` will
+#'   be computed in each variable group separately for each value of `diff_by` and then the absolute difference of
+#'   reference group with each of the comparison groups is compared to determine whether the variable group should be
+#'   filtered out. If any of the difference values meet the filtering criteria, the variable group is kept. If `NULL`
+#'   (default), the filter will be applied as usual without considering differences. Aggregate functions should not be
+#'   used in `filter` when `diff_by` is specified.
 #'
+#'   For example, if `filter = n / N > 0.05` and `diff_by = c("ARM X", "ARM Y", "ARM Z")`, statistic `n / N` will be
+#'   computed within variable groups for each value of `diff_by` - say `stat_X`, `stat_Y`, and `stat_Z` - and then each
+#'   variable group will be kept only if `abs(stat_X - stat_Y) > 0.05` _or_ `abs(stat_X - stat_Z) > 0.05`.
 #' @details
 #' The `filter` argument can be used to filter out variable groups of a hierarchical
 #'   ARD which do not meet the requirements provided as an expression.
@@ -103,17 +115,23 @@
 #' # Example 3 ----------------------------------
 #' # Keep AEs that have an overall prevalence of greater than 5%
 #' filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+#'
+#' # Example 4 ----------------------------------
+#' # Keep AEs that have a difference in prevalence of greater than 3% between reference group with
+#' # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
+#' filter_ard_hierarchical(ard, n / N > 0.03, diff_by = c("Xanomeline High Dose", "Xanomeline Low Dose"))
 NULL
 
 #' @rdname filter_ard_hierarchical
 #' @export
-filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
+filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NULL) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(filter)
   check_scalar_logical(keep_empty)
+  check_class(diff_by, "character", allow_empty = TRUE)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
@@ -145,6 +163,32 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
       call = get_cli_abort_call()
     )
   }
+  if (!is_empty(diff_by)) {
+    if (is_empty(ard_args$by)) {
+      cli::cli_abort(
+        "A {.arg by} variable must have been specified in order to use the {.arg diff_by} argument.",
+        call = get_cli_abort_call()
+      )
+    } else {
+      by_levels <- unique(unlist(x[x[["group1"]] == ard_args$by, ][["group1_level"]]))
+      if (length(diff_by) < 2) {
+        cli::cli_abort(
+          "{.arg diff_by} must contain at least 2 levels of {.arg by} to compare.",
+          call = get_cli_abort_call()
+        )
+      }
+      if (!all(diff_by %in% by_levels)) {
+        not_by_levels <- setdiff(diff_by, by_levels)
+        cli::cli_abort(
+          paste(
+            "{.arg diff_by} contains element{?s} {not_by_levels} which are not valid levels of {.arg by}",
+            "variable {.val ard_args$by}."
+          ),
+          call = get_cli_abort_call()
+        )
+      }
+    }
+  }
 
   # ignore "overall" data
   is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% ard_args$by)))
@@ -168,12 +212,27 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   f_idx <- x_f |>
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
     dplyr::group_map(\(.df, .g) {
-      # allow filtering on `by` variable levels
-      if (length(ard_args$by) > 0) names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
-
       # only filter rows for innermost variable
       if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
-        .df[["idx"]][eval_tidy(filter, data = .df)]
+        # allow filtering on `by` variable levels
+        if (length(ard_args$by) > 0) {
+          names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
+        }
+        if (is_empty(diff_by)) {
+          .df[["idx"]][eval_tidy(filter, data = .df)]
+        } else {
+          # calculate statistic to be compared for each column in `diff_by`
+          stat_vals <- .df |>
+            dplyr::mutate(stat_diff = eval_tidy(filter[[2]][[2]], data = .df)) |>
+            dplyr::filter(.data[[ard_args$by]] %in% diff_by) |>
+            dplyr::pull(stat_diff, name = .data[[ard_args$by]])
+          ref <- which(names(stat_vals) == diff_by[1])
+          # compare comp statistic values with ref statistic value using the given comparison criteria
+          is_diff <- eval(parse(
+            text = paste(abs(stat_vals[ref] - stat_vals[-ref]), filter[[2]][1], filter[[2]][3], collapse = " | ")
+          ))
+          if (is_diff) .df[["idx"]] else list()
+        }
       } else {
         .df[["idx"]]
       }
