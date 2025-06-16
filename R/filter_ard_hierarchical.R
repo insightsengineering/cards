@@ -219,7 +219,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NUL
           names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
         }
         if (is_empty(diff_by)) {
-          .df[["idx"]][eval_tidy(filter, data = .df)]
+          .df[["idx"]][any(eval_tidy(filter, data = .df), na.rm = TRUE)]
         } else {
           # calculate statistic to be compared for each column in `diff_by`
           stat_vals <- .df |>
