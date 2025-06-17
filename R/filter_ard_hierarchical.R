@@ -16,19 +16,7 @@
 #' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
-#' @param diff_by (`character`)\cr
-#'   a vector of length 2 or more containing names of the levels of the `by` variable from `x` to compute the
-#'   _difference_ of when filtering. The first element specified will be used as the reference group to which each of
-#'   the other (comparison) groups will be compared. If this argument is specified, the statistic given in `filter` will
-#'   be computed in each variable group separately for each value of `diff_by` and then the absolute difference of
-#'   reference group with each of the comparison groups is compared to determine whether the variable group should be
-#'   filtered out. If any of the difference values meet the filtering criteria, the variable group is kept. If `NULL`
-#'   (default), the filter will be applied as usual without considering differences. Aggregate functions should not be
-#'   used in `filter` when `diff_by` is specified.
 #'
-#'   For example, if `filter = n / N > 0.05` and `diff_by = c("ARM X", "ARM Y", "ARM Z")`, statistic `n / N` will be
-#'   computed within variable groups for each value of `diff_by` - say `stat_X`, `stat_Y`, and `stat_Z` - and then each
-#'   variable group will be kept only if `abs(stat_X - stat_Y) > 0.05` _or_ `abs(stat_X - stat_Z) > 0.05`.
 #' @details
 #' The `filter` argument can be used to filter out variable groups of a hierarchical
 #'   ARD which do not meet the requirements provided as an expression.
@@ -119,19 +107,19 @@
 #' # Example 4 ----------------------------------
 #' # Keep AEs that have a difference in prevalence of greater than 3% between reference group with
 #' # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
-#' filter_ard_hierarchical(ard, n / N > 0.03, diff_by = c("Xanomeline High Dose", "Xanomeline Low Dose"))
+#' filter_ard_hierarchical(ard, abs(n_2 / N_2 - n_3 / N_3) > 0.03)
 NULL
 
 #' @rdname filter_ard_hierarchical
 #' @export
-filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NULL) {
+filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(filter)
   check_scalar_logical(keep_empty)
-  check_class(diff_by, "character", allow_empty = TRUE)
+  check_logical(quiet)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
@@ -143,6 +131,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NUL
     )
   }
   ard_args <- attributes(x)$args
+  by <- ard_args$by
 
   filter <- enquo(filter)
   if (!quo_is_call(filter)) {
@@ -152,47 +141,36 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NUL
     )
   }
 
-  by_cols <- if (length(ard_args$by) > 0) paste0("group", seq_along(ard_args$by), c("", "_level")) else NULL
-  if (!all(all.vars(filter) %in% c(x$stat_name, ard_args$by))) {
-    var_miss <- setdiff(all.vars(filter), c(x$stat_name, ard_args$by))
+  filter_vars <- all.vars(filter)
+  by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
+  valid_filter_vars <- unique(x$stat_name)
+  if (!is_empty(by)) {
+    by_lvls <- unique(na.omit(unlist(x[["group1_level"]])))
+    valid_filter_vars <- c(valid_filter_vars, by)
+    col_stat_vars <- paste(rep(valid_filter_vars, each = length(by_lvls)), c(seq_along(by_lvls), "overall"), sep = "_")
+    valid_filter_vars <- c(valid_filter_vars, col_stat_vars |> setdiff(paste0(by, "_overall")))
+    if (any(col_stat_vars %in% filter_vars) && !quiet) {
+      by_ids <- cli::cli_vec(
+        paste(paste("xx", seq_along(by_lvls), sep = "_"), paste0('"', by_lvls, '"'), sep = " = ")
+      )
+      cli::cli_inform("If applying filters on specific levels of {.arg by} variable {.val {by}} note that {by_ids}.")
+    }
+  }
+  if (!all(filter_vars %in% valid_filter_vars)) {
+    var_miss <- setdiff(filter_vars, c(x$stat_name, by))
     cli::cli_abort(
       paste(
-        "The expression provided as {.arg filter} includes condition{?s} for statistic{?s} or `by` variable{?s}",
-        "{.val {var_miss}} which {?is/are} not present in the ARD."
+        "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
+        "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not correspond to any of the",
+        "{.var by} variable levels."
       ),
       call = get_cli_abort_call()
     )
   }
-  if (!is_empty(diff_by)) {
-    if (is_empty(ard_args$by)) {
-      cli::cli_abort(
-        "A {.arg by} variable must have been specified in order to use the {.arg diff_by} argument.",
-        call = get_cli_abort_call()
-      )
-    } else {
-      by_levels <- unique(unlist(x[x[["group1"]] == ard_args$by, ][["group1_level"]]))
-      if (length(diff_by) < 2) {
-        cli::cli_abort(
-          "{.arg diff_by} must contain at least 2 levels of {.arg by} to compare.",
-          call = get_cli_abort_call()
-        )
-      }
-      if (!all(diff_by %in% by_levels)) {
-        not_by_levels <- setdiff(diff_by, by_levels)
-        cli::cli_abort(
-          paste(
-            "{.arg diff_by} contains element{?s} {not_by_levels} which are not valid levels of {.arg by}",
-            "variable {.val ard_args$by}."
-          ),
-          call = get_cli_abort_call()
-        )
-      }
-    }
-  }
 
   # ignore "overall" data
-  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% ard_args$by)))
-  if (length(ard_args$by) > 0 && sum(is_overall) > 0) {
+  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  if (!is_empty(by) && sum(is_overall) > 0) {
     x <- x[!is_overall, ]
   }
 
@@ -214,25 +192,37 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NUL
     dplyr::group_map(\(.df, .g) {
       # only filter rows for innermost variable
       if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
-        # allow filtering on `by` variable levels
-        if (length(ard_args$by) > 0) {
-          names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
+        .df_all <- .df
+        # allow filtering on values from a specific column
+        if (!is_empty(by)) {
+          names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- by
+
+          if (any(col_stat_vars %in% filter_vars)) {
+            .df_wide <- .df |>
+              mutate(id_num = row_number()) |>
+              tidyr::pivot_wider(
+                id_cols = c(all_ard_groups(), all_ard_variables()),
+                names_from = "id_num",
+                values_from = any_of(c(by, "n", "N", "p")),
+                values_fn = unlist
+              )
+            # add overall stats
+            if ("n" %in% names(.df) && "n_overall" %in% filter_vars) {
+              .df_wide$n_overall <- sum(.df_wide |> select(starts_with("n_", ignore.case = FALSE)))
+            }
+            if ("N" %in% names(.df) && "N_overall" %in% filter_vars) {
+              .df_wide$N_overall <- sum(.df_wide |> select(starts_with("N_", ignore.case = FALSE)))
+            }
+            if (all(c("n", "N", "p") %in% names(.df)) && "p_overall" %in% filter_vars) {
+              .df_wide$p_overall <- .df_wide$n_overall / .df_wide$N_overall
+            }
+
+            .df_all <- bind_rows(.df_wide, .df)
+          }
         }
-        if (is_empty(diff_by)) {
-          .df[["idx"]][any(eval_tidy(filter, data = .df), na.rm = TRUE)]
-        } else {
-          # calculate statistic to be compared for each column in `diff_by`
-          stat_vals <- .df |>
-            dplyr::mutate(stat_diff = eval_tidy(filter[[2]][[2]], data = .df)) |>
-            dplyr::filter(.data[[ard_args$by]] %in% diff_by) |>
-            dplyr::pull(stat_diff, name = .data[[ard_args$by]])
-          ref <- which(names(stat_vals) == diff_by[1])
-          # compare comp statistic values with ref statistic value using the given comparison criteria
-          is_diff <- eval(parse(
-            text = paste(abs(stat_vals[ref] - stat_vals[-ref]), filter[[2]][1], filter[[2]][3], collapse = " | ")
-          ))
-          if (is_diff) .df[["idx"]] else list()
-        }
+
+        # apply filter
+        .df[["idx"]][any(eval_tidy(filter, data = .df_all), na.rm = TRUE)]
       } else {
         .df[["idx"]]
       }
@@ -253,11 +243,11 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, diff_by = NUL
         names()
       x_no_sum <- x |>
         dplyr::mutate(idx = dplyr::row_number()) |>
-        .ard_reformat_sort("no_sort", ard_args$by, outer_cols)
+        .ard_reformat_sort("no_sort", by, outer_cols)
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
         x_no_sum <- x_no_sum |>
-          dplyr::group_by(across(c(all_ard_group_n((length(ard_args$by):i) + 1), -all_of(by_cols)))) |>
+          dplyr::group_by(across(c(all_ard_group_n((length(by):i) + 1), -all_of(by_cols)))) |>
           dplyr::group_map(
             function(.df, .y) {
               cur_var <- .y[[ncol(.y) - 1]]

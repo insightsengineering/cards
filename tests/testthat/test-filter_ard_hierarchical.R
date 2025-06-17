@@ -33,7 +33,7 @@ test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, mean(n) > 4 | n > 3))
   expect_equal(nrow(ard_f), 117)
 
-  expect_silent(ard_f <- filter_ard_hierarchical(ard, any(n > 5 & TRTA == "Xanomeline High Dose")))
+  expect_message(ard_f <- filter_ard_hierarchical(ard, n_2 > 5))
   expect_equal(nrow(ard_f), 90)
 })
 
