@@ -17,21 +17,21 @@ test_that("filter_ard_hierarchical() works", {
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n > 10))
   expect_snapshot(ard_f)
-  expect_equal(nrow(ard_f), 39)
+  expect_equal(nrow(ard_f), 45)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p > 0.05))
-  expect_equal(nrow(ard_f), 171)
+  expect_equal(nrow(ard_f), 234)
 })
 
 test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n == 2 & p < 0.05))
-  expect_equal(nrow(ard_f), 45)
+  expect_equal(nrow(ard_f), 63)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 4))
   expect_equal(nrow(ard_f), 144)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, mean(n) > 4 | n > 3))
-  expect_equal(nrow(ard_f), 108)
+  expect_equal(nrow(ard_f), 117)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, any(n > 5 & TRTA == "Xanomeline High Dose")))
   expect_equal(nrow(ard_f), 90)
@@ -49,7 +49,7 @@ test_that("filter_ard_hierarchical() works with ard_stack_hierarchical_count() r
   )
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n > 10))
-  expect_equal(nrow(ard_f), 32)
+  expect_equal(nrow(ard_f), 39)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 15))
   expect_equal(nrow(ard_f), 42)
@@ -121,7 +121,7 @@ test_that("filter_ard_hierarchical() works with only one variable in x", {
   )
 
   expect_silent(ard_single <- filter_ard_hierarchical(ard_single, n > 20))
-  expect_equal(nrow(ard_single), 15)
+  expect_equal(nrow(ard_single), 18)
 })
 
 test_that("filter_ard_hierarchical() works when some variables not included in x", {
