@@ -221,14 +221,14 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
             # if specified, add column-wise statistics to filter on
             .df_col_stats <- if (any(col_stat_vars %in% filter_vars)) {
               .df_all |>
-                mutate(id_num = row_number()) |>
+                dplyr::mutate(id_num = dplyr::row_number()) |>
                 tidyr::pivot_wider(
                   id_cols = c(all_ard_groups(), all_ard_variables()),
                   names_from = "id_num",
                   values_from = any_of(c("n", "N", "p"))
                 )
             } else {
-              tibble(group1 = by)
+              dplyr::tibble(group1 = by)
             }
 
             # add overall stats
@@ -242,7 +242,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
             if (all(c("n", "N") %in% names(.df)) && "p_overall" %in% filter_vars) {
               .df_col_stats$p_overall <- sum(.df[["n"]]) / sum(.df[["N"]])
             }
-            .df_all <- bind_rows(.df_all, .df_col_stats)
+            .df_all <- dplyr::bind_rows(.df_all, .df_col_stats)
           }
         }
 
