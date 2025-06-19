@@ -40,6 +40,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```
@@ -57,6 +58,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = c(TRTA, AESEV),
 #'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```
