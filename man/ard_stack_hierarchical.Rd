@@ -137,6 +137,7 @@ include results with the code chunk being re-run with \code{by=NULL}.
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  id = USUBJID,
   overall = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -153,6 +154,7 @@ results with \code{by = AESEV} and again with \code{by = NULL}.
   variables = c(AESOC, AEDECOD),
   by = c(TRTA, AESEV),
   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  id = USUBJID,
   overall = TRUE
 )
 }\if{html}{\out{</div>}}
