@@ -16,6 +16,8 @@
 #' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
+#' @param quiet (`logical`)\cr
+#'   logical indicating whether to suppress any messaging. Default is `FALSE`.
 #'
 #' @details
 #' The `filter` argument can be used to filter out variable groups of a hierarchical
@@ -107,7 +109,7 @@
 #' # Example 4 ----------------------------------
 #' # Keep AEs that have a difference in prevalence of greater than 3% between reference group with
 #' # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
-#' filter_ard_hierarchical(ard, abs(n_2 / N_2 - n_3 / N_3) > 0.03)
+#' filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
 NULL
 
 #' @rdname filter_ard_hierarchical
@@ -146,7 +148,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
   valid_filter_vars <- unique(x$stat_name[x$variable == var])
   if (!is_empty(by)) {
-    by_lvls <- unique(na.omit(unlist(x[["group1_level"]])))
+    by_lvls <- unique(stats::na.omit(unlist(x[["group1_level"]])))
     overall_stat_vars <- paste(valid_filter_vars, "overall", sep = "_")
     if (!all(c("n", "N") %in% valid_filter_vars)) {
       if ("p_overall" %in% filter_vars) {
