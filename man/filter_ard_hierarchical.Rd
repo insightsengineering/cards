@@ -4,7 +4,7 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-filter_ard_hierarchical(x, filter, keep_empty = FALSE)
+filter_ard_hierarchical(x, filter, keep_empty = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -18,6 +18,9 @@ Details section below.}
 \item{keep_empty}{(scalar \code{logical})\cr
 Logical argument indicating whether to retain summary rows corresponding to hierarchy
 sections that have had all rows filtered out. Default is \code{FALSE}.}
+
+\item{quiet}{(\code{logical})\cr
+logical indicating whether to suppress any messaging. Default is \code{FALSE}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -113,6 +116,11 @@ filter_ard_hierarchical(ard, n > 3)
 # Example 3 ----------------------------------
 # Keep AEs that have an overall prevalence of greater than 5\%
 filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+
+# Example 4 ----------------------------------
+# Keep AEs that have a difference in prevalence of greater than 3\% between reference group with
+# `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
+filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
