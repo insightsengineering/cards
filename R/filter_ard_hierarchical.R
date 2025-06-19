@@ -132,6 +132,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   }
   ard_args <- attributes(x)$args
   by <- ard_args$by
+  var <- dplyr::last(ard_args$variables)
 
   filter <- enquo(filter)
   if (!quo_is_call(filter)) {
@@ -143,26 +144,42 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
 
   filter_vars <- all.vars(filter)
   by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
-  valid_filter_vars <- unique(x$stat_name)
+  valid_filter_vars <- unique(x$stat_name[x$variable == var])
   if (!is_empty(by)) {
     by_lvls <- unique(na.omit(unlist(x[["group1_level"]])))
-    valid_filter_vars <- c(valid_filter_vars, by)
-    col_stat_vars <- paste(rep(valid_filter_vars, each = length(by_lvls)), c(seq_along(by_lvls), "overall"), sep = "_")
-    valid_filter_vars <- c(valid_filter_vars, col_stat_vars |> setdiff(paste0(by, "_overall")))
+    overall_stat_vars <- paste(valid_filter_vars, "overall", sep = "_")
+    if (!all(c("n", "N") %in% valid_filter_vars)) {
+      if ("p_overall" %in% filter_vars) {
+        cli::cli_abort(
+          paste(
+            "In order to filter using the {.val p_overall} statistic both the {.val n} and {.val N} statistics must be",
+            "available for rows with {.var variable} == {.str {var}} in the ARD."
+          ),
+          call = get_cli_abort_call()
+        )
+      }
+      overall_stat_vars <- setdiff(overall_stat_vars, "p_overall")
+    }
+    col_stat_vars <- paste(rep(valid_filter_vars, each = length(by_lvls)), seq_along(by_lvls), sep = "_")
+    valid_filter_vars <- c(valid_filter_vars, col_stat_vars, overall_stat_vars, by)
+    ## when to display this message?
     if (any(col_stat_vars %in% filter_vars) && !quiet) {
       by_ids <- cli::cli_vec(
         paste(paste("xx", seq_along(by_lvls), sep = "_"), paste0('"', by_lvls, '"'), sep = " = ")
       )
-      cli::cli_inform("If applying filters on specific levels of {.arg by} variable {.val {by}} note that {by_ids}.")
+      cli::cli_inform("When applying filters on specific levels of {.arg by} variable {.val {by}} {by_ids}.")
     }
   }
   if (!all(filter_vars %in% valid_filter_vars)) {
-    var_miss <- setdiff(filter_vars, c(x$stat_name, by))
+    var_miss <- setdiff(filter_vars, valid_filter_vars)
     cli::cli_abort(
-      paste(
-        "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
-        "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not correspond to any of the",
-        "{.var by} variable levels."
+      c(
+        paste(
+          "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
+          "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not correspond to any of the",
+          "{.var by} variable levels."
+        ),
+        i = "Valid filter terms are: {.val {valid_filter_vars}}."
       ),
       call = get_cli_abort_call()
     )
@@ -191,33 +208,41 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
     dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
     dplyr::group_map(\(.df, .g) {
       # only filter rows for innermost variable
-      if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
+      if (.g$variable == var) {
         .df_all <- .df
         # allow filtering on values from a specific column
         if (!is_empty(by)) {
-          names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- by
+          # use `by` variable name as `group1_level` column name
+          names(.df_all)[names(.df_all) == by_cols[c(FALSE, TRUE)]] <- by
 
-          if (any(col_stat_vars %in% filter_vars)) {
-            .df_wide <- .df |>
-              mutate(id_num = row_number()) |>
-              tidyr::pivot_wider(
-                id_cols = c(all_ard_groups(), all_ard_variables()),
-                names_from = "id_num",
-                values_from = any_of(c(by, "n", "N", "p")),
-                values_fn = unlist
-              )
+          # process any column-wise or overall filters present
+          if (any(c(col_stat_vars, overall_stat_vars) %in% filter_vars)) {
+
+            # if specified, add column-wise statistics to filter on
+            .df_col_stats <- if (any(col_stat_vars %in% filter_vars)) {
+              .df_all |>
+                mutate(id_num = row_number()) |>
+                tidyr::pivot_wider(
+                  id_cols = c(all_ard_groups(), all_ard_variables()),
+                  names_from = "id_num",
+                  values_from = any_of(c("n", "N", "p"))
+                )
+            } else {
+              tibble(group1 = by)
+            }
+
             # add overall stats
+            ## ADD CHECKS FOR STATS NEEDED TO DERIVE
             if ("n" %in% names(.df) && "n_overall" %in% filter_vars) {
-              .df_wide$n_overall <- sum(.df_wide |> select(starts_with("n_", ignore.case = FALSE)))
+              .df_col_stats$n_overall <- sum(.df[["n"]])
             }
             if ("N" %in% names(.df) && "N_overall" %in% filter_vars) {
-              .df_wide$N_overall <- sum(.df_wide |> select(starts_with("N_", ignore.case = FALSE)))
+              .df_col_stats$N_overall <- sum(.df[["N"]])
             }
-            if (all(c("n", "N", "p") %in% names(.df)) && "p_overall" %in% filter_vars) {
-              .df_wide$p_overall <- .df_wide$n_overall / .df_wide$N_overall
+            if (all(c("n", "N") %in% names(.df)) && "p_overall" %in% filter_vars) {
+              .df_col_stats$p_overall <- sum(.df[["n"]]) / sum(.df[["N"]])
             }
-
-            .df_all <- bind_rows(.df_wide, .df)
+            .df_all <- bind_rows(.df_all, .df_col_stats)
           }
         }
 
@@ -235,7 +260,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   if (!keep_empty && length(ard_args$include) > 1) {
     outer_cols <- ard_args$variables |> utils::head(-1)
     # if all rows filtered out remove all summary rows - only overall/header rows left
-    if (!dplyr::last(ard_args$variables) %in% x$variable) {
+    if (!var %in% x$variable) {
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
       names(outer_cols) <- x |>

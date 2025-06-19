@@ -33,8 +33,50 @@ test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, mean(n) > 4 | n > 3))
   expect_equal(nrow(ard_f), 117)
 
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, any(n > 3 & TRTA == "Xanomeline High Dose")))
+  expect_equal(nrow(ard_f), 108)
+})
+
+test_that("filter_ard_hierarchical() works with column-specific filters", {
+  expect_message(ard_f <- filter_ard_hierarchical(ard, n_2 - n_3 > 1))
+  expect_equal(nrow(ard_f), 63)
+
+  expect_message(ard_f <- filter_ard_hierarchical(ard, abs(n_2 - n_3) > n_1))
+  expect_equal(nrow(ard_f), 144)
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, p_overall > 0.3))
+  expect_identical(
+    ard_f,
+    ard |> filter_ard_hierarchical(sum(n) / sum(N) > 0.3)
+  )
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, n_overall > 15))
+  expect_identical(
+    ard_f,
+    ard |> filter_ard_hierarchical(sum(n) > 15)
+  )
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, n_overall / N_overall == p_overall))
+  expect_identical(
+    ard_f,
+    ard
+  )
+
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, p_overall <= 0.1))
+  expect_equal(nrow(ard_f), 108)
+
+  expect_message(ard_f <- filter_ard_hierarchical(ard, p_2 > 0.15 | p_3 > 0.2))
+  expect_identical(
+    ard_f,
+    ard |>
+      filter_ard_hierarchical(any(p > 0.15 & TRTA == "Xanomeline High Dose") | any(p > 0.2 & TRTA == "Xanomeline Low Dose"))
+  )
+
   expect_message(ard_f <- filter_ard_hierarchical(ard, n_2 > 5))
-  expect_equal(nrow(ard_f), 90)
+  expect_identical(
+    ard_f,
+    ard |> filter_ard_hierarchical(any(n > 5 & TRTA == "Xanomeline High Dose"))
+  )
 })
 
 test_that("filter_ard_hierarchical() works with ard_stack_hierarchical_count() results", {
@@ -181,6 +223,27 @@ test_that("filter_ard_hierarchical() error messaging works", {
   # invalid keep_empty input
   expect_snapshot(
     filter_ard_hierarchical(ard, n > 1, keep_empty = NULL),
+    error = TRUE
+  )
+
+  ard_stat_miss <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    id = USUBJID,
+    statistic = ~ "p"
+  )
+
+  # unavailable filter statistic
+  expect_snapshot(
+    filter_ard_hierarchical(ard_stat_miss, n_1 > 1),
+    error = TRUE
+  )
+
+  # p_overall not valid
+  expect_snapshot(
+    filter_ard_hierarchical(ard_stat_miss, p_overall > 0.1),
     error = TRUE
   )
 })
