@@ -71,16 +71,15 @@ ard_hierarchical_count <- function(data, ...) {
 #' @rdname ard_hierarchical
 #' @export
 ard_hierarchical.data.frame <- function(
-  data,
-  variables,
-  by = dplyr::group_vars(data),
-  statistic = everything() ~ c("n", "N", "p"),
-  denominator = NULL,
-  fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels(),
-  id = NULL,
-  ...
-) {
+    data,
+    variables,
+    by = dplyr::group_vars(data),
+    statistic = everything() ~ c("n", "N", "p"),
+    denominator = NULL,
+    fmt_fn = NULL,
+    stat_label = everything() ~ default_stat_labels(),
+    id = NULL,
+    ...) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -156,13 +155,12 @@ ard_hierarchical.data.frame <- function(
 #' @rdname ard_hierarchical
 #' @export
 ard_hierarchical_count.data.frame <- function(
-  data,
-  variables,
-  by = dplyr::group_vars(data),
-  fmt_fn = NULL,
-  stat_label = everything() ~ default_stat_labels(),
-  ...
-) {
+    data,
+    variables,
+    by = dplyr::group_vars(data),
+    fmt_fn = NULL,
+    stat_label = everything() ~ default_stat_labels(),
+    ...) {
   set_cli_abort_call()
   check_dots_used()
 
