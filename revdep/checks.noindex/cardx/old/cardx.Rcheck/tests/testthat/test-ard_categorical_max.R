@@ -36,7 +36,7 @@ test_that("ard_categorical_max() works with default settings", {
       cards::ADAE |> dplyr::group_by(TRTA),
       variables = AESEV,
       id = USUBJID,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM)
+      denominator = cards::ADSL
     ) |>
       print(n = 20, columns = "all")
   )
@@ -66,7 +66,7 @@ test_that("ard_categorical_max(statistic) works", {
       variables = AESEV,
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = cards::ADSL,
       statistic = ~"n"
     )
   )
@@ -106,7 +106,7 @@ test_that("ard_categorical_max(quiet) works", {
       variables = c(AESER, AESEV),
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = cards::ADSL,
       quiet = TRUE
     )
   )
@@ -128,7 +128,7 @@ test_that("ard_categorical_max() works with pre-ordered factor variables", {
       variables = AESEV,
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = cards::ADSL,
       ordered = TRUE
     )
   )
@@ -161,7 +161,7 @@ test_that("ard_categorical_max() works with pre-ordered factor variables", {
       variables = AESEV,
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM)
+      denominator = cards::ADSL
     )
   )
   expect_equal(res$stat[[1]], res_unord$stat[[1]])
@@ -172,7 +172,7 @@ test_that("ard_categorical_max() works with pre-ordered factor variables", {
       variables = AESEV,
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM)
+      denominator = cards::ADSL
     )
   )
   expect_equal(res, res2, ignore_attr = "class")
@@ -184,7 +184,7 @@ test_that("ard_categorical_max() works with pre-ordered factor variables", {
       variables = c(SEX, AESEV),
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = cards::ADSL,
       ordered = c(FALSE, TRUE)
     )
   ))
@@ -200,7 +200,7 @@ test_that("ard_categorical_max() works with pre-ordered factor variables", {
       variables = c(SEX, AESEV),
       id = USUBJID,
       by = TRTA,
-      denominator = cards::ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = cards::ADSL,
       ordered = c(AESEV = TRUE, SEX = FALSE)
     )
   ))

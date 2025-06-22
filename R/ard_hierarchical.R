@@ -44,7 +44,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   id = USUBJID,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#'   denominator = ADSL
 #' )
 #'
 #' ard_hierarchical_count(
@@ -70,14 +70,17 @@ ard_hierarchical_count <- function(data, ...) {
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical.data.frame <- function(data,
-                                        variables,
-                                        by = dplyr::group_vars(data),
-                                        statistic = everything() ~ c("n", "N", "p"),
-                                        denominator = NULL, fmt_fn = NULL,
-                                        stat_label = everything() ~ default_stat_labels(),
-                                        id = NULL,
-                                        ...) {
+ard_hierarchical.data.frame <- function(
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  statistic = everything() ~ c("n", "N", "p"),
+  denominator = NULL,
+  fmt_fn = NULL,
+  stat_label = everything() ~ default_stat_labels(),
+  id = NULL,
+  ...
+) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -106,7 +109,11 @@ ard_hierarchical.data.frame <- function(data,
   }
 
   # if denominator doesn't have all by, they need to be added ------------------
-  if (!is.null(denominator) && is.data.frame(denominator) && !all(by %in% names(denominator))) {
+  if (
+    !is.null(denominator) &&
+      is.data.frame(denominator) &&
+      !all(by %in% names(denominator))
+  ) {
     by_vars_not_present <- by |> setdiff(names(denominator))
     denominator <-
       data |>
@@ -135,7 +142,11 @@ ard_hierarchical.data.frame <- function(data,
     )
 
   # renaming columns -----------------------------------------------------------
-  df_result <- .rename_last_group_as_variable(df_result, by = by, variables = variables)
+  df_result <- .rename_last_group_as_variable(
+    df_result,
+    by = by,
+    variables = variables
+  )
 
   # return ard -----------------------------------------------------------------
   df_result |>
@@ -144,12 +155,14 @@ ard_hierarchical.data.frame <- function(data,
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical_count.data.frame <- function(data,
-                                              variables,
-                                              by = dplyr::group_vars(data),
-                                              fmt_fn = NULL,
-                                              stat_label = everything() ~ default_stat_labels(),
-                                              ...) {
+ard_hierarchical_count.data.frame <- function(
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  fmt_fn = NULL,
+  stat_label = everything() ~ default_stat_labels(),
+  ...
+) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -202,6 +215,9 @@ ard_hierarchical_count.data.frame <- function(data,
     dplyr::select(-all_ard_variables()) |>
     dplyr::rename(
       variable = all_ard_group_n(n = length(c(by, variables)), types = "names"),
-      variable_level = all_ard_group_n(n = length(c(by, variables)), types = "levels")
+      variable_level = all_ard_group_n(
+        n = length(c(by, variables)),
+        types = "levels"
+      )
     )
 }

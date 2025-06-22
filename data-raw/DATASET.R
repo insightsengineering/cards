@@ -10,6 +10,6 @@ ADTTE <- haven::read_xpt(
   "https://github.com/cdisc-org/sdtm-adam-pilot-project/raw/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets/adtte.xpt"
 )
 
-ADSL |> mutate(TRTA = ARM)
-
+ADSL$TRTA <- ADSL$TRT01A
+labelled::var_label(ADSL$TRTA) <- labelled::var_label(ADAE$TRTA)
 usethis::use_data(ADSL, ADAE, ADTTE, overwrite = TRUE)

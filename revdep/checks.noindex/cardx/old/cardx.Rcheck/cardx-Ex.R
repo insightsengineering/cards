@@ -201,7 +201,7 @@ ard_categorical_max(
   variables = c(AESER, AESEV),
   id = USUBJID,
   by = TRTA,
-  denominator = cards::ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = cards::ADSL
 )
 
 

@@ -105,7 +105,7 @@ ard_hierarchical(
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   id = USUBJID,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = ADSL
 )
 
 ard_hierarchical_count(
