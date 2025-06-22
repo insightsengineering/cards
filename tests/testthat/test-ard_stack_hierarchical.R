@@ -179,8 +179,7 @@ test_that("ard_stack_hierarchical(by) messaging", {
         variables = c(AESOC, AEDECOD),
         by = c(TRTA, AESEV),
         denominator = ADSL |>
-          dplyr::bind_rows(ADSL |> dplyr::mutate(ARM = "Total")) |>
-          dplyr::rename(TRTA = ARM),
+          dplyr::bind_rows(ADSL |> dplyr::mutate(TRTA = "Total")),
         id = USUBJID
       )
     )

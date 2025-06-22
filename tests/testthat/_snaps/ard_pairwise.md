@@ -16,7 +16,7 @@
       Error in `ard_pairwise()`:
       ! Error processing `variable` argument.
       ! Can't select columns that don't exist. x Column `NOT_A_COLUMN` doesn't exist.
-      i Select among columns "STUDYID", "USUBJID", "SUBJID", "SITEID", "SITEGR1", "ARM", "TRT01P", "TRT01PN", "TRT01A", "TRT01AN", "TRTSDT", "TRTEDT", "TRTDUR", "AVGDD", "CUMDOSE", "AGE", "AGEGR1", "AGEGR1N", ..., "DCREASCD", and "MMSETOT"
+      i Select among columns "STUDYID", "USUBJID", "SUBJID", "SITEID", "SITEGR1", "ARM", "TRT01P", "TRT01PN", "TRT01A", "TRT01AN", "TRTSDT", "TRTEDT", "TRTDUR", "AVGDD", "CUMDOSE", "AGE", "AGEGR1", "AGEGR1N", ..., "MMSETOT", and "TRTA"
 
 # ard_pairwise(.f) messaging
 
