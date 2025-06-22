@@ -40,6 +40,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   denominator = ADSL,
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```
@@ -57,6 +58,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = c(TRTA, AESEV),
 #'   denominator = ADSL,
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```

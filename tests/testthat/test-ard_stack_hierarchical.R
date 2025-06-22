@@ -169,6 +169,22 @@ test_that("ard_stack_hierarchical(by) messaging", {
         denominator = ADSL
       )
   )
+
+  # no messaging if `id` values are present in multiple levels of the `by` variables
+  expect_no_warning(
+    suppressMessages(
+      ard_stack_hierarchical(
+        data = ADAE |>
+          dplyr::bind_rows(ADAE |> dplyr::mutate(TRTA = "Total")),
+        variables = c(AESOC, AEDECOD),
+        by = c(TRTA, AESEV),
+        denominator = ADSL |>
+          dplyr::bind_rows(ADSL |> dplyr::mutate(ARM = "Total")) |>
+          dplyr::rename(TRTA = ARM),
+        id = USUBJID
+      )
+    )
+  )
 })
 
 test_that("ard_stack_hierarchical(denominator) messaging", {
