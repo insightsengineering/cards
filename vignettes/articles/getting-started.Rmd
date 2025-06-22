@@ -137,8 +137,7 @@ To match the treatment arm variables, we need to do a small data manipulation on
 
 ```{r}
 # rename trt variable
-adsl <- ADSL |>
-  dplyr::rename(TRTA = TRT01A)
+adsl <- ADSL
 
 # subset to Treatment emergent AES
 adae <- ADAE |>
@@ -148,7 +147,8 @@ adae <- ADAE |>
 
 #### Participant-level summaries
 
-A common type of AE table contains participant-level summaries.  Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
+A common type of AE table contains participant-level summaries.
+Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
 
 ```{r, echo=FALSE, message=FALSE}
 ADAE |>
