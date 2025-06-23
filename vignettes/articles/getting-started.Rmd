@@ -25,20 +25,30 @@ gtsummary::theme_gtsummary_compact()
 ADSL |>
   dplyr::select(ARM, AGE, AGEGR1, SEX) |>
   dplyr::mutate(
-    ARM = factor(ARM, levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose")),
-    AGEGR1 = factor(AGEGR1, levels = c("<65", "65-80", ">80"), labels = c("<65", "65-80", ">80"))
+    ARM = factor(
+      ARM,
+      levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose")
+    ),
+    AGEGR1 = factor(
+      AGEGR1,
+      levels = c("<65", "65-80", ">80"),
+      labels = c("<65", "65-80", ">80")
+    )
   ) |>
   gtsummary::tbl_summary(
     by = ARM,
     type = AGE ~ "continuous2",
-    statistic = AGE ~ c("{median} ({p25}, {p75})", "{mean} ({sd})", "{min} - {max}"),
+    statistic = AGE ~
+      c("{median} ({p25}, {p75})", "{mean} ({sd})", "{min} - {max}"),
     value = SEX ~ "F",
     label = list(SEX = "Female", AGEGR1 = "Age Group"),
     digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4))
   ) |>
   gtsummary::add_stat_label() |>
   gtsummary::bold_labels() |>
-  gtsummary::modify_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |>
+  gtsummary::modify_header(
+    gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}"
+  ) |>
   gtsummary::modify_column_alignment(columns = -label, "right") |>
   gtsummary::as_gt() |>
   gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
@@ -57,7 +67,15 @@ df_continuous_ard <-
     ADSL,
     by = ARM,
     variables = AGE,
-    statistic = ~ continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+    statistic = ~ continuous_summary_fns(c(
+      "median",
+      "p25",
+      "p75",
+      "mean",
+      "sd",
+      "min",
+      "max"
+    ))
   )
 df_continuous_ard |> head(5)
 ```
@@ -117,7 +135,15 @@ ard_stack(
   .by = ARM,
   ard_continuous(
     variables = AGE,
-    statistic = ~ continuous_summary_fns(c("median", "p25", "p75", "mean", "sd", "min", "max"))
+    statistic = ~ continuous_summary_fns(c(
+      "median",
+      "p25",
+      "p75",
+      "mean",
+      "sd",
+      "min",
+      "max"
+    ))
   ),
   ard_categorical(variables = AGEGR1),
   ard_dichotomous(variables = SEX, value = list(SEX = "F"))
@@ -137,8 +163,7 @@ To match the treatment arm variables, we need to do a small data manipulation on
 
 ```{r}
 # rename trt variable
-adsl <- ADSL |>
-  dplyr::rename(TRTA = TRT01A)
+adsl <- ADSL
 
 # subset to Treatment emergent AES
 adae <- ADAE |>
@@ -148,7 +173,8 @@ adae <- ADAE |>
 
 #### Participant-level summaries
 
-A common type of AE table contains participant-level summaries.  Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
+A common type of AE table contains participant-level summaries.
+Here, we are reporting the number and percentage of subjects with at least one AE by system organ class and preferred term.
 
 ```{r, echo=FALSE, message=FALSE}
 ADAE |>
@@ -157,12 +183,15 @@ ADAE |>
     by = TRTA,
     variables = c(AEBODSYS, AEDECOD),
     id = USUBJID,
-    denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
+    denominator = ADSL,
     overall_row = TRUE,
     digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
     label = list(..ard_hierarchical_overall.. = "Any Adverse Event")
   ) |>
-  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |>
+  gtsummary::modify_column_alignment(
+    columns = gtsummary::all_stat_cols(),
+    "right"
+  ) |>
   gtsummary::as_gt() |>
   gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
   gt::opt_table_font(stack = "monospace-code")
@@ -198,12 +227,17 @@ ADAE |>
   gtsummary::tbl_hierarchical_count(
     by = TRTA,
     variables = c(AEBODSYS, AEDECOD),
-    denominator = ADSL |> dplyr::rename(TRTA = TRT01A),
+    denominator = ADSL,
     overall_row = TRUE,
     digits = ~ list(p = cards::label_round(digits = 1, scale = 100, width = 4)),
-    label = list(..ard_hierarchical_overall.. = "Total Number of Adverse Events")
+    label = list(
+      ..ard_hierarchical_overall.. = "Total Number of Adverse Events"
+    )
   ) |>
-  gtsummary::modify_column_alignment(columns = gtsummary::all_stat_cols(), "right") |>
+  gtsummary::modify_column_alignment(
+    columns = gtsummary::all_stat_cols(),
+    "right"
+  ) |>
   gtsummary::as_gt() |>
   gt::cols_width(gtsummary::all_stat_cols() ~ gt::pct(23)) |>
   gt::opt_table_font(stack = "monospace-code")

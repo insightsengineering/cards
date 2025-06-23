@@ -76,7 +76,6 @@ test_that("ard_categorical() univariate & specified denomiator", {
   )
   expect_snapshot(class(ard_cat_new_denom))
 
-
   expect_equal(
     ard_cat_new_denom |>
       dplyr::filter(stat_name %in% "n") |>
@@ -103,15 +102,13 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_categorical(
     mtcars,
     variables = "am",
-    fmt_fn =
-      list(
-        am =
-          list(
-            p = function(x) round5(x * 100, digits = 3) |> as.character(),
-            N = function(x) format(round5(x, digits = 2), nsmall = 2),
-            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
-          )
+    fmt_fn = list(
+      am = list(
+        p = function(x) round5(x * 100, digits = 3) |> as.character(),
+        N = function(x) format(round5(x, digits = 2), nsmall = 2),
+        N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
       )
+    )
   ) |>
     apply_fmt_fn() |>
     dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
@@ -146,7 +143,7 @@ test_that("ard_categorical() with strata and by arguments", {
         strata = c(AESOC, AELLT),
         by = TRTA,
         variables = AESEV,
-        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+        denominator = ADSL
       ),
     NA
   )
@@ -233,7 +230,10 @@ test_that("ard_categorical() with strata and by arguments", {
     ard_sort_test <-
       iris |>
       dplyr::mutate(
-        trt = rep_len(c("Bladder + RP LN", "Bladder + Renal Fossa"), length.out = dplyr::n())
+        trt = rep_len(
+          c("Bladder + RP LN", "Bladder + Renal Fossa"),
+          length.out = dplyr::n()
+        )
       ) |>
       ard_categorical(variables = trt, by = Species)
   )
@@ -287,7 +287,12 @@ test_that("ard_categorical(stat_label) argument works", {
 
 test_that("ard_categorical(denominator='cell') works", {
   expect_error(
-    ard_crosstab <- ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "cell"),
+    ard_crosstab <- ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      by = "ARM",
+      denominator = "cell"
+    ),
     NA
   )
 
@@ -296,7 +301,11 @@ test_that("ard_categorical(denominator='cell') works", {
 
   expect_equal(
     ard_crosstab |>
-      dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "n") |>
+      dplyr::filter(
+        group1_level %in% "Placebo",
+        variable_level %in% "<65",
+        stat_name %in% "n"
+      ) |>
       dplyr::pull(stat) |>
       getElement(1),
     mtrx_conts["<65", "Placebo"]
@@ -304,7 +313,11 @@ test_that("ard_categorical(denominator='cell') works", {
 
   expect_equal(
     ard_crosstab |>
-      dplyr::filter(group1_level %in% "Placebo", variable_level %in% "<65", stat_name %in% "p") |>
+      dplyr::filter(
+        group1_level %in% "Placebo",
+        variable_level %in% "<65",
+        stat_name %in% "p"
+      ) |>
       dplyr::pull(stat) |>
       getElement(1),
     mtrx_percs["<65", "Placebo"]
@@ -346,7 +359,12 @@ test_that("ard_categorical(denominator='cell') works", {
 test_that("ard_categorical(denominator='row') works", {
   withr::local_options(list(width = 120))
   expect_error(
-    ard_crosstab_row <- ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "row"),
+    ard_crosstab_row <- ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      by = "ARM",
+      denominator = "row"
+    ),
     NA
   )
 
@@ -354,34 +372,62 @@ test_that("ard_categorical(denominator='row') works", {
   xtab_percent <- proportions(xtab_count, margin = 1)
 
   expect_equal(
-    xtab_count[rownames(xtab_count) %in% "<65", colnames(xtab_count) %in% "Placebo"],
+    xtab_count[
+      rownames(xtab_count) %in% "<65",
+      colnames(xtab_count) %in% "Placebo"
+    ],
     ard_crosstab_row |>
-      dplyr::filter(variable_level %in% "<65", group1_level %in% "Placebo", stat_name %in% "n") |>
+      dplyr::filter(
+        variable_level %in% "<65",
+        group1_level %in% "Placebo",
+        stat_name %in% "n"
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
   expect_equal(
-    xtab_percent[rownames(xtab_percent) %in% "<65", colnames(xtab_percent) %in% "Placebo"],
+    xtab_percent[
+      rownames(xtab_percent) %in% "<65",
+      colnames(xtab_percent) %in% "Placebo"
+    ],
     ard_crosstab_row |>
-      dplyr::filter(variable_level %in% "<65", group1_level %in% "Placebo", stat_name %in% "p") |>
+      dplyr::filter(
+        variable_level %in% "<65",
+        group1_level %in% "Placebo",
+        stat_name %in% "p"
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
 
   expect_equal(
-    xtab_count[rownames(xtab_count) %in% ">80", colnames(xtab_count) %in% "Xanomeline Low Dose"],
+    xtab_count[
+      rownames(xtab_count) %in% ">80",
+      colnames(xtab_count) %in% "Xanomeline Low Dose"
+    ],
     ard_crosstab_row |>
-      dplyr::filter(variable_level %in% ">80", group1_level %in% "Xanomeline Low Dose", stat_name %in% "n") |>
+      dplyr::filter(
+        variable_level %in% ">80",
+        group1_level %in% "Xanomeline Low Dose",
+        stat_name %in% "n"
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
   )
   expect_equal(
-    xtab_percent[rownames(xtab_percent) %in% ">80", colnames(xtab_percent) %in% "Xanomeline Low Dose"],
+    xtab_percent[
+      rownames(xtab_percent) %in% ">80",
+      colnames(xtab_percent) %in% "Xanomeline Low Dose"
+    ],
     ard_crosstab_row |>
-      dplyr::filter(variable_level %in% ">80", group1_level %in% "Xanomeline Low Dose", stat_name %in% "p") |>
+      dplyr::filter(
+        variable_level %in% ">80",
+        group1_level %in% "Xanomeline Low Dose",
+        stat_name %in% "p"
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     ignore_attr = TRUE
@@ -392,7 +438,8 @@ test_that("ard_categorical(denominator='row') works", {
     ard_with_args <-
       ard_categorical(
         ADSL,
-        variables = "AGEGR1", by = "ARM",
+        variables = "AGEGR1",
+        by = "ARM",
         denominator = "row",
         statistic = list(AGEGR1 = c("n", "N")),
         fmt_fn = list(AGEGR1 = list("n" = 2))
@@ -437,7 +484,12 @@ test_that("ard_categorical(denominator='row') works", {
 
 test_that("ard_categorical(denominator='column') works", {
   expect_equal(
-    ard_categorical(ADSL, variables = "AGEGR1", by = "ARM", denominator = "column") |>
+    ard_categorical(
+      ADSL,
+      variables = "AGEGR1",
+      by = "ARM",
+      denominator = "column"
+    ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat),
     ard_categorical(ADSL, variables = "AGEGR1", by = "ARM") |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat)
@@ -513,11 +565,15 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
       ADSL,
       by = ARM,
       variables = AGEGR1,
-      denominator =
-        data.frame(
-          ARM = c("Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
-          ...ard_N... = c(86, 86, 84, 84)
-        )
+      denominator = data.frame(
+        ARM = c(
+          "Placebo",
+          "Placebo",
+          "Xanomeline High Dose",
+          "Xanomeline Low Dose"
+        ),
+        ...ard_N... = c(86, 86, 84, 84)
+      )
     )
   )
 
@@ -536,11 +592,10 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
       ADSL,
       by = ARM,
       variables = AGEGR1,
-      denominator =
-        data.frame(
-          ARM = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
-          ...ard_N... = c(86, 84, 84)
-        )
+      denominator = data.frame(
+        ARM = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"),
+        ...ard_N... = c(86, 84, 84)
+      )
     ) |>
       dplyr::select(-fmt_fn),
     ard_categorical(
@@ -567,7 +622,6 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
     0L
   )
 
-
   expect_equal(
     ADSL |>
       dplyr::mutate(AGEGR1 = NA) |>
@@ -586,9 +640,17 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
 
 test_that("ard_categorical() and ARD column names", {
   ard_colnames <- c(
-    "group1", "group1_level", "variable", "variable_level",
-    "context", "stat_name", "stat_label", "stat",
-    "fmt_fn", "warning", "error"
+    "group1",
+    "group1_level",
+    "variable",
+    "variable_level",
+    "context",
+    "stat_name",
+    "stat_label",
+    "stat",
+    "fmt_fn",
+    "warning",
+    "error"
   )
 
   # no errors when these variables are the summary vars
@@ -680,7 +742,6 @@ test_that("ard_categorical() can handle non-syntactic column names", {
       dplyr::select(stat, error)
   )
 
-
   expect_equal(
     ADSL |>
       dplyr::mutate(`Arm Var` = ARM, `Age Group` = AGEGR1) |>
@@ -697,12 +758,14 @@ test_that("ard_categorical(strata) returns results in proper order", {
     ard_categorical(
       ADAE |>
         dplyr::arrange(AESEV != "SEVERE") |> # put SEVERE at the top
-        dplyr::mutate(AESEV = factor(AESEV, levels = c("MILD", "MODERATE", "SEVERE"))) |>
+        dplyr::mutate(
+          AESEV = factor(AESEV, levels = c("MILD", "MODERATE", "SEVERE"))
+        ) |>
         dplyr::mutate(ANY_AE = 1L),
       by = TRTA,
       strata = AESEV,
       variables = ANY_AE,
-      denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      denominator = ADSL
     ) |>
       dplyr::select(group2_level) |>
       unlist() |>
@@ -736,21 +799,62 @@ test_that("ard_categorical(by) messages about protected names", {
 test_that("ard_categorical() works when using generic names ", {
   # rename some variables
   mtcars2 <- mtcars %>%
-    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
+    dplyr::rename(
+      "variable" = am,
+      "variable_level" = cyl,
+      "by" = disp,
+      "group1_level" = gear
+    )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(variable, variable_level), by = by, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, cyl),
+      by = disp,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(variable, variable_level),
+      by = by,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(cyl, am), by = gear, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(variable_level, variable), by = group1_level, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(cyl, am),
+      by = gear,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(variable_level, variable),
+      by = group1_level,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(gear, am), by = disp, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(group1_level, variable), by = by, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(gear, am),
+      by = disp,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(group1_level, variable),
+      by = by,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   # rename vars
@@ -758,77 +862,236 @@ test_that("ard_categorical() works when using generic names ", {
     dplyr::rename("N" = am, "p" = cyl, "name" = disp, "group1_level" = gear)
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N, p), by = name, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, cyl),
+      by = disp,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N, p),
+      by = name,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(name, group1_level), by = N, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(disp, gear),
+      by = am,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(name, group1_level),
+      by = N,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N, name), by = group1_level, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = gear,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N, name),
+      by = group1_level,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N, name), by = p, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = cyl,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N, name),
+      by = p,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   # rename vars
   mtcars2 <- mtcars %>%
-    dplyr::rename("n" = am, "mean" = cyl, "p.std.error" = disp, "n_unweighted" = gear)
+    dplyr::rename(
+      "n" = am,
+      "mean" = cyl,
+      "p.std.error" = disp,
+      "n_unweighted" = gear
+    )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(gear, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = p.std.error, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(gear, cyl),
+      by = disp,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(n_unweighted, mean),
+      by = p.std.error,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(gear, cyl), by = am, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(n_unweighted, mean), by = n, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(gear, cyl),
+      by = am,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(n_unweighted, mean),
+      by = n,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(n, p.std.error), by = mean, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = cyl,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(n, p.std.error),
+      by = mean,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(n, p.std.error), by = n_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = gear,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(n, p.std.error),
+      by = n_unweighted,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   # rename vars
   mtcars2 <- mtcars %>%
-    dplyr::rename("N_unweighted" = am, "p_unweighted" = cyl, "column" = disp, "row" = gear)
+    dplyr::rename(
+      "N_unweighted" = am,
+      "p_unweighted" = cyl,
+      "column" = disp,
+      "row" = gear
+    )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, cyl), by = disp, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N_unweighted, p_unweighted), by = column, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, cyl),
+      by = disp,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N_unweighted, p_unweighted),
+      by = column,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(disp, gear), by = am, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(column, row), by = N_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(disp, gear),
+      by = am,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(column, row),
+      by = N_unweighted,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = cyl, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = p_unweighted, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = cyl,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N_unweighted, column),
+      by = p_unweighted,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 
   expect_equal(
-    ard_categorical(mtcars, variables = c(am, disp), by = gear, denominator = "row") |> dplyr::select(stat),
-    ard_categorical(mtcars2, variables = c(N_unweighted, column), by = row, denominator = "row") |> dplyr::select(stat)
+    ard_categorical(
+      mtcars,
+      variables = c(am, disp),
+      by = gear,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat),
+    ard_categorical(
+      mtcars2,
+      variables = c(N_unweighted, column),
+      by = row,
+      denominator = "row"
+    ) |>
+      dplyr::select(stat)
   )
 })
 
 test_that("ard_categorical(by) messages about protected names", {
   mtcars2 <- mtcars %>%
-    dplyr::rename("variable" = am, "variable_level" = cyl, "by" = disp, "group1_level" = gear)
+    dplyr::rename(
+      "variable" = am,
+      "variable_level" = cyl,
+      "by" = disp,
+      "group1_level" = gear
+    )
 
   expect_snapshot(
     error = TRUE,
@@ -901,7 +1164,10 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # test the final cum n matches the nrow()
   expect_equal(
     ard |>
-      dplyr::filter(stat_name == "n_cum", variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))) |>
+      dplyr::filter(
+        stat_name == "n_cum",
+        variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     nrow(ADSL)
@@ -909,7 +1175,10 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # test the final cum p is 1
   expect_equal(
     ard |>
-      dplyr::filter(stat_name == "p_cum", variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))) |>
+      dplyr::filter(
+        stat_name == "p_cum",
+        variable_level %in% dplyr::last(.unique_and_sorted(ADSL$AGEGR1))
+      ) |>
       dplyr::pull(stat) |>
       unlist(),
     1
@@ -982,7 +1251,11 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # check the cum n is correct
   expect_equal(
     ard |>
-      dplyr::filter(stat_name %in% "n_cum", group1_level == "Placebo", group2_level == "F") |>
+      dplyr::filter(
+        stat_name %in% "n_cum",
+        group1_level == "Placebo",
+        group2_level == "F"
+      ) |>
       dplyr::select(variable_level, stat) |>
       deframe(),
     table(ADSL$AGEGR1[ADSL$ARM == "Placebo" & ADSL$SEX == "F"]) |>
@@ -992,7 +1265,11 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # check the cum p is correct
   expect_equal(
     ard |>
-      dplyr::filter(stat_name %in% "p_cum", group1_level == "Placebo", group2_level == "F") |>
+      dplyr::filter(
+        stat_name %in% "p_cum",
+        group1_level == "Placebo",
+        group2_level == "F"
+      ) |>
       dplyr::select(variable_level, stat) |>
       deframe(),
     table(ADSL$AGEGR1[ADSL$ARM == "Placebo" & ADSL$SEX == "F"]) |>
@@ -1128,7 +1405,6 @@ test_that("ard_categorical() ordering for multiple strata", {
     dplyr::select(group2_level, group3_level) |>
     tidyr::unnest(everything()) |>
     unique()
-
 
   expect_equal(
     res_actual,

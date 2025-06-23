@@ -19,7 +19,7 @@
 
     Code
       head(ard_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), by = c(TRTA,
-        AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), id = USUBJID), 1L)
+        AESEV), denominator = ADSL, id = USUBJID), 1L)
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" column.
@@ -38,8 +38,7 @@
 
     Code
       head(ard_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), by = c(TRTA,
-        AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), id = c(USUBJID, SITEID)),
-      1L)
+        AESEV), denominator = ADSL, id = c(USUBJID, SITEID)), 1L)
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" and "SITEID" columns.

@@ -46,7 +46,7 @@ where the AE summaries are provided by treatment group.
   ard_stack_hierarchical(
     variables = c(AESOC, AEDECOD),
     by = TRTA,
-    denominator = ADSL |> dplyr::rename(TRTA = ARM),
+    denominator = ADSL,
     id = USUBJID
   )
 }\if{html}{\out{</div>}}\tabular{lrrr}{
@@ -98,7 +98,7 @@ ard <- ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  denominator = ADSL,
   id = USUBJID
 )
 
