@@ -32,7 +32,7 @@
         variable_level stat_name stat_label stat
       1      ATRIAL F…         n          n    0
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
@@ -52,7 +52,7 @@
         variable_level stat_name stat_label stat
       1      ATRIAL F…         n          n    0
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # ard_hierarchical_count() works without by variables
 

@@ -1,8 +1,8 @@
 # mock_categorical()
 
     Code
-      apply_fmt_fn(mock_categorical(variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))), by = list(
-        TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))))
+      apply_fmt_fun(mock_categorical(variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
+      by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))))
     Message
       {cards} data frame: 27 x 12
     Output
@@ -20,7 +20,7 @@
     Message
       i 17 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # mock_categorical() messaging
 
@@ -34,7 +34,7 @@
 # mock_continuous()
 
     Code
-      apply_fmt_fn(mock_continuous(variables = c("AGE", "BMIBL")))
+      apply_fmt_fun(mock_continuous(variables = c("AGE", "BMIBL")))
     Message
       {cards} data frame: 16 x 9
     Output
@@ -56,7 +56,7 @@
       15    BMIBL continuo…       min        Min          xx.x
       16    BMIBL continuo…       max        Max          xx.x
     Message
-      i 3 more variables: fmt_fn, warning, error
+      i 3 more variables: fmt_fun, warning, error
 
 # mock_continuous() messaging
 
@@ -69,7 +69,7 @@
 # mock_dichotomous()
 
     Code
-      apply_fmt_fn(mock_dichotomous(variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))), by = list(TRTA = c(
+      apply_fmt_fun(mock_dichotomous(variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))), by = list(TRTA = c(
         "Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))))
     Message
       {cards} data frame: 9 x 12
@@ -85,7 +85,7 @@
       8   TRTA    Xanomeli…   AGEGR1          65-80         p          %          xx.x
       9   TRTA    Xanomeli…   AGEGR1          65-80         N          N            xx
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # mock_dichotomous() messaging
 
@@ -100,7 +100,7 @@
 # mock_missing()
 
     Code
-      apply_fmt_fn(mock_missing(variables = c("AGE", "BMIBL")))
+      apply_fmt_fun(mock_missing(variables = c("AGE", "BMIBL")))
     Message
       {cards} data frame: 10 x 9
     Output
@@ -116,7 +116,7 @@
       9     BMIBL missing    p_miss  % Missing          xx.x
       10    BMIBL missing p_nonmiss  % Non-mi…          xx.x
     Message
-      i 3 more variables: fmt_fn, warning, error
+      i 3 more variables: fmt_fun, warning, error
 
 # mock_missing() messaging
 
@@ -133,11 +133,11 @@
     Message
       {cards} data frame: 4 x 8
     Output
-        variable   context stat_name stat_label      stat fmt_fn
-      1      AGE attribut…     label  Variable…       Age   <fn>
-      2      AGE attribut…     class  Variable…   logical   NULL
-      3    BMIBL attribut…     label  Variable… Baseline…   <fn>
-      4    BMIBL attribut…     class  Variable…   logical   NULL
+        variable   context stat_name stat_label      stat fmt_fun
+      1      AGE attribut…     label  Variable…       Age    <fn>
+      2      AGE attribut…     class  Variable…   logical    NULL
+      3    BMIBL attribut…     label  Variable… Baseline…    <fn>
+      4    BMIBL attribut…     class  Variable…   logical    NULL
     Message
       i 2 more variables: warning, error
 
@@ -152,12 +152,12 @@
 # mock_total_n()
 
     Code
-      apply_fmt_fn(mock_total_n())
+      apply_fmt_fun(mock_total_n())
     Message
       {cards} data frame: 1 x 9
     Output
                variable context stat_name stat_label stat stat_fmt
       1 ..ard_total_n.. total_n         N          N            xx
     Message
-      i 3 more variables: fmt_fn, warning, error
+      i 3 more variables: fmt_fun, warning, error
 

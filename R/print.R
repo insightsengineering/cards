@@ -13,7 +13,7 @@
 #'   some columns are removed when there are more than a threshold of
 #'   columns present. This argument sets that threshold. This is only used
 #'   when `columns='auto'` and default is `6L`.
-#'   Columns `'error'`, `'warning'`, `'context'`, and `'fmt_fn'` *may* be removed
+#'   Columns `'error'`, `'warning'`, `'context'`, and `'fmt_fun'` *may* be removed
 #'   from the print. All other columns will be printed, even if more than `n_col`
 #'   columns are present.
 #' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
@@ -43,7 +43,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
         x_print, all_ard_groups(), all_ard_variables(),
         any_of(c(
           "context", "stat_name", "stat_label", "stat", "stat_fmt",
-          "fmt_fn", "warning", "error"
+          "fmt_fun", "warning", "error"
         ))
       )
 
@@ -55,9 +55,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       x_print[["error"]] <- NULL
     }
 
-    # remove 'fmt_fn' col if there are many cols
+    # remove 'fmt_fun' col if there are many cols
     if (ncol(x_print) > n_col) {
-      x_print[["fmt_fn"]] <- NULL
+      x_print[["fmt_fun"]] <- NULL
     }
     # remove 'context' col if there are many cols
     if (ncol(x_print) > n_col) {
@@ -110,9 +110,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
   }
 
   # for the formatting function column, abbreviate the print of proper functions
-  if ("fmt_fn" %in% names(x_print)) {
-    x_print$fmt_fn <- lapply(
-      x_print$fmt_fn,
+  if ("fmt_fun" %in% names(x_print)) {
+    x_print$fmt_fun <- lapply(
+      x_print$fmt_fun,
       function(x) {
         if (isTRUE(is.function(x))) {
           return("<fn>")

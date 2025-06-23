@@ -29,7 +29,7 @@
 #'   returns a named list of results is also acceptable, e.g.
 #'   `list(conf.low = -1, conf.high = 1)`. However, when errors occur, the messaging
 #'   will be less clear in this setting.
-#' @param fmt_fn ([`formula-list-selector`][syntax])\cr
+#' @param fmt_fun ([`formula-list-selector`][syntax])\cr
 #'   a named list, a list of formulas,
 #'   or a single formula where the list element is a named list of functions
 #'   (or the RHS of a formula),
@@ -39,6 +39,7 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(mean = "Mean", sd = "SD")` or
 #'   `everything() ~ list(mean ~ "Mean", sd ~ "SD")`.
+#' @param fmt_fn `r lifecycle::badge("deprecated")`
 #' @inheritParams rlang::args_dots_used
 #'
 #' @return an ARD data frame of class 'card'
@@ -74,11 +75,22 @@ ard_continuous.data.frame <- function(data,
                                       by = dplyr::group_vars(data),
                                       strata = NULL,
                                       statistic = everything() ~ continuous_summary_fns(),
-                                      fmt_fn = NULL,
+                                      fmt_fun = NULL,
                                       stat_label = everything() ~ default_stat_labels(),
+                                      fmt_fn = deprecated(),
                                       ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_continuous(fmt_fn)",
+      with = "ard_continuous(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -95,7 +107,7 @@ ard_continuous.data.frame <- function(data,
   process_formula_selectors(
     data[variables],
     statistic = statistic,
-    fmt_fn = fmt_fn,
+    fmt_fun = fmt_fun,
     stat_label = stat_label
   )
   fill_formula_selectors(
@@ -152,14 +164,14 @@ ard_continuous.data.frame <- function(data,
     dplyr::select(all_ard_groups(), "...ard_all_stats...") |>
     tidyr::unnest(cols = "...ard_all_stats...")
 
-  # final processing of fmt_fn -------------------------------------------------
+  # final processing of fmt_fun ------------------------------------------------
   df_results <-
     .process_nested_list_as_df(
       x = df_results,
-      arg = fmt_fn,
-      new_column = "fmt_fn"
+      arg = fmt_fun,
+      new_column = "fmt_fun"
     ) |>
-    .default_fmt_fn()
+    .default_fmt_fun()
 
   # final processing of stat labels --------------------------------------------
   df_results <-
@@ -358,7 +370,7 @@ ard_continuous.data.frame <- function(data,
 #'
 #' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
-  # add fmt_fn column if not already present
+  # add column if not already present
   if (!new_column %in% names(x)) {
     x[[new_column]] <- list(NULL)
   }
@@ -410,18 +422,18 @@ ard_continuous.data.frame <- function(data,
 #'
 #' @examples
 #' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
-#'   dplyr::mutate(fmt_fn = NA)
+#'   dplyr::mutate(fmt_fun = NA)
 #'
-#' cards:::.default_fmt_fn(ard)
-.default_fmt_fn <- function(x) {
+#' cards:::.default_fmt_fun(ard)
+.default_fmt_fun <- function(x) {
   x |>
     dplyr::mutate(
-      fmt_fn =
+      fmt_fun =
         pmap(
-          list(.data$stat_name, .data$stat, .data$fmt_fn),
-          function(stat_name, stat, fmt_fn) {
-            if (!is_empty(fmt_fn)) {
-              return(fmt_fn)
+          list(.data$stat_name, .data$stat, .data$fmt_fun),
+          function(stat_name, stat, fmt_fun) {
+            if (!is_empty(fmt_fun)) {
+              return(fmt_fun)
             }
             if (stat_name %in% c("p", "p_miss", "p_nonmiss")) {
               return(label_round(digits = 1, scale = 100))

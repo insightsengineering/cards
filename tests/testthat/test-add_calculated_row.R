@@ -2,7 +2,7 @@ test_that("add_calculated_row(x)", {
   expect_snapshot(
     ard_continuous(mtcars, variables = mpg) |>
       add_calculated_row(expr = max - min, stat_name = "range") |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 
   expect_snapshot(
@@ -16,7 +16,7 @@ test_that("add_calculated_row(x)", {
           ),
         stat_name = "skew"
       ) |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })
 

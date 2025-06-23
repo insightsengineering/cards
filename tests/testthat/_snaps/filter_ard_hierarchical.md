@@ -19,7 +19,7 @@
     Message
       i 29 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # filter_ard_hierarchical() error messaging works
 

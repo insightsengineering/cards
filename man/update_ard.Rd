@@ -2,16 +2,17 @@
 % Please edit documentation in R/update_ard.R
 \name{update_ard}
 \alias{update_ard}
-\alias{update_ard_fmt_fn}
+\alias{update_ard_fmt_fun}
 \alias{update_ard_stat_label}
 \title{Update ARDs}
 \usage{
-update_ard_fmt_fn(
+update_ard_fmt_fun(
   x,
   variables = everything(),
   stat_names,
-  fmt_fn,
-  filter = TRUE
+  fmt_fun,
+  filter = TRUE,
+  fmt_fn = deprecated()
 )
 
 update_ard_stat_label(
@@ -33,13 +34,15 @@ variables in \code{x$variable} to apply update. Default is \code{everything()}.}
 character vector of the statistic names (i.e. values from \code{x$stat_name}) to
 apply the update.}
 
-\item{fmt_fn}{(\code{function})\cr
-a function or alias recognized by \code{alias_as_fmt_fn()}.}
+\item{fmt_fun}{(\code{function})\cr
+a function or alias recognized by \code{alias_as_fmt_fun()}.}
 
 \item{filter}{(\code{expression})\cr
 an expression that evaluates to a logical vector identifying rows in \code{x}
 to apply the update to. Default is \code{TRUE}, and update is applied to
 all rows.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{stat_label}{(\code{function})\cr
 a string of the updated statistic label.}
@@ -56,9 +59,9 @@ can be modified directly.
 }
 \examples{
 ard_continuous(ADSL, variables = AGE) |>
-  update_ard_fmt_fn(stat_names = c("mean", "sd"), fmt_fn = 8L) |>
+  update_ard_fmt_fun(stat_names = c("mean", "sd"), fmt_fun = 8L) |>
   update_ard_stat_label(stat_names = c("mean", "sd"), stat_label = "Mean (SD)") |>
-  apply_fmt_fn()
+  apply_fmt_fun()
 
 # same as above, but only apply update to the Placebo level
 ard_continuous(
@@ -67,6 +70,6 @@ ard_continuous(
   variables = AGE,
   statistic = ~ continuous_summary_fns(c("N", "mean"))
 ) |>
-  update_ard_fmt_fn(stat_names = "mean", fmt_fn = 8L, filter = group1_level == "Placebo") |>
-  apply_fmt_fn()
+  update_ard_fmt_fun(stat_names = "mean", fmt_fun = 8L, filter = group1_level == "Placebo") |>
+  apply_fmt_fun()
 }

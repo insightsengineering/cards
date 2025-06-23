@@ -5,7 +5,7 @@
       attr(df$var1, "label") <- "Lowercase Letters"
       as.data.frame(ard_attributes(df, variables = everything(), label = list(var2 = "UPPERCASE LETTERS")))
     Output
-        variable    context stat_name     stat_label              stat                     fmt_fn warning error
+        variable    context stat_name     stat_label              stat                    fmt_fun warning error
       1     var1 attributes     label Variable Label Lowercase Letters .Primitive("as.character")    NULL  NULL
       2     var1 attributes     class Variable Class         character                       NULL    NULL  NULL
       3     var2 attributes     label Variable Label UPPERCASE LETTERS .Primitive("as.character")    NULL  NULL

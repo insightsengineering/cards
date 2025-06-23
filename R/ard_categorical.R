@@ -64,7 +64,7 @@
 #' Lastly, when the `p` statistic is returned, the proportion is returned---bounded by `[0, 1]`.
 #' However, the default function to format the statistic scales the proportion by 100
 #' and the percentage is returned which matches the default statistic label of `'%'`.
-#' To get the formatted values, pass the ARD to `apply_fmt_fn()`.
+#' To get the formatted values, pass the ARD to `apply_fmt_fun()`.
 #'
 #' @section Other Statistics:
 #' In some cases, you may need other kinds of statistics for categorical variables.
@@ -114,11 +114,22 @@ ard_categorical.data.frame <- function(data,
                                        strata = NULL,
                                        statistic = everything() ~ c("n", "p", "N"),
                                        denominator = "column",
-                                       fmt_fn = NULL,
+                                       fmt_fun = NULL,
                                        stat_label = everything() ~ default_stat_labels(),
+                                       fmt_fn = deprecated(),
                                        ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_categorical(fmt_fn)",
+      with = "ard_categorical(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -138,7 +149,7 @@ ard_categorical.data.frame <- function(data,
     data[variables],
     statistic = statistic,
     stat_label = stat_label,
-    fmt_fn = fmt_fn
+    fmt_fun = fmt_fun
   )
   fill_formula_selectors(
     data[variables],
@@ -181,14 +192,14 @@ ard_categorical.data.frame <- function(data,
     )
 
 
-  # final processing of fmt_fn -------------------------------------------------
+  # final processing of fmt_fun ------------------------------------------------
   df_result_final <-
     df_result_tabulation |>
     .process_nested_list_as_df(
-      arg = fmt_fn,
-      new_column = "fmt_fn"
+      arg = fmt_fun,
+      new_column = "fmt_fun"
     ) |>
-    .default_fmt_fn()
+    .default_fmt_fun()
 
   # final processing of stat labels --------------------------------------------
   df_result_final <-
