@@ -251,7 +251,7 @@ test_that("filter_ard_hierarchical() error messaging works", {
     by = TRTA,
     denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
     id = USUBJID,
-    statistic = ~ "p"
+    statistic = ~"p"
   )
 
   # unavailable filter statistic

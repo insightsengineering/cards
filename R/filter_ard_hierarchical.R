@@ -229,7 +229,6 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
 
           # process any column-wise or overall filters present
           if (any(c(col_stat_vars, overall_stat_vars) %in% filter_vars)) {
-
             # if specified, add column-wise statistics to filter on
             .df_col_stats <- if (any(col_stat_vars %in% filter_vars)) {
               .df_all |>
