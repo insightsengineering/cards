@@ -1,8 +1,10 @@
-# cards 0.6.0.9007
+# cards 0.6.0.9010
 
 * Added new function `ard_identity()` for saving pre-calculated statistics in an ARD format. (#379)
 
 * Fix bug in `sort_ard_hierarchical()` when hierarchical ARD has `overall=TRUE`. (#431)
+
+* Fix bug in `ard_stack_hierarchical()` when `id` values are present in multiple levels of the `by` variables. (#442)
 
 # cards 0.6.0
 

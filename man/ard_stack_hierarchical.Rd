@@ -136,7 +136,8 @@ include results with the code chunk being re-run with \code{by=NULL}.
   data = ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  denominator = ADSL,
+  id = USUBJID,
   overall = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -152,7 +153,8 @@ results with \code{by = AESEV} and again with \code{by = NULL}.
   data = ADAE,
   variables = c(AESOC, AEDECOD),
   by = c(TRTA, AESEV),
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  denominator = ADSL,
+  id = USUBJID,
   overall = TRUE
 )
 }\if{html}{\out{</div>}}
@@ -163,7 +165,7 @@ ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  denominator = ADSL,
   id = USUBJID
 )
 
@@ -171,6 +173,6 @@ ard_stack_hierarchical_count(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = ADSL
 )
 }

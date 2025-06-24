@@ -39,7 +39,8 @@
 #'   data = ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   denominator = ADSL,
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```
@@ -56,7 +57,8 @@
 #'   data = ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = c(TRTA, AESEV),
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   denominator = ADSL,
+#'   id = USUBJID,
 #'   overall = TRUE
 #' )
 #' ```
@@ -107,7 +109,7 @@
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   denominator = ADSL,
 #'   id = USUBJID
 #' )
 #'
@@ -115,24 +117,25 @@
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#'   denominator = ADSL
 #' )
 NULL
 
 #' @rdname ard_stack_hierarchical
 #' @export
-ard_stack_hierarchical <- function(data,
-                                   variables,
-                                   by = dplyr::group_vars(data),
-                                   id,
-                                   denominator,
-                                   include = everything(),
-                                   statistic = everything() ~ c("n", "N", "p"),
-                                   overall = FALSE,
-                                   over_variables = FALSE,
-                                   attributes = FALSE,
-                                   total_n = FALSE,
-                                   shuffle = FALSE) {
+ard_stack_hierarchical <- function(
+    data,
+    variables,
+    by = dplyr::group_vars(data),
+    id,
+    denominator,
+    include = everything(),
+    statistic = everything() ~ c("n", "N", "p"),
+    overall = FALSE,
+    over_variables = FALSE,
+    attributes = FALSE,
+    total_n = FALSE,
+    shuffle = FALSE) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -151,7 +154,10 @@ ard_stack_hierarchical <- function(data,
 
   # check the id argument is not empty
   if (is_empty(id)) {
-    cli::cli_abort("Argument {.arg id} cannot be empty.", call = get_cli_abort_call())
+    cli::cli_abort(
+      "Argument {.arg id} cannot be empty.",
+      call = get_cli_abort_call()
+    )
   }
 
   # create ARD -----------------------------------------------------------------
@@ -173,22 +179,27 @@ ard_stack_hierarchical <- function(data,
 
 #' @rdname ard_stack_hierarchical
 #' @export
-ard_stack_hierarchical_count <- function(data,
-                                         variables,
-                                         by = dplyr::group_vars(data),
-                                         denominator = NULL,
-                                         include = everything(),
-                                         overall = FALSE,
-                                         over_variables = FALSE,
-                                         attributes = FALSE,
-                                         total_n = FALSE,
-                                         shuffle = FALSE) {
+ard_stack_hierarchical_count <- function(
+    data,
+    variables,
+    by = dplyr::group_vars(data),
+    denominator = NULL,
+    include = everything(),
+    overall = FALSE,
+    over_variables = FALSE,
+    attributes = FALSE,
+    total_n = FALSE,
+    shuffle = FALSE) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
   # denominator must be empty, a data frame, or integer
-  if (!is_empty(denominator) && !is.data.frame(denominator) && !is_integerish(denominator)) {
+  if (
+    !is_empty(denominator) &&
+      !is.data.frame(denominator) &&
+      !is_integerish(denominator)
+  ) {
     cli::cli_abort(
       "The {.arg denominator} argument must be empty, a {.cls data.frame}, or an {.cls integer}, not {.obj_type_friendly {denominator}}.",
       call = get_cli_abort_call()
@@ -212,23 +223,29 @@ ard_stack_hierarchical_count <- function(data,
   )
 }
 
-internal_stack_hierarchical <- function(data,
-                                        variables,
-                                        by = dplyr::group_vars(data),
-                                        id = NULL,
-                                        denominator = NULL,
-                                        include = everything(),
-                                        statistic = NULL,
-                                        overall = FALSE,
-                                        over_variables = FALSE,
-                                        attributes = FALSE,
-                                        total_n = FALSE,
-                                        shuffle = FALSE,
-                                        include_uni_by_tab = TRUE) {
+internal_stack_hierarchical <- function(
+    data,
+    variables,
+    by = dplyr::group_vars(data),
+    id = NULL,
+    denominator = NULL,
+    include = everything(),
+    statistic = NULL,
+    overall = FALSE,
+    over_variables = FALSE,
+    attributes = FALSE,
+    total_n = FALSE,
+    shuffle = FALSE,
+    include_uni_by_tab = TRUE) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
-  cards::process_selectors(data, variables = {{ variables }}, id = {{ id }}, by = {{ by }})
+  cards::process_selectors(
+    data,
+    variables = {{ variables }},
+    id = {{ id }},
+    by = {{ by }}
+  )
   cards::process_selectors(data[variables], include = {{ include }})
   check_scalar_logical(overall)
   check_scalar_logical(over_variables)
@@ -255,7 +272,8 @@ internal_stack_hierarchical <- function(data,
 
   if (is_empty(by) && isTRUE(overall)) {
     cli::cli_inform(
-      c("The {.arg by} argument must be specified when using {.code overall=TRUE}.",
+      c(
+        "The {.arg by} argument must be specified when using {.code overall=TRUE}.",
         i = "Setting {.code overall=FALSE}."
       )
     )
@@ -264,7 +282,8 @@ internal_stack_hierarchical <- function(data,
 
   if (!is.data.frame(denominator) && isTRUE(overall)) {
     cli::cli_inform(
-      c("The {.arg denominator} argument must be specified as a data frame when using {.code overall=TRUE}.",
+      c(
+        "The {.arg denominator} argument must be specified as a data frame when using {.code overall=TRUE}.",
         i = "Setting {.code overall=FALSE}."
       )
     )
@@ -273,7 +292,8 @@ internal_stack_hierarchical <- function(data,
 
   if (is_empty(denominator) && isTRUE(total_n)) {
     cli::cli_inform(
-      c("The {.arg denominator} argument must be specified when using {.code total_n=TRUE}.",
+      c(
+        "The {.arg denominator} argument must be specified when using {.code total_n=TRUE}.",
         i = "Setting {.code total_n=FALSE}."
       )
     )
@@ -281,29 +301,38 @@ internal_stack_hierarchical <- function(data,
   }
 
   # drop missing values --------------------------------------------------------
-  df_na_nan <- is.na(data[c(by, variables)]) | apply(data[c(by, variables)], MARGIN = 2, is.nan)
+  df_na_nan <- is.na(data[c(by, variables)]) |
+    apply(data[c(by, variables)], MARGIN = 2, is.nan)
   if (any(df_na_nan)) {
     rows_with_na <- apply(df_na_nan, MARGIN = 1, any)
-    cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na)}} row{?s} from {.arg data} with
-                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, variables)}} column{?s}."))
+    cli::cli_inform(c(
+      "*" = "Removing {.val {sum(rows_with_na)}} row{?s} from {.arg data} with
+                            {.val {NA}} or {.val {NaN}} values in {.val {c(by, variables)}} column{?s}."
+    ))
     data <- data[!rows_with_na, ]
   }
 
   # remove missing by variables from `denominator`
-  if (is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
+  if (
+    is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))
+  ) {
     df_na_nan_denom <-
       is.na(denominator[intersect(by, names(denominator))]) |
         apply(denominator[intersect(by, names(denominator))], MARGIN = 2, is.nan)
     if (any(df_na_nan_denom)) {
       rows_with_na_denom <- apply(df_na_nan_denom, MARGIN = 1, any)
-      cli::cli_inform(c("*" = "Removing {.val {sum(rows_with_na_denom)}} row{?s} from {.arg denominator} with
-                            {.val {NA}} or {.val {NaN}} values in {.val {intersect(by, names(denominator))}} column{?s}."))
+      cli::cli_inform(c(
+        "*" = "Removing {.val {sum(rows_with_na_denom)}} row{?s} from {.arg denominator} with
+                            {.val {NA}} or {.val {NaN}} values in {.val {intersect(by, names(denominator))}} column{?s}."
+      ))
       denominator <- denominator[!rows_with_na_denom, ]
     }
   }
 
   # sort data if using `ard_hierarchical(id)` ----------------------------------
-  if (!is_empty(id)) data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, variables)))) # styler: off
+  if (!is_empty(id)) {
+    data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, variables))))
+  } # styler: off
 
   # print denom columns if not 100% clear which are used
   if (!is_empty(id) && is.data.frame(denominator)) {
@@ -377,7 +406,11 @@ internal_stack_hierarchical <- function(data,
   }
 
   # add univariate tabulations of by variables ---------------------------------
-  if (isTRUE(include_uni_by_tab) && is.data.frame(denominator) && !is_empty(intersect(by, names(denominator)))) {
+  if (
+    isTRUE(include_uni_by_tab) &&
+      is.data.frame(denominator) &&
+      !is_empty(intersect(by, names(denominator)))
+  ) {
     lst_results <-
       lst_results |>
       append(
@@ -397,7 +430,9 @@ internal_stack_hierarchical <- function(data,
         # need to use this call to also re-run for `overall=TRUE` when specified
         rlang::call2(
           "internal_stack_hierarchical",
-          data = expr(data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE)),
+          data = expr(
+            data |> dplyr::mutate(..ard_hierarchical_overall.. = TRUE)
+          ),
           variables = "..ard_hierarchical_overall..",
           by = by,
           id = id,
@@ -411,7 +446,9 @@ internal_stack_hierarchical <- function(data,
           shuffle = FALSE,
           include_uni_by_tab = FALSE
         ) %>%
-          {suppressMessages(eval_tidy(.))} |> # styler: off
+          {
+            suppressMessages(eval_tidy(.))
+          } |> # styler: off
           list()
       )
   }
@@ -453,7 +490,11 @@ internal_stack_hierarchical <- function(data,
   }
 
   # append attributes used for sorting/filtering -------------------------------
-  attr(result, "args") <- list(by = by, variables = variables, include = include)
+  attr(result, "args") <- list(
+    by = by,
+    variables = variables,
+    include = include
+  )
 
   # sort ARD alphanumerically --------------------------------------------------
   result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
@@ -463,7 +504,13 @@ internal_stack_hierarchical <- function(data,
 }
 
 # this function calculates either the counts or the rates of the events
-.run_hierarchical_fun <- function(data, variables, by, denominator, id, statistic) {
+.run_hierarchical_fun <- function(
+    data,
+    variables,
+    by,
+    denominator,
+    id,
+    statistic) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
@@ -473,7 +520,10 @@ internal_stack_hierarchical <- function(data,
   } else {
     ard_hierarchical(
       data = data |>
-        dplyr::slice_tail(n = 1L, by = all_of(c(id, intersect(by, names(denominator)), variables))),
+        dplyr::slice_tail(
+          n = 1L,
+          by = all_of(c(id, intersect(by, names(denominator)), variables))
+        ),
       variables = all_of(variables),
       by = all_of(by),
       denominator = denominator,

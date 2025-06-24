@@ -36,7 +36,7 @@
 #'   ard_stack_hierarchical(
 #'     variables = c(AESOC, AEDECOD),
 #'     by = TRTA,
-#'     denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'     denominator = ADSL,
 #'     id = USUBJID
 #'   )
 #' ```
@@ -90,7 +90,7 @@
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   denominator = ADSL,
 #'   id = USUBJID
 #' )
 #'
@@ -196,7 +196,13 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
     dplyr::mutate(idx = dplyr::row_number()) |>
-    dplyr::select(all_ard_groups(), all_ard_variables(), "stat_name", "stat", "idx") |>
+    dplyr::select(
+      all_ard_groups(),
+      all_ard_variables(),
+      "stat_name",
+      "stat",
+      "idx"
+    ) |>
     tidyr::pivot_wider(
       id_cols = c(all_ard_groups(), all_ard_variables()),
       names_from = "stat_name",
@@ -207,7 +213,11 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
 
   # apply filter ---------------------------------------------------------------------------------
   f_idx <- x_f |>
-    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+    dplyr::group_by(across(c(
+      all_ard_groups(),
+      all_ard_variables(),
+      -all_of(by_cols)
+    ))) |>
     dplyr::group_map(\(.df, .g) {
       # only filter rows for innermost variable
       if (.g$variable == var) {
