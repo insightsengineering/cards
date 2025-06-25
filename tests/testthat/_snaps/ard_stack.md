@@ -7,8 +7,8 @@
       i Setting `ard_stack(.overall=FALSE)`.
       {cards} data frame: 1 x 8
     Output
-        variable   context stat_name stat_label stat fmt_fn
-      1      mpg continuo…         N          N   32      0
+        variable   context stat_name stat_label stat fmt_fun
+      1      mpg continuo…         N          N   32       0
     Message
       i 2 more variables: warning, error
 
@@ -52,7 +52,7 @@
       9    <NA>                <NA>                           vs              1         N          N   31
       10   <NA>                <NA>              ..ard_total_n..                        N          N   31
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
@@ -75,5 +75,5 @@
       9    <NA>                <NA>                           vs              1         N          N   30
       10   <NA>                <NA>              ..ard_total_n..                        N          N   30
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 

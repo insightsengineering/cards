@@ -20,7 +20,7 @@ as_nested_list <- function(x) {
 
   # format/round the statistics, if not already done ---------------------------
   if (!"stat_fmt" %in% names(x)) {
-    x <- apply_fmt_fn(x)
+    x <- apply_fmt_fun(x)
   }
 
   # construct the nested lists to convert to JSON ------------------------------
@@ -50,7 +50,7 @@ as_nested_list <- function(x) {
 #' @examples
 #' ard_continuous(mtcars, variables = mpg) |>
 #'   dplyr::filter(dplyr::row_number() %in% 1L) |>
-#'   apply_fmt_fn() |>
+#'   apply_fmt_fun() |>
 #'   cards:::.one_row_ard_to_nested_list()
 .one_row_ard_to_nested_list <- function(x) {
   df_preparation <-

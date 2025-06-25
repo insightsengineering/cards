@@ -30,15 +30,15 @@
 #'     ),
 #'   by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
 #' ) |>
-#'   apply_fmt_fn()
+#'   apply_fmt_fun()
 #'
 #' mock_continuous(
 #'   variables = c("AGE", "BMIBL"),
 #'   by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
 #' ) |>
 #'   # update the mock to report 'xx.xx' for standard deviations
-#'   update_ard_fmt_fn(variables = c("AGE", "BMIBL"), stat_names = "sd", fmt_fn = \(x) "xx.xx") |>
-#'   apply_fmt_fn()
+#'   update_ard_fmt_fun(variables = c("AGE", "BMIBL"), stat_names = "sd", fmt_fun = \(x) "xx.xx") |>
+#'   apply_fmt_fun()
 NULL
 
 #' @rdname mock
@@ -88,7 +88,7 @@ mock_categorical <- function(variables,
       stat = list(NULL),
       error = list(NULL),
       warning = list(NULL),
-      fmt_fn = map(
+      fmt_fun = map(
         .data$stat_name,
         ~ ifelse(.x %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss"), \(x) "xx", \(x) "xx.x")
       )
@@ -146,7 +146,7 @@ mock_continuous <- function(variables,
       stat = list(NULL),
       error = list(NULL),
       warning = list(NULL),
-      fmt_fn = map(
+      fmt_fun = map(
         .data$stat_name,
         ~ ifelse(.x %in% c("n", "N", "N_obs", "N_miss", "N_nonmiss"), \(x) "xx", \(x) "xx.x")
       )
@@ -229,7 +229,7 @@ mock_total_n <- function() {
   ard_total_n(data.frame()) |>
     dplyr::mutate(
       stat = list(NULL),
-      fmt_fn = list(\(x) "xx")
+      fmt_fun = list(\(x) "xx")
     )
 }
 

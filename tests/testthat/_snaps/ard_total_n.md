@@ -3,8 +3,8 @@
     Code
       as.data.frame(ard_total_n(ADSL))
     Output
-               variable context stat_name stat_label stat fmt_fn warning error
-      1 ..ard_total_n.. total_n         N          N  254      0    NULL  NULL
+               variable context stat_name stat_label stat fmt_fun warning error
+      1 ..ard_total_n.. total_n         N          N  254       0    NULL  NULL
 
 ---
 

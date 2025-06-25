@@ -36,7 +36,7 @@ test_that("ard_dichotomous() works", {
 
   expect_snapshot(
     ard_dich |>
-      dplyr::select(-c(fmt_fn, warning, error)) |>
+      dplyr::select(-c(fmt_fun, warning, error)) |>
       as.data.frame()
   )
 })

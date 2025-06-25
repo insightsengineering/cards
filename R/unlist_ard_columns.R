@@ -4,7 +4,7 @@
 #'   an ARD data frame of class 'card' or any data frame
 #' @param columns ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to unlist. Default is
-#'   `c(where(is.list), -any_of(c("warning", "error", "fmt_fn")))`.
+#'   `c(where(is.list), -any_of(c("warning", "error", "fmt_fun")))`.
 #' @param fill (scalar)\cr
 #'   scalar to fill NULL values with before unlisting (if they are present).
 #'   Default is `NA`.
@@ -21,15 +21,15 @@
 #' @examples
 #' ADSL |>
 #'   ard_categorical(by = ARM, variables = AGEGR1) |>
-#'   apply_fmt_fn() |>
+#'   apply_fmt_fun() |>
 #'   unlist_ard_columns()
 #'
 #' ADSL |>
 #'   ard_continuous(by = ARM, variables = AGE) |>
-#'   apply_fmt_fn() |>
+#'   apply_fmt_fun() |>
 #'   unlist_ard_columns()
 unlist_ard_columns <- function(x,
-                               columns = c(where(is.list), -any_of(c("warning", "error", "fmt_fn"))),
+                               columns = c(where(is.list), -any_of(c("warning", "error", "fmt_fun"))),
                                fill = NA,
                                fct_as_chr = TRUE) {
   # check inputs ---------------------------------------------------------------

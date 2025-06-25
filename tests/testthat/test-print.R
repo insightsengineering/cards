@@ -8,7 +8,7 @@ test_that("print.card() works", {
   )
 
   expect_snapshot(
-    ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ \(x) round(x, 3)))
+    ard_continuous(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ \(x) round(x, 3)))
   )
 
   # checking the print of Dates
@@ -18,7 +18,7 @@ test_that("print.card() works", {
       variables = x,
       statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
     ) |>
-      dplyr::select(-fmt_fn)
+      dplyr::select(-fmt_fun)
   )
 
   # checking the print of a complex matrix statistic result

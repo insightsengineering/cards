@@ -1,7 +1,7 @@
 #' Apply Formatting Functions
 #'
 #' Apply the formatting functions to each of the raw statistics.
-#' Function aliases are converted to functions using [alias_as_fmt_fn()].
+#' Function aliases are converted to functions using [alias_as_fmt_fun()].
 #'
 #' @param x (`data.frame`)\cr
 #'   an ARD data frame of class 'card'
@@ -14,8 +14,8 @@
 #'
 #' @examples
 #' ard_continuous(ADSL, variables = "AGE") |>
-#'   apply_fmt_fn()
-apply_fmt_fn <- function(x, replace = FALSE) {
+#'   apply_fmt_fun()
+apply_fmt_fun <- function(x, replace = FALSE) {
   set_cli_abort_call()
 
   check_class(x, cls = "card")
@@ -34,13 +34,13 @@ apply_fmt_fn <- function(x, replace = FALSE) {
             .data$stat,
             .data$variable,
             .data$stat_name,
-            .data$fmt_fn,
+            .data$fmt_fun,
             .data$stat_fmt
           ),
           function(stat, variable, stat_name, fn, stat_fmt) {
             if (!is.null(fn) && is.null(stat_fmt)) {
               tryCatch(
-                do.call(alias_as_fmt_fn(fn, variable, stat_name), args = list(stat)),
+                do.call(alias_as_fmt_fun(fn, variable, stat_name), args = list(stat)),
                 error = \(e) {
                   cli::cli_abort(
                     c("There was an error applying the formatting function to
@@ -84,9 +84,9 @@ apply_fmt_fn <- function(x, replace = FALSE) {
 #' @export
 #'
 #' @examples
-#' alias_as_fmt_fn(1)
-#' alias_as_fmt_fn("xx.x")
-alias_as_fmt_fn <- function(x, variable, stat_name) {
+#' alias_as_fmt_fun(1)
+#' alias_as_fmt_fun("xx.x")
+alias_as_fmt_fun <- function(x, variable, stat_name) {
   set_cli_abort_call()
 
   if (is.function(x)) {
@@ -116,16 +116,16 @@ alias_as_fmt_fn <- function(x, variable, stat_name) {
   # if the above conditions are not met, return an error -----------------------
   if (!missing(variable) && !missing(stat_name)) {
     error_message <-
-      c("The value in {.arg fmt_fn} cannot be converted into a function for
+      c("The value in {.arg fmt_fun} cannot be converted into a function for
          statistic {.val {stat_name}} and variable {.val {variable}}.",
         "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+        "*" = "See {.help cards::alias_as_fmt_fun} for details."
       )
   } else {
     error_message <-
-      c("The value in {.arg fmt_fn} cannot be converted into a function.",
+      c("The value in {.arg fmt_fun} cannot be converted into a function.",
         "i" = "Value must be a function, a non-negative integer, or a formatting string, e.g. {.val xx.x}.",
-        "*" = "See {.help cards::alias_as_fmt_fn} for details."
+        "*" = "See {.help cards::alias_as_fmt_fun} for details."
       )
   }
 
@@ -230,7 +230,7 @@ label_round <- function(digits = 1, scale = 1, width = NULL) {
   if (isFALSE(fmt_is_good)) {
     cli::cli_abort(
       message =
-        "The format {.val {x}} for `fmt_fn` is not valid for the
+        "The format {.val {x}} for `fmt_fun` is not valid for the
          variable {.val {variable}} for the statistic {.val {stat_name}}.
          String must begin with 'x' and only consist of x's, a single period or
          none, and may end with a percent symbol.",

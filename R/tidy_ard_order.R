@@ -56,7 +56,7 @@ tidy_ard_column_order <- function(x, group_order = c("ascending", "descending"))
     all_ard_variables(),
     any_of(c(
       "context",
-      "stat_name", "stat_label", "stat", "stat_fmt", "fmt_fn",
+      "stat_name", "stat_label", "stat", "stat_fmt", "fmt_fun",
       "warning", "error"
     )),
     dplyr::everything()

@@ -41,14 +41,14 @@ Rename the grouping and variable columns to their original column names.
 # Example 1 ----------------------------------
 ADSL |>
   ard_categorical(by = ARM, variables = AGEGR1) |>
-  apply_fmt_fn() |>
+  apply_fmt_fun() |>
   rename_ard_columns() |>
   unlist_ard_columns()
 
 # Example 2 ----------------------------------
 ADSL |>
   ard_continuous(by = ARM, variables = AGE) |>
-  apply_fmt_fn() |>
+  apply_fmt_fun() |>
   rename_ard_columns(fill = "Overall {colname}") |>
   unlist_ard_columns()
 }

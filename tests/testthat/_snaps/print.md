@@ -19,7 +19,7 @@
     Message
       i 14 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
@@ -42,25 +42,25 @@
     Message
       i 17 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
     Code
-      ard_continuous(ADSL, variables = "AGE", fmt_fn = AGE ~ list(~ function(x) round(
-        x, 3)))
+      ard_continuous(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x)
+        round(x, 3)))
     Message
       {cards} data frame: 8 x 8
     Output
-        variable   context stat_name stat_label   stat fmt_fn
-      1      AGE continuo…         N          N    254   <fn>
-      2      AGE continuo…      mean       Mean 75.087   <fn>
-      3      AGE continuo…        sd         SD  8.246   <fn>
-      4      AGE continuo…    median     Median     77   <fn>
-      5      AGE continuo…       p25         Q1     70   <fn>
-      6      AGE continuo…       p75         Q3     81   <fn>
-      7      AGE continuo…       min        Min     51   <fn>
-      8      AGE continuo…       max        Max     89   <fn>
+        variable   context stat_name stat_label   stat fmt_fun
+      1      AGE continuo…         N          N    254    <fn>
+      2      AGE continuo…      mean       Mean 75.087    <fn>
+      3      AGE continuo…        sd         SD  8.246    <fn>
+      4      AGE continuo…    median     Median     77    <fn>
+      5      AGE continuo…       p25         Q1     70    <fn>
+      6      AGE continuo…       p75         Q3     81    <fn>
+      7      AGE continuo…       min        Min     51    <fn>
+      8      AGE continuo…       max        Max     89    <fn>
     Message
       i 2 more variables: warning, error
 
@@ -69,7 +69,7 @@
     Code
       dplyr::select(ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"),
       length.out = 10L, by = "day")), variables = x, statistic = ~
-      continuous_summary_fns(c("min", "max", "sd"))), -fmt_fn)
+      continuous_summary_fns(c("min", "max", "sd"))), -fmt_fun)
     Message
       {cards} data frame: 3 x 7
     Output
@@ -89,11 +89,11 @@
     Message
       {cards} data frame: 4 x 8
     Output
-        variable   context stat_name stat_label                         stat fmt_fn
-      1      mpg attribut…     label  Variable…                          mpg   <fn>
-      2      mpg attribut…     class  Variable…                      numeric   NULL
-      3      mpg continuo…      mean       Mean                       20.091      1
-      4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113      1
+        variable   context stat_name stat_label                         stat fmt_fun
+      1      mpg attribut…     label  Variable…                          mpg    <fn>
+      2      mpg attribut…     class  Variable…                      numeric    NULL
+      3      mpg continuo…      mean       Mean                       20.091       1
+      4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113       1
     Message
       i 2 more variables: warning, error
 
