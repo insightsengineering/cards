@@ -1,5 +1,13 @@
 # cards 0.6.0.9010
 
+* Updating any `fmt_fn` references to `fmt_fun` for consistency. 
+
+    * Any function with an argument `cards::foo(fmt_fn)` has been updated to `cards::foo(fmt_fun)`. The old syntax will continue to function, but with a deprecation warning to users.
+
+    * The following function names have been updated: `alias_as_fmt_fun()`, `apply_fmt_fun()`, and `update_ard_fmt_fun()`.  The former function names are still exported from the package, and users will see a deprecation note when they are used.
+
+    * Importantly, the ARD column named `"fmt_fn"` has been updated to `"fmt_fun"`. This change cannot be formally deprecated. For users who were accessing the ARD object directly to modify this column instead of using functions like `update_ard_fmt_fun()`, this will be a breaking change.
+    
 * Added new function `ard_identity()` for saving pre-calculated statistics in an ARD format. (#379)
 
 * Fix bug in `sort_ard_hierarchical()` when hierarchical ARD has `overall=TRUE`. (#431)
