@@ -111,7 +111,7 @@ test_that("ard_categorical(fmt_fun) argument works", {
             N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
           )
       )
-    ) |>
+  ) |>
     apply_fmt_fun() |>
     dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
