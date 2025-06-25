@@ -118,7 +118,7 @@ test_that("print_ard_conditions() no error when factors are present", {
         NULL, NULL
       ), context = c("continuous", "continuous"),
       stat_name = c("min", "max"), stat_label = c("Min", "Max"),
-      stat = list(Inf, -Inf), fmt_fn = list(1L, 1L), warning = list(
+      stat = list(Inf, -Inf), fmt_fun = list(1L, 1L), warning = list(
         "no non-missing arguments to min; returning Inf",
         "no non-missing arguments to max; returning -Inf"
       ), error = list(

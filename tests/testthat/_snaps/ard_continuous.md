@@ -5,12 +5,12 @@
     Output
       [1] "card"       "tbl_df"     "tbl"        "data.frame"
 
-# ard_continuous(fmt_fn) argument works
+# ard_continuous(fmt_fun) argument works
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = "AGE",
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_continuous(ADSL, variables = "AGE",
         statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
-        fmt_fn = list(AGE = list(mean = function(x) as.character(round5(x, digits = 3)),
+        fmt_fun = list(AGE = list(mean = function(x) as.character(round5(x, digits = 3)),
         N = function(x) format(round5(x, digits = 2), nsmall = 2), N_obs = function(x)
           format(round5(x, digits = 2), nsmall = 2))))), variable, stat_name, stat,
       stat_fmt))
@@ -23,8 +23,8 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
-        "AGE", "BMIBL"), statistic = ~ continuous_summary_fns("mean"), fmt_fn = list(
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_continuous(ADSL, variables = c(
+        "AGE", "BMIBL"), statistic = ~ continuous_summary_fns("mean"), fmt_fun = list(
         AGE = list(mean = function(x) as.character(round5(x, digits = 3)))))),
       variable, stat_name, stat, stat_fmt))
     Output
@@ -35,9 +35,9 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_continuous(ADSL, variables = c(
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_continuous(ADSL, variables = c(
         "AGE", "BMIBL"), statistic = ~ continuous_summary_fns(c("mean", "sd")),
-      fmt_fn = ~ list(~ function(x) round(x, 4)))), variable, stat_name, stat,
+      fmt_fun = ~ list(~ function(x) round(x, 4)))), variable, stat_name, stat,
       stat_fmt))
     Output
         variable stat_name     stat stat_fmt
@@ -125,10 +125,10 @@
     Message
       {cards} data frame: 3 x 8
     Output
-        variable   context stat_name stat_label      stat fmt_fn
-      1 DISONSDT continuo…       min        Min 1998-06-…   <fn>
-      2 DISONSDT continuo…       max        Max 2013-09-…   <fn>
-      3 DISONSDT continuo…        sd         SD   878.558      1
+        variable   context stat_name stat_label      stat fmt_fun
+      1 DISONSDT continuo…       min        Min 1998-06-…    <fn>
+      2 DISONSDT continuo…       max        Max 2013-09-…    <fn>
+      3 DISONSDT continuo…        sd         SD   878.558       1
     Message
       i 2 more variables: warning, error
 
@@ -139,7 +139,7 @@
         `Arm Var` = ARM), variables = c("BMI base", Age), statistic = ~ list(
         `mean lbl` = `mean error`), stat_label = everything() ~ list(`mean lbl` = "Test lbl")))
     Output
-        variable    context stat_name stat_label stat                     fmt_fn
+        variable    context stat_name stat_label stat                    fmt_fun
       1 BMI base continuous  mean lbl   Test lbl NULL .Primitive("as.character")
       2      Age continuous  mean lbl   Test lbl NULL .Primitive("as.character")
         warning                                    error

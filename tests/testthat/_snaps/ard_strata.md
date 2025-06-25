@@ -19,7 +19,7 @@
     Message
       i 14 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
@@ -42,5 +42,5 @@
     Message
       i 62 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 

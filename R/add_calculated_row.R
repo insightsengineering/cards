@@ -14,9 +14,10 @@
 #'   Grouping variables to calculate statistics within
 #' @param stat_label (`string`)\cr
 #'   string of the statistic label. Default is the `stat_name`.
-#' @param fmt_fn (`integer`, `function`, `string`)\cr
+#' @param fmt_fun (`integer`, `function`, `string`)\cr
 #'   a function of an integer or string that can be converted to a function with
-#'  `alias_as_fmt_fn()`.
+#'  `alias_as_fmt_fun()`.
+#' @param fmt_fn `r lifecycle::badge("deprecated")`
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -40,9 +41,20 @@ add_calculated_row <- function(x,
                                stat_name,
                                by = c(all_ard_groups(), all_ard_variables(), any_of("context")),
                                stat_label = stat_name,
-                               fmt_fn = NULL) {
+                               fmt_fun = NULL,
+                               fmt_fn = deprecated()) {
   set_cli_abort_call()
   expr <- enexpr(expr)
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "add_calculated_row(fmt_fn)",
+      with = "add_calculated_row(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(x)
@@ -84,7 +96,7 @@ add_calculated_row <- function(x,
             stat = list(.env$new_stat[["result"]]),
             stat_name = .env$stat_name,
             stat_label = .env$stat_label,
-            fmt_fn = list(fmt_fn %||% ifelse(is.numeric(new_stat[["result"]]), 1L, as.character))
+            fmt_fun = list(.env$fmt_fun %||% ifelse(is.numeric(new_stat[["result"]]), 1L, as.character))
           )
       }
     ) |>

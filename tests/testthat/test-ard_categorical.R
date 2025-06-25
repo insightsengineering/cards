@@ -98,19 +98,21 @@ test_that("ard_categorical() univariate & specified denomiator", {
   )
 })
 
-test_that("ard_continuous(fmt_fn) argument works", {
+test_that("ard_categorical(fmt_fun) argument works", {
   ard_categorical(
     mtcars,
     variables = "am",
-    fmt_fn = list(
-      am = list(
-        p = function(x) round5(x * 100, digits = 3) |> as.character(),
-        N = function(x) format(round5(x, digits = 2), nsmall = 2),
-        N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
+    fmt_fun =
+      list(
+        am =
+          list(
+            p = function(x) round5(x * 100, digits = 3) |> as.character(),
+            N = function(x) format(round5(x, digits = 2), nsmall = 2),
+            N_obs = function(x) format(round5(x, digits = 2), nsmall = 2)
+          )
       )
-    )
   ) |>
-    apply_fmt_fn() |>
+    apply_fmt_fun() |>
     dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -118,12 +120,12 @@ test_that("ard_continuous(fmt_fn) argument works", {
   ard_categorical(
     mtcars,
     variables = c("am", "vs"),
-    fmt_fn = list(
+    fmt_fun = list(
       am = list(p = function(x) round5(x * 100, digits = 3)),
       vs = list(p = function(x) round5(x * 100, digits = 1))
     )
   ) |>
-    apply_fmt_fn() |>
+    apply_fmt_fun() |>
     dplyr::select(variable, variable_level, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
@@ -442,15 +444,15 @@ test_that("ard_categorical(denominator='row') works", {
         by = "ARM",
         denominator = "row",
         statistic = list(AGEGR1 = c("n", "N")),
-        fmt_fn = list(AGEGR1 = list("n" = 2))
+        fmt_fun = list(AGEGR1 = list("n" = 2))
       ),
     NA
   )
 
   expect_snapshot(
     ard_with_args |>
-      apply_fmt_fn() |>
-      dplyr::select(-fmt_fn, -warning, -error) |>
+      apply_fmt_fun() |>
+      dplyr::select(-fmt_fun, -warning, -error) |>
       as.data.frame()
   )
 
@@ -597,13 +599,13 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
         ...ard_N... = c(86, 84, 84)
       )
     ) |>
-      dplyr::select(-fmt_fn),
+      dplyr::select(-fmt_fun),
     ard_categorical(
       ADSL,
       by = ARM,
       variables = AGEGR1
     ) |>
-      dplyr::select(-fmt_fn)
+      dplyr::select(-fmt_fun)
   )
 })
 
@@ -640,17 +642,9 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
 
 test_that("ard_categorical() and ARD column names", {
   ard_colnames <- c(
-    "group1",
-    "group1_level",
-    "variable",
-    "variable_level",
-    "context",
-    "stat_name",
-    "stat_label",
-    "stat",
-    "fmt_fn",
-    "warning",
-    "error"
+    "group1", "group1_level", "variable", "variable_level",
+    "context", "stat_name", "stat_label", "stat",
+    "fmt_fun", "warning", "error"
   )
 
   # no errors when these variables are the summary vars

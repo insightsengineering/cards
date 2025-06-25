@@ -131,7 +131,7 @@
       17  AESEV     MODERATE  AESOC    SKIN AND…   <NA>               AEDECOD      PRURITUS…         n          n    1
       18  AESOC    SKIN AND…   <NA>                <NA>               AEDECOD      PRURITUS…         n          n    1
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # ard_stack_hierarchical_count(overall,over_variables)
 
@@ -167,5 +167,5 @@
     Message
       i 11 more rows
       i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 

@@ -5,7 +5,7 @@ test_that("mock_categorical()", {
       variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
       by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
     ) |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })
 
@@ -27,7 +27,7 @@ test_that("mock_continuous()", {
     mock_continuous(
       variables = c("AGE", "BMIBL")
     ) |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })
 
@@ -49,7 +49,7 @@ test_that("mock_dichotomous()", {
       variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))),
       by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
     ) |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })
 
@@ -70,7 +70,7 @@ test_that("mock_missing()", {
     mock_missing(
       variables = c("AGE", "BMIBL")
     ) |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })
 
@@ -106,6 +106,6 @@ test_that("mock_total_n()", {
   withr::local_options(list(width = 130))
   expect_snapshot(
     mock_total_n() |>
-      apply_fmt_fn()
+      apply_fmt_fun()
   )
 })

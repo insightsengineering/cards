@@ -13,8 +13,9 @@ ard_complex(data, ...)
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic,
-  fmt_fn = NULL,
+  fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
+  fmt_fn = deprecated(),
   ...
 )
 }
@@ -58,7 +59,7 @@ to perhaps be updated in the future with more passed arguments. For example,
 if one needs a second variable from the data frame, the function inputs
 may look like: \code{foo(x, data, ...)}}
 
-\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -69,6 +70,8 @@ a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 an ARD data frame of class 'card'

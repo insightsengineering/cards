@@ -6,10 +6,10 @@ ard_fmt_checks <-
   )
 
 
-test_that("apply_fmt_fn() works", {
+test_that("apply_fmt_fun() works", {
   expect_equal(
     ard_fmt_checks |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.1", "6.0")
@@ -19,34 +19,34 @@ test_that("apply_fmt_fn() works", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list(NULL, 2)
+        fmt_fun = list(NULL, 2)
       ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt),
     list(NULL, "6.03")
   )
 })
 
-test_that("apply_fmt_fn() works with integer specification", {
+test_that("apply_fmt_fun() works with integer specification", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list(2, 2)
+        fmt_fun = list(2, 2)
       ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.09", "6.03")
   )
 })
 
-test_that("apply_fmt_fn() works with xx specification", {
+test_that("apply_fmt_fun() works with xx specification", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list("xx.xx", "xx.xx")
+        fmt_fun = list("xx.xx", "xx.xx")
       ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.09", " 6.03")
@@ -55,9 +55,9 @@ test_that("apply_fmt_fn() works with xx specification", {
   expect_equal(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list("xx.xxx", "xx.xxx")
+        fmt_fun = list("xx.xxx", "xx.xxx")
       ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt) |>
       unlist(),
     c("20.091", " 6.027")
@@ -67,7 +67,7 @@ test_that("apply_fmt_fn() works with xx specification", {
     ard_categorical(
       data = mtcars,
       variables = am,
-      fmt_fn = list(
+      fmt_fun = list(
         am = list(
           n = "xx",
           N = "xx",
@@ -75,7 +75,7 @@ test_that("apply_fmt_fn() works with xx specification", {
         )
       )
     ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       dplyr::pull(stat_fmt) |>
       unlist() |>
       unname(),
@@ -83,27 +83,27 @@ test_that("apply_fmt_fn() works with xx specification", {
   )
 })
 
-test_that("apply_fmt_fn() error messaging", {
+test_that("apply_fmt_fun() error messaging", {
   expect_snapshot(
-    apply_fmt_fn(letters),
+    apply_fmt_fun(letters),
     error = TRUE
   )
 
   expect_snapshot(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list("xoxo", "xoxo")
+        fmt_fun = list("xoxo", "xoxo")
       ) |>
-      apply_fmt_fn(),
+      apply_fmt_fun(),
     error = TRUE
   )
 
   expect_snapshot(
     ard_fmt_checks |>
       dplyr::mutate(
-        fmt_fn = list(1L, -1L)
+        fmt_fun = list(1L, -1L)
       ) |>
-      apply_fmt_fn(),
+      apply_fmt_fun(),
     error = TRUE
   )
 
@@ -112,14 +112,14 @@ test_that("apply_fmt_fn() error messaging", {
     ard_fmt_checks |>
       dplyr::mutate(
         stat = lapply(stat, function(x) x * 1000),
-        fmt_fn = list("xx", "xx")
+        fmt_fun = list("xx", "xx")
       ) |>
-      apply_fmt_fn() |>
+      apply_fmt_fun() |>
       as.data.frame()
   )
 })
 
-test_that("apply_fmt_fn(replace)", {
+test_that("apply_fmt_fun(replace)", {
   ard <-
     ADSL |>
     ard_categorical(variables = AGEGR1, statistic = ~"n") |>
@@ -128,10 +128,10 @@ test_that("apply_fmt_fn(replace)", {
     )
 
   expect_snapshot(
-    apply_fmt_fn(ard, replace = FALSE)
+    apply_fmt_fun(ard, replace = FALSE)
   )
 
   expect_snapshot(
-    apply_fmt_fn(ard, replace = TRUE)
+    apply_fmt_fun(ard, replace = TRUE)
   )
 })

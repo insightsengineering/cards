@@ -1,7 +1,7 @@
 # add_calculated_row(x)
 
     Code
-      apply_fmt_fn(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = max -
+      apply_fmt_fun(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = max -
         min, stat_name = "range"))
     Message
       {cards} data frame: 9 x 9
@@ -17,12 +17,12 @@
       8      mpg continuo…       max        Max   33.9     33.9
       9      mpg continuo…     range      range   23.5     23.5
     Message
-      i 3 more variables: fmt_fn, warning, error
+      i 3 more variables: fmt_fun, warning, error
 
 ---
 
     Code
-      apply_fmt_fn(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = dplyr::case_when(
+      apply_fmt_fun(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = dplyr::case_when(
         mean > median ~ "Right Skew", mean < median ~ "Left Skew", .default = "Symmetric"),
       stat_name = "skew"))
     Message
@@ -39,7 +39,7 @@
       8      mpg continuo…       max        Max      33.9       33.9
       9      mpg continuo…      skew       skew Right Sk… Right Skew
     Message
-      i 3 more variables: fmt_fn, warning, error
+      i 3 more variables: fmt_fun, warning, error
 
 # add_calculated_row(expr) messaging
 
