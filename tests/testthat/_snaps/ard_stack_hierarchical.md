@@ -2,8 +2,7 @@
 
     Code
       ard <- ard_stack_hierarchical(dplyr::mutate(ADAE_small, AESOC = ifelse(dplyr::row_number() ==
-        1L, NA, AESOC)), variables = c(AESOC, AEDECOD), id = USUBJID, denominator = dplyr::rename(
-        ADSL, TRTA = TRT01A))
+        1L, NA, AESOC)), variables = c(AESOC, AEDECOD), id = USUBJID, denominator = ADSL)
     Message
       * Removing 1 row from `data` with NA or NaN values in "AESOC" and "AEDECOD" columns.
 
@@ -11,8 +10,8 @@
 
     Code
       ard <- ard_stack_hierarchical(ADAE_small, variables = c(AESOC, AEDECOD), id = USUBJID,
-      by = TRTA, denominator = dplyr::mutate(dplyr::rename(ADSL, TRTA = TRT01A),
-      TRTA = ifelse(dplyr::row_number() == 1L, NA, TRTA)))
+      by = TRTA, denominator = dplyr::mutate(ADSL, TRTA = ifelse(dplyr::row_number() ==
+        1L, NA, TRTA)))
     Message
       * Removing 1 row from `denominator` with NA or NaN values in "TRTA" column.
 
@@ -20,7 +19,7 @@
 
     Code
       ard_stack_hierarchical(ADAE_small, variables = starts_with("xxxxx"), id = USUBJID,
-      denominator = dplyr::rename(ADSL, TRTA = TRT01A))
+      denominator = ADSL)
     Condition
       Error in `ard_stack_hierarchical()`:
       ! Arguments `variables` and `include` cannot be empty.
@@ -29,7 +28,7 @@
 
     Code
       ard_stack_hierarchical(ADAE_small, variables = c(AESOC, AEDECOD), id = starts_with(
-        "xxxxx"), denominator = dplyr::rename(ADSL, TRTA = TRT01A))
+        "xxxxx"), denominator = ADSL)
     Condition
       Error in `ard_stack_hierarchical()`:
       ! Argument `id` cannot be empty.
@@ -39,7 +38,7 @@
     Code
       ard <- ard_stack_hierarchical(dplyr::mutate(ADAE_small, TRTA = ifelse(dplyr::row_number() ==
         1L, NA, TRTA)), variables = c(AESOC, AEDECOD), by = TRTA, id = USUBJID,
-      denominator = dplyr::rename(ADSL, TRTA = TRT01A))
+      denominator = ADSL)
     Message
       * Removing 1 row from `data` with NA or NaN values in "TRTA", "AESOC", and "AEDECOD" columns.
 
@@ -64,7 +63,7 @@
 
     Code
       ard_stack_hierarchical(ADAE_small, variables = c(AESOC, AEDECOD), include = AESOC,
-      by = TRTA, denominator = dplyr::rename(ADSL, TRTA = ARM), id = USUBJID)
+      by = TRTA, denominator = ADSL, id = USUBJID)
     Condition
       Error in `ard_stack_hierarchical()`:
       ! The last column specified in the `variables` (i.e. "AEDECOD") must be in the `include` argument.
@@ -73,7 +72,7 @@
 
     Code
       ard <- ard_stack_hierarchical(ADAE_small, variables = c(AESOC, AEDECOD),
-      denominator = dplyr::rename(ADSL, TRTA = ARM), id = USUBJID, overall = TRUE)
+      denominator = ADSL, id = USUBJID, overall = TRUE)
     Message
       The `by` argument must be specified when using `overall=TRUE`.
       i Setting `overall=FALSE`.
@@ -108,8 +107,7 @@
 # ard_stack_hierarchical_count(overall)
 
     Code
-      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), overall = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" &
-        !variable %in% "TRTA")
+      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = ADSL, overall = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" & !variable %in% "TRTA")
     Message
       {cards} data frame: 18 x 15
     Output
@@ -138,8 +136,8 @@
 # ard_stack_hierarchical_count(overall,over_variables)
 
     Code
-      as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = AESOC, by = TRTA, denominator = dplyr::rename(ADSL, TRTA = ARM), over_variables = TRUE, overall = TRUE), variable == "..ard_hierarchical_overall.."),
-      all_ard_groups(), "variable", "stat_name", "stat"))
+      as.data.frame(dplyr::select(dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = AESOC, by = TRTA, denominator = ADSL, over_variables = TRUE, overall = TRUE), variable == "..ard_hierarchical_overall.."), all_ard_groups(), "variable",
+      "stat_name", "stat"))
     Output
         group1         group1_level                     variable stat_name stat
       1   TRTA              Placebo ..ard_hierarchical_overall..         n    2
@@ -150,8 +148,8 @@
 ---
 
     Code
-      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), overall = TRUE, over_variables = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in%
-        "TRTA" & !variable %in% "TRTA")
+      dplyr::filter(ard_stack_hierarchical_count(ADAE_small, variables = c(AESOC, AEDECOD), by = c(TRTA, AESEV), denominator = ADSL, overall = TRUE, over_variables = TRUE), !group1 %in% "TRTA" & !group2 %in% "TRTA" & !group3 %in% "TRTA" & !variable %in%
+        "TRTA")
     Message
       {cards} data frame: 21 x 15
     Output

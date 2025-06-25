@@ -34,7 +34,7 @@
 #'   ard_stack_hierarchical(
 #'     variables = c(AESOC, AEDECOD),
 #'     by = TRTA,
-#'     denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'     denominator = ADSL,
 #'     id = USUBJID
 #'   )
 #' ```
@@ -88,7 +88,7 @@
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM),
+#'   denominator = ADSL,
 #'   id = USUBJID
 #' )
 #'
@@ -134,7 +134,11 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
     )
   }
 
-  by_cols <- if (length(ard_args$by) > 0) paste0("group", seq_along(ard_args$by), c("", "_level")) else NULL
+  by_cols <- if (length(ard_args$by) > 0) {
+    paste0("group", seq_along(ard_args$by), c("", "_level"))
+  } else {
+    NULL
+  }
   if (!all(all.vars(filter) %in% c(x$stat_name, ard_args$by))) {
     var_miss <- setdiff(all.vars(filter), c(x$stat_name, ard_args$by))
     cli::cli_abort(
@@ -155,7 +159,13 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
     dplyr::mutate(idx = dplyr::row_number()) |>
-    dplyr::select(all_ard_groups(), all_ard_variables(), "stat_name", "stat", "idx") |>
+    dplyr::select(
+      all_ard_groups(),
+      all_ard_variables(),
+      "stat_name",
+      "stat",
+      "idx"
+    ) |>
     tidyr::pivot_wider(
       id_cols = c(all_ard_groups(), all_ard_variables()),
       names_from = "stat_name",
@@ -166,10 +176,16 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
 
   # apply filter ---------------------------------------------------------------------------------
   f_idx <- x_f |>
-    dplyr::group_by(across(c(all_ard_groups(), all_ard_variables(), -all_of(by_cols)))) |>
+    dplyr::group_by(across(c(
+      all_ard_groups(),
+      all_ard_variables(),
+      -all_of(by_cols)
+    ))) |>
     dplyr::group_map(\(.df, .g) {
       # allow filtering on `by` variable levels
-      if (length(ard_args$by) > 0) names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
+      if (length(ard_args$by) > 0) {
+        names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
+      }
 
       # only filter rows for innermost variable
       if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
@@ -198,7 +214,10 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
         x_no_sum <- x_no_sum |>
-          dplyr::group_by(across(c(all_ard_group_n((length(ard_args$by):i) + 1), -all_of(by_cols)))) |>
+          dplyr::group_by(across(c(
+            all_ard_group_n((length(ard_args$by):i) + 1),
+            -all_of(by_cols)
+          ))) |>
           dplyr::group_map(
             function(.df, .y) {
               cur_var <- .y[[ncol(.y) - 1]]

@@ -7,7 +7,7 @@ ard <- ard_stack_hierarchical(
   data = ADAE_subset,
   variables = c(SEX, RACE, AETERM),
   by = TRTA,
-  denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+  denominator = cards::ADSL,
   id = USUBJID,
   over_variables = TRUE
 )
@@ -33,7 +33,12 @@ test_that("filter_ard_hierarchical() works with non-standard filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, mean(n) > 4 | n > 3))
   expect_equal(nrow(ard_f), 108)
 
-  expect_silent(ard_f <- filter_ard_hierarchical(ard, any(n > 5 & TRTA == "Xanomeline High Dose")))
+  expect_silent(
+    ard_f <- filter_ard_hierarchical(
+      ard,
+      any(n > 5 & TRTA == "Xanomeline High Dose")
+    )
+  )
   expect_equal(nrow(ard_f), 90)
 })
 
@@ -44,7 +49,7 @@ test_that("filter_ard_hierarchical() works with ard_stack_hierarchical_count() r
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     over_variables = TRUE
   )
 
@@ -79,12 +84,14 @@ test_that("filter_ard_hierarchical(keep_empty) works", {
     data = ADAE_subset,
     variables = c(SEX, RACE, AEBODSYS, AETERM),
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     id = USUBJID
   )
 
   # keep summary rows
-  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 10, keep_empty = TRUE))
+  expect_silent(
+    ard_f <- filter_ard_hierarchical(ard, sum(n) > 10, keep_empty = TRUE)
+  )
   expect_equal(nrow(ard_f), 270)
 
   # remove summary rows
@@ -99,14 +106,20 @@ test_that("filter_ard_hierarchical(keep_empty) works", {
     data = ADAE_subset,
     variables = c(SEX, RACE, AEBODSYS, AETERM),
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     id = USUBJID,
     include = AETERM
   )
 
   # no summary rows to remove
   expect_silent(ard_f <- filter_ard_hierarchical(ard_noincl, sum(n) > 10))
-  expect_silent(ard_f_keep <- filter_ard_hierarchical(ard_noincl, sum(n) > 10, keep_empty = TRUE))
+  expect_silent(
+    ard_f_keep <- filter_ard_hierarchical(
+      ard_noincl,
+      sum(n) > 10,
+      keep_empty = TRUE
+    )
+  )
   expect_equal(nrow(ard_f), 72)
   expect_identical(ard_f, ard_f_keep)
 })
@@ -116,7 +129,7 @@ test_that("filter_ard_hierarchical() works with only one variable in x", {
     data = ADAE_subset,
     variables = AETERM,
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     id = USUBJID
   )
 
@@ -129,7 +142,7 @@ test_that("filter_ard_hierarchical() works when some variables not included in x
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     id = USUBJID,
     include = c(SEX, AETERM),
     over_variables = TRUE
@@ -143,7 +156,7 @@ test_that("filter_ard_hierarchical() works with overall data", {
     data = ADAE_subset,
     variables = c(SEX, RACE, AETERM),
     by = TRTA,
-    denominator = cards::ADSL |> dplyr::mutate(TRTA = ARM),
+    denominator = cards::ADSL,
     id = USUBJID,
     over_variables = TRUE,
     overall = TRUE
@@ -162,7 +175,10 @@ test_that("filter_ard_hierarchical() works with overall data", {
 test_that("filter_ard_hierarchical() error messaging works", {
   # invalid x input
   expect_snapshot(
-    filter_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"), n > 10),
+    filter_ard_hierarchical(
+      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+      n > 10
+    ),
     error = TRUE
   )
 

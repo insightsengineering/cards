@@ -46,7 +46,7 @@ ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
+  denominator = ADSL,
   id = USUBJID
 ) |>
   sort_ard_hierarchical("alphanumeric")
@@ -55,7 +55,7 @@ ard_stack_hierarchical_count(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = ADSL
 ) |>
   sort_ard_hierarchical("descending")
 \dontshow{\}) # examplesIf}
