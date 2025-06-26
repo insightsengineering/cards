@@ -10,7 +10,7 @@
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 254 rows and 49 columns.
 
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1191 rows and 55 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 1191 rows and 56 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 254 rows and 26 columns.
 }
