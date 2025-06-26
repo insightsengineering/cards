@@ -3,7 +3,7 @@
     Code
       ard_f
     Message
-      {cards} data frame: 39 x 15
+      {cards} data frame: 45 x 15
     Output
          group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
       1    <NA>                <NA>                <NA>                                      TRTA        Placebo         n          n    86
@@ -17,7 +17,7 @@
       9    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
       10   TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
     Message
-      i 29 more rows
+      i 35 more rows
       i Use `print(n = ...)` to see more rows
       i 4 more variables: context, fmt_fun, warning, error
 
@@ -44,7 +44,8 @@
       filter_ard_hierarchical(ard, A > 5)
     Condition
       Error in `filter_ard_hierarchical()`:
-      ! The expression provided as `filter` includes condition for statistic or `by` variable "A" which is not present in the ARD.
+      ! The expression provided as `filter` includes condition for statistic "A" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms are: "n", "N", "p", "n_1", "n_2", "n_3", "N_1", "N_2", "N_3", "p_1", "p_2", "p_3", "n_overall", "N_overall", "p_overall", and "TRTA".
 
 ---
 
@@ -53,4 +54,21 @@
     Condition
       Error in `filter_ard_hierarchical()`:
       ! The `keep_empty` argument must be a scalar with class <logical>, not NULL.
+
+---
+
+    Code
+      filter_ard_hierarchical(ard_stat_miss, n_1 > 1)
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! The expression provided as `filter` includes condition for statistic "n_1" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms are: "p", "p_1", "p_2", "p_3", and "TRTA".
+
+---
+
+    Code
+      filter_ard_hierarchical(ard_stat_miss, p_overall > 0.1)
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! In order to filter using the "p_overall" statistic both the "n" and "N" statistics must be available for rows with `variable` == "AETERM" in the ARD.
 
