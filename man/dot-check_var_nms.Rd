@@ -21,7 +21,7 @@ Checks variable names in a data frame against protected names and modifies
 them if needed
 }
 \examples{
-data <- data.frame(a = "x", b = "y", c = "z", .cards_idx = 1)
+data <- data.frame(a = "x", b = "y", c = "z", ..cards_idx.. = 1)
 
 cards:::.check_var_nms(data, vars_protected = c("x", "z"))
 }
