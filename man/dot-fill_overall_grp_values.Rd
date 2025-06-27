@@ -29,9 +29,9 @@ data <- dplyr::tibble(
   variable_level = c(1, 2, 1, 3, 3),
   A = rep(NA, 5),
   B = rep(NA, 5),
-  .cards_idx = c(1:5)
+  ..cards_idx.. = c(1:5)
 )
 
-cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
+cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 }
 \keyword{internal}
