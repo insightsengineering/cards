@@ -6,7 +6,7 @@
 
 * Fix bug in `ard_stack_hierarchical()` when `id` values are present in multiple levels of the `by` variables. (#442)
 
-* Fix bug in `shuffle_ard()` where error is thrown if input is hierarchical results. (#447)
+* Fix bug in `shuffle_ard()` where error is thrown if input contains hierarchical results. (#447)
 
 # cards 0.6.0
 
