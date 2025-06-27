@@ -94,6 +94,19 @@
       3        <NA> Overall SEX      AGE           <NA>  continuous         N          N  254
       4        <NA>           F      AGE           <NA>  continuous         N          N  143
 
+---
+
+    Code
+      shuffle_ard(bind_ard(dplyr::slice(ard_categorical(ADSL, by = c(ARM, SEX), variables = AGEGR1), 1), dplyr::slice(ard_categorical(ADSL, by = SEX, variables = AGEGR1), 1), dplyr::slice(ard_categorical(
+        ADSL, variables = AGEGR1), 1)))
+    Output
+      # A tibble: 3 x 8
+        ARM         SEX         variable variable_level context     stat_name stat_label  stat
+        <chr>       <chr>       <chr>    <chr>          <chr>       <chr>     <chr>      <int>
+      1 Placebo     F           AGEGR1   65-80          categorical n         n             22
+      2 Overall ARM F           AGEGR1   65-80          categorical n         n             78
+      3 Overall ARM Overall SEX AGEGR1   65-80          categorical n         n            144
+
 # shuffle_ard fills missing group levels if the group is meaningful for cardx output
 
     Code

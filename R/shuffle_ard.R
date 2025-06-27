@@ -30,7 +30,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   dat_cards <- x |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
-    dplyr::mutate(.cards_idx = dplyr::row_number())
+    dplyr::mutate(..cards_idx.. = dplyr::row_number())
 
   # fill stat label if missing
   dat_cards <- dat_cards |>
@@ -44,7 +44,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   vars_protected <- setdiff(names(dat_cards), vars_ard)
 
   dat_cards_grps <- dat_cards |>
-    dplyr::select(-all_of(vars_protected), ".cards_idx")
+    dplyr::select(-all_of(vars_protected), "..cards_idx..")
 
   dat_cards_stats <- dat_cards |>
     dplyr::select(all_of(vars_protected))
@@ -52,11 +52,11 @@ shuffle_ard <- function(x, trim = TRUE) {
   # process the data/variable info
   dat_cards_grps_processed <- dat_cards_grps |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    rename_ard_columns(columns = all_ard_groups("names"), fill = "Overall {colname}") |>
+    rename_ard_columns(columns = all_ard_groups("names"), fill = "..cards_overall..") |>
     # coerce everything to character
     dplyr::mutate(
       dplyr::across(
-        -".cards_idx",
+        -"..cards_idx..",
         ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
       )
     )
@@ -65,7 +65,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   dat_cards_out <- dplyr::left_join(
     dat_cards_grps_processed,
     dat_cards_stats,
-    by = ".cards_idx"
+    by = "..cards_idx.."
   )
 
   dat_cards_out <- dat_cards_out |>
@@ -73,8 +73,8 @@ shuffle_ard <- function(x, trim = TRUE) {
     unlist_ard_columns() |>
     .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    dplyr::arrange(.data$.cards_idx) |>
-    dplyr::select(-".cards_idx")
+    dplyr::arrange(.data$..cards_idx..) |>
+    dplyr::select(-"..cards_idx..")
 
   if (trim) {
     dat_cards_out |> .trim_ard()
@@ -167,13 +167,13 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @keywords internal
 #'
 #' @examples
-#' data <- data.frame(a = "x", b = "y", c = "z", .cards_idx = 1)
+#' data <- data.frame(a = "x", b = "y", c = "z", ..cards_idx.. = 1)
 #'
 #' cards:::.check_var_nms(data, vars_protected = c("x", "z"))
 .check_var_nms <- function(x, vars_protected) {
   # get all represented variable names from original data
   var_nms <- x |>
-    dplyr::select(-ends_with("_level"), -".cards_idx") |>
+    dplyr::select(-ends_with("_level"), -"..cards_idx..") |>
     unlist(use.names = FALSE) |>
     unique()
 
@@ -196,7 +196,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   if (length(var_nms_new) > 0) {
     x |>
       dplyr::mutate(dplyr::across(
-        -c(ends_with("_level"), ".cards_idx"),
+        -c(ends_with("_level"), "..cards_idx.."),
         ~ dplyr::recode(.x, !!!var_nms_new)
       ))
   } else {
@@ -255,7 +255,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' This function fills the missing values of grouping variables with "Overall
 #' `variable name`" where relevant. Specifically it will modify grouping values
 #' from rows with likely overall calculations present (e.g. non-missing
-#' variable/variable_level, 100 percent missing group variables, and evidence that the
+#' variable/variable_level, missing group variables, and evidence that the
 #' `variable` has been computed by group in other rows). "Overall" values will
 #' be populated only for grouping variables that have been used in other calculations
 #' of the same variable and statistics.
@@ -273,43 +273,50 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   variable_level = c(1, 2, 1, 3, 3),
 #'   A = rep(NA, 5),
 #'   B = rep(NA, 5),
-#'   .cards_idx = c(1:5)
+#'   ..cards_idx.. = c(1:5)
 #' )
 #'
-#' cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
+#' cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 .fill_overall_grp_values <- function(x, vars_protected) {
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
   id_vars <- id_vars[id_vars %in% names(x)]
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
-  # replace NA group values with "Overall <var>" where it is likely to be an overall calculation
-  x_missing_by <- x |>
-    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))
+  # replace NA group values with "...cards_overall...." where it is likely to be an overall calculation
+  for (g in grp_vars) {
+    # rows with missing group
+    x_missing_by <- x |>
+      dplyr::filter(is.na(.data[[g]]))
 
-  if (nrow(x_missing_by) > 0) {
-    x_missing_by_replaced <- x_missing_by |> # all NA grouping values
-      dplyr::rows_update(
-        x |>
-          dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
-          dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
-            overall_val <- make.unique(c(
-              unique(v),
-              paste("Overall", cur_col)
-            )) |>
-              rev() %>%
-              .[1]
-            ifelse(!is.na(v), overall_val, v)
-          })) |>
-          dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
-          dplyr::distinct(),
-        by = id_vars,
-        unmatched = "ignore"
-      )
+    # rows with non-missing group
+    x_nonmissing_by <- x |>
+      dplyr::filter(!is.na(.data[[g]]) & !.data[[g]] == "..cards_overall..")
 
-    # replace the modified rows based on indices
-    dplyr::rows_update(x, x_missing_by_replaced, by = ".cards_idx")
-  } else {
-    x
+    if (nrow(x_missing_by) > 0 && nrow(x_nonmissing_by) > 0) {
+      x_missing_by_replaced <- x_missing_by |>
+        dplyr::rows_update(
+          x_nonmissing_by |>
+            dplyr::mutate(!!g := ifelse(!is.na(.data[[g]]), "..cards_overall..", .data[[g]])) |>
+            dplyr::select(-any_of(c(setdiff(names(x), c(g, id_vars))))) |>
+            dplyr::distinct(),
+          by = id_vars,
+          unmatched = "ignore"
+        )
+
+      x <- dplyr::rows_update(x, x_missing_by_replaced, by = "..cards_idx..")
+    }
   }
+
+  # replace "....cards_overall......" group values with "Overall <colname>"
+  x |>
+    dplyr::mutate(across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
+      overall_val <- make.unique(c(
+        unique(v),
+        paste("Overall", cur_col)
+      )) |>
+        rev() %>%
+        .[1]
+      ifelse(!is.na(v) & v == "..cards_overall..", paste0("Overall ", cur_col), v)
+    }))
 }
