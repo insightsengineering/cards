@@ -285,7 +285,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   id_vars <- id_vars[id_vars %in% names(x)]
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
-  # replace NA group values with "...cards_overall...." where it is likely to be an overall calculation
+  # replace NA group values with "..cards_overall.." where it is likely to be an overall calculation
   for (g in grp_vars) {
     # rows with missing group
     x_missing_by <- x |>
@@ -310,7 +310,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
-  # replace "....cards_overall......" group values with "Overall <colname>"
+  # replace "..cards_overall.." group values with "Overall <colname>"
   x |>
     dplyr::mutate(across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
       overall_val <- make.unique(c(
