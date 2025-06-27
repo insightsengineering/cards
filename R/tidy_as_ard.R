@@ -106,7 +106,7 @@ tidy_as_ard <- function(lst_tidy,
   dplyr::tibble(
     stat_name = names(lst_all_results),
     stat = lst_all_results,
-    fmt_fn = lapply(.data$stat, function(x) {
+    fmt_fun = lapply(.data$stat, function(x) {
       switch(is.numeric(x),
         1L
       )

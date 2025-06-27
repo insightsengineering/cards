@@ -13,8 +13,9 @@ ard_continuous(data, ...)
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic = everything() ~ continuous_summary_fns(),
-  fmt_fn = NULL,
+  fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
+  fmt_fn = deprecated(),
   ...
 )
 }
@@ -52,7 +53,7 @@ returns a named list of results is also acceptable, e.g.
 \code{list(conf.low = -1, conf.high = 1)}. However, when errors occur, the messaging
 will be less clear in this setting.}
 
-\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -63,6 +64,8 @@ a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 \code{everything() ~ list(mean ~ "Mean", sd ~ "SD")}.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 an ARD data frame of class 'card'

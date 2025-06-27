@@ -183,7 +183,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
         statistic = c(`X-squared` = 5.07944166638125),
         p.value = 0.0788884197453486, statistic = c(`X-squared` = 1.03944199945198),
         p.value = 0.594686442507218
-      ), fmt_fn = list(
+      ), fmt_fun = list(
         statistic = 1L,
         p.value = 1L, statistic = 1L, p.value = 1L
       ), warning = list(

@@ -15,8 +15,9 @@ ard_dichotomous(data, ...)
   value = maximum_variable_value(data[variables]),
   statistic = everything() ~ c("n", "N", "p"),
   denominator = NULL,
-  fmt_fn = NULL,
+  fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
+  fmt_fn = deprecated(),
   ...
 )
 }
@@ -54,7 +55,7 @@ or a single formula where the list element one or more of  \code{c("n", "N", "p"
 Specify this argument to change the denominator,
 e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
 
-\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -65,6 +66,8 @@ a named list, a list of formulas, or a single formula where
 the list element is either a named list or a list of formulas defining the
 statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 an ARD data frame of class 'card'
@@ -110,7 +113,7 @@ be used as the updated \code{"N"} in the calculations.
 Lastly, when the \code{p} statistic is returned, the proportion is returned---bounded by \verb{[0, 1]}.
 However, the default function to format the statistic scales the proportion by 100
 and the percentage is returned which matches the default statistic label of \code{'\%'}.
-To get the formatted values, pass the ARD to \code{apply_fmt_fn()}.
+To get the formatted values, pass the ARD to \code{apply_fmt_fun()}.
 }
 
 \examples{

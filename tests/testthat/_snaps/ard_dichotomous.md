@@ -8,7 +8,7 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(ard_dich, -c(fmt_fn, warning, error)))
+      as.data.frame(dplyr::select(ard_dich, -c(fmt_fun, warning, error)))
     Output
         variable variable_level     context stat_name stat_label    stat
       1      cyl              4 dichotomous         n          n      11

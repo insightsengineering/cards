@@ -10,7 +10,8 @@ add_calculated_row(
   stat_name,
   by = c(all_ard_groups(), all_ard_variables(), any_of("context")),
   stat_label = stat_name,
-  fmt_fn = NULL
+  fmt_fun = NULL,
+  fmt_fn = deprecated()
 )
 }
 \arguments{
@@ -29,9 +30,11 @@ Grouping variables to calculate statistics within}
 \item{stat_label}{(\code{string})\cr
 string of the statistic label. Default is the \code{stat_name}.}
 
-\item{fmt_fn}{(\code{integer}, \code{function}, \code{string})\cr
+\item{fmt_fun}{(\code{integer}, \code{function}, \code{string})\cr
 a function of an integer or string that can be converted to a function with
-\code{alias_as_fmt_fn()}.}
+\code{alias_as_fmt_fun()}.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 an ARD data frame of class 'card'

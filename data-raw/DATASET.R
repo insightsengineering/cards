@@ -12,4 +12,23 @@ ADTTE <- haven::read_xpt(
 
 ADSL$TRTA <- ADSL$TRT01A
 labelled::var_label(ADSL$TRTA) <- labelled::var_label(ADAE$TRTA)
+
+ADAE <-
+  withr::with_seed(
+    seed = 1L,
+    ADAE |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        .after = "AESEV",
+        AETOXGR = dplyr::case_when(
+          AESDTH == "Y" ~ 5,
+          AESEV == "SEVERE" ~ 4,
+          AESEV == "MODERATE" ~ sample(2:3, 1),
+          AESEV == "MILD" ~ 1,
+        ) |> factor(levels = 1:5)
+      ) |>
+      dplyr::ungroup()
+  ) |>
+  labelled::set_variable_labels(AETOXGR = "Toxicity Grade")
+
 usethis::use_data(ADSL, ADAE, ADTTE, overwrite = TRUE)

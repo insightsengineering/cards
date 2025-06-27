@@ -70,18 +70,28 @@ ard_hierarchical_count <- function(data, ...) {
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical.data.frame <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    statistic = everything() ~ c("n", "N", "p"),
-    denominator = NULL,
-    fmt_fn = NULL,
-    stat_label = everything() ~ default_stat_labels(),
-    id = NULL,
-    ...) {
+ard_hierarchical.data.frame <- function(data,
+                                        variables,
+                                        by = dplyr::group_vars(data),
+                                        statistic = everything() ~ c("n", "N", "p"),
+                                        denominator = NULL,
+                                        fmt_fun = NULL,
+                                        stat_label = everything() ~ default_stat_labels(),
+                                        id = NULL,
+                                        fmt_fn = deprecated(),
+                                        ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_hierarchical(fmt_fn)",
+      with = "ard_hierarchical(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -136,7 +146,7 @@ ard_hierarchical.data.frame <- function(
       strata = all_of(variables),
       statistic = statistic,
       denominator = denominator,
-      fmt_fn = fmt_fn,
+      fmt_fun = fmt_fun,
       stat_label = stat_label
     )
 
@@ -154,15 +164,25 @@ ard_hierarchical.data.frame <- function(
 
 #' @rdname ard_hierarchical
 #' @export
-ard_hierarchical_count.data.frame <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    fmt_fn = NULL,
-    stat_label = everything() ~ default_stat_labels(),
-    ...) {
+ard_hierarchical_count.data.frame <- function(data,
+                                              variables,
+                                              by = dplyr::group_vars(data),
+                                              fmt_fun = NULL,
+                                              stat_label = everything() ~ default_stat_labels(),
+                                              fmt_fn = deprecated(),
+                                              ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_hierarchical_count(fmt_fn)",
+      with = "ard_hierarchical_count(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -185,7 +205,7 @@ ard_hierarchical_count.data.frame <- function(
     by = all_of(by),
     strata = all_of(variables),
     statistic = everything() ~ "n",
-    fmt_fn = fmt_fn,
+    fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
     .rename_last_group_as_variable(by = by, variables = variables) |>

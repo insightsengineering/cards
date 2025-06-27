@@ -62,14 +62,14 @@ reference:
       - as_card
       - bind_ard
       - tidy_ard_column_order
-      - apply_fmt_fn
+      - apply_fmt_fun
       - update_ard
       - process_selectors
       - ard_formals
       - nest_for_ard
       - default_stat_labels
       - check_ard_structure
-      - alias_as_fmt_fn
+      - alias_as_fmt_fun
       - label_round
       - rename_ard_columns
       - unlist_ard_columns

@@ -2,9 +2,18 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{apply_fmt_fn}
+\alias{alias_as_fmt_fn}
+\alias{update_ard_fmt_fn}
 \alias{label_cards}
 \title{Deprecated functions}
 \usage{
+apply_fmt_fn(...)
+
+alias_as_fmt_fn(...)
+
+update_ard_fmt_fn(...)
+
 label_cards(...)
 }
 \description{

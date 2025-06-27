@@ -94,7 +94,7 @@ ard_attributes.data.frame <- function(data,
         TRUE ~ .data$stat_name
       ),
       context = "attributes",
-      fmt_fn = ifelse(.data$stat_name %in% "label", list(as.character), list(NULL)),
+      fmt_fun = ifelse(.data$stat_name %in% "label", list(as.character), list(NULL)),
       warning = list(NULL),
       error = list(NULL)
     ) |>

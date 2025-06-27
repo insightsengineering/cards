@@ -40,10 +40,21 @@ ard_dichotomous.data.frame <- function(data,
                                        value = maximum_variable_value(data[variables]),
                                        statistic = everything() ~ c("n", "N", "p"),
                                        denominator = NULL,
-                                       fmt_fn = NULL,
+                                       fmt_fun = NULL,
                                        stat_label = everything() ~ default_stat_labels(),
+                                       fmt_fn = deprecated(),
                                        ...) {
   set_cli_abort_call()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_dichotomous(fmt_fn)",
+      with = "ard_dichotomous(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -70,7 +81,7 @@ ard_dichotomous.data.frame <- function(data,
     strata = {{ strata }},
     statistic = statistic,
     denominator = denominator,
-    fmt_fn = fmt_fn,
+    fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
     dplyr::filter(

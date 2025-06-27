@@ -12,11 +12,11 @@
     Output
       [1] "card"       "tbl_df"     "tbl"        "data.frame"
 
-# ard_continuous(fmt_fn) argument works
+# ard_categorical(fmt_fun) argument works
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_categorical(mtcars, variables = "am",
-        fmt_fn = list(am = list(p = function(x) as.character(round5(x * 100, digits = 3)),
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_categorical(mtcars, variables = "am",
+        fmt_fun = list(am = list(p = function(x) as.character(round5(x * 100, digits = 3)),
         N = function(x) format(round5(x, digits = 2), nsmall = 2), N_obs = function(x)
           format(round5(x, digits = 2), nsmall = 2))))), variable, variable_level,
       stat_name, stat, stat_fmt))
@@ -32,8 +32,8 @@
 ---
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_categorical(mtcars, variables = c(
-        "am", "vs"), fmt_fn = list(am = list(p = function(x) round5(x * 100, digits = 3)),
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_categorical(mtcars, variables = c(
+        "am", "vs"), fmt_fun = list(am = list(p = function(x) round5(x * 100, digits = 3)),
       vs = list(p = function(x) round5(x * 100, digits = 1))))), variable,
       variable_level, stat_name, stat, stat_fmt))
     Output
@@ -100,7 +100,7 @@
 # ard_categorical(denominator='row') works
 
     Code
-      as.data.frame(dplyr::select(apply_fmt_fn(ard_with_args), -fmt_fn, -warning, -error))
+      as.data.frame(dplyr::select(apply_fmt_fun(ard_with_args), -fmt_fun, -warning, -error))
     Output
          group1         group1_level variable variable_level     context stat_name stat_label stat stat_fmt
       1     ARM              Placebo   AGEGR1          65-80 categorical         n          n   42    42.00
