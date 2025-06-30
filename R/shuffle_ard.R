@@ -75,6 +75,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     unlist_ard_columns() |>
     .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
+    .fill_overall_grp_totals(vars_protected) |>
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
@@ -285,7 +286,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   id_vars <- id_vars[id_vars %in% names(x)]
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
-  # replace NA group values with "..cards_overall.." where it is likely to be an overall calculation
+  # replace NA group values with "..cards_overall.." where it is likely to be
+  # an overall calculation
   for (g in grp_vars) {
     # rows with missing group
     x_missing_by <- x |>
@@ -321,4 +323,49 @@ shuffle_ard <- function(x, trim = TRUE) {
         .[1]
       ifelse(!is.na(v) & v == "..cards_overall..", paste0("Overall ", cur_col), v)
     }))
+}
+
+.fill_overall_grp_totals <- function(x, vars_protected) {
+
+  # determine grouping and merging variables
+  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
+  id_vars <- id_vars[id_vars %in% names(x)]
+  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
+
+  for (g in grp_vars) {
+    g_index <- which(grp_vars == g)
+    x <- x |>
+      dplyr::mutate(
+        !!g := dplyr::case_when(
+          is.na(.data[[g]]) & .data$variable == "..ard_total_n.." & g_index == 1 ~ "..cards_overall..",
+          is.na(.data[[g]]) & .data$variable == "..ard_total_n.." & g_index != 1 ~ "..hierarchical_overall..",
+          is.na(.data[[g]]) & .data$variable == "..ard_hierarchical_overall.." ~ "..hierarchical_overall..",
+          TRUE ~ .data[[g]]
+        )
+      )
+  }
+
+
+  # replace "..cards_overall.." group values with "Overall <colname>"
+  output <- x |>
+    dplyr::mutate(
+      across(
+        all_of(
+          grp_vars
+        ),
+        derive_overall_col_names
+      )
+    )
+
+  output
+}
+
+
+derive_overall_col_names <- function(x) {
+  output <- dplyr::case_when(
+    x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
+    x == "..hierarchical_overall.." ~ glue::glue("Any {dplyr::cur_column()}"),
+    TRUE ~ x
+  )
+  output
 }
