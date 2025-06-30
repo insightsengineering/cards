@@ -333,6 +333,10 @@ shuffle_ard <- function(x, trim = TRUE) {
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
   for (g in grp_vars) {
+    # TODO revisit the logic (see if it holds when we have multiple grouping
+    # variables)
+    # get the index of the grouping variable. it assumes only the first one is
+    # interpreted as "Overall ..." the other ones are interpreted as "Any ..."
     g_index <- which(grp_vars == g)
     x <- x |>
       dplyr::mutate(
