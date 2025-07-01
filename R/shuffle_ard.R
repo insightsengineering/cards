@@ -373,8 +373,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   # `"..hierarchical_overall.."` with `"Any <colname>"`
   output <- x |>
     dplyr::mutate(
-      across(
-        all_of(
+      dplyr::across(
+        tidyselect::all_of(
           grp_vars
         ),
         derive_overall_col_names
