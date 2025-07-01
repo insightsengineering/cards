@@ -301,10 +301,10 @@ test_that("shuffle_ard() fills totals", {
   expect_identical(
     shuffled_ard |>
       dplyr::filter(
-        variable == "..ard_total_n.."
+        variable == "..ard_hierarchical_overall.."
       ) |>
-      dplyr::pull(TRTA),
-    "Overall TRTA"
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC"
   )
-
 })
