@@ -237,6 +237,7 @@ internal_stack_hierarchical <- function(
     total_n = FALSE,
     shuffle = FALSE,
     include_uni_by_tab = TRUE) {
+
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -491,13 +492,13 @@ internal_stack_hierarchical <- function(
     include = include
   )
 
-  # shuffle if requested -------------------------------------------------------
-  if (isTRUE(shuffle)) {
-    result <- shuffle_ard(result)
-  }
-
   # sort ARD alphanumerically --------------------------------------------------
   result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+
+  # shuffle if requested -------------------------------------------------------
+  if (shuffle) {
+    result <- shuffle_ard(result)
+  }
 
   # return final result --------------------------------------------------------
   result |> as_card()
