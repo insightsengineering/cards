@@ -376,13 +376,13 @@ test_that("shuffle_ard() fills with multiple `by` columns", {
         AESOC,
         SEX
       ),
-    tibble::tibble(
+    data.frame(
       TRTA = "Overall TRTA",
       AESOC = "Any AESOC",
       SEX = "Overall SEX"
     ),
-    # the shuffled_ard preserves the card attributes so we need to ignore them
-    # for the purpose of this comparison
+    # the shuffled_ard preserves the card attributes and returns a tibble. We
+    # need to ignore the attributes for the purpose of this comparison
     ignore_attr = TRUE
   )
 
