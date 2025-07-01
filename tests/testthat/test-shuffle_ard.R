@@ -215,7 +215,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
     dplyr::filter(SAFFL=="Y",
                   TRT01A %in% c("Placebo","Xanomeline High Dose"))
 
-  shuffled_ard <- ard_stack_hierarchical(
+  shuffled_ard1 <- ard_stack_hierarchical(
     data = adae,
     by = TRT01A,
     variables = c(AESOC, AETERM),
@@ -228,7 +228,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
   )
 
   expect_identical(
-    attributes(shuffled_ard)[["args"]],
+    attributes(shuffled_ard1)[["args"]],
     list(
       by = "TRT01A",
       variables = c("AESOC", "AETERM"),
@@ -236,4 +236,21 @@ test_that("shuffle_ard() preserves attributes a cards object", {
     )
   )
 
+  shuffled_ard2 <- ard_stack_hierarchical(
+    data = adae,
+    by = TRT01A,
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  ) |>
+    shuffle_ard()
+
+  expect_identical(
+    shuffled_ard1,
+    shuffled_ard2
+  )
 })
