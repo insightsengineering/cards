@@ -266,7 +266,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
 
 })
 
-test_that("shuffle_ard() fills totals", {
+test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`", {
   adae <- ADAE |>
     dplyr::filter(
       SAFFL=="Y",
@@ -301,10 +301,20 @@ test_that("shuffle_ard() fills totals", {
   expect_identical(
     shuffled_ard |>
       dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::pull(TRTA),
+    "Overall TRTA"
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
         variable == "..ard_hierarchical_overall.."
       ) |>
       dplyr::pull(AESOC) |>
       unique(),
     "Any AESOC"
   )
+
 })
