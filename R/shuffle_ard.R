@@ -319,6 +319,6 @@ shuffle_ard <- function(x, trim = TRUE) {
       )) |>
         rev() %>%
         .[1]
-      ifelse(!is.na(v) & v == "..cards_overall..", paste0("Overall ", cur_col), v)
+      ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
     }))
 }

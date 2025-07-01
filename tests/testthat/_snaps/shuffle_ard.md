@@ -107,6 +107,20 @@
       2 Overall ARM F           AGEGR1   65-80          categorical n         n             78
       3 Overall ARM Overall SEX AGEGR1   65-80          categorical n         n            144
 
+---
+
+    Code
+      shuffle_ard(bind_ard(ard_continuous(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_continuous(adsl_new, by = "ARM", variables = "AGE", statistic = ~
+        continuous_summary_fns("mean"))))
+    Output
+      # A tibble: 4 x 6
+        ARM                  variable context    stat_name stat_label  stat
+        <chr>                <chr>    <chr>      <chr>     <chr>      <dbl>
+      1 Overall ARM.1        AGE      continuous mean      Mean        75.1
+      2 Overall ARM          AGE      continuous mean      Mean        75.2
+      3 Xanomeline High Dose AGE      continuous mean      Mean        74.4
+      4 Xanomeline Low Dose  AGE      continuous mean      Mean        75.7
+
 # shuffle_ard fills missing group levels if the group is meaningful for cardx output
 
     Code
