@@ -201,3 +201,39 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       as.data.frame()
   )
 })
+
+test_that("shuffle_ard() preserves attributes a cards object", {
+  adae <- pharmaverseadam::adae |>
+    dplyr::filter(SAFFL=="Y",
+                  TRT01A %in% c("Placebo","Xanomeline High Dose"),
+                  AESOC %in% unique(AESOC)[1:2]) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(AETERM %in% unique(AETERM)[1:2]) |>
+    dplyr::ungroup()
+
+  adsl <- pharmaverseadam::adsl |>
+    dplyr::filter(SAFFL=="Y",
+                  TRT01A %in% c("Placebo","Xanomeline High Dose"))
+
+  shuffled_ard <- ard_stack_hierarchical(
+    data = adae,
+    by = TRT01A,
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = TRUE
+  )
+
+  expect_identical(
+    attributes(shuffled_ard)[["args"]],
+    list(
+      by = "TRT01A",
+      variables = c("AESOC", "AETERM"),
+      include = c("AESOC", "AETERM")
+    )
+  )
+
+})
