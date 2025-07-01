@@ -83,10 +83,10 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
-  output <- dat_cards_out |> as_card()
+  output <- dat_cards_out
 
   if (trim) {
-    output1 <- dat_cards_out |>
+    output <- dat_cards_out |>
       .trim_ard()
   }
 
@@ -386,12 +386,13 @@ shuffle_ard <- function(x, trim = TRUE) {
   output
 }
 
-
 derive_overall_col_names <- function(x) {
   output <- dplyr::case_when(
     x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
     x == "..hierarchical_overall.." ~ glue::glue("Any {dplyr::cur_column()}"),
     TRUE ~ x
   )
-  output
+
+  # we want to strip the `"glue"` class
+  as.character(output)
 }
