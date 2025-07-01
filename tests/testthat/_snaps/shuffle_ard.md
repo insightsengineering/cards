@@ -118,3 +118,66 @@
       3        <NA> Overall SEX   AGEGR1 stats_chisq_test statistic X-squared Statistic 1.03944200
       4        <NA> Overall SEX   AGEGR1 stats_chisq_test   p.value             p-value 0.59468644
 
+# shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_total_n..")
+    Output
+      # A tibble: 1 x 8
+        TRTA         AESOC  variable variable_level context stat_name stat_label  stat
+        <chr>        <chr>  <chr>    <chr>          <chr>   <chr>     <chr>      <dbl>
+      1 Overall TRTA Any A~ ..ard_t~ <NA>           total_n N         N            170
+
+---
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_hierarchical_overall..")
+    Output
+      # A tibble: 9 x 8
+        TRTA        AESOC variable variable_level context stat_name stat_label    stat
+        <chr>       <chr> <chr>    <chr>          <chr>   <chr>     <chr>        <dbl>
+      1 Overall TR~ Any ~ ..ard_h~ TRUE           hierar~ n         n           44    
+      2 Overall TR~ Any ~ ..ard_h~ TRUE           hierar~ N         N          170    
+      3 Overall TR~ Any ~ ..ard_h~ TRUE           hierar~ p         %            0.259
+      4 Placebo     Any ~ ..ard_h~ TRUE           hierar~ n         n           17    
+      5 Placebo     Any ~ ..ard_h~ TRUE           hierar~ N         N           86    
+      6 Placebo     Any ~ ..ard_h~ TRUE           hierar~ p         %            0.198
+      7 Xanomeline~ Any ~ ..ard_h~ TRUE           hierar~ n         n           27    
+      8 Xanomeline~ Any ~ ..ard_h~ TRUE           hierar~ N         N           84    
+      9 Xanomeline~ Any ~ ..ard_h~ TRUE           hierar~ p         %            0.321
+
+# shuffle_ard() fills with multiple `by` columns
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_total_n..")
+    Output
+      # A tibble: 1 x 9
+        TRTA    AESOC SEX   variable variable_level context stat_name stat_label  stat
+        <chr>   <chr> <chr> <chr>    <chr>          <chr>   <chr>     <chr>      <dbl>
+      1 Overal~ Any ~ Over~ ..ard_t~ <NA>           total_n N         N            170
+
+---
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_hierarchical_overall..")
+    Output
+      # A tibble: 15 x 9
+         TRTA         AESOC SEX   variable variable_level context stat_name stat_label
+         <chr>        <chr> <chr> <chr>    <chr>          <chr>   <chr>     <chr>     
+       1 Overall TRTA Any ~ Over~ ..ard_h~ TRUE           hierar~ n         n         
+       2 Overall TRTA Any ~ Over~ ..ard_h~ TRUE           hierar~ N         N         
+       3 Overall TRTA Any ~ Over~ ..ard_h~ TRUE           hierar~ p         %         
+       4 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ n         n         
+       5 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ N         N         
+       6 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ p         %         
+       7 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ n         n         
+       8 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ N         N         
+       9 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ p         %         
+      10 Xanomeline ~ Any ~ F     ..ard_h~ TRUE           hierar~ n         n         
+      11 Xanomeline ~ Any ~ F     ..ard_h~ TRUE           hierar~ N         N         
+      12 Xanomeline ~ Any ~ F     ..ard_h~ TRUE           hierar~ p         %         
+      13 Xanomeline ~ Any ~ M     ..ard_h~ TRUE           hierar~ n         n         
+      14 Xanomeline ~ Any ~ M     ..ard_h~ TRUE           hierar~ N         N         
+      15 Xanomeline ~ Any ~ M     ..ard_h~ TRUE           hierar~ p         %         
+      # i 1 more variable: stat <dbl>
+
