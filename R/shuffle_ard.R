@@ -337,15 +337,13 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 .fill_overall_grp_totals <- function(x, vars_protected, ard_args) {
 
-  # determine grouping and merging variables
-  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
-  id_vars <- id_vars[id_vars %in% names(x)]
-  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
-
+  # extract variables
   by_vars <- ard_args$by
   other_vars <- ard_args$variables
   # drop the last variable as it is not used for grouping
   other_vars <- other_vars[-length(other_vars)]
+
+  grp_vars <- union(by_vars, other_vars)
 
   for (by_var in by_vars) {
     x <- x |>
