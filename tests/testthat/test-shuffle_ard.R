@@ -203,21 +203,23 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
 })
 
 test_that("shuffle_ard() preserves attributes a cards object", {
-  adae <- pharmaverseadam::adae |>
+  adae <- ADAE |>
     dplyr::filter(SAFFL=="Y",
-                  TRT01A %in% c("Placebo","Xanomeline High Dose"),
+                  TRTA %in% c("Placebo","Xanomeline High Dose"),
                   AESOC %in% unique(AESOC)[1:2]) |>
     dplyr::group_by(AESOC) |>
     dplyr::filter(AETERM %in% unique(AETERM)[1:2]) |>
     dplyr::ungroup()
 
-  adsl <- pharmaverseadam::adsl |>
-    dplyr::filter(SAFFL=="Y",
-                  TRT01A %in% c("Placebo","Xanomeline High Dose"))
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL=="Y",
+      TRTA %in% c("Placebo","Xanomeline High Dose")
+    )
 
   shuffled_ard1 <- ard_stack_hierarchical(
     data = adae,
-    by = TRT01A,
+    by = TRTA,
     variables = c(AESOC, AETERM),
     denominator = adsl,
     id = USUBJID,
@@ -230,7 +232,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
   expect_identical(
     attributes(shuffled_ard1)[["args"]],
     list(
-      by = "TRT01A",
+      by = "TRTA",
       variables = c("AESOC", "AETERM"),
       include = c("AESOC", "AETERM")
     )
@@ -238,7 +240,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
 
   shuffled_ard2 <- ard_stack_hierarchical(
     data = adae,
-    by = TRT01A,
+    by = TRTA,
     variables = c(AESOC, AETERM),
     denominator = adsl,
     id = USUBJID,
