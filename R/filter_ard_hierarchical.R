@@ -144,27 +144,28 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
     )
   }
 
+  # remove "overall" data from `x`
+  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  x_overall <- x[is_overall, ]
+  x <- x[!is_overall, ]
+  no_overall <- nrow(x_overall) == 0
+
+  # check that any column-wise/overall statistics in filter are valid
   filter_vars <- all.vars(filter)
   by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
   valid_filter_vars <- unique(x$stat_name[x$variable == var])
   if (!is_empty(by)) {
     by_lvls <- unique(stats::na.omit(unlist(x[["group1_level"]])))
-    overall_stat_vars <- paste(valid_filter_vars, "overall", sep = "_")
-    if (!all(c("n", "N") %in% valid_filter_vars)) {
-      if ("p_overall" %in% filter_vars) {
-        cli::cli_abort(
-          paste(
-            "In order to filter using the {.val p_overall} statistic both the {.val n} and {.val N} statistics must be",
-            "available for rows with {.var variable} == {.str {var}} in the ARD."
-          ),
-          call = get_cli_abort_call()
-        )
-      }
-      overall_stat_vars <- setdiff(overall_stat_vars, "p_overall")
+    overall_stats <- if (!no_overall) {
+      unique(x_overall$stat_name)
+    } else if (no_overall && !all(c("n", "N") %in% valid_filter_vars)) {
+      setdiff(valid_filter_vars, "p")
+    } else {
+      valid_filter_vars
     }
+    overall_stat_vars <- if (!is_empty(overall_stats)) paste(overall_stats, "overall", sep = "_") else NULL
     col_stat_vars <- paste(rep(valid_filter_vars, each = length(by_lvls)), seq_along(by_lvls), sep = "_")
     valid_filter_vars <- c(valid_filter_vars, col_stat_vars, overall_stat_vars, by)
-    ## when to display this message?
     if (any(col_stat_vars %in% filter_vars) && !quiet) {
       by_ids <- cli::cli_vec(
         paste(paste("xx", seq_along(by_lvls), sep = "_"), paste0('"', by_lvls, '"'), sep = " = ")
@@ -185,12 +186,6 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
       ),
       call = get_cli_abort_call()
     )
-  }
-
-  # ignore "overall" data
-  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
-  if (!is_empty(by) && sum(is_overall) > 0) {
-    x <- x[!is_overall, ]
   }
 
   # reshape ARD so each stat is in its own column ------------------------------------------------
@@ -242,16 +237,28 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
               dplyr::tibble(group1 = by)
             }
 
-            # add overall stats
-            ## ADD CHECKS FOR STATS NEEDED TO DERIVE
-            if ("n" %in% names(.df) && "n_overall" %in% filter_vars) {
-              .df_col_stats$n_overall <- sum(.df[["n"]])
+            # add overall stats - derive values if overall=FALSE
+            if (!no_overall) {
+              .df_overall <- .g |>
+                as_card() |>
+                cards::rename_ard_groups_shift() |>
+                dplyr::left_join(x_overall)
             }
-            if ("N" %in% names(.df) && "N_overall" %in% filter_vars) {
-              .df_col_stats$N_overall <- sum(.df[["N"]])
+            if ("n_overall" %in% filter_vars) {
+              .df_col_stats$n_overall <-
+                if (!no_overall) .df_overall$stat[.df_overall$stat_name == "n"][[1]] else sum(.df[["n"]])
             }
-            if (all(c("n", "N") %in% names(.df)) && "p_overall" %in% filter_vars) {
-              .df_col_stats$p_overall <- sum(.df[["n"]]) / sum(.df[["N"]])
+            if ("N_overall" %in% filter_vars) {
+              .df_col_stats$N_overall <-
+                if (!no_overall) .df_overall$stat[.df_overall$stat_name == "N"][[1]] else sum(.df[["N"]])
+            }
+            if ("p_overall" %in% filter_vars) {
+              .df_col_stats$p_overall <-
+                if (!no_overall) {
+                  .df_overall$stat[.df_overall$stat_name == "p"][[1]]
+                } else {
+                  sum(.df[["n"]]) / sum(.df[["N"]])
+                }
             }
             .df_all <- dplyr::bind_rows(.df_all, .df_col_stats)
           }
