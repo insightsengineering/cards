@@ -4,13 +4,7 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-filter_ard_hierarchical(
-  x,
-  filter,
-  var = NULL,
-  keep_empty = FALSE,
-  quiet = FALSE
-)
+filter_ard_hierarchical(x, filter, var = NULL, keep_empty = FALSE)
 }
 \arguments{
 \item{x}{(\code{card})\cr
