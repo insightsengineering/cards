@@ -256,5 +256,5 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
     }
   }
 
-  x
+  as_card(x)
 }
