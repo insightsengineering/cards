@@ -70,5 +70,6 @@
       filter_ard_hierarchical(ard_stat_miss, p_overall > 0.1)
     Condition
       Error in `filter_ard_hierarchical()`:
-      ! In order to filter using the "p_overall" statistic both the "n" and "N" statistics must be available for rows with `variable` == "AETERM" in the ARD.
+      ! The expression provided as `filter` includes condition for statistic "p_overall" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms are: "p", "p_1", "p_2", "p_3", and "TRTA".
 

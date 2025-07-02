@@ -9,7 +9,8 @@ ard <- ard_stack_hierarchical(
   by = TRTA,
   denominator = cards::ADSL,
   id = USUBJID,
-  over_variables = TRUE
+  over_variables = TRUE,
+  overall = TRUE
 )
 
 test_that("filter_ard_hierarchical() works", {
@@ -46,6 +47,17 @@ test_that("filter_ard_hierarchical() works with non-standard filters", {
 })
 
 test_that("filter_ard_hierarchical() works with column-specific filters", {
+  # test overall stat derivations (when overall=FALSE) are equal to stats when overall=TRUE
+  ard_o <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AETERM),
+    by = TRTA,
+    denominator = cards::ADSL,
+    id = USUBJID,
+    over_variables = TRUE,
+    overall = FALSE
+  )
+
   expect_message(ard_f <- filter_ard_hierarchical(ard, n_2 - n_3 > 1))
   expect_equal(nrow(ard_f), 63)
 
@@ -55,7 +67,11 @@ test_that("filter_ard_hierarchical() works with column-specific filters", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p_overall > 0.3))
   expect_identical(
     ard_f,
-    ard |> filter_ard_hierarchical(sum(n) / sum(N) > 0.3)
+    ard |> filter_ard_hierarchical(sum(n) / sum(N) > 0.3),
+  )
+  expect_identical(
+    ard_f,
+    ard_o |> filter_ard_hierarchical(p_overall > 0.3)
   )
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n_overall > 15))
@@ -63,11 +79,15 @@ test_that("filter_ard_hierarchical() works with column-specific filters", {
     ard_f,
     ard |> filter_ard_hierarchical(sum(n) > 15)
   )
+  expect_identical(
+    ard_f,
+    ard_o |> filter_ard_hierarchical(n_overall > 15)
+  )
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, n_overall / N_overall == p_overall))
   expect_identical(
     ard_f,
-    ard
+    ard_o |> filter_ard_hierarchical(n_overall / N_overall == p_overall)
   )
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p_overall <= 0.1))

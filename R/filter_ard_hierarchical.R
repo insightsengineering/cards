@@ -241,8 +241,8 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
             if (!no_overall) {
               .df_overall <- .g |>
                 as_card() |>
-                cards::rename_ard_groups_shift() |>
-                dplyr::left_join(x_overall)
+                cards::rename_ard_groups_shift()
+              .df_overall <- dplyr::left_join(.df_overall, x_overall, by = names(.df_overall))
             }
             if ("n_overall" %in% filter_vars) {
               .df_col_stats$n_overall <-
