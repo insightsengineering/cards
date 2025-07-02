@@ -1,4 +1,4 @@
-# cards 0.6.0.9013
+# cards 0.6.0.9015
 
 ## New Features and Functions
 
@@ -19,6 +19,8 @@
 * Fix bug in `sort_ard_hierarchical()` when hierarchical ARD has `overall=TRUE`. (#431)
 
 * Fix bug in `ard_stack_hierarchical()` when `id` values are present in multiple levels of the `by` variables. (#442)
+
+* Fix bug in `shuffle_ard()` where error is thrown if input contains hierarchical results. (#447)
 
 # cards 0.6.0
 

@@ -10,6 +10,7 @@ output: github_document
 ```{r, echo=FALSE}
 dplyr::tribble(
   ~venue, ~title, ~url_slides, ~url_video,
+  "2025 R/Medicine", "Supercharging Statistical Analysis with ARDs and the {cards} R Package", "https://melkiades.github.io/ARD_rmedicine25/", "https://youtu.be/C_Y1pzpCS5o?feature=shared",
   "2025 PHUSE US Connect", "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}", "https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/", NA_character_,
   "2025 PHUSE US Connect", "Harnessing Analysis Results Datasets (ARD) for Clinical Reporting in R
 Our First ARD-Based Filing Experience with {cards}+{gtsummary}", "https://www.danieldsjoberg.com/ARD-PHUSE-talk-2025/", NA_character_,

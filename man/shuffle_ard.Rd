@@ -18,6 +18,8 @@ only on numeric statistic values.}
 a tibble
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
+
 This function ingests an ARD object and shuffles the information to prepare for analysis.
 Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1
 column, back fills missing grouping values from the variable levels where possible, and
