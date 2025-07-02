@@ -145,6 +145,15 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
       call = get_cli_abort_call()
     )
   }
+  if (!var %in% ard_args$include) {
+    cli::cli_abort(
+      paste(
+        "No statistics available in the ARD for variable {.val {var}}. In order to filter on {.val {var}}",
+        "it must be specified in the {.arg include} argument when the ARD is created."
+      ),
+      call = get_cli_abort_call()
+    )
+  }
 
   by_cols <- if (!is_empty(by)) c("group1", "group1_level") else NULL
   filter_vars <- all.vars(filter)
@@ -152,9 +161,13 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
   if (!all(filter_vars %in% valid_filter_vars)) {
     var_miss <- setdiff(filter_vars, valid_filter_vars)
     cli::cli_abort(
-      paste(
-        "The expression provided as {.arg filter} includes condition{?s} for statistic{?s} or `by` variable{?s}",
-        "{.val {var_miss}} which {?is/are} not present in the ARD."
+      c(
+        paste(
+          "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
+          "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not",
+          "correspond to any of the {.var by} variable levels."
+        ),
+        i = "Valid filter terms for variable {.val {var}} are: {.val {valid_filter_vars}}."
       ),
       call = get_cli_abort_call()
     )
