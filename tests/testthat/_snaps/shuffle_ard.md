@@ -94,6 +94,33 @@
       3        <NA> Overall SEX      AGE           <NA>  continuous         N          N  254
       4        <NA>           F      AGE           <NA>  continuous         N          N  143
 
+---
+
+    Code
+      shuffle_ard(bind_ard(dplyr::slice(ard_categorical(ADSL, by = c(ARM, SEX), variables = AGEGR1), 1), dplyr::slice(ard_categorical(ADSL, by = SEX, variables = AGEGR1), 1), dplyr::slice(ard_categorical(
+        ADSL, variables = AGEGR1), 1)))
+    Output
+      # A tibble: 3 x 8
+        ARM         SEX         variable variable_level context     stat_name stat_label  stat
+        <chr>       <chr>       <chr>    <chr>          <chr>       <chr>     <chr>      <int>
+      1 Placebo     F           AGEGR1   65-80          categorical n         n             22
+      2 Overall ARM F           AGEGR1   65-80          categorical n         n             78
+      3 Overall ARM Overall SEX AGEGR1   65-80          categorical n         n            144
+
+---
+
+    Code
+      shuffle_ard(bind_ard(ard_continuous(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_continuous(adsl_new, by = "ARM", variables = "AGE", statistic = ~
+        continuous_summary_fns("mean"))))
+    Output
+      # A tibble: 4 x 6
+        ARM                  variable context    stat_name stat_label  stat
+        <chr>                <chr>    <chr>      <chr>     <chr>      <dbl>
+      1 Overall ARM.1        AGE      continuous mean      Mean        75.1
+      2 Overall ARM          AGE      continuous mean      Mean        75.2
+      3 Xanomeline High Dose AGE      continuous mean      Mean        74.4
+      4 Xanomeline Low Dose  AGE      continuous mean      Mean        75.7
+
 # shuffle_ard fills missing group levels if the group is meaningful for cardx output
 
     Code
