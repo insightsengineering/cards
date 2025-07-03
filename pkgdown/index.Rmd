@@ -2,15 +2,6 @@
 output: github_document
 ---
 
-<!-- YOU MUST RUN THE CODE BELOW TO ESTABLISH A SYMLINK BEFORE RENDERING! -->
-
-```{r include=FALSE, echo=FALSE, eval=FALSE}
-R.utils::createLink(
-  target = "man",
-  link = "pkgdown/man"
-)
-```
-
 ```{r child='../README.Rmd'}
 ```
 
