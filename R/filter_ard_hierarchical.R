@@ -16,6 +16,8 @@
 #' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
+#' @param quiet (`logical`)\cr
+#'   logical indicating whether to suppress any messaging. Default is `FALSE`.
 #'
 #' @details
 #' The `filter` argument can be used to filter out variable groups of a hierarchical
@@ -103,17 +105,23 @@
 #' # Example 3 ----------------------------------
 #' # Keep AEs that have an overall prevalence of greater than 5%
 #' filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+#'
+#' # Example 4 ----------------------------------
+#' # Keep AEs that have a difference in prevalence of greater than 3% between reference group with
+#' # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
+#' filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
 NULL
 
 #' @rdname filter_ard_hierarchical
 #' @export
-filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
+filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
   check_not_missing(x)
   check_not_missing(filter)
   check_scalar_logical(keep_empty)
+  check_logical(quiet)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
@@ -125,6 +133,8 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
     )
   }
   ard_args <- attributes(x)$args
+  by <- ard_args$by
+  var <- dplyr::last(ard_args$variables)
 
   filter <- enquo(filter)
   if (!quo_is_call(filter)) {
@@ -134,26 +144,48 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
     )
   }
 
-  by_cols <- if (length(ard_args$by) > 0) {
-    paste0("group", seq_along(ard_args$by), c("", "_level"))
-  } else {
-    NULL
+  # remove "overall" data from `x`
+  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  x_overall <- x[is_overall, ]
+  x <- x[!is_overall, ]
+  no_overall <- nrow(x_overall) == 0
+
+  # check that any column-wise/overall statistics in filter are valid
+  filter_vars <- all.vars(filter)
+  by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
+  valid_filter_vars <- unique(x$stat_name[x$variable == var])
+  if (!is_empty(by)) {
+    by_lvls <- unique(stats::na.omit(unlist(x[["group1_level"]])))
+    overall_stats <- if (!no_overall) {
+      unique(x_overall$stat_name)
+    } else if (no_overall && !all(c("n", "N") %in% valid_filter_vars)) {
+      setdiff(valid_filter_vars, "p")
+    } else {
+      valid_filter_vars
+    }
+    overall_stat_vars <- if (!is_empty(overall_stats)) paste(overall_stats, "overall", sep = "_") else NULL
+    col_stat_vars <- paste(rep(valid_filter_vars, each = length(by_lvls)), seq_along(by_lvls), sep = "_")
+    valid_filter_vars <- c(valid_filter_vars, col_stat_vars, overall_stat_vars, by)
+    if (any(col_stat_vars %in% filter_vars) && !quiet) {
+      by_ids <- cli::cli_vec(
+        paste(paste("xx", seq_along(by_lvls), sep = "_"), paste0('"', by_lvls, '"'), sep = " = ")
+      )
+      cli::cli_inform("When applying filters on specific levels of {.arg by} variable {.val {by}} {by_ids}.")
+    }
   }
-  if (!all(all.vars(filter) %in% c(x$stat_name, ard_args$by))) {
-    var_miss <- setdiff(all.vars(filter), c(x$stat_name, ard_args$by))
+  if (!all(filter_vars %in% valid_filter_vars)) {
+    var_miss <- setdiff(filter_vars, valid_filter_vars)
     cli::cli_abort(
-      paste(
-        "The expression provided as {.arg filter} includes condition{?s} for statistic{?s} or `by` variable{?s}",
-        "{.val {var_miss}} which {?is/are} not present in the ARD."
+      c(
+        paste(
+          "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
+          "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not correspond to any of the",
+          "{.var by} variable levels."
+        ),
+        i = "Valid filter terms are: {.val {valid_filter_vars}}."
       ),
       call = get_cli_abort_call()
     )
-  }
-
-  # ignore "overall" data
-  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% ard_args$by)))
-  if (length(ard_args$by) > 0 && sum(is_overall) > 0) {
-    x <- x[!is_overall, ]
   }
 
   # reshape ARD so each stat is in its own column ------------------------------------------------
@@ -182,14 +214,58 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
       -all_of(by_cols)
     ))) |>
     dplyr::group_map(\(.df, .g) {
-      # allow filtering on `by` variable levels
-      if (length(ard_args$by) > 0) {
-        names(.df)[names(.df) == by_cols[c(FALSE, TRUE)]] <- ard_args$by
-      }
-
       # only filter rows for innermost variable
-      if (.g$variable == dplyr::last(attributes(x)$args$variables)) {
-        .df[["idx"]][eval_tidy(filter, data = .df)]
+      if (.g$variable == var) {
+        .df_all <- .df
+        # allow filtering on values from a specific column
+        if (!is_empty(by)) {
+          # use `by` variable name as `group1_level` column name
+          names(.df_all)[names(.df_all) == by_cols[c(FALSE, TRUE)]] <- by
+
+          # process any column-wise or overall filters present
+          if (any(c(col_stat_vars, overall_stat_vars) %in% filter_vars)) {
+            # if specified, add column-wise statistics to filter on
+            .df_col_stats <- if (any(col_stat_vars %in% filter_vars)) {
+              .df_all |>
+                dplyr::mutate(id_num = dplyr::row_number()) |>
+                tidyr::pivot_wider(
+                  id_cols = c(all_ard_groups(), all_ard_variables()),
+                  names_from = "id_num",
+                  values_from = any_of(c("n", "N", "p"))
+                )
+            } else {
+              dplyr::tibble(group1 = by)
+            }
+
+            # add overall stats - derive values if overall=FALSE
+            if (!no_overall) {
+              .df_overall <- .g |>
+                as_card() |>
+                cards::rename_ard_groups_shift()
+              .df_overall <- dplyr::left_join(.df_overall, x_overall, by = names(.df_overall))
+            }
+            if ("n_overall" %in% filter_vars) {
+              .df_col_stats$n_overall <-
+                if (!no_overall) .df_overall$stat[.df_overall$stat_name == "n"][[1]] else sum(.df[["n"]])
+            }
+            if ("N_overall" %in% filter_vars) {
+              .df_col_stats$N_overall <-
+                if (!no_overall) .df_overall$stat[.df_overall$stat_name == "N"][[1]] else sum(.df[["N"]])
+            }
+            if ("p_overall" %in% filter_vars) {
+              .df_col_stats$p_overall <-
+                if (!no_overall) {
+                  .df_overall$stat[.df_overall$stat_name == "p"][[1]]
+                } else {
+                  sum(.df[["n"]]) / sum(.df[["N"]])
+                }
+            }
+            .df_all <- dplyr::bind_rows(.df_all, .df_col_stats)
+          }
+        }
+
+        # apply filter
+        .df[["idx"]][any(eval_tidy(filter, data = .df_all), na.rm = TRUE)]
       } else {
         .df[["idx"]]
       }
@@ -202,7 +278,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
   if (!keep_empty && length(ard_args$include) > 1) {
     outer_cols <- ard_args$variables |> utils::head(-1)
     # if all rows filtered out remove all summary rows - only overall/header rows left
-    if (!dplyr::last(ard_args$variables) %in% x$variable) {
+    if (!var %in% x$variable) {
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
       names(outer_cols) <- x |>
@@ -210,14 +286,11 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE) {
         names()
       x_no_sum <- x |>
         dplyr::mutate(idx = dplyr::row_number()) |>
-        .ard_reformat_sort("no_sort", ard_args$by, outer_cols)
+        .ard_reformat_sort("no_sort", by, outer_cols)
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
         x_no_sum <- x_no_sum |>
-          dplyr::group_by(across(c(
-            all_ard_group_n((length(ard_args$by):i) + 1),
-            -all_of(by_cols)
-          ))) |>
+          dplyr::group_by(across(c(all_ard_group_n((length(by):i) + 1), -all_of(by_cols)))) |>
           dplyr::group_map(
             function(.df, .y) {
               cur_var <- .y[[ncol(.y) - 1]]
