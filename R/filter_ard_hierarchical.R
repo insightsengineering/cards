@@ -106,6 +106,10 @@
 #' # Example 3 ----------------------------------
 #' # Keep AEs that have an overall prevalence of greater than 5%
 #' filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+#'
+#' # Example 4 ----------------------------------
+#' # Keep AEs from SOCs that have an overall prevalence of greater than 20%
+#' filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.20, var = AESOC)
 NULL
 
 #' @rdname filter_ard_hierarchical

@@ -79,6 +79,40 @@ test_that("filter_ard_hierarchical() returns only summary rows when all rows fil
   expect_true(all(ard_f$variable == "TRTA"))
 })
 
+test_that("filter_ard_hierarchical(var) works", {
+  ard <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(AESOC, AEDECOD, AETOXGR),
+    by = TRTA,
+    denominator = cards::ADSL,
+    id = USUBJID
+  )
+
+  # default uses the correct variable
+  expect_identical(
+    filter_ard_hierarchical(ard, n > 5, var = AETOXGR),
+    filter_ard_hierarchical(ard, n > 5)
+  )
+
+  # works with `var` specified
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 15, var = AEDECOD))
+  expect_equal(nrow(ard_f), 189)
+
+  # works with first hierarchy variable
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 50, var = AESOC))
+  expect_equal(nrow(ard_f), 108)
+
+  # works with no `by` variable
+  ard_noby <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(AESOC, AEDECOD, AETOXGR),
+    denominator = cards::ADSL,
+    id = USUBJID
+  )
+  expect_silent(ard_f <- filter_ard_hierarchical(ard_noby, sum(n) > 10, var = AEDECOD))
+  expect_equal(nrow(ard_f), 63)
+})
+
 test_that("filter_ard_hierarchical(keep_empty) works", {
   ard <- ard_stack_hierarchical(
     data = ADAE_subset,
