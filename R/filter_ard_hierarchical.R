@@ -157,7 +157,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
 
   by_cols <- if (!is_empty(by)) c("group1", "group1_level") else NULL
   filter_vars <- all.vars(filter)
-  valid_filter_vars <- unique(x$stat_name[x$variable == var])
+  valid_filter_vars <- c(unique(x$stat_name[x$variable == var]), by)
   if (!all(filter_vars %in% valid_filter_vars)) {
     var_miss <- setdiff(filter_vars, valid_filter_vars)
     cli::cli_abort(

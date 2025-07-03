@@ -44,7 +44,8 @@
       filter_ard_hierarchical(ard, A > 5)
     Condition
       Error in `filter_ard_hierarchical()`:
-      ! The expression provided as `filter` includes condition for statistic or `by` variable "A" which is not present in the ARD.
+      ! The expression provided as `filter` includes condition for statistic "A" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms for variable "AETERM" are: "n", "N", "p", and "TRTA".
 
 ---
 
