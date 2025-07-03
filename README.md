@@ -92,5 +92,5 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
 #> 10    ARM    Xanomeli…      AGE      mean       Mean 74.381
 #> ℹ 14 more rows
 #> ℹ Use `print(n = ...)` to see more rows
-#> ℹ 4 more variables: context, fmt_fn, warning, error
+#> ℹ 4 more variables: context, fmt_fun, warning, error
 ```
