@@ -16,6 +16,8 @@ jobs:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
     with:
       default-landing-page: latest-tag
+      update-r-packages: true
+      deps-installation-method: setup-r-dependencies
   validation:
     name: R Package Validation report 📃
     needs: release
@@ -45,6 +47,7 @@ jobs:
         checking Rd line widths .* NOTE
         checking top-level files .* NOTE
       skip-r-cmd-install: true
+      update-r-packages: true
   coverage:
     name: Coverage 📔
     needs: [release, docs]
