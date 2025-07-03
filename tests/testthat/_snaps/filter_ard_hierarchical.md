@@ -3,7 +3,7 @@
     Code
       ard_f
     Message
-      {cards} data frame: 39 x 15
+      {cards} data frame: 45 x 15
     Output
          group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
       1    <NA>                <NA>                <NA>                                      TRTA        Placebo         n          n    86
@@ -17,7 +17,7 @@
       9    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
       10   TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
     Message
-      i 29 more rows
+      i 35 more rows
       i Use `print(n = ...)` to see more rows
       i 4 more variables: context, fmt_fun, warning, error
 
