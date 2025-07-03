@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,13 +39,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.0.9015" id="cards-0609015">cards 0.6.0.9015<a class="anchor" aria-label="anchor" href="#cards-0609015"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.1" id="cards-061">cards 0.6.1<a class="anchor" aria-label="anchor" href="#cards-061"></a></h2><p class="text-muted">CRAN release: 2025-07-03</p>
 <div class="section level3">
-<h3 id="new-features-and-functions-0-6-0-9015">New Features and Functions<a class="anchor" aria-label="anchor" href="#new-features-and-functions-0-6-0-9015"></a></h3>
+<h3 id="new-features-and-functions-0-6-1">New Features and Functions<a class="anchor" aria-label="anchor" href="#new-features-and-functions-0-6-1"></a></h3>
 <ul><li>Added new function <code><a href="../reference/ard_identity.html">ard_identity()</a></code> for saving pre-calculated statistics in an ARD format. (<a href="https://github.com/insightsengineering/cards/issues/379" class="external-link">#379</a>)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="lifecycle-changes-0-6-0-9015">Lifecycle Changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-0-6-0-9015"></a></h3>
+<h3 id="lifecycle-changes-0-6-1">Lifecycle Changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-0-6-1"></a></h3>
 <ul><li>
 <p>Updating any <code>fmt_fn</code> references to <code>fmt_fun</code> for consistency.</p>
 <ul><li><p>Any function with an argument <code>cards::foo(fmt_fn)</code> has been updated to <code>cards::foo(fmt_fun)</code>. The old syntax will continue to function, but with a deprecation warning to users.</p></li>
@@ -54,7 +54,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-6-0-9015">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0-9015"></a></h3>
+<h3 id="bug-fixes-0-6-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-1"></a></h3>
 <ul><li><p>Fix bug in <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> when hierarchical ARD has <code>overall=TRUE</code>. (<a href="https://github.com/insightsengineering/cards/issues/431" class="external-link">#431</a>)</p></li>
 <li><p>Fix bug in <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> when <code>id</code> values are present in multiple levels of the <code>by</code> variables. (<a href="https://github.com/insightsengineering/cards/issues/442" class="external-link">#442</a>)</p></li>
 <li><p>Fix bug in <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> where error is thrown if input contains hierarchical results. (<a href="https://github.com/insightsengineering/cards/issues/447" class="external-link">#447</a>)</p></li>
