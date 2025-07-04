@@ -34,8 +34,8 @@
 #' @section Denominators:
 #' By default, the `ard_categorical()` function returns the statistics `"n"`, `"N"`, and
 #' `"p"`, where little `"n"` are the counts for the variable levels, and big `"N"` is
-#' the number of non-missing observations. The default calculation for the
-#' percentage is merely `p = n/N`.
+#' the number of non-missing observations. The calculation for the
+#' proportion is  `p = n/N`.
 #'
 #' However, it is sometimes necessary to provide a different `"N"` to use
 #' as the denominator in this calculation. For example, in a calculation
@@ -61,8 +61,8 @@
 #'   The last column must be named `"...ard_N..."`. The integers in this column will
 #'   be used as the updated `"N"` in the calculations.
 #'
-#' Lastly, when the `p` statistic is returned, the proportion is returned---bounded by `[0, 1]`.
-#' However, the default function to format the statistic scales the proportion by 100
+#' When the `p` statistic is returned, the proportion is returned---bounded by `[0, 1]`.
+#' The default function to format the statistic scales the proportion by 100
 #' and the percentage is returned which matches the default statistic label of `'%'`.
 #' To get the formatted values, pass the ARD to `apply_fmt_fun()`.
 #'
