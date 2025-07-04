@@ -79,8 +79,8 @@ Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 
 By default, the \code{ard_categorical()} function returns the statistics \code{"n"}, \code{"N"}, and
 \code{"p"}, where little \code{"n"} are the counts for the variable levels, and big \code{"N"} is
-the number of non-missing observations. The default calculation for the
-percentage is merely \code{p = n/N}.
+the number of non-missing observations. The calculation for the
+proportion is  \code{p = n/N}.
 
 However, it is sometimes necessary to provide a different \code{"N"} to use
 as the denominator in this calculation. For example, in a calculation
@@ -110,8 +110,8 @@ The last column must be named \code{"...ard_N..."}. The integers in this column 
 be used as the updated \code{"N"} in the calculations.
 }
 
-Lastly, when the \code{p} statistic is returned, the proportion is returned---bounded by \verb{[0, 1]}.
-However, the default function to format the statistic scales the proportion by 100
+When the \code{p} statistic is returned, the proportion is returned---bounded by \verb{[0, 1]}.
+The default function to format the statistic scales the proportion by 100
 and the percentage is returned which matches the default statistic label of \code{'\%'}.
 To get the formatted values, pass the ARD to \code{apply_fmt_fun()}.
 }
