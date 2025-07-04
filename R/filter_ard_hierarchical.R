@@ -231,7 +231,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
     var_gp <- paste0("group", length(by) + which_var, "_level")
     x <- x |>
       dplyr::rowwise() |>
-      dplyr::mutate(across(var_gp, \(x) if (is.null(unlist(x))) NA else unlist(x), .names = "var_f")) |>
+      dplyr::mutate(across(all_of(var_gp), \(x) if (is.null(unlist(x))) NA else unlist(x), .names = "var_f")) |>
       dplyr::ungroup() |>
       dplyr::filter(is.na(.data$var_f) | .data$var_f %in% unique(unlist(x$variable_level))) |>
       dplyr::select(-"var_f")

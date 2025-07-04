@@ -228,6 +228,27 @@ test_that("filter_ard_hierarchical() error messaging works", {
     error = TRUE
   )
 
+  # invalid var input
+  expect_snapshot(
+    filter_ard_hierarchical(ard, n > 1, var = "A"),
+    error = TRUE
+  )
+
+  # invalid var input - not in include
+  ard <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = c(SEX, RACE, AETERM),
+    by = TRTA,
+    include = c(SEX, AETERM),
+    denominator = cards::ADSL,
+    id = USUBJID,
+    over_variables = TRUE
+  )
+  expect_snapshot(
+    filter_ard_hierarchical(ard, n > 1, var = RACE),
+    error = TRUE
+  )
+
   # invalid keep_empty input
   expect_snapshot(
     filter_ard_hierarchical(ard, n > 1, keep_empty = NULL),
