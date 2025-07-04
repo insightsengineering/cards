@@ -228,17 +228,38 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
 
   # remove inner variable rows if `var` is an outer variable that does not meet the filter criteria
   if (which_var < length(ard_args$variables)) {
-    var_gp <- paste0("group", length(by) + which_var, "_level")
+    var_gp_nm <- paste0("group", length(by) + which_var) # get `var` group variable name
+
+    # get all combos of variables kept after filtering
+    # keep only unique combos up to `var` group variable
+    var_keep <- x |>
+      dplyr::filter(variable == var) |>
+      dplyr::mutate(
+        !!var_gp_nm := .data$variable,
+        !!paste0(var_gp_nm, "_level") := .data$variable_level
+      )
+    var_keep <- dplyr::distinct(var_keep[1:((length(by) + which_var)*2)])
+
+    # track row indices
+    x <- x |> dplyr::mutate(idx = dplyr::row_number())
+
+    # get row indices to exclude - all rows within `var` sections that have been removed
+    f_idx_inner <-
+      dplyr::anti_join(
+        x[x[[var_gp_nm]] == var & !is.na(x[[var_gp_nm]]), ],
+        var_keep,
+        by = names(var_keep)
+      ) |>
+      dplyr::pull("idx")
+
+    # filter out inner rows
     x <- x |>
-      dplyr::rowwise() |>
-      dplyr::mutate(across(all_of(var_gp), \(x) if (is.null(unlist(x))) NA else unlist(x), .names = "var_f")) |>
-      dplyr::ungroup() |>
-      dplyr::filter(is.na(.data$var_f) | .data$var_f %in% unique(unlist(x$variable_level))) |>
-      dplyr::select(-"var_f")
+      dplyr::filter(!.data$idx %in% f_idx_inner) |>
+      dplyr::select(-"idx")
   }
 
   # remove summary rows from empty sections if requested
-  if (!keep_empty && length(ard_args$include) > 1) {
+  if (var != ard_args$variables[1] && !keep_empty && length(ard_args$include) > 1) {
     outer_cols <- ard_args$variables |> utils::head(-1)
     # if all inner rows filtered out, remove all summary rows - only overall/header rows left
     if (!dplyr::last(ard_args$variables) %in% x$variable) {
