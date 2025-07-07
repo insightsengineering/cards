@@ -121,6 +121,17 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful", {
     ) |>
       shuffle_ard()
   )
+
+  # fills with a unique group value if one already exists in the df
+  adsl_new <- ADSL |>
+    dplyr::mutate(ARM = ifelse(ARM == "Placebo", "Overall ARM", ARM))
+  expect_snapshot(
+    bind_ard(
+      ard_continuous(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
+      ard_continuous(adsl_new, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean"))
+    ) |>
+      shuffle_ard()
+  )
 })
 
 test_that("shuffle_ard doesn't trim off NULL/NA values", {
