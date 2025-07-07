@@ -388,7 +388,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 derive_overall_col_names <- function(x) {
 
-  browser()
   output <- dplyr::case_when(
     x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
     x == "..hierarchical_overall.." ~ glue::glue("Any {dplyr::cur_column()}"),
