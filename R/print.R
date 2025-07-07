@@ -28,15 +28,22 @@
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
-print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, width = NULL, ...) {
+print.card <- function(
+  x,
+  n = NULL,
+  columns = c("auto", "all"),
+  n_col = 6L,
+  width = NULL,
+  ...
+) {
   # Basic error checking
   if (!inherits(x, "card")) {
     stop("x must be a card object")
   }
-  
+
   # set console width
   width <- width %||% getOption("width", 80L)
-  
+
   # convert to a data frame so the list columns print the values in the list ---
   x_print <- as.data.frame(x)
 
@@ -46,14 +53,14 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
 
   # collect information about column types for better printing
   col_types <- tryCatch(.get_column_types(x_print), error = function(e) NULL)
-  
+
   # remove columns based on width and column threshold -------------------------
   if (match.arg(columns) %in% "auto") {
     x_print <- tryCatch(
       .select_columns_for_printing(x_print, n_col, width),
       error = function(e) {
         # Fallback to original logic if helper function fails
-        .select_columns_fallback(x_print, n_col)
+        .select_columns_fallback(x_print, n_col, width)
       }
     )
   }
@@ -75,9 +82,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       cat("{cards} data frame: ", nrow(x), " x ", ncol(x), "\n", sep = "")
     }
   )
-  
+
   print(x_print)
-  
+
   tryCatch(
     .print_footer(x, x_print, n),
     error = function(e) {
@@ -87,11 +94,18 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
       if (ncol(x) > ncol(x_print)) {
         missing_cols <- names(x)[!names(x) %in% names(x_print)]
-        cat("# ... with ", length(missing_cols), " more variables: ", paste(missing_cols, collapse = ", "), "\n", sep = "")
+        cat(
+          "# ... with ",
+          length(missing_cols),
+          " more variables: ",
+          paste(missing_cols, collapse = ", "),
+          "\n",
+          sep = ""
+        )
       }
     }
   )
-  
+
   invisible(x)
 }
 
@@ -99,19 +113,23 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
 #' @noRd
 .get_column_types <- function(x) {
   # Get column type information for better display
-  col_info <- vapply(x, function(col) {
-    if (is.list(col)) {
-      first_non_null <- col[!vapply(col, is.null, logical(1))]
-      if (length(first_non_null) > 0) {
-        paste0("list<", class(first_non_null[[1]])[1], ">")
+  col_info <- vapply(
+    x,
+    function(col) {
+      if (is.list(col)) {
+        first_non_null <- col[!vapply(col, is.null, logical(1))]
+        if (length(first_non_null) > 0) {
+          paste0("list<", class(first_non_null[[1]])[1], ">")
+        } else {
+          "list"
+        }
       } else {
-        "list"
+        class(col)[1]
       }
-    } else {
-      class(col)[1]
-    }
-  }, character(1))
-  
+    },
+    character(1)
+  )
+
   # Create abbreviated type indicators
   type_abbrev <- c(
     "character" = "chr",
@@ -123,7 +141,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
     "POSIXct" = "dttm",
     "POSIXlt" = "dttm"
   )
-  
+
   # Handle list columns and other types
   for (i in seq_along(col_info)) {
     if (startsWith(col_info[i], "list<")) {
@@ -134,24 +152,51 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       col_info[i] <- type_abbrev[col_info[i]] %||% substr(col_info[i], 1, 3)
     }
   }
-  
+
   col_info
 }
 
 .select_columns_for_printing <- function(x_print, n_col, width) {
   # Select columns based on importance and available width
-  if (exists("all_ard_groups", mode = "function") && exists("all_ard_variables", mode = "function")) {
+  if (
+    exists("all_ard_groups", mode = "function") &&
+      exists("all_ard_variables", mode = "function")
+  ) {
     x_print <- dplyr::select(
-      x_print, all_ard_groups(), all_ard_variables(),
+      x_print,
+      all_ard_groups(),
+      all_ard_variables(),
       dplyr::any_of(c(
-        "context", "stat_name", "stat_label", "stat", "stat_fmt",
-        "fmt_fun", "warning", "error"
+        "context",
+        "stat_name",
+        "stat_label",
+        "stat",
+        "stat_fmt",
+        "fmt_fun",
+        "warning",
+        "error"
       ))
     )
   }
-  
+
+  # Width-aware column selection - adjust n_col based on width
+  # Narrow widths should show fewer columns
+  if (width < 50) {
+    n_col_adjusted <- max(3L, n_col - 3L)
+  } else if (width < 70) {
+    n_col_adjusted <- max(4L, n_col - 2L)
+  } else if (width < 90) {
+    n_col_adjusted <- max(5L, n_col - 1L)
+  } else if (width > 110) {
+    n_col_adjusted <- n_col + 3L
+  } else if (width > 100) {
+    n_col_adjusted <- n_col + 2L
+  } else {
+    n_col_adjusted <- n_col
+  }
+
   # Remove warning and error columns if nothing to report
-  if (ncol(x_print) > n_col && "warning" %in% names(x_print)) {
+  if (ncol(x_print) > n_col_adjusted && "warning" %in% names(x_print)) {
     if (exists("every", mode = "function")) {
       if (every(x_print[["warning"]], is.null)) {
         x_print[["warning"]] <- NULL
@@ -162,8 +207,8 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     }
   }
-  
-  if (ncol(x_print) > n_col && "error" %in% names(x_print)) {
+
+  if (ncol(x_print) > n_col_adjusted && "error" %in% names(x_print)) {
     if (exists("every", mode = "function")) {
       if (every(x_print[["error"]], is.null)) {
         x_print[["error"]] <- NULL
@@ -174,57 +219,87 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     }
   }
-  
+
   # Remove less important columns if there are many columns
-  if (ncol(x_print) > n_col) {
+  # Use width-adjusted threshold
+  if (ncol(x_print) > n_col_adjusted) {
     x_print[["fmt_fun"]] <- NULL
   }
-  if (ncol(x_print) > n_col) {
+  if (ncol(x_print) > n_col_adjusted) {
     x_print[["context"]] <- NULL
   }
-  
+
   x_print
 }
 
 # Fallback functions for robustness
-.select_columns_fallback <- function(x_print, n_col) {
+.select_columns_fallback <- function(x_print, n_col, width = 80) {
   # Fallback to original logic if helper functions fail
-  if (exists("all_ard_groups", mode = "function") && exists("all_ard_variables", mode = "function")) {
+  if (
+    exists("all_ard_groups", mode = "function") &&
+      exists("all_ard_variables", mode = "function")
+  ) {
     x_print <- dplyr::select(
-      x_print, all_ard_groups(), all_ard_variables(),
+      x_print,
+      all_ard_groups(),
+      all_ard_variables(),
       dplyr::any_of(c(
-        "context", "stat_name", "stat_label", "stat", "stat_fmt",
-        "fmt_fun", "warning", "error"
+        "context",
+        "stat_name",
+        "stat_label",
+        "stat",
+        "stat_fmt",
+        "fmt_fun",
+        "warning",
+        "error"
       ))
     )
   }
-  
+
+  # Width-aware column selection - adjust n_col based on width
+  if (width < 50) {
+    n_col_adjusted <- max(3L, n_col - 3L)
+  } else if (width < 70) {
+    n_col_adjusted <- max(4L, n_col - 2L)
+  } else if (width < 90) {
+    n_col_adjusted <- max(5L, n_col - 1L)
+  } else if (width > 110) {
+    n_col_adjusted <- n_col + 3L
+  } else if (width > 100) {
+    n_col_adjusted <- n_col + 2L
+  } else {
+    n_col_adjusted <- n_col
+  }
+
   # Remove warning and error columns if nothing to report
-  if (ncol(x_print) > n_col && "warning" %in% names(x_print)) {
+  if (ncol(x_print) > n_col_adjusted && "warning" %in% names(x_print)) {
     if (all(vapply(x_print[["warning"]], is.null, logical(1)))) {
       x_print[["warning"]] <- NULL
     }
   }
-  if (ncol(x_print) > n_col && "error" %in% names(x_print)) {
+  if (ncol(x_print) > n_col_adjusted && "error" %in% names(x_print)) {
     if (all(vapply(x_print[["error"]], is.null, logical(1)))) {
       x_print[["error"]] <- NULL
     }
   }
-  
+
   # Remove less important columns if there are many columns
-  if (ncol(x_print) > n_col) {
+  if (ncol(x_print) > n_col_adjusted) {
     x_print[["fmt_fun"]] <- NULL
   }
-  if (ncol(x_print) > n_col) {
+  if (ncol(x_print) > n_col_adjusted) {
     x_print[["context"]] <- NULL
   }
-  
+
   x_print
 }
 
 .format_columns_for_printing <- function(x_print) {
   # Truncate and format columns for better display
-  if (exists("all_ard_groups", mode = "function") && exists("all_ard_variables", mode = "function")) {
+  if (
+    exists("all_ard_groups", mode = "function") &&
+      exists("all_ard_variables", mode = "function")
+  ) {
     x_print <- tryCatch(
       x_print |>
         dplyr::mutate(
@@ -248,7 +323,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       error = function(e) x_print
     )
   }
-  
+
   # Format statistics with consistent precision
   if ("stat" %in% names(x_print)) {
     x_print$stat <- lapply(
@@ -263,7 +338,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
         } else {
           res <- as.character(x)
         }
-        
+
         if (is.character(res) && nchar(res) > 9) {
           res <- paste0(substr(res, 1, 8), "\u2026")
         }
@@ -271,7 +346,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     )
   }
-  
+
   # Format function columns
   if ("fmt_fun" %in% names(x_print)) {
     x_print$fmt_fun <- lapply(
@@ -284,14 +359,14 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     )
   }
-  
+
   x_print
 }
 
 # Fallback for formatting columns
 .format_columns_fallback <- function(x_print) {
   # Basic formatting fallback
-  
+
   # Format statistics with consistent precision
   if ("stat" %in% names(x_print)) {
     x_print$stat <- lapply(
@@ -305,7 +380,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     )
   }
-  
+
   # Format function columns
   if ("fmt_fun" %in% names(x_print)) {
     x_print$fmt_fun <- lapply(
@@ -318,7 +393,7 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
       }
     )
   }
-  
+
   x_print
 }
 
@@ -329,20 +404,30 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
   } else {
     cat("{cards} data frame: ", nrow(x), " x ", ncol(x), "\n", sep = "")
   }
-  
+
   # Print column types information if helpful
   if (length(col_types) > 0) {
     # Only show column types for printed columns
     printed_col_types <- col_types[names(col_types) %in% names(x_print)]
     if (any(startsWith(printed_col_types, "list"))) {
-      list_cols <- names(printed_col_types)[startsWith(printed_col_types, "list")]
+      list_cols <- names(printed_col_types)[startsWith(
+        printed_col_types,
+        "list"
+      )]
       if (length(list_cols) > 0) {
-        if (exists("cli_alert_info", mode = "function", where = "package:cli")) {
+        if (
+          exists("cli_alert_info", mode = "function", where = "package:cli")
+        ) {
           cli::cli_alert_info(cli::col_grey(
             "List column{?s}: {paste(list_cols, collapse = ', ')}"
           ))
         } else {
-          cat("# List columns: ", paste(list_cols, collapse = ", "), "\n", sep = "")
+          cat(
+            "# List columns: ",
+            paste(list_cols, collapse = ", "),
+            "\n",
+            sep = ""
+          )
         }
       }
     }
@@ -354,13 +439,15 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
   if (nrow(x) > n) {
     if (exists("cli_alert_info", mode = "function", where = "package:cli")) {
       cli::cli_alert_info(cli::col_grey("{nrow(x) - n} more rows"))
-      cli::cli_alert_info(cli::col_grey("Use {.code print(n = ...)} to see more rows"))
+      cli::cli_alert_info(cli::col_grey(
+        "Use {.code print(n = ...)} to see more rows"
+      ))
     } else {
       cat("# ... with ", nrow(x) - n, " more rows\n", sep = "")
       cat("# Use print(n = ...) to see more rows\n")
     }
   }
-  
+
   if (ncol(x) > ncol(x_print)) {
     missing_cols <- names(x)[!names(x) %in% names(x_print)]
     if (exists("cli_alert_info", mode = "function", where = "package:cli")) {
@@ -368,7 +455,14 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, widt
         "{length(missing_cols)} more variable{?s}: {paste(missing_cols, collapse = ', ')}"
       ))
     } else {
-      cat("# ... with ", length(missing_cols), " more variables: ", paste(missing_cols, collapse = ", "), "\n", sep = "")
+      cat(
+        "# ... with ",
+        length(missing_cols),
+        " more variables: ",
+        paste(missing_cols, collapse = ", "),
+        "\n",
+        sep = ""
+      )
     }
   }
 }
