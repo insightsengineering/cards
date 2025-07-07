@@ -338,10 +338,12 @@ shuffle_ard <- function(x, trim = TRUE) {
 .fill_overall_grp_totals <- function(x, vars_protected, ard_args) {
 
   # extract variables
-  by_vars <- ard_args$by
+  by_vars <- intersect(ard_args$by, names(x))
   other_vars <- ard_args$variables
   # drop the last variable as it is not used for grouping
   other_vars <- other_vars[-length(other_vars)]
+  # weird as variables are still in the variable column at this stage
+  other_vars <- intersect(other_vars, names(x))
 
   grp_vars <- union(by_vars, other_vars)
 
@@ -385,12 +387,13 @@ shuffle_ard <- function(x, trim = TRUE) {
 }
 
 derive_overall_col_names <- function(x) {
+  browser()
   output <- dplyr::case_when(
     x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
     x == "..hierarchical_overall.." ~ glue::glue("Any {dplyr::cur_column()}"),
     TRUE ~ x
   )
 
-  # we want to strip the `"glue"` class
+  # strip the `"glue"` class
   as.character(output)
 }

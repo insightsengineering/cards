@@ -153,6 +153,12 @@ ard_stack <- function(data,
   # order ----------------------------------------------------------------------
   ard_full <- tidy_ard_row_order(ard_full)
 
+  # append attributes used for sorting/filtering -------------------------------
+  attr(ard_full, "args") <- list(
+    by = .by,
+    variables = variables
+  )
+
   # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
     return(shuffle_ard(ard_full))
