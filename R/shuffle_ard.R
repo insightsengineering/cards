@@ -331,7 +331,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       )) |>
         rev() %>%
         .[1]
-      ifelse(!is.na(v) & v == "..cards_overall..", paste0("Overall ", cur_col), v)
+      ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
     }))
 }
 
@@ -387,6 +387,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 }
 
 derive_overall_col_names <- function(x) {
+
   browser()
   output <- dplyr::case_when(
     x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
