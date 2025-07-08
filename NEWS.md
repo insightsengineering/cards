@@ -1,5 +1,18 @@
 # cards 0.6.1.9003
 
+## New Features and Functions
+
+* `shuffle_ard()` fills overall or group statistics with `"Overall <column_name>"` 
+or `"Any <column_name>"`. (#337, @dragosmg)
+* `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present
+in the data and creates a unique label. (#465, @dragosmg)
+* `shuffle_ard()` passes down the `arg` attribute of the input `card` object if 
+present. (#466, @dragosmg)
+
+## Lifecycle Changes
+
+## Bug Fixes
+
 # cards 0.6.1
 
 ## New Features and Functions
