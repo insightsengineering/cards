@@ -197,3 +197,62 @@
       15 Xanomeline ~ Any ~ M     ..ard_h~ TRUE           hierar~ p         %         
       # i 1 more variable: stat <dbl>
 
+# shuffle_ard() messages about 'Overall <var>' or 'Any <var>'
+
+    Code
+      dplyr::mutate(test_data, dplyr::across(ARM:TRTA, cards:::.derive_overall_labels))
+    Message
+      i "Overall ARM" already exists in the `ARM` column. Using "Overall ARM.1".
+    Output
+      # A tibble: 5 x 2
+        ARM           TRTA    
+        <chr>         <chr>   
+      1 Overall ARM.1 <NA>    
+      2 Overall ARM   <NA>    
+      3 <NA>          Any TRTA
+      4 BB            C       
+      5 <NA>          C       
+
+---
+
+    Code
+      shuffled_ard <- shuffle_ard(ard)
+    Message
+      i "Overall TRTA" already exists in the `TRTA` column. Using "Overall TRTA.1".
+      i "Any AESOC" already exists in the `AESOC` column. Using"Any AESOC.1".
+
+---
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_total_n..")
+    Output
+      # A tibble: 1 x 9
+        TRTA    AESOC SEX   variable variable_level context stat_name stat_label  stat
+        <chr>   <chr> <chr> <chr>    <chr>          <chr>   <chr>     <chr>      <dbl>
+      1 Overal~ <NA>  <NA>  ..ard_t~ <NA>           total_n N         N            170
+
+---
+
+    Code
+      dplyr::filter(shuffled_ard, variable == "..ard_hierarchical_overall..")
+    Output
+      # A tibble: 15 x 9
+         TRTA         AESOC SEX   variable variable_level context stat_name stat_label
+         <chr>        <chr> <chr> <chr>    <chr>          <chr>   <chr>     <chr>     
+       1 Overall TRT~ Any ~ Over~ ..ard_h~ TRUE           hierar~ n         n         
+       2 Overall TRT~ Any ~ Over~ ..ard_h~ TRUE           hierar~ N         N         
+       3 Overall TRT~ Any ~ Over~ ..ard_h~ TRUE           hierar~ p         %         
+       4 Overall TRTA Any ~ F     ..ard_h~ TRUE           hierar~ n         n         
+       5 Overall TRTA Any ~ F     ..ard_h~ TRUE           hierar~ N         N         
+       6 Overall TRTA Any ~ F     ..ard_h~ TRUE           hierar~ p         %         
+       7 Overall TRTA Any ~ M     ..ard_h~ TRUE           hierar~ n         n         
+       8 Overall TRTA Any ~ M     ..ard_h~ TRUE           hierar~ N         N         
+       9 Overall TRTA Any ~ M     ..ard_h~ TRUE           hierar~ p         %         
+      10 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ n         n         
+      11 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ N         N         
+      12 Placebo      Any ~ F     ..ard_h~ TRUE           hierar~ p         %         
+      13 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ n         n         
+      14 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ N         N         
+      15 Placebo      Any ~ M     ..ard_h~ TRUE           hierar~ p         %         
+      # i 1 more variable: stat <dbl>
+
