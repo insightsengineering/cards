@@ -29,7 +29,6 @@ shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, cls = "card")
   check_scalar_logical(trim)
 
-  # TODO we might not always have the attributes
   ard_attributes <- attributes(x)
   ard_args <- ard_attributes$args
 
@@ -381,12 +380,29 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   )
 .derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
 
-  overall_val <- c(unique(x), glue::glue("Overall {cur_col}")) |>
+  glue_overall <- glue::glue("Overall {cur_col}")
+  glue_any <- glue::glue("Any {cur_col}")
+
+  overall_val <- c(unique(x), glue_overall) |>
     make.unique() |>
     dplyr::last()
-  any_val <- c(unique(x), glue::glue("Any {cur_col}")) |>
+  any_val <- c(unique(x), glue_any) |>
     make.unique() |>
     dplyr::last()
+
+  if (overall_val != glue_overall) {
+    cli::cli_alert_info(
+      "{.val {glue_overall}} already exists in the {.code {cur_col}} column. \\
+      Using {.val {overall_val}}."
+    )
+  }
+
+  if (any_val != glue_any) {
+    cli::cli_alert_info(
+      "{.val {glue_any}} already exists in the {.code {cur_col}} column. Using \\
+      {.val {any_val}}."
+    )
+  }
 
   output <- dplyr::case_when(
     x == "..cards_overall.." ~ overall_val,
