@@ -128,7 +128,7 @@ ADSL |>
     statistic = list(AGEGR1 = list(mode = get_mode))
   )
 #> 
-#> -- cards ------------------------------------------------------------------------------------------------
+#> -- cards ----------------------------------------------------------------------------------------
 #>   variable context   stat_name stat_label stat  fmt_fun                   
 #> 1 AGEGR1   continuo… mode      mode       65-80 .Primitive("as.character")
 }\if{html}{\out{</div>}}
