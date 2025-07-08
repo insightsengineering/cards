@@ -29,6 +29,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, cls = "card")
   check_scalar_logical(trim)
 
+  # TODO we might not always have the attributes
   ard_attributes <- attributes(x)
   ard_args <- ard_attributes$args
 
@@ -79,7 +80,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     unlist_ard_columns() |>
     .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    .fill_overall_grp_totals(vars_protected, ard_args) |>
+    # .fill_overall_grp_totals(vars_protected) |>
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
@@ -90,7 +91,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       .trim_ard()
   }
 
-  # re-attach the attributes
+  # re-attach the arg attribute
   attr(output, "args") <- ard_args
 
   output
@@ -291,6 +292,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 .fill_overall_grp_values <- function(x, vars_protected) {
+
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
   id_vars <- id_vars[id_vars %in% names(x)]
@@ -322,51 +324,70 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
-  # replace "..cards_overall.." group values with "Overall <colname>"
-  x |>
-    dplyr::mutate(across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
-      overall_val <- make.unique(c(
-        unique(v),
-        paste("Overall", cur_col)
-      )) |>
-        rev() %>%
-        .[1]
-      ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
-    }))
-}
+  for (i in seq_along(grp_vars)) {
+    g_var <- grp_vars[i]
 
-.fill_overall_grp_totals <- function(x, vars_protected, ard_args) {
-
-  # extract variables
-  by_vars <- intersect(ard_args$by, names(x))
-  other_vars <- ard_args$variables
-  # drop the last variable as it is not used for grouping
-  other_vars <- other_vars[-length(other_vars)]
-  # weird as variables are still in the variable column at this stage
-  other_vars <- intersect(other_vars, names(x))
-
-  grp_vars <- union(by_vars, other_vars)
-
-  for (by_var in by_vars) {
     x <- x |>
       dplyr::mutate(
-        !!by_var := dplyr::if_else(
-          is.na(.data[[by_var]]) & .data$variable == "..ard_total_n..",
-          "..cards_overall..",
-          .data[[by_var]]
+        !!g_var := dplyr::case_when(
+          # only assign "..cards_overall.." for the first grouping variable
+          is.na(.data[[g_var]]) & .data$variable == "..ard_total_n.." & i == 1 ~ "..cards_overall..",
+          is.na(.data[[g_var]]) & .data$variable == "..ard_hierarchical_overall.." ~ "..hierarchical_overall..",
+          TRUE ~ .data[[g_var]]
         )
       )
   }
 
-  for (other_var in other_vars) {
+  # replace "..cards_overall.." group values with "Overall <colname>"
+  # x |>
+  #   dplyr::mutate(
+  #     across(
+  #       all_of(grp_vars),
+  #       function(v, cur_col = dplyr::cur_column()) {
+  #         overall_val <- make.unique(
+  #           c(
+  #             unique(v),
+  #             paste("Overall", cur_col)
+  #         )
+  #         ) |>
+  #           rev() %>%
+  #           .[1]
+  #         ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
+  #   }))
+
+  # replace `"..cards_overall.."` group values with "Overall <colname>" and
+  # `"..hierarchical_overall.."` with `"Any <colname>"`
+  output <- x |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::all_of(
+          grp_vars
+        ),
+        derive_overall_col_names
+      )
+    )
+
+  output
+}
+
+.fill_overall_grp_totals <- function(x, vars_protected, ard_args = NULL) {
+  browser()
+
+  # determine grouping and merging variables
+  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
+  id_vars <- id_vars[id_vars %in% names(x)]
+  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
+
+  for (i in seq_along(grp_vars)) {
+    g_var <- grp_vars[i]
+
     x <- x |>
       dplyr::mutate(
-        !!other_var := dplyr::if_else(
-          is.na(.data[[other_var]]) & (
-            .data$variable == "..ard_total_n.." |
-              .data$variable == "..ard_hierarchical_overall.."),
-          "..hierarchical_overall..",
-          .data[[other_var]]
+        !!g_var := dplyr::case_when(
+          # only assign "..cards_overall.." for the first grouping variable
+          is.na(.data[[g_var]]) & .data$variable == "..ard_total_n.." & i == 1 ~ "..cards_overall..",
+          is.na(.data[[g_var]]) & .data$variable == "..ard_hierarchical_overall.." ~ "..hierarchical_overall..",
+          TRUE ~ .data[[g_var]]
         )
       )
   }
@@ -386,14 +407,20 @@ shuffle_ard <- function(x, trim = TRUE) {
   output
 }
 
-derive_overall_col_names <- function(x) {
+derive_overall_col_names <- function(x, cur_col = dplyr::cur_column()) {
+# browser()
+  overall_val <- c(unique(x), glue::glue("Overall {cur_col}")) |>
+    make.unique() |>
+    dplyr::last()
+  any_val <- c(unique(x), glue::glue("Any {cur_col}")) |>
+    make.unique() |>
+    dplyr::last()
 
   output <- dplyr::case_when(
-    x == "..cards_overall.." ~ glue::glue("Overall {dplyr::cur_column()}"),
-    x == "..hierarchical_overall.." ~ glue::glue("Any {dplyr::cur_column()}"),
+    x == "..cards_overall.." ~ overall_val,
+    x == "..hierarchical_overall.." ~ any_val,
     TRUE ~ x
   )
 
-  # strip the `"glue"` class
-  as.character(output)
+  output
 }
