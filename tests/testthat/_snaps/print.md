@@ -3,46 +3,44 @@
     Code
       ard_continuous(ADSL, by = "ARM", variables = "AGE")
     Message
-      {cards} data frame: 24 x 10
+      
+      -- cards -----------------------------------------------------------------------
     Output
-         group1 group1_level variable stat_name stat_label   stat
-      1     ARM      Placebo      AGE         N          N     86
-      2     ARM      Placebo      AGE      mean       Mean 75.209
-      3     ARM      Placebo      AGE        sd         SD   8.59
-      4     ARM      Placebo      AGE    median     Median     76
-      5     ARM      Placebo      AGE       p25         Q1     69
-      6     ARM      Placebo      AGE       p75         Q3     82
-      7     ARM      Placebo      AGE       min        Min     52
-      8     ARM      Placebo      AGE       max        Max     89
-      9     ARM    Xanomeli…      AGE         N          N     84
-      10    ARM    Xanomeli…      AGE      mean       Mean 74.381
+         group1 group1_level variable stat_name stat_label stat  
+      1  ARM    Placebo      AGE      N         N          86    
+      2  ARM    Placebo      AGE      mean      Mean       75.209
+      3  ARM    Placebo      AGE      sd        SD         8.59  
+      4  ARM    Placebo      AGE      median    Median     76    
+      5  ARM    Placebo      AGE      p25       Q1         69    
+      6  ARM    Placebo      AGE      p75       Q3         82    
+      7  ARM    Placebo      AGE      min       Min        52    
+      8  ARM    Placebo      AGE      max       Max        89    
+      9  ARM    Xanomeli…    AGE      N         N          84    
+      10 ARM    Xanomeli…    AGE      mean      Mean       74.381
     Message
-      i 14 more rows
-      i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fun, warning, error
+      i Showing 10 of 24 rows.
 
 ---
 
     Code
       ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
     Message
-      {cards} data frame: 27 x 11
+      
+      -- cards -----------------------------------------------------------------------
     Output
-         group1 group1_level variable variable_level stat_name stat_label  stat
-      1     ARM      Placebo   AGEGR1          65-80         n          n    42
-      2     ARM      Placebo   AGEGR1          65-80         N          N    86
-      3     ARM      Placebo   AGEGR1          65-80         p          % 0.488
-      4     ARM      Placebo   AGEGR1            <65         n          n    14
-      5     ARM      Placebo   AGEGR1            <65         N          N    86
-      6     ARM      Placebo   AGEGR1            <65         p          % 0.163
-      7     ARM      Placebo   AGEGR1            >80         n          n    30
-      8     ARM      Placebo   AGEGR1            >80         N          N    86
-      9     ARM      Placebo   AGEGR1            >80         p          % 0.349
-      10    ARM    Xanomeli…   AGEGR1          65-80         n          n    55
+         group1 group1_level variable variable_level stat_name stat_label stat 
+      1  ARM    Placebo      AGEGR1   65-80          n         n          42   
+      2  ARM    Placebo      AGEGR1   65-80          N         N          86   
+      3  ARM    Placebo      AGEGR1   65-80          p         %          0.488
+      4  ARM    Placebo      AGEGR1   <65            n         n          14   
+      5  ARM    Placebo      AGEGR1   <65            N         N          86   
+      6  ARM    Placebo      AGEGR1   <65            p         %          0.163
+      7  ARM    Placebo      AGEGR1   >80            n         n          30   
+      8  ARM    Placebo      AGEGR1   >80            N         N          86   
+      9  ARM    Placebo      AGEGR1   >80            p         %          0.349
+      10 ARM    Xanomeli…    AGEGR1   65-80          n         n          55   
     Message
-      i 17 more rows
-      i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fun, warning, error
+      i Showing 10 of 27 rows.
 
 ---
 
@@ -50,19 +48,18 @@
       ard_continuous(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x)
         round(x, 3)))
     Message
-      {cards} data frame: 8 x 8
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable   context stat_name stat_label   stat fmt_fun
-      1      AGE continuo…         N          N    254    <fn>
-      2      AGE continuo…      mean       Mean 75.087    <fn>
-      3      AGE continuo…        sd         SD  8.246    <fn>
-      4      AGE continuo…    median     Median     77    <fn>
-      5      AGE continuo…       p25         Q1     70    <fn>
-      6      AGE continuo…       p75         Q3     81    <fn>
-      7      AGE continuo…       min        Min     51    <fn>
-      8      AGE continuo…       max        Max     89    <fn>
-    Message
-      i 2 more variables: warning, error
+        variable context   stat_name stat_label stat   fmt_fun                   
+      1 AGE      continuo… N         N          254    function (x) , round(x, 3)
+      2 AGE      continuo… mean      Mean       75.087 function (x) , round(x, 3)
+      3 AGE      continuo… sd        SD         8.246  function (x) , round(x, 3)
+      4 AGE      continuo… median    Median     77     function (x) , round(x, 3)
+      5 AGE      continuo… p25       Q1         70     function (x) , round(x, 3)
+      6 AGE      continuo… p75       Q3         81     function (x) , round(x, 3)
+      7 AGE      continuo… min       Min        51     function (x) , round(x, 3)
+      8 AGE      continuo… max       Max        89     function (x) , round(x, 3)
 
 ---
 
@@ -71,14 +68,13 @@
       length.out = 10L, by = "day")), variables = x, statistic = ~
       continuous_summary_fns(c("min", "max", "sd"))), -fmt_fun)
     Message
-      {cards} data frame: 3 x 7
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable   context stat_name stat_label      stat error
-      1        x continuo…       min        Min 2000-01-…      
-      2        x continuo…       max        Max 2000-01-…      
-      3        x continuo…        sd         SD     3.028      
-    Message
-      i 1 more variable: warning
+        variable context   stat_name stat_label stat  error
+      1 x        continuo… min       Min        10957      
+      2 x        continuo… max       Max        10966      
+      3 x        continuo… sd        SD         3.028      
 
 ---
 
@@ -87,13 +83,115 @@
         variables = mpg, statistic = ~ continuous_summary_fns("mean", other_stats = list(
           vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
     Message
-      {cards} data frame: 4 x 8
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable   context stat_name stat_label                         stat fmt_fun
-      1      mpg attribut…     label  Variable…                          mpg    <fn>
-      2      mpg attribut…     class  Variable…                      numeric    NULL
-      3      mpg continuo…      mean       Mean                       20.091       1
-      4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113       1
+        variable context   stat_name stat_label stat                        
+      1 mpg      attribut… label     Variable…  mpg                         
+      2 mpg      attribut… class     Variable…  numeric                     
+      3 mpg      continuo… mean      Mean       20.091                      
+      4 mpg      continuo… vcov      vcov       1.265, -1.265, -1.265, 3.113
+        fmt_fun                   
+      1 .Primitive("as.character")
+      2 NULL                      
+      3 1                         
+      4 1                         
+
+# print.card(width) works
+
+    Code
+      ard_continuous(ADSL, by = "ARM", variables = "AGE")
     Message
-      i 2 more variables: warning, error
+      
+      -- cards -----------------------------------------------------------------------
+    Output
+         group1 group1_level variable stat_name stat_label stat  
+      1  ARM    Placebo      AGE      N         N          86    
+      2  ARM    Placebo      AGE      mean      Mean       75.209
+      3  ARM    Placebo      AGE      sd        SD         8.59  
+      4  ARM    Placebo      AGE      median    Median     76    
+      5  ARM    Placebo      AGE      p25       Q1         69    
+      6  ARM    Placebo      AGE      p75       Q3         82    
+      7  ARM    Placebo      AGE      min       Min        52    
+      8  ARM    Placebo      AGE      max       Max        89    
+      9  ARM    Xanomeli…    AGE      N         N          84    
+      10 ARM    Xanomeli…    AGE      mean      Mean       74.381
+    Message
+      i Showing 10 of 24 rows.
+
+---
+
+    Code
+      print(ard_continuous(ADSL, by = c("ARM", "SEX"), variables = c("AGE", "BMIBL")), n = 5)
+    Message
+      
+      -- cards -----------------------------------------------------------------------
+    Output
+        group1 group1_level group2 group2_level variable stat_name stat_label stat  
+      1 ARM    Placebo      SEX    F            AGE      N         N          53    
+      2 ARM    Placebo      SEX    F            AGE      mean      Mean       76.358
+      3 ARM    Placebo      SEX    F            AGE      sd        SD         8.733 
+      4 ARM    Placebo      SEX    F            AGE      median    Median     78    
+      5 ARM    Placebo      SEX    F            AGE      p25       Q1         70    
+    Message
+      i Showing 5 of 96 rows.
+
+# print.card(n) works
+
+    Code
+      print(ard_continuous(ADSL, by = "ARM", variables = "AGE"), n = 2)
+    Message
+      
+      -- cards -----------------------------------------------------------------------
+    Output
+        group1 group1_level variable stat_name stat_label stat  
+      1 ARM    Placebo      AGE      N         N          86    
+      2 ARM    Placebo      AGE      mean      Mean       75.209
+    Message
+      i Showing 2 of 24 rows.
+
+---
+
+    Code
+      print(ard_continuous(ADSL, by = "ARM", variables = "AGE"), n = 20)
+    Message
+      
+      -- cards -----------------------------------------------------------------------
+    Output
+         group1 group1_level variable stat_name stat_label stat  
+      1  ARM    Placebo      AGE      N         N          86    
+      2  ARM    Placebo      AGE      mean      Mean       75.209
+      3  ARM    Placebo      AGE      sd        SD         8.59  
+      4  ARM    Placebo      AGE      median    Median     76    
+      5  ARM    Placebo      AGE      p25       Q1         69    
+      6  ARM    Placebo      AGE      p75       Q3         82    
+      7  ARM    Placebo      AGE      min       Min        52    
+      8  ARM    Placebo      AGE      max       Max        89    
+      9  ARM    Xanomeli…    AGE      N         N          84    
+      10 ARM    Xanomeli…    AGE      mean      Mean       74.381
+      11 ARM    Xanomeli…    AGE      sd        SD         7.886 
+      12 ARM    Xanomeli…    AGE      median    Median     76    
+      13 ARM    Xanomeli…    AGE      p25       Q1         70.5  
+      14 ARM    Xanomeli…    AGE      p75       Q3         80    
+      15 ARM    Xanomeli…    AGE      min       Min        56    
+      16 ARM    Xanomeli…    AGE      max       Max        88    
+      17 ARM    Xanomeli…    AGE      N         N          84    
+      18 ARM    Xanomeli…    AGE      mean      Mean       75.667
+      19 ARM    Xanomeli…    AGE      sd        SD         8.286 
+      20 ARM    Xanomeli…    AGE      median    Median     77.5  
+    Message
+      i Showing 20 of 24 rows.
+
+# print.card() messaging works
+
+    Code
+      print(ard_continuous(ADSL, variables = "AGE"), n = 1)
+    Message
+      
+      -- cards -----------------------------------------------------------------------
+    Output
+        variable context   stat_name stat_label stat fmt_fun
+      1 AGE      continuo… N         N          254  0      
+    Message
+      i Showing 1 of 8 rows.
 

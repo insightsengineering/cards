@@ -5,12 +5,11 @@
     Message
       The `.by` argument should be specified when using `.overall=TRUE`.
       i Setting `ard_stack(.overall=FALSE)`.
-      {cards} data frame: 1 x 8
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable   context stat_name stat_label stat fmt_fun
-      1      mpg continuo…         N          N   32       0
-    Message
-      i 2 more variables: warning, error
+        variable context   stat_name stat_label stat fmt_fun
+      1 mpg      continuo… N         N          32   0      
 
 ---
 
@@ -38,21 +37,20 @@
       .overall = TRUE), stat_name %in% "N")
     Message
       * Removing 1 row with NA or NaN values in "am" and "vs" columns.
-      {cards} data frame: 10 x 13
+      
+      -- cards -----------------------------------------------------------------------
     Output
-         group1 group1_level group2 group2_level        variable variable_level stat_name stat_label stat
-      1      am            0     vs            0             mpg                        N          N   12
-      2      am            0     vs            1             mpg                        N          N    7
-      3      am            1     vs            0             mpg                        N          N    5
-      4      am            1     vs            1             mpg                        N          N    7
-      5    <NA>                <NA>                          mpg                        N          N   31
-      6    <NA>                <NA>                           am              0         N          N   31
-      7    <NA>                <NA>                           am              1         N          N   31
-      8    <NA>                <NA>                           vs              0         N          N   31
-      9    <NA>                <NA>                           vs              1         N          N   31
-      10   <NA>                <NA>              ..ard_total_n..                        N          N   31
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+         group1 group1_level group2 group2_level variable        variable_level stat_name stat_label stat
+      1  am     0            vs     0            mpg                            N         N          12  
+      2  am     0            vs     1            mpg                            N         N          7   
+      3  am     1            vs     0            mpg                            N         N          5   
+      4  am     1            vs     1            mpg                            N         N          7   
+      5  <NA>                <NA>                mpg                            N         N          31  
+      6  <NA>                <NA>                am              0              N         N          31  
+      7  <NA>                <NA>                am              1              N         N          31  
+      8  <NA>                <NA>                vs              0              N         N          31  
+      9  <NA>                <NA>                vs              1              N         N          31  
+      10 <NA>                <NA>                ..ard_total_n..                N         N          31  
 
 ---
 
@@ -61,19 +59,18 @@
       .overall = TRUE), stat_name %in% "N")
     Message
       * Removing 2 rows with NA or NaN values in "am" and "vs" columns.
-      {cards} data frame: 10 x 13
+      
+      -- cards -----------------------------------------------------------------------
     Output
-         group1 group1_level group2 group2_level        variable variable_level stat_name stat_label stat
-      1      am            0     vs            0             mpg                        N          N   12
-      2      am            0     vs            1             mpg                        N          N    7
-      3      am            1     vs            0             mpg                        N          N    4
-      4      am            1     vs            1             mpg                        N          N    7
-      5    <NA>                <NA>                          mpg                        N          N   30
-      6    <NA>                <NA>                           am              0         N          N   30
-      7    <NA>                <NA>                           am              1         N          N   30
-      8    <NA>                <NA>                           vs              0         N          N   30
-      9    <NA>                <NA>                           vs              1         N          N   30
-      10   <NA>                <NA>              ..ard_total_n..                        N          N   30
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+         group1 group1_level group2 group2_level variable        variable_level stat_name stat_label stat
+      1  am     0            vs     0            mpg                            N         N          12  
+      2  am     0            vs     1            mpg                            N         N          7   
+      3  am     1            vs     0            mpg                            N         N          4   
+      4  am     1            vs     1            mpg                            N         N          7   
+      5  <NA>                <NA>                mpg                            N         N          30  
+      6  <NA>                <NA>                am              0              N         N          30  
+      7  <NA>                <NA>                am              1              N         N          30  
+      8  <NA>                <NA>                vs              0              N         N          30  
+      9  <NA>                <NA>                vs              1              N         N          30  
+      10 <NA>                <NA>                ..ard_total_n..                N         N          30  
 

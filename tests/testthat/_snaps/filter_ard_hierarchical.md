@@ -3,23 +3,22 @@
     Code
       ard_f
     Message
-      {cards} data frame: 39 x 15
+      
+      -- cards -----------------------------------------------------------------------
     Output
-         group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
-      1    <NA>                <NA>                <NA>                                      TRTA        Placebo         n          n    86
-      2    <NA>                <NA>                <NA>                                      TRTA        Placebo         N          N   254
-      3    <NA>                <NA>                <NA>                                      TRTA        Placebo         p          % 0.339
-      4    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         n          n    84
-      5    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         N          N   254
-      6    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
-      7    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         n          n    84
-      8    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         N          N   254
-      9    <NA>                <NA>                <NA>                                      TRTA      Xanomeli…         p          % 0.331
-      10   TRTA      Placebo   <NA>                <NA>              ..ard_hierarchical_overall..           TRUE         n          n    26
+         group1 group1_level group2 group2_level group3 group3_level variable                     variable_level stat_name stat_label stat 
+      1  <NA>                <NA>                <NA>                TRTA                         Placebo        n         n          86   
+      2  <NA>                <NA>                <NA>                TRTA                         Placebo        N         N          254  
+      3  <NA>                <NA>                <NA>                TRTA                         Placebo        p         %          0.339
+      4  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      n         n          84   
+      5  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      N         N          254  
+      6  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      p         %          0.331
+      7  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      n         n          84   
+      8  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      N         N          254  
+      9  <NA>                <NA>                <NA>                TRTA                         Xanomeli…      p         %          0.331
+      10 TRTA   Placebo      <NA>                <NA>                ..ard_hierarchical_overall.. TRUE           n         n          26   
     Message
-      i 29 more rows
-      i Use `print(n = ...)` to see more rows
-      i 4 more variables: context, fmt_fun, warning, error
+      i Showing 10 of 39 rows.
 
 # filter_ard_hierarchical() error messaging works
 

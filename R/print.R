@@ -5,6 +5,8 @@
 #'
 #' @param x (`data.frame`)\cr
 #'   object of class 'card'
+#' @param width (`integer`)\cr
+#'   integer specifying the width of the console. Default is `getOption("width")`.
 #' @param n (`integer`)\cr
 #'   integer specifying the number of rows to print
 #' @param columns (`string`)\cr
@@ -26,21 +28,46 @@
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
-print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
+print.card <- function(x, width = getOption("width"), n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
   set_cli_abort_call()
+
+  # assertion ------------------------------------------------------------------
+  if (!inherits(x, "card")) {
+    cli::cli_abort(c("x" = "{.var x} must be a {.cls card} object."))
+  }
 
   # convert to a data frame so the list columns print the values in the list ---
   x_print <- as.data.frame(x)
 
   # number of rows to print (modeled after tibbles print) ----------------------
   n <- n %||% ifelse(nrow(x_print) > 20L, 10L, nrow(x_print))
-  x_print <- utils::head(x_print, n = n)
+  x_print_n <- utils::head(x_print, n = n)
 
+  # select and format columns --------------------------------------------------
+  x_print_n <- .pr_select_cols(x_print_n, columns, n_col)
+  x_print_n <- .pr_format_cols(x_print_n)
+
+
+  # print object ---------------------------------------------------------------
+  cli::cli_h1("cards")
+  print(x_print_n, right = FALSE)
+
+  # print footer ---------------------------------------------------------------
+  if (n < nrow(x)) {
+    cli::cli_inform(c("i" = "Showing {n} of {nrow(x)} rows."))
+  }
+
+  invisible(x)
+}
+
+# helpers ----------------------------------------------------------------------
+
+.pr_select_cols <- function(x, columns, n_col) {
   # remove columns -------------------------------------------------------------
-  if (arg_match(columns) %in% "auto") {
-    x_print <-
+  if (rlang::arg_match(columns, values = c("auto", "all")) %in% "auto") {
+    x <-
       dplyr::select(
-        x_print, all_ard_groups(), all_ard_variables(),
+        x, all_ard_groups(), all_ard_variables(),
         any_of(c(
           "context", "stat_name", "stat_label", "stat", "stat_fmt",
           "fmt_fun", "warning", "error"
@@ -48,27 +75,31 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       )
 
     # remove warning and error columns if nothing to report
-    if (ncol(x_print) > n_col && "warning" %in% names(x_print) && every(x_print[["warning"]], is.null)) {
-      x_print[["warning"]] <- NULL
+    if (ncol(x) > n_col && "warning" %in% names(x) && every(x[["warning"]], is.null)) {
+      x[["warning"]] <- NULL
     }
-    if (ncol(x_print) > n_col && "error" %in% names(x_print) && every(x_print[["error"]], is.null)) {
-      x_print[["error"]] <- NULL
+    if (ncol(x) > n_col && "error" %in% names(x) && every(x[["error"]], is.null)) {
+      x[["error"]] <- NULL
     }
 
     # remove 'fmt_fun' col if there are many cols
-    if (ncol(x_print) > n_col) {
-      x_print[["fmt_fun"]] <- NULL
+    if (ncol(x) > n_col) {
+      x[["fmt_fun"]] <- NULL
     }
     # remove 'context' col if there are many cols
-    if (ncol(x_print) > n_col) {
-      x_print[["context"]] <- NULL
+    if (ncol(x) > n_col) {
+      x[["context"]] <- NULL
     }
   }
 
-  # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ------
-  x_print <-
+  x
+}
+
+.pr_format_cols <- function(x) {
+  # truncate the 'group##_level', 'variable_level', 'stat_label', and 'context' columns ----
+  x <-
     tryCatch(
-      x_print |>
+      x |>
         dplyr::mutate(
           across(
             c(
@@ -87,53 +118,28 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
             }
           )
         ),
-      error = function(e) x_print
+      error = function(e) x
     )
 
   # for the statistics, round to 3 decimal places ------------------------------
-  if ("stat" %in% names(x_print)) {
-    x_print$stat <- lapply(
-      x_print$stat,
+  if ("stat" %in% names(x)) {
+    x$stat <- lapply(
+      x$stat,
       function(x) {
         if (isTRUE(is.numeric(x))) {
           res <- round5(x, digits = 3)
         } else {
-          res <- as.character(x)
-        }
-
-        if (is_string(res) && nchar(res) > 9) {
-          res <- paste0(substr(res, 1, 8), "\u2026")
+          res <- x
         }
         res
       }
     )
   }
 
-  # for the formatting function column, abbreviate the print of proper functions
-  if ("fmt_fun" %in% names(x_print)) {
-    x_print$fmt_fun <- lapply(
-      x_print$fmt_fun,
-      function(x) {
-        if (isTRUE(is.function(x))) {
-          return("<fn>")
-        }
-        x
-      }
-    )
+  # unlist the stat_fmt column so it prints nicely -----------------------------
+  if ("stat_fmt" %in% names(x)) {
+    x$stat_fmt <- unlist(x$stat_fmt)
   }
 
-  # final printing --------------------------------------------------------------
-  cli::cli_text(cli::col_grey("{{cards}} data frame: {nrow(x)} x {ncol(x)}"))
-  print(x_print)
-  if (nrow(x) > n) {
-    cli::cli_alert_info(cli::col_grey("{nrow(x) - n} more rows"))
-    cli::cli_alert_info(cli::col_grey("Use {.code print(n = ...)} to see more rows"))
-  }
-  if (ncol(x) > ncol(x_print)) {
-    missing_cols <- names(x) |> setdiff(names(x_print))
-    cli::cli_alert_info(cli::col_grey(
-      "{length(missing_cols)} more variable{?s}: {paste(missing_cols, collapse = ', ')}"
-    ))
-  }
-  invisible(x)
+  x
 }

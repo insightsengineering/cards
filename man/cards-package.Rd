@@ -26,6 +26,7 @@ Authors:
 \itemize{
   \item Becca Krouse \email{becca.z.krouse@gsk.com}
   \item Emily de la Rua \email{emily.de_la_rua@contractors.roche.com}
+  \item James Kim \email{james.j.kim@pfizer.com} (\href{https://orcid.org/0000-0002-3122-0001}{ORCID})
 }
 
 Other contributors:

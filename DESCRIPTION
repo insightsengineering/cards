@@ -6,6 +6,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-0862-2018")),
     person("Becca", "Krouse", , "becca.z.krouse@gsk.com", role = "aut"),
     person("Emily", "de la Rua", , "emily.de_la_rua@contractors.roche.com", role = "aut"),
+    person("James", "Kim", , "james.j.kim@pfizer.com", role = "aut",
+           comment = c(ORCID = "0000-0002-3122-0001")),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
     person("GlaxoSmithKline Research & Development Limited", role = "cph")
   )

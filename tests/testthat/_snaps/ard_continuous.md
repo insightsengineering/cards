@@ -123,14 +123,13 @@
     Code
       ard_date
     Message
-      {cards} data frame: 3 x 8
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable   context stat_name stat_label      stat fmt_fun
-      1 DISONSDT continuo…       min        Min 1998-06-…    <fn>
-      2 DISONSDT continuo…       max        Max 2013-09-…    <fn>
-      3 DISONSDT continuo…        sd         SD   878.558       1
-    Message
-      i 2 more variables: warning, error
+        variable context   stat_name stat_label stat    fmt_fun                   
+      1 DISONSDT continuo… min       Min        10390   .Primitive("as.character")
+      2 DISONSDT continuo… max       Max        15964   .Primitive("as.character")
+      3 DISONSDT continuo… sd        SD         878.558 1                         
 
 # ard_continuous() works with non-syntactic names
 
