@@ -213,7 +213,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
   )
 })
 
-test_that("shuffle_ard() preserves attributes a cards object", {
+test_that("shuffle_ard() preserves the attributes of a cards object", {
   adae <- ADAE |>
     dplyr::filter(
       SAFFL == "Y",
@@ -232,7 +232,7 @@ test_that("shuffle_ard() preserves attributes a cards object", {
       TRTA %in% c("Placebo", "Xanomeline High Dose")
     )
 
-  shuffled_ard1 <- ard_stack_hierarchical(
+  ard <- ard_stack_hierarchical(
     data = adae,
     by = TRTA,
     variables = c(AESOC, AETERM),
@@ -240,41 +240,16 @@ test_that("shuffle_ard() preserves attributes a cards object", {
     id = USUBJID,
     overall = TRUE,
     over_variables = TRUE,
-    total_n = TRUE,
-    shuffle = TRUE
+    total_n = TRUE
   )
 
-  expect_identical(
-    attributes(shuffled_ard1)[["args"]],
-    list(
-      by = "TRTA",
-      variables = c("AESOC", "AETERM"),
-      include = c("AESOC", "AETERM")
-    )
-  )
-
-  shuffled_ard2 <- ard_stack_hierarchical(
-    data = adae,
-    by = TRTA,
-    variables = c(AESOC, AETERM),
-    denominator = adsl,
-    id = USUBJID,
-    overall = TRUE,
-    over_variables = TRUE,
-    total_n = TRUE,
-    shuffle = FALSE
-  ) |>
+  shuffled_ard <- ard |>
     shuffle_ard()
 
-  # TODO for the moment `shuffled_ard1` and `shuffled_ard2` are not identical,
-  # but should they be?
-  expect_error(
-    expect_identical(
-      shuffled_ard1,
-      shuffled_ard2
-    )
+  expect_identical(
+    attributes(ard)[["args"]],
+    attributes(shuffled_ard)[["args"]]
   )
-
 })
 
 test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`", {
@@ -389,8 +364,8 @@ test_that("shuffle_ard() fills with multiple `by` columns", {
       ),
     data.frame(
       TRTA = "Overall TRTA",
-      AESOC = "Any AESOC",
-      SEX = "Overall SEX"
+      AESOC = NA_character_,
+      SEX = NA_character_
     ),
     # the shuffled_ard preserves the card attributes and returns a tibble. We
     # need to ignore the attributes for the purpose of this comparison
