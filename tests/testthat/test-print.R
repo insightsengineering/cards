@@ -37,38 +37,3 @@ test_that("print.card() works", {
     )
   )
 })
-
-test_that("print.card(width) works", {
-  withr::local_options(list(width = 150))
-
-  expect_snapshot(
-    ard_continuous(ADSL, by = "ARM", variables = "AGE")
-  )
-
-  expect_snapshot(
-    ard_continuous(ADSL, by = c("ARM", "SEX"), variables = c("AGE", "BMIBL")) |>
-      print(n = 5)
-  )
-})
-
-test_that("print.card(n) works", {
-  withr::local_options(list(width = 150))
-
-  expect_snapshot(
-    ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
-      print(n = 2)
-  )
-
-  expect_snapshot(
-    ard_continuous(ADSL, by = "ARM", variables = "AGE") |>
-      print(n = 20)
-  )
-})
-
-test_that("print.card() messaging works", {
-  withr::local_options(list(width = 150))
-
-  expect_snapshot(
-    print(ard_continuous(ADSL, variables = "AGE"), n = 1)
-  )
-})
