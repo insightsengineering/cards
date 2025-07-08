@@ -372,8 +372,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' )
 #'
 #' data |>
-#'   mutate(
-#'     across(
+#'   dplyr::mutate(
+#'     dplyr::across(
 #'       ARM:TRTA,
 #'       cards:::.derive_overall_labels
 #'     )
