@@ -80,7 +80,6 @@ shuffle_ard <- function(x, trim = TRUE) {
     unlist_ard_columns() |>
     .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    # .fill_overall_grp_totals(vars_protected) |>
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
@@ -337,23 +336,6 @@ shuffle_ard <- function(x, trim = TRUE) {
         )
       )
   }
-
-  # replace "..cards_overall.." group values with "Overall <colname>"
-  # x |>
-  #   dplyr::mutate(
-  #     across(
-  #       all_of(grp_vars),
-  #       function(v, cur_col = dplyr::cur_column()) {
-  #         overall_val <- make.unique(
-  #           c(
-  #             unique(v),
-  #             paste("Overall", cur_col)
-  #         )
-  #         ) |>
-  #           rev() %>%
-  #           .[1]
-  #         ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
-  #   }))
 
   # replace `"..cards_overall.."` group values with "Overall <colname>" and
   # `"..hierarchical_overall.."` with `"Any <colname>"`
