@@ -347,14 +347,39 @@ shuffle_ard <- function(x, trim = TRUE) {
         tidyselect::all_of(
           grp_vars
         ),
-        derive_overall_labels
+        .derive_overall_labels
       )
     )
 
   output
 }
 
-derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
+#' Derive overall labels
+#'
+#' Transform the `"..cards_overall.."` and `"..hierarchical_overall.."` labels
+#' into `"Overall <variable_name>"` and `"Any <variable_name>"` respectively.
+#' Also it ensures the labels are unique (in case they already exist) with
+#' `make.unique()` which appends a sequence number.
+#'
+#' @param x (character) content of target (current) column
+#' @param cur_col (character) name of current column
+#'
+#' @returns a character vector
+#'
+#' @examples
+#' data <- dplyr::tibble(
+#'   ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
+#'   TRTA = c(NA, NA, "..hierarchical_overall..", "C", "C")
+#' )
+#'
+#' data |>
+#'   mutate(
+#'     across(
+#'       ARM:TRTA,
+#'       cards:::.derive_overall_labels
+#'     )
+#'   )
+.derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
 
   overall_val <- c(unique(x), glue::glue("Overall {cur_col}")) |>
     make.unique() |>
