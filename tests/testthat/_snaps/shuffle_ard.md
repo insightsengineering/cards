@@ -112,6 +112,8 @@
     Code
       shuffle_ard(bind_ard(ard_continuous(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_continuous(adsl_new, by = "ARM", variables = "AGE", statistic = ~
         continuous_summary_fns("mean"))))
+    Message
+      i "Overall ARM" already exists in the `ARM` column. Using "Overall ARM.1".
     Output
       # A tibble: 4 x 6
         ARM                  variable context    stat_name stat_label  stat
@@ -138,9 +140,9 @@
       dplyr::filter(shuffled_ard, variable == "..ard_total_n..")
     Output
       # A tibble: 1 x 8
-        TRTA         AESOC  variable variable_level context stat_name stat_label  stat
-        <chr>        <chr>  <chr>    <chr>          <chr>   <chr>     <chr>      <dbl>
-      1 Overall TRTA Any A~ ..ard_t~ <NA>           total_n N         N            170
+        TRTA         AESOC variable  variable_level context stat_name stat_label  stat
+        <chr>        <chr> <chr>     <chr>          <chr>   <chr>     <chr>      <dbl>
+      1 Overall TRTA <NA>  ..ard_to~ <NA>           total_n N         N            170
 
 ---
 
@@ -168,7 +170,7 @@
       # A tibble: 1 x 9
         TRTA    AESOC SEX   variable variable_level context stat_name stat_label  stat
         <chr>   <chr> <chr> <chr>    <chr>          <chr>   <chr>     <chr>      <dbl>
-      1 Overal~ Any ~ Over~ ..ard_t~ <NA>           total_n N         N            170
+      1 Overal~ <NA>  <NA>  ..ard_t~ <NA>           total_n N         N            170
 
 ---
 
