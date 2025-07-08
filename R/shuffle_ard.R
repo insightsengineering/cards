@@ -370,45 +370,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   output
 }
 
-.fill_overall_grp_totals <- function(x, vars_protected, ard_args = NULL) {
-  browser()
-
-  # determine grouping and merging variables
-  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
-  id_vars <- id_vars[id_vars %in% names(x)]
-  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
-
-  for (i in seq_along(grp_vars)) {
-    g_var <- grp_vars[i]
-
-    x <- x |>
-      dplyr::mutate(
-        !!g_var := dplyr::case_when(
-          # only assign "..cards_overall.." for the first grouping variable
-          is.na(.data[[g_var]]) & .data$variable == "..ard_total_n.." & i == 1 ~ "..cards_overall..",
-          is.na(.data[[g_var]]) & .data$variable == "..ard_hierarchical_overall.." ~ "..hierarchical_overall..",
-          TRUE ~ .data[[g_var]]
-        )
-      )
-  }
-
-  # replace `"..cards_overall.."` group values with "Overall <colname>" and
-  # `"..hierarchical_overall.."` with `"Any <colname>"`
-  output <- x |>
-    dplyr::mutate(
-      dplyr::across(
-        tidyselect::all_of(
-          grp_vars
-        ),
-        derive_overall_col_names
-      )
-    )
-
-  output
-}
-
 derive_overall_col_names <- function(x, cur_col = dplyr::cur_column()) {
-# browser()
+
   overall_val <- c(unique(x), glue::glue("Overall {cur_col}")) |>
     make.unique() |>
     dplyr::last()
