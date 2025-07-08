@@ -265,13 +265,13 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 #' Fill Overall Group Variables
 #'
-#' This function fills the missing values of grouping variables with "Overall
-#' `variable name`" where relevant. Specifically it will modify grouping values
-#' from rows with likely overall calculations present (e.g. non-missing
-#' variable/variable_level, missing group variables, and evidence that the
-#' `variable` has been computed by group in other rows). "Overall" values will
-#' be populated only for grouping variables that have been used in other calculations
-#' of the same variable and statistics.
+#' This function fills the missing values of grouping variables with
+#' `"Overall <variable_name>"` or `"Any <variable_name>"`where relevant.
+#' Specifically, it will modify grouping values from rows with likely overall
+#' calculations present (e.g. non-missing variable/variable_level, missing group
+#' variables, and evidence that the `variable` has been computed by group in
+#' other rows). "Overall" values will be populated only for grouping variables
+#' that have been used in other calculations of the same variable and statistics.
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
@@ -323,6 +323,8 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
+  # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
+  # where it is likely to be a group or subgroup calculation
   for (i in seq_along(grp_vars)) {
     g_var <- grp_vars[i]
 
@@ -345,14 +347,14 @@ shuffle_ard <- function(x, trim = TRUE) {
         tidyselect::all_of(
           grp_vars
         ),
-        derive_overall_col_names
+        derive_overall_labels
       )
     )
 
   output
 }
 
-derive_overall_col_names <- function(x, cur_col = dplyr::cur_column()) {
+derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
 
   overall_val <- c(unique(x), glue::glue("Overall {cur_col}")) |>
     make.unique() |>
