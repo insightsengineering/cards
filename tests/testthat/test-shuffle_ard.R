@@ -213,7 +213,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
   )
 })
 
-test_that("shuffle_ard() preserves the attributes of a cards object", {
+test_that("shuffle_ard() preserves the attributes of a `card` object", {
   adae <- ADAE |>
     dplyr::filter(
       SAFFL == "Y",
