@@ -322,7 +322,8 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
-  # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
+  # replace NA group values with "..cards_overall.." or
+  # "..hierarchical_overall.."
   # where it is likely to be a group or subgroup calculation
   for (i in seq_along(grp_vars)) {
     g_var <- grp_vars[i]
@@ -331,8 +332,12 @@ shuffle_ard <- function(x, trim = TRUE) {
       dplyr::mutate(
         !!g_var := dplyr::case_when(
           # only assign "..cards_overall.." for the first grouping variable
-          is.na(.data[[g_var]]) & .data$variable == "..ard_total_n.." & i == 1 ~ "..cards_overall..",
-          is.na(.data[[g_var]]) & .data$variable == "..ard_hierarchical_overall.." ~ "..hierarchical_overall..",
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_total_n.." & i == 1 ~
+              "..cards_overall..",
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_hierarchical_overall.." ~
+              "..hierarchical_overall..",
           TRUE ~ .data[[g_var]]
         )
       )
@@ -399,8 +404,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 
   if (any_val != glue_any) {
     cli::cli_alert_info(
-      "{.val {glue_any}} already exists in the {.code {cur_col}} column. Using \\
-      {.val {any_val}}."
+      "{.val {glue_any}} already exists in the {.code {cur_col}} column. Using\\
+       {.val {any_val}}."
     )
   }
 
