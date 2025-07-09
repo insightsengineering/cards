@@ -28,7 +28,14 @@
 #' @examples
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
-print.card <- function(x, width = getOption("width"), n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
+print.card <- function(
+  x,
+  width = getOption("width"),
+  n = NULL,
+  columns = c("auto", "all"),
+  n_col = 6L,
+  ...
+) {
   set_cli_abort_call()
 
   # assertion ------------------------------------------------------------------
@@ -46,7 +53,6 @@ print.card <- function(x, width = getOption("width"), n = NULL, columns = c("aut
   # select and format columns --------------------------------------------------
   x_print_n <- .pr_select_cols(x_print_n, columns, n_col)
   x_print_n <- .pr_format_cols(x_print_n)
-
 
   # print object ---------------------------------------------------------------
   cli::cli_h1("cards")
@@ -67,18 +73,32 @@ print.card <- function(x, width = getOption("width"), n = NULL, columns = c("aut
   if (rlang::arg_match(columns, values = c("auto", "all")) %in% "auto") {
     x <-
       dplyr::select(
-        x, all_ard_groups(), all_ard_variables(),
+        x,
+        all_ard_groups(),
+        all_ard_variables(),
         any_of(c(
-          "context", "stat_name", "stat_label", "stat", "stat_fmt",
-          "fmt_fun", "warning", "error"
+          "context",
+          "stat_name",
+          "stat_label",
+          "stat",
+          "stat_fmt",
+          "fmt_fun",
+          "warning",
+          "error"
         ))
       )
 
     # remove warning and error columns if nothing to report
-    if (ncol(x) > n_col && "warning" %in% names(x) && every(x[["warning"]], is.null)) {
+    if (
+      ncol(x) > n_col &&
+        "warning" %in% names(x) &&
+        every(x[["warning"]], is.null)
+    ) {
       x[["warning"]] <- NULL
     }
-    if (ncol(x) > n_col && "error" %in% names(x) && every(x[["error"]], is.null)) {
+    if (
+      ncol(x) > n_col && "error" %in% names(x) && every(x[["error"]], is.null)
+    ) {
       x[["error"]] <- NULL
     }
 
