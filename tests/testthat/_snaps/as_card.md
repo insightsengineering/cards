@@ -4,11 +4,12 @@
       as_card(data.frame(stat_name = c("N", "mean"), stat_label = c("N", "Mean"),
       stat = c(10, 0.5)))
     Message
-      {cards} data frame: 2 x 3
+      
+      -- cards -----------------------------------------------------------------------
     Output
         stat_name stat_label stat
-      1         N          N   10
-      2      mean       Mean  0.5
+      1 N         N          10  
+      2 mean      Mean       0.5 
 
 # as_card() error catching works correctly
 
