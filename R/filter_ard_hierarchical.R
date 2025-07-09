@@ -26,6 +26,19 @@
 #'   statistics (`n`, `p`, and `N`) provided they are included at least once
 #'   in the ARD, as well as the values of any `by` variables.
 #'
+#' Additionally, filters can be applied on individual levels of the `by` variable via the
+#'   `n_XX`, `N_XX`, and `p_XX` statistics, where each `XX` represents the index of the `by`
+#'   variable level to select the statistic from. For example, `filter = n_1 > 5` will check
+#'   whether `n` values for the first level of `by` are greater than 5 in each row group.
+#'
+#' Overall statistics for each row group can be used in filters via the `n_overall`, `N_overall`,
+#'   and `p_overall` statistics. If the ARD is created with parameter `overall=TRUE`, then these
+#'   overall statistics will be extracted directly from the ARD, otherwise the statistics will be
+#'   derived where possible. If `overall=FALSE`, then `n_overall` can only be derived if the `n`
+#'   statistic is present in the ARD for the filter variable, `N_overall` if the `N` statistic is
+#'   present for the filter variable, and `p_overall` if both the `n` and `N` statistics are
+#'   present for the filter variable.
+#'
 #' To illustrate how the function works, consider the typical example below
 #'   where the AE summaries are provided by treatment group.
 #'
@@ -59,26 +72,27 @@
 #'
 #' In addition to filtering on individual statistic values, filters can be applied
 #'   across the treatment groups (i.e. across all `by` variable values) by using
-#'   aggregate functions such as `sum()` and `mean()`.
-#' A value of `filter = sum(n) >= 18` retains AEs where the sum of the number
-#'   of AEs across the treatment groups is greater than or equal to 18.
+#'   aggregate functions such as `sum()` and `mean()`. For simplicity, it is suggested to use
+#'   the `XX_overall` statistics in place of `sum(XX)` in equivalent scenarios. For example,
+#'   `n_overall` is equivalent to `sum(n)`.
+#' A value of `filter = sum(n) >= 18` (or `filter = n_overall >= 18`) retains AEs where the sum of
+#'   the number of AEs across the treatment groups is greater than or equal to 18.
 #'
-#' If `ard_stack_hierarchical(overall=TRUE)` was run, the overall column is
-#'   __not__ considered in any filtering.
+#' If `ard_stack_hierarchical(overall=TRUE)` was run, the overall column is __not__ considered in
+#'   any filtering except for `XX_overall` statistics, if specified.
 #'
 #' If `ard_stack_hierarchical(over_variables=TRUE)` was run, any overall statistics are kept regardless
-#' of filtering.
+#'   of filtering.
 #'
 #' Some examples of possible filters:
 #' - `filter = n > 5`: keep AEs where one of the treatment groups observed more than 5 AEs
 #' - `filter = n == 2 & p < 0.05`: keep AEs where one of the treatment groups observed exactly 2
 #'    AEs _and_ one of the treatment groups observed a proportion less than 5%
-#' - `filter = sum(n) >= 4`: keep AEs where there were 4 or more AEs observed across the treatment groups
+#' - `filter = n_overall >= 4`: keep AEs where there were 4 or more AEs observed across the treatment groups
 #' - `filter = mean(n) > 4 | n > 3`: keep AEs where the mean number of AEs is 4 or more across the
 #'   treatment groups _or_ one of the treatment groups observed more than 3 AEs
-#' - `filter = any(n > 2 & TRTA == "Xanomeline High Dose")`: keep AEs where the
-#'    `"Xanomeline High Dose"` treatment group observed more than 2 AEs
-#'
+#' - `filter = n_2 > 2`: keep AEs where the `"Xanomeline High Dose"` treatment group (second `by` variable
+#'   level) observed more than 2 AEs
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [sort_ard_hierarchical()]
@@ -121,7 +135,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   check_not_missing(x)
   check_not_missing(filter)
   check_scalar_logical(keep_empty)
-  check_logical(quiet)
+  check_scalar_logical(quiet)
   check_class(x, "card")
   if (!"args" %in% names(attributes(x))) {
     cli::cli_abort(
