@@ -140,6 +140,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
     var = {{ var }}
   )
   if (is_empty(var)) var <- dplyr::last(ard_args$variables)
+  check_scalar(var, message = "Only one variable can be selected as {.arg var}.")
   which_var <- which(ard_args$variables == var)
 
   filter <- enquo(filter)

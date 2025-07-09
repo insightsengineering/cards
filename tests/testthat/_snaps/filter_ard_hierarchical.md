@@ -60,6 +60,14 @@
 ---
 
     Code
+      filter_ard_hierarchical(ard, n > 1, var = c(SEX, RACE))
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! Only one variable can be selected as `var`.
+
+---
+
+    Code
       filter_ard_hierarchical(ard, n > 1, var = RACE)
     Condition
       Error in `filter_ard_hierarchical()`:

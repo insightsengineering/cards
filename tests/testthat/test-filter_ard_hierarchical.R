@@ -233,6 +233,10 @@ test_that("filter_ard_hierarchical() error messaging works", {
     filter_ard_hierarchical(ard, n > 1, var = "A"),
     error = TRUE
   )
+  expect_snapshot(
+    filter_ard_hierarchical(ard, n > 1, var = c(SEX, RACE)),
+    error = TRUE
+  )
 
   # invalid var input - not in include
   ard <- ard_stack_hierarchical(
