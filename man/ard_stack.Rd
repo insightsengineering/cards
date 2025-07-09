@@ -41,9 +41,9 @@ variables represented in the ARD. Default is \code{FALSE}.}
 \item{.total_n}{(\code{logical})\cr
 logical indicating whether to include of \code{ard_total_n()} in the returned ARD.}
 
-\item{.shuffle}{(\code{logical})\cr
-logical indicating whether to perform \code{shuffle_ard()} on the final result.
-Default is \code{FALSE}.}
+\item{.shuffle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} support for \code{.shuffle = TRUE}
+will be removed in the next release. \code{ard_stack()} will no longer shuffle.
+\code{shuffle_ard()} should be called directly.}
 }
 \value{
 an ARD data frame of class 'card'
