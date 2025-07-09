@@ -29,13 +29,12 @@
 #' ard_categorical(ADSL, variables = AGEGR1) |>
 #'   print()
 print.card <- function(
-  x,
-  width = getOption("width"),
-  n = NULL,
-  columns = c("auto", "all"),
-  n_col = 6L,
-  ...
-) {
+    x,
+    width = getOption("width"),
+    n = NULL,
+    columns = c("auto", "all"),
+    n_col = 6L,
+    ...) {
   set_cli_abort_call()
 
   # assertion ------------------------------------------------------------------
