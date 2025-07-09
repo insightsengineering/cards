@@ -238,7 +238,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE) {
         !!var_gp_nm := .data$variable,
         !!paste0(var_gp_nm, "_level") := .data$variable_level
       )
-    var_keep <- dplyr::distinct(var_keep[1:((length(by) + which_var) * 2)])
+    var_keep <- dplyr::distinct(var_keep[(1 + length(by) * 2):((length(by) + which_var) * 2)])
 
     # track row indices
     x <- x |> dplyr::mutate(idx = dplyr::row_number())
