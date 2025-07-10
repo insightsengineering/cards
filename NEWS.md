@@ -1,4 +1,6 @@
-# cards 0.6.1.9003
+# cards 0.6.1.9004
+
+* Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
 
 # cards 0.6.1
 

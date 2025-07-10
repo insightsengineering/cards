@@ -13,6 +13,9 @@
 #' @param filter (`expression`)\cr
 #'   an expression that is used to filter variable groups of the hierarchical ARD. See the
 #'   Details section below.
+#' @param var ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
+#'   hierarchy variable from `x` to perform filtering on. If `NULL`, the last hierarchy variable
+#'   from `x` (`dplyr::last(attributes(x)$args$variables)`) will be used.
 #' @param keep_empty (scalar `logical`)\cr
 #'   Logical argument indicating whether to retain summary rows corresponding to hierarchy
 #'   sections that have had all rows filtered out. Default is `FALSE`.
@@ -105,7 +108,8 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   denominator = ADSL,
-#'   id = USUBJID
+#'   id = USUBJID,
+#'   overall = TRUE
 #' )
 #'
 #' # Example 1 ----------------------------------
@@ -124,11 +128,15 @@
 #' # Keep AEs that have a difference in prevalence of greater than 3% between reference group with
 #' # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
 #' filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
+#'
+#' # Example 5 ----------------------------------
+#' # Keep AEs from SOCs that have an overall prevalence of greater than 20%
+#' filter_ard_hierarchical(ard, p_overall > 0.20, var = AESOC)
 NULL
 
 #' @rdname filter_ard_hierarchical
 #' @export
-filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE) {
+filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, quiet = FALSE) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
@@ -148,7 +156,15 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
   }
   ard_args <- attributes(x)$args
   by <- ard_args$by
-  var <- dplyr::last(ard_args$variables)
+
+  # get name of filtering variable
+  process_selectors(
+    as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
+    var = {{ var }}
+  )
+  if (is_empty(var)) var <- dplyr::last(ard_args$variables)
+  check_scalar(var, message = "Only one variable can be selected as {.arg var}.")
+  which_var <- which(ard_args$variables == var)
 
   filter <- enquo(filter)
   if (!quo_is_call(filter)) {
@@ -157,16 +173,19 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
       call = get_cli_abort_call()
     )
   }
-
-  # remove "overall" data from `x`
-  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
-  x_overall <- x[is_overall, ]
-  x <- x[!is_overall, ]
-  no_overall <- nrow(x_overall) == 0
-
+  if (!var %in% ard_args$include) {
+    cli::cli_abort(
+      paste(
+        "No statistics available in the ARD for variable {.val {var}}. In order to filter on {.val {var}}",
+        "it must be specified in the {.arg include} argument when the ARD is created."
+      ),
+      call = get_cli_abort_call()
+    )
+  }
+  
   # check that any column-wise/overall statistics in filter are valid
   filter_vars <- all.vars(filter)
-  by_cols <- if (!is_empty(by)) paste0("group", seq_along(by), c("", "_level")) else NULL
+  by_cols <- if (!is_empty(by)) c("group1", "group1_level") else NULL
   valid_filter_vars <- unique(x$stat_name[x$variable == var])
   if (!is_empty(by)) {
     by_lvls <- unique(stats::na.omit(unlist(x[["group1_level"]])))
@@ -193,14 +212,20 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
       c(
         paste(
           "The expression provided as {.arg filter} includes condition{?s} for statistic{?s}",
-          "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not correspond to any of the",
-          "{.var by} variable levels."
+          "{.val {var_miss}} which {?is/are} not present in the ARD and {?does/do} not",
+          "correspond to any of the {.var by} variable levels."
         ),
-        i = "Valid filter terms are: {.val {valid_filter_vars}}."
+        i = "Valid filter terms for variable {.val {var}} are: {.val {valid_filter_vars}}."
       ),
       call = get_cli_abort_call()
     )
   }
+
+  # remove "overall" data from `x`
+  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+  x_overall <- x[is_overall, ]
+  x <- x[!is_overall, ]
+  no_overall <- nrow(x_overall) == 0
 
   # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
@@ -228,7 +253,7 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
       -all_of(by_cols)
     ))) |>
     dplyr::group_map(\(.df, .g) {
-      # only filter rows for innermost variable
+      # only filter rows for variable `var`
       if (.g$variable == var) {
         .df_all <- .df
         # allow filtering on values from a specific column
@@ -288,11 +313,43 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
     sort()
   x <- x[f_idx, ]
 
+  # remove inner variable rows if `var` is an outer variable that does not meet the filter criteria
+  if (which_var < length(ard_args$variables)) {
+    var_gp_nm <- paste0("group", length(by) + which_var) # get `var` group variable name
+
+    # get all combos of variables kept after filtering
+    # keep only unique combos up to `var` group variable
+    var_keep <- x |>
+      dplyr::filter(.data$variable == var) |>
+      dplyr::mutate(
+        !!var_gp_nm := .data$variable,
+        !!paste0(var_gp_nm, "_level") := .data$variable_level
+      )
+    var_keep <- dplyr::distinct(var_keep[(1 + length(by) * 2):((length(by) + which_var) * 2)])
+
+    # track row indices
+    x <- x |> dplyr::mutate(idx = dplyr::row_number())
+
+    # get row indices to exclude - all rows within `var` sections that have been removed
+    f_idx_inner <-
+      dplyr::anti_join(
+        x[x[[var_gp_nm]] == var & !is.na(x[[var_gp_nm]]), ],
+        var_keep,
+        by = names(var_keep)
+      ) |>
+      dplyr::pull("idx")
+
+    # filter out inner rows
+    x <- x |>
+      dplyr::filter(!.data$idx %in% f_idx_inner) |>
+      dplyr::select(-"idx")
+  }
+
   # remove summary rows from empty sections if requested
-  if (!keep_empty && length(ard_args$include) > 1) {
+  if (var != ard_args$variables[1] && !keep_empty && length(ard_args$include) > 1) {
     outer_cols <- ard_args$variables |> utils::head(-1)
-    # if all rows filtered out remove all summary rows - only overall/header rows left
-    if (!var %in% x$variable) {
+    # if all inner rows filtered out, remove all summary rows - only overall/header rows left
+    if (!dplyr::last(ard_args$variables) %in% x$variable) {
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
       names(outer_cols) <- x |>
@@ -324,5 +381,5 @@ filter_ard_hierarchical <- function(x, filter, keep_empty = FALSE, quiet = FALSE
     }
   }
 
-  x
+  as_card(x)
 }

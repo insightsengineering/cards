@@ -50,6 +50,32 @@
 ---
 
     Code
+      filter_ard_hierarchical(ard, n > 1, var = "A")
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! Error processing `var` argument.
+      ! Can't select columns that don't exist. x Column `A` doesn't exist.
+      i Select among columns "SEX", "RACE", and "AETERM"
+
+---
+
+    Code
+      filter_ard_hierarchical(ard, n > 1, var = c(SEX, RACE))
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! Only one variable can be selected as `var`.
+
+---
+
+    Code
+      filter_ard_hierarchical(ard, n > 1, var = RACE)
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! No statistics available in the ARD for variable "RACE". In order to filter on "RACE" it must be specified in the `include` argument when the ARD is created.
+
+---
+
+    Code
       filter_ard_hierarchical(ard, n > 1, keep_empty = NULL)
     Condition
       Error in `filter_ard_hierarchical()`:
