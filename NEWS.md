@@ -1,4 +1,4 @@
-# cards 0.6.1.9005
+# cards 0.6.1.9006
 
 * Added flexibility to filter by `by` variable level-specific values when using `filter_ard_hierarchical()` to allow for filtering of hierarchical ARDs by difference in two rates. (#438)
 
