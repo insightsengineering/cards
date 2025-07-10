@@ -45,7 +45,7 @@
     Condition
       Error in `filter_ard_hierarchical()`:
       ! The expression provided as `filter` includes condition for statistic "A" which is not present in the ARD and does not correspond to any of the `by` variable levels.
-      i Valid filter terms for variable "AETERM" are: "n", "N", "p", and "TRTA".
+      i Valid filter terms for variable "AETERM" are: "n", "N", "p", "n_1", "n_2", "n_3", "N_1", "N_2", "N_3", "p_1", "p_2", "p_3", "n_overall", "N_overall", "p_overall", and "TRTA".
 
 ---
 
@@ -80,4 +80,22 @@
     Condition
       Error in `filter_ard_hierarchical()`:
       ! The `keep_empty` argument must be a scalar with class <logical>, not NULL.
+
+---
+
+    Code
+      filter_ard_hierarchical(ard_stat_miss, n_1 > 1)
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! The expression provided as `filter` includes condition for statistic "n_1" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms for variable "AETERM" are: "p", "p_1", "p_2", "p_3", and "TRTA".
+
+---
+
+    Code
+      filter_ard_hierarchical(ard_stat_miss, p_overall > 0.1)
+    Condition
+      Error in `filter_ard_hierarchical()`:
+      ! The expression provided as `filter` includes condition for statistic "p_overall" which is not present in the ARD and does not correspond to any of the `by` variable levels.
+      i Valid filter terms for variable "AETERM" are: "p", "p_1", "p_2", "p_3", and "TRTA".
 
