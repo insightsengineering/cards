@@ -4,11 +4,13 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-<<<<<<< HEAD
-filter_ard_hierarchical(x, filter, keep_empty = FALSE, quiet = FALSE)
-=======
-filter_ard_hierarchical(x, filter, var = NULL, keep_empty = FALSE)
->>>>>>> main
+filter_ard_hierarchical(
+  x,
+  filter,
+  var = NULL,
+  keep_empty = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -125,7 +127,8 @@ ard <- ard_stack_hierarchical(
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   denominator = ADSL,
-  id = USUBJID
+  id = USUBJID,
+  overall = TRUE
 )
 
 # Example 1 ----------------------------------
@@ -141,14 +144,13 @@ filter_ard_hierarchical(ard, n > 3)
 filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
 
 # Example 4 ----------------------------------
-<<<<<<< HEAD
 # Keep AEs that have a difference in prevalence of greater than 3\% between reference group with
 # `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
 filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
-=======
+
+# Example 5 ----------------------------------
 # Keep AEs from SOCs that have an overall prevalence of greater than 20\%
-filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.20, var = AESOC)
->>>>>>> main
+filter_ard_hierarchical(ard, p_overall > 0.20, var = AESOC)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -157,22 +157,13 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   ard_args <- attributes(x)$args
   by <- ard_args$by
 
-  # get name of filtering variable
+  # get and check name of filtering variable
   process_selectors(
     as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
     var = {{ var }}
   )
   if (is_empty(var)) var <- dplyr::last(ard_args$variables)
   check_scalar(var, message = "Only one variable can be selected as {.arg var}.")
-  which_var <- which(ard_args$variables == var)
-
-  filter <- enquo(filter)
-  if (!quo_is_call(filter)) {
-    cli::cli_abort(
-      "The {.arg filter} argument must be an expression.",
-      call = get_cli_abort_call()
-    )
-  }
   if (!var %in% ard_args$include) {
     cli::cli_abort(
       paste(
@@ -182,7 +173,27 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
       call = get_cli_abort_call()
     )
   }
-  
+  which_var <- which(ard_args$variables == var)
+
+  # check filter input is valid
+  filter <- enquo(filter)
+  if (!quo_is_call(filter)) {
+    cli::cli_abort(
+      "The {.arg filter} argument must be an expression.",
+      call = get_cli_abort_call()
+    )
+  }
+
+  # remove "overall" data from `x`
+  if (is_empty(by)) {
+    x_overall <- x
+  } else {
+    is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
+    x_overall <- x[is_overall, ]
+    x <- x[!is_overall, ]
+  }
+  no_overall <- nrow(x_overall) == 0
+
   # check that any column-wise/overall statistics in filter are valid
   filter_vars <- all.vars(filter)
   by_cols <- if (!is_empty(by)) c("group1", "group1_level") else NULL
@@ -220,12 +231,6 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
       call = get_cli_abort_call()
     )
   }
-
-  # remove "overall" data from `x`
-  is_overall <- apply(x, 1, function(x) !isTRUE(any(x %in% by)))
-  x_overall <- x[is_overall, ]
-  x <- x[!is_overall, ]
-  no_overall <- nrow(x_overall) == 0
 
   # reshape ARD so each stat is in its own column ------------------------------------------------
   x_f <- x |>
