@@ -63,6 +63,13 @@ statistic is present in the ARD for the filter variable, \code{N_overall} if the
 present for the filter variable, and \code{p_overall} if both the \code{n} and \code{N} statistics are
 present for the filter variable.
 
+By default, filters will be applied at the level of the innermost hierarchy variable, i.e.
+the last variable supplied to \code{variables}. If filters should instead be applied at the level
+of one of the outer hierarchy variables, the \code{var} parameter can be used to select a different
+variable to filter on. When \code{var} is set to a different (outer) variable and a level of the
+variable does not meet the filtering criteria then the section corresponding to that variable
+level and all sub-sections within that section will be removed.
+
 To illustrate how the function works, consider the typical example below
 where the AE summaries are provided by treatment group.
 
@@ -83,8 +90,9 @@ where the AE summaries are provided by treatment group.
 }
 
 
-Filters are applied to the summary statistics of the innermost variable in the hierarchy---\code{AEDECOD}
-in this case.
+Filters are applied to the summary statistics of the innermost variable in the hierarchy by
+default---\code{AEDECOD} in this case. If we wanted to filter based on SOC rates instead of AE
+rates we could specify \code{var = AESOC} instead.
 If any of the summary statistics meet the filter requirement for any of the treatment groups,
 the entire row is retained.
 For example, if \code{filter = n >= 9} were passed, the criteria would be met for DIARRHOEA
@@ -100,6 +108,9 @@ the \code{XX_overall} statistics in place of \code{sum(XX)} in equivalent scenar
 \code{n_overall} is equivalent to \code{sum(n)}.
 A value of \code{filter = sum(n) >= 18} (or \code{filter = n_overall >= 18}) retains AEs where the sum of
 the number of AEs across the treatment groups is greater than or equal to 18.
+
+If \code{filter = n_overall >= 18} and \code{var = AESOC} then all rows corresponding to an SOC with an
+overall rate less than 18 - including all AEs within that SOC - will be removed.
 
 If \code{ard_stack_hierarchical(overall=TRUE)} was run, the overall column is \strong{not} considered in
 any filtering except for \code{XX_overall} statistics, if specified.

@@ -42,6 +42,13 @@
 #'   present for the filter variable, and `p_overall` if both the `n` and `N` statistics are
 #'   present for the filter variable.
 #'
+#' By default, filters will be applied at the level of the innermost hierarchy variable, i.e.
+#'   the last variable supplied to `variables`. If filters should instead be applied at the level
+#'   of one of the outer hierarchy variables, the `var` parameter can be used to select a different
+#'   variable to filter on. When `var` is set to a different (outer) variable and a level of the
+#'   variable does not meet the filtering criteria then the section corresponding to that variable
+#'   level and all sub-sections within that section will be removed.
+#'
 #' To illustrate how the function works, consider the typical example below
 #'   where the AE summaries are provided by treatment group.
 #'
@@ -63,8 +70,9 @@
 #' |DIARRHOEA                      |  9 (10%)  |             4 (4.8%)  |            5 (6.0%)  |
 #' |VOMITING                       | 3 (3.5%)  |             7 (8.3%)  |            3 (3.6%)  |
 #'
-#' Filters are applied to the summary statistics of the innermost variable in the hierarchy---`AEDECOD`
-#'   in this case.
+#' Filters are applied to the summary statistics of the innermost variable in the hierarchy by
+#'   default---`AEDECOD` in this case. If we wanted to filter based on SOC rates instead of AE
+#'   rates we could specify `var = AESOC` instead.
 #' If any of the summary statistics meet the filter requirement for any of the treatment groups,
 #'   the entire row is retained.
 #' For example, if `filter = n >= 9` were passed, the criteria would be met for DIARRHOEA
@@ -80,6 +88,9 @@
 #'   `n_overall` is equivalent to `sum(n)`.
 #' A value of `filter = sum(n) >= 18` (or `filter = n_overall >= 18`) retains AEs where the sum of
 #'   the number of AEs across the treatment groups is greater than or equal to 18.
+#'
+#' If `filter = n_overall >= 18` and `var = AESOC` then all rows corresponding to an SOC with an
+#'   overall rate less than 18 - including all AEs within that SOC - will be removed.
 #'
 #' If `ard_stack_hierarchical(overall=TRUE)` was run, the overall column is __not__ considered in
 #'   any filtering except for `XX_overall` statistics, if specified.
