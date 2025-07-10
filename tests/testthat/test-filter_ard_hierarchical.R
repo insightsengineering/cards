@@ -188,7 +188,7 @@ test_that("filter_ard_hierarchical(var) works", {
     id = USUBJID
   )
   expect_silent(ard_f <- filter_ard_hierarchical(ard_noby, sum(n) > 10, var = AEDECOD))
-  expect_equal(nrow(ard_f), 63)
+  expect_equal(nrow(ard_f), 60)
 })
 
 test_that("filter_ard_hierarchical(keep_empty) works", {

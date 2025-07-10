@@ -377,7 +377,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
         x_no_sum <- x_no_sum |>
-          dplyr::group_by(across(c(all_ard_group_n((length(by):i) + 1), -all_of(by_cols)))) |>
+          dplyr::group_by(across(c(all_ard_group_n((1:i) + length(by)), -all_of(by_cols)))) |>
           dplyr::group_map(
             function(.df, .y) {
               cur_var <- .y[[ncol(.y) - 1]]
