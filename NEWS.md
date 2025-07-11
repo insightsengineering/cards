@@ -4,6 +4,8 @@
 
 * Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
 
+* Add `ADLB` data set. (#450)
+
 # cards 0.6.1
 
 ## New Features and Functions
