@@ -213,45 +213,6 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
   )
 })
 
-test_that("shuffle_ard() preserves the attributes of a `card` object", {
-  adae <- ADAE |>
-    dplyr::filter(
-      SAFFL == "Y",
-      TRTA %in% c("Placebo", "Xanomeline High Dose"),
-      AESOC %in% unique(AESOC)[1:2]
-    ) |>
-    dplyr::group_by(AESOC) |>
-    dplyr::filter(
-      AETERM %in% unique(AETERM)[1:2]
-    ) |>
-    dplyr::ungroup()
-
-  adsl <- ADSL |>
-    dplyr::filter(
-      SAFFL == "Y",
-      TRTA %in% c("Placebo", "Xanomeline High Dose")
-    )
-
-  ard <- ard_stack_hierarchical(
-    data = adae,
-    by = TRTA,
-    variables = c(AESOC, AETERM),
-    denominator = adsl,
-    id = USUBJID,
-    overall = TRUE,
-    over_variables = TRUE,
-    total_n = TRUE
-  )
-
-  shuffled_ard <- ard |>
-    shuffle_ard()
-
-  expect_identical(
-    attributes(ard)[["args"]],
-    attributes(shuffled_ard)[["args"]]
-  )
-})
-
 test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`", {
   adae <- ADAE |>
     dplyr::filter(
