@@ -89,7 +89,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       .trim_ard()
   }
 
-  # re-attach the arg attribute
+  # re-attach the args attribute
   attr(output, "args") <- ard_args
 
   output
