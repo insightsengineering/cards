@@ -289,14 +289,12 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 .fill_overall_grp_values <- function(x, vars_protected) {
-
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
   id_vars <- id_vars[id_vars %in% names(x)]
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
-  # replace NA group values with "..cards_overall.." where it is likely to be
-  # an overall calculation
+  # replace NA group values with "..cards_overall.." where it is likely to be an overall calculation
   for (g in grp_vars) {
     # rows with missing group
     x_missing_by <- x |>
@@ -321,8 +319,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
-  # replace NA group values with "..cards_overall.." or
-  # "..hierarchical_overall.."
+  # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
   # where it is likely to be a group or subgroup calculation
   for (i in seq_along(grp_vars)) {
     g_var <- grp_vars[i]
