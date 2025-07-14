@@ -237,7 +237,6 @@ internal_stack_hierarchical <- function(
     total_n = FALSE,
     shuffle = FALSE,
     include_uni_by_tab = TRUE) {
-
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
