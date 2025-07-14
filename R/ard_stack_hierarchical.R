@@ -485,7 +485,7 @@ internal_stack_hierarchical <- function(
     cards::tidy_ard_row_order()
 
   # shuffle if requested -------------------------------------------------------
-  if (shuffle) {
+  if (isTRUE(shuffle)) {
     result <- shuffle_ard(result)
   }
 
