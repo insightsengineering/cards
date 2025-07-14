@@ -18,9 +18,7 @@ test_that("ard_stack() works", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ),
-    ignore_function_env = TRUE,
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    ignore_function_env = TRUE
   )
 
   # check equivalency NSE
@@ -68,9 +66,7 @@ test_that("ard_stack() works", {
       ard_dichotomous(data = mtcars, variables = "vs"),
       .order = TRUE
     ),
-    ignore_function_env = TRUE,
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    ignore_function_env = TRUE
   )
 
 
@@ -107,9 +103,7 @@ test_that("ard_stack() adding overalls", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
-    ),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    )
   )
 })
 
@@ -138,9 +132,7 @@ test_that("ard_stack() adding missing/attributes", {
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
       .order = TRUE
-    ),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    )
   )
 
   # including `.overall=TRUE`
@@ -170,9 +162,7 @@ test_that("ard_stack() adding missing/attributes", {
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
       .order = TRUE
-    ),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    )
   )
 })
 
@@ -197,9 +187,7 @@ test_that("ard_stack() .shuffle argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ) |>
-      shuffle_ard(),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+      shuffle_ard()
   )
 
 
@@ -225,9 +213,7 @@ test_that("ard_stack() .shuffle argument", {
       ard_dichotomous(data = mtcars, variables = "vs"),
       ard_categorical(data = mtcars, variables = "cyl")
     ) |>
-      shuffle_ard(),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+      shuffle_ard()
   )
 })
 
@@ -242,9 +228,7 @@ test_that("ard_stack() adding total N", {
     ) |>
       tail(n = 1) |>
       dplyr::select(-all_ard_groups(), -all_ard_variables("levels")),
-    ard_total_n(mtcars),
-    # ignore attributes since ard_stack passes them down
-    ignore_attr = TRUE
+    ard_total_n(mtcars)
   )
 })
 
