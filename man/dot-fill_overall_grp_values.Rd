@@ -19,8 +19,9 @@ This function fills the missing values of grouping variables with
 Specifically, it will modify grouping values from rows with likely overall
 calculations present (e.g. non-missing variable/variable_level, missing group
 variables, and evidence that the \code{variable} has been computed by group in
-other rows). "Overall" values will be populated only for grouping variables
+other rows). \code{"Overall"} values will be populated only for grouping variables
 that have been used in other calculations of the same variable and statistics.
+\code{"Any"} will be used if it is likely to be a hierarchical calculation.
 }
 \examples{
 data <- dplyr::tibble(
