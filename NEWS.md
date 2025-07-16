@@ -1,4 +1,4 @@
-# cards 0.6.1.9009
+# cards 0.6.1.9010
 
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
 
