@@ -48,26 +48,24 @@
     Code
       apply_fmt_fun(ard, replace = FALSE)
     Message
-      {cards} data frame: 3 x 10
+      
+      -- cards -----------------------------------------------------------------------
     Output
-        variable variable_level stat_name stat_label stat   stat_fmt
-      1   AGEGR1          65-80         n          n  144 144.000000
-      2   AGEGR1            <65         n          n   33         33
-      3   AGEGR1            >80         n          n   77         77
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+        variable variable_level stat_name stat_label stat stat_fmt  
+      1 AGEGR1   65-80          n         n          144  144.000000
+      2 AGEGR1   <65            n         n          33   33        
+      3 AGEGR1   >80            n         n          77   77        
 
 ---
 
     Code
       apply_fmt_fun(ard, replace = TRUE)
     Message
-      {cards} data frame: 3 x 10
+      
+      -- cards -----------------------------------------------------------------------
     Output
         variable variable_level stat_name stat_label stat stat_fmt
-      1   AGEGR1          65-80         n          n  144      144
-      2   AGEGR1            <65         n          n   33       33
-      3   AGEGR1            >80         n          n   77       77
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+      1 AGEGR1   65-80          n         n          144  144     
+      2 AGEGR1   <65            n         n          33   33      
+      3 AGEGR1   >80            n         n          77   77      
 
