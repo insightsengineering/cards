@@ -254,13 +254,14 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 #' Fill Overall Group Variables
 #'
-#' This function fills the missing values of grouping variables with "Overall
-#' `variable name`" where relevant. Specifically it will modify grouping values
-#' from rows with likely overall calculations present (e.g. non-missing
-#' variable/variable_level, missing group variables, and evidence that the
-#' `variable` has been computed by group in other rows). "Overall" values will
-#' be populated only for grouping variables that have been used in other calculations
-#' of the same variable and statistics.
+#' This function fills the missing values of grouping variables with
+#' `"Overall <variable_name>"` or `"Any <variable_name>"`where relevant.
+#' Specifically, it will modify grouping values from rows with likely overall
+#' calculations present (e.g. non-missing variable/variable_level, missing group
+#' variables, and evidence that the `variable` has been computed by group in
+#' other rows). `"Overall"` values will be populated only for grouping variables
+#' that have been used in other calculations of the same variable and statistics.
+#' `"Any"` will be used if it is likely to be a hierarchical calculation.
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
@@ -310,15 +311,98 @@ shuffle_ard <- function(x, trim = TRUE) {
     }
   }
 
-  # replace "..cards_overall.." group values with "Overall <colname>"
-  x |>
-    dplyr::mutate(across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
-      overall_val <- make.unique(c(
-        unique(v),
-        paste("Overall", cur_col)
-      )) |>
-        rev() %>%
-        .[1]
-      ifelse(!is.na(v) & v == "..cards_overall..", overall_val, v)
-    }))
+  # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
+  # where it is likely to be a group or subgroup calculation
+  for (i in seq_along(grp_vars)) {
+    g_var <- grp_vars[i]
+
+    x <- x |>
+      dplyr::mutate(
+        !!g_var := dplyr::case_when(
+          # only assign "..cards_overall.." for the first grouping variable
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_total_n.." & i == 1 ~
+            "..cards_overall..",
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_hierarchical_overall.." ~
+            "..hierarchical_overall..",
+          TRUE ~ .data[[g_var]]
+        )
+      )
+  }
+
+  # replace `"..cards_overall.."` group values with "Overall <colname>" and
+  # `"..hierarchical_overall.."` with `"Any <colname>"`
+  output <- x |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::all_of(
+          grp_vars
+        ),
+        .derive_overall_labels
+      )
+    )
+
+  output
+}
+
+#' Derive overall labels
+#'
+#' Transform the `"..cards_overall.."` and `"..hierarchical_overall.."` labels
+#' into `"Overall <variable_name>"` and `"Any <variable_name>"` respectively.
+#' Also it ensures the labels are unique (in case they already exist) with
+#' `make.unique()` which appends a sequence number.
+#'
+#' @param x (character) content of target (current) column
+#' @param cur_col (character) name of current column
+#'
+#' @returns a character vector
+#'
+#' @keywords internal
+#'
+#' @examples
+#' data <- dplyr::tibble(
+#'   ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
+#'   TRTA = c(NA, NA, "..hierarchical_overall..", "C", "C")
+#' )
+#'
+#' data |>
+#'   dplyr::mutate(
+#'     dplyr::across(
+#'       ARM:TRTA,
+#'       cards:::.derive_overall_labels
+#'     )
+#'   )
+.derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
+  glue_overall <- glue::glue("Overall {cur_col}")
+  glue_any <- glue::glue("Any {cur_col}")
+
+  overall_val <- c(unique(x), glue_overall) |>
+    make.unique() |>
+    dplyr::last()
+  any_val <- c(unique(x), glue_any) |>
+    make.unique() |>
+    dplyr::last()
+
+  if (overall_val != glue_overall) {
+    cli::cli_alert_info(
+      "{.val {glue_overall}} already exists in the {.code {cur_col}} column. \\
+      Using {.val {overall_val}}."
+    )
+  }
+
+  if (any_val != glue_any) {
+    cli::cli_alert_info(
+      "{.val {glue_any}} already exists in the {.code {cur_col}} column. Using\\
+       {.val {any_val}}."
+    )
+  }
+
+  output <- dplyr::case_when(
+    x == "..cards_overall.." ~ overall_val,
+    x == "..hierarchical_overall.." ~ any_val,
+    TRUE ~ x
+  )
+
+  output
 }

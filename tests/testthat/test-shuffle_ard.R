@@ -212,3 +212,264 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       as.data.frame()
   )
 })
+
+test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`", {
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup()
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    )
+
+  shuffled_ard <- ard_stack_hierarchical(
+    data = adae,
+    by = TRTA,
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  ) |>
+    shuffle_ard()
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::pull(TRTA),
+    "Overall TRTA"
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
+
+test_that("shuffle_ard() fills with multiple `by` columns", {
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup()
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    )
+
+  ard <- ard_stack_hierarchical(
+    data = adae,
+    by = c(TRTA, SEX),
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  )
+
+  shuffled_ard <- ard |>
+    shuffle_ard()
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::select(
+        TRTA,
+        AESOC,
+        SEX
+      ),
+    data.frame(
+      TRTA = "Overall TRTA",
+      AESOC = NA_character_,
+      SEX = NA_character_
+    ),
+    # the shuffled_ard preserves the card attributes and returns a tibble. We
+    # need to ignore the attributes for the purpose of this comparison
+    ignore_attr = TRUE
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
+
+test_that("shuffle_ard() messages about 'Overall <var>' or 'Any <var>'", {
+  test_data <- dplyr::tibble(
+    ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
+    TRTA = c(NA, NA, "..hierarchical_overall..", "C", "C")
+  )
+
+  # messaging actually comes from .derive_overall_labels
+  expect_snapshot(
+    test_data |>
+      dplyr::mutate(
+        dplyr::across(
+          ARM:TRTA,
+          cards:::.derive_overall_labels
+        )
+      )
+  )
+
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      TRTA = dplyr::if_else(
+        TRTA == "Xanomeline High Dose",
+        "Overall TRTA",
+        TRTA
+      ),
+      AESOC = dplyr::if_else(
+        AESOC == "GASTROINTESTINAL DISORDERS",
+        "Any AESOC",
+        AESOC
+      )
+    )
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    ) |>
+    dplyr::mutate(
+      TRTA = dplyr::if_else(
+        TRTA == "Xanomeline High Dose",
+        "Overall TRTA",
+        TRTA
+      )
+    )
+
+  ard <- ard_stack_hierarchical(
+    data = adae,
+    by = c(TRTA, SEX),
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  )
+
+  expect_snapshot(
+    shuffled_ard <- ard |>
+      shuffle_ard()
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::select(
+        TRTA,
+        AESOC,
+        SEX
+      ),
+    data.frame(
+      TRTA = "Overall TRTA.1",
+      AESOC = NA_character_,
+      SEX = NA_character_
+    ),
+    # the shuffled_ard preserves the card attributes and returns a tibble. We
+    # need to ignore the attributes for the purpose of this comparison
+    ignore_attr = TRUE
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC.1"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
