@@ -1,4 +1,4 @@
-# cards 0.6.1.9008
+# cards 0.6.1.9009
 
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
 
@@ -7,6 +7,11 @@
 * Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
 
 * Add `ADLB` data set. (#450)
+
+* `shuffle_ard()` fills overall or group statistics with `"Overall <column_name>"` or `"Any <column_name>"`. (#337, @dragosmg)
+
+* `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
+
 
 # cards 0.6.1
 
