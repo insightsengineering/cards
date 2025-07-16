@@ -358,6 +358,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @returns a character vector
 #'
+#' @keywords internal
+#'
 #' @examples
 #' data <- dplyr::tibble(
 #'   ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
