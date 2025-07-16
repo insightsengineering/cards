@@ -28,6 +28,10 @@ shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, cls = "card")
   check_scalar_logical(trim)
 
+
+  ard_attributes <- attributes(x)
+  ard_args <- ard_attributes$args
+
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
     tidy_ard_column_order() |>
@@ -78,11 +82,17 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
+  output <- dat_cards_out
+
   if (trim) {
-    dat_cards_out |> .trim_ard()
-  } else {
-    dat_cards_out
+    output <- dat_cards_out |>
+      .trim_ard()
   }
+
+  # re-attach the args attribute
+  attr(output, "args") <- ard_args
+
+  output
 }
 
 
