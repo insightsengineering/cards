@@ -490,8 +490,6 @@ test_that("shuffle_ard() preserves the attributes of a `card` object", {
 
   adsl <- ADSL |>
     dplyr::filter(
-
-
       SAFFL == "Y",
       TRTA %in% c("Placebo", "Xanomeline High Dose")
     )
@@ -507,8 +505,7 @@ test_that("shuffle_ard() preserves the attributes of a `card` object", {
     total_n = TRUE
   )
 
-  shuffled_ard <- ard |>
-    shuffle_ard()
+  shuffled_ard <- shuffle_ard(ard)
 
   expect_identical(
     attributes(ard)[["args"]],
