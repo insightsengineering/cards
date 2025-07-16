@@ -282,8 +282,8 @@ test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <va
 test_that("shuffle_ard() fills with multiple `by` columns", {
   adae <- ADAE |>
     dplyr::filter(
-      SAFFL=="Y",
-      TRTA %in% c("Placebo","Xanomeline High Dose"),
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
       AESOC %in% unique(AESOC)[1:2]
     ) |>
     dplyr::group_by(AESOC) |>
@@ -295,7 +295,7 @@ test_that("shuffle_ard() fills with multiple `by` columns", {
   adsl <- ADSL |>
     dplyr::filter(
       SAFFL == "Y",
-      TRTA %in% c("Placebo","Xanomeline High Dose")
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
     )
 
   ard <- ard_stack_hierarchical(
@@ -377,7 +377,7 @@ test_that("shuffle_ard() messages about 'Overall <var>' or 'Any <var>'", {
 
   adae <- ADAE |>
     dplyr::filter(
-      SAFFL=="Y",
+      SAFFL == "Y",
       TRTA %in% c("Placebo", "Xanomeline High Dose"),
       AESOC %in% unique(AESOC)[1:2]
     ) |>
@@ -402,7 +402,7 @@ test_that("shuffle_ard() messages about 'Overall <var>' or 'Any <var>'", {
   adsl <- ADSL |>
     dplyr::filter(
       SAFFL == "Y",
-      TRTA %in% c("Placebo","Xanomeline High Dose")
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
     ) |>
     dplyr::mutate(
       TRTA = dplyr::if_else(

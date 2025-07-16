@@ -83,7 +83,6 @@ shuffle_ard <- function(x, trim = TRUE) {
   } else {
     dat_cards_out
   }
-
 }
 
 
@@ -323,10 +322,10 @@ shuffle_ard <- function(x, trim = TRUE) {
           # only assign "..cards_overall.." for the first grouping variable
           is.na(.data[[g_var]]) &
             .data$variable == "..ard_total_n.." & i == 1 ~
-              "..cards_overall..",
+            "..cards_overall..",
           is.na(.data[[g_var]]) &
             .data$variable == "..ard_hierarchical_overall.." ~
-              "..hierarchical_overall..",
+            "..hierarchical_overall..",
           TRUE ~ .data[[g_var]]
         )
       )
@@ -373,7 +372,6 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'     )
 #'   )
 .derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
-
   glue_overall <- glue::glue("Overall {cur_col}")
   glue_any <- glue::glue("Any {cur_col}")
 
