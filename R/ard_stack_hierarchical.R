@@ -485,6 +485,13 @@ internal_stack_hierarchical <- function(
     cards::tidy_ard_column_order() |>
     cards::tidy_ard_row_order()
 
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(
+    by = by,
+    variables = variables,
+    include = include
+  )
+
   # sort ARD alphanumerically --------------------------------------------------
   result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
 
@@ -495,14 +502,6 @@ internal_stack_hierarchical <- function(
       what = "ard_stack_hierarchical(shuffle)",
       with = "shuffle_ard()"
     )
-
-  # append attributes used for sorting/filtering -------------------------------
-  attr(result, "args") <- list(
-    by = by,
-    variables = variables,
-    include = include
-  )
-
     result <- shuffle_ard(result)
   }
 
