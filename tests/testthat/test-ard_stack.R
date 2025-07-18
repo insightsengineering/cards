@@ -168,6 +168,8 @@ test_that("ard_stack() adding missing/attributes", {
 
 
 test_that("ard_stack() .shuffle argument", {
+  # we expect it to work but with a warning messaged related to the deprecation
+  # of the `shuffle` argument
   expect_no_error(
     expect_warning(
       ard_test <- ard_stack(
@@ -195,6 +197,8 @@ test_that("ard_stack() .shuffle argument", {
 
 
   # with overalls
+  # we expect it to work but with a warning messaged related to the deprecation
+  # of the `shuffle` argument
   expect_no_error(
     expect_warning(
       ard_test <- ard_stack(
