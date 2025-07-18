@@ -497,7 +497,7 @@ internal_stack_hierarchical <- function(
 
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.7.0",
       what = "ard_stack_hierarchical(shuffle)",
       with = "shuffle_ard()"

@@ -155,7 +155,7 @@ ard_stack <- function(data,
 
   # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.7.0",
       what = "ard_stack(.shuffle)",
       with = "shuffle_ard()"
