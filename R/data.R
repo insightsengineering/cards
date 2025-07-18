@@ -10,3 +10,6 @@
 
 #' @rdname adam
 "ADTTE"
+
+#' @rdname adam
+"ADLB"
