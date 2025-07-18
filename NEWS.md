@@ -12,6 +12,8 @@
 
 * `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
 
+* Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
+
 
 # cards 0.6.1
 
