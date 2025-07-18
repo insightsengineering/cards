@@ -68,7 +68,7 @@ test_that("ard_stack() works", {
   )
   attr(ard_match, "args") <- list(
     by = NULL,
-    variables = c("mpg","vs")
+    variables = c("mpg", "vs")
   )
   expect_equal(
     ard2,
@@ -110,7 +110,7 @@ test_that("ard_stack() adding overalls", {
   )
   attr(ard_match, "args") <- list(
     by = "cyl",
-    variables = c("mpg","vs")
+    variables = c("mpg", "vs")
   )
   expect_equal(
     ard_test,

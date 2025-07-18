@@ -155,7 +155,7 @@ ard_stack <- function(data,
 
   # append attributes ----------------------------------------------------------
   attr(ard_full, "args") <- list(
-    by = if(is_empty(.by)) NULL else .by,
+    by = if (is_empty(.by)) NULL else .by,
     variables = variables
   )
 
