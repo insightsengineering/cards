@@ -43,7 +43,7 @@ logical indicating whether to include of \code{ard_total_n()} in the returned AR
 
 \item{.shuffle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} support for \code{.shuffle = TRUE}
 will be removed in the next release. \code{ard_stack()} will no longer shuffle.
-\code{shuffle_ard()} should be called directly.}
+\code{shuffle_ard()} should be called separately.}
 }
 \value{
 an ARD data frame of class 'card'

@@ -91,7 +91,7 @@ logical indicating whether to include of \code{ard_total_n(denominator)} in the 
 \item{shuffle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} support for \code{.shuffle = TRUE}
 will be removed in the next release. \code{ard_stack_hierarchical()} and
 \code{ard_stack_hierarchical_count()} will no longer shuffle. \code{shuffle_ard()}
-should be called directly.}
+should be called separately.}
 }
 \value{
 an ARD data frame of class 'card'
