@@ -4,7 +4,7 @@
 \alias{sort_ard_hierarchical}
 \title{Sort Stacked Hierarchical ARDs}
 \usage{
-sort_ard_hierarchical(x, sort = c("descending", "alphanumeric"))
+sort_ard_hierarchical(x, sort = everything() ~ "descending")
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -57,7 +57,7 @@ ard_stack_hierarchical_count(
   by = TRTA,
   denominator = ADSL
 ) |>
-  sort_ard_hierarchical("descending")
+  sort_ard_hierarchical(sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
