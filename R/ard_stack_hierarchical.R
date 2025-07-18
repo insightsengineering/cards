@@ -485,6 +485,9 @@ internal_stack_hierarchical <- function(
     cards::tidy_ard_column_order() |>
     cards::tidy_ard_row_order()
 
+  # sort ARD alphanumerically --------------------------------------------------
+  result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
     lifecycle::deprecate_soft(
@@ -492,8 +495,6 @@ internal_stack_hierarchical <- function(
       what = "ard_stack_hierarchical(shuffle)",
       with = "shuffle_ard()"
     )
-    result <- shuffle_ard(result)
-  }
 
   # append attributes used for sorting/filtering -------------------------------
   attr(result, "args") <- list(
@@ -502,8 +503,8 @@ internal_stack_hierarchical <- function(
     include = include
   )
 
-  # sort ARD alphanumerically --------------------------------------------------
-  result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+    result <- shuffle_ard(result)
+  }
 
   # return final result --------------------------------------------------------
   result |> as_card()
