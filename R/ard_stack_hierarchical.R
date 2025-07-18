@@ -100,7 +100,7 @@
 #' @param shuffle `r lifecycle::badge("deprecated")` support for `.shuffle = TRUE`
 #'   will be removed in the next release. `ard_stack_hierarchical()` and
 #'   `ard_stack_hierarchical_count()` will no longer shuffle. `shuffle_ard()`
-#'   should be called directly.
+#'   should be called separately.
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_stack_hierarchical
@@ -488,7 +488,7 @@ internal_stack_hierarchical <- function(
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
     lifecycle::deprecate_soft(
-      when = "0.6.2",
+      when = "0.7.0",
       what = "ard_stack_hierarchical(shuffle)",
       with = "shuffle_ard()"
     )
