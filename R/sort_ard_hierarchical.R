@@ -123,7 +123,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     dplyr::mutate(idx = dplyr::row_number()) |>
     dplyr::mutate(
       variable_level =
-        if_else(.data$variable %in% c("..ard_hierarchical_overall..", "..ard_total_n.."), list(NA), variable_level)
+        dplyr::if_else(.data$variable %in% c("..ard_hierarchical_overall..", "..ard_total_n.."), list(NA), variable_level)
     )
 
   for (i in seq_along(x_args$variables)) {
@@ -166,8 +166,8 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   if (!is_empty(by) & i == 1) {
     x <- x |>
       dplyr::mutate(
-        !!cur_var := if_else(!is_empty(by) & .data$variable %in% by, "..empty..", .data[[cur_var]]),
-        !!cur_var_lvl := if_else(!is_empty(by) & .data$variable %in% by, as.list(NA), .data[[cur_var_lvl]])
+        !!cur_var := dplyr::if_else(!is_empty(by) & .data$variable %in% by, "..empty..", .data[[cur_var]]),
+        !!cur_var_lvl := dplyr::if_else(!is_empty(by) & .data$variable %in% by, as.list(NA), .data[[cur_var_lvl]])
       )
   }
 
@@ -238,7 +238,6 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   sort_stat <- if (n_all) "n" else "p"
 
   sum_i <- paste0("sum_group_", i)
-
   x_sums <- x |>
     dplyr::filter(
       .data$stat_name == sort_stat,
@@ -246,7 +245,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       if (!is_empty(x_args$by)) !.data$group1 %in% x_args$variables
     ) |>
     dplyr::summarize(!!sum_i := sum(unlist(.data$stat[.data$stat_name == sort_stat]))) |>
-    ungroup()
+    dplyr::ungroup()
 
   if (i == 1) {
     x_sums[x_sums[[cur_var]] %in% "..overall..", sum_i] <- max(x_sums[[sum_i]], na.rm = TRUE) + 1
@@ -255,9 +254,9 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
   sort_cols <- append(dplyr::group_vars(x), sum_i, after = length(dplyr::group_vars(x)) - 2)
   x_sums <- x_sums |>
-    dplyr::arrange(across(sort_cols, \(x) if (is.numeric(x)) desc(x) else x)) |>
+    dplyr::arrange(across(sort_cols, \(x) if (is.numeric(x)) dplyr::desc(x) else x)) |>
     dplyr::mutate(!!paste0("sort_group_", i) := dplyr::row_number())
 
   x |>
-    left_join(x_sums, by = group_vars(x))
+    dplyr::left_join(x_sums, by = dplyr::group_vars(x))
 }
