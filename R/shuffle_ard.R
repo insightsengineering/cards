@@ -58,7 +58,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   # process the data/variable info
   dat_cards_grps_processed <- dat_cards_grps |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    rename_ard_columns(columns = all_ard_groups("names"), fill = "..cards_overall..") |>
+    rename_ard_columns(fill = "..cards_overall..") |>
+   # rename_ard_columns(columns = all_ard_groups("names"), fill = "..cards_overall..") |>
     # coerce everything to character
     dplyr::mutate(
       dplyr::across(
@@ -77,8 +78,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   dat_cards_out <- dat_cards_out |>
     # unlist the list-columns
     unlist_ard_columns() |>
-    .fill_grps_from_variables() |>
-    .fill_overall_grp_values(vars_protected) |>
+    # .fill_grps_from_variables() |>
+    # .fill_overall_grp_values(vars_protected) |>   # todo - use the attributes to figure out by stats and backfill grps
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
