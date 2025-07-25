@@ -74,6 +74,13 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
   x_args <- attributes(x)$args
 
+  # for calculations by highest severity, innermost variable is extracted from `by`
+  if (length(x_args$by) > 1) {
+    x_args$variables <- c(x_args$variables, x_args$by[-1])
+    x_args$include <- c(x_args$include, x_args$by[-1])
+    x_args$by <- x_args$by[-1]
+  }
+
   # get and check name of sorting variables
   if (is.character(sort)) {
     sort <- as.formula(paste0("everything() ~ '", sort, "'"))
@@ -93,13 +100,6 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     )
   }
 
-  # for calculations by highest severity, innermost variable is extracted from `by`
-  if (length(x_args$by) > 1) {
-    x_args$variables <- c(x_args$variables, x_args$by[-1])
-    x_args$include <- c(x_args$include, x_args$by[-1])
-    x_args$by <- x_args$by[-1]
-  }
-
   by <- x_args$by
   cols <-
     x_args$variables |>
@@ -108,6 +108,17 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
         dplyr::select(all_ard_group_n(seq_along(x_args$variables) + length(by), types = "names"), "variable") |>
         names()
     )
+
+  # header row info not sorted - appended to top of sorted ARD
+  has_hdr <- !is_empty(by) | "..ard_hierarchical_overall.." %in% x$variable
+  if (has_hdr) {
+    x_header <- x |>
+      dplyr::filter(variable %in% c(by, "..ard_hierarchical_overall..")) |>
+      # header statistic rows above "..ard_hierarchical_overall.." rows
+      dplyr::arrange(dplyr::desc(.data$variable))
+    x <- x |>
+      dplyr::filter(!variable %in% c(by, "..ard_hierarchical_overall.."))
+  }
 
   # attributes and total n not sorted - appended to bottom of sorted ARD
   has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
@@ -120,111 +131,129 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
   # reformat ARD for sorting ---------------------------------------------------------------------
   x_sort <- x |>
-    dplyr::mutate(idx = dplyr::row_number()) |>
-    dplyr::mutate(
-      variable_level =
-        dplyr::if_else(.data$variable %in% c("..ard_hierarchical_overall..", "..ard_total_n.."), list(NA), variable_level)
-    )
+    # for sorting, assign indices to each row in original order
+    dplyr::mutate(idx = dplyr::row_number())
 
-  for (i in seq_along(x_args$variables)) {
-    sort_i <- sort[[cols[i]]]
-    cur_var <- names(cols)[i]
+  # reformat current variable columns for sorting
+  x_sort <- x_sort |>
+    .ard_reformat_sort(by, cols)
+
+  for (i in seq_along(cols)) {
+    sort_i <- sort[[cols[i]]] # current sorting type
+    cur_var <- names(cols)[i] # current grouping variable
 
     x_sort <- x_sort |>
-      .ard_reformat_sort(cur_var, by, cols, i)
+      # group by current and all previous grouping columns
+      dplyr::group_by(pick(
+        any_of(cards::all_ard_group_n(seq_len(i) + length(by))),
+        any_of(c(cur_var, paste0(cur_var, "_level")))
+      ))
 
     if (sort_i == "descending") {
       # descending sort
       x_sort <- x_sort |>
+        # calculate sums for each group at the current level, then get group indices
         .append_hierarchy_sums(x_args, cur_var, i)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
+        # sort grouping variables in alphanumeric order
         dplyr::arrange(.by_group = TRUE) |>
+        # append group indices
         dplyr::mutate(!!paste0("sort_group_", i) := dplyr::cur_group_id())
     }
   }
 
-  # apply sorting at each hierarchy level
   idx_sorted <- x_sort |>
     dplyr::ungroup() |>
+    # sort according to determined orders at each hierarchy level
     dplyr::arrange(dplyr::pick(starts_with("sort_group_"))) |>
+    # pull ordered row indices
     dplyr::pull(idx)
+
+  # sort ARD
   x <- x[idx_sorted, ]
 
-  # keep attributes at bottom of ARD
+  # if present, keep header info at top of ARD
+  if (has_hdr) x <- dplyr::bind_rows(x_header, x)
+
+  # if present, keep attributes at bottom of ARD
   if (has_attr) x <- dplyr::bind_rows(x, x_attr)
 
   x
 }
 
 # this function reformats a hierarchical ARD for sorting
-.ard_reformat_sort <- function(x, cur_var, by, cols, i) {
-  cur_var_lvl <- paste0(cur_var, "_level")
+.ard_reformat_sort <- function(x, by, cols) {
+  for (i in seq_along(cols)) {
+    # get current grouping variables
+    cur_var <- names(cols)[i]
+    cur_var_lvl <- paste0(cur_var, "_level")
 
-  # header info
-  if (!is_empty(by) & i == 1) {
+    # outer hierarchy variables - process summary rows
+    if (!cur_var %in% "variable") {
+      x[x$variable %in% cols[i], ] <-
+        x[x$variable %in% cols[i], ] |>
+        dplyr::mutate(
+          # move variable/level names to correct grouping variable columns
+          !!cur_var := .data$variable,
+          !!cur_var_lvl := as.list(.data$variable_level),
+          # mark rows as overall summary data
+          variable := "..overall..",
+          variable_level = as.list(NA_character_)
+        )
+    }
+
+    # overall=TRUE - process summary rows (no `by` variable)
+    if (!is_empty(by) & !cur_var %in% "variable" & any(x[[paste0("group", i)]] %in% cols[i])) {
+      x[x[[paste0("group", i)]] %in% cols[i], ] <-
+        x[x[[paste0("group", i)]] %in% cols[i], ] |>
+        dplyr::mutate(
+          # shift variable/level names one to the right
+          !!paste0("group", i + length(by) + 1) := .data[[cur_var]],
+          !!paste0("group", i + length(by) + 1, "_level") := as.list(.data[[cur_var_lvl]]),
+          !!cur_var := .data[[paste0("group", i)]],
+          !!cur_var_lvl := as.list(.data[[paste0("group", i, "_level")]])
+        )
+    }
+
+    # previous hierarchy variables - process summary rows
+    if (any(is.na(x[[cur_var]]))) {
+      x[is.na(x[[cur_var]]), ] <-
+        x[is.na(x[[cur_var]]), ] |>
+        dplyr::mutate(
+          # mark summary rows from previous variables as "empty" for the current
+          # to sort them prior to non-summary rows in the same section
+          !!cur_var :=
+            dplyr::case_when(
+              !is_empty(by) & .data$group1 %in% c(by, NA) ~ "..empty..",
+              .default = NA
+            ),
+          !!cur_var_lvl := as.list(NA)
+        )
+    }
+
     x <- x |>
-      dplyr::mutate(
-        !!cur_var := dplyr::if_else(!is_empty(by) & .data$variable %in% by, "..empty..", .data[[cur_var]]),
-        !!cur_var_lvl := dplyr::if_else(!is_empty(by) & .data$variable %in% by, as.list(NA), .data[[cur_var_lvl]])
-      )
+      dplyr::rowwise() |>
+      # unlist cur_var_lvl column
+      dplyr::mutate(dplyr::across(all_of(cur_var_lvl), ~ as.character(unlist(.x))))
   }
 
-  # group summary rows
-  if (!cur_var %in% "variable") {
-    x[x$variable %in% cols[i], ] <-
-      x[x$variable %in% cols[i], ] |>
-      dplyr::mutate(
-        !!cur_var := .data$variable,
-        !!cur_var_lvl := .data$variable_level,
-        variable := "..overall..",
-        variable_level = as.list(NA)
-      )
-  }
-  # overall=TRUE rows
-  if (!is_empty(by) & !cur_var %in% "variable" & any(x[[paste0("group", i)]] %in% cols[i])) {
-    x[x[[paste0("group", i)]] %in% cols[i], ] <-
-      x[x[[paste0("group", i)]] %in% cols[i], ] |>
-      dplyr::mutate(
-        !!paste0("group", i + length(by) + 1) := .data[[cur_var]],
-        !!paste0("group", i + length(by) + 1, "_level") := .data[[cur_var_lvl]],
-        !!cur_var := .data[[paste0("group", i)]],
-        !!cur_var_lvl := as.list(.data[[paste0("group", i, "_level")]])
-      )
-  }
-  # overall summary rows
-  x[is.na(x[[cur_var]]), ] <-
-    x[is.na(x[[cur_var]]), ] |>
-    dplyr::mutate(
-      !!cur_var :=
-        dplyr::case_when(
-          .data$variable == "..ard_hierarchical_overall.." ~ "..overall..",
-          .data$group1 %in% c(by, NA) ~ "..empty..",
-          .default = NA
-        ),
-      !!cur_var_lvl := as.list(NA)
-    )
-
-  x |>
-    dplyr::mutate(dplyr::across(cur_var_lvl, ~ .x |> unlist())) |>
-    dplyr::group_by(pick(any_of(cards::all_ard_group_n(seq_len(i) + length(by))), any_of(c(cur_var, cur_var_lvl))))
+  x
 }
 
-# this function calculates and appends n sums for each hierarchy level section/row (across by variables)
+# this function calculates and appends n sums for the current hierarchy level section (across `by` variables)
 .append_hierarchy_sums <- function(x, x_args, cur_var, i) {
   # all variables in x have n or p stat present (not required if filtered out first)
-  n_all <- length(setdiff(
+  n_all <- is_empty(setdiff(
     intersect(x_args$include, x$variable),
     x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")
-  )) ==
-    0
+  ))
   if (!n_all) {
-    p_all <- length(setdiff(
+    p_all <- is_empty(setdiff(
       intersect(x_args$include, x$variable),
       x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")
-    )) ==
-      0
+    ))
     if (!p_all) {
       cli::cli_abort(
         paste(
@@ -235,28 +264,38 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       )
     }
   }
-  sort_stat <- if (n_all) "n" else "p"
+  sort_stat <- if (n_all) "n" else "p" # statistic to use when calculating group sums
 
-  sum_i <- paste0("sum_group_", i)
+  # calculate group sums
+  sum_i <- paste0("sum_group_", i) # sum column label
   x_sums <- x |>
     dplyr::filter(
-      .data$stat_name == sort_stat,
-      (variable == dplyr::last(x_args$variables) | .data[[cur_var]] %in% c("..empty..", "..overall..")),
-      if (!is_empty(x_args$by)) !.data$group1 %in% x_args$variables
+      .data$stat_name == sort_stat, # select statistic to sum
+      if (!is_empty(x_args$by)) .data$group1 %in% x_args$by else TRUE,
+      if (length(c(x_args$by, x_args$variables)) > 1) { ## for more than one var??
+        if (x_args$variable[i] %in% x_args$include & !cur_var %in% "variable") {
+          # if current variable is in include, sum summary rows for the current variable
+          .data$variable %in% "..overall.."
+        } else {
+          # otherwise, sum all innermost rows for the current variable
+          TRUE
+        }
+      } else {
+        TRUE
+      }
     ) |>
+    # get sum in each group
     dplyr::summarize(!!sum_i := sum(unlist(.data$stat[.data$stat_name == sort_stat]))) |>
     dplyr::ungroup()
 
-  if (i == 1) {
-    x_sums[x_sums[[cur_var]] %in% "..overall..", sum_i] <- max(x_sums[[sum_i]], na.rm = TRUE) + 1
-    x_sums[x_sums[[cur_var]] %in% "..empty..", sum_i] <- max(x_sums[[sum_i]], na.rm = TRUE) + 1
-  }
-
-  sort_cols <- append(dplyr::group_vars(x), sum_i, after = length(dplyr::group_vars(x)) - 2)
+  sort_cols <- append(dplyr::group_vars(x), sum_i, after = length(dplyr::group_vars(x)) - 1)
   x_sums <- x_sums |>
-    dplyr::arrange(across(sort_cols, \(x) if (is.numeric(x)) dplyr::desc(x) else x)) |>
+    # sort group sums in descending order, grouping variables in alphanumeric order
+    dplyr::arrange(across(all_of(sort_cols), \(x) if (is.numeric(x)) dplyr::desc(x) else x)) |>
+    # record order of groups
     dplyr::mutate(!!paste0("sort_group_", i) := dplyr::row_number())
 
+  # append corresponding group order index to each row
   x |>
     dplyr::left_join(x_sums, by = dplyr::group_vars(x))
 }

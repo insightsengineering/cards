@@ -373,7 +373,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
         names()
       x_no_sum <- x |>
         dplyr::mutate(idx = dplyr::row_number()) |>
-        .ard_reformat_sort("no_sort", by, outer_cols)
+        .ard_reformat_sort(by, outer_cols)
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
         x_no_sum <- x_no_sum |>
