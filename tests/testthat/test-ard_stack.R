@@ -361,8 +361,8 @@ test_that("ard_stack() .by_stats argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_continuous(data = mtcars, c("am", "cyl"), variables = "mpg"),
+      ard_dichotomous(data = mtcars, c("am", "cyl"), variables = "vs"),
       ard_categorical(data = mtcars, variables = "am"),
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,

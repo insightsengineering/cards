@@ -100,7 +100,7 @@
 #' @param shuffle (scalar `logical`)\cr
 #'   logical indicating whether to perform `shuffle_ard()` on the final result.
 #'   Default is `FALSE`.
-#' @param .by_stats (`logical`)\cr
+#' @param by_stats (`logical`)\cr
 #'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
 #' @return an ARD data frame of class 'card'

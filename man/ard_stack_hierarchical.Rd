@@ -96,9 +96,6 @@ Default is \code{FALSE}.}
 
 \item{by_stats}{(\code{logical})\cr
 logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
-
-\item{.by_stats}{(\code{logical})\cr
-logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
 }
 \value{
 an ARD data frame of class 'card'
