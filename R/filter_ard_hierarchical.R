@@ -195,6 +195,15 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
     )
   }
 
+  # attributes and total n not filtered - appended to bottom of filtered ARD
+  has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
+  if (has_attr) {
+    x_attr <- x |>
+      dplyr::filter(context %in% c("attributes", "total_n"))
+    x <- x |>
+      dplyr::filter(!context %in% c("attributes", "total_n"))
+  }
+
   # remove "overall" data from `x`
   if (is_empty(by)) {
     x_overall <- x
@@ -362,7 +371,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   }
 
   # remove summary rows from empty sections if requested
-  if (var != ard_args$variables[1] && !keep_empty && length(ard_args$include) > 1) {
+  if (!keep_empty && var != ard_args$variables[1] && length(ard_args$include) > 1) {
     cols <-
       ard_args$variables |>
       stats::setNames(
@@ -373,6 +382,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
     outer_cols <- head(cols, -1)
     # if all inner rows filtered out, remove all summary rows - only overall/header rows left
     if (!dplyr::last(ard_args$variables) %in% x$variable) {
+      # if no inner rows remain, remove all summary rows
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
       x_sum <- x |>
@@ -409,5 +419,9 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
       x <- x[idx_keep, ]
     }
   }
+
+  # if present, keep attributes at bottom of ARD
+  if (has_attr) x <- dplyr::bind_rows(x, x_attr)
+
   as_card(x)
 }

@@ -109,6 +109,15 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
         names()
     )
 
+  # attributes and total n not sorted - appended to bottom of sorted ARD
+  has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
+  if (has_attr) {
+    x_attr <- x |>
+      dplyr::filter(context %in% c("attributes", "total_n"))
+    x <- x |>
+      dplyr::filter(!context %in% c("attributes", "total_n"))
+  }
+
   # header row info not sorted - appended to top of sorted ARD
   has_hdr <- !is_empty(by) | "..ard_hierarchical_overall.." %in% x$variable
   if (has_hdr) {
@@ -118,15 +127,6 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       dplyr::arrange(dplyr::desc(.data$variable))
     x <- x |>
       dplyr::filter(!variable %in% c(by, "..ard_hierarchical_overall.."))
-  }
-
-  # attributes and total n not sorted - appended to bottom of sorted ARD
-  has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
-  if (has_attr) {
-    x_attr <- x |>
-      dplyr::filter(context %in% c("attributes", "total_n"))
-    x <- x |>
-      dplyr::filter(!context %in% c("attributes", "total_n"))
   }
 
   # reformat ARD for sorting ---------------------------------------------------------------------
