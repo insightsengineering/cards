@@ -30,6 +30,8 @@
 #'   Default is `FALSE`.
 #' @param .total_n (`logical`)\cr
 #'   logical indicating whether to include of `ard_total_n()` in the returned ARD.
+#' @param .by_stats (`logical`)\cr
+#'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -59,7 +61,8 @@ ard_stack <- function(data,
                       .missing = FALSE,
                       .attributes = FALSE,
                       .total_n = FALSE,
-                      .shuffle = FALSE) {
+                      .shuffle = FALSE,
+                      .by_stats = TRUE) {
   set_cli_abort_call()
 
   # process arguments ----------------------------------------------------------
@@ -74,6 +77,7 @@ ard_stack <- function(data,
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
   check_scalar_logical(.total_n)
+  check_scalar_logical(.by_stats)
 
   if (is_empty(.by) && isTRUE(.overall)) {
     cli::cli_inform(
@@ -105,7 +109,7 @@ ard_stack <- function(data,
   }
 
   # compute Ns by group / combine main calls -----------------------------------
-  if (!is_empty(by)) {
+  if (!is_empty(by) && isTRUE(.by_stats)) {
     ard_full <- bind_ard(
       ard_list,
       ard_categorical(

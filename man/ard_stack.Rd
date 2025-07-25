@@ -12,7 +12,8 @@ ard_stack(
   .missing = FALSE,
   .attributes = FALSE,
   .total_n = FALSE,
-  .shuffle = FALSE
+  .shuffle = FALSE,
+  .by_stats = TRUE
 )
 }
 \arguments{
@@ -44,6 +45,9 @@ logical indicating whether to include of \code{ard_total_n()} in the returned AR
 \item{.shuffle}{(\code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
+
+\item{.by_stats}{(\code{logical})\cr
+logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
 }
 \value{
 an ARD data frame of class 'card'

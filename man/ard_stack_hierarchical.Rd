@@ -17,7 +17,8 @@ ard_stack_hierarchical(
   over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
-  shuffle = FALSE
+  shuffle = FALSE,
+  by_stats = TRUE
 )
 
 ard_stack_hierarchical_count(
@@ -30,7 +31,8 @@ ard_stack_hierarchical_count(
   over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
-  shuffle = FALSE
+  shuffle = FALSE,
+  by_stats = TRUE
 )
 }
 \arguments{
@@ -91,6 +93,9 @@ logical indicating whether to include of \code{ard_total_n(denominator)} in the 
 \item{shuffle}{(scalar \code{logical})\cr
 logical indicating whether to perform \code{shuffle_ard()} on the final result.
 Default is \code{FALSE}.}
+
+\item{by_stats}{(\code{logical})\cr
+logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
 }
 \value{
 an ARD data frame of class 'card'
