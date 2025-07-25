@@ -72,13 +72,13 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     return(x)
   }
 
-  x_args <- attributes(x)$args
+  ard_args <- attributes(x)$args
 
   # for calculations by highest severity, innermost variable is extracted from `by`
-  if (length(x_args$by) > 1) {
-    x_args$variables <- c(x_args$variables, x_args$by[-1])
-    x_args$include <- c(x_args$include, x_args$by[-1])
-    x_args$by <- x_args$by[-1]
+  if (length(ard_args$by) > 1) {
+    ard_args$variables <- c(ard_args$variables, ard_args$by[-1])
+    ard_args$include <- c(ard_args$include, ard_args$by[-1])
+    ard_args$by <- ard_args$by[-1]
   }
 
   # get and check name of sorting variables
@@ -86,11 +86,11 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     sort <- as.formula(paste0("everything() ~ '", sort, "'"))
   }
   process_formula_selectors(
-    as.list(x_args$variables) |> data.frame() |> stats::setNames(x_args$variables),
+    as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
     sort = sort
   )
   fill_formula_selectors(
-    as.list(x_args$variables) |> data.frame() |> stats::setNames(x_args$variables),
+    as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
     sort = everything() ~ "descending"
   )
   if (!all(unlist(sort) %in% c("descending", "alphanumeric"))) {
@@ -100,12 +100,12 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     )
   }
 
-  by <- x_args$by
+  by <- ard_args$by
   cols <-
-    x_args$variables |>
+    ard_args$variables |>
     stats::setNames(
       x |>
-        dplyr::select(all_ard_group_n(seq_along(x_args$variables) + length(by), types = "names"), "variable") |>
+        dplyr::select(all_ard_group_n(seq_along(ard_args$variables) + length(by), types = "names"), "variable") |>
         names()
     )
 
@@ -153,7 +153,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       # descending sort
       x_sort <- x_sort |>
         # calculate sums for each group at the current level, then get group indices
-        .append_hierarchy_sums(x_args, cur_var, i)
+        .append_hierarchy_sums(ard_args, cur_var, i)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
@@ -236,22 +236,23 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     x <- x |>
       dplyr::rowwise() |>
       # unlist cur_var_lvl column
-      dplyr::mutate(dplyr::across(all_of(cur_var_lvl), ~ as.character(unlist(.x))))
+      dplyr::mutate(dplyr::across(all_of(cur_var_lvl), ~ as.character(unlist(.x)))) |>
+      dplyr::ungroup()
   }
 
   x
 }
 
 # this function calculates and appends n sums for the current hierarchy level section (across `by` variables)
-.append_hierarchy_sums <- function(x, x_args, cur_var, i) {
+.append_hierarchy_sums <- function(x, ard_args, cur_var, i) {
   # all variables in x have n or p stat present (not required if filtered out first)
   n_all <- is_empty(setdiff(
-    intersect(x_args$include, x$variable),
+    intersect(ard_args$include, x$variable),
     x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")
   ))
   if (!n_all) {
     p_all <- is_empty(setdiff(
-      intersect(x_args$include, x$variable),
+      intersect(ard_args$include, x$variable),
       x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")
     ))
     if (!p_all) {
@@ -271,9 +272,9 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   x_sums <- x |>
     dplyr::filter(
       .data$stat_name == sort_stat, # select statistic to sum
-      if (!is_empty(x_args$by)) .data$group1 %in% x_args$by else TRUE,
-      if (length(c(x_args$by, x_args$variables)) > 1) { ## for more than one var??
-        if (x_args$variable[i] %in% x_args$include & !cur_var %in% "variable") {
+      if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
+      if (length(c(ard_args$by, ard_args$variables)) > 1) { ## for more than one var??
+        if (ard_args$variable[i] %in% ard_args$include & !cur_var %in% "variable") {
           # if current variable is in include, sum summary rows for the current variable
           .data$variable %in% "..overall.."
         } else {
