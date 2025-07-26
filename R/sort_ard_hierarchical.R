@@ -226,7 +226,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
           # to sort them prior to non-summary rows in the same section
           !!cur_var :=
             dplyr::case_when(
-              !is_empty(by) & .data$group1 %in% c(by, NA) ~ "..empty..",
+              .data$variable %in% "..overall.." ~ "..empty..",
               .default = NA
             ),
           !!cur_var_lvl := as.list(NA)
