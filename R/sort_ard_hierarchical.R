@@ -209,14 +209,14 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     }
 
     # overall=TRUE - process summary rows (no `by` variable)
-    if (!is_empty(by) & !cur_var %in% "variable" & any(x[[paste0("group", i)]] %in% cols[i]) &
-      paste0("group", i + length(by) + 1) %in% names(x)) {
+    if (!is_empty(by) & !cur_var %in% "variable" & any(x[[paste0("group", i)]] %in% cols[i])) {
+      next_var_gp <- paste0("group", i + length(by) + 1) %in% names(x)
       x[x[[paste0("group", i)]] %in% cols[i], ] <-
         x[x[[paste0("group", i)]] %in% cols[i], ] |>
         dplyr::mutate(
           # shift variable/level names one to the right
-          !!paste0("group", i + length(by) + 1) := .data[[cur_var]],
-          !!paste0("group", i + length(by) + 1, "_level") := as.list(.data[[cur_var_lvl]]),
+          !!paste0("group", i + length(by) + 1) := if (next_var_gp) .data[[cur_var]] else NULL,
+          !!paste0("group", i + length(by) + 1, "_level") := if (next_var_gp) as.list(.data[[cur_var_lvl]]) else NULL,
           !!cur_var := .data[[paste0("group", i)]],
           !!cur_var_lvl := as.list(.data[[paste0("group", i, "_level")]])
         )

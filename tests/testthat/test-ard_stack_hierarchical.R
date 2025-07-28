@@ -663,8 +663,7 @@ test_that("ard_stack_hierarchical_count(attributes)", {
       dplyr::select(-all_missing_columns()),
     ADAE_small |>
       ard_attributes(variables = c(TRTA, AESOC, AEDECOD)) |>
-      dplyr::select(-all_missing_columns()) |>
-      dplyr::slice(c(5:6, 1:2, 3:4)),
+      dplyr::select(-all_missing_columns()),
     ignore_attr = TRUE
   )
 })
