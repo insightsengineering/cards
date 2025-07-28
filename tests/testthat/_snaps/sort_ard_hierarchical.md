@@ -82,5 +82,5 @@
       sort_ard_hierarchical(ard)
     Condition
       Error in `sort_ard_hierarchical()`:
-      ! If `sort='descending'` then either "n" or "p" must be present in `x` for all variables in order to calculate the count sums used for sorting.
+      ! If `sort='descending'` for any variables then either "n" or "p" must be present in `x` for each of these specified variables in order to calculate the count sums used for sorting.
 

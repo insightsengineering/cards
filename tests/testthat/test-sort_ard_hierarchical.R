@@ -156,6 +156,75 @@ test_that("sort_ard_hierarchical(sort = 'alphanumeric') works", {
   )
 })
 
+test_that("sort_ard_hierarchical(sort) works with different sorting methods for each variable", {
+  expect_silent(
+    ard <- sort_ard_hierarchical(
+      ard,
+      sort = list(SEX ~ "alphanumeric", RACE = "descending", AETERM = "alphanumeric")
+    )
+  )
+
+  expect_equal(
+    ard |>
+      dplyr::filter(variable == "SEX") |>
+      dplyr::select(variable_level) |>
+      dplyr::distinct() |>
+      dplyr::pull(variable_level) |>
+      unlist(),
+    sort(c("F", "M"))
+  )
+  expect_equal(
+    ard |>
+      dplyr::filter(variable == "RACE") |>
+      dplyr::select(
+        all_ard_groups("levels"),
+        -"group1_level",
+        all_ard_variables()
+      ) |>
+      dplyr::distinct() |>
+      dplyr::pull(variable_level) |>
+      unlist(),
+    c(
+      "WHITE",
+      "BLACK OR AFRICAN AMERICAN",
+      "WHITE",
+      "BLACK OR AFRICAN AMERICAN",
+      "AMERICAN INDIAN OR ALASKA NATIVE"
+    )
+  )
+  expect_equal(
+    ard |>
+      dplyr::filter(variable == "AETERM") |>
+      dplyr::select(
+        all_ard_groups("levels"),
+        -"group1_level",
+        all_ard_variables()
+      ) |>
+      dplyr::distinct() |>
+      dplyr::pull(variable_level) |>
+      unlist(),
+    c(
+      "APPLICATION SITE ERYTHEMA",
+      "APPLICATION SITE PRURITUS",
+      "DIARRHOEA",
+      "ERYTHEMA",
+      "APPLICATION SITE PRURITUS",
+      "ATRIOVENTRICULAR BLOCK SECOND DEGREE",
+      "DIARRHOEA",
+      "ERYTHEMA",
+      "APPLICATION SITE ERYTHEMA",
+      "APPLICATION SITE PRURITUS",
+      "ATRIOVENTRICULAR BLOCK SECOND DEGREE",
+      "DIARRHOEA",
+      "ERYTHEMA",
+      "APPLICATION SITE PRURITUS",
+      "DIARRHOEA",
+      "ERYTHEMA",
+      "ERYTHEMA"
+    )
+  )
+})
+
 test_that("sort_ard_hierarchical() works when there is no overall row in x", {
   ard_no_overall <- ard_stack_hierarchical(
     data = ADAE_subset,

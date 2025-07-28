@@ -10,16 +10,20 @@
 #' @param x (`card`)\cr
 #'   a stacked hierarchical ARD of class `'card'` created using [ard_stack_hierarchical()] or
 #'   [`ard_stack_hierarchical_count()`].
-#' @param sort (`string`)\cr
-#'   type of sorting to perform. Value must be one of:
-#'   - `"alphanumeric"` - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
-#'     by `variable_level` text.
-#'   - `"descending"` - within each variable group of the ARD, count sums are calculated for each group and groups are
-#'     sorted in descending order by sum. If `sort = "descending"`, the `n` statistic is used to calculate variable
-#'     group sums if included in `statistic` for all variables, otherwise `p` is used. If neither `n` nor `p` are
-#'     present in `x` for all variables, an error will occur.
+#' @param sort ([`formula-list-selector`][syntax], `string`)\cr
+#'   a named list, a list of formulas, a single formula where the list element is a named list of functions
+#'   (or the RHS of a formula), or a string specifying the types of sorting to perform at each hierarchy variable level.
+#'   If sort method for any variable is not specified then the sort method will default to `"descending"`. If a single
+#'   unnamed string is supplied, it is applied to all variables. For each variable, the value specified must
+#'   be one of:
+#'   - `"alphanumeric"` - at the specified hierarchical variable level of the ARD, groups are ordered alphanumerically
+#'     (i.e. A to Z) by `variable_level` text.
+#'   - `"descending"` - within each variable group of the ARD at the specified hierarchy variable level, count sums are
+#'     calculated for each group and groups are sorted in descending order by sum. When `sort` is `"descending"` for a
+#'     given variable and `n` is included in `statistic` for the variable then `n` is used to calculate variable group
+#'     sums, otherwise `p` is used. If neither `n` nor `p` are present in `x` for the variable, an error will occur.
 #'
-#'   Defaults to `"descending"`.
+#'   Defaults to `everything() ~ "descending"`.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
@@ -38,7 +42,7 @@
 #'   denominator = ADSL,
 #'   id = USUBJID
 #' ) |>
-#'   sort_ard_hierarchical("alphanumeric")
+#'   sort_ard_hierarchical(AESOC ~ "alphanumeric")
 #'
 #' ard_stack_hierarchical_count(
 #'   ADAE,
@@ -243,29 +247,29 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   x
 }
 
-# this function calculates and appends n sums for the current hierarchy level section (across `by` variables)
+# this function calculates and appends group sums/ordering for the current hierarchy level (across `by` variables)
 .append_hierarchy_sums <- function(x, ard_args, cur_var, i) {
   # all variables in x have n or p stat present (not required if filtered out first)
-  n_all <- is_empty(setdiff(
+  n_stat <- is_empty(setdiff(
     intersect(ard_args$include, x$variable),
     x |> dplyr::filter(.data$stat_name == "n") |> dplyr::pull("variable")
   ))
-  if (!n_all) {
-    p_all <- is_empty(setdiff(
+  if (!n_stat) {
+    p_stat <- is_empty(setdiff(
       intersect(ard_args$include, x$variable),
       x |> dplyr::filter(.data$stat_name == "p") |> dplyr::pull("variable")
     ))
-    if (!p_all) {
+    if (!p_stat) { # p statistic is also not available
       cli::cli_abort(
         paste(
-          "If {.code sort='descending'} then either {.val n} or {.val p} must be present in {.arg x} for all",
-          "variables in order to calculate the count sums used for sorting."
+          "If {.code sort='descending'} for any variables then either {.val n} or {.val p} must be present in {.arg x}",
+          "for each of these specified variables in order to calculate the count sums used for sorting."
         ),
         call = get_cli_abort_call()
       )
     }
   }
-  sort_stat <- if (n_all) "n" else "p" # statistic to use when calculating group sums
+  sort_stat <- if (n_stat) "n" else "p" # statistic used to calculate group sums
 
   # calculate group sums
   sum_i <- paste0("sum_group_", i) # sum column label
@@ -273,12 +277,12 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     dplyr::filter(
       .data$stat_name == sort_stat, # select statistic to sum
       if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
-      if (length(c(ard_args$by, ard_args$variables)) > 1) { ## for more than one var??
+      if (length(c(ard_args$by, ard_args$variables)) > 1) {
         if (ard_args$variable[i] %in% ard_args$include & !cur_var %in% "variable") {
           # if current variable is in include, sum summary rows for the current variable
           .data$variable %in% "..overall.."
         } else {
-          # otherwise, sum all innermost rows for the current variable
+          # otherwise, sum all *innermost* rows for the current variable
           TRUE
         }
       } else {
@@ -289,7 +293,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     dplyr::summarize(!!sum_i := sum(unlist(.data$stat[.data$stat_name == sort_stat]))) |>
     dplyr::ungroup()
 
-  sort_cols <- append(dplyr::group_vars(x), sum_i, after = length(dplyr::group_vars(x)) - 1)
+  sort_cols <- append(dplyr::group_vars(x), sum_i, after = length(dplyr::group_vars(x)) - 1) # sorting columns
   x_sums <- x_sums |>
     # sort group sums in descending order, grouping variables in alphanumeric order
     dplyr::arrange(across(all_of(sort_cols), \(x) if (is.numeric(x)) dplyr::desc(x) else x)) |>
