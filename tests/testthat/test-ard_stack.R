@@ -335,3 +335,74 @@ test_that("ard_stack(.by) messaging", {
       dplyr::filter(stat_name %in% "N")
   )
 })
+
+test_that("ard_stack() .by_stats argument", {
+  # by stats for 1 variable
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .by_stats = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_categorical(data = mtcars, variables = "cyl"),
+      .update = TRUE,
+      .order = TRUE
+    )
+  )
+
+  # by stats for 2 variables
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = c("am", "cyl"),
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .by_stats = TRUE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, c("am", "cyl"), variables = "mpg"),
+      ard_dichotomous(data = mtcars, c("am", "cyl"), variables = "vs"),
+      ard_categorical(data = mtcars, variables = "am"),
+      ard_categorical(data = mtcars, variables = "cyl"),
+      .update = TRUE,
+      .order = TRUE
+    )
+  )
+
+  # no by stats
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = c("am", "cyl"),
+      ard_continuous(variables = "mpg"),
+      ard_dichotomous(variables = "vs"),
+      .by_stats = FALSE
+    ),
+    NA
+  )
+
+  expect_equal(
+    ard_test,
+    bind_ard(
+      ard_continuous(data = mtcars, by = c("am", "cyl"), variables = "mpg"),
+      ard_dichotomous(data = mtcars, by = c("am", "cyl"), variables = "vs"),
+      .update = TRUE,
+      .order = TRUE
+    )
+  )
+})
