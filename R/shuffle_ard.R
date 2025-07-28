@@ -59,7 +59,6 @@ shuffle_ard <- function(x, trim = TRUE) {
   dat_cards_grps_processed <- dat_cards_grps |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
     rename_ard_columns(fill = "..cards_overall..") |>
-   # rename_ard_columns(columns = all_ard_groups("names"), fill = "..cards_overall..") |>
     # coerce everything to character
     dplyr::mutate(
       dplyr::across(
@@ -78,8 +77,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   dat_cards_out <- dat_cards_out |>
     # unlist the list-columns
     unlist_ard_columns() |>
-    # .fill_grps_from_variables() |>
-    # .fill_overall_grp_values(vars_protected) |>   # todo - use the attributes to figure out by stats and backfill grps
+    .coalesce_ard_vars() |>
+    .fill_overall_grp_values(vars_protected, ard_args) |>
     dplyr::arrange(.data$..cards_idx..) |>
     dplyr::select(-"..cards_idx..")
 
@@ -96,6 +95,40 @@ shuffle_ard <- function(x, trim = TRUE) {
   output
 }
 
+
+#' Coalesce protected `..ard_*` variables into a single column, `..ard_vars..`
+#'
+#' @param x (`data.frame`)\cr
+#'   a data frame
+#'
+#' @return a tibble
+#' @keywords internal
+#'
+#' @examples
+#' tibble::tibble(
+#'   grp = c("A",NA,"B",NA),
+#'   ..ard_total_n.. = c(NA, NA, NA, TRUE),
+#'   ..ard_hierarchical_overall.. = c(NA, TRUE, NA, NA),
+#'   ..cards_idx.. = 1:4
+#' ) |>
+#' cards:::.coalesce_ard_vars()
+.coalesce_ard_vars <- function(x){
+
+  ard_vars <- intersect(c("..ard_total_n..", "..ard_hierarchical_overall.."), names(x))
+  if (length(ard_vars)>0){
+   x <- x |>
+      dplyr::mutate(across(all_of(ard_vars), ~ ifelse(!is.na(.x), dplyr::cur_column(), .x))) |>
+      dplyr::mutate(..ard_vars.. = do.call(dplyr::coalesce, across(all_of(ard_vars))))|>
+      dplyr::select(-all_of(ard_vars))
+  } else {
+    x <- x |>
+      mutate(..ard_vars.. = NA)
+  }
+
+  x  |>
+    dplyr::relocate("..ard_vars..", .before = "..cards_idx..")
+
+}
 
 #' Trim ARD
 #'
@@ -276,6 +309,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
+#' @param ard_args (`list`)\cr
+#'   list of args passed from ard_* calls
 #'
 #' @return data frame
 #' @keywords internal
@@ -291,14 +326,19 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' )
 #'
 #' cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
-.fill_overall_grp_values <- function(x, vars_protected) {
+.fill_overall_grp_values <- function(x, vars_protected, ard_args) {
+
+  if (is.null(ard_args) || is_empty(ard_args$by)){
+    return(x)
+  }
+
   # determine grouping and merging variables
-  id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
-  id_vars <- id_vars[id_vars %in% names(x)]
-  grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
+  grp_vars <- ard_args$by
+  id_vars <- setdiff(names(x), unique(c(vars_protected, grp_vars, "..ard_vars..")))
 
   # replace NA group values with "..cards_overall.." where it is likely to be an overall calculation
   for (g in grp_vars) {
+
     # rows with missing group
     x_missing_by <- x |>
       dplyr::filter(is.na(.data[[g]]))
@@ -324,23 +364,16 @@ shuffle_ard <- function(x, trim = TRUE) {
 
   # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
   # where it is likely to be a group or subgroup calculation
-  for (i in seq_along(grp_vars)) {
-    g_var <- grp_vars[i]
-
-    x <- x |>
-      dplyr::mutate(
-        !!g_var := dplyr::case_when(
-          # only assign "..cards_overall.." for the first grouping variable
-          is.na(.data[[g_var]]) &
-            .data$variable == "..ard_total_n.." & i == 1 ~
-            "..cards_overall..",
-          is.na(.data[[g_var]]) &
-            .data$variable == "..ard_hierarchical_overall.." ~
-            "..hierarchical_overall..",
-          TRUE ~ .data[[g_var]]
-        )
-      )
-  }
+  x <- x |>
+    dplyr::mutate(across(all_of(grp_vars),
+                         ~ifelse(is.na(.x),
+                                 ..ard_vars..,
+                                 .x)))|>
+    dplyr::mutate(across(all_of(id_vars),
+                         ~ifelse(is.na(.x) & .data$..ard_vars.. == "..ard_hierarchical_overall..",
+                                 "..hierarchical_overall..",
+                                 .x))) |>
+    dplyr::select(-"..ard_vars..")
 
   # replace `"..cards_overall.."` group values with "Overall <colname>" and
   # `"..hierarchical_overall.."` with `"Any <colname>"`
@@ -348,7 +381,7 @@ shuffle_ard <- function(x, trim = TRUE) {
     dplyr::mutate(
       dplyr::across(
         tidyselect::all_of(
-          grp_vars
+          c(grp_vars, id_vars)
         ),
         .derive_overall_labels
       )
