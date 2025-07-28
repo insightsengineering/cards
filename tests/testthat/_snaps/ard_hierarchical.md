@@ -11,7 +11,8 @@
       ard_hierarchical(data = ADAE, variables = starts_with("xxxx"), by = c(TRTA,
         AESEV))
     Message
-      {cards} data frame: 0 x 0
+      
+      -- cards -----------------------------------------------------------------------
     Output
       data frame with 0 columns and 0 rows
 
@@ -25,14 +26,13 @@
       Duplicate rows found in data for the "USUBJID" column.
       i Percentages/Denominators are not correct.
     Message
-      {cards} data frame: 1 x 15
+      
+      -- cards -----------------------------------------------------------------------
     Output
         group1 group1_level group2 group2_level group3 group3_level variable
-      1   TRTA      Placebo  AESEV         MILD  AESOC    CARDIAC …  AEDECOD
+      1 TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC …    AEDECOD 
         variable_level stat_name stat_label stat
-      1      ATRIAL F…         n          n    0
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+      1 ATRIAL F…      n         n          0   
 
 ---
 
@@ -44,14 +44,13 @@
       Duplicate rows found in data for the "USUBJID" and "SITEID" columns.
       i Percentages/Denominators are not correct.
     Message
-      {cards} data frame: 1 x 15
+      
+      -- cards -----------------------------------------------------------------------
     Output
         group1 group1_level group2 group2_level group3 group3_level variable
-      1   TRTA      Placebo  AESEV         MILD  AESOC    CARDIAC …  AEDECOD
+      1 TRTA   Placebo      AESEV  MILD         AESOC  CARDIAC …    AEDECOD 
         variable_level stat_name stat_label stat
-      1      ATRIAL F…         n          n    0
-    Message
-      i 4 more variables: context, fmt_fun, warning, error
+      1 ATRIAL F…      n         n          0   
 
 # ard_hierarchical_count() works without by variables
 
@@ -66,7 +65,8 @@
       ard_hierarchical_count(data = ADAE, variables = starts_with("xxxx"), by = c(
         TRTA, AESEV))
     Message
-      {cards} data frame: 0 x 0
+      
+      -- cards -----------------------------------------------------------------------
     Output
       data frame with 0 columns and 0 rows
 
