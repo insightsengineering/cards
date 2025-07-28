@@ -300,6 +300,16 @@ test_that("sort_ard_hierarchical() works with only one variable in x", {
       unique(),
     sort(unique(ADAE_subset$AETERM))
   )
+
+  # works with no `by`
+  ard_single <- ard_stack_hierarchical(
+    data = ADAE_subset,
+    variables = AETERM,
+    denominator = cards::ADSL,
+    id = USUBJID,
+    over_variables = TRUE
+  )
+  expect_silent(ard_single <- sort_ard_hierarchical(ard_single))
 })
 
 test_that("sort_ard_hierarchical() works when some variables not included in x", {

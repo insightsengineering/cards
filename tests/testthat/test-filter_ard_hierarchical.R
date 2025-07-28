@@ -180,15 +180,16 @@ test_that("filter_ard_hierarchical(var) works", {
   expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 50, var = AESOC))
   expect_equal(nrow(ard_f), 108)
 
-  # works with no `by` variable
+  # works with no `by` variable, attributes
   ard_noby <- ard_stack_hierarchical(
     data = ADAE_subset,
     variables = c(AESOC, AEDECOD, AETOXGR),
     denominator = cards::ADSL,
-    id = USUBJID
+    id = USUBJID,
+    attributes = TRUE
   )
   expect_silent(ard_f <- filter_ard_hierarchical(ard_noby, sum(n) > 10, var = AEDECOD))
-  expect_equal(nrow(ard_f), 60)
+  expect_equal(nrow(ard_f), 67)
 })
 
 test_that("filter_ard_hierarchical(keep_empty) works", {
