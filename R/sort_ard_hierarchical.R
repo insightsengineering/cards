@@ -87,7 +87,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
   # get and check name of sorting variables
   if (is.character(sort)) {
-    sort <- as.formula(paste0("everything() ~ '", sort, "'"))
+    sort <- stats::as.formula(paste0("everything() ~ '", sort, "'"))
   }
   process_formula_selectors(
     as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
@@ -117,20 +117,20 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
   if (has_attr) {
     x_attr <- x |>
-      dplyr::filter(context %in% c("attributes", "total_n"))
+      dplyr::filter(.data$context %in% c("attributes", "total_n"))
     x <- x |>
-      dplyr::filter(!context %in% c("attributes", "total_n"))
+      dplyr::filter(!.data$context %in% c("attributes", "total_n"))
   }
 
   # header row info not sorted - appended to top of sorted ARD
   has_hdr <- !is_empty(by) | "..ard_hierarchical_overall.." %in% x$variable
   if (has_hdr) {
     x_header <- x |>
-      dplyr::filter(variable %in% c(by, "..ard_hierarchical_overall..")) |>
+      dplyr::filter(.data$variable %in% c(by, "..ard_hierarchical_overall..")) |>
       # header statistic rows above "..ard_hierarchical_overall.." rows
       dplyr::arrange(dplyr::desc(.data$variable))
     x <- x |>
-      dplyr::filter(!variable %in% c(by, "..ard_hierarchical_overall.."))
+      dplyr::filter(!.data$variable %in% c(by, "..ard_hierarchical_overall.."))
   }
 
   # reformat ARD for sorting ---------------------------------------------------------------------
@@ -148,7 +148,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
     x_sort <- x_sort |>
       # group by current and all previous grouping columns
-      dplyr::group_by(pick(
+      dplyr::group_by(dplyr::pick(
         any_of(cards::all_ard_group_n(seq_len(i) + length(by))),
         any_of(c(cur_var, paste0(cur_var, "_level")))
       ))
@@ -173,7 +173,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     # sort according to determined orders at each hierarchy level
     dplyr::arrange(dplyr::pick(starts_with("sort_group_"))) |>
     # pull ordered row indices
-    dplyr::pull(idx)
+    dplyr::pull("idx")
 
   # sort ARD
   x <- x[idx_sorted, ]

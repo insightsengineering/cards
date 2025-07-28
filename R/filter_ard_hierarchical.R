@@ -199,9 +199,9 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
   if (has_attr) {
     x_attr <- x |>
-      dplyr::filter(context %in% c("attributes", "total_n"))
+      dplyr::filter(.data$context %in% c("attributes", "total_n"))
     x <- x |>
-      dplyr::filter(!context %in% c("attributes", "total_n"))
+      dplyr::filter(!.data$context %in% c("attributes", "total_n"))
   }
 
   # remove "overall" data from `x`
@@ -379,7 +379,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
           dplyr::select(all_ard_group_n(seq_along(ard_args$variables) + length(by), types = "names"), "variable") |>
           names()
       )
-    outer_cols <- head(cols, -1)
+    outer_cols <- utils::head(cols, -1)
     # if all inner rows filtered out, remove all summary rows - only overall/header rows left
     if (!dplyr::last(ard_args$variables) %in% x$variable) {
       # if no inner rows remain, remove all summary rows
@@ -395,12 +395,12 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
         # get group keys of all non-empty sections
         x_gps <- x_sum |>
           # group by current and all previous grouping columns
-          dplyr::group_by(pick(
+          dplyr::group_by(dplyr::pick(
             any_of(cards::all_ard_group_n((1:i) + length(by))),
             any_of(cards::all_ard_variables())
           )) |>
           dplyr::group_keys() |>
-          dplyr::filter(!variable %in% "..overall..") |>
+          dplyr::filter(!.data$variable %in% "..overall..") |>
           dplyr::select(any_of(cards::all_ard_group_n((1:i) + length(by)))) |>
           dplyr::distinct()
 
@@ -408,11 +408,11 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
         idx_rm <- x_sum |>
           dplyr::filter(.data[[names(cols)[i]]] %in% cols[i]) |>
           dplyr::anti_join(x_gps, by = names(x_gps)) |>
-          dplyr::pull(idx)
+          dplyr::pull("idx")
 
         # remove summary rows from empty sections
         x_sum <- x_sum |>
-          dplyr::filter(!idx %in% idx_rm)
+          dplyr::filter(!.data$idx %in% idx_rm)
       }
       # filter out all empty summary rows
       idx_keep <- sort(x_sum$idx)
