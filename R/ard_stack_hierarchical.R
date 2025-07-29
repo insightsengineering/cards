@@ -506,8 +506,8 @@ internal_stack_hierarchical <- function(
   if (isTRUE(shuffle)) {
     lifecycle::deprecate_warn(
       when = "0.7.0",
-      what = "ard_stack_hierarchical(shuffle)",
-      with = "shuffle_ard()"
+      what = "cards::ard_stack_hierarchical(shuffle)",
+      details = "Call `shuffle_ard()` after `ard_stack_hierarchical()`."
     )
     result <- shuffle_ard(result)
   }
