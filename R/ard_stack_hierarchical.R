@@ -101,6 +101,8 @@
 #'   will be removed in the next release. `ard_stack_hierarchical()` and
 #'   `ard_stack_hierarchical_count()` will no longer shuffle. `shuffle_ard()`
 #'   should be called separately.
+#' @param by_stats (`logical`)\cr
+#'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_stack_hierarchical
@@ -136,7 +138,8 @@ ard_stack_hierarchical <- function(
     over_variables = FALSE,
     attributes = FALSE,
     total_n = FALSE,
-    shuffle = FALSE) {
+    shuffle = FALSE,
+    by_stats = TRUE) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -174,7 +177,8 @@ ard_stack_hierarchical <- function(
     over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
-    shuffle = shuffle
+    shuffle = shuffle,
+    by_stats = by_stats
   )
 }
 
@@ -190,7 +194,8 @@ ard_stack_hierarchical_count <- function(
     over_variables = FALSE,
     attributes = FALSE,
     total_n = FALSE,
-    shuffle = FALSE) {
+    shuffle = FALSE,
+    by_stats = TRUE) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -220,7 +225,8 @@ ard_stack_hierarchical_count <- function(
     over_variables = over_variables,
     attributes = attributes,
     total_n = total_n,
-    shuffle = shuffle
+    shuffle = shuffle,
+    by_stats = by_stats
   )
 }
 
@@ -237,7 +243,7 @@ internal_stack_hierarchical <- function(
     attributes = FALSE,
     total_n = FALSE,
     shuffle = FALSE,
-    include_uni_by_tab = TRUE) {
+    by_stats = TRUE) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -253,6 +259,7 @@ internal_stack_hierarchical <- function(
   check_scalar_logical(attributes)
   check_scalar_logical(total_n)
   check_scalar_logical(shuffle)
+  check_scalar_logical(by_stats)
 
   # check inputs ---------------------------------------------------------------
   # both variables and include must be specified
@@ -408,7 +415,7 @@ internal_stack_hierarchical <- function(
 
   # add univariate tabulations of by variables ---------------------------------
   if (
-    isTRUE(include_uni_by_tab) &&
+    isTRUE(by_stats) &&
       is.data.frame(denominator) &&
       !is_empty(intersect(by, names(denominator)))
   ) {
@@ -445,7 +452,7 @@ internal_stack_hierarchical <- function(
           attributes = FALSE,
           total_n = FALSE,
           shuffle = FALSE,
-          include_uni_by_tab = FALSE
+          by_stats = FALSE
         ) %>%
           {
             suppressMessages(eval_tidy(.))

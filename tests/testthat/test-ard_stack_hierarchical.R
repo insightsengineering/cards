@@ -689,3 +689,45 @@ test_that("ard_stack_hierarchical_count(attributes)", {
     ignore_attr = TRUE
   )
 })
+
+test_that("ard_stack_hierarchical() by_stats argument", {
+  # include by_stats
+  expect_silent(
+    ard <-
+      ard_stack_hierarchical(
+        ADAE_small,
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        id = USUBJID,
+        denominator = ADSL,
+        by_stats = TRUE
+      )
+  )
+
+  expect_equal(
+    ard |> dplyr::filter(variable == "TRTA") |> dplyr::select(-all_ard_groups()),
+    ard_categorical(
+      data = ADSL,
+      variables = TRTA
+    ),
+    ignore_attr = TRUE
+  )
+
+  # no by_stats
+  expect_silent(
+    ard <-
+      ard_stack_hierarchical(
+        ADAE_small,
+        variables = c(AESOC, AEDECOD),
+        by = TRTA,
+        id = USUBJID,
+        denominator = ADSL,
+        by_stats = FALSE
+      )
+  )
+
+  expect_equal(
+    ard |> dplyr::filter(variable == "TRTA") |> nrow(),
+    0
+  )
+})

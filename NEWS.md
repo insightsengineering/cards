@@ -2,6 +2,8 @@
 
 * `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
 
+* Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
+
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
 
 * Added flexibility to filter by `by` variable level-specific values when using `filter_ard_hierarchical()` to allow for filtering of hierarchical ARDs by difference in two rates. (#438)

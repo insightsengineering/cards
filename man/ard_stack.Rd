@@ -12,7 +12,8 @@ ard_stack(
   .missing = FALSE,
   .attributes = FALSE,
   .total_n = FALSE,
-  .shuffle = FALSE
+  .shuffle = FALSE,
+  .by_stats = TRUE
 )
 }
 \arguments{
@@ -44,6 +45,9 @@ logical indicating whether to include of \code{ard_total_n()} in the returned AR
 \item{.shuffle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} support for \code{.shuffle = TRUE}
 will be removed in the next release. \code{ard_stack()} will no longer shuffle.
 \code{shuffle_ard()} should be called separately.}
+
+\item{.by_stats}{(\code{logical})\cr
+logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
 }
 \value{
 an ARD data frame of class 'card'
