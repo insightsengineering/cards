@@ -97,9 +97,10 @@
 #'   variables represented in the ARD. Default is `FALSE`.
 #' @param total_n (scalar `logical`)\cr
 #'   logical indicating whether to include of `ard_total_n(denominator)` in the returned ARD.
-#' @param shuffle (scalar `logical`)\cr
-#'   logical indicating whether to perform `shuffle_ard()` on the final result.
-#'   Default is `FALSE`.
+#' @param shuffle `r lifecycle::badge("deprecated")` support for `.shuffle = TRUE`
+#'   will be removed in the next release. `ard_stack_hierarchical()` and
+#'   `ard_stack_hierarchical_count()` will no longer shuffle. `shuffle_ard()`
+#'   should be called separately.
 #' @param by_stats (`logical`)\cr
 #'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
@@ -491,11 +492,6 @@ internal_stack_hierarchical <- function(
     cards::tidy_ard_column_order() |>
     cards::tidy_ard_row_order()
 
-  # shuffle if requested -------------------------------------------------------
-  if (isTRUE(shuffle)) {
-    result <- shuffle_ard(result)
-  }
-
   # append attributes used for sorting/filtering -------------------------------
   attr(result, "args") <- list(
     by = by,
@@ -505,6 +501,16 @@ internal_stack_hierarchical <- function(
 
   # sort ARD alphanumerically --------------------------------------------------
   result <- result |> sort_ard_hierarchical(sort = "alphanumeric")
+
+  # shuffle if requested -------------------------------------------------------
+  if (isTRUE(shuffle)) {
+    lifecycle::deprecate_warn(
+      when = "0.7.0",
+      what = "cards::ard_stack_hierarchical(shuffle)",
+      details = "Call `shuffle_ard()` after `ard_stack_hierarchical()`."
+    )
+    result <- shuffle_ard(result)
+  }
 
   # return final result --------------------------------------------------------
   result |> as_card()
