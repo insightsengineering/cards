@@ -203,7 +203,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
           !!cur_var := .data$variable,
           !!cur_var_lvl := as.list(.data$variable_level),
           # mark rows as overall summary data
-          variable := "..overall..",
+          variable = "..overall..",
           variable_level = as.list(NA_character_)
         )
     }
