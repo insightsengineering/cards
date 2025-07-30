@@ -12,13 +12,13 @@
 #'   [`ard_stack_hierarchical_count()`].
 #' @param sort ([`formula-list-selector`][syntax], `string`)\cr
 #'   a named list, a list of formulas, a single formula where the list element is a named list of functions
-#'   (or the RHS of a formula), or a string specifying the types of sorting to perform at each hierarchy variable level.
-#'   If sort method for any variable is not specified then the sort method will default to `"descending"`. If a single
-#'   unnamed string is supplied, it is applied to all variables. For each variable, the value specified must
+#'   (or the RHS of a formula), or a single string specifying the types of sorting to perform at each hierarchy variable
+#'   level. If the sort method for any variable is not specified then the method will default to `"descending"`. If a
+#'   single unnamed string is supplied it is applied to all variables. For each variable, the value specified must
 #'   be one of:
-#'   - `"alphanumeric"` - at the specified hierarchical variable level of the ARD, groups are ordered alphanumerically
+#'   - `"alphanumeric"` - at the specified hierarchy level of the ARD, groups are ordered alphanumerically
 #'     (i.e. A to Z) by `variable_level` text.
-#'   - `"descending"` - within each variable group of the ARD at the specified hierarchy variable level, count sums are
+#'   - `"descending"` - within each variable group of the ARD at the specified hierarchy level, count sums are
 #'     calculated for each group and groups are sorted in descending order by sum. When `sort` is `"descending"` for a
 #'     given variable and `n` is included in `statistic` for the variable then `n` is used to calculate variable group
 #'     sums, otherwise `p` is used. If neither `n` nor `p` are present in `x` for the variable, an error will occur.
@@ -85,7 +85,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     ard_args$by <- ard_args$by[-1]
   }
 
-  # get and check name of sorting variables
+  # get and check sorting method(s)
   if (is.character(sort)) {
     sort <- stats::as.formula(paste0("everything() ~ '", sort, "'"))
   }

@@ -13,14 +13,14 @@ a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard
 
 \item{sort}{(\code{\link[=syntax]{formula-list-selector}}, \code{string})\cr
 a named list, a list of formulas, a single formula where the list element is a named list of functions
-(or the RHS of a formula), or a string specifying the types of sorting to perform at each hierarchy variable level.
-If sort method for any variable is not specified then the sort method will default to \code{"descending"}. If a single
-unnamed string is supplied, it is applied to all variables. For each variable, the value specified must
+(or the RHS of a formula), or a single string specifying the types of sorting to perform at each hierarchy variable
+level. If the sort method for any variable is not specified then the method will default to \code{"descending"}. If a
+single unnamed string is supplied it is applied to all variables. For each variable, the value specified must
 be one of:
 \itemize{
-\item \code{"alphanumeric"} - at the specified hierarchical variable level of the ARD, groups are ordered alphanumerically
+\item \code{"alphanumeric"} - at the specified hierarchy level of the ARD, groups are ordered alphanumerically
 (i.e. A to Z) by \code{variable_level} text.
-\item \code{"descending"} - within each variable group of the ARD at the specified hierarchy variable level, count sums are
+\item \code{"descending"} - within each variable group of the ARD at the specified hierarchy level, count sums are
 calculated for each group and groups are sorted in descending order by sum. When \code{sort} is \code{"descending"} for a
 given variable and \code{n} is included in \code{statistic} for the variable then \code{n} is used to calculate variable group
 sums, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present in \code{x} for the variable, an error will occur.
