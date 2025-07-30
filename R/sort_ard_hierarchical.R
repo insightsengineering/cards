@@ -157,7 +157,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       # descending sort
       x_sort <- x_sort |>
         # calculate sums for each group at the current level, then get group indices
-        .append_hierarchy_sums(ard_args, cur_var, i)
+        .append_hierarchy_sums(ard_args, cols, i)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
@@ -249,7 +249,10 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 }
 
 # this function calculates and appends group sums/ordering for the current hierarchy level (across `by` variables)
-.append_hierarchy_sums <- function(x, ard_args, cur_var, i) {
+.append_hierarchy_sums <- function(x, ard_args, cols, i) {
+  cur_var <- names(cols)[i] # get current grouping variable
+  next_var <- names(cols)[i + 1] # get next grouping variable
+
   # all variables in x have n or p stat present (not required if filtered out first)
   n_stat <- is_empty(setdiff(
     intersect(ard_args$include, x$variable),
@@ -280,8 +283,9 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
       if (length(c(ard_args$by, ard_args$variables)) > 1) {
         if (ard_args$variable[i] %in% ard_args$include & !cur_var %in% "variable") {
-          # if current variable is in include, sum summary rows for the current variable
-          .data$variable %in% "..overall.."
+          # if current variable is in include, sum *only* summary rows for the current variable
+          .data$variable %in% "..overall.." &
+            if (!next_var %in% "variable") .data[[next_var]] %in% "..empty.." else TRUE
         } else {
           # otherwise, sum all *innermost* rows for the current variable
           TRUE
