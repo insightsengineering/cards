@@ -58,14 +58,11 @@ shuffle_ard <- function(x, trim = TRUE) {
   # process the data/variable info
   dat_cards_grps_processed <- dat_cards_grps |>
     .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    rename_ard_columns(fill = "..cards_overall..") |>
-    # coerce everything to character
     dplyr::mutate(
-      dplyr::across(
-        -"..cards_idx..",
-        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
-      )
-    )
+      dplyr::across(c(all_ard_groups("levels"), all_ard_variables("levels")),
+                    ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
+      )) |>
+    rename_ard_columns(fill = "..cards_overall..")
 
   # join together again
   dat_cards_out <- dplyr::left_join(
@@ -122,7 +119,7 @@ shuffle_ard <- function(x, trim = TRUE) {
       dplyr::select(-all_of(ard_vars))
   } else {
     x <- x |>
-      mutate(..ard_vars.. = NA)
+      dplyr::mutate(..ard_vars.. = NA)
   }
 
   x  |>
