@@ -195,6 +195,15 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
     )
   }
 
+  # attributes and total n not filtered - appended to bottom of filtered ARD
+  has_attr <- "attributes" %in% x$context | "total_n" %in% x$context
+  if (has_attr) {
+    x_attr <- x |>
+      dplyr::filter(.data$context %in% c("attributes", "total_n"))
+    x <- x |>
+      dplyr::filter(!.data$context %in% c("attributes", "total_n"))
+  }
+
   # remove "overall" data from `x`
   if (is_empty(by)) {
     x_overall <- x
@@ -362,40 +371,57 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   }
 
   # remove summary rows from empty sections if requested
-  if (var != ard_args$variables[1] && !keep_empty && length(ard_args$include) > 1) {
-    outer_cols <- ard_args$variables |> utils::head(-1)
+  if (!keep_empty && var != ard_args$variables[1] && length(ard_args$include) > 1) {
+    cols <-
+      ard_args$variables |>
+      stats::setNames(
+        x |>
+          dplyr::select(all_ard_group_n(seq_along(ard_args$variables) + length(by), types = "names"), "variable") |>
+          names()
+      )
+    outer_cols <- utils::head(cols, -1)
     # if all inner rows filtered out, remove all summary rows - only overall/header rows left
     if (!dplyr::last(ard_args$variables) %in% x$variable) {
+      # if no inner rows remain, remove all summary rows
       x <- x |> dplyr::filter(!.data$variable %in% outer_cols)
     } else {
-      names(outer_cols) <- x |>
-        dplyr::select(all_ard_groups("names"), -all_of(by_cols)) |>
-        names()
-      x_no_sum <- x |>
+      x_sum <- x |>
         dplyr::mutate(idx = dplyr::row_number()) |>
-        .ard_reformat_sort("no_sort", by, outer_cols)
+        # reformat current variable columns for filtering
+        .ard_reformat_sort(by, cols)
+
       # check if each hierarchy section (from innermost to outermost) is empty and if so remove its summary row
       for (i in rev(seq_along(outer_cols))) {
-        x_no_sum <- x_no_sum |>
-          dplyr::group_by(across(c(all_ard_group_n((1:i) + length(by)), -all_of(by_cols)))) |>
-          dplyr::group_map(
-            function(.df, .y) {
-              cur_var <- .y[[ncol(.y) - 1]]
-              if (cur_var == "..empty..") {
-                .df
-              } else {
-                inner_rows <- .df |> dplyr::filter(.data$variable != cur_var)
-                if (nrow(inner_rows) > 0) .df else NULL
-              }
-            },
-            .keep = TRUE
-          ) |>
-          dplyr::bind_rows()
+        # get group keys of all non-empty sections
+        x_gps <- x_sum |>
+          # group by current and all previous grouping columns
+          dplyr::group_by(dplyr::pick(
+            any_of(cards::all_ard_group_n((1:i) + length(by))),
+            any_of(cards::all_ard_variables())
+          )) |>
+          dplyr::group_keys() |>
+          dplyr::filter(!.data$variable %in% "..overall..") |>
+          dplyr::select(any_of(cards::all_ard_group_n((1:i) + length(by)))) |>
+          dplyr::distinct()
+
+        # get indices of rows to remove (summary rows from empty sections)
+        idx_rm <- x_sum |>
+          dplyr::filter(.data[[names(cols)[i]]] %in% cols[i]) |>
+          dplyr::anti_join(x_gps, by = names(x_gps)) |>
+          dplyr::pull("idx")
+
+        # remove summary rows from empty sections
+        x_sum <- x_sum |>
+          dplyr::filter(!.data$idx %in% idx_rm)
       }
-      idx_no_sum <- sort(x_no_sum$idx)
-      x <- x[idx_no_sum, ]
+      # filter out all empty summary rows
+      idx_keep <- sort(x_sum$idx)
+      x <- x[idx_keep, ]
     }
   }
+
+  # if present, keep attributes at bottom of ARD
+  if (has_attr) x <- dplyr::bind_rows(x, x_attr)
 
   as_card(x)
 }
