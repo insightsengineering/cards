@@ -1,4 +1,4 @@
-# cards 0.6.1.9010
+# cards 0.6.1.9011
 
 * Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
 
