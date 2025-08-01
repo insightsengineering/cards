@@ -357,7 +357,8 @@ test_that("ard_stack() .by_stats argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 
   # by stats for 2 variables
@@ -381,7 +382,8 @@ test_that("ard_stack() .by_stats argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 
   # no by stats
@@ -403,6 +405,7 @@ test_that("ard_stack() .by_stats argument", {
       ard_dichotomous(data = mtcars, by = c("am", "cyl"), variables = "vs"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 })
