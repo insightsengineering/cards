@@ -1,4 +1,8 @@
-# cards 0.6.1.9010
+# cards 0.6.1.9012
+
+* Refactored `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
+
+* Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
 
 * `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
 
