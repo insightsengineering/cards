@@ -97,12 +97,11 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     as.list(ard_args$variables) |> data.frame() |> stats::setNames(ard_args$variables),
     sort = everything() ~ "descending"
   )
-  if (!all(unlist(sort) %in% c("descending", "alphanumeric"))) {
-    cli::cli_abort(
-      "Sorting type must be either {.val descending} or {.val alphanumeric} for all variables.",
-      call = get_cli_abort_call()
-    )
-  }
+  check_list_elements(
+    x = sort,
+    predicate = \(x) x %in% c("descending", "alphanumeric"),
+    error_msg = "Sorting type must be either {.val descending} or {.val alphanumeric} for all variables."
+  )
 
   by <- ard_args$by
   cols <-

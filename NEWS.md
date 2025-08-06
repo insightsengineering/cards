@@ -1,5 +1,9 @@
 # cards 0.6.1.9011
 
+* Refactored `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
+
+* Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
+
 * Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
 
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
