@@ -1,5 +1,5 @@
 ---
-title: "Creating New ARDs"
+title: "Writing ARD Functions"
 ---
 
 ```{r, include = FALSE}
@@ -44,7 +44,7 @@ In the output, we see the outputs from the t-test; the mean difference, confiden
 It's also useful to see the functions inputs; for example, we can see that we did not use equal variances as the `stat` is `FALSE` for `stat_name` `var.equal`.
 This is useful for re-use, if we need to run the test again we can use the ARD to see what options we need to use to recreate the result. 
 
-# Create a new `ard_*()` function
+# Write a new `ard_*()` function
 
 _But what do we do if the statistical method that we want to use hasn't been implemented already in {cardx}?_
 
