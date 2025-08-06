@@ -33,7 +33,6 @@ Other contributors:
 \itemize{
   \item F. Hoffmann-La Roche AG [copyright holder, funder]
   \item GlaxoSmithKline Research & Development Limited [copyright holder]
-  \item Clymb Clinical [copyright holder, funder]
 }
 
 }
