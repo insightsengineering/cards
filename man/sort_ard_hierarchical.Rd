@@ -4,25 +4,29 @@
 \alias{sort_ard_hierarchical}
 \title{Sort Stacked Hierarchical ARDs}
 \usage{
-sort_ard_hierarchical(x, sort = c("descending", "alphanumeric"))
+sort_ard_hierarchical(x, sort = everything() ~ "descending")
 }
 \arguments{
 \item{x}{(\code{card})\cr
 a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard_stack_hierarchical]{ard_stack_hierarchical()}} or
 \code{\link[=ard_stack_hierarchical_count]{ard_stack_hierarchical_count()}}.}
 
-\item{sort}{(\code{string})\cr
-type of sorting to perform. Value must be one of:
+\item{sort}{(\code{\link[=syntax]{formula-list-selector}}, \code{string})\cr
+a named list, a list of formulas, a single formula where the list element is a named list of functions
+(or the RHS of a formula), or a single string specifying the types of sorting to perform at each hierarchy variable
+level. If the sort method for any variable is not specified then the method will default to \code{"descending"}. If a
+single unnamed string is supplied it is applied to all variables. For each variable, the value specified must
+be one of:
 \itemize{
-\item \code{"alphanumeric"} - within each hierarchical section of the ARD, groups are ordered alphanumerically (i.e. A to Z)
-by \code{variable_level} text.
-\item \code{"descending"} - within each variable group of the ARD, count sums are calculated for each group and groups are
-sorted in descending order by sum. If \code{sort = "descending"}, the \code{n} statistic is used to calculate variable
-group sums if included in \code{statistic} for all variables, otherwise \code{p} is used. If neither \code{n} nor \code{p} are
-present in \code{x} for all variables, an error will occur.
+\item \code{"alphanumeric"} - at the specified hierarchy level of the ARD, groups are ordered alphanumerically
+(i.e. A to Z) by \code{variable_level} text.
+\item \code{"descending"} - within each variable group of the ARD at the specified hierarchy level, count sums are
+calculated for each group and groups are sorted in descending order by sum. When \code{sort} is \code{"descending"} for a
+given variable and \code{n} is included in \code{statistic} for the variable then \code{n} is used to calculate variable group
+sums, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present in \code{x} for the variable, an error will occur.
 }
 
-Defaults to \code{"descending"}.}
+Defaults to \code{everything() ~ "descending"}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -49,7 +53,7 @@ ard_stack_hierarchical(
   denominator = ADSL,
   id = USUBJID
 ) |>
-  sort_ard_hierarchical("alphanumeric")
+  sort_ard_hierarchical(AESOC ~ "alphanumeric")
 
 ard_stack_hierarchical_count(
   ADAE,
@@ -57,7 +61,7 @@ ard_stack_hierarchical_count(
   by = TRTA,
   denominator = ADSL
 ) |>
-  sort_ard_hierarchical("descending")
+  sort_ard_hierarchical(sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"))
 \dontshow{\}) # examplesIf}
 }
 \seealso{
