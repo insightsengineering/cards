@@ -4,11 +4,21 @@
 \alias{print.card}
 \title{Print}
 \usage{
-\method{print}{card}(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
+\method{print}{card}(
+  x,
+  width = getOption("width"),
+  n = NULL,
+  columns = c("auto", "all"),
+  n_col = 6L,
+  ...
+)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 object of class 'card'}
+
+\item{width}{(\code{integer})\cr
+integer specifying the width of the console. Default is \code{getOption("width")}.}
 
 \item{n}{(\code{integer})\cr
 integer specifying the number of rows to print}
