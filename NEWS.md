@@ -4,6 +4,8 @@
 
 * Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
 
+* `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
+
 * Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
 
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)

@@ -179,15 +179,20 @@ test_that("ard_stack() adding missing/attributes", {
 
 
 test_that("ard_stack() .shuffle argument", {
-  expect_error(
-    ard_test <- ard_stack(
-      data = mtcars,
-      .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
-      .shuffle = TRUE
-    ),
-    NA
+  # we expect it to work but with a warning messaged related to the deprecation
+  # of the `shuffle` argument
+  expect_no_error(
+    expect_warning(
+      ard_test <- ard_stack(
+        data = mtcars,
+        .by = "cyl",
+        ard_continuous(variables = "mpg"),
+        ard_dichotomous(variables = "vs"),
+        .shuffle = TRUE
+      ),
+      "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
+      fixed = TRUE
+    )
   )
 
   expect_equal(
@@ -204,16 +209,21 @@ test_that("ard_stack() .shuffle argument", {
 
 
   # with overalls
-  expect_error(
-    ard_test <- ard_stack(
-      data = mtcars,
-      .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
-      .shuffle = TRUE,
-      .overall = TRUE
-    ),
-    NA
+  # we expect it to work but with a warning messaged related to the deprecation
+  # of the `shuffle` argument
+  expect_no_error(
+    expect_warning(
+      ard_test <- ard_stack(
+        data = mtcars,
+        .by = "cyl",
+        ard_continuous(variables = "mpg"),
+        ard_dichotomous(variables = "vs"),
+        .shuffle = TRUE,
+        .overall = TRUE
+      ),
+      "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
+      fixed = TRUE
+    )
   )
 
   expect_equal(

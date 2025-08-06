@@ -25,9 +25,9 @@
 #' @param .attributes (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
-#' @param .shuffle (`logical`)\cr
-#'   logical indicating whether to perform `shuffle_ard()` on the final result.
-#'   Default is `FALSE`.
+#' @param .shuffle `r lifecycle::badge("deprecated")` support for `.shuffle = TRUE`
+#'   will be removed in the next release. `ard_stack()` will no longer shuffle.
+#'   `shuffle_ard()` should be called separately.
 #' @param .total_n (`logical`)\cr
 #'   logical indicating whether to include of `ard_total_n()` in the returned ARD.
 #' @param .by_stats (`logical`)\cr
@@ -164,6 +164,11 @@ ard_stack <- function(data,
 
   # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
+    lifecycle::deprecate_warn(
+      when = "0.7.0",
+      what = "cards::ard_stack(.shuffle)",
+      details = "Call `shuffle_ard()` after `ard_stack()`."
+    )
     return(shuffle_ard(ard_full))
   }
 
