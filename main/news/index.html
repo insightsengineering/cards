@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9015</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +39,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.1.9012" id="cards-0619012">cards 0.6.1.9012<a class="anchor" aria-label="anchor" href="#cards-0619012"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.1.9015" id="cards-0619015">cards 0.6.1.9015<a class="anchor" aria-label="anchor" href="#cards-0619015"></a></h2>
 <ul><li><p>Refactored <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> to allow for different sorting methods at each hierarchy variable level. (<a href="https://github.com/insightsengineering/cards/issues/487" class="external-link">#487</a>)</p></li>
 <li><p>Updated <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> and <code><a href="../reference/filter_ard_hierarchical.html">filter_ard_hierarchical()</a></code> to always keep attribute and total N rows at the bottom of the ARD.</p></li>
+<li><p><code>shuffle</code> and <code>.shuffle</code> arguments (for <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack.html">ard_stack()</a></code>) are deprecated and users encouraged to call <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> directly. (<a href="https://github.com/insightsengineering/cards/issues/475" class="external-link">#475</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
 <li><p>Added <code>ard_stack(.by_stat)</code> and <code>ard_stack_hierarchical(by_stat)</code> arguments that, when <code>TRUE</code> (the default), includes a univariate ARD tabulation of the <code>by</code> variable in the returned ARD. (<a href="https://github.com/insightsengineering/cards/issues/335" class="external-link">#335</a>)</p></li>
 <li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> passes down the <code>args</code> attribute of the input <code>card</code> object when present. (<a href="https://github.com/insightsengineering/cards/issues/484" class="external-link">#484</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
 <li><p>Added flexibility to filter by <code>by</code> variable level-specific values when using <code><a href="../reference/filter_ard_hierarchical.html">filter_ard_hierarchical()</a></code> to allow for filtering of hierarchical ARDs by difference in two rates. (<a href="https://github.com/insightsengineering/cards/issues/438" class="external-link">#438</a>)</p></li>
@@ -49,6 +50,7 @@
 <li><p>Add <code>ADLB</code> data set. (<a href="https://github.com/insightsengineering/cards/issues/450" class="external-link">#450</a>)</p></li>
 <li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> fills overall or group statistics with <code>"Overall &lt;column_name&gt;"</code> or <code>"Any &lt;column_name&gt;"</code>. (<a href="https://github.com/insightsengineering/cards/issues/337" class="external-link">#337</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
 <li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> messages if <code>"Overall &lt;column_names&gt;"</code> is accidentally present in the data and creates a unique label. (<a href="https://github.com/insightsengineering/cards/issues/465" class="external-link">#465</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
+<li><p>Similar to <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code>, <code><a href="../reference/ard_stack.html">ard_stack()</a></code> contains an <code>args</code> attribute to retain information about input arguments.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="cards-061">cards 0.6.1<a class="anchor" aria-label="anchor" href="#cards-061"></a></h2><p class="text-muted">CRAN release: 2025-07-03</p>
