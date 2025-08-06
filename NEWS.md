@@ -1,4 +1,4 @@
-# cards 0.6.1.9012
+# cards 0.6.1.9013
 
 * Refactored `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
 
@@ -19,6 +19,8 @@
 * `shuffle_ard()` fills overall or group statistics with `"Overall <column_name>"` or `"Any <column_name>"`. (#337, @dragosmg)
 
 * `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
+
+* Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
 
 
 # cards 0.6.1

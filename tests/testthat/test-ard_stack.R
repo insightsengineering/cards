@@ -18,7 +18,8 @@ test_that("ard_stack() works", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ),
-    ignore_function_env = TRUE
+    ignore_function_env = TRUE,
+    ignore_attr = TRUE
   )
 
   # check equivalency NSE
@@ -30,7 +31,8 @@ test_that("ard_stack() works", {
       ard_continuous(variables = mpg),
       ard_dichotomous(variables = vs)
     ),
-    ignore_function_env = TRUE
+    ignore_function_env = TRUE,
+    ignore_attr = TRUE
   )
 
   # check equivalency tidyselect
@@ -59,13 +61,17 @@ test_that("ard_stack() works", {
     NA
   )
 
+  ard_match <- bind_ard(
+    ard_continuous(data = mtcars, variables = "mpg"),
+    ard_dichotomous(data = mtcars, variables = "vs"),
+    .order = TRUE
+  )
+  attr(ard_match, "args") <- list(
+    by = character(0)
+  )
   expect_equal(
     ard2,
-    bind_ard(
-      ard_continuous(data = mtcars, variables = "mpg"),
-      ard_dichotomous(data = mtcars, variables = "vs"),
-      .order = TRUE
-    ),
+    ard_match,
     ignore_function_env = TRUE
   )
 
@@ -92,18 +98,21 @@ test_that("ard_stack() adding overalls", {
     NA
   )
 
-
+  ard_match <- bind_ard(
+    ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
+    ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+    ard_continuous(data = mtcars, variables = "mpg"),
+    ard_dichotomous(data = mtcars, variables = "vs"),
+    ard_categorical(data = mtcars, variables = "cyl"),
+    .update = TRUE,
+    .order = TRUE
+  )
+  attr(ard_match, "args") <- list(
+    by = "cyl"
+  )
   expect_equal(
     ard_test,
-    bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_continuous(data = mtcars, variables = "mpg"),
-      ard_dichotomous(data = mtcars, variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
-      .update = TRUE,
-      .order = TRUE
-    )
+    ard_match
   )
 })
 
@@ -132,7 +141,8 @@ test_that("ard_stack() adding missing/attributes", {
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 
   # including `.overall=TRUE`
@@ -162,7 +172,8 @@ test_that("ard_stack() adding missing/attributes", {
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 })
 
@@ -192,7 +203,8 @@ test_that("ard_stack() .shuffle argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .order = TRUE
     ) |>
-      shuffle_ard()
+      shuffle_ard(),
+    ignore_attr = TRUE
   )
 
 
@@ -223,7 +235,8 @@ test_that("ard_stack() .shuffle argument", {
       ard_dichotomous(data = mtcars, variables = "vs"),
       ard_categorical(data = mtcars, variables = "cyl")
     ) |>
-      shuffle_ard()
+      shuffle_ard(),
+    ignore_attr = TRUE
   )
 })
 
@@ -238,7 +251,8 @@ test_that("ard_stack() adding total N", {
     ) |>
       tail(n = 1) |>
       dplyr::select(-all_ard_groups(), -all_ard_variables("levels")),
-    ard_total_n(mtcars)
+    ard_total_n(mtcars),
+    ignore_attr = TRUE
   )
 })
 
@@ -353,7 +367,8 @@ test_that("ard_stack() .by_stats argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 
   # by stats for 2 variables
@@ -377,7 +392,8 @@ test_that("ard_stack() .by_stats argument", {
       ard_categorical(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 
   # no by stats
@@ -399,6 +415,7 @@ test_that("ard_stack() .by_stats argument", {
       ard_dichotomous(data = mtcars, by = c("am", "cyl"), variables = "vs"),
       .update = TRUE,
       .order = TRUE
-    )
+    ),
+    ignore_attr = TRUE
   )
 })
