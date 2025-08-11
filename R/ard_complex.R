@@ -1,12 +1,12 @@
 #' Complex ARD Summaries
 #'
-#' Function is similar to [ard_continuous()], but allows for more complex
-#' summaries. While `ard_continuous(statistic)` only allows for a univariable
+#' Function is similar to [ard_summary()], but allows for more complex
+#' summaries. While `ard_summary(statistic)` only allows for a univariable
 #' function, `ard_complex(statistic)` can handle more complex data summaries.
 #'
-#' @inheritParams ard_continuous
+#' @inheritParams ard_summary
 #' @param statistic ([`formula-list-selector`][syntax])\cr
-#'   The form of the statistics argument is identical to `ard_continuous(statistic)`
+#'   The form of the statistics argument is identical to `ard_summary(statistic)`
 #'   argument, except the summary function _must_ accept the following arguments:
 #'   - `x`: a vector
 #'   - `data`: the data frame that has been subset such that the `by`/`strata` columns
@@ -26,7 +26,7 @@
 #' @name ard_complex
 #'
 #' @examples
-#' # example how to mimic behavior of `ard_continuous()`
+#' # example how to mimic behavior of `ard_summary()`
 #' ard_complex(
 #'   ADSL,
 #'   by = "ARM",
@@ -75,8 +75,8 @@ ard_complex.data.frame <- function(data,
   if (lifecycle::is_present(fmt_fn)) {
     lifecycle::deprecate_soft(
       when = "0.6.1",
-      what = "ard_continuous(fmt_fn)",
-      with = "ard_continuous(fmt_fun)"
+      what = "ard_summary(fmt_fn)",
+      with = "ard_summary(fmt_fun)"
     )
     fmt_fun <- fmt_fn
   }
@@ -101,7 +101,7 @@ ard_complex.data.frame <- function(data,
   }
 
   # calculate statistics -------------------------------------------------------
-  # first set an option to be used internally within `ard_continuous()`
+  # first set an option to be used internally within `ard_summary()`
   # to calculate the statistics and pass multiple arguments to the
   # user-supplied functions in the `statistics` argument
   old_option <- getOption("cards.calculate_stats_as_ard.eval_fun")
@@ -118,7 +118,7 @@ ard_complex.data.frame <- function(data,
         parse_expr()
   )
 
-  ard_continuous(
+  ard_summary(
     data = data,
     variables = all_of(variables),
     by = {{ by }},

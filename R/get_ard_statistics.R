@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' get_ard_statistics(
 #'   ard,
@@ -66,7 +66,7 @@ get_ard_statistics <- function(x,
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' cards:::.create_list_for_attributes(ard, c("group1", "group1_level"), 1)
 .create_list_for_attributes <- function(ard_subset, attributes, i) {

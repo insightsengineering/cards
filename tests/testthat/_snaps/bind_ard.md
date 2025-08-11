@@ -18,7 +18,7 @@
 # bind_ard() .order argument works
 
     Code
-      dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM", variables = "SEX") %>% {
+      dplyr::select(as.data.frame(bind_ard(ard_tabulate(ADSL, by = "ARM", variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
       }, .order = TRUE)), -c(context, fmt_fun, warning, error))
     Output
@@ -45,7 +45,7 @@
 ---
 
     Code
-      dplyr::select(as.data.frame(bind_ard(ard_categorical(ADSL, by = "ARM", variables = "SEX") %>% {
+      dplyr::select(as.data.frame(bind_ard(ard_tabulate(ADSL, by = "ARM", variables = "SEX") %>% {
         dplyr::slice(., sample.int(nrow(.)))
       }, .order = FALSE)), -c(context, fmt_fun, warning, error))
     Output
@@ -72,7 +72,7 @@
 # bind_ard(.distinct)
 
     Code
-      ard_continuous(ADSL, variables = AGE) %>% {
+      ard_summary(ADSL, variables = AGE) %>% {
         bind_ard(., ., .update = FALSE)
       }
     Message

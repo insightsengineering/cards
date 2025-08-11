@@ -43,16 +43,16 @@
 #' @inheritParams rlang::args_dots_used
 #'
 #' @return an ARD data frame of class 'card'
-#' @name ard_continuous
+#' @name ard_summary
 #'
 #' @examples
-#' ard_continuous(ADSL, by = "ARM", variables = "AGE")
+#' ard_summary(ADSL, by = "ARM", variables = "AGE")
 #'
 #' # if a single function returns a named list, the named
 #' # results will be placed in the resulting ARD
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_continuous(
+#'   ard_summary(
 #'     variables = "AGE",
 #'     statistic =
 #'       ~ list(conf.int = \(x) t.test(x)[["conf.int"]] |>
@@ -61,16 +61,16 @@
 #'   )
 NULL
 
-#' @rdname ard_continuous
+#' @rdname ard_summary
 #' @export
-ard_continuous <- function(data, ...) {
+ard_summary <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_continuous")
+  UseMethod("ard_summary")
 }
 
-#' @rdname ard_continuous
+#' @rdname ard_summary
 #' @export
-ard_continuous.data.frame <- function(data,
+ard_summary.data.frame <- function(data,
                                       variables,
                                       by = dplyr::group_vars(data),
                                       strata = NULL,
@@ -86,8 +86,8 @@ ard_continuous.data.frame <- function(data,
   if (lifecycle::is_present(fmt_fn)) {
     lifecycle::deprecate_soft(
       when = "0.6.1",
-      what = "ard_continuous(fmt_fn)",
-      with = "ard_continuous(fmt_fun)"
+      what = "ard_summary(fmt_fn)",
+      with = "ard_summary(fmt_fun)"
     )
     fmt_fun <- fmt_fn
   }
@@ -112,8 +112,8 @@ ard_continuous.data.frame <- function(data,
   )
   fill_formula_selectors(
     data[variables],
-    statistic = formals(asNamespace("cards")[["ard_continuous.data.frame"]])[["stat_label"]] |> eval(),
-    stat_label = formals(asNamespace("cards")[["ard_continuous.data.frame"]])[["stat_label"]] |> eval()
+    statistic = formals(asNamespace("cards")[["ard_summary.data.frame"]])[["stat_label"]] |> eval(),
+    stat_label = formals(asNamespace("cards")[["ard_summary.data.frame"]])[["stat_label"]] |> eval()
   )
 
   check_list_elements(
@@ -366,7 +366,7 @@ ard_continuous.data.frame <- function(data,
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' cards:::.process_nested_list_as_df(ard, NULL, "new_col")
 .process_nested_list_as_df <- function(x, arg, new_column, unlist = FALSE) {
@@ -421,7 +421,7 @@ ard_continuous.data.frame <- function(data,
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1") |>
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1") |>
 #'   dplyr::mutate(fmt_fun = NA)
 #'
 #' cards:::.default_fmt_fun(ard)

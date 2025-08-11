@@ -2,7 +2,7 @@
 #'
 #' Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 #'
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #' @param value (named `list`)\cr
 #'   named list of dichotomous values to tabulate. Default is `maximum_variable_value(data)`,
 #'   which returns the largest/last value after a sort.
@@ -10,7 +10,7 @@
 #' @return an ARD data frame of class 'card'
 #' @name ard_dichotomous
 #'
-#' @inheritSection ard_categorical Denominators
+#' @inheritSection ard_tabulate Denominators
 #'
 #' @examples
 #' ard_dichotomous(mtcars, by = vs, variables = c(cyl, am), value = list(cyl = 4))
@@ -74,7 +74,7 @@ ard_dichotomous.data.frame <- function(data,
   }
 
   # calculate summary statistics -----------------------------------------------
-  ard_categorical(
+  ard_tabulate(
     data = data,
     variables = all_of(variables),
     by = {{ by }},

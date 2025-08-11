@@ -40,7 +40,7 @@
 # shuffle_ard notifies user about warnings/errors before dropping
 
     Code
-      shuffle_ard(ard_continuous(ADSL, variables = AGEGR1))
+      shuffle_ard(ard_summary(ADSL, variables = AGEGR1))
     Message
       "warning" column contains messages that will be removed.
     Output
@@ -59,7 +59,7 @@
 # shuffle_ard fills missing group levels if the group is meaningful
 
     Code
-      shuffle_ard(dplyr::filter(bind_ard(ard_continuous(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p",
+      shuffle_ard(dplyr::filter(bind_ard(ard_summary(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p",
         stat_label = "p", stat = list(0.05))), dplyr::row_number() <= 5L))
     Output
       # A tibble: 4 x 6
@@ -73,7 +73,7 @@
 ---
 
     Code
-      shuffle_ard(dplyr::filter(bind_ard(ard_continuous(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p",
+      shuffle_ard(dplyr::filter(bind_ard(ard_summary(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p",
         stat = list(0.05))), dplyr::row_number() <= 5L))
     Output
       # A tibble: 2 x 6
@@ -85,8 +85,8 @@
 ---
 
     Code
-      as.data.frame(shuffle_ard(bind_ard(dplyr::slice(ard_categorical(ADSL, by = ARM, variables = AGEGR1), 1), dplyr::slice(ard_categorical(ADSL, variables = AGEGR1), 1), dplyr::slice(ard_continuous(ADSL,
-        by = SEX, variables = AGE), 1), dplyr::slice(ard_continuous(ADSL, variables = AGE), 1))))
+      as.data.frame(shuffle_ard(bind_ard(dplyr::slice(ard_tabulate(ADSL, by = ARM, variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL, variables = AGEGR1), 1), dplyr::slice(ard_summary(ADSL, by = SEX,
+        variables = AGE), 1), dplyr::slice(ard_summary(ADSL, variables = AGE), 1))))
     Output
                 ARM         SEX variable variable_level     context stat_name stat_label stat
       1     Placebo        <NA>   AGEGR1          65-80 categorical         n          n   42
@@ -97,8 +97,8 @@
 ---
 
     Code
-      shuffle_ard(bind_ard(dplyr::slice(ard_categorical(ADSL, by = c(ARM, SEX), variables = AGEGR1), 1), dplyr::slice(ard_categorical(ADSL, by = SEX, variables = AGEGR1), 1), dplyr::slice(ard_categorical(
-        ADSL, variables = AGEGR1), 1)))
+      shuffle_ard(bind_ard(dplyr::slice(ard_tabulate(ADSL, by = c(ARM, SEX), variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL, by = SEX, variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL,
+        variables = AGEGR1), 1)))
     Output
       # A tibble: 3 x 8
         ARM         SEX         variable variable_level context     stat_name stat_label  stat
@@ -110,8 +110,8 @@
 ---
 
     Code
-      shuffle_ard(bind_ard(ard_continuous(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_continuous(adsl_new, by = "ARM", variables = "AGE", statistic = ~
-        continuous_summary_fns("mean"))))
+      shuffle_ard(bind_ard(ard_summary(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_summary(adsl_new, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns(
+        "mean"))))
     Message
       i "Overall ARM" already exists in the `ARM` column. Using "Overall ARM.1".
     Output

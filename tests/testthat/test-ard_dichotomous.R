@@ -11,7 +11,7 @@ test_that("ard_dichotomous() works", {
   expect_snapshot(class(ard_dich))
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = cyl
     ) |>
@@ -23,7 +23,7 @@ test_that("ard_dichotomous() works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars |> dplyr::mutate(am = as.logical(am)),
       variables = am
     ) |>

@@ -54,13 +54,13 @@ We'll first look at how `broom::tidy()` can make this even easier for us, then p
 
 ## Using `broom::tidy()`
 
-Typically, a user will pass a function which returns a scalar value in the `cards::ard_continuous(statistic)` argument.
+Typically, a user will pass a function which returns a scalar value in the `cards::ard_summary(statistic)` argument.
 However, the argument also allows for functions that return named lists, where the names from the list will then be used as the statistic names.
 Since data frames or tibbles are just named lists with a little more formatting, we can pass a function to the `statistic` argument which returns a single row data frame or tibble and the behavior will be the same.
 Each column of the table gives the name of the statistic via its column name, and then the corresponding value. 
 
 Commonly used statistical methods outputs are able to be passed through `broom::tidy()`, which will convert the output into a tibble.
-We can then pass the output of `broom::tidy()` through to the `cards::ard_continuous(statistic)` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
+We can then pass the output of `broom::tidy()` through to the `cards::ard_summary(statistic)` argument of the ARD function we wish to use, this leads to an ARD output like we see in the above example, where we have one row per relevant input or output from the statistical method.
 
 Please note that we can only use the `broom::tidy()` output directly, as we see in the below example, when the output is a tibble with a single row.
 
@@ -71,7 +71,7 @@ We can just pass the code to carry out the one-sample t-test and pass the output
 ```{r tidy-stats-method}
 cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
-  cards::ard_continuous(
+  cards::ard_summary(
     variables = AGE,
     statistic = everything() ~ list(t_test = \(x) t.test(x) |> broom::tidy())
   ) |>
@@ -106,7 +106,7 @@ We also don't need to specify any arguments, in this case it will pick up that t
 
 ```{r wilcox-with-cards}
 cards::ADSL |>
-  cards::ard_continuous(
+  cards::ard_summary(
     variables = AGE,
     by = ARM,
     statistic = ~ list(wilcox = wilcox_one_var)
@@ -120,8 +120,8 @@ We see here that we get an output of 8 rows, 2 rows (one for the method, and one
 The examples above are great to illustrate a simple case, but it is perhaps a rare scenario where we are implementing a statistical method with a single vector as its input.
 How would we update the code above if we need to implement a two-sample t-test?
 
-The `cards::ard_complex()` is similar to `cards::ard_continuous()`, but allows for more complex inputs in the function passed in the `statistic` argument.
-In `cards::ard_continuous()`, the functions passed must accept a single vector, e.g. `\(x) t.test(x)`.
+The `cards::ard_complex()` is similar to `cards::ard_summary()`, but allows for more complex inputs in the function passed in the `statistic` argument.
+In `cards::ard_summary()`, the functions passed must accept a single vector, e.g. `\(x) t.test(x)`.
 But in `cards::ard_complex()`, in addition to the vector being passed, the `data` subset, the `full_data`, character `by`, and character `strata` are also passed (see the `cards::ard_complex()` for a full description). Your function does not need to utilize each of these elements, but each _will be passed_ to your function.
 As a result, we recommend your function accept the triple dots to handle unused arguments.
 
@@ -150,7 +150,7 @@ wilcox_one_var_error <- function(x) {
 }
 
 cards::ADSL |>
-  cards::ard_continuous(
+  cards::ard_summary(
     variables = AGE,
     by = ARM,
     statistic = ~ list(wilcox = wilcox_one_var_error)
@@ -171,7 +171,7 @@ wilcox_one_var_error <- cards::as_cards_fn(
 )
 
 cards::ADSL |>
-  cards::ard_continuous(
+  cards::ard_summary(
     variables = AGE,
     by = ARM,
     statistic = ~ list(wilcox = wilcox_one_var_error)
@@ -206,7 +206,7 @@ my_ard_one_sample_t_test <- function(data, variable, ...) {
 
   # create the ARD of results
   ard_results <-
-    cards::ard_continuous(
+    cards::ard_summary(
       data = data,
       variables = {{ variable }},
       statistic = everything() ~ list(t_test = t_test_fun)

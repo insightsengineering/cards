@@ -34,7 +34,7 @@ which matches
 }
 \examples{
 # continuous variable summaries
-ard_continuous(
+ard_summary(
   ADSL,
   variables = "AGE",
   statistic = ~ continuous_summary_fns(c("N", "median"))

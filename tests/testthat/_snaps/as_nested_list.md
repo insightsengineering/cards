@@ -1,7 +1,7 @@
 # as_nested_list() works
 
     Code
-      as_nested_list(ard_continuous(mtcars, by = "cyl", variables = "hp"))
+      as_nested_list(ard_summary(mtcars, by = "cyl", variables = "hp"))
     Output
       $variable
       $variable$hp

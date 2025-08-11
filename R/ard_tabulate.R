@@ -29,10 +29,10 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.
-#' @inheritParams ard_continuous
+#' @inheritParams ard_summary
 #'
 #' @section Denominators:
-#' By default, the `ard_categorical()` function returns the statistics `"n"`, `"N"`, and
+#' By default, the `ard_tabulate()` function returns the statistics `"n"`, `"N"`, and
 #' `"p"`, where little `"n"` are the counts for the variable levels, and big `"N"` is
 #' the number of non-missing observations. The calculation for the
 #' proportion is  `p = n/N`.
@@ -66,49 +66,31 @@
 #' and the percentage is returned which matches the default statistic label of `'%'`.
 #' To get the formatted values, pass the ARD to `apply_fmt_fun()`.
 #'
-#' @section Other Statistics:
-#' In some cases, you may need other kinds of statistics for categorical variables.
-#' Despite the name, `ard_continuous()` can be used to obtain these statistics.
-#'
-#' In the example below, we calculate the mode of a categorical variable.
-#'
-#' ```{r}
-#' get_mode <- function(x) {
-#'   table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1L)
-#' }
-#'
-#' ADSL |>
-#'   ard_continuous(
-#'     variables = AGEGR1,
-#'     statistic = list(AGEGR1 = list(mode = get_mode))
-#'   )
-#' ```
-#'
 #'
 #' @return an ARD data frame of class 'card'
-#' @name ard_categorical
+#' @name ard_tabulate
 #'
 #' @examples
-#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_categorical(
+#'   ard_tabulate(
 #'     variables = "AGEGR1",
 #'     statistic = everything() ~ "n"
 #'   )
 NULL
 
-#' @rdname ard_categorical
+#' @rdname ard_tabulate
 #' @export
-ard_categorical <- function(data, ...) {
+ard_tabulate <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_categorical")
+  UseMethod("ard_tabulate")
 }
 
-#' @rdname ard_categorical
+#' @rdname ard_tabulate
 #' @export
-ard_categorical.data.frame <- function(data,
+ard_tabulate.data.frame <- function(data,
                                        variables,
                                        by = dplyr::group_vars(data),
                                        strata = NULL,
@@ -125,8 +107,8 @@ ard_categorical.data.frame <- function(data,
   if (lifecycle::is_present(fmt_fn)) {
     lifecycle::deprecate_soft(
       when = "0.6.1",
-      what = "ard_categorical(fmt_fn)",
-      with = "ard_categorical(fmt_fun)"
+      what = "ard_tabulate(fmt_fn)",
+      with = "ard_tabulate(fmt_fun)"
     )
     fmt_fun <- fmt_fn
   }
@@ -153,7 +135,7 @@ ard_categorical.data.frame <- function(data,
   )
   fill_formula_selectors(
     data[variables],
-    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
+    statistic = formals(asNamespace("cards")[["ard_tabulate.data.frame"]])[["statistic"]] |> eval()
   )
   check_list_elements(
     x = statistic,
@@ -232,7 +214,7 @@ ard_categorical.data.frame <- function(data,
 #' `statistic = list(variable_name = list(tabulation=c("n", "N", "p")))`
 #' argument, and returns the tabulations in an ARD structure.
 #'
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #' @return an ARD data frame of class 'card'
 #' @keywords internal
 #'
@@ -506,11 +488,11 @@ arrange_using_order <- function(data, columns) {
 
 #' Process `denominator` Argument
 #'
-#' Function takes the `ard_categorical(denominator)` argument and returns a
+#' Function takes the `ard_tabulate(denominator)` argument and returns a
 #' structured data frame that is merged with the count data and used as the
 #' denominator in percentage calculations.
 #'
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #'
 #' @return a data frame
 #' @keywords internal

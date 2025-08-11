@@ -1,8 +1,17 @@
 #' Deprecated functions
 #'
+#' @description
 #' `r lifecycle::badge('deprecated')`\cr
 #' Some functions have been deprecated and are no longer being actively
 #' supported.
+#'
+#' **Renamed functions**
+#'  - `ard_categorical()` to `ard_tabulate()`
+#'  - `ard_continuous()` to `ard_summary()`
+#'  - `ard_complex()` to `ard_mvsummary()`
+#'  - `apply_fmt_fn()` to `apply_fmt_fun()`
+#'  - `alias_as_fmt_fn()` to `alias_as_fmt_fun()`
+#'  - `update_ard_fmt_fn()` to `update_ard_fmt_fun()`
 #'
 #' @name deprecated
 #' @keywords internal

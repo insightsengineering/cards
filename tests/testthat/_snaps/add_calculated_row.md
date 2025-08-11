@@ -1,7 +1,7 @@
 # add_calculated_row(x)
 
     Code
-      apply_fmt_fun(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = max -
+      apply_fmt_fun(add_calculated_row(ard_summary(mtcars, variables = mpg), expr = max -
         min, stat_name = "range"))
     Message
       {cards} data frame: 9 x 9
@@ -22,7 +22,7 @@
 ---
 
     Code
-      apply_fmt_fun(add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = dplyr::case_when(
+      apply_fmt_fun(add_calculated_row(ard_summary(mtcars, variables = mpg), expr = dplyr::case_when(
         mean > median ~ "Right Skew", mean < median ~ "Left Skew", .default = "Symmetric"),
       stat_name = "skew"))
     Message
@@ -44,8 +44,8 @@
 # add_calculated_row(expr) messaging
 
     Code
-      add_calculated_row(ard_continuous(mtcars, variables = mpg), expr = not_a_stat *
-        2, stat_name = "this_doesnt_work")
+      add_calculated_row(ard_summary(mtcars, variables = mpg), expr = not_a_stat * 2,
+      stat_name = "this_doesnt_work")
     Condition
       Error in `add_calculated_row()`:
       ! There was an error calculating the new statistic. See below:
@@ -54,7 +54,7 @@
 # add_calculated_row(by) messaging
 
     Code
-      add_calculated_row(ard_continuous(mtcars, variables = mpg, by = cyl), expr = max -
+      add_calculated_row(ard_summary(mtcars, variables = mpg, by = cyl), expr = max -
         min, stat_name = "range", by = "context")
     Condition
       Error in `add_calculated_row()`:

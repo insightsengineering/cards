@@ -59,11 +59,11 @@ The table above has three types of data summaries: a **continuous** variable sum
 
 #### Continuous Summaries
 
-To get a continuous variable summary, we will use the `ard_continuous()` function from the **{cards}** package.
+To get a continuous variable summary, we will use the `ard_summary()` function from the **{cards}** package.
 
 ```{r}
 df_continuous_ard <-
-  ard_continuous(
+  ard_summary(
     ADSL,
     by = ARM,
     variables = AGE,
@@ -82,11 +82,11 @@ df_continuous_ard |> head(5)
 
 #### Categorical Summaries
 
-To get the categorical variable summary, we will use the `ard_categorical()` function.
+To get the categorical variable summary, we will use the `ard_tabulate()` function.
 
 ```{r}
 df_categorical_ard <-
-  ard_categorical(
+  ard_tabulate(
     ADSL,
     by = ARM,
     variables = AGEGR1
@@ -133,7 +133,7 @@ Moreover, this will also return the univariate tabulation of the `.by` variable,
 ard_stack(
   data = ADSL,
   .by = ARM,
-  ard_continuous(
+  ard_summary(
     variables = AGE,
     statistic = ~ continuous_summary_fns(c(
       "median",
@@ -145,7 +145,7 @@ ard_stack(
       "max"
     ))
   ),
-  ard_categorical(variables = AGEGR1),
+  ard_tabulate(variables = AGEGR1),
   ard_dichotomous(variables = SEX, value = list(SEX = "F"))
 )
 ```

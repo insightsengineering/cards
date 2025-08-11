@@ -77,7 +77,7 @@ Compute Analysis Results Data (ARD) for dichotomous summary statistics.
 }
 \section{Denominators}{
 
-By default, the \code{ard_categorical()} function returns the statistics \code{"n"}, \code{"N"}, and
+By default, the \code{ard_tabulate()} function returns the statistics \code{"n"}, \code{"N"}, and
 \code{"p"}, where little \code{"n"} are the counts for the variable levels, and big \code{"N"} is
 the number of non-missing observations. The calculation for the
 proportion is  \code{p = n/N}.

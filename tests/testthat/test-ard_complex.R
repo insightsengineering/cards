@@ -1,5 +1,5 @@
 test_that("ard_complex() works", {
-  # we can replicate `ard_continuous()` for univariate analysis
+  # we can replicate `ard_summary()` for univariate analysis
   # using the `x` arg in the mean function
   expect_equal(
     ard_complex(
@@ -9,7 +9,7 @@ test_that("ard_complex() works", {
       statistic = list(AGE = list(mean = \(x, ...) mean(x)))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat),
-    ard_continuous(
+    ard_summary(
       ADSL,
       by = "ARM",
       variables = "AGE",
@@ -27,7 +27,7 @@ test_that("ard_complex() works", {
       statistic = list(AGE = list(mean = \(data, variable, ...) mean(data[[variable]])))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat),
-    ard_continuous(
+    ard_summary(
       ADSL,
       by = "ARM",
       variables = "AGE",

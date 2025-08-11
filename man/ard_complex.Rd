@@ -41,7 +41,7 @@ columns specified.
 Arguments may be used in conjunction with one another.}
 
 \item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
-The form of the statistics argument is identical to \code{ard_continuous(statistic)}
+The form of the statistics argument is identical to \code{ard_summary(statistic)}
 argument, except the summary function \emph{must} accept the following arguments:
 \itemize{
 \item \code{x}: a vector
@@ -77,12 +77,12 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 an ARD data frame of class 'card'
 }
 \description{
-Function is similar to \code{\link[=ard_continuous]{ard_continuous()}}, but allows for more complex
-summaries. While \code{ard_continuous(statistic)} only allows for a univariable
+Function is similar to \code{\link[=ard_summary]{ard_summary()}}, but allows for more complex
+summaries. While \code{ard_summary(statistic)} only allows for a univariable
 function, \code{ard_complex(statistic)} can handle more complex data summaries.
 }
 \examples{
-# example how to mimic behavior of `ard_continuous()`
+# example how to mimic behavior of `ard_summary()`
 ard_complex(
   ADSL,
   by = "ARM",

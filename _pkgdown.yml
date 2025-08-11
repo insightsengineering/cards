@@ -39,8 +39,8 @@ reference:
   - title: "ARD Creation"
   - subtitle: "Data Summaries"
   -  contents:
-      - ard_continuous
-      - ard_categorical
+      - ard_summary
+      - ard_tabulate
       - ard_hierarchical
       - ard_dichotomous
       - ard_missing

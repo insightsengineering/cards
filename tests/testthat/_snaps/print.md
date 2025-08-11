@@ -1,7 +1,7 @@
 # print.card() works
 
     Code
-      ard_continuous(ADSL, by = "ARM", variables = "AGE")
+      ard_summary(ADSL, by = "ARM", variables = "AGE")
     Message
       {cards} data frame: 24 x 10
     Output
@@ -24,7 +24,7 @@
 ---
 
     Code
-      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+      ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
     Message
       {cards} data frame: 27 x 11
     Output
@@ -47,8 +47,8 @@
 ---
 
     Code
-      ard_continuous(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x)
-        round(x, 3)))
+      ard_summary(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x) round(x,
+        3)))
     Message
       {cards} data frame: 8 x 8
     Output
@@ -67,7 +67,7 @@
 ---
 
     Code
-      dplyr::select(ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"),
+      dplyr::select(ard_summary(data = data.frame(x = seq(as.Date("2000-01-01"),
       length.out = 10L, by = "day")), variables = x, statistic = ~
       continuous_summary_fns(c("min", "max", "sd"))), -fmt_fun)
     Message
@@ -83,7 +83,7 @@
 ---
 
     Code
-      bind_ard(ard_attributes(mtcars, variables = mpg), ard_continuous(mtcars,
+      bind_ard(ard_attributes(mtcars, variables = mpg), ard_summary(mtcars,
         variables = mpg, statistic = ~ continuous_summary_fns("mean", other_stats = list(
           vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
     Message

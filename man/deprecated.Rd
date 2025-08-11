@@ -20,5 +20,15 @@ label_cards(...)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
 Some functions have been deprecated and are no longer being actively
 supported.
+
+\strong{Renamed functions}
+\itemize{
+\item \code{ard_categorical()} to \code{ard_tabulate()}
+\item \code{ard_continuous()} to \code{ard_summary()}
+\item \code{ard_complex()} to \code{ard_mvsummary()}
+\item \code{apply_fmt_fn()} to \code{apply_fmt_fun()}
+\item \code{alias_as_fmt_fn()} to \code{alias_as_fmt_fun()}
+\item \code{update_ard_fmt_fn()} to \code{update_ard_fmt_fun()}
+}
 }
 \keyword{internal}
