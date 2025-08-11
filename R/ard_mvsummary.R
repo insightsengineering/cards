@@ -2,7 +2,7 @@
 #'
 #' Function is similar to [ard_summary()], but allows for more complex
 #' summaries. While `ard_summary(statistic)` only allows for a univariable
-#' function, `ard_complex(statistic)` can handle more complex data summaries.
+#' function, `ard_mvsummary(statistic)` can handle more complex data summaries.
 #'
 #' @inheritParams ard_summary
 #' @param statistic ([`formula-list-selector`][syntax])\cr
@@ -23,11 +23,11 @@
 #'   may look like: `foo(x, data, ...)`
 #'
 #' @return an ARD data frame of class 'card'
-#' @name ard_complex
+#' @name ard_mvsummary
 #'
 #' @examples
 #' # example how to mimic behavior of `ard_summary()`
-#' ard_complex(
+#' ard_mvsummary(
 #'   ADSL,
 #'   by = "ARM",
 #'   variables = "AGE",
@@ -44,22 +44,22 @@
 #'
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_complex(
+#'   ard_mvsummary(
 #'     variables = "AGE",
 #'     statistic = list(AGE = list(means = grand_mean))
 #'   )
 NULL
 
-#' @rdname ard_complex
+#' @rdname ard_mvsummary
 #' @export
-ard_complex <- function(data, ...) {
+ard_mvsummary <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_complex")
+  UseMethod("ard_mvsummary")
 }
 
-#' @rdname ard_complex
+#' @rdname ard_mvsummary
 #' @export
-ard_complex.data.frame <- function(data,
+ard_mvsummary.data.frame <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
                                    strata = NULL,

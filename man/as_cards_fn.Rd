@@ -24,7 +24,7 @@ an ARD data frame of class 'card'
 }
 \description{
 Add attributes to a function that specify the expected results.
-It is used when \code{ard_summary()} or \code{ard_complex()} errors and constructs
+It is used when \code{ard_summary()} or \code{ard_mvsummary()} errors and constructs
 an ARD with the correct structure when the results cannot be calculated.
 }
 \examples{

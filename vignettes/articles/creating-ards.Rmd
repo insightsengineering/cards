@@ -120,9 +120,9 @@ We see here that we get an output of 8 rows, 2 rows (one for the method, and one
 The examples above are great to illustrate a simple case, but it is perhaps a rare scenario where we are implementing a statistical method with a single vector as its input.
 How would we update the code above if we need to implement a two-sample t-test?
 
-The `cards::ard_complex()` is similar to `cards::ard_summary()`, but allows for more complex inputs in the function passed in the `statistic` argument.
+The `cards::ard_mvsummary()` is similar to `cards::ard_summary()`, but allows for more complex inputs in the function passed in the `statistic` argument.
 In `cards::ard_summary()`, the functions passed must accept a single vector, e.g. `\(x) t.test(x)`.
-But in `cards::ard_complex()`, in addition to the vector being passed, the `data` subset, the `full_data`, character `by`, and character `strata` are also passed (see the `cards::ard_complex()` for a full description). Your function does not need to utilize each of these elements, but each _will be passed_ to your function.
+But in `cards::ard_mvsummary()`, in addition to the vector being passed, the `data` subset, the `full_data`, character `by`, and character `strata` are also passed (see the `cards::ard_mvsummary()` for a full description). Your function does not need to utilize each of these elements, but each _will be passed_ to your function.
 As a result, we recommend your function accept the triple dots to handle unused arguments.
 
 An implementation of a two-sample t-test may look like this:
@@ -132,7 +132,7 @@ ttest_two_sample <- \(x, data, ...) t.test(x ~ data[["ARM"]]) |> broom::tidy()
 
 cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
-  cards::ard_complex(
+  cards::ard_mvsummary(
     variables = AGE,
     statistic = everything() ~ list(t_test = ttest_two_sample)
   ) |>

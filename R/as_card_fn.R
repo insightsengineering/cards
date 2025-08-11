@@ -1,7 +1,7 @@
 #' As card function
 #'
 #' Add attributes to a function that specify the expected results.
-#' It is used when `ard_summary()` or `ard_complex()` errors and constructs
+#' It is used when `ard_summary()` or `ard_mvsummary()` errors and constructs
 #' an ARD with the correct structure when the results cannot be calculated.
 #'
 #' @param f (`function`)\cr
