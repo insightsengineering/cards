@@ -3,7 +3,7 @@
 \name{ard_mvsummary}
 \alias{ard_mvsummary}
 \alias{ard_mvsummary.data.frame}
-\title{Complex ARD Summaries}
+\title{Multivariate ARD Summaries}
 \usage{
 ard_mvsummary(data, ...)
 
@@ -77,7 +77,7 @@ statistic labels, e.g. \code{everything() ~ list(mean = "Mean", sd = "SD")} or
 an ARD data frame of class 'card'
 }
 \description{
-Function is similar to \code{\link[=ard_summary]{ard_summary()}}, but allows for more complex
+Function is similar to \code{\link[=ard_summary]{ard_summary()}}, but allows for more complex, multivariate
 summaries. While \code{ard_summary(statistic)} only allows for a univariable
 function, \code{ard_mvsummary(statistic)} can handle more complex data summaries.
 }

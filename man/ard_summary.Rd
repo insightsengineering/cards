@@ -3,7 +3,7 @@
 \name{ard_summary}
 \alias{ard_summary}
 \alias{ard_summary.data.frame}
-\title{Continuous ARD Statistics}
+\title{Univariate ARD Statistics}
 \usage{
 ard_summary(data, ...)
 

@@ -1,4 +1,4 @@
-#' Continuous ARD Statistics
+#' Univariate ARD Statistics
 #'
 #' Compute Analysis Results Data (ARD) for simple continuous summary statistics.
 #'

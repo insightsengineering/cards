@@ -1,6 +1,6 @@
-#' Complex ARD Summaries
+#' Multivariate ARD Summaries
 #'
-#' Function is similar to [ard_summary()], but allows for more complex
+#' Function is similar to [ard_summary()], but allows for more complex, multivariate
 #' summaries. While `ard_summary(statistic)` only allows for a univariable
 #' function, `ard_mvsummary(statistic)` can handle more complex data summaries.
 #'
