@@ -17,8 +17,6 @@ a named list
 For each column in the passed data frame, the function returns a named list
 with the value being the largest/last element after a sort.
 For factors, the last level is returned, and for logical vectors \code{TRUE} is returned.
-This is used as the default value in \code{ard_dichotomous(value)} if not specified by
-the user.
 }
 \examples{
 ADSL[c("AGEGR1", "BMIBLGR1")] |> maximum_variable_value()
