@@ -13,6 +13,7 @@ ard_tabulate(data, ...)
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic = everything() ~ c("n", "p", "N"),
+  value = NULL,
   denominator = "column",
   fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
@@ -45,6 +46,11 @@ Arguments may be used in conjunction with one another.}
 a named list, a list of formulas,
 or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
 (on the RHS of a formula).}
+
+\item{value}{(\code{\link[=syntax]{formula-list-selector}})\cr
+named list of dichotomous values to tabulate.
+When specified, the returned tabulation will be restricted to include
+the specified value only. Default is \code{NULL}.}
 
 \item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
 Specify this argument to change the denominator,

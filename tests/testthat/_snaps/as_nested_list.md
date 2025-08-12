@@ -24,7 +24,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$N$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean
@@ -41,7 +41,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd
@@ -58,7 +58,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$median
@@ -75,7 +75,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$median$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25
@@ -92,7 +92,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75
@@ -109,7 +109,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min
@@ -126,7 +126,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max
@@ -143,7 +143,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$context
-      [1] "continuous"
+      [1] "summary"
       
       
       
@@ -164,7 +164,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$N$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean
@@ -181,7 +181,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd
@@ -198,7 +198,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$median
@@ -215,7 +215,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$median$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25
@@ -232,7 +232,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75
@@ -249,7 +249,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min
@@ -266,7 +266,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max
@@ -283,7 +283,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$context
-      [1] "continuous"
+      [1] "summary"
       
       
       
@@ -304,7 +304,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$N$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean
@@ -321,7 +321,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd
@@ -338,7 +338,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median
@@ -355,7 +355,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25
@@ -372,7 +372,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75
@@ -389,7 +389,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min
@@ -406,7 +406,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$context
-      [1] "continuous"
+      [1] "summary"
       
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max
@@ -423,7 +423,7 @@
       NULL
       
       $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$context
-      [1] "continuous"
+      [1] "summary"
       
       
       

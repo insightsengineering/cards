@@ -25,6 +25,78 @@ NULL
 
 # "stop" deprecation for 18 months: (Sys.Date() - lubridate::dmonths(18)) |> as.Date()
 
+# v0.7.0 -----------------------------------------------------------------------
+# These were dropped from the documentation in v0.7.0. But were not officially deprecated
+#' @rdname deprecated
+#' @export
+ard_continuous <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_dichotomous")
+}
+
+#' @rdname deprecated
+#' @export
+ard_categorical <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_dichotomous")
+}
+
+#' @rdname deprecated
+#' @export
+ard_complex <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_dichotomous")
+}
+
+#' @rdname deprecated
+#' @export
+ard_dichotomous <- function(data, ...) {
+  check_not_missing(data)
+  UseMethod("ard_dichotomous")
+}
+
+#' @rdname deprecated
+#' @export
+ard_continuous.data.frame <- function(...) {
+  ard_summary(...) |>
+    dplyr::mutate(context = "continuous")
+}
+
+
+#' @rdname deprecated
+#' @export
+ard_categorical.data.frame <- function(...) {
+  ard_summary(...) |>
+    dplyr::mutate(context = "categorical")
+}
+
+#' @rdname deprecated
+#' @export
+ard_complex.data.frame <- function(...) {
+  ard_mvsummary(...) |>
+    dplyr::mutate(context = "complex")
+}
+
+#' @rdname deprecated
+#' @export
+ard_dichotomous.data.frame <- function(data, variables, value = maximum_variable_value(data[variables]), ...) {
+  cards::process_selectors(data, variables = {{ variables }})
+  cards::process_formula_selectors(data[variables], value = value)
+  fill_formula_selectors(
+    data[variables],
+    value = formals(asNamespace("cards")[["ard_dichotomous.data.frame"]])[["value"]] |> eval()
+  )
+
+  ard_tabulate(
+    data = data,
+    variables = {{ variables }},
+    value = value,
+    ...
+  ) |>
+    dplyr::mutate(context = "dichotomous")
+}
+
+# v0.6.1 -----------------------------------------------------------------------
 #' @rdname deprecated
 #' @export
 apply_fmt_fn <- function(...) {

@@ -42,7 +42,6 @@ reference:
       - ard_summary
       - ard_tabulate
       - ard_hierarchical
-      - ard_dichotomous
       - ard_missing
       - ard_total_n
       - ard_mvsummary

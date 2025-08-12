@@ -2,12 +2,41 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{ard_continuous}
+\alias{ard_categorical}
+\alias{ard_complex}
+\alias{ard_dichotomous}
+\alias{ard_continuous.data.frame}
+\alias{ard_categorical.data.frame}
+\alias{ard_complex.data.frame}
+\alias{ard_dichotomous.data.frame}
 \alias{apply_fmt_fn}
 \alias{alias_as_fmt_fn}
 \alias{update_ard_fmt_fn}
 \alias{label_cards}
 \title{Deprecated functions}
 \usage{
+ard_continuous(data, ...)
+
+ard_categorical(data, ...)
+
+ard_complex(data, ...)
+
+ard_dichotomous(data, ...)
+
+\method{ard_continuous}{data.frame}(...)
+
+\method{ard_categorical}{data.frame}(...)
+
+\method{ard_complex}{data.frame}(...)
+
+\method{ard_dichotomous}{data.frame}(
+  data,
+  variables,
+  value = maximum_variable_value(data[variables]),
+  ...
+)
+
 apply_fmt_fn(...)
 
 alias_as_fmt_fn(...)

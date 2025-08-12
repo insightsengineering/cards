@@ -123,10 +123,10 @@
     Message
       {cards} data frame: 3 x 8
     Output
-        variable   context stat_name stat_label      stat fmt_fun
-      1 DISONSDT continuo…       min        Min 1998-06-…    <fn>
-      2 DISONSDT continuo…       max        Max 2013-09-…    <fn>
-      3 DISONSDT continuo…        sd         SD   878.558       1
+        variable context stat_name stat_label      stat fmt_fun
+      1 DISONSDT summary       min        Min 1998-06-…    <fn>
+      2 DISONSDT summary       max        Max 2013-09-…    <fn>
+      3 DISONSDT summary        sd         SD   878.558       1
     Message
       i 2 more variables: warning, error
 
@@ -137,12 +137,12 @@
         `Arm Var` = ARM), variables = c("BMI base", Age), statistic = ~ list(
         `mean lbl` = `mean error`), stat_label = everything() ~ list(`mean lbl` = "Test lbl")))
     Output
-        variable    context stat_name stat_label stat                    fmt_fun
-      1 BMI base continuous  mean lbl   Test lbl NULL .Primitive("as.character")
-      2      Age continuous  mean lbl   Test lbl NULL .Primitive("as.character")
-        warning                                    error
-      1    NULL There was an error calculating the mean.
-      2    NULL There was an error calculating the mean.
+        variable context stat_name stat_label stat                    fmt_fun warning
+      1 BMI base summary  mean lbl   Test lbl NULL .Primitive("as.character")    NULL
+      2      Age summary  mean lbl   Test lbl NULL .Primitive("as.character")    NULL
+                                           error
+      1 There was an error calculating the mean.
+      2 There was an error calculating the mean.
 
 # ard_summary() errors with incomplete factor columns
 

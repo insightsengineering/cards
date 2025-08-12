@@ -100,25 +100,25 @@
     Code
       as.data.frame(dplyr::select(apply_fmt_fun(ard_with_args), -fmt_fun, -warning, -error))
     Output
-         group1         group1_level variable variable_level     context stat_name stat_label stat stat_fmt
-      1     ARM              Placebo   AGEGR1          65-80 categorical         n          n   42    42.00
-      2     ARM              Placebo   AGEGR1          65-80 categorical         N          N  144      144
-      3     ARM              Placebo   AGEGR1            <65 categorical         n          n   14    14.00
-      4     ARM              Placebo   AGEGR1            <65 categorical         N          N   33       33
-      5     ARM              Placebo   AGEGR1            >80 categorical         n          n   30    30.00
-      6     ARM              Placebo   AGEGR1            >80 categorical         N          N   77       77
-      7     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         n          n   55    55.00
-      8     ARM Xanomeline High Dose   AGEGR1          65-80 categorical         N          N  144      144
-      9     ARM Xanomeline High Dose   AGEGR1            <65 categorical         n          n   11    11.00
-      10    ARM Xanomeline High Dose   AGEGR1            <65 categorical         N          N   33       33
-      11    ARM Xanomeline High Dose   AGEGR1            >80 categorical         n          n   18    18.00
-      12    ARM Xanomeline High Dose   AGEGR1            >80 categorical         N          N   77       77
-      13    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         n          n   47    47.00
-      14    ARM  Xanomeline Low Dose   AGEGR1          65-80 categorical         N          N  144      144
-      15    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         n          n    8     8.00
-      16    ARM  Xanomeline Low Dose   AGEGR1            <65 categorical         N          N   33       33
-      17    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         n          n   29    29.00
-      18    ARM  Xanomeline Low Dose   AGEGR1            >80 categorical         N          N   77       77
+         group1         group1_level variable variable_level  context stat_name stat_label stat stat_fmt
+      1     ARM              Placebo   AGEGR1          65-80 tabulate         n          n   42    42.00
+      2     ARM              Placebo   AGEGR1          65-80 tabulate         N          N  144      144
+      3     ARM              Placebo   AGEGR1            <65 tabulate         n          n   14    14.00
+      4     ARM              Placebo   AGEGR1            <65 tabulate         N          N   33       33
+      5     ARM              Placebo   AGEGR1            >80 tabulate         n          n   30    30.00
+      6     ARM              Placebo   AGEGR1            >80 tabulate         N          N   77       77
+      7     ARM Xanomeline High Dose   AGEGR1          65-80 tabulate         n          n   55    55.00
+      8     ARM Xanomeline High Dose   AGEGR1          65-80 tabulate         N          N  144      144
+      9     ARM Xanomeline High Dose   AGEGR1            <65 tabulate         n          n   11    11.00
+      10    ARM Xanomeline High Dose   AGEGR1            <65 tabulate         N          N   33       33
+      11    ARM Xanomeline High Dose   AGEGR1            >80 tabulate         n          n   18    18.00
+      12    ARM Xanomeline High Dose   AGEGR1            >80 tabulate         N          N   77       77
+      13    ARM  Xanomeline Low Dose   AGEGR1          65-80 tabulate         n          n   47    47.00
+      14    ARM  Xanomeline Low Dose   AGEGR1          65-80 tabulate         N          N  144      144
+      15    ARM  Xanomeline Low Dose   AGEGR1            <65 tabulate         n          n    8     8.00
+      16    ARM  Xanomeline Low Dose   AGEGR1            <65 tabulate         N          N   33       33
+      17    ARM  Xanomeline Low Dose   AGEGR1            >80 tabulate         n          n   29    29.00
+      18    ARM  Xanomeline Low Dose   AGEGR1            >80 tabulate         N          N   77       77
 
 # ard_tabulate(denominator=<data frame with counts>) works
 
@@ -190,4 +190,74 @@
     Condition
       Error in `ard_tabulate()`:
       ! The `denominator` argument must be one of "column" and "row" when cumulative statistics "n_cum" or "p_cum" are specified, which were requested for variable `AGEGR1`.
+
+# ard_tabulate(value) works
+
+    Code
+      class(ard_dich)
+    Output
+      [1] "card"       "tbl_df"     "tbl"        "data.frame"
+
+---
+
+    Code
+      as.data.frame(dplyr::select(ard_dich, -c(fmt_fun, warning, error)))
+    Output
+        variable variable_level  context stat_name stat_label    stat
+      1      cyl              4 tabulate         n          n      11
+      2      cyl              4 tabulate         N          N      32
+      3      cyl              4 tabulate         p          % 0.34375
+      4       am           TRUE tabulate         n          n      13
+      5       am           TRUE tabulate         N          N      32
+      6       am           TRUE tabulate         p          % 0.40625
+      7     gear              3 tabulate         n          n       5
+      8     gear              3 tabulate         N          N      32
+      9     gear              3 tabulate         p          % 0.15625
+
+# ard_tabulate(value) errors are correct
+
+    Code
+      ard_tabulate(mtcars, variables = c("cyl", "am", "gear"), value = list(cyl = letters))
+    Condition
+      Error in `ard_tabulate()`:
+      ! Error in argument `value` for variable "cyl".
+      i The value must be one of 4, 6, and 8.
+
+---
+
+    Code
+      ard_tabulate(iris, variables = everything(), value = list(Species = "not_a_species"))
+    Condition
+      Error in `ard_tabulate()`:
+      ! Error in argument `value` for variable "Species".
+      i A value of "not_a_species" was passed, but must be one of setosa, versicolor, and virginica.
+      i To summarize this value, use `forcats::fct_expand()` to add "not_a_species" as a level.
+
+---
+
+    Code
+      ard_tabulate(mtcars, variables = c("cyl", "am", "gear"), value = list(cyl = 100))
+    Condition
+      Error in `ard_tabulate()`:
+      ! Error in argument `value` for variable "cyl".
+      i A value of 100 was passed, but must be one of 4, 6, and 8.
+      i To summarize this value, make the column a factor and include 100 as a level.
+
+# ard_tabulate(value) errors with incomplete factor columns
+
+    Code
+      ard_tabulate(dplyr::mutate(mtcars, am = factor(am, levels = character(0))),
+      variables = c(cyl, vs), by = am, value = list(cyl = 4))
+    Condition
+      Error in `ard_tabulate()`:
+      ! Factors with empty "levels" attribute are not allowed, which was identified in column "am".
+
+---
+
+    Code
+      ard_tabulate(dplyr::mutate(mtcars, am = factor(am, levels = c(0, 1, NA),
+      exclude = NULL)), variables = c(cyl, am), value = list(cyl = 4))
+    Condition
+      Error in `ard_tabulate()`:
+      ! Factors with NA levels are not allowed, which are present in column "am".
 

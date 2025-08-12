@@ -29,6 +29,10 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.
+#' @param value ([`formula-list-selector`][syntax])\cr
+#'   named list of dichotomous values to tabulate.
+#'   When specified, the returned tabulation will be restricted to include
+#'   the specified value only. Default is `NULL`.
 #' @inheritParams ard_summary
 #'
 #' @section Denominators:
@@ -91,15 +95,16 @@ ard_tabulate <- function(data, ...) {
 #' @rdname ard_tabulate
 #' @export
 ard_tabulate.data.frame <- function(data,
-                                       variables,
-                                       by = dplyr::group_vars(data),
-                                       strata = NULL,
-                                       statistic = everything() ~ c("n", "p", "N"),
-                                       denominator = "column",
-                                       fmt_fun = NULL,
-                                       stat_label = everything() ~ default_stat_labels(),
-                                       fmt_fn = deprecated(),
-                                       ...) {
+                                    variables,
+                                    by = dplyr::group_vars(data),
+                                    strata = NULL,
+                                    statistic = everything() ~ c("n", "p", "N"),
+                                    value = NULL,
+                                    denominator = "column",
+                                    fmt_fun = NULL,
+                                    stat_label = everything() ~ default_stat_labels(),
+                                    fmt_fn = deprecated(),
+                                    ...) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -131,7 +136,8 @@ ard_tabulate.data.frame <- function(data,
     data[variables],
     statistic = statistic,
     stat_label = stat_label,
-    fmt_fun = fmt_fun
+    fmt_fun = fmt_fun,
+    value = value
   )
   fill_formula_selectors(
     data[variables],
@@ -142,6 +148,7 @@ ard_tabulate.data.frame <- function(data,
     predicate = \(x) is.character(x) && all(x %in% c("n", "p", "N", "n_cum", "p_cum")),
     error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N', 'n_cum', 'p_cum')}}"
   )
+  .check_dichotomous_value(data, value)
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
@@ -199,9 +206,12 @@ ard_tabulate.data.frame <- function(data,
         )
     )
 
+  # filter on passed dichotomous values ----------------------------------------
+  df_result_final <- .filter_dichotomous_value(df_result_final, value, variables)
+
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::mutate(context = "categorical") |>
+    dplyr::mutate(context = "tabulate") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card()
@@ -256,8 +266,8 @@ ard_tabulate.data.frame <- function(data,
             }
           }
         ) |>
-          compact() |>
-          names(),
+        compact() |>
+        names(),
       denominator = denominator,
       by = by,
       strata = strata
@@ -316,7 +326,7 @@ ard_tabulate.data.frame <- function(data,
           dplyr::mutate(
             stat_name =
               gsub(pattern = "^...ard_", replacement = "", x = .data$stat_name) %>%
-                gsub(pattern = "...$", replacement = "", x = .)
+              gsub(pattern = "...$", replacement = "", x = .)
           ) |>
           dplyr::filter(.data$stat_name %in% tab_stats[["tabulation"]])
       }
@@ -370,10 +380,10 @@ ard_tabulate.data.frame <- function(data,
       dplyr::mutate(
         .by = any_of(c(by, strata)),
         ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
-          cumsum(.data$...ard_n...)
+                                 cumsum(.data$...ard_n...)
         ),
         ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
-          cumsum(.data$...ard_p...)
+                                 cumsum(.data$...ard_p...)
         )
       )
   } else if (denominator %in% "row") {
@@ -381,10 +391,10 @@ ard_tabulate.data.frame <- function(data,
       dplyr::mutate(
         .by = any_of(variable),
         ...ard_n_cum... = switch("n_cum" %in% tab_stats[["tabulation"]],
-          cumsum(.data$...ard_n...)
+                                 cumsum(.data$...ard_n...)
         ),
         ...ard_p_cum... = switch("p_cum" %in% tab_stats[["tabulation"]],
-          cumsum(.data$...ard_p...)
+                                 cumsum(.data$...ard_p...)
         )
       )
   }
@@ -537,8 +547,8 @@ arrange_using_order <- function(data, columns) {
   }
   # if user passed a data frame WITHOUT the counts pre-specified and no by/strata
   else if (is.data.frame(denominator) &&
-    !"...ard_N..." %in% names(denominator) &&
-    is_empty(intersect(c(by, strata), names(denominator)))) {
+           !"...ard_N..." %in% names(denominator) &&
+           is_empty(intersect(c(by, strata), names(denominator)))) {
     lst_denominator <-
       rep_named(
         variables,
@@ -617,7 +627,7 @@ arrange_using_order <- function(data, columns) {
     # check there are no duplicates in by/strata variables
     if (
       (any(c(by, strata) %in% names(denominator)) && any(duplicated(denominator[c(by, strata)]))) ||
-        (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
+      (!any(c(by, strata) %in% names(denominator)) && nrow(denominator) > 1L)
     ) {
       paste(
         "Specified counts in column {.val '...ard_N...'} are not unique in",
@@ -704,4 +714,92 @@ arrange_using_order <- function(data, columns) {
     ) |>
       cli::cli_abort(call = get_cli_abort_call())
   }
+}
+
+#' Perform Value Checks
+#'
+#' Check the validity of the values passed in `ard_tabulate(value)`.
+#'
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param value (named `list`)\cr
+#'   a named list
+#'
+#' @return returns invisible if check is successful, throws an error message if not.
+#' @keywords internal
+#'
+#' @examples
+#' cards:::.check_dichotomous_value(mtcars, list(cyl = 4))
+.check_dichotomous_value <- function(data, value) {
+  imap(
+    value,
+    function(value, column) {
+      accepted_values <- .unique_and_sorted(data[[column]])
+      if (length(value) != 1L || !value %in% accepted_values) {
+        message <- "Error in argument {.arg value} for variable {.val {column}}."
+        message <-
+          case_switch(
+            length(value) != 1L ~ c(message, "i" = "The value must be one of {.val {accepted_values}}."),
+            .default = c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}.")
+          )
+        if (length(value) == 1L) {
+          message <-
+            case_switch(
+              inherits(data[[column]], "factor") ~
+                c(message, i = "To summarize this value, use {.fun forcats::fct_expand} to add {.val {value}} as a level."),
+              .default = c(message, i = "To summarize this value, make the column a factor and include {.val {value}} as a level.")
+            )
+        }
+
+
+        cli::cli_abort(
+          message = message,
+          call = get_cli_abort_call()
+        )
+      }
+    }
+  ) |>
+    invisible()
+}
+
+.filter_dichotomous_value <- function(x, value, variables) {
+  if (is_empty(value)) return(x) # styler: off
+
+  # update value object with the levels to keep
+  variables_no_value <- setdiff(variables, names(value))
+  if (!is_empty(variables_no_value)) {
+    value <-
+      c(
+        value,
+        dplyr::filter(x, .data$variable %in% .env$variables_no_value) |>
+          dplyr::distinct(!!!rlang::syms(c("variable", "variable_level"))) |>
+          tidyr::nest(variable_level = .data$variable_level) |>
+          dplyr::mutate(variable_level = map(.data$variable_level, unlist)) |>
+          deframe()
+        )
+  }
+
+  # filter ARD
+  x |>
+    dplyr::filter(
+      pmap(
+        list(.data$variable, .data$variable_level),
+        function(variable, variable_level) {
+          variable_level %in% .env$value[[variable]]
+        }
+      ) |>
+        unlist()
+    )
+}
+
+case_switch <- function(..., .default = NULL) {
+  dots <- dots_list(...)
+
+  for (f in dots) {
+    if (isTRUE(eval(f_lhs(f), envir = attr(f, ".Environment")))) {
+      return(eval(f_rhs(f), envir = attr(f, ".Environment")))
+    }
+  }
+
+  return(.default)
 }

@@ -127,5 +127,5 @@ ard_mvsummary.data.frame <- function(data,
     fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
-    dplyr::mutate(context = "complex")
+    dplyr::mutate(context = "mvsummary")
 }

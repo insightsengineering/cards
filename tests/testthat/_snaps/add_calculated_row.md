@@ -6,16 +6,16 @@
     Message
       {cards} data frame: 9 x 9
     Output
-        variable   context stat_name stat_label   stat stat_fmt
-      1      mpg continuo…         N          N     32       32
-      2      mpg continuo…      mean       Mean 20.091     20.1
-      3      mpg continuo…        sd         SD  6.027      6.0
-      4      mpg continuo…    median     Median   19.2     19.2
-      5      mpg continuo…       p25         Q1  15.35     15.4
-      6      mpg continuo…       p75         Q3   22.8     22.8
-      7      mpg continuo…       min        Min   10.4     10.4
-      8      mpg continuo…       max        Max   33.9     33.9
-      9      mpg continuo…     range      range   23.5     23.5
+        variable context stat_name stat_label   stat stat_fmt
+      1      mpg summary         N          N     32       32
+      2      mpg summary      mean       Mean 20.091     20.1
+      3      mpg summary        sd         SD  6.027      6.0
+      4      mpg summary    median     Median   19.2     19.2
+      5      mpg summary       p25         Q1  15.35     15.4
+      6      mpg summary       p75         Q3   22.8     22.8
+      7      mpg summary       min        Min   10.4     10.4
+      8      mpg summary       max        Max   33.9     33.9
+      9      mpg summary     range      range   23.5     23.5
     Message
       i 3 more variables: fmt_fun, warning, error
 
@@ -28,16 +28,16 @@
     Message
       {cards} data frame: 9 x 9
     Output
-        variable   context stat_name stat_label      stat   stat_fmt
-      1      mpg continuo…         N          N        32         32
-      2      mpg continuo…      mean       Mean    20.091       20.1
-      3      mpg continuo…        sd         SD     6.027        6.0
-      4      mpg continuo…    median     Median      19.2       19.2
-      5      mpg continuo…       p25         Q1     15.35       15.4
-      6      mpg continuo…       p75         Q3      22.8       22.8
-      7      mpg continuo…       min        Min      10.4       10.4
-      8      mpg continuo…       max        Max      33.9       33.9
-      9      mpg continuo…      skew       skew Right Sk… Right Skew
+        variable context stat_name stat_label      stat   stat_fmt
+      1      mpg summary         N          N        32         32
+      2      mpg summary      mean       Mean    20.091       20.1
+      3      mpg summary        sd         SD     6.027        6.0
+      4      mpg summary    median     Median      19.2       19.2
+      5      mpg summary       p25         Q1     15.35       15.4
+      6      mpg summary       p75         Q3      22.8       22.8
+      7      mpg summary       min        Min      10.4       10.4
+      8      mpg summary       max        Max      33.9       33.9
+      9      mpg summary      skew       skew Right Sk… Right Skew
     Message
       i 3 more variables: fmt_fun, warning, error
 
