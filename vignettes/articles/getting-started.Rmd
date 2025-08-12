@@ -101,7 +101,7 @@ In this case, we want to show the Female (`"F"`) level of the `SEX` variable and
 
 ```{r}
 df_dichotomous_ard <-
-  arrd_tabulate(
+  ard_tabulate(
     ADSL,
     by = ARM,
     variables = SEX,
@@ -146,7 +146,7 @@ ard_stack(
     ))
   ),
   ard_tabulate(variables = AGEGR1),
-  arrd_tabulate(variables = SEX, value = list(SEX = "F"))
+  ard_tabulate(variables = SEX, value = list(SEX = "F"))
 )
 ```
 
