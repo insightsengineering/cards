@@ -203,16 +203,16 @@
     Code
       as.data.frame(dplyr::select(ard_dich, -c(fmt_fun, warning, error)))
     Output
-        variable variable_level  context stat_name stat_label    stat
-      1      cyl              4 tabulate         n          n      11
-      2      cyl              4 tabulate         N          N      32
-      3      cyl              4 tabulate         p          % 0.34375
-      4       am           TRUE tabulate         n          n      13
-      5       am           TRUE tabulate         N          N      32
-      6       am           TRUE tabulate         p          % 0.40625
-      7     gear              3 tabulate         n          n       5
-      8     gear              3 tabulate         N          N      32
-      9     gear              3 tabulate         p          % 0.15625
+        variable variable_level        context stat_name stat_label    stat
+      1      cyl              4 tabulate_value         n          n      11
+      2      cyl              4 tabulate_value         N          N      32
+      3      cyl              4 tabulate_value         p          % 0.34375
+      4       am           TRUE tabulate_value         n          n      13
+      5       am           TRUE tabulate_value         N          N      32
+      6       am           TRUE tabulate_value         p          % 0.40625
+      7     gear              3 tabulate_value         n          n       5
+      8     gear              3 tabulate_value         N          N      32
+      9     gear              3 tabulate_value         p          % 0.15625
 
 # ard_tabulate(value) errors are correct
 

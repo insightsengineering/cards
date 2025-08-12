@@ -3,8 +3,6 @@
 #' For each column in the passed data frame, the function returns a named list
 #' with the value being the largest/last element after a sort.
 #' For factors, the last level is returned, and for logical vectors `TRUE` is returned.
-#' This is used as the default value in `ard_dichotomous(value)` if not specified by
-#' the user.
 #'
 #' @param data (`data.frame`)\cr
 #'   a data frame

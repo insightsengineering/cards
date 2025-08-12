@@ -211,7 +211,7 @@ ard_tabulate.data.frame <- function(data,
 
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::mutate(context = "tabulate") |>
+    dplyr::mutate(context = ifelse(.data$variable %in% names(value), "tabulate_value", "tabulate")) |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card()
