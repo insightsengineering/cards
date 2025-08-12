@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.954320987654321" branch-rate="0" lines-covered="3092" lines-valid="3240" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-08-12 01:01:53.175454">
+<coverage line-rate="0.954320987654321" branch-rate="0" lines-covered="3092" lines-valid="3240" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-08-12 02:35:40.807985">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -3855,71 +3855,71 @@
             </method>
             <method name="ard_categorical.data.frame" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="68" hits="0" branch="false"/>
                 <line number="69" hits="0" branch="false"/>
-                <line number="70" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="ard_complex.data.frame" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="75" hits="0" branch="false"/>
                 <line number="76" hits="0" branch="false"/>
-                <line number="77" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="ard_dichotomous.data.frame" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="82" hits="0" branch="false"/>
                 <line number="83" hits="0" branch="false"/>
                 <line number="84" hits="0" branch="false"/>
                 <line number="85" hits="0" branch="false"/>
                 <line number="86" hits="0" branch="false"/>
                 <line number="87" hits="0" branch="false"/>
-                <line number="88" hits="0" branch="false"/>
+                <line number="89" hits="0" branch="false"/>
                 <line number="90" hits="0" branch="false"/>
                 <line number="91" hits="0" branch="false"/>
                 <line number="92" hits="0" branch="false"/>
                 <line number="93" hits="0" branch="false"/>
                 <line number="94" hits="0" branch="false"/>
                 <line number="95" hits="0" branch="false"/>
-                <line number="96" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="apply_fmt_fn" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="102" hits="0" branch="false"/>
                 <line number="103" hits="0" branch="false"/>
                 <line number="104" hits="0" branch="false"/>
                 <line number="105" hits="0" branch="false"/>
                 <line number="106" hits="0" branch="false"/>
-                <line number="107" hits="0" branch="false"/>
-                <line number="109" hits="0" branch="false"/>
+                <line number="108" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="alias_as_fmt_fn" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="114" hits="0" branch="false"/>
                 <line number="115" hits="0" branch="false"/>
                 <line number="116" hits="0" branch="false"/>
                 <line number="117" hits="0" branch="false"/>
                 <line number="118" hits="0" branch="false"/>
-                <line number="119" hits="0" branch="false"/>
-                <line number="121" hits="0" branch="false"/>
+                <line number="120" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="update_ard_fmt_fn" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="126" hits="0" branch="false"/>
                 <line number="127" hits="0" branch="false"/>
                 <line number="128" hits="0" branch="false"/>
                 <line number="129" hits="0" branch="false"/>
                 <line number="130" hits="0" branch="false"/>
-                <line number="131" hits="0" branch="false"/>
-                <line number="133" hits="0" branch="false"/>
+                <line number="132" hits="0" branch="false"/>
               </lines>
             </method>
             <method name="label_cards" signature="" line-rate="0" branch-rate="0" complexity="0">
               <lines>
+                <line number="139" hits="0" branch="false"/>
                 <line number="140" hits="0" branch="false"/>
                 <line number="141" hits="0" branch="false"/>
                 <line number="142" hits="0" branch="false"/>
                 <line number="143" hits="0" branch="false"/>
-                <line number="144" hits="0" branch="false"/>
-                <line number="146" hits="0" branch="false"/>
+                <line number="145" hits="0" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -3934,47 +3934,47 @@
             <line number="55" hits="0" branch="false"/>
             <line number="61" hits="0" branch="false"/>
             <line number="62" hits="0" branch="false"/>
+            <line number="68" hits="0" branch="false"/>
             <line number="69" hits="0" branch="false"/>
-            <line number="70" hits="0" branch="false"/>
+            <line number="75" hits="0" branch="false"/>
             <line number="76" hits="0" branch="false"/>
-            <line number="77" hits="0" branch="false"/>
+            <line number="82" hits="0" branch="false"/>
             <line number="83" hits="0" branch="false"/>
             <line number="84" hits="0" branch="false"/>
             <line number="85" hits="0" branch="false"/>
             <line number="86" hits="0" branch="false"/>
             <line number="87" hits="0" branch="false"/>
-            <line number="88" hits="0" branch="false"/>
+            <line number="89" hits="0" branch="false"/>
             <line number="90" hits="0" branch="false"/>
             <line number="91" hits="0" branch="false"/>
             <line number="92" hits="0" branch="false"/>
             <line number="93" hits="0" branch="false"/>
             <line number="94" hits="0" branch="false"/>
             <line number="95" hits="0" branch="false"/>
-            <line number="96" hits="0" branch="false"/>
+            <line number="102" hits="0" branch="false"/>
             <line number="103" hits="0" branch="false"/>
             <line number="104" hits="0" branch="false"/>
             <line number="105" hits="0" branch="false"/>
             <line number="106" hits="0" branch="false"/>
-            <line number="107" hits="0" branch="false"/>
-            <line number="109" hits="0" branch="false"/>
+            <line number="108" hits="0" branch="false"/>
+            <line number="114" hits="0" branch="false"/>
             <line number="115" hits="0" branch="false"/>
             <line number="116" hits="0" branch="false"/>
             <line number="117" hits="0" branch="false"/>
             <line number="118" hits="0" branch="false"/>
-            <line number="119" hits="0" branch="false"/>
-            <line number="121" hits="0" branch="false"/>
+            <line number="120" hits="0" branch="false"/>
+            <line number="126" hits="0" branch="false"/>
             <line number="127" hits="0" branch="false"/>
             <line number="128" hits="0" branch="false"/>
             <line number="129" hits="0" branch="false"/>
             <line number="130" hits="0" branch="false"/>
-            <line number="131" hits="0" branch="false"/>
-            <line number="133" hits="0" branch="false"/>
+            <line number="132" hits="0" branch="false"/>
+            <line number="139" hits="0" branch="false"/>
             <line number="140" hits="0" branch="false"/>
             <line number="141" hits="0" branch="false"/>
             <line number="142" hits="0" branch="false"/>
             <line number="143" hits="0" branch="false"/>
-            <line number="144" hits="0" branch="false"/>
-            <line number="146" hits="0" branch="false"/>
+            <line number="145" hits="0" branch="false"/>
           </lines>
         </class>
         <class name="eval_capture_conditions.R" filename="R/eval_capture_conditions.R" line-rate="1" branch-rate="0" complexity="0">
