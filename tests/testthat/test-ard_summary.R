@@ -287,7 +287,7 @@ test_that("ard_summary() works with non-syntactic names", {
 
   expect_snapshot(ADSL |>
     dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE, `Arm Var` = ARM) |>
-      ard_summary(
+    ard_summary(
       variables = c("BMI base", `Age`),
       statistic = ~ list("mean lbl" = `mean error`),
       stat_label = everything() ~ list(`mean lbl` = "Test lbl")

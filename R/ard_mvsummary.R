@@ -60,14 +60,14 @@ ard_mvsummary <- function(data, ...) {
 #' @rdname ard_mvsummary
 #' @export
 ard_mvsummary.data.frame <- function(data,
-                                   variables,
-                                   by = dplyr::group_vars(data),
-                                   strata = NULL,
-                                   statistic,
-                                   fmt_fun = NULL,
-                                   stat_label = everything() ~ default_stat_labels(),
-                                   fmt_fn = deprecated(),
-                                   ...) {
+                                     variables,
+                                     by = dplyr::group_vars(data),
+                                     strata = NULL,
+                                     statistic,
+                                     fmt_fun = NULL,
+                                     stat_label = everything() ~ default_stat_labels(),
+                                     fmt_fn = deprecated(),
+                                     ...) {
   set_cli_abort_call()
   check_dots_used()
 

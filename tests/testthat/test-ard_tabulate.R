@@ -1416,7 +1416,7 @@ test_that("ard_tabulate(value) works", {
       ard_tabulate(
         mtcars |> dplyr::mutate(gear = factor(gear), am = as.logical(am)),
         variables = c("cyl", "am", "gear"),
-        value = c(maximum_variable_value(mtcars[c("am", "gear")]),  list(cyl = 4))
+        value = c(maximum_variable_value(mtcars[c("am", "gear")]), list(cyl = 4))
       ),
     NA
   )
@@ -1536,4 +1536,3 @@ test_that("ard_tabulate(value) errors with incomplete factor columns", {
       )
   )
 })
-

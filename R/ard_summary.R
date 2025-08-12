@@ -71,14 +71,14 @@ ard_summary <- function(data, ...) {
 #' @rdname ard_summary
 #' @export
 ard_summary.data.frame <- function(data,
-                                      variables,
-                                      by = dplyr::group_vars(data),
-                                      strata = NULL,
-                                      statistic = everything() ~ continuous_summary_fns(),
-                                      fmt_fun = NULL,
-                                      stat_label = everything() ~ default_stat_labels(),
-                                      fmt_fn = deprecated(),
-                                      ...) {
+                                   variables,
+                                   by = dplyr::group_vars(data),
+                                   strata = NULL,
+                                   statistic = everything() ~ continuous_summary_fns(),
+                                   fmt_fun = NULL,
+                                   stat_label = everything() ~ default_stat_labels(),
+                                   fmt_fn = deprecated(),
+                                   ...) {
   set_cli_abort_call()
   check_dots_used()
 
