@@ -31,21 +31,21 @@ NULL
 #' @export
 ard_continuous <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_dichotomous")
+  UseMethod("ard_continuous")
 }
 
 #' @rdname deprecated
 #' @export
 ard_categorical <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_dichotomous")
+  UseMethod("ard_categorical")
 }
 
 #' @rdname deprecated
 #' @export
 ard_complex <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_dichotomous")
+  UseMethod("ard_complex")
 }
 
 #' @rdname deprecated
@@ -57,23 +57,22 @@ ard_dichotomous <- function(data, ...) {
 
 #' @rdname deprecated
 #' @export
-ard_continuous.data.frame <- function(...) {
-  ard_summary(...) |>
+ard_continuous.data.frame <- function(data, ...) {
+  ard_summary(data = data, ...) |>
     dplyr::mutate(context = "continuous")
 }
 
-
 #' @rdname deprecated
 #' @export
-ard_categorical.data.frame <- function(...) {
-  ard_summary(...) |>
+ard_categorical.data.frame <- function(data, ...) {
+  ard_tabulate(data = data, ...) |>
     dplyr::mutate(context = "categorical")
 }
 
 #' @rdname deprecated
 #' @export
-ard_complex.data.frame <- function(...) {
-  ard_mvsummary(...) |>
+ard_complex.data.frame <- function(data, ...) {
+  ard_mvsummary(data = data, ...) |>
     dplyr::mutate(context = "complex")
 }
 

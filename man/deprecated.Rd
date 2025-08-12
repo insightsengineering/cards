@@ -24,11 +24,11 @@ ard_complex(data, ...)
 
 ard_dichotomous(data, ...)
 
-\method{ard_continuous}{data.frame}(...)
+\method{ard_continuous}{data.frame}(data, ...)
 
-\method{ard_categorical}{data.frame}(...)
+\method{ard_categorical}{data.frame}(data, ...)
 
-\method{ard_complex}{data.frame}(...)
+\method{ard_complex}{data.frame}(data, ...)
 
 \method{ard_dichotomous}{data.frame}(
   data,
