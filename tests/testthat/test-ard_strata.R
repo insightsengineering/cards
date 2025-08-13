@@ -37,14 +37,14 @@ test_that("ard_strata(by,strata) when both empty", {
 })
 
 test_that("nest_for_ard retains strata in nested data", {
-  df <- tibble::tibble(
+  df <- dplyr::tibble(
     PARAMCD = rep(c("A", "B"), each = 2),
     VALUE = 1:4
   )
 
   nested <- nest_for_ard(df, strata = "PARAMCD")
   # Ensure 'PARAMCD' is in each nested data frame
-  expect_true(all(purrr::map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
+  expect_true(all(map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
 
   # Get the name of the outer strata column (e.g., "group1_level" or "PARAMCD")
   outer_strata_name <- setdiff(names(nested), "data")
