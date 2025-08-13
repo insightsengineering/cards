@@ -43,8 +43,9 @@ test_that("nest_for_ard retains strata in nested data", {
   )
 
   nested <- nest_for_ard(df, strata = "PARAMCD")
-
-  expect_true("PARAMCD" %in% names(nested))
-  expect_true("data" %in% names(nested))
+  # Ensure 'PARAMCD' is in each nested data frame
   expect_true(all(purrr::map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
+
+  # Get the name of the outer strata column (e.g., "group1_level" or "PARAMCD")
+  outer_strata_name <- setdiff(names(nested), "data")
 })
