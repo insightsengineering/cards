@@ -119,7 +119,7 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
         seq_len(nrow(df_return)),
         FUN = function(i) {
           dplyr::filter(data, !!!lst_filter_exprs[[i]]) |>
-            dplyr::select(-all_of(.env$by), -all_of(.env$strata))
+            dplyr::select(-all_of(.env$by))
         }
       )
   }
