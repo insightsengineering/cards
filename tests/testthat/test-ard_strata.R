@@ -35,3 +35,16 @@ test_that("ard_strata(by,strata) when both empty", {
     ard_continuous(ADSL, by = ARM, variables = AGE)
   )
 })
+
+test_that("nest_for_ard retains strata in nested data", {
+  df <- tibble::tibble(
+    PARAMCD = rep(c("A", "B"), each = 2),
+    VALUE = 1:4
+  )
+
+  nested <- nest_for_ard(df, strata = "PARAMCD")
+
+  expect_true("PARAMCD" %in% names(nested))
+  expect_true("data" %in% names(nested))
+  expect_true(all(purrr::map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
+})
