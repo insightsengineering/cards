@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.954320987654321" branch-rate="0" lines-covered="3092" lines-valid="3240" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-08-12 04:33:21.789139">
+<coverage line-rate="0.954320987654321" branch-rate="0" lines-covered="3092" lines-valid="3240" branches-covered="0" branches-valid="0" complexity="0" version="3.6.4" timestamp="2025-08-15 21:51:34.486457">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
@@ -2881,37 +2881,37 @@
             </method>
             <method name=".filter_dichotomous_value" signature="" line-rate="0.590909090909091" branch-rate="0" complexity="0">
               <lines>
-                <line number="766" hits="406" branch="false"/>
-                <line number="769" hits="50" branch="false"/>
-                <line number="770" hits="50" branch="false"/>
-                <line number="771" hits="0" branch="false"/>
-                <line number="772" hits="0" branch="false"/>
-                <line number="773" hits="0" branch="false"/>
-                <line number="774" hits="0" branch="false"/>
-                <line number="775" hits="0" branch="false"/>
-                <line number="776" hits="0" branch="false"/>
-                <line number="777" hits="0" branch="false"/>
-                <line number="778" hits="0" branch="false"/>
-                <line number="779" hits="0" branch="false"/>
-                <line number="783" hits="50" branch="false"/>
-                <line number="784" hits="50" branch="false"/>
-                <line number="785" hits="50" branch="false"/>
-                <line number="786" hits="50" branch="false"/>
-                <line number="787" hits="50" branch="false"/>
-                <line number="788" hits="50" branch="false"/>
-                <line number="789" hits="50" branch="false"/>
-                <line number="790" hits="50" branch="false"/>
-                <line number="791" hits="50" branch="false"/>
-                <line number="792" hits="50" branch="false"/>
+                <line number="777" hits="406" branch="false"/>
+                <line number="780" hits="50" branch="false"/>
+                <line number="781" hits="50" branch="false"/>
+                <line number="782" hits="0" branch="false"/>
+                <line number="783" hits="0" branch="false"/>
+                <line number="784" hits="0" branch="false"/>
+                <line number="785" hits="0" branch="false"/>
+                <line number="786" hits="0" branch="false"/>
+                <line number="787" hits="0" branch="false"/>
+                <line number="788" hits="0" branch="false"/>
+                <line number="789" hits="0" branch="false"/>
+                <line number="790" hits="0" branch="false"/>
+                <line number="794" hits="50" branch="false"/>
+                <line number="795" hits="50" branch="false"/>
+                <line number="796" hits="50" branch="false"/>
+                <line number="797" hits="50" branch="false"/>
+                <line number="798" hits="50" branch="false"/>
+                <line number="799" hits="50" branch="false"/>
+                <line number="800" hits="50" branch="false"/>
+                <line number="801" hits="50" branch="false"/>
+                <line number="802" hits="50" branch="false"/>
+                <line number="803" hits="50" branch="false"/>
               </lines>
             </method>
             <method name="case_switch" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="796" hits="12088" branch="false"/>
-                <line number="798" hits="12088" branch="false"/>
-                <line number="799" hits="12093" branch="false"/>
-                <line number="800" hits="1669" branch="false"/>
-                <line number="804" hits="10419" branch="false"/>
+                <line number="818" hits="12088" branch="false"/>
+                <line number="820" hits="12088" branch="false"/>
+                <line number="821" hits="12093" branch="false"/>
+                <line number="822" hits="1669" branch="false"/>
+                <line number="826" hits="10419" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -3346,33 +3346,33 @@
             <line number="760" hits="482" branch="false"/>
             <line number="761" hits="482" branch="false"/>
             <line number="762" hits="482" branch="false"/>
-            <line number="766" hits="406" branch="false"/>
-            <line number="769" hits="50" branch="false"/>
-            <line number="770" hits="50" branch="false"/>
-            <line number="771" hits="0" branch="false"/>
-            <line number="772" hits="0" branch="false"/>
-            <line number="773" hits="0" branch="false"/>
-            <line number="774" hits="0" branch="false"/>
-            <line number="775" hits="0" branch="false"/>
-            <line number="776" hits="0" branch="false"/>
-            <line number="777" hits="0" branch="false"/>
-            <line number="778" hits="0" branch="false"/>
-            <line number="779" hits="0" branch="false"/>
-            <line number="783" hits="50" branch="false"/>
-            <line number="784" hits="50" branch="false"/>
-            <line number="785" hits="50" branch="false"/>
-            <line number="786" hits="50" branch="false"/>
-            <line number="787" hits="50" branch="false"/>
-            <line number="788" hits="50" branch="false"/>
-            <line number="789" hits="50" branch="false"/>
-            <line number="790" hits="50" branch="false"/>
-            <line number="791" hits="50" branch="false"/>
-            <line number="792" hits="50" branch="false"/>
-            <line number="796" hits="12088" branch="false"/>
-            <line number="798" hits="12088" branch="false"/>
-            <line number="799" hits="12093" branch="false"/>
-            <line number="800" hits="1669" branch="false"/>
-            <line number="804" hits="10419" branch="false"/>
+            <line number="777" hits="406" branch="false"/>
+            <line number="780" hits="50" branch="false"/>
+            <line number="781" hits="50" branch="false"/>
+            <line number="782" hits="0" branch="false"/>
+            <line number="783" hits="0" branch="false"/>
+            <line number="784" hits="0" branch="false"/>
+            <line number="785" hits="0" branch="false"/>
+            <line number="786" hits="0" branch="false"/>
+            <line number="787" hits="0" branch="false"/>
+            <line number="788" hits="0" branch="false"/>
+            <line number="789" hits="0" branch="false"/>
+            <line number="790" hits="0" branch="false"/>
+            <line number="794" hits="50" branch="false"/>
+            <line number="795" hits="50" branch="false"/>
+            <line number="796" hits="50" branch="false"/>
+            <line number="797" hits="50" branch="false"/>
+            <line number="798" hits="50" branch="false"/>
+            <line number="799" hits="50" branch="false"/>
+            <line number="800" hits="50" branch="false"/>
+            <line number="801" hits="50" branch="false"/>
+            <line number="802" hits="50" branch="false"/>
+            <line number="803" hits="50" branch="false"/>
+            <line number="818" hits="12088" branch="false"/>
+            <line number="820" hits="12088" branch="false"/>
+            <line number="821" hits="12093" branch="false"/>
+            <line number="822" hits="1669" branch="false"/>
+            <line number="826" hits="10419" branch="false"/>
           </lines>
         </class>
         <class name="ard_total_n.R" filename="R/ard_total_n.R" line-rate="1" branch-rate="0" complexity="0">
