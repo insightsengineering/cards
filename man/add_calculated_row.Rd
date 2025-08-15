@@ -44,10 +44,10 @@ Use this function to add a new statistic row that is a function of the
 other statistics in an ARD.
 }
 \examples{
-ard_continuous(mtcars, variables = mpg) |>
+ard_summary(mtcars, variables = mpg) |>
   add_calculated_row(expr = max - min, stat_name = "range")
 
-ard_continuous(mtcars, variables = mpg) |>
+ard_summary(mtcars, variables = mpg) |>
   add_calculated_row(
     expr =
       dplyr::case_when(

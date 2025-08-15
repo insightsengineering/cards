@@ -36,12 +36,9 @@
       as.data.frame(apply_fmt_fun(dplyr::mutate(ard_fmt_checks, stat = lapply(stat,
         function(x) x * 1000), fmt_fun = list("xx", "xx"))))
     Output
-        variable    context stat_name stat_label     stat stat_fmt fmt_fun warning
-      1      mpg continuous      mean       Mean 20090.62    20091      xx    NULL
-      2      mpg continuous        sd         SD 6026.948     6027      xx    NULL
-        error
-      1  NULL
-      2  NULL
+        variable context stat_name stat_label     stat stat_fmt fmt_fun warning error
+      1      mpg summary      mean       Mean 20090.62    20091      xx    NULL  NULL
+      2      mpg summary        sd         SD 6026.948     6027      xx    NULL  NULL
 
 # apply_fmt_fun(replace)
 

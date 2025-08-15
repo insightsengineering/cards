@@ -27,8 +27,8 @@ optionally trims statistics-level metadata.
 }
 \examples{
 bind_ard(
-  ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-  ard_categorical(ADSL, variables = "ARM")
+  ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+  ard_tabulate(ADSL, variables = "ARM")
 ) |>
   shuffle_ard()
 }

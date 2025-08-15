@@ -32,7 +32,7 @@
 #'     counts that may appear in the header of a table.
 #'   - the `denominator` argument must be specified when `id` is used to
 #'     calculate the event rates.
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_hierarchical
@@ -139,7 +139,7 @@ ard_hierarchical.data.frame <- function(data,
 
   # perform tabulations --------------------------------------------------------
   df_result <-
-    ard_categorical(
+    ard_tabulate(
       data = data,
       variables = "...ard_dummy_for_counting...",
       by = all_of(by),
@@ -199,7 +199,7 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  ard_categorical(
+  ard_tabulate(
     data = data,
     variables = "...ard_dummy_for_counting...",
     by = all_of(by),

@@ -1,7 +1,7 @@
 # print.card() works
 
     Code
-      ard_continuous(ADSL, by = "ARM", variables = "AGE")
+      ard_summary(ADSL, by = "ARM", variables = "AGE")
     Message
       {cards} data frame: 24 x 10
     Output
@@ -24,7 +24,7 @@
 ---
 
     Code
-      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+      ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
     Message
       {cards} data frame: 27 x 11
     Output
@@ -47,43 +47,43 @@
 ---
 
     Code
-      ard_continuous(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x)
-        round(x, 3)))
+      ard_summary(ADSL, variables = "AGE", fmt_fun = AGE ~ list(~ function(x) round(x,
+        3)))
     Message
       {cards} data frame: 8 x 8
     Output
-        variable   context stat_name stat_label   stat fmt_fun
-      1      AGE continuo…         N          N    254    <fn>
-      2      AGE continuo…      mean       Mean 75.087    <fn>
-      3      AGE continuo…        sd         SD  8.246    <fn>
-      4      AGE continuo…    median     Median     77    <fn>
-      5      AGE continuo…       p25         Q1     70    <fn>
-      6      AGE continuo…       p75         Q3     81    <fn>
-      7      AGE continuo…       min        Min     51    <fn>
-      8      AGE continuo…       max        Max     89    <fn>
+        variable context stat_name stat_label   stat fmt_fun
+      1      AGE summary         N          N    254    <fn>
+      2      AGE summary      mean       Mean 75.087    <fn>
+      3      AGE summary        sd         SD  8.246    <fn>
+      4      AGE summary    median     Median     77    <fn>
+      5      AGE summary       p25         Q1     70    <fn>
+      6      AGE summary       p75         Q3     81    <fn>
+      7      AGE summary       min        Min     51    <fn>
+      8      AGE summary       max        Max     89    <fn>
     Message
       i 2 more variables: warning, error
 
 ---
 
     Code
-      dplyr::select(ard_continuous(data = data.frame(x = seq(as.Date("2000-01-01"),
+      dplyr::select(ard_summary(data = data.frame(x = seq(as.Date("2000-01-01"),
       length.out = 10L, by = "day")), variables = x, statistic = ~
       continuous_summary_fns(c("min", "max", "sd"))), -fmt_fun)
     Message
       {cards} data frame: 3 x 7
     Output
-        variable   context stat_name stat_label      stat error
-      1        x continuo…       min        Min 2000-01-…      
-      2        x continuo…       max        Max 2000-01-…      
-      3        x continuo…        sd         SD     3.028      
+        variable context stat_name stat_label      stat error
+      1        x summary       min        Min 2000-01-…      
+      2        x summary       max        Max 2000-01-…      
+      3        x summary        sd         SD     3.028      
     Message
       i 1 more variable: warning
 
 ---
 
     Code
-      bind_ard(ard_attributes(mtcars, variables = mpg), ard_continuous(mtcars,
+      bind_ard(ard_attributes(mtcars, variables = mpg), ard_summary(mtcars,
         variables = mpg, statistic = ~ continuous_summary_fns("mean", other_stats = list(
           vcov = function(x) vcov(lm(mpg ~ am, mtcars))))))
     Message
@@ -92,8 +92,8 @@
         variable   context stat_name stat_label                         stat fmt_fun
       1      mpg attribut…     label  Variable…                          mpg    <fn>
       2      mpg attribut…     class  Variable…                      numeric    NULL
-      3      mpg continuo…      mean       Mean                       20.091       1
-      4      mpg continuo…      vcov       vcov 1.265, -1.265, -1.265, 3.113       1
+      3      mpg   summary      mean       Mean                       20.091       1
+      4      mpg   summary      vcov       vcov 1.265, -1.265, -1.265, 3.113       1
     Message
       i 2 more variables: warning, error
 

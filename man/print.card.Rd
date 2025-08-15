@@ -35,7 +35,7 @@ an ARD data frame of class 'card' (invisibly)
 Print method for objects of class 'card'
 }
 \examples{
-ard_categorical(ADSL, variables = AGEGR1) |>
+ard_tabulate(ADSL, variables = AGEGR1) |>
   print()
 }
 \keyword{internal}

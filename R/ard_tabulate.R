@@ -29,10 +29,14 @@
 #'   the list element is either a named list or a list of formulas defining the
 #'   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
 #'   `everything() ~ list(n ~ "n", p ~ "pct")`.
-#' @inheritParams ard_continuous
+#' @param value ([`formula-list-selector`][syntax])\cr
+#'   named list of dichotomous values to tabulate.
+#'   When specified, the returned tabulation will be restricted to include
+#'   the specified value only. Default is `NULL`.
+#' @inheritParams ard_summary
 #'
 #' @section Denominators:
-#' By default, the `ard_categorical()` function returns the statistics `"n"`, `"N"`, and
+#' By default, the `ard_tabulate()` function returns the statistics `"n"`, `"N"`, and
 #' `"p"`, where little `"n"` are the counts for the variable levels, and big `"N"` is
 #' the number of non-missing observations. The calculation for the
 #' proportion is  `p = n/N`.
@@ -66,58 +70,41 @@
 #' and the percentage is returned which matches the default statistic label of `'%'`.
 #' To get the formatted values, pass the ARD to `apply_fmt_fun()`.
 #'
-#' @section Other Statistics:
-#' In some cases, you may need other kinds of statistics for categorical variables.
-#' Despite the name, `ard_continuous()` can be used to obtain these statistics.
-#'
-#' In the example below, we calculate the mode of a categorical variable.
-#'
-#' ```{r}
-#' get_mode <- function(x) {
-#'   table(x) |> sort(decreasing = TRUE) |> names() |> getElement(1L)
-#' }
-#'
-#' ADSL |>
-#'   ard_continuous(
-#'     variables = AGEGR1,
-#'     statistic = list(AGEGR1 = list(mode = get_mode))
-#'   )
-#' ```
-#'
 #'
 #' @return an ARD data frame of class 'card'
-#' @name ard_categorical
+#' @name ard_tabulate
 #'
 #' @examples
-#' ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_categorical(
+#'   ard_tabulate(
 #'     variables = "AGEGR1",
 #'     statistic = everything() ~ "n"
 #'   )
 NULL
 
-#' @rdname ard_categorical
+#' @rdname ard_tabulate
 #' @export
-ard_categorical <- function(data, ...) {
+ard_tabulate <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_categorical")
+  UseMethod("ard_tabulate")
 }
 
-#' @rdname ard_categorical
+#' @rdname ard_tabulate
 #' @export
-ard_categorical.data.frame <- function(data,
-                                       variables,
-                                       by = dplyr::group_vars(data),
-                                       strata = NULL,
-                                       statistic = everything() ~ c("n", "p", "N"),
-                                       denominator = "column",
-                                       fmt_fun = NULL,
-                                       stat_label = everything() ~ default_stat_labels(),
-                                       fmt_fn = deprecated(),
-                                       ...) {
+ard_tabulate.data.frame <- function(data,
+                                    variables,
+                                    by = dplyr::group_vars(data),
+                                    strata = NULL,
+                                    statistic = everything() ~ c("n", "p", "N"),
+                                    value = NULL,
+                                    denominator = "column",
+                                    fmt_fun = NULL,
+                                    stat_label = everything() ~ default_stat_labels(),
+                                    fmt_fn = deprecated(),
+                                    ...) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -125,8 +112,8 @@ ard_categorical.data.frame <- function(data,
   if (lifecycle::is_present(fmt_fn)) {
     lifecycle::deprecate_soft(
       when = "0.6.1",
-      what = "ard_categorical(fmt_fn)",
-      with = "ard_categorical(fmt_fun)"
+      what = "ard_tabulate(fmt_fn)",
+      with = "ard_tabulate(fmt_fun)"
     )
     fmt_fun <- fmt_fn
   }
@@ -149,17 +136,19 @@ ard_categorical.data.frame <- function(data,
     data[variables],
     statistic = statistic,
     stat_label = stat_label,
-    fmt_fun = fmt_fun
+    fmt_fun = fmt_fun,
+    value = value
   )
   fill_formula_selectors(
     data[variables],
-    statistic = formals(asNamespace("cards")[["ard_categorical.data.frame"]])[["statistic"]] |> eval()
+    statistic = formals(asNamespace("cards")[["ard_tabulate.data.frame"]])[["statistic"]] |> eval()
   )
   check_list_elements(
     x = statistic,
     predicate = \(x) is.character(x) && all(x %in% c("n", "p", "N", "n_cum", "p_cum")),
     error_msg = "Elements passed in the {.arg statistic} argument must be one or more of {.val {c('n', 'p', 'N', 'n_cum', 'p_cum')}}"
   )
+  .check_dichotomous_value(data, value)
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
@@ -217,9 +206,12 @@ ard_categorical.data.frame <- function(data,
         )
     )
 
+  # filter on passed dichotomous values ----------------------------------------
+  df_result_final <- .filter_dichotomous_value(df_result_final, value, variables)
+
   # merge in stat labels and format ARD for return -----------------------------
   df_result_final |>
-    dplyr::mutate(context = "categorical") |>
+    dplyr::mutate(context = ifelse(.data$variable %in% names(value), "tabulate_value", "tabulate")) |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card()
@@ -232,7 +224,7 @@ ard_categorical.data.frame <- function(data,
 #' `statistic = list(variable_name = list(tabulation=c("n", "N", "p")))`
 #' argument, and returns the tabulations in an ARD structure.
 #'
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #' @return an ARD data frame of class 'card'
 #' @keywords internal
 #'
@@ -506,11 +498,11 @@ arrange_using_order <- function(data, columns) {
 
 #' Process `denominator` Argument
 #'
-#' Function takes the `ard_categorical(denominator)` argument and returns a
+#' Function takes the `ard_tabulate(denominator)` argument and returns a
 #' structured data frame that is merged with the count data and used as the
 #' denominator in percentage calculations.
 #'
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #'
 #' @return a data frame
 #' @keywords internal
@@ -722,4 +714,114 @@ arrange_using_order <- function(data, columns) {
     ) |>
       cli::cli_abort(call = get_cli_abort_call())
   }
+}
+
+#' Perform Value Checks
+#'
+#' Check the validity of the values passed in `ard_tabulate(value)`.
+#'
+#' @param data (`data.frame`)\cr
+#'   a data frame
+#' @param value (named `list`)\cr
+#'   a named list
+#'
+#' @return returns invisible if check is successful, throws an error message if not.
+#' @keywords internal
+#'
+#' @examples
+#' cards:::.check_dichotomous_value(mtcars, list(cyl = 4))
+.check_dichotomous_value <- function(data, value) {
+  imap(
+    value,
+    function(value, column) {
+      accepted_values <- .unique_and_sorted(data[[column]])
+      if (length(value) != 1L || !value %in% accepted_values) {
+        message <- "Error in argument {.arg value} for variable {.val {column}}."
+        message <-
+          case_switch(
+            length(value) != 1L ~ c(message, "i" = "The value must be one of {.val {accepted_values}}."),
+            .default = c(message, "i" = "A value of {.val {value}} was passed, but must be one of {.val {accepted_values}}.")
+          )
+        if (length(value) == 1L) {
+          message <-
+            case_switch(
+              inherits(data[[column]], "factor") ~
+                c(message, i = "To summarize this value, use {.fun forcats::fct_expand} to add {.val {value}} as a level."),
+              .default = c(message, i = "To summarize this value, make the column a factor and include {.val {value}} as a level.")
+            )
+        }
+
+
+        cli::cli_abort(
+          message = message,
+          call = get_cli_abort_call()
+        )
+      }
+    }
+  ) |>
+    invisible()
+}
+
+
+#' Filter ARD on values
+#'
+#' Helper function to filter a tabulation ARD on a specific variable value.
+#'
+#' @param x an ARD created with `ard_tabulate()`
+#' @param value named list where the name is a variable and the value is the value to retain.
+#' @param variables character vector of variable names
+#'
+#' @returns an ARD
+#' @noRd
+.filter_dichotomous_value <- function(x, value, variables) {
+  if (is_empty(value)) return(x) # styler: off
+
+  # update value object with the levels to keep
+  variables_no_value <- setdiff(variables, names(value))
+  if (!is_empty(variables_no_value)) {
+    value <-
+      c(
+        value,
+        dplyr::filter(x, .data$variable %in% .env$variables_no_value) |>
+          dplyr::distinct(!!!rlang::syms(c("variable", "variable_level"))) |>
+          tidyr::nest(variable_level = .data$variable_level) |>
+          dplyr::mutate(variable_level = map(.data$variable_level, unlist)) |>
+          deframe()
+      )
+  }
+
+  # filter ARD
+  x |>
+    dplyr::filter(
+      pmap(
+        list(.data$variable, .data$variable_level),
+        function(variable, variable_level) {
+          variable_level %in% .env$value[[variable]]
+        }
+      ) |>
+        unlist()
+    )
+}
+
+
+#' Case Switch
+#'
+#' A pipe-friendly version of a series of `if ()`, `if else ()`, and `else` statements.
+#'
+#' @param ... `formula`\cr
+#'  LHS is the predicate condition, and RHS is the returned value when RHS is `TRUE`
+#' @param .default the default value when no conditions in `...` are met.
+#'
+#' @returns an object
+#' @noRd
+case_switch <- function(..., .default = NULL) {
+  dots <- dots_list(...)
+
+  for (f in dots) {
+    if (isTRUE(eval(f_lhs(f), envir = attr(f, ".Environment")))) {
+      return(eval(f_rhs(f), envir = attr(f, ".Environment")))
+    }
+  }
+
+  return(.default)
 }

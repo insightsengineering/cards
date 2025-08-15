@@ -1,12 +1,12 @@
 # print_ard_conditions() works
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE))
+      print_ard_conditions(ard_summary(ADSL, variables = AGE))
 
 ---
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
+      print_ard_conditions(ard_summary(ADSL, variables = AGE, statistic = ~ list(
         mean = function(x) mean(x), mean_warning = function(x) {
           warning("warn1")
           warning("warn2")
@@ -22,8 +22,8 @@
 ---
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, by = ARM, statistic = ~
-         list(mean = function(x) mean(x), mean_warning = function(x) {
+      print_ard_conditions(ard_summary(ADSL, variables = AGE, by = ARM, statistic = ~
+        list(mean = function(x) mean(x), mean_warning = function(x) {
           warning("warn1")
           warning("warn2")
           mean(x)
@@ -44,8 +44,8 @@
 ---
 
     Code
-      print_ard_conditions(dplyr::mutate(ard_continuous(ADSL, variables = AGE),
-      error = list("repeated error")))
+      print_ard_conditions(dplyr::mutate(ard_summary(ADSL, variables = AGE), error = list(
+        "repeated error")))
     Message
       The following errors were returned during `print_ard_conditions()`:
       x For variable `AGE` and "N", "mean", "sd", "median", "p25", "p75", "min", and "max" statistics: repeated error
@@ -55,7 +55,7 @@
     Code
       tbl_summary <- (function() {
         set_cli_abort_call()
-        ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ list(err_fn = function(
+        ard <- ard_summary(ADSL, variables = AGE, statistic = ~ list(err_fn = function(
           x) stop("'tis an error")))
         print_ard_conditions(ard)
       })
@@ -67,7 +67,7 @@
 # print_ard_conditions(condition_type)
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
+      print_ard_conditions(ard_summary(ADSL, variables = AGE, statistic = ~ list(
         mean_warning = function(x) {
           warning("warn1")
           warning("warn2")
@@ -84,7 +84,7 @@
 ---
 
     Code
-      print_ard_conditions(ard_continuous(ADSL, variables = AGE, statistic = ~ list(
+      print_ard_conditions(ard_summary(ADSL, variables = AGE, statistic = ~ list(
         mean = function(x) mean(x), err_fn = function(x) stop("'tis an error"))),
       condition_type = "identity")
     Message
@@ -96,8 +96,8 @@
 # print_ard_conditions() no error when 'error'/'warning' columns not present
 
     Code
-      print_ard_conditions(dplyr::select(ard_continuous(ADSL, variables = AGE),
-      -warning, -error))
+      print_ard_conditions(dplyr::select(ard_summary(ADSL, variables = AGE), -warning,
+      -error))
 
 # print_ard_conditions() no error when factors are present
 

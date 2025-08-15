@@ -10,7 +10,7 @@ test_that("as_card() works", {
 })
 
 test_that("as_card() does not affect 'card' objects", {
-  my_ard <- ard_continuous(ADSL, by = "ARM", variables = "AGE")
+  my_ard <- ard_summary(ADSL, by = "ARM", variables = "AGE")
 
   expect_identical(
     my_ard |> as_card(),

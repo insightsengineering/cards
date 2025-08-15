@@ -422,7 +422,7 @@ internal_stack_hierarchical <- function(
     lst_results <-
       lst_results |>
       append(
-        ard_categorical(
+        ard_tabulate(
           data = denominator,
           variables = all_of(intersect(by, names(denominator)))
         ) |>

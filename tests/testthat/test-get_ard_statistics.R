@@ -1,5 +1,5 @@
 test_that("get_ard_statistics() works", {
-  ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+  ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
   expect_snapshot(
     get_ard_statistics(

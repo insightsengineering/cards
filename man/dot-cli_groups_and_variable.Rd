@@ -19,7 +19,7 @@ Prints a string of all \code{group##}/\code{group##_level} column values and
 using glue syntax.
 }
 \examples{
-ard <- ard_continuous(
+ard <- ard_summary(
   ADSL,
   by = ARM,
   variables = AGE,

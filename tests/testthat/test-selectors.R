@@ -1,5 +1,5 @@
 test_that("selectors work", {
-  ard_testing <- ard_categorical(ADSL, by = ARM, variables = AGE)
+  ard_testing <- ard_tabulate(ADSL, by = ARM, variables = AGE)
 
   expect_equal(
     ard_testing |>
@@ -44,7 +44,7 @@ test_that("selectors work", {
     suppressMessages(
       rep_len(list(mtcars[c("am", "vs")]), length.out = 11) |> dplyr::bind_cols()
     ) |>
-      ard_categorical(
+      ard_tabulate(
         variables = "vs...2",
         by = starts_with("am"),
         statistic = ~"n"
@@ -57,7 +57,7 @@ test_that("selectors work", {
 
   # all_ard_group_n() works
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       by = c(am, vs),
       variables = cyl
@@ -68,7 +68,7 @@ test_that("selectors work", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       by = c(am, vs),
       variables = cyl
@@ -81,8 +81,8 @@ test_that("selectors work", {
   # all_missing_columns() works
   expect_equal(
     bind_ard(
-      ard_categorical(mtcars, by = am, variables = cyl),
-      ard_categorical(mtcars, variables = vs)
+      ard_tabulate(mtcars, by = am, variables = cyl),
+      ard_tabulate(mtcars, variables = vs)
     ) |>
       dplyr::filter(variable == "vs") |>
       dplyr::select(all_missing_columns()) |>

@@ -42,6 +42,6 @@ cardx functions.
 ard_strata(
   ADSL,
   .by = ARM,
-  .f = ~ ard_continuous(.x, variables = AGE)
+  .f = ~ ard_summary(.x, variables = AGE)
 )
 }

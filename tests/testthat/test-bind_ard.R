@@ -1,5 +1,5 @@
 test_that("bind_ard() works", {
-  ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+  ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
   expect_error(
     bind_ard(ard, ard, .update = TRUE),
@@ -9,7 +9,7 @@ test_that("bind_ard() works", {
 
 
 test_that("ARD helpers messaging", {
-  ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+  ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
   expect_snapshot(
     bind_ard(ard, ard, .update = letters),
@@ -27,7 +27,7 @@ test_that("bind_ard() .order argument works", {
   withr::local_seed(1123)
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
+      ard_tabulate(ADSL, by = "ARM", variables = "SEX") %>%
         # randomly sort data
         {dplyr::slice(., sample.int(nrow(.)))}, # styler: off
       .order = TRUE
@@ -38,7 +38,7 @@ test_that("bind_ard() .order argument works", {
 
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = "ARM", variables = "SEX") %>%
+      ard_tabulate(ADSL, by = "ARM", variables = "SEX") %>%
         # randomly sort data
         {dplyr::slice(., sample.int(nrow(.)))}, # styler: off
       .order = FALSE
@@ -50,14 +50,14 @@ test_that("bind_ard() .order argument works", {
 
 test_that("bind_ard(.quiet)", {
   expect_silent(
-    ard_continuous(ADSL, variables = AGE) %>%
+    ard_summary(ADSL, variables = AGE) %>%
       {bind_ard(., ., .update = TRUE, .quiet = TRUE)} # styler: off
   )
 })
 
 test_that("bind_ard(.distinct)", {
   expect_snapshot(
-    ard_continuous(ADSL, variables = AGE) %>%
+    ard_summary(ADSL, variables = AGE) %>%
       {bind_ard(., ., .update = FALSE)} # styler: off
   )
 })

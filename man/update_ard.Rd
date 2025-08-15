@@ -58,13 +58,13 @@ exactly meet your needs, recall that an ARD is just a data frame and it
 can be modified directly.
 }
 \examples{
-ard_continuous(ADSL, variables = AGE) |>
+ard_summary(ADSL, variables = AGE) |>
   update_ard_fmt_fun(stat_names = c("mean", "sd"), fmt_fun = 8L) |>
   update_ard_stat_label(stat_names = c("mean", "sd"), stat_label = "Mean (SD)") |>
   apply_fmt_fun()
 
 # same as above, but only apply update to the Placebo level
-ard_continuous(
+ard_summary(
   ADSL,
   by = ARM,
   variables = AGE,

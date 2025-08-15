@@ -29,7 +29,7 @@ non-\code{NULL} value, e.g. \code{NA}.
 \examples{
 # the quantile functions error because the input is character, while the median function returns NA
 data.frame(x = rep_len(NA_character_, 10)) |>
-  ard_continuous(
+  ard_summary(
     variables = x,
     statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
   ) |>

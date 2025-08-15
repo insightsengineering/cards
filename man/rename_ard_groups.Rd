@@ -25,7 +25,7 @@ an ARD data frame of class 'card'
 Functions for renaming group columns names in ARDs.
 }
 \examples{
-ard <- ard_continuous(ADSL, by = c(SEX, ARM), variables = AGE)
+ard <- ard_summary(ADSL, by = c(SEX, ARM), variables = AGE)
 
 # Example 1 ----------------------------------
 rename_ard_groups_shift(ard, shift = -1)

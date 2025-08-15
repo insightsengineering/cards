@@ -1,13 +1,13 @@
 test_that("print_ard_conditions() works", {
   # nothing prints with no errors/warnings
   expect_snapshot(
-    ard_continuous(ADSL, variables = AGE) |>
+    ard_summary(ADSL, variables = AGE) |>
       print_ard_conditions()
   )
 
   # expected messaging without by variable
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGE,
       statistic = ~ list(
@@ -25,7 +25,7 @@ test_that("print_ard_conditions() works", {
 
   # expected messaging with by variable
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGE,
       by = ARM,
@@ -44,7 +44,7 @@ test_that("print_ard_conditions() works", {
 
   # expected messaging when the same error appears for all stats (consolidated correctly)
   expect_snapshot(
-    ard_continuous(ADSL, variables = AGE) |>
+    ard_summary(ADSL, variables = AGE) |>
       dplyr::mutate(error = list("repeated error")) |>
       print_ard_conditions()
   )
@@ -54,7 +54,7 @@ test_that("print_ard_conditions() works", {
     tbl_summary <- function() {
       set_cli_abort_call()
 
-      ard <- ard_continuous(
+      ard <- ard_summary(
         ADSL,
         variables = AGE,
         statistic = ~ list(err_fn = \(x) stop("'tis an error"))
@@ -69,7 +69,7 @@ test_that("print_ard_conditions() works", {
 test_that("print_ard_conditions(condition_type)", {
   # expected warnings as warnings
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGE,
       statistic = ~ list(mean_warning = \(x) {
@@ -84,7 +84,7 @@ test_that("print_ard_conditions(condition_type)", {
   # expected warnings as warnings
   expect_snapshot(
     error = TRUE,
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGE,
       statistic = ~ list(
@@ -98,7 +98,7 @@ test_that("print_ard_conditions(condition_type)", {
 
 test_that("print_ard_conditions() no error when 'error'/'warning' columns not present", {
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGE
     ) |>
@@ -136,7 +136,7 @@ test_that("print_ard_conditions() no error when factors are present", {
 # See issue #309
 test_that("print_ard_conditions() works when curly brackets appear in condition message", {
   # add a warning message that has curly brackets in it
-  ard <- ard_continuous(ADSL, variables = AGE, statistic = ~ continuous_summary_fns("mean")) |>
+  ard <- ard_summary(ADSL, variables = AGE, statistic = ~ continuous_summary_fns("mean")) |>
     dplyr::mutate(
       warning = list("warning with {curly} brackets"),
       error = list("error with {curly} brackets")

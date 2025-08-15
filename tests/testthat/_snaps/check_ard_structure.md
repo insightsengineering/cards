@@ -1,7 +1,7 @@
 # check_ard_structure() works
 
     Code
-      check_ard_structure(structure(dplyr::select(dplyr::mutate(ard_continuous(ADSL,
+      check_ard_structure(structure(dplyr::select(dplyr::mutate(ard_summary(ADSL,
         variables = "AGE"), stat = unlist(stat)), -error), class = "data.frame"))
     Message
       Object is not of class <card>.

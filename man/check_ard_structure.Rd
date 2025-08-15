@@ -24,7 +24,7 @@ Function tests the structure and returns notes when object does not
 conform to expected structure.
 }
 \examples{
-ard_continuous(ADSL, variables = "AGE") |>
+ard_summary(ADSL, variables = "AGE") |>
   dplyr::select(-warning, -error) |>
   check_ard_structure()
 }

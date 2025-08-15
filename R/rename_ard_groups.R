@@ -12,7 +12,7 @@
 #' @name rename_ard_groups
 #'
 #' @examples
-#' ard <- ard_continuous(ADSL, by = c(SEX, ARM), variables = AGE)
+#' ard <- ard_summary(ADSL, by = c(SEX, ARM), variables = AGE)
 #'
 #' # Example 1 ----------------------------------
 #' rename_ard_groups_shift(ard, shift = -1)

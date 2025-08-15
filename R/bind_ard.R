@@ -31,7 +31,7 @@
 #' @export
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .quiet = FALSE) {

@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' ard_continuous(ADSL, variables = "AGE") |>
+#' ard_summary(ADSL, variables = "AGE") |>
 #'   dplyr::select(-warning, -error) |>
 #'   check_ard_structure()
 check_ard_structure <- function(x, column_order = TRUE, method = TRUE) {

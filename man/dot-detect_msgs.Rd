@@ -18,7 +18,7 @@ Function looks for non-null contents in requested columns and notifies user
 before removal. Specifically used for detecting messages.
 }
 \examples{
-ard <- ard_continuous(
+ard <- ard_summary(
   ADSL,
   by = ARM,
   variables = AGE,

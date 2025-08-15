@@ -1,12 +1,12 @@
 test_that("add_calculated_row(x)", {
   expect_snapshot(
-    ard_continuous(mtcars, variables = mpg) |>
+    ard_summary(mtcars, variables = mpg) |>
       add_calculated_row(expr = max - min, stat_name = "range") |>
       apply_fmt_fun()
   )
 
   expect_snapshot(
-    ard_continuous(mtcars, variables = mpg) |>
+    ard_summary(mtcars, variables = mpg) |>
       add_calculated_row(
         expr =
           dplyr::case_when(
@@ -23,7 +23,7 @@ test_that("add_calculated_row(x)", {
 
 test_that("add_calculated_row(expr) messaging", {
   expect_snapshot(
-    ard_continuous(mtcars, variables = mpg) |>
+    ard_summary(mtcars, variables = mpg) |>
       add_calculated_row(expr = not_a_stat * 2, stat_name = "this_doesnt_work"),
     error = TRUE
   )
@@ -31,7 +31,7 @@ test_that("add_calculated_row(expr) messaging", {
 
 test_that("add_calculated_row(by) messaging", {
   expect_snapshot(
-    ard_continuous(mtcars, variables = mpg, by = cyl) |>
+    ard_summary(mtcars, variables = mpg, by = cyl) |>
       add_calculated_row(expr = max - min, stat_name = "range", by = "context"),
     error = TRUE
   )

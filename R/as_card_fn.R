@@ -1,7 +1,7 @@
 #' As card function
 #'
 #' Add attributes to a function that specify the expected results.
-#' It is used when `ard_continuous()` or `ard_complex()` errors and constructs
+#' It is used when `ard_summary()` or `ard_mvsummary()` errors and constructs
 #' an ARD with the correct structure when the results cannot be calculated.
 #'
 #' @param f (`function`)\cr
@@ -19,7 +19,7 @@
 #'     \(x) t.test(x)[c("statistic", "p.value")],
 #'     stat_names = c("statistic", "p.value")
 #'   )
-#' ard_continuous(
+#' ard_summary(
 #'   mtcars,
 #'   variables = mpg,
 #'   statistic = ~ list(ttest = ttest_works)
@@ -35,7 +35,7 @@
 #'     },
 #'     stat_names = c("statistic", "p.value")
 #'   )
-#' ard_continuous(
+#' ard_summary(
 #'   mtcars,
 #'   variables = mpg,
 #'   statistic = ~ list(ttest = ttest_error)
@@ -43,7 +43,7 @@
 #'
 #' # if we don't use `as_card_fn()` and there is an error,
 #' #   the returned result is only one row
-#' ard_continuous(
+#' ard_summary(
 #'   mtcars,
 #'   variables = mpg,
 #'   statistic = ~ list(ttest = \(x) {

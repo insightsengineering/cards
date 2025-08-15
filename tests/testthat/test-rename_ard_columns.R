@@ -1,7 +1,7 @@
 test_that("rename_ard_columns(columns)", {
   expect_equal(
     ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
+      ard_tabulate(by = ARM, variables = AGEGR1) |>
       rename_ard_columns() %>%
       `[`(1:2) |>
       names(),
@@ -13,7 +13,7 @@ test_that("rename_ard_columns(columns)", {
     ard_stack <-
       ard_stack(
         ADSL,
-        ard_categorical(variables = AGEGR1),
+        ard_tabulate(variables = AGEGR1),
         .by = ARM
       ) |>
       rename_ard_columns()
@@ -24,7 +24,7 @@ test_that("rename_ard_columns(columns)", {
     ard_stack |>
       dplyr::filter(is.na(AGEGR1)) |>
       dplyr::select(-AGEGR1),
-    ard_categorical(ADSL, variables = ARM) |>
+    ard_tabulate(ADSL, variables = ARM) |>
       rename_ard_columns()
   )
 })
@@ -33,7 +33,7 @@ test_that("rename_ard_columns(columns) messsaging", {
   expect_snapshot(
     error = TRUE,
     ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
+      ard_tabulate(by = ARM, variables = AGEGR1) |>
       rename_ard_columns(columns = all_ard_groups())
   )
 
@@ -41,7 +41,7 @@ test_that("rename_ard_columns(columns) messsaging", {
     error = TRUE,
     ADSL |>
       dplyr::rename(stat = AGEGR1) |>
-      ard_categorical(by = ARM, variables = stat) |>
+      ard_tabulate(by = ARM, variables = stat) |>
       rename_ard_columns()
   )
 })
@@ -49,7 +49,7 @@ test_that("rename_ard_columns(columns) messsaging", {
 test_that("rename_ard_columns(unlist) lifecycle", {
   lifecycle::expect_deprecated(
     ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
+      ard_tabulate(by = ARM, variables = AGEGR1) |>
       rename_ard_columns(unlist = "stat")
   )
 })

@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' # passing a character variable for numeric summary
-#' ard_continuous(ADSL, variables = AGEGR1) |>
+#' ard_summary(ADSL, variables = AGEGR1) |>
 #'   print_ard_conditions()
 print_ard_conditions <- function(x, condition_type = c("inform", "identity")) {
   # check inputs ---------------------------------------------------------------
@@ -43,7 +43,7 @@ print_ard_conditions <- function(x, condition_type = c("inform", "identity")) {
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_continuous(
+#' ard <- ard_summary(
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE
@@ -150,7 +150,7 @@ print_ard_conditions <- function(x, condition_type = c("inform", "identity")) {
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_continuous(
+#' ard <- ard_summary(
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,

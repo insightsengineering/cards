@@ -64,8 +64,8 @@ by variable will also be returned.
 \examples{
 ard_stack(
   data = ADSL,
-  ard_categorical(variables = "AGEGR1"),
-  ard_continuous(variables = "AGE"),
+  ard_tabulate(variables = "AGEGR1"),
+  ard_summary(variables = "AGE"),
   .by = "ARM",
   .overall = TRUE,
   .attributes = TRUE
@@ -73,8 +73,8 @@ ard_stack(
 
 ard_stack(
   data = ADSL,
-  ard_categorical(variables = "AGEGR1"),
-  ard_continuous(variables = "AGE"),
+  ard_tabulate(variables = "AGEGR1"),
+  ard_summary(variables = "AGE"),
   .by = "ARM",
   .shuffle = TRUE
 )

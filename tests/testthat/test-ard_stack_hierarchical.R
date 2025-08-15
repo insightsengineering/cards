@@ -488,7 +488,7 @@ test_that("ard_stack_hierarchical_count(denominator) univariate tabulations", {
       ) |>
       dplyr::filter(variable == "TRTA") |>
       dplyr::select(-all_missing_columns()),
-    ard_categorical(ADSL, variables = TRTA) |>
+    ard_tabulate(ADSL, variables = TRTA) |>
       dplyr::select(-all_missing_columns()),
     ignore_attr = TRUE
   )
@@ -503,7 +503,7 @@ test_that("ard_stack_hierarchical_count(denominator) univariate tabulations", {
       ) |>
       dplyr::filter(variable == "TRTA") |>
       dplyr::select(-all_missing_columns()),
-    ard_categorical(ADSL, variables = TRTA) |>
+    ard_tabulate(ADSL, variables = TRTA) |>
       dplyr::select(-all_missing_columns()),
     ignore_attr = TRUE
   )
@@ -705,7 +705,7 @@ test_that("ard_stack_hierarchical() by_stats argument", {
 
   expect_equal(
     ard |> dplyr::filter(variable == "TRTA") |> dplyr::select(-all_ard_groups()),
-    ard_categorical(
+    ard_tabulate(
       data = ADSL,
       variables = TRTA
     ),

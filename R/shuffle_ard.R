@@ -18,8 +18,8 @@
 #'
 #' @examples
 #' bind_ard(
-#'   ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-#'   ard_categorical(ADSL, variables = "ARM")
+#'   ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+#'   ard_tabulate(ADSL, variables = "ARM")
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
@@ -110,8 +110,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @examples
 #' ard <- bind_ard(
-#'   ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-#'   ard_categorical(ADSL, variables = "ARM")
+#'   ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+#'   ard_tabulate(ADSL, variables = "ARM")
 #' ) |>
 #'   shuffle_ard(trim = FALSE)
 #'
@@ -139,7 +139,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_continuous(
+#' ard <- ard_summary(
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,

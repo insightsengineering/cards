@@ -17,7 +17,7 @@ test_that("tidy_ard_column_order() works", {
       x10 = sample(LETTERS[19:20], 30, replace = TRUE),
       dummy = 1L
     ) |>
-      ard_categorical(
+      ard_tabulate(
         variables = "dummy",
         strata = x1:x10,
         statistic = everything() ~ "n"

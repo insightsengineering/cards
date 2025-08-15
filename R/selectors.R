@@ -23,7 +23,7 @@
 #' @name selectors
 #'
 #' @examples
-#' ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+#' ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 #'
 #' ard |> dplyr::select(all_ard_groups())
 #' ard |> dplyr::select(all_ard_variables())

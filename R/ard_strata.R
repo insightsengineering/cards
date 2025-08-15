@@ -32,7 +32,7 @@
 #' ard_strata(
 #'   ADSL,
 #'   .by = ARM,
-#'   .f = ~ ard_continuous(.x, variables = AGE)
+#'   .f = ~ ard_summary(.x, variables = AGE)
 #' )
 ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   set_cli_abort_call()

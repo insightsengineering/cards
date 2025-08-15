@@ -23,8 +23,8 @@
 #' # order columns
 #' ard <-
 #'   dplyr::bind_rows(
-#'     ard_continuous(mtcars, variables = "mpg"),
-#'     ard_continuous(mtcars, variables = "mpg", by = "cyl")
+#'     ard_summary(mtcars, variables = "mpg"),
+#'     ard_summary(mtcars, variables = "mpg", by = "cyl")
 #'   )
 #'
 #' tidy_ard_column_order(ard) |>

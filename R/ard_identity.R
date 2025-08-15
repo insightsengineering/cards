@@ -30,7 +30,7 @@ ard_identity <- function(x, variable, context = "identity") {
 
   # build data frame for calculation -------------------------------------------
   dplyr::tibble("{variable}" := TRUE) |>
-    ard_continuous(
+    ard_summary(
       variables = all_of(variable),
       statistic = everything() ~ list(identity = \(xxx) x)
     ) |>
