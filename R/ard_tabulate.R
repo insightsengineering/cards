@@ -762,6 +762,17 @@ arrange_using_order <- function(data, columns) {
     invisible()
 }
 
+
+#' Filter ARD on values
+#'
+#' Helper function to filter a tabulation ARD on a specific variable value.
+#'
+#' @param x an ARD created with `ard_tabulate()`
+#' @param value named list where the name is a variable and the value is the value to retain.
+#' @param variables character vector of variable names
+#'
+#' @returns an ARD
+#' @noRd
 .filter_dichotomous_value <- function(x, value, variables) {
   if (is_empty(value)) return(x) # styler: off
 
@@ -792,6 +803,17 @@ arrange_using_order <- function(data, columns) {
     )
 }
 
+
+#' Case Switch
+#'
+#' A pipe-friendly version of a series of `if ()`, `if else ()`, and `else` statements.
+#'
+#' @param ... `formula`\cr
+#'  LHS is the predicate condition, and RHS is the returned value when RHS is `TRUE`
+#' @param .default the default value when no conditions in `...` are met.
+#'
+#' @returns an object
+#' @noRd
 case_switch <- function(..., .default = NULL) {
   dots <- dots_list(...)
 
