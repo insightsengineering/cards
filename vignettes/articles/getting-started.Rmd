@@ -96,12 +96,12 @@ df_categorical_ard |> head(5)
 
 #### Dichotomous Summaries
 
-To get the dichotomous variable summary, we will use `ard_tabulate(value)`.
+To get the dichotomous variable summary, we will use `ard_tabulate_value()`.
 In this case, we want to show the Female (`"F"`) level of the `SEX` variable and specify this with the `values` argument.
 
 ```{r}
 df_dichotomous_ard <-
-  ard_tabulate(
+  ard_tabulate_value(
     ADSL,
     by = ARM,
     variables = SEX,
@@ -146,7 +146,7 @@ ard_stack(
     ))
   ),
   ard_tabulate(variables = AGEGR1),
-  ard_tabulate(variables = SEX, value = list(SEX = "F"))
+  ard_tabulate_value(variables = SEX, value = list(SEX = "F"))
 )
 ```
 

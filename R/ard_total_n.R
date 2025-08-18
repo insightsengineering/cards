@@ -31,7 +31,7 @@ ard_total_n.data.frame <- function(data, ...) {
   # calculate total N ----------------------------------------------------------
   data |>
     dplyr::mutate(..ard_total_n.. = TRUE) |>
-    ard_tabulate(
+    ard_tabulate_value(
       variables = "..ard_total_n..",
       statistic = list(..ard_total_n.. = "N"),
       value = list(..ard_total_n.. = TRUE)
