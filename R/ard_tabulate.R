@@ -1,4 +1,4 @@
-#' Tabulate ARD Statistics
+#' Tabulate ARD
 #'
 #' Compute Analysis Results Data (ARD) for categorical summary statistics.
 #'

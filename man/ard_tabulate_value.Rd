@@ -3,7 +3,7 @@
 \name{ard_tabulate_value}
 \alias{ard_tabulate_value}
 \alias{ard_tabulate_value.data.frame}
-\title{Tabulate Value ARD Statistics}
+\title{Tabulate Value ARD}
 \usage{
 ard_tabulate_value(data, ...)
 
@@ -73,7 +73,7 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 an ARD data frame of class 'card'
 }
 \description{
-Compute Analysis Results Data (ARD) for dichotomous summary statistics.
+Tabulate an Analysis Results Data (ARD) for dichotomous or a specified value.
 }
 \section{Denominators}{
 

@@ -1,6 +1,6 @@
-#' Tabulate Value ARD Statistics
+#' Tabulate Value ARD
 #'
-#' Compute Analysis Results Data (ARD) for dichotomous summary statistics.
+#' Tabulate an Analysis Results Data (ARD) for dichotomous or a specified value.
 #'
 #' @inheritParams ard_tabulate
 #' @param value (named `list`)\cr

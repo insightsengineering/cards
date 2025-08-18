@@ -3,7 +3,7 @@
 \name{ard_tabulate}
 \alias{ard_tabulate}
 \alias{ard_tabulate.data.frame}
-\title{Tabulate ARD Statistics}
+\title{Tabulate ARD}
 \usage{
 ard_tabulate(data, ...)
 
