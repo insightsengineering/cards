@@ -30,12 +30,7 @@ ard_dichotomous(data, ...)
 
 \method{ard_complex}{data.frame}(data, ...)
 
-\method{ard_dichotomous}{data.frame}(
-  data,
-  variables,
-  value = maximum_variable_value(data[variables]),
-  ...
-)
+\method{ard_dichotomous}{data.frame}(data, ...)
 
 apply_fmt_fn(...)
 

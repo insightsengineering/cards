@@ -78,20 +78,8 @@ ard_complex.data.frame <- function(data, ...) {
 
 #' @rdname deprecated
 #' @export
-ard_dichotomous.data.frame <- function(data, variables, value = maximum_variable_value(data[variables]), ...) {
-  cards::process_selectors(data, variables = {{ variables }})
-  cards::process_formula_selectors(data[variables], value = value)
-  fill_formula_selectors(
-    data[variables],
-    value = formals(asNamespace("cards")[["ard_dichotomous.data.frame"]])[["value"]] |> eval()
-  )
-
-  ard_tabulate(
-    data = data,
-    variables = {{ variables }},
-    value = value,
-    ...
-  ) |>
+ard_dichotomous.data.frame <- function(data, ...) {
+  ard_tabulate_value(data = data, ...) |>
     dplyr::mutate(context = "dichotomous")
 }
 

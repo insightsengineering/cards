@@ -5,7 +5,7 @@ test_that("ard_stack() works", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1)
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ),
     NA
   )
@@ -14,7 +14,7 @@ test_that("ard_stack() works", {
     ard1,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "cyl"),
       .order = TRUE
     ),
@@ -29,7 +29,7 @@ test_that("ard_stack() works", {
       data = mtcars,
       .by = cyl,
       ard_summary(variables = mpg),
-      ard_tabulate(variables = vs, value = vs ~ 1)
+      ard_tabulate_value(variables = vs, value = vs ~ 1)
     ),
     ignore_function_env = TRUE,
     ignore_attr = TRUE
@@ -46,7 +46,7 @@ test_that("ard_stack() works", {
       data = mtcars2,
       .by = all_of(by),
       ard_summary(variables = all_of(var_cont)),
-      ard_tabulate(variables = all_of(var_cat), , value = all_of(var_cat) ~ 1)
+      ard_tabulate_value(variables = all_of(var_cat), , value = all_of(var_cat) ~ 1)
     )
   )
 
@@ -56,14 +56,14 @@ test_that("ard_stack() works", {
       data = mtcars,
       .by = NULL,
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1)
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ),
     NA
   )
 
   ard_match <- bind_ard(
     ard_summary(data = mtcars, variables = "mpg"),
-    ard_tabulate(data = mtcars, variables = "vs", value = vs ~ 1),
+    ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
     .order = TRUE
   )
   attr(ard_match, "args") <- list(
@@ -81,7 +81,7 @@ test_that("ard_stack() works", {
     ard_stack(
       data = mtcars2,
       ard_summary(variables = all_of(var_cont)),
-      ard_tabulate(variables = all_of(var_cat), value = all_of(var_cat) ~ 1)
+      ard_tabulate_value(variables = all_of(var_cat), value = all_of(var_cat) ~ 1)
     )
   )
 })
@@ -92,7 +92,7 @@ test_that("ard_stack() adding overalls", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .overall = TRUE
     ),
     NA
@@ -100,9 +100,9 @@ test_that("ard_stack() adding overalls", {
 
   ard_match <- bind_ard(
     ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-    ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+    ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
     ard_summary(data = mtcars, variables = "mpg"),
-    ard_tabulate(data = mtcars, variables = "vs", value = vs ~ 1),
+    ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
     ard_tabulate(data = mtcars, variables = "cyl"),
     .update = TRUE,
     .order = TRUE
@@ -124,7 +124,7 @@ test_that("ard_stack() adding missing/attributes", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .missing = TRUE,
       .attributes = TRUE
     ),
@@ -135,7 +135,7 @@ test_that("ard_stack() adding missing/attributes", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
       ard_tabulate(data = mtcars, variables = "cyl"),
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
@@ -151,7 +151,7 @@ test_that("ard_stack() adding missing/attributes", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .missing = TRUE,
       .overall = TRUE,
       .attributes = TRUE
@@ -163,10 +163,10 @@ test_that("ard_stack() adding missing/attributes", {
     ard_test_overall,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
       ard_summary(data = mtcars, variables = "mpg"),
-      ard_tabulate(data = mtcars, variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "cyl"),
       ard_missing(data = mtcars, variables = c("mpg", "vs")),
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
@@ -187,7 +187,7 @@ test_that("ard_stack() .shuffle argument", {
         data = mtcars,
         .by = "cyl",
         ard_summary(variables = "mpg"),
-        ard_tabulate(variables = "vs", value = vs ~ 1),
+        ard_tabulate_value(variables = "vs", value = vs ~ 1),
         .shuffle = TRUE
       ),
       "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
@@ -199,7 +199,7 @@ test_that("ard_stack() .shuffle argument", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "cyl"),
       .order = TRUE
     ) |>
@@ -217,7 +217,7 @@ test_that("ard_stack() .shuffle argument", {
         data = mtcars,
         .by = "cyl",
         ard_summary(variables = "mpg"),
-        ard_tabulate(variables = "vs", value = vs ~ 1),
+        ard_tabulate_value(variables = "vs", value = vs ~ 1),
         .shuffle = TRUE,
         .overall = TRUE
       ),
@@ -230,9 +230,9 @@ test_that("ard_stack() .shuffle argument", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_summary(data = mtcars, variables = "mpg"),
-      ard_tabulate(data = mtcars, variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "cyl")
     ) |>
       shuffle_ard(),
@@ -309,7 +309,7 @@ test_that("ard_stack() follows ard structure", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1)
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ) |>
       check_ard_structure(method = FALSE)
   )
@@ -353,7 +353,7 @@ test_that("ard_stack() .by_stats argument", {
       data = mtcars,
       .by = "cyl",
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = TRUE
     ),
     NA
@@ -363,7 +363,7 @@ test_that("ard_stack() .by_stats argument", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
@@ -377,7 +377,7 @@ test_that("ard_stack() .by_stats argument", {
       data = mtcars,
       .by = c("am", "cyl"),
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = TRUE
     ),
     NA
@@ -387,7 +387,7 @@ test_that("ard_stack() .by_stats argument", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, c("am", "cyl"), variables = "mpg"),
-      ard_tabulate(data = mtcars, c("am", "cyl"), variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, c("am", "cyl"), variables = "vs", value = vs ~ 1),
       ard_tabulate(data = mtcars, variables = "am"),
       ard_tabulate(data = mtcars, variables = "cyl"),
       .update = TRUE,
@@ -402,7 +402,7 @@ test_that("ard_stack() .by_stats argument", {
       data = mtcars,
       .by = c("am", "cyl"),
       ard_summary(variables = "mpg"),
-      ard_tabulate(variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = FALSE
     ),
     NA
@@ -412,7 +412,7 @@ test_that("ard_stack() .by_stats argument", {
     ard_test,
     bind_ard(
       ard_summary(data = mtcars, by = c("am", "cyl"), variables = "mpg"),
-      ard_tabulate(data = mtcars, by = c("am", "cyl"), variables = "vs", value = vs ~ 1),
+      ard_tabulate_value(data = mtcars, by = c("am", "cyl"), variables = "vs", value = vs ~ 1),
       .update = TRUE,
       .order = TRUE
     ),
