@@ -1,6 +1,6 @@
-test_that("ard_categorical() univariate", {
+test_that("ard_tabulate() univariate", {
   expect_error(
-    ard_cat_uni <- ard_categorical(mtcars, variables = "am"),
+    ard_cat_uni <- ard_tabulate(mtcars, variables = "am"),
     NA
   )
   expect_snapshot(class(ard_cat_uni))
@@ -27,7 +27,7 @@ test_that("ard_categorical() univariate", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = starts_with("xxxxx")
     ),
@@ -36,12 +36,12 @@ test_that("ard_categorical() univariate", {
 
   # works for ordered factors
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
       variables = cyl
     ) |>
       dplyr::select(stat_name, stat_label, stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
       variables = cyl
     ) |>
@@ -49,13 +49,13 @@ test_that("ard_categorical() univariate", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = TRUE)),
       by = vs,
       variables = cyl
     ) |>
       dplyr::select(stat_name, stat_label, stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars |> dplyr::mutate(cyl = factor(cyl, ordered = FALSE)),
       by = vs,
       variables = cyl
@@ -64,10 +64,10 @@ test_that("ard_categorical() univariate", {
   )
 })
 
-test_that("ard_categorical() univariate & specified denomiator", {
+test_that("ard_tabulate() univariate & specified denomiator", {
   expect_error(
     ard_cat_new_denom <-
-      ard_categorical(
+      ard_tabulate(
         mtcars,
         variables = "am",
         denominator = list(mtcars) |> rep_len(100) |> dplyr::bind_rows()
@@ -98,8 +98,8 @@ test_that("ard_categorical() univariate & specified denomiator", {
   )
 })
 
-test_that("ard_categorical(fmt_fun) argument works", {
-  ard_categorical(
+test_that("ard_tabulate(fmt_fun) argument works", {
+  ard_tabulate(
     mtcars,
     variables = "am",
     fmt_fun =
@@ -117,7 +117,7 @@ test_that("ard_categorical(fmt_fun) argument works", {
     as.data.frame() |>
     expect_snapshot()
 
-  ard_categorical(
+  ard_tabulate(
     mtcars,
     variables = c("am", "vs"),
     fmt_fun = list(
@@ -132,7 +132,7 @@ test_that("ard_categorical(fmt_fun) argument works", {
 })
 
 
-test_that("ard_categorical() with strata and by arguments", {
+test_that("ard_tabulate() with strata and by arguments", {
   ADAE_small <-
     ADAE |>
     dplyr::filter(AESOC %in% c("EYE DISORDERS", "INVESTIGATIONS")) |>
@@ -140,7 +140,7 @@ test_that("ard_categorical() with strata and by arguments", {
 
   expect_error(
     card_ae_strata <-
-      ard_categorical(
+      ard_tabulate(
         data = ADAE_small,
         strata = c(AESOC, AELLT),
         by = TRTA,
@@ -219,7 +219,7 @@ test_that("ard_categorical() with strata and by arguments", {
   # check for messaging about missing by/strata combos in denominator arg
   expect_snapshot(
     error = TRUE,
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       by = "ARM",
       variables = "AGEGR1",
@@ -237,15 +237,15 @@ test_that("ard_categorical() with strata and by arguments", {
           length.out = dplyr::n()
         )
       ) |>
-      ard_categorical(variables = trt, by = Species)
+      ard_tabulate(variables = trt, by = Species)
   )
   expect_s3_class(ard_sort_test$group1_level[[1]], "factor")
 })
 
-test_that("ard_categorical(stat_label) argument works", {
+test_that("ard_tabulate(stat_label) argument works", {
   # formula
   expect_snapshot(
-    ard_categorical(
+    ard_tabulate(
       data = ADSL,
       by = "ARM",
       variables = c("AGEGR1", "SEX"),
@@ -259,7 +259,7 @@ test_that("ard_categorical(stat_label) argument works", {
 
   # list
   expect_snapshot(
-    ard_categorical(
+    ard_tabulate(
       data = ADSL,
       by = "ARM",
       variables = c("AGEGR1", "SEX"),
@@ -273,7 +273,7 @@ test_that("ard_categorical(stat_label) argument works", {
 
   # variable-specific
   expect_snapshot(
-    ard_categorical(
+    ard_tabulate(
       data = ADSL,
       by = "ARM",
       variables = c("AGEGR1", "SEX"),
@@ -287,9 +287,9 @@ test_that("ard_categorical(stat_label) argument works", {
 })
 
 
-test_that("ard_categorical(denominator='cell') works", {
+test_that("ard_tabulate(denominator='cell') works", {
   expect_error(
-    ard_crosstab <- ard_categorical(
+    ard_crosstab <- ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       by = "ARM",
@@ -333,7 +333,7 @@ test_that("ard_categorical(denominator='cell') works", {
       letters = letters[1:2]
     )
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variables = c(all_na_lgl, all_na_fct),
       statistic = ~ c("n", "N"),
@@ -345,7 +345,7 @@ test_that("ard_categorical(denominator='cell') works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variables = c(all_na_lgl, all_na_fct),
       by = letters,
@@ -358,10 +358,10 @@ test_that("ard_categorical(denominator='cell') works", {
   )
 })
 
-test_that("ard_categorical(denominator='row') works", {
+test_that("ard_tabulate(denominator='row') works", {
   withr::local_options(list(width = 120))
   expect_error(
-    ard_crosstab_row <- ard_categorical(
+    ard_crosstab_row <- ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       by = "ARM",
@@ -438,7 +438,7 @@ test_that("ard_categorical(denominator='row') works", {
   # testing the arguments work properly
   expect_error(
     ard_with_args <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         by = "ARM",
@@ -459,7 +459,7 @@ test_that("ard_categorical(denominator='row') works", {
   # works with an all missing variable
   df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       statistic = ~ c("n", "N"),
@@ -471,7 +471,7 @@ test_that("ard_categorical(denominator='row') works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
@@ -484,23 +484,23 @@ test_that("ard_categorical(denominator='row') works", {
   )
 })
 
-test_that("ard_categorical(denominator='column') works", {
+test_that("ard_tabulate(denominator='column') works", {
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       by = "ARM",
       denominator = "column"
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat),
-    ard_categorical(ADSL, variables = "AGEGR1", by = "ARM") |>
+    ard_tabulate(ADSL, variables = "AGEGR1", by = "ARM") |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat_name, stat)
   )
 
   # works with an all missing variable
   df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       statistic = ~ c("n", "N"),
@@ -512,7 +512,7 @@ test_that("ard_categorical(denominator='column') works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
@@ -527,7 +527,7 @@ test_that("ard_categorical(denominator='column') works", {
   # works with an all missing variable
   df_missing <- dplyr::tibble(all_na_lgl = c(NA, NA), letters = letters[1:2])
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       statistic = ~ c("n", "N"),
@@ -539,7 +539,7 @@ test_that("ard_categorical(denominator='column') works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = df_missing,
       variable = all_na_lgl,
       by = letters,
@@ -552,18 +552,18 @@ test_that("ard_categorical(denominator='column') works", {
   )
 })
 
-test_that("ard_categorical(denominator=integer()) works", {
+test_that("ard_tabulate(denominator=integer()) works", {
   expect_equal(
-    ard_categorical(ADSL, variables = AGEGR1, denominator = 1000) |>
+    ard_tabulate(ADSL, variables = AGEGR1, denominator = 1000) |>
       get_ard_statistics(variable_level %in% "<65", .attributes = NULL),
     list(n = 33, N = 1000, p = 33 / 1000)
   )
 })
 
-test_that("ard_categorical(denominator=<data frame with counts>) works", {
+test_that("ard_tabulate(denominator=<data frame with counts>) works", {
   expect_snapshot(
     error = TRUE,
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       by = ARM,
       variables = AGEGR1,
@@ -581,7 +581,7 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
 
   expect_snapshot(
     error = TRUE,
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       by = ARM,
       variables = AGEGR1,
@@ -590,7 +590,7 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       by = ARM,
       variables = AGEGR1,
@@ -600,7 +600,7 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
       )
     ) |>
       dplyr::select(-fmt_fun),
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       by = ARM,
       variables = AGEGR1
@@ -609,11 +609,11 @@ test_that("ard_categorical(denominator=<data frame with counts>) works", {
   )
 })
 
-test_that("ard_categorical(denominator=<data frame without counts>) works", {
+test_that("ard_tabulate(denominator=<data frame without counts>) works", {
   expect_equal(
     ADSL |>
       dplyr::mutate(AGEGR1 = NA) |>
-      ard_categorical(
+      ard_tabulate(
         variables = AGEGR1,
         statistic = ~ c("n", "p"),
         denominator = rep_len(list(ADSL), 10L) |> dplyr::bind_rows()
@@ -627,7 +627,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
   expect_equal(
     ADSL |>
       dplyr::mutate(AGEGR1 = NA) |>
-      ard_categorical(
+      ard_tabulate(
         variables = AGEGR1,
         by = ARM,
         statistic = ~ c("n", "p"),
@@ -640,7 +640,7 @@ test_that("ard_categorical(denominator=<data frame without counts>) works", {
   )
 })
 
-test_that("ard_categorical() and ARD column names", {
+test_that("ard_tabulate() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
     "context", "stat_name", "stat_label", "stat",
@@ -655,7 +655,7 @@ test_that("ard_categorical() and ARD column names", {
         function(var) {
           df <- mtcars[c("am", "cyl")]
           names(df) <- c("am", var)
-          ard_categorical(
+          ard_tabulate(
             data = df,
             by = "am",
             variables = all_of(var)
@@ -674,7 +674,7 @@ test_that("ard_categorical() and ARD column names", {
         function(byvar) {
           df <- mtcars[c("am", "cyl")]
           names(df) <- c(byvar, "cyl")
-          ard_continuous(
+          ard_summary(
             data = df,
             by = all_of(byvar),
             variables = "cyl"
@@ -686,70 +686,70 @@ test_that("ard_categorical() and ARD column names", {
   )
 })
 
-test_that("ard_categorical() with grouped data works", {
+test_that("ard_tabulate() with grouped data works", {
   expect_equal(
     ADSL |>
       dplyr::group_by(ARM) |>
-      ard_categorical(variables = AGEGR1),
-    ard_categorical(data = ADSL, by = "ARM", variables = "AGEGR1")
+      ard_tabulate(variables = AGEGR1),
+    ard_tabulate(data = ADSL, by = "ARM", variables = "AGEGR1")
   )
 })
 
 
-test_that("ard_categorical() and all NA columns", {
+test_that("ard_tabulate() and all NA columns", {
   expect_snapshot(
     error = TRUE,
     ADSL |>
       dplyr::mutate(AGEGR1 = NA_character_) |>
-      ard_categorical(variables = AGEGR1)
+      ard_tabulate(variables = AGEGR1)
   )
 })
 
-test_that("ard_categorical() can handle non-syntactic column names", {
+test_that("ard_tabulate() can handle non-syntactic column names", {
   expect_equal(
     ADSL |>
       dplyr::mutate(`Age Group` = AGEGR1) |>
-      ard_categorical(variables = `Age Group`) |>
+      ard_tabulate(variables = `Age Group`) |>
       dplyr::select(stat),
     ADSL |>
-      ard_categorical(variables = AGEGR1) |>
+      ard_tabulate(variables = AGEGR1) |>
       dplyr::select(stat)
   )
 
   expect_equal(
     ADSL |>
       dplyr::mutate(`Age Group` = AGEGR1) |>
-      ard_categorical(variables = "Age Group") |>
+      ard_tabulate(variables = "Age Group") |>
       dplyr::select(stat, error),
     ADSL |>
-      ard_categorical(variables = AGEGR1) |>
+      ard_tabulate(variables = AGEGR1) |>
       dplyr::select(stat, error)
   )
 
   expect_equal(
     ADSL |>
       dplyr::mutate(`Arm Var` = ARM, `Age Group` = AGEGR1) |>
-      ard_categorical(by = `Arm Var`, variables = "Age Group") |>
+      ard_tabulate(by = `Arm Var`, variables = "Age Group") |>
       dplyr::select(stat, error),
     ADSL |>
-      ard_categorical(by = ARM, variables = AGEGR1) |>
+      ard_tabulate(by = ARM, variables = AGEGR1) |>
       dplyr::select(stat, error)
   )
 
   expect_equal(
     ADSL |>
       dplyr::mutate(`Arm Var` = ARM, `Age Group` = AGEGR1) |>
-      ard_categorical(strata = "Arm Var", variables = `Age Group`) |>
+      ard_tabulate(strata = "Arm Var", variables = `Age Group`) |>
       dplyr::select(stat, error),
     ADSL |>
-      ard_categorical(strata = ARM, variables = AGEGR1) |>
+      ard_tabulate(strata = ARM, variables = AGEGR1) |>
       dplyr::select(stat, error)
   )
 })
 
-test_that("ard_categorical(strata) returns results in proper order", {
+test_that("ard_tabulate(strata) returns results in proper order", {
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       ADAE |>
         dplyr::arrange(AESEV != "SEVERE") |> # put SEVERE at the top
         dplyr::mutate(
@@ -769,7 +769,7 @@ test_that("ard_categorical(strata) returns results in proper order", {
   )
 })
 
-test_that("ard_categorical(by) messages about protected names", {
+test_that("ard_tabulate(by) messages about protected names", {
   mtcars2 <- mtcars |>
     dplyr::mutate(
       variable = am,
@@ -780,17 +780,17 @@ test_that("ard_categorical(by) messages about protected names", {
 
   expect_snapshot(
     error = TRUE,
-    ard_categorical(mtcars2, by = variable, variables = gear)
+    ard_tabulate(mtcars2, by = variable, variables = gear)
   )
 
   expect_error(
-    ard_categorical(mtcars2, by = variable_level, variables = gear),
+    ard_tabulate(mtcars2, by = variable_level, variables = gear),
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })
 
 # - test if function parameters can be used as variable names without error
-test_that("ard_categorical() works when using generic names ", {
+test_that("ard_tabulate() works when using generic names ", {
   # rename some variables
   mtcars2 <- mtcars %>%
     dplyr::rename(
@@ -801,14 +801,14 @@ test_that("ard_categorical() works when using generic names ", {
     )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, cyl),
       by = disp,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(variable, variable_level),
       by = by,
@@ -818,14 +818,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(cyl, am),
       by = gear,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(variable_level, variable),
       by = group1_level,
@@ -835,14 +835,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(gear, am),
       by = disp,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(group1_level, variable),
       by = by,
@@ -856,14 +856,14 @@ test_that("ard_categorical() works when using generic names ", {
     dplyr::rename("N" = am, "p" = cyl, "name" = disp, "group1_level" = gear)
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, cyl),
       by = disp,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N, p),
       by = name,
@@ -873,14 +873,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(disp, gear),
       by = am,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(name, group1_level),
       by = N,
@@ -890,14 +890,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = gear,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N, name),
       by = group1_level,
@@ -907,14 +907,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = cyl,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N, name),
       by = p,
@@ -933,14 +933,14 @@ test_that("ard_categorical() works when using generic names ", {
     )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(gear, cyl),
       by = disp,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(n_unweighted, mean),
       by = p.std.error,
@@ -950,14 +950,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(gear, cyl),
       by = am,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(n_unweighted, mean),
       by = n,
@@ -967,14 +967,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = cyl,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(n, p.std.error),
       by = mean,
@@ -984,14 +984,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = gear,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(n, p.std.error),
       by = n_unweighted,
@@ -1010,14 +1010,14 @@ test_that("ard_categorical() works when using generic names ", {
     )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, cyl),
       by = disp,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N_unweighted, p_unweighted),
       by = column,
@@ -1027,14 +1027,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(disp, gear),
       by = am,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(column, row),
       by = N_unweighted,
@@ -1044,14 +1044,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = cyl,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N_unweighted, column),
       by = p_unweighted,
@@ -1061,14 +1061,14 @@ test_that("ard_categorical() works when using generic names ", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       mtcars,
       variables = c(am, disp),
       by = gear,
       denominator = "row"
     ) |>
       dplyr::select(stat),
-    ard_categorical(
+    ard_tabulate(
       mtcars2,
       variables = c(N_unweighted, column),
       by = row,
@@ -1078,7 +1078,7 @@ test_that("ard_categorical() works when using generic names ", {
   )
 })
 
-test_that("ard_categorical(by) messages about protected names", {
+test_that("ard_tabulate(by) messages about protected names", {
   mtcars2 <- mtcars %>%
     dplyr::rename(
       "variable" = am,
@@ -1089,24 +1089,24 @@ test_that("ard_categorical(by) messages about protected names", {
 
   expect_snapshot(
     error = TRUE,
-    ard_categorical(mtcars2, by = variable, variables = by)
+    ard_tabulate(mtcars2, by = variable, variables = by)
   )
 
   expect_error(
-    ard_categorical(mtcars2, by = variable_level, variables = by),
+    ard_tabulate(mtcars2, by = variable_level, variables = by),
     'The `by` argument cannot include variables named "variable" and "variable_level".'
   )
 })
 
 
-test_that("ard_categorical() follows ard structure", {
+test_that("ard_tabulate() follows ard structure", {
   expect_silent(
-    ard_categorical(mtcars, variables = "am") |>
+    ard_tabulate(mtcars, variables = "am") |>
       check_ard_structure(method = FALSE)
   )
 })
 
-test_that("ard_categorical() with hms times", {
+test_that("ard_tabulate() with hms times", {
   # originally reported in https://github.com/ddsjoberg/gtsummary/issues/1893
   skip_if_not_installed("hms")
   withr::local_package("hms")
@@ -1115,11 +1115,11 @@ test_that("ard_categorical() with hms times", {
     ADSL |>
     dplyr::mutate(time_hms = hms(seconds = 15))
   expect_silent(
-    ard <- ard_categorical(ADSL2, by = ARM, variables = time_hms)
+    ard <- ard_tabulate(ADSL2, by = ARM, variables = time_hms)
   )
   expect_equal(
     ard$stat,
-    ard_categorical(
+    ard_tabulate(
       ADSL2 |> dplyr::mutate(time_hms = as.numeric(time_hms)),
       by = ARM,
       variables = time_hms
@@ -1127,13 +1127,13 @@ test_that("ard_categorical() with hms times", {
   )
 })
 
-test_that("ard_categorical() errors with incomplete factor columns", {
+test_that("ard_tabulate() errors with incomplete factor columns", {
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = character(0))) |>
-      ard_categorical(variables = am)
+      ard_tabulate(variables = am)
   )
 
   # Check error when factor has NA level
@@ -1141,15 +1141,15 @@ test_that("ard_categorical() errors with incomplete factor columns", {
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
-      ard_categorical(variables = am)
+      ard_tabulate(variables = am)
   )
 })
 
-test_that("ard_categorical(denominator='column') with cumulative counts", {
+test_that("ard_tabulate(denominator='column') with cumulative counts", {
   # check cumulative stats work without `by/strata`
   expect_silent(
     ard <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
@@ -1202,7 +1202,7 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # check cumulative stats work with `by`
   expect_silent(
     ard <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         by = ARM,
@@ -1234,7 +1234,7 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   # check with by & strata
   expect_silent(
     ard <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         by = ARM,
@@ -1274,12 +1274,12 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
 
   # function works when only `n_cum` requested
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       statistic = everything() ~ "n_cum"
     ),
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
@@ -1288,12 +1288,12 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   )
   # function works when only `p_cum` requested
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       statistic = everything() ~ "p_cum"
     ),
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
@@ -1302,11 +1302,11 @@ test_that("ard_categorical(denominator='column') with cumulative counts", {
   )
 })
 
-test_that("ard_categorical(denominator='row') with cumulative counts", {
+test_that("ard_tabulate(denominator='row') with cumulative counts", {
   # check cumulative stats work without `by/strata`
   expect_silent(
     ard <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         statistic = everything() ~ c("n", "p", "n_cum", "p_cum"),
@@ -1337,7 +1337,7 @@ test_that("ard_categorical(denominator='row') with cumulative counts", {
   # check cumulative stats work with `by`
   expect_silent(
     ard <-
-      ard_categorical(
+      ard_tabulate(
         ADSL,
         variables = "AGEGR1",
         by = SEX,
@@ -1368,11 +1368,11 @@ test_that("ard_categorical(denominator='row') with cumulative counts", {
   )
 })
 
-test_that("ard_categorical() with cumulative counts messaging", {
+test_that("ard_tabulate() with cumulative counts messaging", {
   # cumulative counts/percents only available when `denominator=c('column', 'row')`
   expect_snapshot(
     error = TRUE,
-    ard_categorical(
+    ard_tabulate(
       ADSL,
       variables = "AGEGR1",
       by = SEX,
@@ -1382,7 +1382,7 @@ test_that("ard_categorical() with cumulative counts messaging", {
   )
 })
 
-test_that("ard_categorical() ordering for multiple strata", {
+test_that("ard_tabulate() ordering for multiple strata", {
   adae_mini <- ADAE |>
     dplyr::select(USUBJID, TRTA, AESOC, AEDECOD) |>
     dplyr::filter(AESOC %in% unique(AESOC)[1:4]) |>
@@ -1390,7 +1390,7 @@ test_that("ard_categorical() ordering for multiple strata", {
     dplyr::filter(AEDECOD %in% unique(AEDECOD)[1:5]) |>
     dplyr::ungroup()
 
-  res_actual <- ard_categorical(
+  res_actual <- ard_tabulate(
     adae_mini |> unique() |> dplyr::mutate(any_ae = TRUE),
     strata = c(AESOC, AEDECOD),
     by = TRTA,

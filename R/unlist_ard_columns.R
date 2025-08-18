@@ -20,12 +20,12 @@
 #'
 #' @examples
 #' ADSL |>
-#'   ard_categorical(by = ARM, variables = AGEGR1) |>
+#'   ard_tabulate(by = ARM, variables = AGEGR1) |>
 #'   apply_fmt_fun() |>
 #'   unlist_ard_columns()
 #'
 #' ADSL |>
-#'   ard_continuous(by = ARM, variables = AGE) |>
+#'   ard_summary(by = ARM, variables = AGE) |>
 #'   apply_fmt_fun() |>
 #'   unlist_ard_columns()
 unlist_ard_columns <- function(x,

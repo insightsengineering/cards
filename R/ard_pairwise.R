@@ -23,7 +23,7 @@
 #'   ADSL,
 #'   variable = ARM,
 #'   .f = \(df) {
-#'     ard_complex(
+#'     ard_mvsummary(
 #'       df,
 #'       variables = AGE,
 #'       statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$ARM)[c("statistic", "p.value")])

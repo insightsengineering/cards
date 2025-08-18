@@ -1,5 +1,5 @@
 ard_fmt_checks <-
-  ard_continuous(
+  ard_summary(
     data = mtcars,
     variables = mpg,
     statistic = ~ continuous_summary_fns(c("mean", "sd"))
@@ -64,7 +64,7 @@ test_that("apply_fmt_fun() works with xx specification", {
   )
 
   expect_equal(
-    ard_categorical(
+    ard_tabulate(
       data = mtcars,
       variables = am,
       fmt_fun = list(
@@ -122,7 +122,7 @@ test_that("apply_fmt_fun() error messaging", {
 test_that("apply_fmt_fun(replace)", {
   ard <-
     ADSL |>
-    ard_categorical(variables = AGEGR1, statistic = ~"n") |>
+    ard_tabulate(variables = AGEGR1, statistic = ~"n") |>
     dplyr::mutate(
       stat_fmt = ifelse(dplyr::row_number() == 1, list("144.000000"), list(NULL))
     )

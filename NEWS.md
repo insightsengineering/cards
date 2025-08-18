@@ -1,6 +1,12 @@
 # cards 0.6.1.9015
 
-* Refactored `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
+* The following functions have been renamed. (#470)
+  - `ard_continuous()` to `ard_summary()`
+  - `ard_complex()` to `ard_mvsummary()`
+  - `ard_categorical()` to `ard_tabulate()`
+  - `ard_dichotomous()` to `ard_tabulate_value()`
+
+* Updated `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
 
 * Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
 
@@ -21,7 +27,6 @@
 * `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
 
 * Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
-
 
 # cards 0.6.1
 

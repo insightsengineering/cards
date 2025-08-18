@@ -1,7 +1,7 @@
 # tidy_ard_row_order() works
 
     Code
-      dplyr::select(ard_categorical(data.frame(x1 = sample(LETTERS[1:5], 30, replace = TRUE), x2 = sample(LETTERS[6:10], 30,
+      dplyr::select(ard_tabulate(data.frame(x1 = sample(LETTERS[1:5], 30, replace = TRUE), x2 = sample(LETTERS[6:10], 30,
       replace = TRUE), x3 = sample(LETTERS[11:15], 30, replace = TRUE), zz = 1L, aa = 1L), by = x1:x3, variables = c(zz, aa),
       statistic = everything() ~ "n"), all_ard_groups(), all_ard_variables())
     Message

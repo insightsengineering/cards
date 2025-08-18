@@ -289,7 +289,7 @@ test_that("filter_ard_hierarchical() error messaging works", {
   # invalid x input
   expect_snapshot(
     filter_ard_hierarchical(
-      ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+      ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
       n > 10
     ),
     error = TRUE

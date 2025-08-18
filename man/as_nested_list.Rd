@@ -18,6 +18,6 @@ a nested list
 Convert ARDs to nested lists.
 }
 \examples{
-ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
+ard_summary(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
   as_nested_list()
 }

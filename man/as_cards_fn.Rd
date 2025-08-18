@@ -24,7 +24,7 @@ an ARD data frame of class 'card'
 }
 \description{
 Add attributes to a function that specify the expected results.
-It is used when \code{ard_continuous()} or \code{ard_complex()} errors and constructs
+It is used when \code{ard_summary()} or \code{ard_mvsummary()} errors and constructs
 an ARD with the correct structure when the results cannot be calculated.
 }
 \examples{
@@ -34,7 +34,7 @@ ttest_works <-
     \(x) t.test(x)[c("statistic", "p.value")],
     stat_names = c("statistic", "p.value")
   )
-ard_continuous(
+ard_summary(
   mtcars,
   variables = mpg,
   statistic = ~ list(ttest = ttest_works)
@@ -50,7 +50,7 @@ ttest_error <-
     },
     stat_names = c("statistic", "p.value")
   )
-ard_continuous(
+ard_summary(
   mtcars,
   variables = mpg,
   statistic = ~ list(ttest = ttest_error)
@@ -58,7 +58,7 @@ ard_continuous(
 
 # if we don't use `as_card_fn()` and there is an error,
 #   the returned result is only one row
-ard_continuous(
+ard_summary(
   mtcars,
   variables = mpg,
   statistic = ~ list(ttest = \(x) {

@@ -1,7 +1,7 @@
 # update_ard_fmt_fun()
 
     Code
-      update_ard_fmt_fun(ard_continuous(ADSL, variables = AGE), stat_names = c("mean",
+      update_ard_fmt_fun(ard_summary(ADSL, variables = AGE), stat_names = c("mean",
         "sd"), fmt_fun = -8L)
     Condition
       Error in `update_ard_fmt_fun()`:
@@ -12,7 +12,7 @@
 # update_ard_fmt_fun(filter)
 
     Code
-      apply_fmt_fun(update_ard_fmt_fun(ard_continuous(ADSL, by = ARM, variables = AGE,
+      apply_fmt_fun(update_ard_fmt_fun(ard_summary(ADSL, by = ARM, variables = AGE,
         statistic = ~ continuous_summary_fns(c("N", "mean"))), stat_names = "mean",
       fmt_fun = 8L, filter = group1_level == "Placebo"))
     Message
@@ -31,7 +31,7 @@
 # update_ard_fmt_fun(filter) messaging
 
     Code
-      update_ard_fmt_fun(ard_continuous(ADSL, by = ARM, variables = AGE, statistic = ~
+      update_ard_fmt_fun(ard_summary(ADSL, by = ARM, variables = AGE, statistic = ~
         continuous_summary_fns(c("N", "mean"))), stat_names = "mean", fmt_fun = 8L,
       filter = group99999999_level == "Placebo")
     Condition
@@ -42,7 +42,7 @@
 ---
 
     Code
-      update_ard_fmt_fun(ard_continuous(ADSL, by = ARM, variables = AGE, statistic = ~
+      update_ard_fmt_fun(ard_summary(ADSL, by = ARM, variables = AGE, statistic = ~
         continuous_summary_fns(c("N", "mean"))), stat_names = "mean", fmt_fun = 8L,
       filter = c(TRUE, FALSE))
     Condition
@@ -52,9 +52,9 @@
 # update_ard_stat_label(filter)
 
     Code
-      update_ard_stat_label(ard_continuous(ADSL, by = ARM, variables = AGE,
-        statistic = ~ continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c(
-        "mean", "sd"), stat_label = "Mean (SD)", filter = group1_level == "Placebo")
+      update_ard_stat_label(ard_summary(ADSL, by = ARM, variables = AGE, statistic = ~
+        continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c("mean", "sd"),
+      stat_label = "Mean (SD)", filter = group1_level == "Placebo")
     Message
       {cards} data frame: 9 x 10
     Output
@@ -74,10 +74,9 @@
 # update_ard_stat_label(filter) messaging
 
     Code
-      update_ard_stat_label(ard_continuous(ADSL, by = ARM, variables = AGE,
-        statistic = ~ continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c(
-        "mean", "sd"), stat_label = "Mean (SD)", filter = group99999999_level ==
-        "Placebo")
+      update_ard_stat_label(ard_summary(ADSL, by = ARM, variables = AGE, statistic = ~
+        continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c("mean", "sd"),
+      stat_label = "Mean (SD)", filter = group99999999_level == "Placebo")
     Condition
       Error in `value[[3L]]()`:
       ! There was an error evaluating the `filter` argument. See below:
@@ -86,9 +85,9 @@
 ---
 
     Code
-      update_ard_stat_label(ard_continuous(ADSL, by = ARM, variables = AGE,
-        statistic = ~ continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c(
-        "mean", "sd"), stat_label = "Mean (SD)", filter = c(TRUE, FALSE))
+      update_ard_stat_label(ard_summary(ADSL, by = ARM, variables = AGE, statistic = ~
+        continuous_summary_fns(c("N", "mean", "sd"))), stat_names = c("mean", "sd"),
+      stat_label = "Mean (SD)", filter = c(TRUE, FALSE))
     Condition
       Error in `update_ard_stat_label()`:
       ! The `filter` argument must be an expression that evaluates to a <logical> vector of length 1 or 9.

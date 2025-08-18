@@ -1,21 +1,21 @@
 # ard_stack() messaging
 
     Code
-      head(ard_stack(data = mtcars, ard_continuous(variables = "mpg"), .overall = TRUE), 1L)
+      head(ard_stack(data = mtcars, ard_summary(variables = "mpg"), .overall = TRUE), 1L)
     Message
       The `.by` argument should be specified when using `.overall=TRUE`.
       i Setting `ard_stack(.overall=FALSE)`.
       {cards} data frame: 1 x 8
     Output
-        variable   context stat_name stat_label stat fmt_fun
-      1      mpg continuo…         N          N   32       0
+        variable context stat_name stat_label stat fmt_fun
+      1      mpg summary         N          N   32       0
     Message
       i 2 more variables: warning, error
 
 ---
 
     Code
-      ard_stack(ADSL, by = "ARM", ard_continuous(variables = AGE))
+      ard_stack(ADSL, by = "ARM", ard_summary(variables = AGE))
     Condition
       Error in `ard_stack()`:
       ! Cannot evaluate expression `by = ARM`.
@@ -25,16 +25,16 @@
 
     Code
       complex_call <- list()
-      complex_call$ard_continuous <- ard_continuous
-      ard_stack(data = mtcars, .by = am, complex_call$ard_continuous(variables = "mpg"), )
+      complex_call$ard_summary <- ard_summary
+      ard_stack(data = mtcars, .by = am, complex_call$ard_summary(variables = "mpg"), )
     Condition
       Error in `ard_stack()`:
-      ! `cards::ard_stack()` works with simple calls (`?rlang::call_name()`) and `complex_call$ard_continuous(variables = "mpg")` is not simple.
+      ! `cards::ard_stack()` works with simple calls (`?rlang::call_name()`) and `complex_call$ard_summary(variables = "mpg")` is not simple.
 
 # ard_stack(.by) messaging
 
     Code
-      dplyr::filter(ard_stack(mtcars2, ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE,
+      dplyr::filter(ard_stack(mtcars2, ard_summary(variables = "mpg", statistic = ~ continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE,
       .overall = TRUE), stat_name %in% "N")
     Message
       * Removing 1 row with NA or NaN values in "am" and "vs" columns.
@@ -57,7 +57,7 @@
 ---
 
     Code
-      dplyr::filter(ard_stack(mtcars3, ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE,
+      dplyr::filter(ard_stack(mtcars3, ard_summary(variables = "mpg", statistic = ~ continuous_summary_fns("N")), .by = c(am, vs), .total_n = TRUE,
       .overall = TRUE), stat_name %in% "N")
     Message
       * Removing 2 rows with NA or NaN values in "am" and "vs" columns.
