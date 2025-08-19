@@ -44,3 +44,113 @@
       i Use `print(n = ...)` to see more rows
       i 4 more variables: context, fmt_fun, warning, error
 
+# ard_strata computes stats for parameter specific strata
+
+    Code
+      as.data.frame(tbl)[1:25, ]
+    Output
+          group2 group2_level group1 group1_level variable variable_level     context
+      1  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
+      2  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
+      3  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
+      4  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
+      5  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
+      6  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
+      7  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
+      8  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
+      9  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
+      10 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
+      11 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
+      12 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
+      13 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
+      14 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
+      15 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
+      16 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
+      17 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
+      18 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
+      19 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
+      20 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
+      21 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
+      22 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
+      23 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
+      24 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
+      25 PARAMCD       PARAM2  TREAT        TREAT    AVALC              1 categorical
+         stat_name stat_label      stat
+      1          n          n         1
+      2          N          N         3
+      3          p          % 0.3333333
+      4          n          n         2
+      5          N          N         3
+      6          p          % 0.6666667
+      7          n          n         3
+      8          N          N         3
+      9          p          %         1
+      10         n          n         0
+      11         N          N         3
+      12         p          %         0
+      13         n          n         0
+      14         N          N         0
+      15         p          %       NaN
+      16         n          n         0
+      17         N          N         0
+      18         p          %       NaN
+      19         n          n         0
+      20         N          N         0
+      21         p          %       NaN
+      22         n          n         0
+      23         N          N         0
+      24         p          %       NaN
+      25         n          n         0
+                                                                                                                                                                                                                                                                                                                           fmt_fun
+      1                                                                                                                                                                                                                                                                                                                          0
+      2                                                                                                                                                                                                                                                                                                                          0
+      3  function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      4                                                                                                                                                                                                                                                                                                                          0
+      5                                                                                                                                                                                                                                                                                                                          0
+      6  function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      7                                                                                                                                                                                                                                                                                                                          0
+      8                                                                                                                                                                                                                                                                                                                          0
+      9  function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      10                                                                                                                                                                                                                                                                                                                         0
+      11                                                                                                                                                                                                                                                                                                                         0
+      12 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      13                                                                                                                                                                                                                                                                                                                         0
+      14                                                                                                                                                                                                                                                                                                                         0
+      15 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      16                                                                                                                                                                                                                                                                                                                         0
+      17                                                                                                                                                                                                                                                                                                                         0
+      18 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      19                                                                                                                                                                                                                                                                                                                         0
+      20                                                                                                                                                                                                                                                                                                                         0
+      21 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      22                                                                                                                                                                                                                                                                                                                         0
+      23                                                                                                                                                                                                                                                                                                                         0
+      24 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
+      25                                                                                                                                                                                                                                                                                                                         0
+         warning error
+      1     NULL  NULL
+      2     NULL  NULL
+      3     NULL  NULL
+      4     NULL  NULL
+      5     NULL  NULL
+      6     NULL  NULL
+      7     NULL  NULL
+      8     NULL  NULL
+      9     NULL  NULL
+      10    NULL  NULL
+      11    NULL  NULL
+      12    NULL  NULL
+      13    NULL  NULL
+      14    NULL  NULL
+      15    NULL  NULL
+      16    NULL  NULL
+      17    NULL  NULL
+      18    NULL  NULL
+      19    NULL  NULL
+      20    NULL  NULL
+      21    NULL  NULL
+      22    NULL  NULL
+      23    NULL  NULL
+      24    NULL  NULL
+      25    NULL  NULL
+
