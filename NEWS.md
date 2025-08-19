@@ -1,4 +1,4 @@
-# cards 0.6.1.9016
+# cards 0.6.1.9017
 
 * The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
 
