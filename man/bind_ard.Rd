@@ -49,7 +49,7 @@ Wrapper for \code{dplyr::bind_rows()} with additional checks
 for duplicated statistics.
 }
 \examples{
-ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
 bind_ard(ard, ard, .update = TRUE)
 }

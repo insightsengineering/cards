@@ -4,8 +4,8 @@ test_that("ard_stack() works", {
     ard1 <- ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs")
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ),
     NA
   )
@@ -13,9 +13,9 @@ test_that("ard_stack() works", {
   expect_equal(
     ard1,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       .order = TRUE
     ),
     ignore_function_env = TRUE,
@@ -28,8 +28,8 @@ test_that("ard_stack() works", {
     ard_stack(
       data = mtcars,
       .by = cyl,
-      ard_continuous(variables = mpg),
-      ard_dichotomous(variables = vs)
+      ard_summary(variables = mpg),
+      ard_tabulate_value(variables = vs, value = vs ~ 1)
     ),
     ignore_function_env = TRUE,
     ignore_attr = TRUE
@@ -45,8 +45,8 @@ test_that("ard_stack() works", {
     ard_stack(
       data = mtcars2,
       .by = all_of(by),
-      ard_continuous(variables = all_of(var_cont)),
-      ard_dichotomous(variables = all_of(var_cat))
+      ard_summary(variables = all_of(var_cont)),
+      ard_tabulate_value(variables = all_of(var_cat), , value = all_of(var_cat) ~ 1)
     )
   )
 
@@ -55,15 +55,15 @@ test_that("ard_stack() works", {
     ard2 <- ard_stack(
       data = mtcars,
       .by = NULL,
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs")
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ),
     NA
   )
 
   ard_match <- bind_ard(
-    ard_continuous(data = mtcars, variables = "mpg"),
-    ard_dichotomous(data = mtcars, variables = "vs"),
+    ard_summary(data = mtcars, variables = "mpg"),
+    ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
     .order = TRUE
   )
   attr(ard_match, "args") <- list(
@@ -80,8 +80,8 @@ test_that("ard_stack() works", {
     ard2,
     ard_stack(
       data = mtcars2,
-      ard_continuous(variables = all_of(var_cont)),
-      ard_dichotomous(variables = all_of(var_cat))
+      ard_summary(variables = all_of(var_cont)),
+      ard_tabulate_value(variables = all_of(var_cat), value = all_of(var_cat) ~ 1)
     )
   )
 })
@@ -91,19 +91,19 @@ test_that("ard_stack() adding overalls", {
     ard_test <- ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .overall = TRUE
     ),
     NA
   )
 
   ard_match <- bind_ard(
-    ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-    ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-    ard_continuous(data = mtcars, variables = "mpg"),
-    ard_dichotomous(data = mtcars, variables = "vs"),
-    ard_categorical(data = mtcars, variables = "cyl"),
+    ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+    ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+    ard_summary(data = mtcars, variables = "mpg"),
+    ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
+    ard_tabulate(data = mtcars, variables = "cyl"),
     .update = TRUE,
     .order = TRUE
   )
@@ -123,8 +123,8 @@ test_that("ard_stack() adding missing/attributes", {
     ard_test <- ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .missing = TRUE,
       .attributes = TRUE
     ),
@@ -134,10 +134,10 @@ test_that("ard_stack() adding missing/attributes", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
       .order = TRUE
@@ -150,8 +150,8 @@ test_that("ard_stack() adding missing/attributes", {
     ard_test_overall <- ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .missing = TRUE,
       .overall = TRUE,
       .attributes = TRUE
@@ -162,12 +162,12 @@ test_that("ard_stack() adding missing/attributes", {
   expect_equal(
     ard_test_overall,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
       ard_missing(data = mtcars, by = "cyl", variables = c("mpg", "vs")),
-      ard_continuous(data = mtcars, variables = "mpg"),
-      ard_dichotomous(data = mtcars, variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_summary(data = mtcars, variables = "mpg"),
+      ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       ard_missing(data = mtcars, variables = c("mpg", "vs")),
       ard_attributes(mtcars, variables = c("mpg", "vs", "cyl")),
       .update = TRUE,
@@ -186,8 +186,8 @@ test_that("ard_stack() .shuffle argument", {
       ard_test <- ard_stack(
         data = mtcars,
         .by = "cyl",
-        ard_continuous(variables = "mpg"),
-        ard_dichotomous(variables = "vs"),
+        ard_summary(variables = "mpg"),
+        ard_tabulate_value(variables = "vs", value = vs ~ 1),
         .shuffle = TRUE
       ),
       "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
@@ -198,9 +198,9 @@ test_that("ard_stack() .shuffle argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       .order = TRUE
     ) |>
       shuffle_ard(),
@@ -216,8 +216,8 @@ test_that("ard_stack() .shuffle argument", {
       ard_test <- ard_stack(
         data = mtcars,
         .by = "cyl",
-        ard_continuous(variables = "mpg"),
-        ard_dichotomous(variables = "vs"),
+        ard_summary(variables = "mpg"),
+        ard_tabulate_value(variables = "vs", value = vs ~ 1),
         .shuffle = TRUE,
         .overall = TRUE
       ),
@@ -229,11 +229,11 @@ test_that("ard_stack() .shuffle argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_continuous(data = mtcars, variables = "mpg"),
-      ard_dichotomous(data = mtcars, variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl")
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_summary(data = mtcars, variables = "mpg"),
+      ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "cyl")
     ) |>
       shuffle_ard(),
     ignore_attr = TRUE
@@ -246,7 +246,7 @@ test_that("ard_stack() adding total N", {
     ard_stack(
       mtcars,
       .by = am,
-      ard_continuous(variables = mpg),
+      ard_summary(variables = mpg),
       .total_n = TRUE
     ) |>
       tail(n = 1) |>
@@ -260,11 +260,11 @@ test_that("ard_stack() works with namespaced functions", {
   expect_equal(
     ard_stack(
       data = mtcars,
-      cards::ard_continuous(variables = "mpg")
+      cards::ard_summary(variables = "mpg")
     ),
     ard_stack(
       data = mtcars,
-      ard_continuous(variables = "mpg")
+      ard_summary(variables = "mpg")
     )
   )
 })
@@ -274,7 +274,7 @@ test_that("ard_stack() messaging", {
   expect_snapshot(
     ard_stack(
       data = mtcars,
-      ard_continuous(variables = "mpg"),
+      ard_summary(variables = "mpg"),
       .overall = TRUE
     ) |>
       head(1L)
@@ -283,7 +283,7 @@ test_that("ard_stack() messaging", {
   # by argument doesn't include period in front
   expect_snapshot(
     error = TRUE,
-    ard_stack(ADSL, by = "ARM", ard_continuous(variables = AGE))
+    ard_stack(ADSL, by = "ARM", ard_summary(variables = AGE))
   )
 })
 
@@ -292,11 +292,11 @@ test_that("ard_stack() complex call error", {
   expect_snapshot(
     {
       complex_call <- list()
-      complex_call$ard_continuous <- ard_continuous
+      complex_call$ard_summary <- ard_summary
       ard_stack(
         data = mtcars,
         .by = am,
-        complex_call$ard_continuous(variables = "mpg"),
+        complex_call$ard_summary(variables = "mpg"),
       )
     },
     error = TRUE
@@ -308,8 +308,8 @@ test_that("ard_stack() follows ard structure", {
     ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs")
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1)
     ) |>
       check_ard_structure(method = FALSE)
   )
@@ -323,7 +323,7 @@ test_that("ard_stack(.by) messaging", {
   expect_snapshot(
     mtcars2 |>
       ard_stack(
-        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        ard_summary(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
         .by = c(am, vs),
         .total_n = TRUE,
         .overall = TRUE
@@ -337,7 +337,7 @@ test_that("ard_stack(.by) messaging", {
   expect_snapshot(
     mtcars3 |>
       ard_stack(
-        ard_continuous(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
+        ard_summary(variables = "mpg", statistic = ~ continuous_summary_fns("N")),
         .by = c(am, vs),
         .total_n = TRUE,
         .overall = TRUE
@@ -352,8 +352,8 @@ test_that("ard_stack() .by_stats argument", {
     ard_test <- ard_stack(
       data = mtcars,
       .by = "cyl",
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = TRUE
     ),
     NA
@@ -362,9 +362,9 @@ test_that("ard_stack() .by_stats argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = "cyl", variables = "vs"),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
     ),
@@ -376,8 +376,8 @@ test_that("ard_stack() .by_stats argument", {
     ard_test <- ard_stack(
       data = mtcars,
       .by = c("am", "cyl"),
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = TRUE
     ),
     NA
@@ -386,10 +386,10 @@ test_that("ard_stack() .by_stats argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, c("am", "cyl"), variables = "mpg"),
-      ard_dichotomous(data = mtcars, c("am", "cyl"), variables = "vs"),
-      ard_categorical(data = mtcars, variables = "am"),
-      ard_categorical(data = mtcars, variables = "cyl"),
+      ard_summary(data = mtcars, c("am", "cyl"), variables = "mpg"),
+      ard_tabulate_value(data = mtcars, c("am", "cyl"), variables = "vs", value = vs ~ 1),
+      ard_tabulate(data = mtcars, variables = "am"),
+      ard_tabulate(data = mtcars, variables = "cyl"),
       .update = TRUE,
       .order = TRUE
     ),
@@ -401,8 +401,8 @@ test_that("ard_stack() .by_stats argument", {
     ard_test <- ard_stack(
       data = mtcars,
       .by = c("am", "cyl"),
-      ard_continuous(variables = "mpg"),
-      ard_dichotomous(variables = "vs"),
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
       .by_stats = FALSE
     ),
     NA
@@ -411,8 +411,8 @@ test_that("ard_stack() .by_stats argument", {
   expect_equal(
     ard_test,
     bind_ard(
-      ard_continuous(data = mtcars, by = c("am", "cyl"), variables = "mpg"),
-      ard_dichotomous(data = mtcars, by = c("am", "cyl"), variables = "vs"),
+      ard_summary(data = mtcars, by = c("am", "cyl"), variables = "mpg"),
+      ard_tabulate_value(data = mtcars, by = c("am", "cyl"), variables = "vs", value = vs ~ 1),
       .update = TRUE,
       .order = TRUE
     ),

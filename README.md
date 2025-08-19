@@ -77,7 +77,7 @@ tables.
 ``` r
 library(cards)
 
-ard_continuous(ADSL, by = "ARM", variables = "AGE")
+ard_summary(ADSL, by = "ARM", variables = "AGE")
 #> {cards} data frame: 24 x 10
 #>    group1 group1_level variable stat_name stat_label   stat
 #> 1     ARM      Placebo      AGE         N          N     86

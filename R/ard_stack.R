@@ -39,8 +39,8 @@
 #' @examples
 #' ard_stack(
 #'   data = ADSL,
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE"),
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE"),
 #'   .by = "ARM",
 #'   .overall = TRUE,
 #'   .attributes = TRUE
@@ -48,8 +48,8 @@
 #'
 #' ard_stack(
 #'   data = ADSL,
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE"),
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE"),
 #'   .by = "ARM",
 #'   .shuffle = TRUE
 #' )
@@ -112,7 +112,7 @@ ard_stack <- function(data,
   if (!is_empty(by) && isTRUE(.by_stats)) {
     ard_full <- bind_ard(
       ard_list,
-      ard_categorical(
+      ard_tabulate(
         data = data,
         variables = all_of(.by)
       )
@@ -194,8 +194,8 @@ ard_stack <- function(data,
 #' cards:::.eval_ard_calls(
 #'   data = ADSL,
 #'   .by = "ARM",
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE")
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE")
 #' )
 .eval_ard_calls <- function(data, .by, ...) {
   # capture quosures -----------------------------------------------------------

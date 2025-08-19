@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' ard_continuous(ADSL, variables = "AGE") |>
+#' ard_summary(ADSL, variables = "AGE") |>
 #'   apply_fmt_fun()
 apply_fmt_fun <- function(x, replace = FALSE) {
   set_cli_abort_call()

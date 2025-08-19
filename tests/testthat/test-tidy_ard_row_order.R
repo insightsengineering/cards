@@ -12,7 +12,7 @@ test_that("tidy_ard_row_order() works", {
       zz = 1L,
       aa = 1L
     ) |>
-      ard_categorical(
+      ard_tabulate(
         by = x1:x3,
         variables = c(zz, aa),
         statistic = everything() ~ "n"

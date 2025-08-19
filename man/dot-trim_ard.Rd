@@ -20,8 +20,8 @@ information about errors/warnings, and unnested list columns.
 }
 \examples{
 ard <- bind_ard(
-  ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-  ard_categorical(ADSL, variables = "ARM")
+  ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+  ard_tabulate(ADSL, variables = "ARM")
 ) |>
   shuffle_ard(trim = FALSE)
 

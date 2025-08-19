@@ -20,7 +20,7 @@ returns invisible if check is successful, throws warning/error messages if not.
 Print Condition Messages Saved in an ARD
 }
 \examples{
-ard <- ard_continuous(
+ard <- ard_summary(
   ADSL,
   by = ARM,
   variables = AGE

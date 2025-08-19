@@ -1,15 +1,15 @@
-test_that("ard_complex() works", {
-  # we can replicate `ard_continuous()` for univariate analysis
+test_that("ard_mvsummary() works", {
+  # we can replicate `ard_summary()` for univariate analysis
   # using the `x` arg in the mean function
   expect_equal(
-    ard_complex(
+    ard_mvsummary(
       ADSL,
       by = "ARM",
       variables = "AGE",
       statistic = list(AGE = list(mean = \(x, ...) mean(x)))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat),
-    ard_continuous(
+    ard_summary(
       ADSL,
       by = "ARM",
       variables = "AGE",
@@ -20,14 +20,14 @@ test_that("ard_complex() works", {
 
   # using the `data` and `variable` args in the mean function
   expect_equal(
-    ard_complex(
+    ard_mvsummary(
       ADSL,
       by = "ARM",
       variables = "AGE",
       statistic = list(AGE = list(mean = \(data, variable, ...) mean(data[[variable]])))
     ) |>
       dplyr::select(all_ard_groups(), all_ard_variables(), stat),
-    ard_continuous(
+    ard_summary(
       ADSL,
       by = "ARM",
       variables = "AGE",
@@ -46,7 +46,7 @@ test_that("ard_complex() works", {
         )
       }
       ard_grand_mean <-
-        ard_complex(
+        ard_mvsummary(
           ADSL,
           by = "ARM",
           variables = "AGE",
@@ -82,11 +82,11 @@ test_that("ard_complex() works", {
   )
 })
 
-test_that("ard_complex() messaging", {
+test_that("ard_mvsummary() messaging", {
   # correct messaging when BMIBL doesn't have any summary fns
   expect_snapshot(
     error = TRUE,
-    ard_complex(
+    ard_mvsummary(
       ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
@@ -95,15 +95,15 @@ test_that("ard_complex() messaging", {
   )
 })
 
-test_that("ard_complex() with grouped data works", {
+test_that("ard_mvsummary() with grouped data works", {
   expect_equal(
     ADSL |>
       dplyr::group_by(ARM) |>
-      ard_complex(
+      ard_mvsummary(
         variables = c("AGE", "BMIBL"),
         statistic = ~ list(mean = \(x, ...) mean(x))
       ),
-    ard_complex(
+    ard_mvsummary(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
@@ -113,9 +113,9 @@ test_that("ard_complex() with grouped data works", {
 })
 
 
-test_that("ard_complex() follows ard structure", {
+test_that("ard_mvsummary() follows ard structure", {
   expect_silent(
-    ard_complex(
+    ard_mvsummary(
       ADSL,
       by = "ARM",
       variables = "AGE",
@@ -125,13 +125,13 @@ test_that("ard_complex() follows ard structure", {
   )
 })
 
-test_that("ard_complex() errors with incorrect factor columns", {
+test_that("ard_mvsummary() errors with incorrect factor columns", {
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = character(0))) |>
-      ard_complex(
+      ard_mvsummary(
         by = "am",
         variables = "mpg",
         statistic = list(mpg = list(mean = \(x, ...) mean(x)))
@@ -143,7 +143,7 @@ test_that("ard_complex() errors with incorrect factor columns", {
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
-      ard_complex(
+      ard_mvsummary(
         by = "am",
         variables = "mpg",
         statistic = list(mpg = list(mean = \(x, ...) mean(x)))
@@ -151,7 +151,7 @@ test_that("ard_complex() errors with incorrect factor columns", {
   )
 })
 
-test_that("ard_complex() with `as_cards_fn()` inputs", {
+test_that("ard_mvsummary() with `as_cards_fn()` inputs", {
   ttest_works <-
     as_cards_fn(
       \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")],
@@ -168,15 +168,15 @@ test_that("ard_complex() with `as_cards_fn()` inputs", {
 
   # the result is the same when there is no error
   expect_equal(
-    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
-    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")]))
+    ard_mvsummary(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
+    ard_mvsummary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")]))
   )
 
   # when there is an error, we get the same structure back
   expect_equal(
-    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
+    ard_mvsummary(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
       dplyr::pull("stat_name"),
-    ard_complex(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")])) |>
+    ard_mvsummary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")])) |>
       dplyr::pull("stat_name")
   )
 })
