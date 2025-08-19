@@ -49,32 +49,32 @@
     Code
       as.data.frame(tbl)[1:25, ]
     Output
-          group2 group2_level group1 group1_level variable variable_level     context
-      1  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
-      2  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
-      3  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 categorical
-      4  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
-      5  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
-      6  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 categorical
-      7  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
-      8  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
-      9  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 categorical
-      10 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
-      11 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
-      12 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 categorical
-      13 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
-      14 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
-      15 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 categorical
-      16 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
-      17 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
-      18 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 categorical
-      19 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
-      20 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
-      21 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 categorical
-      22 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
-      23 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
-      24 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 categorical
-      25 PARAMCD       PARAM2  TREAT        TREAT    AVALC              1 categorical
+          group2 group2_level group1 group1_level variable variable_level  context
+      1  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
+      2  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
+      3  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
+      4  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
+      5  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
+      6  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
+      7  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
+      8  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
+      9  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
+      10 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
+      11 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
+      12 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
+      13 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
+      14 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
+      15 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
+      16 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
+      17 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
+      18 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
+      19 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
+      20 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
+      21 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
+      22 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
+      23 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
+      24 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
+      25 PARAMCD       PARAM2  TREAT        TREAT    AVALC              1 tabulate
          stat_name stat_label      stat
       1          n          n         1
       2          N          N         3

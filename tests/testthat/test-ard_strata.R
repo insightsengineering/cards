@@ -42,11 +42,12 @@ test_that("nest_for_ard retains strata in nested data", {
     TREAT = rep(c("TREAT", "PLACEBO"), times = 6),
     PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
     AVALC = c(
-      "Yes", "No", "Yes",           # PARAM1
-      "Yes", "Yes", "No",           # PARAM1
-      "low", "medium", "high",      # PARAM2
-      "low", "low", "medium"        # PARAM2
-    ))
+      "Yes", "No", "Yes", # PARAM1
+      "Yes", "Yes", "No", # PARAM1
+      "low", "medium", "high", # PARAM2
+      "low", "low", "medium" # PARAM2
+    )
+  )
   nested <- nest_for_ard(df, strata = "PARAMCD")
   # Ensure 'PARAMCD' is in each nested data frame
   expect_true(all(map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
@@ -58,11 +59,12 @@ test_that("ard_strata computes stats for parameter specific strata", {
     TREAT = rep(c("TREAT", "PLACEBO"), times = 6),
     PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
     AVALC = c(
-      "Yes", "No", "Yes",           # PARAM1
-      "Yes", "Yes", "No",           # PARAM1
-      "low", "medium", "high",      # PARAM2
-      "low", "low", "medium"        # PARAM2
-    ))
+      "Yes", "No", "Yes", # PARAM1
+      "Yes", "Yes", "No", # PARAM1
+      "low", "medium", "high", # PARAM2
+      "low", "low", "medium" # PARAM2
+    )
+  )
   param_levels <-
     list(
       PARAM1 = c("Yes", "No"),
@@ -73,7 +75,7 @@ test_that("ard_strata computes stats for parameter specific strata", {
     df,
     .strata = PARAMCD,
     .f = \(.x) {
-      param <- .x[["PARAMCD"]][1]  # Get current PARAMCD
+      param <- .x[["PARAMCD"]][1]
       .x |>
         dplyr::mutate(
           AVALC = factor(AVALC, levels = param_levels[[param]])
@@ -84,5 +86,5 @@ test_that("ard_strata computes stats for parameter specific strata", {
         )
     }
   )
-  expect_snapshot(as.data.frame(tbl)[1:25,])
+  expect_snapshot(as.data.frame(tbl)[1:25, ])
 })
