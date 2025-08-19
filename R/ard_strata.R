@@ -29,42 +29,39 @@
 #' @export
 #'
 #' @examples
+#' # Example 1 ----------------------------------
 #' ard_strata(
 #'   ADSL,
 #'   .by = ARM,
 #'   .f = ~ ard_summary(.x, variables = AGE)
 #' )
 #'
+#' # Example 2 ----------------------------------
 #' df <- data.frame(
 #'   USUBJID = 1:12,
-#'   TREAT = rep(c("TREAT", "PLACEBO"), times = 6),
 #'   PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
 #'   AVALC = c(
 #'     "Yes", "No", "Yes", # PARAM1
 #'     "Yes", "Yes", "No", # PARAM1
-#'     "low", "medium", "high", # PARAM2
-#'     "low", "low", "medium" # PARAM2
+#'     "Low", "Medium", "High", # PARAM2
+#'     "Low", "Low", "Medium" # PARAM2
 #'   )
 #' )
-#' param_levels <-
-#'   list(
-#'     PARAM1 = c("Yes", "No"),
-#'     PARAM2 = c("Zero", "Low", "Medium", "High")
-#'   )
 #'
 #' ard_strata(
 #'   df,
 #'   .strata = PARAMCD,
 #'   .f = \(.x) {
-#'     param <- .x[["PARAMCD"]][1]
-#'     .x |>
-#'       dplyr::mutate(
-#'         AVALC = factor(AVALC, levels = param_levels[[param]])
-#'       ) |>
-#'       ard_tabulate(
-#'         by = TREAT,
-#'         variables = AVALC
+#'     lvls <-
+#'       switch(
+#'         .x[["PARAMCD"]][1],
+#'         "PARAM1" = c("Yes", "No"),
+#'         "PARAM2" = c("Zero", "Low", "Medium", "High")
 #'       )
+#'
+#'     .x |>
+#'       dplyr::mutate(AVALC = factor(AVALC, levels = lvls)) |>
+#'       ard_tabulate(variables = AVALC)
 #'   }
 #' )
 ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
