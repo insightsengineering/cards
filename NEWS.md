@@ -1,5 +1,7 @@
 # cards 0.6.1.9016
 
+* The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
+
 * The following functions have been renamed. (#470)
   - `ard_continuous()` to `ard_summary()`
   - `ard_complex()` to `ard_mvsummary()`
