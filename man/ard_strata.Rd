@@ -63,8 +63,7 @@ ard_strata(
   .strata = PARAMCD,
   .f = \(.x) {
     lvls <-
-      switch(
-        .x[["PARAMCD"]][1],
+      switch(.x[["PARAMCD"]][1],
         "PARAM1" = c("Yes", "No"),
         "PARAM2" = c("Zero", "Low", "Medium", "High")
       )
