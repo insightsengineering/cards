@@ -77,7 +77,7 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   process_selectors(.data, .by = {{ .by }}, .strata = {{ .strata }})
 
   # nest the data frame --------------------------------------------------------
-  df_nested_data <- nest_for_ard(.data, by = .by, strata = .strata)
+  df_nested_data <- nest_for_ard(.data, by = .by, strata = .strata, include_by_and_strata = TRUE)
 
   # run fn on nested data frames -----------------------------------------------
   df_nested_data <- df_nested_data |>

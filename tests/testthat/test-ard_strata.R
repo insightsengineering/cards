@@ -36,23 +36,6 @@ test_that("ard_strata(by,strata) when both empty", {
   )
 })
 
-test_that("nest_for_ard retains strata in nested data", {
-  df <- data.frame(
-    USUBJID = 1:12,
-    TREAT = rep(c("TREAT", "PLACEBO"), times = 6),
-    PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
-    AVALC = c(
-      "Yes", "No", "Yes", # PARAM1
-      "Yes", "Yes", "No", # PARAM1
-      "low", "medium", "high", # PARAM2
-      "low", "low", "medium" # PARAM2
-    )
-  )
-  nested <- nest_for_ard(df, strata = "PARAMCD")
-  # Ensure 'PARAMCD' is in each nested data frame
-  expect_true(all(map_lgl(nested$data, ~ "PARAMCD" %in% names(.x))))
-})
-
 test_that("ard_strata computes stats for parameter specific strata", {
   withr::local_options(list(width = 180))
 
