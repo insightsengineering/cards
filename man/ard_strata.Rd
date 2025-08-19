@@ -39,9 +39,38 @@ this function would primarily be used with the statistical functions in the
 cardx functions.
 }
 \examples{
+# Example 1 ----------------------------------
 ard_strata(
   ADSL,
   .by = ARM,
   .f = ~ ard_summary(.x, variables = AGE)
+)
+
+# Example 2 ----------------------------------
+df <- data.frame(
+  USUBJID = 1:12,
+  PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
+  AVALC = c(
+    "Yes", "No", "Yes", # PARAM1
+    "Yes", "Yes", "No", # PARAM1
+    "Low", "Medium", "High", # PARAM2
+    "Low", "Low", "Medium" # PARAM2
+  )
+)
+
+ard_strata(
+  df,
+  .strata = PARAMCD,
+  .f = \(.x) {
+    lvls <-
+      switch(.x[["PARAMCD"]][1],
+        "PARAM1" = c("Yes", "No"),
+        "PARAM2" = c("Zero", "Low", "Medium", "High")
+      )
+
+    .x |>
+      dplyr::mutate(AVALC = factor(AVALC, levels = lvls)) |>
+      ard_tabulate(variables = AVALC)
+  }
 )
 }

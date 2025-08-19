@@ -35,3 +35,42 @@ test_that("ard_strata(by,strata) when both empty", {
     ard_summary(ADSL, by = ARM, variables = AGE)
   )
 })
+
+test_that("ard_strata computes stats for parameter specific strata", {
+  withr::local_options(list(width = 180))
+
+  df <- data.frame(
+    USUBJID = 1:12,
+    PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
+    AVALC = c(
+      "Yes", "No", "Yes", # PARAM1
+      "Yes", "Yes", "No", # PARAM1
+      "Low", "Medium", "High", # PARAM2
+      "Low", "Low", "Medium" # PARAM2
+    )
+  )
+  param_levels <-
+    list(
+      PARAM1 = c("Yes", "No"),
+      PARAM2 = c("Zero", "Low", "Medium", "High")
+    )
+
+  tbl <- ard_strata(
+    df,
+    .strata = PARAMCD,
+    .f = \(.x) {
+      param <- .x[["PARAMCD"]][1]
+      .x |>
+        dplyr::mutate(
+          AVALC = factor(AVALC, levels = param_levels[[param]])
+        ) |>
+        ard_tabulate(variables = AVALC)
+    }
+  )
+
+  ## line added to fix failing snapshot test on ubuntu-latest (devel)
+  ## TODO: resolve after release of R-devel
+  skip_if_not(package_version(paste(R.version$major, R.version$minor, sep = ".")) <= package_version("4.5.0"))
+
+  expect_snapshot(as.data.frame(tbl))
+})
