@@ -54,15 +54,16 @@ test_that("nest_for_ard retains strata in nested data", {
 })
 
 test_that("ard_strata computes stats for parameter specific strata", {
+  withr::local_options(list(width = 180))
+
   df <- data.frame(
     USUBJID = 1:12,
-    TREAT = rep(c("TREAT", "PLACEBO"), times = 6),
     PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
     AVALC = c(
       "Yes", "No", "Yes", # PARAM1
       "Yes", "Yes", "No", # PARAM1
-      "low", "medium", "high", # PARAM2
-      "low", "low", "medium" # PARAM2
+      "Low", "Medium", "High", # PARAM2
+      "Low", "Low", "Medium" # PARAM2
     )
   )
   param_levels <-
@@ -80,10 +81,7 @@ test_that("ard_strata computes stats for parameter specific strata", {
         dplyr::mutate(
           AVALC = factor(AVALC, levels = param_levels[[param]])
         ) |>
-        ard_tabulate(
-          by = TREAT,
-          variables = AVALC,
-        )
+        ard_tabulate(variables = AVALC)
     }
   )
 
@@ -91,5 +89,5 @@ test_that("ard_strata computes stats for parameter specific strata", {
   ## TODO: resolve after release of R-devel
   skip_if_not(package_version(paste(R.version$major, R.version$minor, sep = ".")) <= package_version("4.5.0"))
 
-  expect_snapshot(as.data.frame(tbl)[1:25, ])
+  expect_snapshot(as.data.frame(tbl))
 })

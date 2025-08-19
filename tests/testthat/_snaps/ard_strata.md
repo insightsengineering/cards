@@ -47,60 +47,27 @@
 # ard_strata computes stats for parameter specific strata
 
     Code
-      as.data.frame(tbl)[1:25, ]
+      as.data.frame(tbl)
     Output
-          group2 group2_level group1 group1_level variable variable_level  context
-      1  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
-      2  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
-      3  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              1 tabulate
-      4  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
-      5  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
-      6  PARAMCD       PARAM1  TREAT      PLACEBO    AVALC              2 tabulate
-      7  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
-      8  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
-      9  PARAMCD       PARAM1  TREAT        TREAT    AVALC              1 tabulate
-      10 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
-      11 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
-      12 PARAMCD       PARAM1  TREAT        TREAT    AVALC              2 tabulate
-      13 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
-      14 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
-      15 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              1 tabulate
-      16 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
-      17 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
-      18 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              2 tabulate
-      19 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
-      20 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
-      21 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              3 tabulate
-      22 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
-      23 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
-      24 PARAMCD       PARAM2  TREAT      PLACEBO    AVALC              4 tabulate
-      25 PARAMCD       PARAM2  TREAT        TREAT    AVALC              1 tabulate
-         stat_name stat_label      stat
-      1          n          n         1
-      2          N          N         3
-      3          p          % 0.3333333
-      4          n          n         2
-      5          N          N         3
-      6          p          % 0.6666667
-      7          n          n         3
-      8          N          N         3
-      9          p          %         1
-      10         n          n         0
-      11         N          N         3
-      12         p          %         0
-      13         n          n         0
-      14         N          N         0
-      15         p          %       NaN
-      16         n          n         0
-      17         N          N         0
-      18         p          %       NaN
-      19         n          n         0
-      20         N          N         0
-      21         p          %       NaN
-      22         n          n         0
-      23         N          N         0
-      24         p          %       NaN
-      25         n          n         0
+          group1 group1_level variable variable_level  context stat_name stat_label      stat
+      1  PARAMCD       PARAM1    AVALC              1 tabulate         n          n         4
+      2  PARAMCD       PARAM1    AVALC              1 tabulate         N          N         6
+      3  PARAMCD       PARAM1    AVALC              1 tabulate         p          % 0.6666667
+      4  PARAMCD       PARAM1    AVALC              2 tabulate         n          n         2
+      5  PARAMCD       PARAM1    AVALC              2 tabulate         N          N         6
+      6  PARAMCD       PARAM1    AVALC              2 tabulate         p          % 0.3333333
+      7  PARAMCD       PARAM2    AVALC              1 tabulate         n          n         0
+      8  PARAMCD       PARAM2    AVALC              1 tabulate         N          N         6
+      9  PARAMCD       PARAM2    AVALC              1 tabulate         p          %         0
+      10 PARAMCD       PARAM2    AVALC              2 tabulate         n          n         3
+      11 PARAMCD       PARAM2    AVALC              2 tabulate         N          N         6
+      12 PARAMCD       PARAM2    AVALC              2 tabulate         p          %       0.5
+      13 PARAMCD       PARAM2    AVALC              3 tabulate         n          n         2
+      14 PARAMCD       PARAM2    AVALC              3 tabulate         N          N         6
+      15 PARAMCD       PARAM2    AVALC              3 tabulate         p          % 0.3333333
+      16 PARAMCD       PARAM2    AVALC              4 tabulate         n          n         1
+      17 PARAMCD       PARAM2    AVALC              4 tabulate         N          N         6
+      18 PARAMCD       PARAM2    AVALC              4 tabulate         p          % 0.1666667
                                                                                                                                                                                                                                                                                                                            fmt_fun
       1                                                                                                                                                                                                                                                                                                                          0
       2                                                                                                                                                                                                                                                                                                                          0
@@ -120,13 +87,6 @@
       16                                                                                                                                                                                                                                                                                                                         0
       17                                                                                                                                                                                                                                                                                                                         0
       18 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
-      19                                                                                                                                                                                                                                                                                                                         0
-      20                                                                                                                                                                                                                                                                                                                         0
-      21 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
-      22                                                                                                                                                                                                                                                                                                                         0
-      23                                                                                                                                                                                                                                                                                                                         0
-      24 function (x) , {,     res <- ifelse(is.na(x), NA_character_, str_trim(format(round_fun(x * ,         scale, digits = digits), nsmall = digits))),     if (!is.null(width)) {,         res <- ifelse(nchar(res) >= width | is.na(res), res, ,             paste0(strrep(" ", width - nchar(res)), res)),     },     res, }
-      25                                                                                                                                                                                                                                                                                                                         0
          warning error
       1     NULL  NULL
       2     NULL  NULL
@@ -146,11 +106,4 @@
       16    NULL  NULL
       17    NULL  NULL
       18    NULL  NULL
-      19    NULL  NULL
-      20    NULL  NULL
-      21    NULL  NULL
-      22    NULL  NULL
-      23    NULL  NULL
-      24    NULL  NULL
-      25    NULL  NULL
 
