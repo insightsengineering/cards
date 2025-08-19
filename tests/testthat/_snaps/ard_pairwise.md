@@ -1,8 +1,8 @@
 # ard_pairwise(variable) messaging
 
     Code
-      ard_pairwise(ADSL, variable = c(ARM, AGEGR1), .f = function(df) ard_complex(df,
-        variables = AGE, statistic = ~ list(ttest = ttest_fn)))
+      ard_pairwise(ADSL, variable = c(ARM, AGEGR1), .f = function(df) ard_mvsummary(
+        df, variables = AGE, statistic = ~ list(ttest = ttest_fn)))
     Condition
       Error in `ard_pairwise()`:
       ! The `variable` argument must be length 1.
@@ -10,7 +10,7 @@
 ---
 
     Code
-      ard_pairwise(ADSL, variable = NOT_A_COLUMN, .f = function(df) ard_complex(df,
+      ard_pairwise(ADSL, variable = NOT_A_COLUMN, .f = function(df) ard_mvsummary(df,
         variables = AGE, statistic = ~ list(ttest = ttest_fn)))
     Condition
       Error in `ard_pairwise()`:
@@ -30,8 +30,8 @@
 # ard_pairwise(include) messaging
 
     Code
-      ard_pairwise(ADSL, variable = ARM, .f = function(df) ard_complex(df, variables = AGE,
-        statistic = ~ list(ttest = ttest_fn)), include = "NOT_A_LEVEL")
+      ard_pairwise(ADSL, variable = ARM, .f = function(df) ard_mvsummary(df,
+        variables = AGE, statistic = ~ list(ttest = ttest_fn)), include = "NOT_A_LEVEL")
     Condition
       Error in `ard_pairwise()`:
       ! The `include` argument must be NULL or one or more of "Placebo", "Xanomeline High Dose", and "Xanomeline Low Dose".
@@ -39,8 +39,8 @@
 ---
 
     Code
-      ard_pairwise(ADSL, variable = ARM, .f = function(df) ard_complex(df, variables = AGE,
-        statistic = ~ list(ttest = ttest_fn)), include = mtcars)
+      ard_pairwise(ADSL, variable = ARM, .f = function(df) ard_mvsummary(df,
+        variables = AGE, statistic = ~ list(ttest = ttest_fn)), include = mtcars)
     Condition
       Error in `ard_pairwise()`:
       ! The `include` argument must be a simple vector, not a data frame.

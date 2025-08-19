@@ -24,7 +24,7 @@
 # filter_ard_hierarchical() error messaging works
 
     Code
-      filter_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+      filter_ard_hierarchical(ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
       n > 10)
     Condition
       Error in `filter_ard_hierarchical()`:

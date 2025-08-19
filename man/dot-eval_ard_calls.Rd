@@ -26,8 +26,8 @@ Evaluate the \verb{ard_*()} function calls
 cards:::.eval_ard_calls(
   data = ADSL,
   .by = "ARM",
-  ard_categorical(variables = "AGEGR1"),
-  ard_continuous(variables = "AGE")
+  ard_tabulate(variables = "AGEGR1"),
+  ard_summary(variables = "AGE")
 )
 }
 \keyword{internal}

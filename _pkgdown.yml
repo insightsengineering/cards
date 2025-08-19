@@ -39,13 +39,13 @@ reference:
   - title: "ARD Creation"
   - subtitle: "Data Summaries"
   -  contents:
-      - ard_continuous
-      - ard_categorical
+      - ard_summary
+      - ard_tabulate
+      - ard_tabulate_value
       - ard_hierarchical
-      - ard_dichotomous
       - ard_missing
       - ard_total_n
-      - ard_complex
+      - ard_mvsummary
       - ard_stack
       - ard_stack_hierarchical
 

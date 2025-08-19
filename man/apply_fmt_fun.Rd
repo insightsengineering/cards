@@ -22,6 +22,6 @@ Apply the formatting functions to each of the raw statistics.
 Function aliases are converted to functions using \code{\link[=alias_as_fmt_fun]{alias_as_fmt_fun()}}.
 }
 \examples{
-ard_continuous(ADSL, variables = "AGE") |>
+ard_summary(ADSL, variables = "AGE") |>
   apply_fmt_fun()
 }

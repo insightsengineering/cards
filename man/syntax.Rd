@@ -22,7 +22,7 @@ package and custom selectors. Review their help files for details.
 
 \section{Formula and List Selectors}{
 Some arguments in the cards package accept list and
-formula notation, e.g. \code{ard_continuous(statistic=)}.
+formula notation, e.g. \code{ard_summary(statistic=)}.
 Below enumerates a few tips and shortcuts for using the list and formulas.
 \enumerate{
 \item \strong{List of Formulas}
@@ -30,40 +30,40 @@ Below enumerates a few tips and shortcuts for using the list and formulas.
 Typical usage includes a list of formulas, where the LHS is a variable
 name or a selector.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = list(age ~ list(N = \\(x) length(x)), starts_with("a") ~ list(mean = mean)))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = list(age ~ list(N = \\(x) length(x)), starts_with("a") ~ list(mean = mean)))
 }\if{html}{\out{</div>}}
 \item \strong{Named List}
 
 You may also pass a named list; however, the tidyselect selectors
 are not supported with this syntax.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = list(age = list(N = \\(x) length(x))))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = list(age = list(N = \\(x) length(x))))
 }\if{html}{\out{</div>}}
 \item \strong{Hybrid Named List/List of Formulas}
 
 You can pass a combination of formulas and named elements.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = list(age = list(N = \\(x) length(x)), starts_with("a") ~ list(mean = mean)))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = list(age = list(N = \\(x) length(x)), starts_with("a") ~ list(mean = mean)))
 }\if{html}{\out{</div>}}
 \item \strong{Shortcuts}
 
 You can pass a single formula, which is equivalent to passing the formula
 in a list.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = starts_with("a") ~ list(mean = mean)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = starts_with("a") ~ list(mean = mean)
 }\if{html}{\out{</div>}}
 
 As a shortcut to select all variables, you can omit the LHS of the formula.
 The two calls below are equivalent.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = ~list(N = \\(x) length(x)))
-ard_continuous(statistic = everything() ~ list(N = \\(x) length(x)))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = ~list(N = \\(x) length(x)))
+ard_summary(statistic = everything() ~ list(N = \\(x) length(x)))
 }\if{html}{\out{</div>}}
 \item \strong{Combination Selectors}
 
 Selectors can be combined using the \code{c()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_continuous(statistic = c(everything(), -age) ~ list(N = \\(x) length(x)))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ard_summary(statistic = c(everything(), -age) ~ list(N = \\(x) length(x)))
 }\if{html}{\out{</div>}}
 }
 }

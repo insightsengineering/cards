@@ -24,7 +24,7 @@
 #' @keywords internal
 #'
 #' @examples
-#' ard_categorical(ADSL, variables = AGEGR1) |>
+#' ard_tabulate(ADSL, variables = AGEGR1) |>
 #'   print()
 print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
   set_cli_abort_call()

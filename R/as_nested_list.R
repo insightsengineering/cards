@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' ard_continuous(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
+#' ard_summary(mtcars, by = "cyl", variables = c("mpg", "hp")) |>
 #'   as_nested_list()
 as_nested_list <- function(x) {
   set_cli_abort_call()
@@ -48,7 +48,7 @@ as_nested_list <- function(x) {
 #' @keywords internal
 #'
 #' @examples
-#' ard_continuous(mtcars, variables = mpg) |>
+#' ard_summary(mtcars, variables = mpg) |>
 #'   dplyr::filter(dplyr::row_number() %in% 1L) |>
 #'   apply_fmt_fun() |>
 #'   cards:::.one_row_ard_to_nested_list()

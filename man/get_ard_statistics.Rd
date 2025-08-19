@@ -31,7 +31,7 @@ named list
 Returns the statistics from an ARD as a named list.
 }
 \examples{
-ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
 get_ard_statistics(
   ard,

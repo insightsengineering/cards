@@ -1,12 +1,12 @@
-#' Complex ARD Summaries
+#' Multivariate ARD Summaries
 #'
-#' Function is similar to [ard_continuous()], but allows for more complex
-#' summaries. While `ard_continuous(statistic)` only allows for a univariable
-#' function, `ard_complex(statistic)` can handle more complex data summaries.
+#' Function is similar to [ard_summary()], but allows for more complex, multivariate
+#' summaries. While `ard_summary(statistic)` only allows for a univariable
+#' function, `ard_mvsummary(statistic)` can handle more complex data summaries.
 #'
-#' @inheritParams ard_continuous
+#' @inheritParams ard_summary
 #' @param statistic ([`formula-list-selector`][syntax])\cr
-#'   The form of the statistics argument is identical to `ard_continuous(statistic)`
+#'   The form of the statistics argument is identical to `ard_summary(statistic)`
 #'   argument, except the summary function _must_ accept the following arguments:
 #'   - `x`: a vector
 #'   - `data`: the data frame that has been subset such that the `by`/`strata` columns
@@ -23,11 +23,11 @@
 #'   may look like: `foo(x, data, ...)`
 #'
 #' @return an ARD data frame of class 'card'
-#' @name ard_complex
+#' @name ard_mvsummary
 #'
 #' @examples
-#' # example how to mimic behavior of `ard_continuous()`
-#' ard_complex(
+#' # example how to mimic behavior of `ard_summary()`
+#' ard_mvsummary(
 #'   ADSL,
 #'   by = "ARM",
 #'   variables = "AGE",
@@ -44,30 +44,30 @@
 #'
 #' ADSL |>
 #'   dplyr::group_by(ARM) |>
-#'   ard_complex(
+#'   ard_mvsummary(
 #'     variables = "AGE",
 #'     statistic = list(AGE = list(means = grand_mean))
 #'   )
 NULL
 
-#' @rdname ard_complex
+#' @rdname ard_mvsummary
 #' @export
-ard_complex <- function(data, ...) {
+ard_mvsummary <- function(data, ...) {
   check_not_missing(data)
-  UseMethod("ard_complex")
+  UseMethod("ard_mvsummary")
 }
 
-#' @rdname ard_complex
+#' @rdname ard_mvsummary
 #' @export
-ard_complex.data.frame <- function(data,
-                                   variables,
-                                   by = dplyr::group_vars(data),
-                                   strata = NULL,
-                                   statistic,
-                                   fmt_fun = NULL,
-                                   stat_label = everything() ~ default_stat_labels(),
-                                   fmt_fn = deprecated(),
-                                   ...) {
+ard_mvsummary.data.frame <- function(data,
+                                     variables,
+                                     by = dplyr::group_vars(data),
+                                     strata = NULL,
+                                     statistic,
+                                     fmt_fun = NULL,
+                                     stat_label = everything() ~ default_stat_labels(),
+                                     fmt_fn = deprecated(),
+                                     ...) {
   set_cli_abort_call()
   check_dots_used()
 
@@ -75,8 +75,8 @@ ard_complex.data.frame <- function(data,
   if (lifecycle::is_present(fmt_fn)) {
     lifecycle::deprecate_soft(
       when = "0.6.1",
-      what = "ard_continuous(fmt_fn)",
-      with = "ard_continuous(fmt_fun)"
+      what = "ard_summary(fmt_fn)",
+      with = "ard_summary(fmt_fun)"
     )
     fmt_fun <- fmt_fn
   }
@@ -101,7 +101,7 @@ ard_complex.data.frame <- function(data,
   }
 
   # calculate statistics -------------------------------------------------------
-  # first set an option to be used internally within `ard_continuous()`
+  # first set an option to be used internally within `ard_summary()`
   # to calculate the statistics and pass multiple arguments to the
   # user-supplied functions in the `statistics` argument
   old_option <- getOption("cards.calculate_stats_as_ard.eval_fun")
@@ -118,7 +118,7 @@ ard_complex.data.frame <- function(data,
         parse_expr()
   )
 
-  ard_continuous(
+  ard_summary(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
@@ -127,5 +127,5 @@ ard_complex.data.frame <- function(data,
     fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
-    dplyr::mutate(context = "complex")
+    dplyr::mutate(context = "mvsummary")
 }
