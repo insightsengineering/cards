@@ -17,9 +17,9 @@ an expression that represents an element of a nested list
 Convert One Row to Nested List
 }
 \examples{
-ard_continuous(mtcars, variables = mpg) |>
+ard_summary(mtcars, variables = mpg) |>
   dplyr::filter(dplyr::row_number() \%in\% 1L) |>
-  apply_fmt_fn() |>
+  apply_fmt_fun() |>
   cards:::.one_row_ard_to_nested_list()
 }
 \keyword{internal}

@@ -25,11 +25,13 @@
 #' @param .attributes (`logical`)\cr
 #'   logical indicating whether to include the results of `ard_attributes()` for all
 #'   variables represented in the ARD. Default is `FALSE`.
-#' @param .shuffle (`logical`)\cr
-#'   logical indicating whether to perform `shuffle_ard()` on the final result.
-#'   Default is `FALSE`.
+#' @param .shuffle `r lifecycle::badge("deprecated")` support for `.shuffle = TRUE`
+#'   will be removed in the next release. `ard_stack()` will no longer shuffle.
+#'   `shuffle_ard()` should be called separately.
 #' @param .total_n (`logical`)\cr
 #'   logical indicating whether to include of `ard_total_n()` in the returned ARD.
+#' @param .by_stats (`logical`)\cr
+#'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
 #' @return an ARD data frame of class 'card'
 #' @export
@@ -37,8 +39,8 @@
 #' @examples
 #' ard_stack(
 #'   data = ADSL,
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE"),
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE"),
 #'   .by = "ARM",
 #'   .overall = TRUE,
 #'   .attributes = TRUE
@@ -46,8 +48,8 @@
 #'
 #' ard_stack(
 #'   data = ADSL,
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE"),
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE"),
 #'   .by = "ARM",
 #'   .shuffle = TRUE
 #' )
@@ -59,7 +61,8 @@ ard_stack <- function(data,
                       .missing = FALSE,
                       .attributes = FALSE,
                       .total_n = FALSE,
-                      .shuffle = FALSE) {
+                      .shuffle = FALSE,
+                      .by_stats = TRUE) {
   set_cli_abort_call()
 
   # process arguments ----------------------------------------------------------
@@ -74,6 +77,7 @@ ard_stack <- function(data,
   check_scalar_logical(.attributes)
   check_scalar_logical(.shuffle)
   check_scalar_logical(.total_n)
+  check_scalar_logical(.by_stats)
 
   if (is_empty(.by) && isTRUE(.overall)) {
     cli::cli_inform(
@@ -105,10 +109,10 @@ ard_stack <- function(data,
   }
 
   # compute Ns by group / combine main calls -----------------------------------
-  if (!is_empty(by)) {
+  if (!is_empty(by) && isTRUE(.by_stats)) {
     ard_full <- bind_ard(
       ard_list,
-      ard_categorical(
+      ard_tabulate(
         data = data,
         variables = all_of(.by)
       )
@@ -153,8 +157,18 @@ ard_stack <- function(data,
   # order ----------------------------------------------------------------------
   ard_full <- tidy_ard_row_order(ard_full)
 
+  # append attributes ----------------------------------------------------------
+  attr(ard_full, "args") <- list(
+    by = .by
+  )
+
   # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
+    lifecycle::deprecate_warn(
+      when = "0.7.0",
+      what = "cards::ard_stack(.shuffle)",
+      details = "Call `shuffle_ard()` after `ard_stack()`."
+    )
     return(shuffle_ard(ard_full))
   }
 
@@ -180,8 +194,8 @@ ard_stack <- function(data,
 #' cards:::.eval_ard_calls(
 #'   data = ADSL,
 #'   .by = "ARM",
-#'   ard_categorical(variables = "AGEGR1"),
-#'   ard_continuous(variables = "AGE")
+#'   ard_tabulate(variables = "AGEGR1"),
+#'   ard_summary(variables = "AGE")
 #' )
 .eval_ard_calls <- function(data, .by, ...) {
   # capture quosures -----------------------------------------------------------

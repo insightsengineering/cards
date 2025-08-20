@@ -12,7 +12,8 @@ ard_stack(
   .missing = FALSE,
   .attributes = FALSE,
   .total_n = FALSE,
-  .shuffle = FALSE
+  .shuffle = FALSE,
+  .by_stats = TRUE
 )
 }
 \arguments{
@@ -41,9 +42,12 @@ variables represented in the ARD. Default is \code{FALSE}.}
 \item{.total_n}{(\code{logical})\cr
 logical indicating whether to include of \code{ard_total_n()} in the returned ARD.}
 
-\item{.shuffle}{(\code{logical})\cr
-logical indicating whether to perform \code{shuffle_ard()} on the final result.
-Default is \code{FALSE}.}
+\item{.shuffle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} support for \code{.shuffle = TRUE}
+will be removed in the next release. \code{ard_stack()} will no longer shuffle.
+\code{shuffle_ard()} should be called separately.}
+
+\item{.by_stats}{(\code{logical})\cr
+logical indicating whether to include overall stats of the \code{by} variables in the returned ARD.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -60,8 +64,8 @@ by variable will also be returned.
 \examples{
 ard_stack(
   data = ADSL,
-  ard_categorical(variables = "AGEGR1"),
-  ard_continuous(variables = "AGE"),
+  ard_tabulate(variables = "AGEGR1"),
+  ard_summary(variables = "AGE"),
   .by = "ARM",
   .overall = TRUE,
   .attributes = TRUE
@@ -69,8 +73,8 @@ ard_stack(
 
 ard_stack(
   data = ADSL,
-  ard_categorical(variables = "AGEGR1"),
-  ard_continuous(variables = "AGE"),
+  ard_tabulate(variables = "AGEGR1"),
+  ard_summary(variables = "AGE"),
   .by = "ARM",
   .shuffle = TRUE
 )

@@ -19,7 +19,7 @@
 
     Code
       head(ard_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), by = c(TRTA,
-        AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), id = USUBJID), 1L)
+        AESEV), denominator = ADSL, id = USUBJID), 1L)
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" column.
@@ -32,14 +32,13 @@
         variable_level stat_name stat_label stat
       1      ATRIAL F…         n          n    0
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 ---
 
     Code
       head(ard_hierarchical(data = ADAE, variables = c(AESOC, AEDECOD), by = c(TRTA,
-        AESEV), denominator = dplyr::rename(ADSL, TRTA = ARM), id = c(USUBJID, SITEID)),
-      1L)
+        AESEV), denominator = ADSL, id = c(USUBJID, SITEID)), 1L)
     Condition
       Warning:
       Duplicate rows found in data for the "USUBJID" and "SITEID" columns.
@@ -52,7 +51,7 @@
         variable_level stat_name stat_label stat
       1      ATRIAL F…         n          n    0
     Message
-      i 4 more variables: context, fmt_fn, warning, error
+      i 4 more variables: context, fmt_fun, warning, error
 
 # ard_hierarchical_count() works without by variables
 

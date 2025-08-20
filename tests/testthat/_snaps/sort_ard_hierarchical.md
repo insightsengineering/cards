@@ -63,7 +63,7 @@
 # sort_ard_hierarchical() error messaging works
 
     Code
-      sort_ard_hierarchical(ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"))
+      sort_ard_hierarchical(ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"))
     Condition
       Error in `sort_ard_hierarchical()`:
       ! Sorting is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
@@ -74,7 +74,7 @@
       sort_ard_hierarchical(ard, sort = "no_sorting")
     Condition
       Error in `sort_ard_hierarchical()`:
-      ! `sort` must be one of "descending" or "alphanumeric", not "no_sorting".
+      ! Sorting type must be either "descending" or "alphanumeric" for all variables.
 
 ---
 
@@ -82,5 +82,5 @@
       sort_ard_hierarchical(ard)
     Condition
       Error in `sort_ard_hierarchical()`:
-      ! If `sort='descending'` then either "n" or "p" must be present in `x` for all variables in order to calculate the count sums used for sorting.
+      ! If `sort='descending'` for any variables then either "n" or "p" must be present in `x` for each of these specified variables in order to calculate the count sums used for sorting.
 

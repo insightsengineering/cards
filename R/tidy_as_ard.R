@@ -2,7 +2,7 @@
 #'
 #' @description
 #' `r lifecycle::badge("questioning")`\cr
-#' *Function is questioning because we think a better solution may be `ard_continuous()` + `ard_formals()`.*
+#' *Function is questioning because we think a better solution may be `ard_summary()` + `ard_formals()`.*
 #'
 #' Function converts a model's one-row tidy data frame into an ARD structure.
 #' The tidied data frame must have been constructed with
@@ -106,7 +106,7 @@ tidy_as_ard <- function(lst_tidy,
   dplyr::tibble(
     stat_name = names(lst_all_results),
     stat = lst_all_results,
-    fmt_fn = lapply(.data$stat, function(x) {
+    fmt_fun = lapply(.data$stat, function(x) {
       switch(is.numeric(x),
         1L
       )

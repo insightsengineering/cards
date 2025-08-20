@@ -1,7 +1,7 @@
-test_that("ard_continuous() works", {
+test_that("ard_summary() works", {
   expect_error(
     ard_test <-
-      ard_continuous(mtcars, variables = c(mpg, hp), by = c(am, vs)),
+      ard_summary(mtcars, variables = c(mpg, hp), by = c(am, vs)),
     NA
   )
   expect_snapshot(class(ard_test))
@@ -22,7 +22,7 @@ test_that("ard_continuous() works", {
   )
 
   expect_equal(
-    ard_continuous(
+    ard_summary(
       mtcars,
       variables = starts_with("xxxxx")
     ),
@@ -31,12 +31,12 @@ test_that("ard_continuous() works", {
 })
 
 
-test_that("ard_continuous(fmt_fn) argument works", {
-  ard_continuous(
+test_that("ard_summary(fmt_fun) argument works", {
+  ard_summary(
     ADSL,
     variables = "AGE",
     statistic = list(AGE = continuous_summary_fns(c("N", "mean", "median"))),
-    fmt_fn =
+    fmt_fun =
       list(
         AGE =
           list(
@@ -46,16 +46,16 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_fmt_fn() |>
+    apply_fmt_fun() |>
     dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
-  ard_continuous(
+  ard_summary(
     ADSL,
     variables = c("AGE", "BMIBL"),
     statistic = ~ continuous_summary_fns("mean"),
-    fmt_fn =
+    fmt_fun =
       list(
         AGE =
           list(
@@ -63,48 +63,48 @@ test_that("ard_continuous(fmt_fn) argument works", {
           )
       )
   ) |>
-    apply_fmt_fn() |>
+    apply_fmt_fun() |>
     dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 
   # tidyselect works
-  ard_continuous(
+  ard_summary(
     ADSL,
     variables = c("AGE", "BMIBL"),
     statistic = ~ continuous_summary_fns(c("mean", "sd")),
-    fmt_fn = ~ list(~ function(x) round(x, 4))
+    fmt_fun = ~ list(~ function(x) round(x, 4))
   ) |>
-    apply_fmt_fn() |>
+    apply_fmt_fun() |>
     dplyr::select(variable, stat_name, stat, stat_fmt) |>
     as.data.frame() |>
     expect_snapshot()
 })
 
-test_that("ard_continuous() messaging", {
+test_that("ard_summary() messaging", {
   # proper error message when statistic argument mis-specified
   expect_snapshot(
-    ard_continuous(mtcars, variables = "mpg", statistic = ~ list(mean = "this is a string")),
+    ard_summary(mtcars, variables = "mpg", statistic = ~ list(mean = "this is a string")),
     error = TRUE
   )
 
   # proper error message when non-data frame passed
   expect_snapshot(
-    ard_continuous(letters, variables = "mpg"),
+    ard_summary(letters, variables = "mpg"),
     error = TRUE
   )
 
   # proper error message when variables not passed
   expect_snapshot(
-    ard_continuous(mtcars),
+    ard_summary(mtcars),
     error = TRUE
   )
 })
 
-test_that("ard_continuous(stat_label) argument works", {
+test_that("ard_summary(stat_label) argument works", {
   # formula
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
@@ -118,7 +118,7 @@ test_that("ard_continuous(stat_label) argument works", {
 
   # list
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
@@ -132,7 +132,7 @@ test_that("ard_continuous(stat_label) argument works", {
 
   # variable-specific
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       data = ADSL,
       by = "ARM",
       variables = c("AGE", "BMIBL"),
@@ -151,7 +151,7 @@ test_that("ard_continuous(stat_label) argument works", {
       rlang::set_names(c("conf.low", "conf.high"))
   }
   ard1 <-
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = "AGE",
       statistic = ~ list(conf.int = conf_int),
@@ -162,7 +162,7 @@ test_that("ard_continuous(stat_label) argument works", {
 
   expect_snapshot(ard1)
 
-  ard2 <- ard_continuous(
+  ard2 <- ard_summary(
     ADSL,
     variables = "AGE",
     statistic = ~ list(conf.int = conf_int),
@@ -174,11 +174,11 @@ test_that("ard_continuous(stat_label) argument works", {
   expect_equal(ard1, ard2)
 })
 
-test_that("ard_continuous() and ARD column names", {
+test_that("ard_summary() and ARD column names", {
   ard_colnames <- c(
     "group1", "group1_level", "variable", "variable_level",
     "context", "stat_name", "stat_label", "statistic",
-    "fmt_fn", "warning", "error"
+    "fmt_fun", "warning", "error"
   )
 
   # no errors when these variables are the summary vars
@@ -186,7 +186,7 @@ test_that("ard_continuous() and ARD column names", {
     {
       df <- mtcars
       names(df) <- ard_colnames
-      ard_continuous(
+      ard_summary(
         data = suppressMessages(cbind(mtcars["am"], df)),
         variables = all_of(ard_colnames),
         by = "am"
@@ -203,7 +203,7 @@ test_that("ard_continuous() and ARD column names", {
         function(byvar) {
           df <- mtcars[c("am", "mpg")]
           names(df) <- c(byvar, "mpg")
-          ard_continuous(
+          ard_summary(
             data = df,
             by = all_of(byvar),
             variables = "mpg"
@@ -216,18 +216,18 @@ test_that("ard_continuous() and ARD column names", {
 })
 
 
-test_that("ard_continuous() with grouped data works", {
+test_that("ard_summary() with grouped data works", {
   expect_equal(
     ADSL |>
       dplyr::group_by(ARM) |>
-      ard_continuous(variables = AGE),
-    ard_continuous(data = ADSL, by = ARM, variables = AGE)
+      ard_summary(variables = AGE),
+    ard_summary(data = ADSL, by = ARM, variables = AGE)
   )
 })
 
-test_that("ard_continuous() with dates works and displays as expected", {
+test_that("ard_summary() with dates works and displays as expected", {
   ard_date <- ADSL |>
-    ard_continuous(
+    ard_summary(
       variables = DISONSDT,
       statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
     )
@@ -236,9 +236,9 @@ test_that("ard_continuous() with dates works and displays as expected", {
   expect_equal(ard_date$stat[[1]], as.Date("1998-06-13"))
 })
 
-test_that("ard_continuous() with empty/missing dates works, and preserves Date class", {
+test_that("ard_summary() with empty/missing dates works, and preserves Date class", {
   empty_date <- data.frame(dt = as.Date(NA)) |>
-    ard_continuous(
+    ard_summary(
       variables = dt,
       statistic = ~ continuous_summary_fns(c("min"))
     )
@@ -246,17 +246,17 @@ test_that("ard_continuous() with empty/missing dates works, and preserves Date c
 })
 
 
-test_that("ard_continuous() works with non-syntactic names", {
+test_that("ard_summary() works with non-syntactic names", {
   expect_equal(
     ADSL |>
       dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE) |>
-      ard_continuous(
+      ard_summary(
         variables = `BMI base`,
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
       dplyr::select(stat, error),
     ADSL |>
-      ard_continuous(
+      ard_summary(
         variables = BMIBL,
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
@@ -266,13 +266,13 @@ test_that("ard_continuous() works with non-syntactic names", {
   expect_equal(
     ADSL |>
       dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE) |>
-      ard_continuous(
+      ard_summary(
         variables = "BMI base",
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
       dplyr::select(stat, error),
     ADSL |>
-      ard_continuous(
+      ard_summary(
         variables = BMIBL,
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
@@ -287,7 +287,7 @@ test_that("ard_continuous() works with non-syntactic names", {
 
   expect_snapshot(ADSL |>
     dplyr::mutate(`BMI base` = BMIBL, `Age` = AGE, `Arm Var` = ARM) |>
-    ard_continuous(
+    ard_summary(
       variables = c("BMI base", `Age`),
       statistic = ~ list("mean lbl" = `mean error`),
       stat_label = everything() ~ list(`mean lbl` = "Test lbl")
@@ -296,28 +296,28 @@ test_that("ard_continuous() works with non-syntactic names", {
 })
 
 # - test if function parameters can be used as variable names without error
-test_that("ard_continuous() works when using generic names ", {
+test_that("ard_summary() works when using generic names ", {
   mtcars2 <- mtcars %>%
     dplyr::rename("variable_level" = mpg, "variable" = cyl, "median" = disp, "p25" = gear)
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(variable_level, variable), by = median) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(variable_level, variable), by = median) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(disp, gear), by = mpg) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(median, p25), by = variable_level) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(disp, gear), by = mpg) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(median, p25), by = variable_level) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(disp, gear), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(median, p25), by = variable) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(disp, gear), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(median, p25), by = variable) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(disp, mpg), by = gear) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(median, variable_level), by = p25) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(disp, mpg), by = gear) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(median, variable_level), by = p25) |> dplyr::select(stat)
   )
 
   # rename vars
@@ -326,28 +326,28 @@ test_that("ard_continuous() works when using generic names ", {
     dplyr::rename("by" = mpg, "statistic" = cyl, "weights" = disp, "p75" = gear)
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(by, statistic), by = weights) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(by, statistic), by = weights) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(statistic, weights), by = by) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(statistic, weights), by = by) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(by, statistic), by = p75) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(by, statistic), by = p75) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
   )
 
   # rename vars
@@ -355,28 +355,28 @@ test_that("ard_continuous() works when using generic names ", {
     dplyr::rename("mean" = mpg, "sd" = cyl, "var" = disp, "sum" = gear)
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(mean, sd), by = var) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(mean, sd), by = var) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(sd, var), by = mean) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(sd, var), by = mean) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(mean, var), by = sd) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(mean, var), by = sd) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(mean, sd), by = sum) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(mean, sd), by = sum) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat)
   )
 
   # rename vars
@@ -384,45 +384,45 @@ test_that("ard_continuous() works when using generic names ", {
     dplyr::rename("deff" = mpg, "min" = cyl, "max" = disp, "mean.std.error" = gear)
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(deff, min), by = max) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(deff, min), by = max) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(min, max), by = deff) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(min, max), by = deff) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(deff, max), by = min) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(deff, max), by = min) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(deff, min), by = mean.std.error) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(deff, min), by = mean.std.error) |> dplyr::select(stat)
   )
 
   expect_equal(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_continuous(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
+    ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
+    ard_summary(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
   )
 })
 
-test_that("ard_continuous() follows ard structure", {
+test_that("ard_summary() follows ard structure", {
   expect_silent(
-    ard_continuous(mtcars, variables = c(mpg, gear), by = cyl) |>
+    ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |>
       check_ard_structure(method = FALSE)
   )
 })
 
-test_that("ard_continuous() errors with incomplete factor columns", {
+test_that("ard_summary() errors with incomplete factor columns", {
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = character(0))) |>
-      ard_continuous(
+      ard_summary(
         by = am,
         variables = mpg
       )
@@ -433,7 +433,7 @@ test_that("ard_continuous() errors with incomplete factor columns", {
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
-      ard_continuous(
+      ard_summary(
         by = am,
         variables = mpg
       )
@@ -441,7 +441,7 @@ test_that("ard_continuous() errors with incomplete factor columns", {
 })
 
 
-test_that("ard_continuous() with `as_cards_fn()` inputs", {
+test_that("ard_summary() with `as_cards_fn()` inputs", {
   ttest_works <-
     as_cards_fn(
       \(x) t.test(x)[c("statistic", "p.value")],
@@ -458,15 +458,15 @@ test_that("ard_continuous() with `as_cards_fn()` inputs", {
 
   # the result is the same when there is no error
   expect_equal(
-    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
-    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")]))
+    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
+    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")]))
   )
 
   # when there is an error, we get the same structure back
   expect_equal(
-    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
+    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_error)) |>
       dplyr::pull("stat_name"),
-    ard_continuous(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")])) |>
+    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")])) |>
       dplyr::pull("stat_name")
   )
 })

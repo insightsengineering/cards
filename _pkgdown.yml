@@ -39,13 +39,13 @@ reference:
   - title: "ARD Creation"
   - subtitle: "Data Summaries"
   -  contents:
-      - ard_continuous
-      - ard_categorical
+      - ard_summary
+      - ard_tabulate
+      - ard_tabulate_value
       - ard_hierarchical
-      - ard_dichotomous
       - ard_missing
       - ard_total_n
-      - ard_complex
+      - ard_mvsummary
       - ard_stack
       - ard_stack_hierarchical
 
@@ -54,6 +54,7 @@ reference:
       - ard_strata
       - ard_pairwise
       - ard_attributes
+      - ard_identity
 
   - title: "ARD Utilities"
   - subtitle: "Construct ARDs"
@@ -61,14 +62,14 @@ reference:
       - as_card
       - bind_ard
       - tidy_ard_column_order
-      - apply_fmt_fn
+      - apply_fmt_fun
       - update_ard
       - process_selectors
       - ard_formals
       - nest_for_ard
       - default_stat_labels
       - check_ard_structure
-      - alias_as_fmt_fn
+      - alias_as_fmt_fun
       - label_round
       - rename_ard_columns
       - unlist_ard_columns

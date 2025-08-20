@@ -3,7 +3,7 @@
 #' Returns the total N for the data frame.
 #' The placeholder variable name returned in the object is `"..ard_total_n.."`
 #'
-#' @inheritParams ard_dichotomous
+#' @inheritParams ard_tabulate
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return an ARD data frame of class 'card'
@@ -31,7 +31,11 @@ ard_total_n.data.frame <- function(data, ...) {
   # calculate total N ----------------------------------------------------------
   data |>
     dplyr::mutate(..ard_total_n.. = TRUE) |>
-    ard_dichotomous(variables = "..ard_total_n..", statistic = list(..ard_total_n.. = "N")) |>
+    ard_tabulate_value(
+      variables = "..ard_total_n..",
+      statistic = list(..ard_total_n.. = "N"),
+      value = list(..ard_total_n.. = TRUE)
+    ) |>
     dplyr::mutate(context = "total_n") |>
     dplyr::select(-all_ard_variables("levels"))
 }

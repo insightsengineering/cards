@@ -4,7 +4,13 @@
 \alias{filter_ard_hierarchical}
 \title{Filter Stacked Hierarchical ARDs}
 \usage{
-filter_ard_hierarchical(x, filter, keep_empty = FALSE)
+filter_ard_hierarchical(
+  x,
+  filter,
+  var = NULL,
+  keep_empty = FALSE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -15,9 +21,16 @@ a stacked hierarchical ARD of class \code{'card'} created using \code{\link[=ard
 an expression that is used to filter variable groups of the hierarchical ARD. See the
 Details section below.}
 
+\item{var}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+hierarchy variable from \code{x} to perform filtering on. If \code{NULL}, the last hierarchy variable
+from \code{x} (\code{dplyr::last(attributes(x)$args$variables)}) will be used.}
+
 \item{keep_empty}{(scalar \code{logical})\cr
 Logical argument indicating whether to retain summary rows corresponding to hierarchy
 sections that have had all rows filtered out. Default is \code{FALSE}.}
+
+\item{quiet}{(\code{logical})\cr
+logical indicating whether to suppress any messaging. Default is \code{FALSE}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -37,6 +50,26 @@ Variable groups can be filtered on the values of any of the possible
 statistics (\code{n}, \code{p}, and \code{N}) provided they are included at least once
 in the ARD, as well as the values of any \code{by} variables.
 
+Additionally, filters can be applied on individual levels of the \code{by} variable via the
+\code{n_XX}, \code{N_XX}, and \code{p_XX} statistics, where each \code{XX} represents the index of the \code{by}
+variable level to select the statistic from. For example, \code{filter = n_1 > 5} will check
+whether \code{n} values for the first level of \code{by} are greater than 5 in each row group.
+
+Overall statistics for each row group can be used in filters via the \code{n_overall}, \code{N_overall},
+and \code{p_overall} statistics. If the ARD is created with parameter \code{overall=TRUE}, then these
+overall statistics will be extracted directly from the ARD, otherwise the statistics will be
+derived where possible. If \code{overall=FALSE}, then \code{n_overall} can only be derived if the \code{n}
+statistic is present in the ARD for the filter variable, \code{N_overall} if the \code{N} statistic is
+present for the filter variable, and \code{p_overall} if both the \code{n} and \code{N} statistics are
+present for the filter variable.
+
+By default, filters will be applied at the level of the innermost hierarchy variable, i.e.
+the last variable supplied to \code{variables}. If filters should instead be applied at the level
+of one of the outer hierarchy variables, the \code{var} parameter can be used to select a different
+variable to filter on. When \code{var} is set to a different (outer) variable and a level of the
+variable does not meet the filtering criteria then the section corresponding to that variable
+level and all sub-sections within that section will be removed.
+
 To illustrate how the function works, consider the typical example below
 where the AE summaries are provided by treatment group.
 
@@ -46,7 +79,7 @@ where the AE summaries are provided by treatment group.
   ard_stack_hierarchical(
     variables = c(AESOC, AEDECOD),
     by = TRTA,
-    denominator = ADSL |> dplyr::rename(TRTA = ARM),
+    denominator = ADSL,
     id = USUBJID
   )
 }\if{html}{\out{</div>}}\tabular{lrrr}{
@@ -57,8 +90,9 @@ where the AE summaries are provided by treatment group.
 }
 
 
-Filters are applied to the summary statistics of the innermost variable in the hierarchy---\code{AEDECOD}
-in this case.
+Filters are applied to the summary statistics of the innermost variable in the hierarchy by
+default---\code{AEDECOD} in this case. If we wanted to filter based on SOC rates instead of AE
+rates we could specify \code{var = AESOC} instead.
 If any of the summary statistics meet the filter requirement for any of the treatment groups,
 the entire row is retained.
 For example, if \code{filter = n >= 9} were passed, the criteria would be met for DIARRHOEA
@@ -69,12 +103,17 @@ for VOMITING so all rows associated with this AE would be removed.
 
 In addition to filtering on individual statistic values, filters can be applied
 across the treatment groups (i.e. across all \code{by} variable values) by using
-aggregate functions such as \code{sum()} and \code{mean()}.
-A value of \code{filter = sum(n) >= 18} retains AEs where the sum of the number
-of AEs across the treatment groups is greater than or equal to 18.
+aggregate functions such as \code{sum()} and \code{mean()}. For simplicity, it is suggested to use
+the \code{XX_overall} statistics in place of \code{sum(XX)} in equivalent scenarios. For example,
+\code{n_overall} is equivalent to \code{sum(n)}.
+A value of \code{filter = sum(n) >= 18} (or \code{filter = n_overall >= 18}) retains AEs where the sum of
+the number of AEs across the treatment groups is greater than or equal to 18.
 
-If \code{ard_stack_hierarchical(overall=TRUE)} was run, the overall column is
-\strong{not} considered in any filtering.
+If \code{filter = n_overall >= 18} and \code{var = AESOC} then all rows corresponding to an SOC with an
+overall rate less than 18 - including all AEs within that SOC - will be removed.
+
+If \code{ard_stack_hierarchical(overall=TRUE)} was run, the overall column is \strong{not} considered in
+any filtering except for \code{XX_overall} statistics, if specified.
 
 If \code{ard_stack_hierarchical(over_variables=TRUE)} was run, any overall statistics are kept regardless
 of filtering.
@@ -84,11 +123,11 @@ Some examples of possible filters:
 \item \code{filter = n > 5}: keep AEs where one of the treatment groups observed more than 5 AEs
 \item \code{filter = n == 2 & p < 0.05}: keep AEs where one of the treatment groups observed exactly 2
 AEs \emph{and} one of the treatment groups observed a proportion less than 5\%
-\item \code{filter = sum(n) >= 4}: keep AEs where there were 4 or more AEs observed across the treatment groups
+\item \code{filter = n_overall >= 4}: keep AEs where there were 4 or more AEs observed across the treatment groups
 \item \code{filter = mean(n) > 4 | n > 3}: keep AEs where the mean number of AEs is 4 or more across the
 treatment groups \emph{or} one of the treatment groups observed more than 3 AEs
-\item \code{filter = any(n > 2 & TRTA == "Xanomeline High Dose")}: keep AEs where the
-\code{"Xanomeline High Dose"} treatment group observed more than 2 AEs
+\item \code{filter = n_2 > 2}: keep AEs where the \code{"Xanomeline High Dose"} treatment group (second \code{by} variable
+level) observed more than 2 AEs
 }
 }
 \examples{
@@ -98,8 +137,9 @@ ard <- ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),
   by = TRTA,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM),
-  id = USUBJID
+  denominator = ADSL,
+  id = USUBJID,
+  overall = TRUE
 )
 
 # Example 1 ----------------------------------
@@ -113,6 +153,15 @@ filter_ard_hierarchical(ard, n > 3)
 # Example 3 ----------------------------------
 # Keep AEs that have an overall prevalence of greater than 5\%
 filter_ard_hierarchical(ard, sum(n) / sum(N) > 0.05)
+
+# Example 4 ----------------------------------
+# Keep AEs that have a difference in prevalence of greater than 3\% between reference group with
+# `TRTA = "Xanomeline High Dose"` and comparison group with `TRTA = "Xanomeline Low Dose"`
+filter_ard_hierarchical(ard, abs(p_2 - p_3) > 0.03)
+
+# Example 5 ----------------------------------
+# Keep AEs from SOCs that have an overall prevalence of greater than 20\%
+filter_ard_hierarchical(ard, p_overall > 0.20, var = AESOC)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

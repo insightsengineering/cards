@@ -17,9 +17,10 @@ ard_hierarchical_count(data, ...)
   by = dplyr::group_vars(data),
   statistic = everything() ~ c("n", "N", "p"),
   denominator = NULL,
-  fmt_fn = NULL,
+  fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
   id = NULL,
+  fmt_fn = deprecated(),
   ...
 )
 
@@ -27,8 +28,9 @@ ard_hierarchical_count(data, ...)
   data,
   variables,
   by = dplyr::group_vars(data),
-  fmt_fn = NULL,
+  fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
+  fmt_fn = deprecated(),
   ...
 )
 }
@@ -62,7 +64,7 @@ counts that may appear in the header of a table.
 calculate the event rates.
 }}
 
-\item{fmt_fn}{(\code{\link[=syntax]{formula-list-selector}})\cr
+\item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
@@ -77,6 +79,8 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \item{id}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 an optional argument used to assert there are no duplicates within
 the \code{c(id, variables)} columns.}
+
+\item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 an ARD data frame of class 'card'
@@ -105,7 +109,7 @@ ard_hierarchical(
   variables = c(AESOC, AEDECOD),
   by = TRTA,
   id = USUBJID,
-  denominator = ADSL |> dplyr::rename(TRTA = ARM)
+  denominator = ADSL
 )
 
 ard_hierarchical_count(

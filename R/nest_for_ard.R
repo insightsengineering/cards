@@ -32,6 +32,9 @@
 #' @param include_data (scalar `logical`)\cr
 #'   logical indicating whether to include the data subsets as a list-column.
 #'   Default is `TRUE`.
+#' @param include_by_and_strata (`logical`)\cr
+#'   When `TRUE`, the `by` and `strata` variables are included in the nested
+#'   data frames.
 #'
 #' @return a nested tibble
 #' @export
@@ -47,7 +50,8 @@
 #' )
 nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
                          rename_columns = TRUE, list_columns = TRUE,
-                         include_data = TRUE) {
+                         include_data = TRUE,
+                         include_by_and_strata = FALSE) {
   set_cli_abort_call()
 
   # if no by/stratifying variables, simply return the data frame
@@ -118,8 +122,14 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
       lapply(
         seq_len(nrow(df_return)),
         FUN = function(i) {
-          dplyr::filter(data, !!!lst_filter_exprs[[i]]) |>
-            dplyr::select(-all_of(.env$by), -all_of(.env$strata))
+          data <- dplyr::filter(data, !!!lst_filter_exprs[[i]])
+
+          # remove by and strata columns, unless requested to stay
+          if (!include_by_and_strata) {
+            data <- dplyr::select(data, -all_of(.env$by), -all_of(.env$strata))
+          }
+
+          data
         }
       )
   }

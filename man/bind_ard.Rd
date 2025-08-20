@@ -22,7 +22,7 @@ columns will be filled with \code{NA}.}
 logical indicating whether to remove non-distinct values from the ARD.
 Duplicates are checked across grouping variables, primary variables,
 context (if present), the \strong{statistic name and the statistic value}.
-Default is \code{FALSE}. If a statistic name and value is repeated and \code{.distinct=TRUE},
+Default is \code{TRUE}. If a statistic name and value is repeated and \code{.distinct=TRUE},
 the more recently added statistics will be retained, and the other(s) omitted.}
 
 \item{.update}{(\code{logical})\cr
@@ -49,7 +49,7 @@ Wrapper for \code{dplyr::bind_rows()} with additional checks
 for duplicated statistics.
 }
 \examples{
-ard <- ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
 
 bind_ard(ard, ard, .update = TRUE)
 }

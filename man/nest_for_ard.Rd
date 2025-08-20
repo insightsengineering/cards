@@ -11,7 +11,8 @@ nest_for_ard(
   key = "data",
   rename_columns = TRUE,
   list_columns = TRUE,
-  include_data = TRUE
+  include_data = TRUE,
+  include_by_and_strata = FALSE
 )
 }
 \arguments{
@@ -44,6 +45,10 @@ logical indicating whether to put levels of \code{by} and
 \item{include_data}{(scalar \code{logical})\cr
 logical indicating whether to include the data subsets as a list-column.
 Default is \code{TRUE}.}
+
+\item{include_by_and_strata}{(\code{logical})\cr
+When \code{TRUE}, the \code{by} and \code{strata} variables are included in the nested
+data frames.}
 }
 \value{
 a nested tibble

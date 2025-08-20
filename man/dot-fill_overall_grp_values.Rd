@@ -14,13 +14,14 @@ a data frame}
 data frame
 }
 \description{
-This function fills the missing values of grouping variables with "Overall
-\verb{variable name}" where relevant. Specifically it will modify grouping values
-from rows with likely overall calculations present (e.g. non-missing
-variable/variable_level, 100 percent missing group variables, and evidence that the
-\code{variable} has been computed by group in other rows). "Overall" values will
-be populated only for grouping variables that have been used in other calculations
-of the same variable and statistics.
+This function fills the missing values of grouping variables with
+\code{"Overall <variable_name>"} or \code{"Any <variable_name>"}where relevant.
+Specifically, it will modify grouping values from rows with likely overall
+calculations present (e.g. non-missing variable/variable_level, missing group
+variables, and evidence that the \code{variable} has been computed by group in
+other rows). \code{"Overall"} values will be populated only for grouping variables
+that have been used in other calculations of the same variable and statistics.
+\code{"Any"} will be used if it is likely to be a hierarchical calculation.
 }
 \examples{
 data <- dplyr::tibble(
@@ -29,9 +30,9 @@ data <- dplyr::tibble(
   variable_level = c(1, 2, 1, 3, 3),
   A = rep(NA, 5),
   B = rep(NA, 5),
-  .cards_idx = c(1:5)
+  ..cards_idx.. = c(1:5)
 )
 
-cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
+cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 }
 \keyword{internal}

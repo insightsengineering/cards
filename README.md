@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
+# cards <a href="https://insightsengineering.github.io/cards/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
 
 <!-- badges: start -->
 
@@ -77,7 +77,7 @@ tables.
 ``` r
 library(cards)
 
-ard_continuous(ADSL, by = "ARM", variables = "AGE")
+ard_summary(ADSL, by = "ARM", variables = "AGE")
 #> {cards} data frame: 24 x 10
 #>    group1 group1_level variable stat_name stat_label   stat
 #> 1     ARM      Placebo      AGE         N          N     86
@@ -92,5 +92,5 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
 #> 10    ARM    Xanomeli…      AGE      mean       Mean 74.381
 #> ℹ 14 more rows
 #> ℹ Use `print(n = ...)` to see more rows
-#> ℹ 4 more variables: context, fmt_fn, warning, error
+#> ℹ 4 more variables: context, fmt_fun, warning, error
 ```

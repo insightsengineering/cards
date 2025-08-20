@@ -29,10 +29,39 @@
 #' @export
 #'
 #' @examples
+#' # Example 1 ----------------------------------
 #' ard_strata(
 #'   ADSL,
 #'   .by = ARM,
-#'   .f = ~ ard_continuous(.x, variables = AGE)
+#'   .f = ~ ard_summary(.x, variables = AGE)
+#' )
+#'
+#' # Example 2 ----------------------------------
+#' df <- data.frame(
+#'   USUBJID = 1:12,
+#'   PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
+#'   AVALC = c(
+#'     "Yes", "No", "Yes", # PARAM1
+#'     "Yes", "Yes", "No", # PARAM1
+#'     "Low", "Medium", "High", # PARAM2
+#'     "Low", "Low", "Medium" # PARAM2
+#'   )
+#' )
+#'
+#' ard_strata(
+#'   df,
+#'   .strata = PARAMCD,
+#'   .f = \(.x) {
+#'     lvls <-
+#'       switch(.x[["PARAMCD"]][1],
+#'         "PARAM1" = c("Yes", "No"),
+#'         "PARAM2" = c("Zero", "Low", "Medium", "High")
+#'       )
+#'
+#'     .x |>
+#'       dplyr::mutate(AVALC = factor(AVALC, levels = lvls)) |>
+#'       ard_tabulate(variables = AVALC)
+#'   }
 #' )
 ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   set_cli_abort_call()
@@ -47,7 +76,7 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   process_selectors(.data, .by = {{ .by }}, .strata = {{ .strata }})
 
   # nest the data frame --------------------------------------------------------
-  df_nested_data <- nest_for_ard(.data, by = .by, strata = .strata)
+  df_nested_data <- nest_for_ard(.data, by = .by, strata = .strata, include_by_and_strata = TRUE)
 
   # run fn on nested data frames -----------------------------------------------
   df_nested_data <- df_nested_data |>

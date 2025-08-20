@@ -44,8 +44,8 @@ library(cards)
 
 ard <-
   bind_ard(
-    ard_continuous(ADSL, by = "ARM", variables = "AGE"),
-    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+    ard_summary(ADSL, by = "ARM", variables = "AGE"),
+    ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
   )
 
 ard
@@ -87,8 +87,8 @@ library(jsonlite)
 #* @serializer unboxedJSON
 function() {
   ard <- bind_ard(
-    ard_continuous(ADSL, by = "ARM", variables = "AGE"),
-    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+    ard_summary(ADSL, by = "ARM", variables = "AGE"),
+    ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
   )
 
   ard |>

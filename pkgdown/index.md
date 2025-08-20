@@ -1,9 +1,9 @@
-Talks and Presentations
-================
+
+<!-- YOU MUST RUN THE CODE BELOW TO ESTABLISH A SYMLINK BEFORE RENDERING! -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cards <a href="https://insightsengineering.github.io/cards/"><img src="man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
+# cards <a href="https://insightsengineering.github.io/cards/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="120" alt="cards website" /></a>
 
 <!-- badges: start -->
 
@@ -94,25 +94,25 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
 #> 10    ARM    Xanomeli…      AGE      mean       Mean 74.381
 #> ℹ 14 more rows
 #> ℹ Use `print(n = ...)` to see more rows
-#> ℹ 4 more variables: context, fmt_fn, warning, error
+#> ℹ 4 more variables: context, fmt_fun, warning, error
 ```
 
 ## Other Resources
 
-<div id="nfepjlwncq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#nfepjlwncq table {
+<div id="wccixxjwid" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wccixxjwid table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#nfepjlwncq thead, #nfepjlwncq tbody, #nfepjlwncq tfoot, #nfepjlwncq tr, #nfepjlwncq td, #nfepjlwncq th {
+&#10;#wccixxjwid thead, #wccixxjwid tbody, #wccixxjwid tfoot, #wccixxjwid tr, #wccixxjwid td, #wccixxjwid th {
   border-style: none;
 }
-&#10;#nfepjlwncq p {
+&#10;#wccixxjwid p {
   margin: 0;
   padding: 0;
 }
-&#10;#nfepjlwncq .gt_table {
+&#10;#wccixxjwid .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -137,11 +137,11 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_caption {
+&#10;#wccixxjwid .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#nfepjlwncq .gt_title {
+&#10;#wccixxjwid .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -152,7 +152,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#nfepjlwncq .gt_subtitle {
+&#10;#wccixxjwid .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -163,7 +163,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#nfepjlwncq .gt_heading {
+&#10;#wccixxjwid .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -174,12 +174,12 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_bottom_border {
+&#10;#wccixxjwid .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_col_headings {
+&#10;#wccixxjwid .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -193,7 +193,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_col_heading {
+&#10;#wccixxjwid .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -212,7 +212,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#nfepjlwncq .gt_column_spanner_outer {
+&#10;#wccixxjwid .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -223,13 +223,13 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#nfepjlwncq .gt_column_spanner_outer:first-child {
+&#10;#wccixxjwid .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#nfepjlwncq .gt_column_spanner_outer:last-child {
+&#10;#wccixxjwid .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#nfepjlwncq .gt_column_spanner {
+&#10;#wccixxjwid .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -240,10 +240,10 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   display: inline-block;
   width: 100%;
 }
-&#10;#nfepjlwncq .gt_spanner_row {
+&#10;#wccixxjwid .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#nfepjlwncq .gt_group_heading {
+&#10;#wccixxjwid .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -268,7 +268,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   vertical-align: middle;
   text-align: left;
 }
-&#10;#nfepjlwncq .gt_empty_group_heading {
+&#10;#wccixxjwid .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -282,13 +282,13 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#nfepjlwncq .gt_from_md > :first-child {
+&#10;#wccixxjwid .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#nfepjlwncq .gt_from_md > :last-child {
+&#10;#wccixxjwid .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#nfepjlwncq .gt_row {
+&#10;#wccixxjwid .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -306,7 +306,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#nfepjlwncq .gt_stub {
+&#10;#wccixxjwid .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -318,7 +318,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfepjlwncq .gt_stub_row_group {
+&#10;#wccixxjwid .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -331,13 +331,13 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#nfepjlwncq .gt_row_group_first td {
+&#10;#wccixxjwid .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#nfepjlwncq .gt_row_group_first th {
+&#10;#wccixxjwid .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#nfepjlwncq .gt_summary_row {
+&#10;#wccixxjwid .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -346,14 +346,14 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfepjlwncq .gt_first_summary_row {
+&#10;#wccixxjwid .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_first_summary_row.thick {
+&#10;#wccixxjwid .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#nfepjlwncq .gt_last_summary_row {
+&#10;#wccixxjwid .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -362,7 +362,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_grand_summary_row {
+&#10;#wccixxjwid .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -371,7 +371,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfepjlwncq .gt_first_grand_summary_row {
+&#10;#wccixxjwid .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -380,7 +380,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_last_grand_summary_row_top {
+&#10;#wccixxjwid .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -389,10 +389,10 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_striped {
+&#10;#wccixxjwid .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#nfepjlwncq .gt_table_body {
+&#10;#wccixxjwid .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -400,7 +400,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_footnotes {
+&#10;#wccixxjwid .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -413,7 +413,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_footnote {
+&#10;#wccixxjwid .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -421,7 +421,7 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfepjlwncq .gt_sourcenotes {
+&#10;#wccixxjwid .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -434,69 +434,77 @@ ard_continuous(ADSL, by = "ARM", variables = "AGE")
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#nfepjlwncq .gt_sourcenote {
+&#10;#wccixxjwid .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#nfepjlwncq .gt_left {
+&#10;#wccixxjwid .gt_left {
   text-align: left;
 }
-&#10;#nfepjlwncq .gt_center {
+&#10;#wccixxjwid .gt_center {
   text-align: center;
 }
-&#10;#nfepjlwncq .gt_right {
+&#10;#wccixxjwid .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#nfepjlwncq .gt_font_normal {
+&#10;#wccixxjwid .gt_font_normal {
   font-weight: normal;
 }
-&#10;#nfepjlwncq .gt_font_bold {
+&#10;#wccixxjwid .gt_font_bold {
   font-weight: bold;
 }
-&#10;#nfepjlwncq .gt_font_italic {
+&#10;#wccixxjwid .gt_font_italic {
   font-style: italic;
 }
-&#10;#nfepjlwncq .gt_super {
+&#10;#wccixxjwid .gt_super {
   font-size: 65%;
 }
-&#10;#nfepjlwncq .gt_footnote_marks {
+&#10;#wccixxjwid .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#nfepjlwncq .gt_asterisk {
+&#10;#wccixxjwid .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#nfepjlwncq .gt_indent_1 {
+&#10;#wccixxjwid .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#nfepjlwncq .gt_indent_2 {
+&#10;#wccixxjwid .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#nfepjlwncq .gt_indent_3 {
+&#10;#wccixxjwid .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#nfepjlwncq .gt_indent_4 {
+&#10;#wccixxjwid .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#nfepjlwncq .gt_indent_5 {
+&#10;#wccixxjwid .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#nfepjlwncq .katex-display {
+&#10;#wccixxjwid .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#nfepjlwncq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#wccixxjwid div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   &#10;  <tbody class="gt_table_body">
+    <tr><td headers="venue" class="gt_row gt_left"><span class='gt_from_md'>2025 CDISC COSA Spotlight</span></td>
+<td headers="title" class="gt_row gt_left"><span class='gt_from_md'>ARD-based Reporting in R with {cards} and {gtsummary} packages</span></td>
+<td headers="url_slides" class="gt_row gt_center"><span style="white-space: pre;"><a href="https://www.danieldsjoberg.com/CDISC-COSA-Spotlight-ARD-gtsummary-2025/" target="_blank" style="color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;"><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#808080;overflow:visible;position:relative;"><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V352H64V64H512z"/></svg></a></span></td>
+<td headers="url_video" class="gt_row gt_center"><span style="white-space: pre;"><a href="https://www.cdisc.org/events/webinar/cosa-spotlight-q2-2025" target="_blank" style="color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;"><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#808080;overflow:visible;position:relative;"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg></a></span></td></tr>
+    <tr><td headers="venue" class="gt_row gt_left"><span class='gt_from_md'>2025 R/Medicine</span></td>
+<td headers="title" class="gt_row gt_left"><span class='gt_from_md'>Supercharging Statistical Analysis with ARDs and the {cards} R Package</span></td>
+<td headers="url_slides" class="gt_row gt_center"><span style="white-space: pre;"><a href="https://melkiades.github.io/ARD_rmedicine25/" target="_blank" style="color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;"><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#808080;overflow:visible;position:relative;"><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V352H64V64H512z"/></svg></a></span></td>
+<td headers="url_video" class="gt_row gt_center"><span style="white-space: pre;"><a href="https://youtu.be/C_Y1pzpCS5o?feature=shared" target="_blank" style="color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;"><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#808080;overflow:visible;position:relative;"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg></a></span></td></tr>
     <tr><td headers="venue" class="gt_row gt_left"><span class='gt_from_md'>2025 PHUSE US Connect</span></td>
 <td headers="title" class="gt_row gt_left"><span class='gt_from_md'>Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}</span></td>
 <td headers="url_slides" class="gt_row gt_center"><span style="white-space: pre;"><a href="https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/" target="_blank" style="color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;"><svg aria-hidden="true" role="img" viewBox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#808080;overflow:visible;position:relative;"><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V352H64V64H512z"/></svg></a></span></td>

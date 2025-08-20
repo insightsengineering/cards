@@ -9,8 +9,7 @@ See below for options available in the \{cards\} package
 \section{cards.round_type}{
 
 There are two types of rounding types in the \{cards\} package that are implemented
-in \code{label_round()}, \code{alias_as_fmt_fn()}, and \code{apply_fmt_fn()} functions' \code{round_type}
-argument.
+in \code{label_round()}, \code{alias_as_fmt_fun()}, and \code{apply_fmt_fun()} functions.
 \itemize{
 \item \code{'round-half-up'} (\emph{default}): rounding method where values exactly halfway
 between two numbers are rounded to the larger in magnitude number.
@@ -20,9 +19,9 @@ See \code{\link[=round]{round()}} for details.
 }
 
 To change the default rounding to use IEC 60559, this option must be set \strong{both}
-when the ARDs are created and when \code{apply_fmt_fn()} is run. This ensures that
+when the ARDs are created and when \code{apply_fmt_fun()} is run. This ensures that
 any \emph{default} formatting functions created with \code{label_round()} utilize the
 specified rounding method and the method is used what aliases are converted
-into functions (which occurs in \code{apply_fmt_fn()} when it calls \code{alias_as_fmt_fn()}).
+into functions (which occurs in \code{apply_fmt_fun()} when it calls \code{alias_as_fmt_fun()}).
 }
 

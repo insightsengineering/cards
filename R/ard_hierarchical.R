@@ -32,7 +32,7 @@
 #'     counts that may appear in the header of a table.
 #'   - the `denominator` argument must be specified when `id` is used to
 #'     calculate the event rates.
-#' @inheritParams ard_categorical
+#' @inheritParams ard_tabulate
 #'
 #' @return an ARD data frame of class 'card'
 #' @name ard_hierarchical
@@ -44,7 +44,7 @@
 #'   variables = c(AESOC, AEDECOD),
 #'   by = TRTA,
 #'   id = USUBJID,
-#'   denominator = ADSL |> dplyr::rename(TRTA = ARM)
+#'   denominator = ADSL
 #' )
 #'
 #' ard_hierarchical_count(
@@ -74,12 +74,24 @@ ard_hierarchical.data.frame <- function(data,
                                         variables,
                                         by = dplyr::group_vars(data),
                                         statistic = everything() ~ c("n", "N", "p"),
-                                        denominator = NULL, fmt_fn = NULL,
+                                        denominator = NULL,
+                                        fmt_fun = NULL,
                                         stat_label = everything() ~ default_stat_labels(),
                                         id = NULL,
+                                        fmt_fn = deprecated(),
                                         ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_hierarchical(fmt_fn)",
+      with = "ard_hierarchical(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -93,7 +105,7 @@ ard_hierarchical.data.frame <- function(data,
   )
   data <- dplyr::ungroup(data)
 
-  if (!is_empty(id) && anyDuplicated(data[c(id, variables)]) > 0L) {
+  if (!is_empty(id) && anyDuplicated(data[c(id, by, variables)]) > 0L) {
     cli::cli_warn(c(
       "Duplicate rows found in data for the {.val {id}} column{?s}.",
       "i" = "Percentages/Denominators are not correct."
@@ -106,7 +118,11 @@ ard_hierarchical.data.frame <- function(data,
   }
 
   # if denominator doesn't have all by, they need to be added ------------------
-  if (!is.null(denominator) && is.data.frame(denominator) && !all(by %in% names(denominator))) {
+  if (
+    !is.null(denominator) &&
+      is.data.frame(denominator) &&
+      !all(by %in% names(denominator))
+  ) {
     by_vars_not_present <- by |> setdiff(names(denominator))
     denominator <-
       data |>
@@ -123,19 +139,23 @@ ard_hierarchical.data.frame <- function(data,
 
   # perform tabulations --------------------------------------------------------
   df_result <-
-    ard_categorical(
+    ard_tabulate(
       data = data,
       variables = "...ard_dummy_for_counting...",
       by = all_of(by),
       strata = all_of(variables),
       statistic = statistic,
       denominator = denominator,
-      fmt_fn = fmt_fn,
+      fmt_fun = fmt_fun,
       stat_label = stat_label
     )
 
   # renaming columns -----------------------------------------------------------
-  df_result <- .rename_last_group_as_variable(df_result, by = by, variables = variables)
+  df_result <- .rename_last_group_as_variable(
+    df_result,
+    by = by,
+    variables = variables
+  )
 
   # return ard -----------------------------------------------------------------
   df_result |>
@@ -147,11 +167,22 @@ ard_hierarchical.data.frame <- function(data,
 ard_hierarchical_count.data.frame <- function(data,
                                               variables,
                                               by = dplyr::group_vars(data),
-                                              fmt_fn = NULL,
+                                              fmt_fun = NULL,
                                               stat_label = everything() ~ default_stat_labels(),
+                                              fmt_fn = deprecated(),
                                               ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_hierarchical_count(fmt_fn)",
+      with = "ard_hierarchical_count(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -168,13 +199,13 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  ard_categorical(
+  ard_tabulate(
     data = data,
     variables = "...ard_dummy_for_counting...",
     by = all_of(by),
     strata = all_of(variables),
     statistic = everything() ~ "n",
-    fmt_fn = fmt_fn,
+    fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
     .rename_last_group_as_variable(by = by, variables = variables) |>
@@ -202,6 +233,9 @@ ard_hierarchical_count.data.frame <- function(data,
     dplyr::select(-all_ard_variables()) |>
     dplyr::rename(
       variable = all_ard_group_n(n = length(c(by, variables)), types = "names"),
-      variable_level = all_ard_group_n(n = length(c(by, variables)), types = "levels")
+      variable_level = all_ard_group_n(
+        n = length(c(by, variables)),
+        types = "levels"
+      )
     )
 }

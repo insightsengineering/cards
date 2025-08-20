@@ -2,7 +2,7 @@
 #'
 #' Compute Analysis Results Data (ARD) for statistics related to data missingness.
 #'
-#' @inheritParams ard_continuous
+#' @inheritParams ard_summary
 #' @param by ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   results are tabulated by **all combinations** of the columns specified.
 #'
@@ -33,11 +33,22 @@ ard_missing.data.frame <- function(data,
                                    variables,
                                    by = dplyr::group_vars(data),
                                    statistic = everything() ~ c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss"),
-                                   fmt_fn = NULL,
+                                   fmt_fun = NULL,
                                    stat_label = everything() ~ default_stat_labels(),
+                                   fmt_fn = deprecated(),
                                    ...) {
   set_cli_abort_call()
   check_dots_used()
+
+  # deprecated args ------------------------------------------------------------
+  if (lifecycle::is_present(fmt_fn)) {
+    lifecycle::deprecate_soft(
+      when = "0.6.1",
+      what = "ard_missing(fmt_fn)",
+      with = "ard_missing(fmt_fun)"
+    )
+    fmt_fun <- fmt_fn
+  }
 
   # check inputs ---------------------------------------------------------------
   check_not_missing(variables)
@@ -71,12 +82,12 @@ ard_missing.data.frame <- function(data,
   )
 
   # get the summary statistics -------------------------------------------------
-  ard_continuous(
+  ard_summary(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
     statistic = lapply(statistic, \(x) missing_summary_fns(x)),
-    fmt_fn = fmt_fn,
+    fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
     dplyr::mutate(

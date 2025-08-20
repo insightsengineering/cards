@@ -1,7 +1,7 @@
-test_that("ard_dichotomous() works", {
+test_that("ard_tabulate_value() works", {
   expect_error(
     ard_dich <-
-      ard_dichotomous(
+      ard_tabulate_value(
         mtcars |> dplyr::mutate(gear = factor(gear), am = as.logical(am)),
         variables = c("cyl", "am", "gear"),
         value = list(cyl = 4)
@@ -34,17 +34,21 @@ test_that("ard_dichotomous() works", {
       dplyr::select(-context)
   )
 
+  ## line added to fix failing snapshot test on ubuntu-latest (devel)
+  ## TODO: resolve after release of R-devel
+  skip_if_not(package_version(paste(R.version$major, R.version$minor, sep = ".")) <= package_version("4.5.0"))
+
   expect_snapshot(
     ard_dich |>
-      dplyr::select(-c(fmt_fn, warning, error)) |>
+      dplyr::select(-c(fmt_fun, warning, error)) |>
       as.data.frame()
   )
 })
 
 
-test_that("ard_dichotomous() works", {
+test_that("ard_tabulate_value() errors are correct", {
   expect_snapshot(
-    ard_dichotomous(
+    ard_tabulate_value(
       mtcars,
       variables = c("cyl", "am", "gear"),
       value = list(cyl = letters)
@@ -53,7 +57,7 @@ test_that("ard_dichotomous() works", {
   )
 
   expect_snapshot(
-    ard_dichotomous(
+    ard_tabulate_value(
       iris,
       variables = everything(),
       value = list(Species = "not_a_species")
@@ -62,7 +66,7 @@ test_that("ard_dichotomous() works", {
   )
 
   expect_snapshot(
-    ard_dichotomous(
+    ard_tabulate_value(
       mtcars,
       variables = c("cyl", "am", "gear"),
       value = list(cyl = 100)
@@ -72,12 +76,12 @@ test_that("ard_dichotomous() works", {
 })
 
 
-test_that("ard_dichotomous() with grouped data works", {
+test_that("ard_tabulate_value() with grouped data works", {
   expect_equal(
     mtcars |>
       dplyr::group_by(vs) |>
-      ard_dichotomous(variables = c(cyl, am), value = list(cyl = 4)),
-    ard_dichotomous(
+      ard_tabulate_value(variables = c(cyl, am), value = list(cyl = 4)),
+    ard_tabulate_value(
       data = mtcars,
       by = vs,
       variables = c(cyl, am),
@@ -86,22 +90,22 @@ test_that("ard_dichotomous() with grouped data works", {
   )
 })
 
-test_that("ard_dichotomous() follows ard structure", {
+test_that("ard_tabulate_value() follows ard structure", {
   expect_silent(
     mtcars |>
       dplyr::group_by(vs) |>
-      ard_dichotomous(variables = c(cyl, am), value = list(cyl = 4)) |>
+      ard_tabulate_value(variables = c(cyl, am), value = list(cyl = 4)) |>
       check_ard_structure(method = FALSE)
   )
 })
 
-test_that("ard_dichotomous() errors with incomplete factor columns", {
+test_that("ard_tabulate_value() errors with incomplete factor columns", {
   # Check error when factors have no levels
   expect_snapshot(
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = character(0))) |>
-      ard_dichotomous(
+      ard_tabulate_value(
         variables = c(cyl, vs),
         by = am,
         value = list(cyl = 4)
@@ -113,7 +117,7 @@ test_that("ard_dichotomous() errors with incomplete factor columns", {
     error = TRUE,
     mtcars |>
       dplyr::mutate(am = factor(am, levels = c(0, 1, NA), exclude = NULL)) |>
-      ard_dichotomous(
+      ard_tabulate_value(
         variables = c(cyl, am),
         value = list(cyl = 4)
       )

@@ -6,8 +6,9 @@
 \usage{
 unlist_ard_columns(
   x,
-  columns = c(where(is.list), -any_of(c("warning", "error", "fmt_fn"))),
-  fill = NA
+  columns = c(where(is.list), -any_of(c("warning", "error", "fmt_fun"))),
+  fill = NA,
+  fct_as_chr = TRUE
 )
 }
 \arguments{
@@ -16,11 +17,17 @@ an ARD data frame of class 'card' or any data frame}
 
 \item{columns}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to unlist. Default is
-\code{c(where(is.list), -any_of(c("warning", "error", "fmt_fn")))}.}
+\code{c(where(is.list), -any_of(c("warning", "error", "fmt_fun")))}.}
 
 \item{fill}{(scalar)\cr
 scalar to fill NULL values with before unlisting (if they are present).
 Default is \code{NA}.}
+
+\item{fct_as_chr}{(scalar \code{logical})\cr
+When \code{TRUE}, factor elements will be converted to character before unlisting.
+When the column being unlisted contains mixed types of classes, the
+factor elements are often converted to the underlying integer value instead
+of retaining the label. Default is \code{TRUE}.}
 }
 \value{
 a data frame
@@ -30,12 +37,12 @@ Unlist ARD Columns
 }
 \examples{
 ADSL |>
-  ard_categorical(by = ARM, variables = AGEGR1) |>
-  apply_fmt_fn() |>
+  ard_tabulate(by = ARM, variables = AGEGR1) |>
+  apply_fmt_fun() |>
   unlist_ard_columns()
 
 ADSL |>
-  ard_continuous(by = ARM, variables = AGE) |>
-  apply_fmt_fn() |>
+  ard_summary(by = ARM, variables = AGE) |>
+  apply_fmt_fun() |>
   unlist_ard_columns()
 }

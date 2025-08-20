@@ -13,13 +13,18 @@ test_that("ard_hierarchical() works without by variables", {
 
   expect_equal(
     ard_heir_no_by |>
-      dplyr::filter(group1_level == "CARDIAC DISORDERS", variable_level == "ATRIAL FIBRILLATION") |>
+      dplyr::filter(
+        group1_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL FIBRILLATION"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     dplyr::tibble(
-      n =
-        ADAE |>
-          dplyr::filter(AESOC == "CARDIAC DISORDERS", AEDECOD == "ATRIAL FIBRILLATION") |>
-          nrow(),
+      n = ADAE |>
+        dplyr::filter(
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL FIBRILLATION"
+        ) |>
+        nrow(),
       N = nrow(ADSL),
       p = n / N
     ) |>
@@ -34,20 +39,27 @@ test_that("ard_hierarchical() works with by variable", {
         data = ADAE,
         variables = c(AESOC, AEDECOD),
         by = TRTA,
-        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+        denominator = ADSL
       ),
     NA
   )
 
   expect_equal(
     ard_heir_with_by |>
-      dplyr::filter(group1_level == "Placebo", group2_level == "CARDIAC DISORDERS", variable_level == "ATRIAL FIBRILLATION") |>
+      dplyr::filter(
+        group1_level == "Placebo",
+        group2_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL FIBRILLATION"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     dplyr::tibble(
-      n =
-        ADAE |>
-          dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AEDECOD == "ATRIAL FIBRILLATION") |>
-          nrow(),
+      n = ADAE |>
+        dplyr::filter(
+          TRTA == "Placebo",
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL FIBRILLATION"
+        ) |>
+        nrow(),
       N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
       p = n / N
     ) |>
@@ -62,7 +74,7 @@ test_that("ard_hierarchical() works with by variable not present in 'denominator
         data = ADAE,
         variables = c(AESOC, AEDECOD),
         by = c(TRTA, AESEV),
-        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+        denominator = ADSL
       ),
     NA
   )
@@ -77,15 +89,14 @@ test_that("ard_hierarchical() works with by variable not present in 'denominator
       ) |>
       get_ard_statistics(.attributes = NULL),
     dplyr::tibble(
-      n =
-        ADAE |>
-          dplyr::filter(
-            TRTA == "Placebo",
-            AESEV == "MILD",
-            AESOC == "CARDIAC DISORDERS",
-            AEDECOD == "ATRIAL HYPERTROPHY"
-          ) |>
-          nrow(),
+      n = ADAE |>
+        dplyr::filter(
+          TRTA == "Placebo",
+          AESEV == "MILD",
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL HYPERTROPHY"
+        ) |>
+        nrow(),
       N = ADSL |> dplyr::filter(ARM == "Placebo") |> nrow(),
       p = n / N
     ) |>
@@ -109,7 +120,7 @@ test_that("ard_hierarchical(id) argument works", {
       data = ADAE,
       variables = c(AESOC, AEDECOD),
       by = c(TRTA, AESEV),
-      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = ADSL,
       id = USUBJID
     ) |>
       head(1L)
@@ -121,7 +132,7 @@ test_that("ard_hierarchical(id) argument works", {
       data = ADAE,
       variables = c(AESOC, AEDECOD),
       by = c(TRTA, AESEV),
-      denominator = ADSL |> dplyr::rename(TRTA = ARM),
+      denominator = ADSL,
       id = c(USUBJID, SITEID)
     ) |>
       head(1L)
@@ -142,13 +153,18 @@ test_that("ard_hierarchical_count() works without by variables", {
 
   expect_equal(
     ard_heir_no_by |>
-      dplyr::filter(group1_level == "CARDIAC DISORDERS", variable_level == "ATRIAL FIBRILLATION") |>
+      dplyr::filter(
+        group1_level == "CARDIAC DISORDERS",
+        variable_level == "ATRIAL FIBRILLATION"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     list(
-      n =
-        ADAE |>
-          dplyr::filter(AESOC == "CARDIAC DISORDERS", AEDECOD == "ATRIAL FIBRILLATION") |>
-          nrow()
+      n = ADAE |>
+        dplyr::filter(
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL FIBRILLATION"
+        ) |>
+        nrow()
     )
   )
 
@@ -157,13 +173,15 @@ test_that("ard_hierarchical_count() works without by variables", {
       data = ADAE,
       variables = AESOC
     ) |>
-      dplyr::filter(variable == "AESOC", variable_level == "CARDIAC DISORDERS") |>
+      dplyr::filter(
+        variable == "AESOC",
+        variable_level == "CARDIAC DISORDERS"
+      ) |>
       get_ard_statistics(.attributes = NULL),
     list(
-      n =
-        ADAE |>
-          dplyr::filter(AESOC == "CARDIAC DISORDERS") |>
-          nrow()
+      n = ADAE |>
+        dplyr::filter(AESOC == "CARDIAC DISORDERS") |>
+        nrow()
     )
   )
 })
@@ -188,10 +206,13 @@ test_that("ard_hierarchical_count() works with by variable", {
       ) |>
       get_ard_statistics(.attributes = NULL),
     list(
-      n =
-        ADAE |>
-          dplyr::filter(TRTA == "Placebo", AESOC == "CARDIAC DISORDERS", AEDECOD == "ATRIAL HYPERTROPHY") |>
-          nrow()
+      n = ADAE |>
+        dplyr::filter(
+          TRTA == "Placebo",
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL HYPERTROPHY"
+        ) |>
+        nrow()
     )
   )
 })
@@ -217,15 +238,14 @@ test_that("ard_hierarchical_count() works with by variable not present in 'denom
       ) |>
       get_ard_statistics(.attributes = NULL),
     list(
-      n =
-        ADAE |>
-          dplyr::filter(
-            TRTA == "Placebo",
-            AESEV == "MILD",
-            AESOC == "CARDIAC DISORDERS",
-            AEDECOD == "ATRIAL HYPERTROPHY"
-          ) |>
-          nrow()
+      n = ADAE |>
+        dplyr::filter(
+          TRTA == "Placebo",
+          AESEV == "MILD",
+          AESOC == "CARDIAC DISORDERS",
+          AEDECOD == "ATRIAL HYPERTROPHY"
+        ) |>
+        nrow()
     )
   )
 })
@@ -247,13 +267,13 @@ test_that("ard_hierarchical() and ard_hierarchical_count() with grouped data wor
       dplyr::group_by(TRTA) |>
       ard_hierarchical(
         variables = c(AESOC, AEDECOD),
-        denominator = ADSL |> dplyr::rename(TRTA = ARM)
+        denominator = ADSL
       ),
     ard_hierarchical(
       data = ADAE,
       by = TRTA,
       variables = c(AESOC, AEDECOD),
-      denominator = ADSL |> dplyr::rename(TRTA = ARM)
+      denominator = ADSL
     )
   )
 
@@ -351,16 +371,26 @@ test_that("ard_hierarchical_count() provides correct results with 10+ groups", {
     dplyr::select(ard, all_ard_groups(), all_ard_variables()) |>
       names(),
     c(
-      "group1", "group1_level",
-      "group2", "group2_level",
-      "group3", "group3_level",
-      "group4", "group4_level",
-      "group5", "group5_level",
-      "group6", "group6_level",
-      "group7", "group7_level",
-      "group8", "group8_level",
-      "group9", "group9_level",
-      "variable", "variable_level"
+      "group1",
+      "group1_level",
+      "group2",
+      "group2_level",
+      "group3",
+      "group3_level",
+      "group4",
+      "group4_level",
+      "group5",
+      "group5_level",
+      "group6",
+      "group6_level",
+      "group7",
+      "group7_level",
+      "group8",
+      "group8_level",
+      "group9",
+      "group9_level",
+      "variable",
+      "variable_level"
     )
   )
 

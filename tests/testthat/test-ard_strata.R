@@ -3,7 +3,7 @@ test_that("ard_strata() works", {
     ard_strata(
       ADSL,
       .by = ARM,
-      .f = ~ ard_continuous(.x, variables = AGE)
+      .f = ~ ard_summary(.x, variables = AGE)
     )
   )
 
@@ -11,27 +11,66 @@ test_that("ard_strata() works", {
     ard_strata(
       ADSL,
       .strata = ARM,
-      .f = ~ ard_continuous(.x, variables = AGE, by = AGEGR1)
+      .f = ~ ard_summary(.x, variables = AGE, by = AGEGR1)
     )
   )
 
   expect_equal(
-    ard_strata(ADSL, .by = ARM, .f = ~ ard_continuous(.x, by = c(SEX, AGEGR1), variables = AGE)) |>
+    ard_strata(ADSL, .by = ARM, .f = ~ ard_summary(.x, by = c(SEX, AGEGR1), variables = AGE)) |>
       tidy_ard_column_order() |>
       tidy_ard_row_order(),
-    ard_continuous(ADSL, by = c(SEX, AGEGR1, ARM), variables = AGE) |>
+    ard_summary(ADSL, by = c(SEX, AGEGR1, ARM), variables = AGE) |>
       tidy_ard_row_order()
   )
 })
 
 test_that("ard_strata(by,strata) when both empty", {
   expect_equal(
-    ard_strata(ADSL, .f = ~ ard_continuous(.x, variables = AGE)),
-    ard_continuous(ADSL, variables = AGE)
+    ard_strata(ADSL, .f = ~ ard_summary(.x, variables = AGE)),
+    ard_summary(ADSL, variables = AGE)
   )
 
   expect_equal(
-    ard_strata(ADSL, .f = ~ ard_continuous(.x, by = ARM, variables = AGE)),
-    ard_continuous(ADSL, by = ARM, variables = AGE)
+    ard_strata(ADSL, .f = ~ ard_summary(.x, by = ARM, variables = AGE)),
+    ard_summary(ADSL, by = ARM, variables = AGE)
   )
+})
+
+test_that("ard_strata computes stats for parameter specific strata", {
+  withr::local_options(list(width = 180))
+
+  df <- data.frame(
+    USUBJID = 1:12,
+    PARAMCD = rep(c("PARAM1", "PARAM2"), each = 6),
+    AVALC = c(
+      "Yes", "No", "Yes", # PARAM1
+      "Yes", "Yes", "No", # PARAM1
+      "Low", "Medium", "High", # PARAM2
+      "Low", "Low", "Medium" # PARAM2
+    )
+  )
+  param_levels <-
+    list(
+      PARAM1 = c("Yes", "No"),
+      PARAM2 = c("Zero", "Low", "Medium", "High")
+    )
+
+  tbl <- ard_strata(
+    df,
+    .strata = PARAMCD,
+    .f = \(.x) {
+      param <- .x[["PARAMCD"]][1]
+      .x |>
+        dplyr::mutate(
+          AVALC = factor(AVALC, levels = param_levels[[param]])
+        ) |>
+        ard_tabulate(variables = AVALC)
+    }
+  )
+
+  ## line added to fix failing snapshot test on ubuntu-latest (devel)
+  ## TODO: resolve after release of R-devel
+  skip_if_not(package_version(paste(R.version$major, R.version$minor, sep = ".")) <= package_version("4.5.0"))
+
+  expect_snapshot(as.data.frame(tbl))
 })

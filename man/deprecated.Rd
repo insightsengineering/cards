@@ -2,14 +2,57 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{ard_continuous}
+\alias{ard_categorical}
+\alias{ard_complex}
+\alias{ard_dichotomous}
+\alias{ard_continuous.data.frame}
+\alias{ard_categorical.data.frame}
+\alias{ard_complex.data.frame}
+\alias{ard_dichotomous.data.frame}
+\alias{apply_fmt_fn}
+\alias{alias_as_fmt_fn}
+\alias{update_ard_fmt_fn}
 \alias{label_cards}
 \title{Deprecated functions}
 \usage{
+ard_continuous(data, ...)
+
+ard_categorical(data, ...)
+
+ard_complex(data, ...)
+
+ard_dichotomous(data, ...)
+
+\method{ard_continuous}{data.frame}(data, ...)
+
+\method{ard_categorical}{data.frame}(data, ...)
+
+\method{ard_complex}{data.frame}(data, ...)
+
+\method{ard_dichotomous}{data.frame}(data, ...)
+
+apply_fmt_fn(...)
+
+alias_as_fmt_fn(...)
+
+update_ard_fmt_fn(...)
+
 label_cards(...)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
 Some functions have been deprecated and are no longer being actively
 supported.
+
+\strong{Renamed functions}
+\itemize{
+\item \code{ard_categorical()} to \code{ard_tabulate()}
+\item \code{ard_continuous()} to \code{ard_summary()}
+\item \code{ard_complex()} to \code{ard_mvsummary()}
+\item \code{apply_fmt_fn()} to \code{apply_fmt_fun()}
+\item \code{alias_as_fmt_fn()} to \code{alias_as_fmt_fun()}
+\item \code{update_ard_fmt_fn()} to \code{update_ard_fmt_fun()}
+}
 }
 \keyword{internal}

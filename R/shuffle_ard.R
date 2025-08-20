@@ -1,5 +1,7 @@
 #' Shuffle ARD
 #'
+#' @description `r lifecycle::badge('experimental')`\cr
+#'
 #' This function ingests an ARD object and shuffles the information to prepare for analysis.
 #' Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1
 #' column, back fills missing grouping values from the variable levels where possible, and
@@ -16,8 +18,8 @@
 #'
 #' @examples
 #' bind_ard(
-#'   ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-#'   ard_categorical(ADSL, variables = "ARM")
+#'   ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+#'   ard_tabulate(ADSL, variables = "ARM")
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
@@ -26,11 +28,15 @@ shuffle_ard <- function(x, trim = TRUE) {
   check_class(x = x, cls = "card")
   check_scalar_logical(trim)
 
+
+  ard_attributes <- attributes(x)
+  ard_args <- ard_attributes$args
+
   # make sure columns are in order & add index for retaining order
   dat_cards <- x |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
-    dplyr::mutate(.cards_idx = dplyr::row_number())
+    dplyr::mutate(..cards_idx.. = dplyr::row_number())
 
   # fill stat label if missing
   dat_cards <- dat_cards |>
@@ -44,49 +50,49 @@ shuffle_ard <- function(x, trim = TRUE) {
   vars_protected <- setdiff(names(dat_cards), vars_ard)
 
   dat_cards_grps <- dat_cards |>
-    dplyr::select(-all_of(vars_protected), ".cards_idx")
+    dplyr::select(-all_of(vars_protected), "..cards_idx..")
 
   dat_cards_stats <- dat_cards |>
     dplyr::select(all_of(vars_protected))
 
   # process the data/variable info
   dat_cards_grps_processed <- dat_cards_grps |>
-    # unlist the list-columns
+    .check_var_nms(vars_protected = names(dat_cards_stats)) |>
+    rename_ard_columns(columns = all_ard_groups("names"), fill = "..cards_overall..") |>
+    # coerce everything to character
     dplyr::mutate(
       dplyr::across(
-        where(.is_list_column_of_scalars),
-        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_) |>
-          unlist()
+        -"..cards_idx..",
+        ~ lapply(., \(x) if (!is.null(x)) as.character(x) else NA_character_)
       )
-    ) |>
-    .check_var_nms(vars_protected = names(dat_cards_stats)) |>
-    rename_ard_columns(columns = all_ard_groups()) |>
-    .fill_grps_from_variables()
+    )
 
   # join together again
   dat_cards_out <- dplyr::left_join(
     dat_cards_grps_processed,
     dat_cards_stats,
-    by = ".cards_idx"
+    by = "..cards_idx.."
   )
 
-  # fill stat_label -> variable_level if exists
-  if ("stat_label" %in% names(dat_cards_out)) {
-    dat_cards_out <- dat_cards_out |>
-      dplyr::mutate(dplyr::across(any_of("variable_level"), ~ dplyr::coalesce(.x, stat_label)))
-  }
-
   dat_cards_out <- dat_cards_out |>
+    # unlist the list-columns
+    unlist_ard_columns() |>
+    .fill_grps_from_variables() |>
     .fill_overall_grp_values(vars_protected) |>
-    dplyr::rename(any_of(c(label = "variable_level"))) |>
-    dplyr::arrange(".cards_idx") |>
-    dplyr::select(-".cards_idx")
+    dplyr::arrange(.data$..cards_idx..) |>
+    dplyr::select(-"..cards_idx..")
+
+  output <- dat_cards_out
 
   if (trim) {
-    dat_cards_out |> .trim_ard()
-  } else {
-    dat_cards_out
+    output <- dat_cards_out |>
+      .trim_ard()
   }
+
+  # re-attach the args attribute
+  attr(output, "args") <- ard_args
+
+  output
 }
 
 
@@ -104,8 +110,8 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'
 #' @examples
 #' ard <- bind_ard(
-#'   ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
-#'   ard_categorical(ADSL, variables = "ARM")
+#'   ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
+#'   ard_tabulate(ADSL, variables = "ARM")
 #' ) |>
 #'   shuffle_ard(trim = FALSE)
 #'
@@ -113,22 +119,11 @@ shuffle_ard <- function(x, trim = TRUE) {
 .trim_ard <- function(x) {
   check_data_frame(x)
 
+  # detect any warning/error messages and notify user
+  .detect_msgs(x, "warning", "error")
   # flatten ard table for easier viewing ---------------------------------------
   x |>
-    # detect any warning/error messages and notify user
-    .detect_msgs("warning", "error") |>
-    # filter to numeric statistic values
-    dplyr::filter(map_lgl(
-      .data$stat,
-      \(x) is.null(x) || (length(x) == 1L && (is.numeric(x) || is.na(x)))
-    )) |>
-    # unlist the list-columns
-    dplyr::mutate(stat = lapply(
-      .data$stat,
-      \(x) if (!is.null(x) && !is.na(x)) x else NA_real_
-    ) |> unlist() |> unname()) |>
-    # remove the formatting functions / warning / error
-    dplyr::select(-where(is.list), -any_of("stat_label"))
+    dplyr::select(-c("fmt_fun", "warning", "error"))
 }
 
 
@@ -141,12 +136,10 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   a data frame
 #' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   columns to search within
-#'
-#' @return a data frame
 #' @keywords internal
 #'
 #' @examples
-#' ard <- ard_continuous(
+#' ard <- ard_summary(
 #'   ADSL,
 #'   by = ARM,
 #'   variables = AGE,
@@ -170,8 +163,6 @@ shuffle_ard <- function(x, trim = TRUE) {
       cli::cli_inform("{.val {var}} column contains messages that will be removed.")
     }
   })
-
-  x
 }
 
 #' Check Variable Names
@@ -188,13 +179,13 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @keywords internal
 #'
 #' @examples
-#' data <- data.frame(a = "x", b = "y", c = "z", .cards_idx = 1)
+#' data <- data.frame(a = "x", b = "y", c = "z", ..cards_idx.. = 1)
 #'
 #' cards:::.check_var_nms(data, vars_protected = c("x", "z"))
 .check_var_nms <- function(x, vars_protected) {
   # get all represented variable names from original data
   var_nms <- x |>
-    dplyr::select(-ends_with("_level"), -".cards_idx") |>
+    dplyr::select(-ends_with("_level"), -"..cards_idx..") |>
     unlist(use.names = FALSE) |>
     unique()
 
@@ -217,7 +208,7 @@ shuffle_ard <- function(x, trim = TRUE) {
   if (length(var_nms_new) > 0) {
     x |>
       dplyr::mutate(dplyr::across(
-        -c(ends_with("_level"), ".cards_idx"),
+        -c(ends_with("_level"), "..cards_idx.."),
         ~ dplyr::recode(.x, !!!var_nms_new)
       ))
   } else {
@@ -273,13 +264,14 @@ shuffle_ard <- function(x, trim = TRUE) {
 
 #' Fill Overall Group Variables
 #'
-#' This function fills the missing values of grouping variables with "Overall
-#' `variable name`" where relevant. Specifically it will modify grouping values
-#' from rows with likely overall calculations present (e.g. non-missing
-#' variable/variable_level, 100 percent missing group variables, and evidence that the
-#' `variable` has been computed by group in other rows). "Overall" values will
-#' be populated only for grouping variables that have been used in other calculations
-#' of the same variable and statistics.
+#' This function fills the missing values of grouping variables with
+#' `"Overall <variable_name>"` or `"Any <variable_name>"`where relevant.
+#' Specifically, it will modify grouping values from rows with likely overall
+#' calculations present (e.g. non-missing variable/variable_level, missing group
+#' variables, and evidence that the `variable` has been computed by group in
+#' other rows). `"Overall"` values will be populated only for grouping variables
+#' that have been used in other calculations of the same variable and statistics.
+#' `"Any"` will be used if it is likely to be a hierarchical calculation.
 #'
 #' @param x (`data.frame`)\cr
 #'   a data frame
@@ -294,60 +286,133 @@ shuffle_ard <- function(x, trim = TRUE) {
 #'   variable_level = c(1, 2, 1, 3, 3),
 #'   A = rep(NA, 5),
 #'   B = rep(NA, 5),
-#'   .cards_idx = c(1:5)
+#'   ..cards_idx.. = c(1:5)
 #' )
 #'
-#' cards:::.fill_overall_grp_values(data, vars_protected = ".cards_idx")
+#' cards:::.fill_overall_grp_values(data, vars_protected = "..cards_idx..")
 .fill_overall_grp_values <- function(x, vars_protected) {
   # determine grouping and merging variables
   id_vars <- c("variable", "variable_level", "stat_name", "stat_label")
   id_vars <- id_vars[id_vars %in% names(x)]
   grp_vars <- setdiff(names(x), unique(c(vars_protected, id_vars)))
 
-  # replace NA group values with "Overall <var>" where it is likely to be an overall calculation
-  x_missing_by <- x |>
-    dplyr::filter(dplyr::if_all(all_of(grp_vars), ~ is.na(.)))
+  # replace NA group values with "..cards_overall.." where it is likely to be an overall calculation
+  for (g in grp_vars) {
+    # rows with missing group
+    x_missing_by <- x |>
+      dplyr::filter(is.na(.data[[g]]))
 
-  if (nrow(x_missing_by) > 0) {
-    x_missing_by_replaced <- x_missing_by |> # all NA grouping values
-      dplyr::rows_update(
-        x |>
-          dplyr::filter(dplyr::if_any(all_of(grp_vars), ~ !is.na(.))) |>
-          dplyr::mutate(dplyr::across(all_of(grp_vars), function(v, cur_col = dplyr::cur_column()) {
-            overall_val <- make.unique(c(
-              unique(v),
-              paste("Overall", cur_col)
-            )) |>
-              rev() %>%
-              .[1]
-            ifelse(!is.na(v), overall_val, v)
-          })) |>
-          dplyr::select(-any_of(c(setdiff(names(x), c(grp_vars, id_vars))))) |>
-          dplyr::distinct(),
-        by = id_vars,
-        unmatched = "ignore"
-      )
+    # rows with non-missing group
+    x_nonmissing_by <- x |>
+      dplyr::filter(!is.na(.data[[g]]) & !.data[[g]] == "..cards_overall..")
 
-    # replace the modified rows based on indices
-    dplyr::rows_update(x, x_missing_by_replaced, by = ".cards_idx")
-  } else {
-    x
+    if (nrow(x_missing_by) > 0 && nrow(x_nonmissing_by) > 0) {
+      x_missing_by_replaced <- x_missing_by |>
+        dplyr::rows_update(
+          x_nonmissing_by |>
+            dplyr::mutate(!!g := ifelse(!is.na(.data[[g]]), "..cards_overall..", .data[[g]])) |>
+            dplyr::select(-any_of(c(setdiff(names(x), c(g, id_vars))))) |>
+            dplyr::distinct(),
+          by = id_vars,
+          unmatched = "ignore"
+        )
+
+      x <- dplyr::rows_update(x, x_missing_by_replaced, by = "..cards_idx..")
+    }
   }
+
+  # replace NA group values with "..cards_overall.." or "..hierarchical_overall.."
+  # where it is likely to be a group or subgroup calculation
+  for (i in seq_along(grp_vars)) {
+    g_var <- grp_vars[i]
+
+    x <- x |>
+      dplyr::mutate(
+        !!g_var := dplyr::case_when(
+          # only assign "..cards_overall.." for the first grouping variable
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_total_n.." & i == 1 ~
+            "..cards_overall..",
+          is.na(.data[[g_var]]) &
+            .data$variable == "..ard_hierarchical_overall.." ~
+            "..hierarchical_overall..",
+          TRUE ~ .data[[g_var]]
+        )
+      )
+  }
+
+  # replace `"..cards_overall.."` group values with "Overall <colname>" and
+  # `"..hierarchical_overall.."` with `"Any <colname>"`
+  output <- x |>
+    dplyr::mutate(
+      dplyr::across(
+        tidyselect::all_of(
+          grp_vars
+        ),
+        .derive_overall_labels
+      )
+    )
+
+  output
 }
 
-#' List Column as a Vector Predicate
+#' Derive overall labels
 #'
-#' A predicate function to check whether a column is a list and can be
-#' represented as a vector.
+#' Transform the `"..cards_overall.."` and `"..hierarchical_overall.."` labels
+#' into `"Overall <variable_name>"` and `"Any <variable_name>"` respectively.
+#' Also it ensures the labels are unique (in case they already exist) with
+#' `make.unique()` which appends a sequence number.
 #'
-#' @param x (`any`)\cr
-#'   column to check
+#' @param x (character) content of target (current) column
+#' @param cur_col (character) name of current column
 #'
-#' @return a logical
+#' @returns a character vector
+#'
 #' @keywords internal
 #'
 #' @examples
-#' cards:::.is_list_column_of_scalars(as.list(1:5))
-.is_list_column_of_scalars <- function(x) {
-  is.list(x) && all(unlist(lapply(x, FUN = function(x) length(x) == 1L || is.null(x))))
+#' data <- dplyr::tibble(
+#'   ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
+#'   TRTA = c(NA, NA, "..hierarchical_overall..", "C", "C")
+#' )
+#'
+#' data |>
+#'   dplyr::mutate(
+#'     dplyr::across(
+#'       ARM:TRTA,
+#'       cards:::.derive_overall_labels
+#'     )
+#'   )
+.derive_overall_labels <- function(x, cur_col = dplyr::cur_column()) {
+  glue_overall <- glue::glue("Overall {cur_col}")
+  glue_any <- glue::glue("Any {cur_col}")
+
+  overall_val <- c(unique(x), glue_overall) |>
+    make.unique() |>
+    dplyr::last()
+  any_val <- c(unique(x), glue_any) |>
+    make.unique() |>
+    dplyr::last()
+
+  if (overall_val != glue_overall) {
+    cli::cli_alert_info(
+      "{.val {glue_overall}} already exists in the {.code {cur_col}} column. \\
+      Using {.val {overall_val}}."
+    )
+  }
+
+  if (any_val != glue_any) {
+    cli::cli_alert_info(
+      "{.val {glue_any}} already exists in the {.code {cur_col}} column. Using\\
+       {.val {any_val}}."
+    )
+  }
+
+  output <- dplyr::case_when(
+    x == "..cards_overall.." ~ overall_val,
+    x == "..hierarchical_overall.." ~ any_val,
+    TRUE ~ x
+  )
+
+  output
 }

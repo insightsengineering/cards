@@ -1,6 +1,9 @@
+skip_if_not(is_pkg_installed("withr"))
+
 test_that("shuffle/trim works", {
+  withr::local_options(list(width = 200))
   # shuffle without group/var levels
-  ard_simple <- ard_continuous(ADSL, variables = "AGE")
+  ard_simple <- ard_summary(ADSL, variables = "AGE")
 
   ard_simple_shuffled <- ard_simple |>
     shuffle_ard(trim = FALSE) |>
@@ -10,8 +13,8 @@ test_that("shuffle/trim works", {
 
   # shuffle back-fills groupings
   ard_grp <- bind_ard(
-    ard_categorical(ADSL, variables = "ARM"),
-    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1")
+    ard_tabulate(ADSL, variables = "ARM"),
+    ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
   )
   ard_grp_shuffled <- ard_grp |>
     shuffle_ard(trim = FALSE) |>
@@ -31,22 +34,22 @@ test_that("shuffle/trim works", {
 
   # shuffle many different formats
   ard_test <- bind_ard(
-    ard_categorical(ADSL, variables = "ARM"),
-    ard_continuous(ADSL, by = "ARM", variables = "AGE", stat_label = ~ list(c("mean", "sd") ~ "Mean(SD)")),
-    ard_categorical(ADSL, by = "ARM", variables = "AGEGR1"),
+    ard_tabulate(ADSL, variables = "ARM"),
+    ard_summary(ADSL, by = "ARM", variables = "AGE", stat_label = ~ list(c("mean", "sd") ~ "Mean(SD)")),
+    ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
     ard_missing(ADSL, by = "ARM", variables = c("AGEGR1", "AGE"))
   )
   ard_shuffled <- ard_test |>
     shuffle_ard() |>
     as.data.frame()
 
-  expect_snapshot(ard_shuffled)
+  expect_snapshot(ard_shuffled[1:5, ])
 
   # shuffle & trim
   ard_shuff_trim <- ard_test |>
     shuffle_ard() |>
     as.data.frame()
-  expect_snapshot(ard_shuff_trim)
+  expect_snapshot(ard_shuff_trim[1:5, ])
   # only numeric stats
   expect_type(ard_shuff_trim$stat, "double")
   # no list columns
@@ -54,7 +57,7 @@ test_that("shuffle/trim works", {
 })
 
 test_that("shuffle_ard handles protected names", {
-  ard_test <- ard_categorical(
+  ard_test <- ard_tabulate(
     ADSL |> dplyr::rename(stat = ARM),
     by = "stat",
     variables = "AGEGR1"
@@ -65,8 +68,9 @@ test_that("shuffle_ard handles protected names", {
 })
 
 test_that("shuffle_ard notifies user about warnings/errors before dropping", {
+  withr::local_options(list(width = 200))
   expect_snapshot(
-    ard_continuous(
+    ard_summary(
       ADSL,
       variables = AGEGR1
     ) |>
@@ -75,43 +79,66 @@ test_that("shuffle_ard notifies user about warnings/errors before dropping", {
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful", {
+  withr::local_options(list(width = 200))
   # mix of missing/nonmissing group levels present before shuffle
   expect_snapshot(
     bind_ard(
-      ard_continuous(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
+      ard_summary(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", stat = list(0.05))
     ) |>
+      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard()
   )
 
   # no group levels present before shuffle
   expect_snapshot(
     bind_ard(
-      ard_continuous(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
+      ard_summary(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
       dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p", stat = list(0.05))
     ) |>
+      dplyr::filter(dplyr::row_number() <= 5L) |>
       shuffle_ard()
   )
 
   # mix of group variables - fills overall only if variable has been calculated by group elsewhere
-  withr::local_options(list(width = 90))
   expect_snapshot(
     bind_ard(
-      ard_categorical(ADSL, by = ARM, variables = AGEGR1),
-      ard_categorical(ADSL, variables = AGEGR1),
-      ard_continuous(ADSL, by = SEX, variables = AGE),
-      ard_continuous(ADSL, variables = AGE)
+      ard_tabulate(ADSL, by = ARM, variables = AGEGR1) |> dplyr::slice(1),
+      ard_tabulate(ADSL, variables = AGEGR1) |> dplyr::slice(1),
+      ard_summary(ADSL, by = SEX, variables = AGE) |> dplyr::slice(1),
+      ard_summary(ADSL, variables = AGE) |> dplyr::slice(1)
     ) |>
       shuffle_ard() |>
       as.data.frame()
+  )
+
+  # mix of hierarchical group variables - fills overall only if variable has been calculated by group elsewhere
+  expect_snapshot(
+    bind_ard(
+      ard_tabulate(ADSL, by = c(ARM, SEX), variables = AGEGR1) |> dplyr::slice(1),
+      ard_tabulate(ADSL, by = SEX, variables = AGEGR1) |> dplyr::slice(1),
+      ard_tabulate(ADSL, variables = AGEGR1) |> dplyr::slice(1)
+    ) |>
+      shuffle_ard()
+  )
+
+  # fills with a unique group value if one already exists in the df
+  adsl_new <- ADSL |>
+    dplyr::mutate(ARM = ifelse(ARM == "Placebo", "Overall ARM", ARM))
+  expect_snapshot(
+    bind_ard(
+      ard_summary(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")),
+      ard_summary(adsl_new, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean"))
+    ) |>
+      shuffle_ard()
   )
 })
 
 test_that("shuffle_ard doesn't trim off NULL/NA values", {
   # mix of char NA, NULL values
   res <- suppressMessages(
-    data.frame(x = rep_len(NA_character_, 10)) |>
-      ard_continuous(
+    data.frame(x = rep_len(NA, 10)) |>
+      ard_summary(
         variables = x,
         statistic = ~ continuous_summary_fns(c("median", "p25", "p75"))
       ) |>
@@ -119,32 +146,15 @@ test_that("shuffle_ard doesn't trim off NULL/NA values", {
       dplyr::pull(stat)
   )
 
-  # check that all rows present and result is a numeric vector
+  # check that all rows present
   expect_length(res, 3)
-  expect_equal(class(res), "numeric")
-})
-
-test_that("shuffle_ard trims statistics with length > 1", {
-  expect_equal(
-    ard_continuous(
-      ADSL,
-      variables = AGE,
-      statistic = list(AGE = list(
-        long_result = \(x) 1:3,
-        long_list_result = \(x) list(1:3)
-      ))
-    ) |>
-      shuffle_ard() |>
-      nrow(),
-    0L
-  )
 })
 
 test_that("shuffle_ard coerces all factor groups/variables to character", {
   adsl_ <- ADSL |>
     dplyr::mutate(RACE = factor(RACE))
 
-  res <- ard_categorical(
+  res <- ard_tabulate(
     data = adsl_,
     by = TRT01A,
     variables = c(RACE, ETHNIC)
@@ -160,12 +170,13 @@ test_that("shuffle_ard coerces all factor groups/variables to character", {
 
   # correct coersion
   expect_equal(
-    sort(unique(res$label)),
+    sort(unique(res$variable_level)),
     sort(unique(c(as.character(adsl_$RACE), adsl_$ETHNIC)))
   )
 })
 
 test_that("shuffle_ard fills missing group levels if the group is meaningful for cardx output", {
+  withr::local_options(list(width = 200))
   # cardx ARD: this is a dput() of a cardx result (see commented out code below) SAVED 2024-08-30
   ard_cardx <-
     structure(list(
@@ -183,7 +194,7 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
         statistic = c(`X-squared` = 5.07944166638125),
         p.value = 0.0788884197453486, statistic = c(`X-squared` = 1.03944199945198),
         p.value = 0.594686442507218
-      ), fmt_fn = list(
+      ), fmt_fun = list(
         statistic = 1L,
         p.value = 1L, statistic = 1L, p.value = 1L
       ), warning = list(
@@ -200,20 +211,304 @@ test_that("shuffle_ard fills missing group levels if the group is meaningful for
       shuffle_ard() |>
       as.data.frame()
   )
+})
 
-  # adsl_sub <- ADSL |> dplyr::filter(ARM %in% unique(ARM)[1:2])
-  # bind_ard(
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "ARM",
-  #     variables = "AGEGR1"
-  #   ),
-  #   cardx::ard_stats_chisq_test(
-  #     data = adsl_sub,
-  #     by = "SEX",
-  #     variables = "AGEGR1"
-  #   )
-  # ) |>
-  #   dplyr::filter(stat_name %in% c("statistic", "p.value")) |>
-  #   dput()
+test_that("shuffle_ard() fills grouping columns with `Overall <var>` or `Any <var>`", {
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup()
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    )
+
+  shuffled_ard <- ard_stack_hierarchical(
+    data = adae,
+    by = TRTA,
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  ) |>
+    shuffle_ard()
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::pull(TRTA),
+    "Overall TRTA"
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
+
+test_that("shuffle_ard() fills with multiple `by` columns", {
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup()
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    )
+
+  ard <- ard_stack_hierarchical(
+    data = adae,
+    by = c(TRTA, SEX),
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  )
+
+  shuffled_ard <- ard |>
+    shuffle_ard()
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::select(
+        TRTA,
+        AESOC,
+        SEX
+      ),
+    data.frame(
+      TRTA = "Overall TRTA",
+      AESOC = NA_character_,
+      SEX = NA_character_
+    ),
+    # the shuffled_ard preserves the card attributes and returns a tibble. We
+    # need to ignore the attributes for the purpose of this comparison
+    ignore_attr = TRUE
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
+
+test_that("shuffle_ard() messages about 'Overall <var>' or 'Any <var>'", {
+  test_data <- dplyr::tibble(
+    ARM = c("..cards_overall..", "Overall ARM", NA, "BB", NA),
+    TRTA = c(NA, NA, "..hierarchical_overall..", "C", "C")
+  )
+
+  # messaging actually comes from .derive_overall_labels
+  expect_snapshot(
+    test_data |>
+      dplyr::mutate(
+        dplyr::across(
+          ARM:TRTA,
+          cards:::.derive_overall_labels
+        )
+      )
+  )
+
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      TRTA = dplyr::if_else(
+        TRTA == "Xanomeline High Dose",
+        "Overall TRTA",
+        TRTA
+      ),
+      AESOC = dplyr::if_else(
+        AESOC == "GASTROINTESTINAL DISORDERS",
+        "Any AESOC",
+        AESOC
+      )
+    )
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    ) |>
+    dplyr::mutate(
+      TRTA = dplyr::if_else(
+        TRTA == "Xanomeline High Dose",
+        "Overall TRTA",
+        TRTA
+      )
+    )
+
+  ard <- ard_stack_hierarchical(
+    data = adae,
+    by = c(TRTA, SEX),
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE,
+    shuffle = FALSE
+  )
+
+  expect_snapshot(
+    shuffled_ard <- ard |>
+      shuffle_ard()
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      ) |>
+      dplyr::select(
+        TRTA,
+        AESOC,
+        SEX
+      ),
+    data.frame(
+      TRTA = "Overall TRTA.1",
+      AESOC = NA_character_,
+      SEX = NA_character_
+    ),
+    # the shuffled_ard preserves the card attributes and returns a tibble. We
+    # need to ignore the attributes for the purpose of this comparison
+    ignore_attr = TRUE
+  )
+
+  expect_identical(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      ) |>
+      dplyr::pull(AESOC) |>
+      unique(),
+    "Any AESOC.1"
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_total_n.."
+      )
+  )
+
+  expect_snapshot(
+    shuffled_ard |>
+      dplyr::filter(
+        variable == "..ard_hierarchical_overall.."
+      )
+  )
+})
+
+
+test_that("shuffle_ard() preserves the attributes of a `card` object", {
+  adae <- ADAE |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose"),
+      AESOC %in% unique(AESOC)[1:2]
+    ) |>
+    dplyr::group_by(AESOC) |>
+    dplyr::filter(
+      AETERM %in% unique(AETERM)[1:2]
+    ) |>
+    dplyr::ungroup()
+
+  adsl <- ADSL |>
+    dplyr::filter(
+      SAFFL == "Y",
+      TRTA %in% c("Placebo", "Xanomeline High Dose")
+    )
+
+  ard <- ard_stack_hierarchical(
+    data = adae,
+    by = TRTA,
+    variables = c(AESOC, AETERM),
+    denominator = adsl,
+    id = USUBJID,
+    overall = TRUE,
+    over_variables = TRUE,
+    total_n = TRUE
+  )
+
+  shuffled_ard <- shuffle_ard(ard)
+
+  expect_identical(
+    attributes(ard)[["args"]],
+    attributes(shuffled_ard)[["args"]]
+  )
 })

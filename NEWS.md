@@ -1,12 +1,88 @@
-# cards 0.5.1.9008
+# cards 0.6.1.9017
 
-* Added new function `unlist_ard_columns()`. (#391)
+* The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
+
+* The following functions have been renamed. (#470)
+  - `ard_continuous()` to `ard_summary()`
+  - `ard_complex()` to `ard_mvsummary()`
+  - `ard_categorical()` to `ard_tabulate()`
+  - `ard_dichotomous()` to `ard_tabulate_value()`
+
+* Updated `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
+
+* Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
+
+* `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
+
+* Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
+
+* `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
+
+* Added flexibility to filter by `by` variable level-specific values when using `filter_ard_hierarchical()` to allow for filtering of hierarchical ARDs by difference in two rates. (#438)
+
+* Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
+
+* Add `ADLB` data set. (#450)
+
+* `shuffle_ard()` fills overall or group statistics with `"Overall <column_name>"` or `"Any <column_name>"`. (#337, @dragosmg)
+
+* `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
+
+* Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
+
+# cards 0.6.1
+
+## New Features and Functions
+
+* Added new function `ard_identity()` for saving pre-calculated statistics in an ARD format. (#379)
+
+## Lifecycle Changes
+
+* Updating any `fmt_fn` references to `fmt_fun` for consistency. 
+
+    * Any function with an argument `cards::foo(fmt_fn)` has been updated to `cards::foo(fmt_fun)`. The old syntax will continue to function, but with a deprecation warning to users.
+
+    * The following function names have been updated: `alias_as_fmt_fun()`, `apply_fmt_fun()`, and `update_ard_fmt_fun()`.  The former function names are still exported from the package, and users will see a deprecation note when they are used.
+
+    * Importantly, the ARD column named `"fmt_fn"` has been updated to `"fmt_fun"`. This change cannot be formally deprecated. For users who were accessing the ARD object directly to modify this column instead of using functions like `update_ard_fmt_fun()`, this will be a breaking change.
+    
+## Bug Fixes
+
+* Fix bug in `sort_ard_hierarchical()` when hierarchical ARD has `overall=TRUE`. (#431)
+
+* Fix bug in `ard_stack_hierarchical()` when `id` values are present in multiple levels of the `by` variables. (#442)
+
+* Fix bug in `shuffle_ard()` where error is thrown if input contains hierarchical results. (#447)
+
+# cards 0.6.0
+
+## New Features and Functions
 
 * Added functions `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to sort & filter ARDs created using `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`. (#301)
 
+* Updated `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()` to automatically sort results alphanumerically. (#423)
+
+* Added new function `unlist_ard_columns()`. (#391)
+
+* Updated function `rename_ard_columns()`. (#380)
+
+    * The function no longer coerces values to character.
+
+    * The `fill` argument has been added to specify a value to fill in the new column when there are no levels associated with the variables (e.g. continuous summaries).
+
+    * The `unlist` argument has been deprecated in favor of using the new `unlist_ard_columns()` function.
+
+    * The function no longer accepts generic data frames: inputs must be a data frame of class `card`.
+    
 * Added function `ard_formals()` to assist in adding a function's formals, that is, the arguments with their default values, along with user-passed arguments into an ARD structure.
 
+## Bug Fixes
+
 * Fixed sorting order of logical variables in `nest_for_ard()`. (#411)
+
+## Lifecycle Changes
+
+* The `shuffle_ard()` function no longer outputs a `'label'` column, and instead retains the original `'variable'` level from the cards object. It also no longer trims rows with non-numeric stats values. (#416)
 
 # cards 0.5.1
 
