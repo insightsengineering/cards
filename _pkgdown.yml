@@ -102,3 +102,7 @@ reference:
   - title: "Data"
     contents:
       - adam
+
+  - title: "Deprecated Functions"
+    contents:
+      - deprecated
