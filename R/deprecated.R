@@ -14,7 +14,6 @@
 #'  - `update_ard_fmt_fn()` to `update_ard_fmt_fun()`
 #'
 #' @name deprecated
-#' @keywords internal
 NULL
 
 # "soft" deprecation for 6 months: (Sys.Date() - lubridate::dmonths(6)) |> as.Date()
@@ -27,6 +26,7 @@ NULL
 
 # v0.7.0 -----------------------------------------------------------------------
 # These were dropped from the documentation in v0.7.0. But were not officially deprecated
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_continuous <- function(data, ...) {
@@ -34,6 +34,7 @@ ard_continuous <- function(data, ...) {
   UseMethod("ard_continuous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_categorical <- function(data, ...) {
@@ -41,6 +42,7 @@ ard_categorical <- function(data, ...) {
   UseMethod("ard_categorical")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_complex <- function(data, ...) {
@@ -48,6 +50,7 @@ ard_complex <- function(data, ...) {
   UseMethod("ard_complex")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_dichotomous <- function(data, ...) {
@@ -55,6 +58,7 @@ ard_dichotomous <- function(data, ...) {
   UseMethod("ard_dichotomous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_continuous.data.frame <- function(data, ...) {
@@ -62,6 +66,7 @@ ard_continuous.data.frame <- function(data, ...) {
     dplyr::mutate(context = "continuous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_categorical.data.frame <- function(data, ...) {
@@ -69,6 +74,7 @@ ard_categorical.data.frame <- function(data, ...) {
     dplyr::mutate(context = "categorical")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_complex.data.frame <- function(data, ...) {
@@ -76,6 +82,7 @@ ard_complex.data.frame <- function(data, ...) {
     dplyr::mutate(context = "complex")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_dichotomous.data.frame <- function(data, ...) {
@@ -118,17 +125,4 @@ update_ard_fmt_fn <- function(...) {
   )
 
   alias_as_fmt_fun(...)
-}
-
-# Deprecated on 2025-02-08: I don't think any users would have utilized this function, and we can do a quick deprecation cycle.
-#' @rdname deprecated
-#' @export
-label_cards <- function(...) {
-  lifecycle::deprecate_soft(
-    when = "0.5.0",
-    what = "cards::label_cards()",
-    with = "label_round()"
-  )
-
-  label_round(...)
 }
