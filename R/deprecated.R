@@ -126,4 +126,3 @@ update_ard_fmt_fn <- function(...) {
 
   alias_as_fmt_fun(...)
 }
-
