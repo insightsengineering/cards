@@ -8,8 +8,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 options(width = 120)
-library(gtsummary)
-theme_gtsummary_compact()
+gtsummary::theme_gtsummary_compact()
 ```
 
 ```{r,output=FALSE, message=FALSE}
