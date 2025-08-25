@@ -14,7 +14,6 @@
 #'  - `update_ard_fmt_fn()` to `update_ard_fmt_fun()`
 #'
 #' @name deprecated
-#' @keywords internal
 NULL
 
 # "soft" deprecation for 6 months: (Sys.Date() - lubridate::dmonths(6)) |> as.Date()
@@ -120,15 +119,3 @@ update_ard_fmt_fn <- function(...) {
   alias_as_fmt_fun(...)
 }
 
-# Deprecated on 2025-02-08: I don't think any users would have utilized this function, and we can do a quick deprecation cycle.
-#' @rdname deprecated
-#' @export
-label_cards <- function(...) {
-  lifecycle::deprecate_soft(
-    when = "0.5.0",
-    what = "cards::label_cards()",
-    with = "label_round()"
-  )
-
-  label_round(...)
-}
