@@ -36,6 +36,8 @@ ADAE <-
   labelled::set_variable_labels(AETOXGR = "Toxicity Grade")
 
 # Reduce ADLB Dataset (744264 rows to 5784)
-ADLB <- ADLB |> dplyr::filter(SUBJID %in% head(unique(SUBJID), 20))
+ADLB <- ADLB |>
+  dplyr::filter(SUBJID %in% head(unique(SUBJID), 20)) |>
+  dplyr::mutate(dplyr::across(where(is.character), trimws))
 
 usethis::use_data(ADSL, ADAE, ADTTE, ADLB, overwrite = TRUE)

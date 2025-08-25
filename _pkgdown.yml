@@ -17,7 +17,9 @@ navbar:
     menu:
     - text: "Getting Started"
       href: articles/getting-started.html
-    - text: "Creating New ARDs"
+    - text: "Long Data ARDs"
+      href: articles/long_data.html
+    - text: "Writing ARD Functions"
       href: articles/creating-ards.html
     - text: "Other ARD Representations"
       href: articles/structures.html

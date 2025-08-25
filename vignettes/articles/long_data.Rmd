@@ -1,0 +1,189 @@
+---
+title: "Long Data Summaries"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(width = 120)
+library(gtsummary)
+theme_gtsummary_compact()
+```
+
+```{r,output=FALSE, message=FALSE}
+library(cards)
+library(dplyr)
+```
+
+The goal of this article is to illustrate which {cards} functions are used to various types long data summaries: think ADAE, ADLB, ADCM, and other similarly structured data sets.
+
+Generally, the solution to long data summaries lies with `ard_stack_hierarchical*()`, `tbl_strata()`, or even a call to a more basic function like `ard_tabulate()`. Herein, we will review these function and when each is needed.
+
+# Hierarchical or Nested Summaries
+
+The `ard_stack_hierarchical*()` family of functions are useful when tabulating hierarchical or nested data **and** the tabulation needs to be repeated across more than one of the hierarchies.
+The most common example is the summary of adverse event (AE) data.
+
+```{r echo=FALSE}
+gtsummary::tbl_hierarchical(
+  data = ADAE,
+  variables = c(AESOC, AEDECOD),
+  by = TRTA,
+  id = USUBJID,
+  denominator = ADSL,
+  overall_row = TRUE,
+  label = list(..ard_hierarchical_overall.. = "Number Subjects with AE")
+) |> 
+  gtsummary::modify_table_body(
+    ~ .x |> 
+      dplyr::filter(label %in% c("Number Subjects with AE",
+                                 "GASTROINTESTINAL DISORDERS",
+                                 "DIARRHOEA",
+                                 "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+                                 "APPLICATION SITE ERYTHEMA",
+                                 "APPLICATION SITE PRURITUS",
+                                 "APPLICATION SITE VESICLES",
+                                 "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+                                 "ERYTHEMA",
+                                 "PRURITUS GENERALISED"))
+  ) |> 
+  gtsummary::remove_footnote_header() |> 
+  gtsummary::modify_source_note("Printing a few illustrative rows from the full table.")
+```
+
+In the table above, the AE _rate_ are reported for both the system organ class (SOC) and AE term.
+That is, each AE is counted once per subject, and the rate each AE is then calculated; this is then repeated for SOC.
+A call to the `ard_stack_hierarchical()` function will return an ARD with the adverse event rates, the system organ class rates, the overall rates (row one from the example table), and the counts that appear in the header.
+
+To create the ARD for this table, use the `ard_stack_hierarchical()` function.
+
+```{r results="hide"}
+ard_ae <-
+  ADAE |> 
+  ard_stack_hierarchical(
+    variables = c(AESOC, AEDECOD), # report rates for SOC and AE within SOC
+    by = TRTA,                     # report all statistics by treatment
+    id = USUBJID,                  # used to remove duplicate AEs within subject
+    denominator = ADSL,            # specified the denominator for rate calculations
+    over_variables = TRUE          # include summary statistics for Any AE
+  )
+```
+
+The returned ARD contains _four stacked sections_: AE rates, SOC rates, Any AE rates, and Treatment counts.
+Let's inspect the different summary statistics returned.
+
+**Adverse Event Rates**
+
+The `ADAE` data frame is subset to remove duplicate AEs reported from each subject.
+From there, the rates are calculated against the `ADSL` data frame passed in the `denominator` argument.
+
+```{r}
+ard_ae |> 
+  filter(variable == "AEDECOD")
+```
+
+**System Organ Class Rates**
+
+The AE rate process is repeated for SOC.
+
+```{r}
+ard_ae |> 
+  filter(variable == "AESOC") |> 
+  select(-all_missing_columns())
+```
+
+**Any AE Rates**
+
+The process is then repeated to calculate rates of any adverse event.
+
+```{r}
+ard_ae |> 
+  filter(variable == "..ard_hierarchical_overall..") |> 
+  select(-all_missing_columns())
+```
+
+**Treatment Counts**
+
+Finally, a univariate tabulation of the `TRTA` column from `ADSL` is included.
+
+```{r}
+ard_ae |> 
+  filter(variable == "TRTA") |> 
+  select(-all_missing_columns())
+```
+
+<!-- TODO: Convert this to a qmd and add an aside about the stack function makes calls to other functions. -->
+
+The package exports a similar function for counting adverse event, rather than calculating rates: `ard_stack_hierarchical_count()`.
+
+# Stratified Summaries
+
+There are many types of stratified summaries that may be needed to report results from a trial.
+We will focus on a common lab summary where summary statistics are reported by lab type, visit and treatment.
+
+```{r echo=FALSE}
+ADLB |> 
+  mutate(AVISIT = trimws(AVISIT)) |> 
+  filter(
+    PARAMCD %in% c("BILI", "CREAT"),
+    AVISIT %in% c("Baseline", "Week 24")
+  ) |> 
+  gtsummary::tbl_strata_nested_stack(
+    strata = PARAM,
+    \(.x) {
+      .x |> 
+        crane::tbl_baseline_chg(
+          baseline_level = "Baseline",
+          by = "TRTA",
+          denominator = ADSL
+        )
+    }
+  ) |> 
+  gtsummary::modify_bold(columns = label, rows = tbl_indent_id1 > 0L) |>
+  gtsummary::modify_spanning_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |> 
+  gtsummary::modify_header(label = "**Lab  \n\U00A0\U00A0\U00A0\U00A0 Visit**") |> 
+  gtsummary::modify_source_note("Printing a few illustrative rows from the full table.")
+```
+
+To build the ARD for this table, we use the `ard_summary()`.
+
+```{r}
+ADLB |>
+  # subset on two labs and two study visits
+  filter(
+    PARAMCD %in% c("BILI", "CREAT"),
+    AVISIT %in% c("Baseline", "Week 24")
+  ) |> 
+  ard_summary(
+    # calculate statistics by observed combinations of PARAM on AVISIT
+    strata = c("PARAM", "AVISIT"),
+    # By TRTA will provide results for each of the treatments, even if unobserved
+    by = "TRTA",
+    # provide summaries for the measurement and its change from baseline
+    variables = c("AVAL", "CHG")
+  )
+```
+
+There are some cases, where slightly different behavior is needed within stratum.
+In these cases, use the `ard_strata()` function.
+For example, if we were tabulating character `AVALC` values, and the possible values are different depending on `PARAM`, the code may look something like this:
+
+```{r eval = FALSE}
+ard_strata(
+  data = ADLB,
+  .strata = "PARAM",
+  .f = \(data_param) {
+    # set factor depending on the PARAM value
+    if (data_param$PARAM[1] == "XXX") data_param$AVALC <- factor(data_param$AVALC, levels = c("No", "Yes"))
+    if (data_param$PARAM[1] == "YYY") data_param$AVALC <- factor(data_param$AVALC, levels = c("Low", "High"))
+    
+    ard_tabulate(
+      data_param,
+      variable = "AVALC"
+    )
+  }
+)
+```
+
