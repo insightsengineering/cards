@@ -182,7 +182,7 @@ ard_strata(
 
     ard_tabulate(
       data_param,
-      strata = "AVISIT", 
+      strata = "AVISIT",
       by = "TRTA",
       variable = "AVALC"
     )
