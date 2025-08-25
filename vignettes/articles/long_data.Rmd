@@ -16,7 +16,7 @@ library(cards)
 library(dplyr)
 ```
 
-The goal of this article is to illustrate which {cards} functions are used to various types long data summaries: think ADAE, ADLB, ADCM, and other similarly structured data sets.
+The goal of this article is to illustrate which {cards} functions are used to create long data summaries: think summaries from ADAE, ADLB, ADCM, and other similarly structured data sets.
 
 Generally, the solution to long data summaries lies with `ard_stack_hierarchical*()`, `tbl_strata()`, or even a call to a more basic function like `ard_tabulate()`. Herein, we will review these function and when each is needed.
 
@@ -54,8 +54,8 @@ gtsummary::tbl_hierarchical(
   gtsummary::modify_source_note("Printing a few illustrative rows from the full table.")
 ```
 
-In the table above, the AE _rate_ are reported for both the system organ class (SOC) and AE term.
-That is, each AE is counted once per subject, and the rate each AE is then calculated; this is then repeated for SOC.
+In the table above, the AE _rates_ are reported for both the system organ class (SOC) and AE term.
+That is, each AE is counted once per subject and then rate for each AE calculated; this is repeated for SOC.
 A call to the `ard_stack_hierarchical()` function will return an ARD with the adverse event rates, the system organ class rates, the overall rates (row one from the example table), and the counts that appear in the header.
 
 To create the ARD for this table, use the `ard_stack_hierarchical()` function.
@@ -73,12 +73,12 @@ ard_ae <-
 ```
 
 The returned ARD contains _four stacked sections_: AE rates, SOC rates, Any AE rates, and Treatment counts.
-Let's inspect the different summary statistics returned.
+Let's inspect each of these four sections.
 
 **Adverse Event Rates**
 
-The `ADAE` data frame is subset to remove duplicate AEs reported from each subject.
-From there, the rates are calculated against the `ADSL` data frame passed in the `denominator` argument.
+To calculate the AE event counts, the `ADAE` data frame is subset to remove duplicate AEs reported from each subject.
+From there, the rates are calculated using the `ADSL` data frame passed in the `denominator` argument.
 
 ```{r}
 ard_ae |>
@@ -160,7 +160,7 @@ ADLB |>
   ard_summary(
     # calculate statistics by observed combinations of PARAM on AVISIT
     strata = c("PARAM", "AVISIT"),
-    # By TRTA will provide results for each of the treatments, even if unobserved
+    # `by='TRTA'` will provide results for each of the treatments, even if unobserved
     by = "TRTA",
     # provide summaries for the measurement and its change from baseline
     variables = c("AVAL", "CHG")
@@ -182,6 +182,8 @@ ard_strata(
 
     ard_tabulate(
       data_param,
+      strata = "AVISIT", 
+      by = "TRTA",
       variable = "AVALC"
     )
   }
