@@ -35,21 +35,23 @@ gtsummary::tbl_hierarchical(
   denominator = ADSL,
   overall_row = TRUE,
   label = list(..ard_hierarchical_overall.. = "Number Subjects with AE")
-) |> 
+) |>
   gtsummary::modify_table_body(
-    ~ .x |> 
-      dplyr::filter(label %in% c("Number Subjects with AE",
-                                 "GASTROINTESTINAL DISORDERS",
-                                 "DIARRHOEA",
-                                 "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
-                                 "APPLICATION SITE ERYTHEMA",
-                                 "APPLICATION SITE PRURITUS",
-                                 "APPLICATION SITE VESICLES",
-                                 "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
-                                 "ERYTHEMA",
-                                 "PRURITUS GENERALISED"))
-  ) |> 
-  gtsummary::remove_footnote_header() |> 
+    ~ .x |>
+      dplyr::filter(label %in% c(
+        "Number Subjects with AE",
+        "GASTROINTESTINAL DISORDERS",
+        "DIARRHOEA",
+        "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS",
+        "APPLICATION SITE ERYTHEMA",
+        "APPLICATION SITE PRURITUS",
+        "APPLICATION SITE VESICLES",
+        "SKIN AND SUBCUTANEOUS TISSUE DISORDERS",
+        "ERYTHEMA",
+        "PRURITUS GENERALISED"
+      ))
+  ) |>
+  gtsummary::remove_footnote_header() |>
   gtsummary::modify_source_note("Printing a few illustrative rows from the full table.")
 ```
 
@@ -61,13 +63,13 @@ To create the ARD for this table, use the `ard_stack_hierarchical()` function.
 
 ```{r results="hide"}
 ard_ae <-
-  ADAE |> 
+  ADAE |>
   ard_stack_hierarchical(
     variables = c(AESOC, AEDECOD), # report rates for SOC and AE within SOC
-    by = TRTA,                     # report all statistics by treatment
-    id = USUBJID,                  # used to remove duplicate AEs within subject
-    denominator = ADSL,            # specified the denominator for rate calculations
-    over_variables = TRUE          # include summary statistics for Any AE
+    by = TRTA, # report all statistics by treatment
+    id = USUBJID, # used to remove duplicate AEs within subject
+    denominator = ADSL, # specified the denominator for rate calculations
+    over_variables = TRUE # include summary statistics for Any AE
   )
 ```
 
@@ -80,7 +82,7 @@ The `ADAE` data frame is subset to remove duplicate AEs reported from each subje
 From there, the rates are calculated against the `ADSL` data frame passed in the `denominator` argument.
 
 ```{r}
-ard_ae |> 
+ard_ae |>
   filter(variable == "AEDECOD")
 ```
 
@@ -89,8 +91,8 @@ ard_ae |>
 The AE rate process is repeated for SOC.
 
 ```{r}
-ard_ae |> 
-  filter(variable == "AESOC") |> 
+ard_ae |>
+  filter(variable == "AESOC") |>
   select(-all_missing_columns())
 ```
 
@@ -99,8 +101,8 @@ ard_ae |>
 The process is then repeated to calculate rates of any adverse event.
 
 ```{r}
-ard_ae |> 
-  filter(variable == "..ard_hierarchical_overall..") |> 
+ard_ae |>
+  filter(variable == "..ard_hierarchical_overall..") |>
   select(-all_missing_columns())
 ```
 
@@ -109,8 +111,8 @@ ard_ae |>
 Finally, a univariate tabulation of the `TRTA` column from `ADSL` is included.
 
 ```{r}
-ard_ae |> 
-  filter(variable == "TRTA") |> 
+ard_ae |>
+  filter(variable == "TRTA") |>
   select(-all_missing_columns())
 ```
 
@@ -124,26 +126,26 @@ There are many types of stratified summaries that may be needed to report result
 We will focus on a common lab summary where summary statistics are reported by lab type, visit and treatment.
 
 ```{r echo=FALSE}
-ADLB |> 
-  mutate(AVISIT = trimws(AVISIT)) |> 
+ADLB |>
+  mutate(AVISIT = trimws(AVISIT)) |>
   filter(
     PARAMCD %in% c("BILI", "CREAT"),
     AVISIT %in% c("Baseline", "Week 24")
-  ) |> 
+  ) |>
   gtsummary::tbl_strata_nested_stack(
     strata = PARAM,
     \(.x) {
-      .x |> 
+      .x |>
         crane::tbl_baseline_chg(
           baseline_level = "Baseline",
           by = "TRTA",
           denominator = ADSL
         )
     }
-  ) |> 
+  ) |>
   gtsummary::modify_bold(columns = label, rows = tbl_indent_id1 > 0L) |>
-  gtsummary::modify_spanning_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |> 
-  gtsummary::modify_header(label = "**Lab  \n\U00A0\U00A0\U00A0\U00A0 Visit**") |> 
+  gtsummary::modify_spanning_header(gtsummary::all_stat_cols() ~ "**{level}**  \nN = {n}") |>
+  gtsummary::modify_header(label = "**Lab  \n\U00A0\U00A0\U00A0\U00A0 Visit**") |>
   gtsummary::modify_source_note("Printing a few illustrative rows from the full table.")
 ```
 
@@ -155,7 +157,7 @@ ADLB |>
   filter(
     PARAMCD %in% c("BILI", "CREAT"),
     AVISIT %in% c("Baseline", "Week 24")
-  ) |> 
+  ) |>
   ard_summary(
     # calculate statistics by observed combinations of PARAM on AVISIT
     strata = c("PARAM", "AVISIT"),
@@ -178,7 +180,7 @@ ard_strata(
     # set factor depending on the PARAM value
     if (data_param$PARAM[1] == "XXX") data_param$AVALC <- factor(data_param$AVALC, levels = c("No", "Yes"))
     if (data_param$PARAM[1] == "YYY") data_param$AVALC <- factor(data_param$AVALC, levels = c("Low", "High"))
-    
+
     ard_tabulate(
       data_param,
       variable = "AVALC"
