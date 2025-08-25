@@ -37,6 +37,9 @@ alias_as_fmt_fn(...)
 
 update_ard_fmt_fn(...)
 }
+\arguments{
+\item{data, ...}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr
 Some functions have been deprecated and are no longer being actively

@@ -26,6 +26,7 @@ NULL
 
 # v0.7.0 -----------------------------------------------------------------------
 # These were dropped from the documentation in v0.7.0. But were not officially deprecated
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_continuous <- function(data, ...) {
@@ -33,6 +34,7 @@ ard_continuous <- function(data, ...) {
   UseMethod("ard_continuous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_categorical <- function(data, ...) {
@@ -40,6 +42,7 @@ ard_categorical <- function(data, ...) {
   UseMethod("ard_categorical")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_complex <- function(data, ...) {
@@ -47,6 +50,7 @@ ard_complex <- function(data, ...) {
   UseMethod("ard_complex")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_dichotomous <- function(data, ...) {
@@ -54,6 +58,7 @@ ard_dichotomous <- function(data, ...) {
   UseMethod("ard_dichotomous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_continuous.data.frame <- function(data, ...) {
@@ -61,6 +66,7 @@ ard_continuous.data.frame <- function(data, ...) {
     dplyr::mutate(context = "continuous")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_categorical.data.frame <- function(data, ...) {
@@ -68,6 +74,7 @@ ard_categorical.data.frame <- function(data, ...) {
     dplyr::mutate(context = "categorical")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_complex.data.frame <- function(data, ...) {
@@ -75,6 +82,7 @@ ard_complex.data.frame <- function(data, ...) {
     dplyr::mutate(context = "complex")
 }
 
+#' @param data,... `r lifecycle::badge('deprecated')`
 #' @rdname deprecated
 #' @export
 ard_dichotomous.data.frame <- function(data, ...) {
