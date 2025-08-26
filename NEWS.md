@@ -2,6 +2,8 @@
 
 * Added an article illustrating how to summarize long data structures. (#356)
 
+* Added an article illustrating how to summarize long data structures. (#356)
+
 * The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
 
 * The following functions have been renamed. (#470)

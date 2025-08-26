@@ -18,7 +18,7 @@ library(dplyr)
 
 The goal of this article is to illustrate which {cards} functions are used to create long data summaries: think summaries from ADAE, ADLB, ADCM, and other similarly structured data sets.
 
-Generally, the solution to long data summaries lies with `ard_stack_hierarchical*()`, `tbl_strata()`, or even a call to a more basic function like `ard_tabulate()`. Herein, we will review these function and when each is needed.
+Generally, the solution to long data summaries lies with `ard_stack_hierarchical*()`, `ard_strata()`, or even a call to a more basic function like `ard_tabulate()`. Herein, we will review these function and when each is needed.
 
 # Hierarchical or Nested Summaries
 
@@ -150,6 +150,12 @@ ADLB |>
 
 To build the ARD for this table, we use the `ard_summary()`.
 
+  - `ard_summary(by="TRTA")`: Use the `by` argument ensures each level of treatment has all associated summary statistics, even if there are combinations that are unobserved or all `NA`.
+
+  - `ard_summary(strata=c("PARAM", "AVISIT")`: The strata argument will produce summary statistics for all _observed combinations_ of `'PARAM'` and `'AVISIT'`. We opt to use `strata` because it is common a trial will not collect all labs at each visit, and we don't want to report that bilirubin had no observations at week xx when it was never meant to be collected at that visit, for example.
+
+  - `ard_summary(variables=c("AVAL", "CHG"))`: These are the variables that will be summarized within `'TRTA'`, `'PARAM'`, and `'AVISIT'`.
+
 ```{r}
 ADLB |>
   # subset on two labs and two study visits
@@ -170,6 +176,8 @@ ADLB |>
 There are some cases, where slightly different behavior is needed within stratum.
 In these cases, use the `ard_strata()` function.
 For example, if we were tabulating character `AVALC` values, and the possible values are different depending on `PARAM`, the code may look something like this:
+
+<!-- TODO: Should we update to use pharmaverseadam? That ADLB has a AVALC. -->
 
 ```{r eval = FALSE}
 ard_strata(
