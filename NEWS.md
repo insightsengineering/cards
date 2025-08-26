@@ -1,4 +1,4 @@
-# cards 0.6.1.9019
+# cards 0.6.1.9020
 
 * Added an article illustrating how to summarize long data structures. (#356)
 
