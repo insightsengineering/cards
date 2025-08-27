@@ -19,7 +19,6 @@
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Analysis Results Data">
 <meta name="description" content="Construct CDISC (Clinical Data Interchange Standards Consortium) compliant Analysis Results Data objects. These objects are used and re-used to construct summary tables, visualizations, and written reports. The package also exports utilities for working with these objects and creating new Analysis Results Data objects.">
 <meta property="og:description" content="Construct CDISC (Clinical Data Interchange Standards Consortium) compliant Analysis Results Data objects. These objects are used and re-used to construct summary tables, visualizations, and written reports. The package also exports utilities for working with these objects and creating new Analysis Results Data objects.">
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="consent.css">
 <script src="consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -31,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +45,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -56,6 +56,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -82,11 +83,9 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="cards-">cards 
+<div class="page-header"><h1 id="cards-">cards <a href="https://insightsengineering.github.io/cards/"><img src="https://raw.githubusercontent.com/insightsengineering/cardx/main/man/figures/logo.png" align="right" height="120" alt="cards website"></a>
 <a class="anchor" aria-label="anchor" href="#cards-"></a>
-</h1>
-</div>
+</h1></div>
 <!-- badges: start -->
 
 <p>The <a href="https://www.cdisc.org/standards/foundational/analysis-results-standard" class="external-link">CDISC Analysis Results Standard</a> aims to facilitate automation, reproducibility, reusability, and traceability of analysis results data (ARD). The {cards} package creates these <strong>C</strong>DISC <strong>A</strong>nalysis <strong>R</strong>esult <strong>D</strong>ata <strong>S</strong>ets.</p>
@@ -127,7 +126,7 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/insightsengineering/cards" class="external-link">cards</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/ard_summary.html">ard_summary</a></span><span class="op">(</span><span class="va">ADSL</span>, by <span class="op">=</span> <span class="st">"ARM"</span>, variables <span class="op">=</span> <span class="st">"AGE"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {cards} data frame: 24 x 10</span></span>
 <span><span class="co">#&gt;    group1 group1_level variable stat_name stat_label   stat</span></span>
 <span><span class="co">#&gt; 1     ARM      Placebo      AGE         N          N     86</span></span>
@@ -147,20 +146,20 @@
 <div class="section level2">
 <h2 id="other-resources">Other Resources<a class="anchor" aria-label="anchor" href="#other-resources"></a>
 </h2>
-<div id="wccixxjwid" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wccixxjwid table {
+<div id="qtlbwypahv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qtlbwypahv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#wccixxjwid thead, #wccixxjwid tbody, #wccixxjwid tfoot, #wccixxjwid tr, #wccixxjwid td, #wccixxjwid th {
+&#10;#qtlbwypahv thead, #qtlbwypahv tbody, #qtlbwypahv tfoot, #qtlbwypahv tr, #qtlbwypahv td, #qtlbwypahv th {
   border-style: none;
 }
-&#10;#wccixxjwid p {
+&#10;#qtlbwypahv p {
   margin: 0;
   padding: 0;
 }
-&#10;#wccixxjwid .gt_table {
+&#10;#qtlbwypahv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -185,11 +184,11 @@
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_caption {
+&#10;#qtlbwypahv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#wccixxjwid .gt_title {
+&#10;#qtlbwypahv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -200,7 +199,7 @@
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#wccixxjwid .gt_subtitle {
+&#10;#qtlbwypahv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -211,7 +210,7 @@
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#wccixxjwid .gt_heading {
+&#10;#qtlbwypahv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -222,12 +221,12 @@
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_bottom_border {
+&#10;#qtlbwypahv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_col_headings {
+&#10;#qtlbwypahv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -241,7 +240,7 @@
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_col_heading {
+&#10;#qtlbwypahv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -260,7 +259,7 @@
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#wccixxjwid .gt_column_spanner_outer {
+&#10;#qtlbwypahv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -271,13 +270,13 @@
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#wccixxjwid .gt_column_spanner_outer:first-child {
+&#10;#qtlbwypahv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#wccixxjwid .gt_column_spanner_outer:last-child {
+&#10;#qtlbwypahv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#wccixxjwid .gt_column_spanner {
+&#10;#qtlbwypahv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -288,10 +287,10 @@
   display: inline-block;
   width: 100%;
 }
-&#10;#wccixxjwid .gt_spanner_row {
+&#10;#qtlbwypahv .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#wccixxjwid .gt_group_heading {
+&#10;#qtlbwypahv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -316,7 +315,7 @@
   vertical-align: middle;
   text-align: left;
 }
-&#10;#wccixxjwid .gt_empty_group_heading {
+&#10;#qtlbwypahv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -330,13 +329,13 @@
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#wccixxjwid .gt_from_md > :first-child {
+&#10;#qtlbwypahv .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#wccixxjwid .gt_from_md > :last-child {
+&#10;#qtlbwypahv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#wccixxjwid .gt_row {
+&#10;#qtlbwypahv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -354,7 +353,7 @@
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#wccixxjwid .gt_stub {
+&#10;#qtlbwypahv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -366,7 +365,7 @@
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wccixxjwid .gt_stub_row_group {
+&#10;#qtlbwypahv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -379,13 +378,13 @@
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#wccixxjwid .gt_row_group_first td {
+&#10;#qtlbwypahv .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#wccixxjwid .gt_row_group_first th {
+&#10;#qtlbwypahv .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#wccixxjwid .gt_summary_row {
+&#10;#qtlbwypahv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -394,14 +393,14 @@
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wccixxjwid .gt_first_summary_row {
+&#10;#qtlbwypahv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_first_summary_row.thick {
+&#10;#qtlbwypahv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#wccixxjwid .gt_last_summary_row {
+&#10;#qtlbwypahv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -410,7 +409,7 @@
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_grand_summary_row {
+&#10;#qtlbwypahv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -419,7 +418,7 @@
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wccixxjwid .gt_first_grand_summary_row {
+&#10;#qtlbwypahv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -428,7 +427,7 @@
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_last_grand_summary_row_top {
+&#10;#qtlbwypahv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -437,10 +436,10 @@
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_striped {
+&#10;#qtlbwypahv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#wccixxjwid .gt_table_body {
+&#10;#qtlbwypahv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -448,7 +447,7 @@
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_footnotes {
+&#10;#qtlbwypahv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -461,7 +460,7 @@
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_footnote {
+&#10;#qtlbwypahv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -469,7 +468,7 @@
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wccixxjwid .gt_sourcenotes {
+&#10;#qtlbwypahv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -482,64 +481,64 @@
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#wccixxjwid .gt_sourcenote {
+&#10;#qtlbwypahv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#wccixxjwid .gt_left {
+&#10;#qtlbwypahv .gt_left {
   text-align: left;
 }
-&#10;#wccixxjwid .gt_center {
+&#10;#qtlbwypahv .gt_center {
   text-align: center;
 }
-&#10;#wccixxjwid .gt_right {
+&#10;#qtlbwypahv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#wccixxjwid .gt_font_normal {
+&#10;#qtlbwypahv .gt_font_normal {
   font-weight: normal;
 }
-&#10;#wccixxjwid .gt_font_bold {
+&#10;#qtlbwypahv .gt_font_bold {
   font-weight: bold;
 }
-&#10;#wccixxjwid .gt_font_italic {
+&#10;#qtlbwypahv .gt_font_italic {
   font-style: italic;
 }
-&#10;#wccixxjwid .gt_super {
+&#10;#qtlbwypahv .gt_super {
   font-size: 65%;
 }
-&#10;#wccixxjwid .gt_footnote_marks {
+&#10;#qtlbwypahv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#wccixxjwid .gt_asterisk {
+&#10;#qtlbwypahv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#wccixxjwid .gt_indent_1 {
+&#10;#qtlbwypahv .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#wccixxjwid .gt_indent_2 {
+&#10;#qtlbwypahv .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#wccixxjwid .gt_indent_3 {
+&#10;#qtlbwypahv .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#wccixxjwid .gt_indent_4 {
+&#10;#qtlbwypahv .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#wccixxjwid .gt_indent_5 {
+&#10;#qtlbwypahv .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#wccixxjwid .katex-display {
+&#10;#qtlbwypahv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#wccixxjwid div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#qtlbwypahv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -696,7 +695,8 @@
 <li>
 <a href="http://www.danieldsjoberg.com/" class="external-link">Daniel D. Sjoberg</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-0862-2018" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>Becca Krouse <br><small class="roles"> Author </small>   </li>
-<li>Emily de la Rua <br><small class="roles"> Author </small>   </li>
+<li>Emily de la Rua <br><small class="roles"> Author </small> <a href="https://orcid.org/0009-0000-8738-5561" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Malan Bosman <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-3020-195X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>F. Hoffmann-La Roche AG <br><small class="roles"> Copyright holder, funder </small>   </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>

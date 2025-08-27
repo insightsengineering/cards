@@ -25,7 +25,6 @@ can be modified directly.">
 This is a helper function to streamline the update process. If it does not
 exactly meet your needs, recall that an ARD is just a data frame and it
 can be modified directly.">
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -37,7 +36,7 @@ can be modified directly.">
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +51,8 @@ can be modified directly.">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -62,6 +62,7 @@ can be modified directly.">
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -88,8 +89,9 @@ can be modified directly.">
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Update ARDs</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/R/update_ard.R" class="external-link"><code>R/update_ard.R</code></a></small>
+
+      <h1>Update ARDs</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/R/update_ard.R" class="external-link"><code>R/update_ard.R</code></a></small>
       <div class="d-none name"><code>update_ard.Rd</code></div>
     </div>
 
@@ -181,24 +183,24 @@ a string of the updated statistic label.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a>
 </h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">ADSL</span>, variables <span class="op">=</span> <span class="va">AGE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span><span class="va">ADSL</span>, variables <span class="op">=</span> <span class="va">AGE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">update_ard_fmt_fun</span><span class="op">(</span>stat_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span>, fmt_fun <span class="op">=</span> <span class="fl">8L</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">update_ard_stat_label</span><span class="op">(</span>stat_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"sd"</span><span class="op">)</span>, stat_label <span class="op">=</span> <span class="st">"Mean (SD)"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="apply_fmt_fun.html">apply_fmt_fun</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 8 x 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label   stat    stat_fmt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE continuo…         N          N    254         254</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE continuo…      mean  Mean (SD) 75.087 75.08661417</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE continuo…        sd  Mean (SD)  8.246  8.24623390</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE continuo…    median     Median     77        77.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE continuo…       p25         Q1     70        70.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE continuo…       p75         Q3     81        81.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE continuo…       min        Min     51        51.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE continuo…       max        Max     89        89.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label   stat    stat_fmt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      AGE summary         N          N    254         254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AGE summary      mean  Mean (SD) 75.087 75.08661417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AGE summary        sd  Mean (SD)  8.246  8.24623390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      AGE summary    median     Median     77        77.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      AGE summary       p25         Q1     70        70.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      AGE summary       p75         Q3     81        81.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      AGE summary       min        Min     51        51.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      AGE summary       max        Max     89        89.0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">3 more variables: fmt_fun, warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># same as above, but only apply update to the Placebo level</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">ADSL</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">ARM</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="va">AGE</span>,</span></span>

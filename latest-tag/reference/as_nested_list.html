@@ -21,7 +21,6 @@
 Convert ARDs to nested lists.">
 <meta property="og:description" content="
 Convert ARDs to nested lists.">
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -33,7 +32,7 @@ Convert ARDs to nested lists.">
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +47,8 @@ Convert ARDs to nested lists.">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -58,6 +58,7 @@ Convert ARDs to nested lists.">
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -84,8 +85,9 @@ Convert ARDs to nested lists.">
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>ARD as Nested List</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/R/as_nested_list.R" class="external-link"><code>R/as_nested_list.R</code></a></small>
+
+      <h1>ARD as Nested List</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/R/as_nested_list.R" class="external-link"><code>R/as_nested_list.R</code></a></small>
       <div class="d-none name"><code>as_nested_list.Rd</code></div>
     </div>
 
@@ -122,7 +124,7 @@ an ARD data frame of class 'card'</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a>
 </h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span><span class="va">mtcars</span>, by <span class="op">=</span> <span class="st">"cyl"</span>, variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mpg"</span>, <span class="st">"hp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">as_nested_list</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg</span>
@@ -145,7 +147,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$mean</span>
@@ -162,7 +164,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$sd</span>
@@ -179,7 +181,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$median</span>
@@ -196,7 +198,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$p25</span>
@@ -213,7 +215,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$p75</span>
@@ -230,7 +232,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$min</span>
@@ -247,7 +249,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$max</span>
@@ -264,7 +266,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`4`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -285,7 +287,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$mean</span>
@@ -302,7 +304,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$sd</span>
@@ -319,7 +321,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$median</span>
@@ -336,7 +338,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$p25</span>
@@ -353,7 +355,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$p75</span>
@@ -370,7 +372,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$min</span>
@@ -387,7 +389,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$max</span>
@@ -404,7 +406,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`6`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -425,7 +427,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$mean</span>
@@ -442,7 +444,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$sd</span>
@@ -459,7 +461,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$median</span>
@@ -476,7 +478,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$p25</span>
@@ -493,7 +495,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$p75</span>
@@ -510,7 +512,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$min</span>
@@ -527,7 +529,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$max</span>
@@ -544,7 +546,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$mpg$group1$cyl$group1_level$`8`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -573,7 +575,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean</span>
@@ -590,7 +592,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd</span>
@@ -607,7 +609,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$median</span>
@@ -624,7 +626,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25</span>
@@ -641,7 +643,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75</span>
@@ -658,7 +660,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$min</span>
@@ -675,7 +677,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$max</span>
@@ -692,7 +694,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`4`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -713,7 +715,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean</span>
@@ -730,7 +732,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd</span>
@@ -747,7 +749,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$median</span>
@@ -764,7 +766,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25</span>
@@ -781,7 +783,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75</span>
@@ -798,7 +800,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$min</span>
@@ -815,7 +817,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$max</span>
@@ -832,7 +834,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`6`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -853,7 +855,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$N$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean</span>
@@ -870,7 +872,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$mean$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd</span>
@@ -887,7 +889,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$sd$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$median</span>
@@ -904,7 +906,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$median$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25</span>
@@ -921,7 +923,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$p25$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75</span>
@@ -938,7 +940,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$p75$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$min</span>
@@ -955,7 +957,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$min$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$max</span>
@@ -972,7 +974,7 @@ an ARD data frame of class 'card'</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $variable$hp$group1$cyl$group1_level$`8`$stat_name$max$context</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "continuous"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "summary"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

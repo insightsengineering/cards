@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -53,6 +54,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -83,10 +85,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Getting Started</h1>
+
+      <h1>Getting Started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/vignettes/articles/getting-started.Rmd" class="external-link"><code>vignettes/articles/getting-started.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/vignettes/articles/getting-started.Rmd" class="external-link"><code>vignettes/articles/getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started.Rmd</code></div>
     </div>
 
@@ -633,11 +636,11 @@ and a <strong>dichotomous</strong> variable summary for
 <h4 id="continuous-summaries">Continuous Summaries<a class="anchor" aria-label="anchor" href="#continuous-summaries"></a>
 </h4>
 <p>To get a continuous variable summary, we will use the
-<code><a href="../reference/ard_continuous.html">ard_continuous()</a></code> function from the <strong>{cards}</strong>
+<code><a href="../reference/ard_summary.html">ard_summary()</a></code> function from the <strong>{cards}</strong>
 package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_continuous_ard</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    <span class="va">ADSL</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
@@ -665,10 +668,10 @@ package.</p>
 <h4 id="categorical-summaries">Categorical Summaries<a class="anchor" aria-label="anchor" href="#categorical-summaries"></a>
 </h4>
 <p>To get the categorical variable summary, we will use the
-<code><a href="../reference/ard_categorical.html">ard_categorical()</a></code> function.</p>
+<code><a href="../reference/ard_tabulate.html">ard_tabulate()</a></code> function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_categorical_ard</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/ard_categorical.html">ard_categorical</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/ard_tabulate.html">ard_tabulate</a></span><span class="op">(</span></span>
 <span>    <span class="va">ADSL</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    variables <span class="op">=</span> <span class="va">AGEGR1</span></span>
@@ -687,12 +690,12 @@ package.</p>
 <h4 id="dichotomous-summaries">Dichotomous Summaries<a class="anchor" aria-label="anchor" href="#dichotomous-summaries"></a>
 </h4>
 <p>To get the dichotomous variable summary, we will use
-<code><a href="../reference/ard_dichotomous.html">ard_dichotomous()</a></code>. In this case, we want to show the Female
-(<code>"F"</code>) level of the <code>SEX</code> variable and specify
-this with the <code>values</code> argument.</p>
+<code><a href="../reference/ard_tabulate_value.html">ard_tabulate_value()</a></code>. In this case, we want to show the
+Female (<code>"F"</code>) level of the <code>SEX</code> variable and
+specify this with the <code>values</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_dichotomous_ard</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="../reference/ard_dichotomous.html">ard_dichotomous</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/ard_tabulate_value.html">ard_tabulate_value</a></span><span class="op">(</span></span>
 <span>    <span class="va">ADSL</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    variables <span class="op">=</span> <span class="va">SEX</span>,</span>
@@ -751,7 +754,7 @@ header row of the table.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ard_stack.html">ard_stack</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">ADSL</span>,</span>
 <span>  .by <span class="op">=</span> <span class="va">ARM</span>,</span>
-<span>  <span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/summary_functions.html">continuous_summary_fns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>      <span class="st">"median"</span>,</span>
@@ -763,8 +766,8 @@ header row of the table.</p>
 <span>      <span class="st">"max"</span></span>
 <span>    <span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/ard_categorical.html">ard_categorical</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="va">AGEGR1</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="../reference/ard_dichotomous.html">ard_dichotomous</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="va">SEX</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/ard_tabulate.html">ard_tabulate</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="va">AGEGR1</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/ard_tabulate_value.html">ard_tabulate_value</a></span><span class="op">(</span>variables <span class="op">=</span> <span class="va">SEX</span>, value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="st">"F"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">{cards} data frame: 66 x 11</span></span></span>
 <span><span class="co">#&gt;    group1 group1_level variable variable_level stat_name stat_label   stat</span></span>

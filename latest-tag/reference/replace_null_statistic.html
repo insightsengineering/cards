@@ -23,7 +23,6 @@ non-NULL value, e.g. NA.'>
 <meta property="og:description" content='When a statistical summary function errors, the "stat" column will be
 NULL. It is, however, sometimes useful to replace these values with a
 non-NULL value, e.g. NA.'>
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -35,7 +34,7 @@ non-NULL value, e.g. NA.'>
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +49,8 @@ non-NULL value, e.g. NA.'>
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -60,6 +60,7 @@ non-NULL value, e.g. NA.'>
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -86,8 +87,9 @@ non-NULL value, e.g. NA.'>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Replace NULL Statistics with Specified Value</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/R/replace_null_statistic.R" class="external-link"><code>R/replace_null_statistic.R</code></a></small>
+
+      <h1>Replace NULL Statistics with Specified Value</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/R/replace_null_statistic.R" class="external-link"><code>R/replace_null_statistic.R</code></a></small>
       <div class="d-none name"><code>replace_null_statistic.Rd</code></div>
     </div>
 
@@ -141,16 +143,16 @@ Default is <code>TRUE</code>, which applies to all rows.</p></dd>
 </h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># the quantile functions error because the input is character, while the median function returns NA</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep_len</a></span><span class="op">(</span><span class="cn">NA_character_</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    variables <span class="op">=</span> <span class="va">x</span>,</span></span>
 <span class="r-in"><span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="summary_functions.html">continuous_summary_fns</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"p25"</span>, <span class="st">"p75"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">replace_null_statistic</span><span class="op">(</span>rows <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">error</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 3 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label stat     error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        x continuo…    median     Median   NA          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        x continuo…       p25         Q1   NA non-nume…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        x continuo…       p75         Q3   NA non-nume…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label stat     error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        x summary    median     Median   NA          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        x summary       p25         Q1   NA non-nume…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        x summary       p75         Q3   NA non-nume…</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: fmt_fun, warning</span></span>
 </code></pre></div>
     </div>

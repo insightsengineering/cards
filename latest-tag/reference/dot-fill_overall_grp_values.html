@@ -17,21 +17,22 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Fill Overall Group Variables — .fill_overall_grp_values">
-<meta name="description" content='This function fills the missing values of grouping variables with "Overall
-variable name" where relevant. Specifically it will modify grouping values
-from rows with likely overall calculations present (e.g. non-missing
-variable/variable_level, missing group variables, and evidence that the
-variable has been computed by group in other rows). "Overall" values will
-be populated only for grouping variables that have been used in other calculations
-of the same variable and statistics.'>
-<meta property="og:description" content='This function fills the missing values of grouping variables with "Overall
-variable name" where relevant. Specifically it will modify grouping values
-from rows with likely overall calculations present (e.g. non-missing
-variable/variable_level, missing group variables, and evidence that the
-variable has been computed by group in other rows). "Overall" values will
-be populated only for grouping variables that have been used in other calculations
-of the same variable and statistics.'>
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
+<meta name="description" content='This function fills the missing values of grouping variables with
+"Overall &amp;lt;variable_name&amp;gt;" or "Any &amp;lt;variable_name&amp;gt;"where relevant.
+Specifically, it will modify grouping values from rows with likely overall
+calculations present (e.g. non-missing variable/variable_level, missing group
+variables, and evidence that the variable has been computed by group in
+other rows). "Overall" values will be populated only for grouping variables
+that have been used in other calculations of the same variable and statistics.
+"Any" will be used if it is likely to be a hierarchical calculation.'>
+<meta property="og:description" content='This function fills the missing values of grouping variables with
+"Overall &amp;lt;variable_name&amp;gt;" or "Any &amp;lt;variable_name&amp;gt;"where relevant.
+Specifically, it will modify grouping values from rows with likely overall
+calculations present (e.g. non-missing variable/variable_level, missing group
+variables, and evidence that the variable has been computed by group in
+other rows). "Overall" values will be populated only for grouping variables
+that have been used in other calculations of the same variable and statistics.
+"Any" will be used if it is likely to be a hierarchical calculation.'>
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -43,7 +44,7 @@ of the same variable and statistics.'>
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +59,8 @@ of the same variable and statistics.'>
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -68,6 +70,7 @@ of the same variable and statistics.'>
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -94,19 +97,21 @@ of the same variable and statistics.'>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Fill Overall Group Variables</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/R/shuffle_ard.R" class="external-link"><code>R/shuffle_ard.R</code></a></small>
+
+      <h1>Fill Overall Group Variables</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/R/shuffle_ard.R" class="external-link"><code>R/shuffle_ard.R</code></a></small>
       <div class="d-none name"><code>dot-fill_overall_grp_values.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>This function fills the missing values of grouping variables with "Overall
-<code>variable name</code>" where relevant. Specifically it will modify grouping values
-from rows with likely overall calculations present (e.g. non-missing
-variable/variable_level, missing group variables, and evidence that the
-<code>variable</code> has been computed by group in other rows). "Overall" values will
-be populated only for grouping variables that have been used in other calculations
-of the same variable and statistics.</p>
+    <p>This function fills the missing values of grouping variables with
+<code>"Overall &lt;variable_name&gt;"</code> or <code>"Any &lt;variable_name&gt;"</code>where relevant.
+Specifically, it will modify grouping values from rows with likely overall
+calculations present (e.g. non-missing variable/variable_level, missing group
+variables, and evidence that the <code>variable</code> has been computed by group in
+other rows). <code>"Overall"</code> values will be populated only for grouping variables
+that have been used in other calculations of the same variable and statistics.
+<code>"Any"</code> will be used if it is likely to be a hierarchical calculation.</p>
     </div>
 
     <div class="section level2">
@@ -149,7 +154,7 @@ a data frame</p></dd>
 <span class="r-in"><span><span class="fu">cards</span><span class="fu">:::</span><span class="fu">.fill_overall_grp_values</span><span class="op">(</span><span class="va">data</span>, vars_protected <span class="op">=</span> <span class="st">"..cards_idx.."</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   grp         variable variable_level A     B     ..cards_idx..</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> AA          A                     1 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> AA          B                     2 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Overall grp A                     1 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>                3</span>

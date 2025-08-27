@@ -18,12 +18,11 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="As card function — as_cards_fn">
 <meta name="description" content="Add attributes to a function that specify the expected results.
-It is used when ard_continuous() or ard_complex() errors and constructs
+It is used when ard_summary() or ard_mvsummary() errors and constructs
 an ARD with the correct structure when the results cannot be calculated.">
 <meta property="og:description" content="Add attributes to a function that specify the expected results.
-It is used when ard_continuous() or ard_complex() errors and constructs
+It is used when ard_summary() or ard_mvsummary() errors and constructs
 an ARD with the correct structure when the results cannot be calculated.">
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -35,7 +34,7 @@ an ARD with the correct structure when the results cannot be calculated.">
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +49,8 @@ an ARD with the correct structure when the results cannot be calculated.">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -60,6 +60,7 @@ an ARD with the correct structure when the results cannot be calculated.">
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -86,14 +87,15 @@ an ARD with the correct structure when the results cannot be calculated.">
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>As card function</h1>
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/R/as_card_fn.R" class="external-link"><code>R/as_card_fn.R</code></a></small>
+
+      <h1>As card function</h1>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/R/as_card_fn.R" class="external-link"><code>R/as_card_fn.R</code></a></small>
       <div class="d-none name"><code>as_cards_fn.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p>Add attributes to a function that specify the expected results.
-It is used when <code><a href="ard_continuous.html">ard_continuous()</a></code> or <code><a href="ard_complex.html">ard_complex()</a></code> errors and constructs
+It is used when <code><a href="ard_summary.html">ard_summary()</a></code> or <code><a href="ard_mvsummary.html">ard_mvsummary()</a></code> errors and constructs
 an ARD with the correct structure when the results cannot be calculated.</p>
     </div>
 
@@ -141,15 +143,15 @@ a character vector of the expected statistic names returned by function <code>f<
 <span class="r-in"><span>    \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>    stat_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>, <span class="st">"p.value"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="va">mpg</span>,</span></span>
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ttest <span class="op">=</span> <span class="va">ttest_works</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 2 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label   stat fmt_fun</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg continuo… statistic  statistic 18.857       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      mpg continuo…   p.value    p.value      0       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label   stat fmt_fun</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg summary statistic  statistic 18.857       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      mpg summary   p.value    p.value      0       1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: warning, error</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># When there is an error and we use `as_card_fn()`,</span></span></span>
@@ -162,20 +164,20 @@ a character vector of the expected statistic names returned by function <code>f<
 <span class="r-in"><span>    <span class="op">}</span>,</span></span>
 <span class="r-in"><span>    stat_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"statistic"</span>, <span class="st">"p.value"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="va">mpg</span>,</span></span>
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ttest <span class="op">=</span> <span class="va">ttest_error</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 2 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label stat     error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg continuo… statistic  statistic      Intentio…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      mpg continuo…   p.value    p.value      Intentio…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label stat     error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg summary statistic  statistic      Intentio…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      mpg summary   p.value    p.value      Intentio…</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: fmt_fun, warning</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># if we don't use `as_card_fn()` and there is an error,</span></span></span>
 <span class="r-in"><span><span class="co">#   the returned result is only one row</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ard_summary.html">ard_summary</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">mtcars</span>,</span></span>
 <span class="r-in"><span>  variables <span class="op">=</span> <span class="va">mpg</span>,</span></span>
 <span class="r-in"><span>  statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ttest <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -184,8 +186,8 @@ a character vector of the expected statistic names returned by function <code>f<
 <span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">{cards} data frame: 1 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable   context stat_name stat_label stat     error</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg continuo…     ttest      ttest      Intentio…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   variable context stat_name stat_label stat     error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      mpg summary     ttest      ttest      Intentio…</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> <span style="color: #555555;">2 more variables: fmt_fun, warning</span></span>
 </code></pre></div>
     </div>

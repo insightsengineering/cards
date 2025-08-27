@@ -17,7 +17,6 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Package index">
-<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -29,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +43,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -54,6 +54,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -80,7 +81,8 @@
 </nav><div class="container template-reference-index">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Package index</h1>
+
+      <h1>Package index</h1>
     </div>
 
     <div class="section level2">
@@ -107,18 +109,26 @@
       <dl>
 <dt>
 
-          <code><a href="ard_continuous.html">ard_continuous()</a></code>
+          <code><a href="ard_summary.html">ard_summary()</a></code>
 
         </dt>
-        <dd>Continuous ARD Statistics</dd>
+        <dd>Univariate ARD Statistics</dd>
       </dl>
 <dl>
 <dt>
 
-          <code><a href="ard_categorical.html">ard_categorical()</a></code>
+          <code><a href="ard_tabulate.html">ard_tabulate()</a></code>
 
         </dt>
-        <dd>Categorical ARD Statistics</dd>
+        <dd>Tabulate ARD</dd>
+      </dl>
+<dl>
+<dt>
+
+          <code><a href="ard_tabulate_value.html">ard_tabulate_value()</a></code>
+
+        </dt>
+        <dd>Tabulate Value ARD</dd>
       </dl>
 <dl>
 <dt>
@@ -127,14 +137,6 @@
 
         </dt>
         <dd>Hierarchical ARD Statistics</dd>
-      </dl>
-<dl>
-<dt>
-
-          <code><a href="ard_dichotomous.html">ard_dichotomous()</a></code>
-
-        </dt>
-        <dd>Dichotomous ARD Statistics</dd>
       </dl>
 <dl>
 <dt>
@@ -155,10 +157,10 @@
 <dl>
 <dt>
 
-          <code><a href="ard_complex.html">ard_complex()</a></code>
+          <code><a href="ard_mvsummary.html">ard_mvsummary()</a></code>
 
         </dt>
-        <dd>Complex ARD Summaries</dd>
+        <dd>Multivariate ARD Summaries</dd>
       </dl>
 <dl>
 <dt>
@@ -565,10 +567,32 @@
       <dl>
 <dt>
 
-          <code><a href="adam.html">ADSL</a></code> <code><a href="adam.html">ADAE</a></code> <code><a href="adam.html">ADTTE</a></code>
+          <code><a href="adam.html">ADSL</a></code> <code><a href="adam.html">ADAE</a></code> <code><a href="adam.html">ADTTE</a></code> <code><a href="adam.html">ADLB</a></code>
 
         </dt>
         <dd>Example ADaM Data</dd>
+      </dl>
+</div>
+<div class="section level2">
+      <h2 id="deprecated-functions">Deprecated Functions<a class="anchor" aria-label="anchor" href="#deprecated-functions"></a>
+</h2>
+
+
+
+
+    </div>
+<div class="section level2">
+
+
+
+
+      <dl>
+<dt>
+
+          <code><a href="deprecated.html">ard_continuous()</a></code> <code><a href="deprecated.html">ard_categorical()</a></code> <code><a href="deprecated.html">ard_complex()</a></code> <code><a href="deprecated.html">ard_dichotomous()</a></code> <code><a href="deprecated.html">apply_fmt_fn()</a></code> <code><a href="deprecated.html">alias_as_fmt_fn()</a></code> <code><a href="deprecated.html">update_ard_fmt_fn()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>Deprecated functions</dd>
       </dl>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

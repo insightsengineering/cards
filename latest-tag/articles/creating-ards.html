@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Creating New ARDs • cards</title>
+<title>Writing ARD Functions • cards</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Creating New ARDs">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Writing ARD Functions">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started</a></li>
-    <li><a class="dropdown-item" href="../articles/creating-ards.html">Creating New ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/long_data.html">Long Data ARDs</a></li>
+    <li><a class="dropdown-item" href="../articles/creating-ards.html">Writing ARD Functions</a></li>
     <li><a class="dropdown-item" href="../articles/structures.html">Other ARD Representations</a></li>
   </ul>
 </li>
@@ -53,6 +54,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.5.1">v0.5.1</a>
@@ -83,10 +85,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Creating New ARDs</h1>
+
+      <h1>Writing ARD Functions</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/HEAD/vignettes/articles/creating-ards.Rmd" class="external-link"><code>vignettes/articles/creating-ards.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/vignettes/articles/creating-ards.Rmd" class="external-link"><code>vignettes/articles/creating-ards.Rmd</code></a></small>
       <div class="d-none name"><code>creating-ards.Rmd</code></div>
     </div>
 
@@ -149,7 +152,7 @@ re-use, if we need to run the test again we can use the ARD to see what
 options we need to use to recreate the result.</p>
 </div>
 <div class="section level2">
-<h2 id="create-a-new-ard_-function">Create a new <code>ard_*()</code> function<a class="anchor" aria-label="anchor" href="#create-a-new-ard_-function"></a>
+<h2 id="write-a-new-ard_-function">Write a new <code>ard_*()</code> function<a class="anchor" aria-label="anchor" href="#write-a-new-ard_-function"></a>
 </h2>
 <p><em>But what do we do if the statistical method that we want to use
 hasn’t been implemented already in {cardx}?</em></p>
@@ -163,18 +166,18 @@ scratch.</p>
 <h3 id="using-broomtidy">Using <code>broom::tidy()</code><a class="anchor" aria-label="anchor" href="#using-broomtidy"></a>
 </h3>
 <p>Typically, a user will pass a function which returns a scalar value
-in the <code>cards::ard_continuous(statistic)</code> argument. However,
-the argument also allows for functions that return named lists, where
-the names from the list will then be used as the statistic names. Since
-data frames or tibbles are just named lists with a little more
-formatting, we can pass a function to the <code>statistic</code>
-argument which returns a single row data frame or tibble and the
-behavior will be the same. Each column of the table gives the name of
-the statistic via its column name, and then the corresponding value.</p>
+in the <code>cards::ard_summary(statistic)</code> argument. However, the
+argument also allows for functions that return named lists, where the
+names from the list will then be used as the statistic names. Since data
+frames or tibbles are just named lists with a little more formatting, we
+can pass a function to the <code>statistic</code> argument which returns
+a single row data frame or tibble and the behavior will be the same.
+Each column of the table gives the name of the statistic via its column
+name, and then the corresponding value.</p>
 <p>Commonly used statistical methods outputs are able to be passed
 through <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code>, which will convert the output into a
 tibble. We can then pass the output of <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom::tidy()</a></code>
-through to the <code>cards::ard_continuous(statistic)</code> argument of
+through to the <code>cards::ard_summary(statistic)</code> argument of
 the ARD function we wish to use, this leads to an ARD output like we see
 in the above example, where we have one row per relevant input or output
 from the statistical method.</p>
@@ -189,7 +192,7 @@ so:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cards</span><span class="fu">::</span><span class="va"><a href="../reference/adam.html">ADSL</a></span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>t_test <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -248,7 +251,7 @@ arguments, in this case it will pick up that the one variable
 <code>AGE</code> for the individual treatment arms.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">cards</span><span class="fu">::</span><span class="va"><a href="../reference/adam.html">ADSL</a></span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>wilcox <span class="op">=</span> <span class="va">wilcox_one_var</span><span class="op">)</span></span>
@@ -272,15 +275,15 @@ method, and one for the p-value) for each of the 4 treatment arms.</p>
 perhaps a rare scenario where we are implementing a statistical method
 with a single vector as its input. How would we update the code above if
 we need to implement a two-sample t-test?</p>
-<p>The <code><a href="../reference/ard_complex.html">cards::ard_complex()</a></code> is similar to
-<code><a href="../reference/ard_continuous.html">cards::ard_continuous()</a></code>, but allows for more complex inputs
-in the function passed in the <code>statistic</code> argument. In
-<code><a href="../reference/ard_continuous.html">cards::ard_continuous()</a></code>, the functions passed must accept a
+<p>The <code><a href="../reference/ard_mvsummary.html">cards::ard_mvsummary()</a></code> is similar to
+<code><a href="../reference/ard_summary.html">cards::ard_summary()</a></code>, but allows for more complex inputs in
+the function passed in the <code>statistic</code> argument. In
+<code><a href="../reference/ard_summary.html">cards::ard_summary()</a></code>, the functions passed must accept a
 single vector, e.g. <code>\(x) t.test(x)</code>. But in
-<code><a href="../reference/ard_complex.html">cards::ard_complex()</a></code>, in addition to the vector being
+<code><a href="../reference/ard_mvsummary.html">cards::ard_mvsummary()</a></code>, in addition to the vector being
 passed, the <code>data</code> subset, the <code>full_data</code>,
 character <code>by</code>, and character <code>strata</code> are also
-passed (see the <code><a href="../reference/ard_complex.html">cards::ard_complex()</a></code> for a full
+passed (see the <code><a href="../reference/ard_mvsummary.html">cards::ard_mvsummary()</a></code> for a full
 description). Your function does not need to utilize each of these
 elements, but each <em>will be passed</em> to your function. As a
 result, we recommend your function accept the triple dots to handle
@@ -291,7 +294,7 @@ unused arguments.</p>
 <span></span>
 <span><span class="fu">cards</span><span class="fu">::</span><span class="va"><a href="../reference/adam.html">ADSL</a></span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_complex.html">ard_complex</a></span><span class="op">(</span></span>
+<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_mvsummary.html">ard_mvsummary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>t_test <span class="op">=</span> <span class="va">ttest_two_sample</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -323,7 +326,7 @@ statistical method.</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">cards</span><span class="fu">::</span><span class="va"><a href="../reference/adam.html">ADSL</a></span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>wilcox <span class="op">=</span> <span class="va">wilcox_one_var_error</span><span class="op">)</span></span>
@@ -354,7 +357,7 @@ impact downstream code.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">cards</span><span class="fu">::</span><span class="va"><a href="../reference/adam.html">ADSL</a></span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>  <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>    variables <span class="op">=</span> <span class="va">AGE</span>,</span>
 <span>    by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>    statistic <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>wilcox <span class="op">=</span> <span class="va">wilcox_one_var_error</span><span class="op">)</span></span>
@@ -405,7 +408,7 @@ the argument values passed to <code>t.test(...)</code></p>
 <span></span>
 <span>  <span class="co"># create the ARD of results</span></span>
 <span>  <span class="va">ard_results</span> <span class="op">&lt;-</span></span>
-<span>    <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_continuous.html">ard_continuous</a></span><span class="op">(</span></span>
+<span>    <span class="fu">cards</span><span class="fu">::</span><span class="fu"><a href="../reference/ard_summary.html">ard_summary</a></span><span class="op">(</span></span>
 <span>      data <span class="op">=</span> <span class="va">data</span>,</span>
 <span>      variables <span class="op">=</span> <span class="op">{</span><span class="op">{</span> <span class="va">variable</span> <span class="op">}</span><span class="op">}</span>,</span>
 <span>      statistic <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>t_test <span class="op">=</span> <span class="va">t_test_fun</span><span class="op">)</span></span>
