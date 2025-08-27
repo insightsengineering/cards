@@ -1,36 +1,40 @@
 # cards 0.6.1.9021
 
-* Added an article illustrating how to summarize long data structures. (#356)
-
-* The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
-
-* The following functions have been renamed. (#470)
-  - `ard_continuous()` to `ard_summary()`
-  - `ard_complex()` to `ard_mvsummary()`
-  - `ard_categorical()` to `ard_tabulate()`
-  - `ard_dichotomous()` to `ard_tabulate_value()`
+## New Features and Functions
 
 * Updated `sort_ard_hierarchical()` to allow for different sorting methods at each hierarchy variable level. (#487)
 
 * Updated `sort_ard_hierarchical()` and `filter_ard_hierarchical()` to always keep attribute and total N rows at the bottom of the ARD.
 
-* `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
+* Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
+
+* Added flexibility to filter by `by` variable level-specific values when using `filter_ard_hierarchical()` to allow for filtering of hierarchical ARDs by difference in two rates. (#438)
+
+* The `ard_strata()` function has been updated to include the strata columns in the nested data frames. (#461)
+
+* Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
+
+* Added an article illustrating how to summarize long data structures. (#356)
 
 * Added `ard_stack(.by_stat)` and `ard_stack_hierarchical(by_stat)` arguments that, when `TRUE` (the default), includes a univariate ARD tabulation of the `by` variable in the returned ARD. (#335)
 
 * `shuffle_ard()` passes down the `args` attribute of the input `card` object when present. (#484, @dragosmg)
 
-* Added flexibility to filter by `by` variable level-specific values when using `filter_ard_hierarchical()` to allow for filtering of hierarchical ARDs by difference in two rates. (#438)
-
-* Added argument `var` to `filter_ard_hierarchical()` to allow filtering by any hierarchy variable. (#467)
-
-* Add `ADLB` data set. (#450)
-
 * `shuffle_ard()` fills overall or group statistics with `"Overall <column_name>"` or `"Any <column_name>"`. (#337, @dragosmg)
 
 * `shuffle_ard()` messages if `"Overall <column_names>"` is accidentally present in the data and creates a unique label. (#465, @dragosmg)
 
-* Similar to `ard_stack_hierarchical()`, `ard_stack()` contains an `args` attribute to retain information about input arguments.
+* Add `ADLB` data set. (#450)
+
+## Lifecycle Changes
+
+* The following functions have been renamed. The old functions still work in the package, and will be soft deprecated in the next release. (#470)
+  - `ard_continuous()` to `ard_summary()`
+  - `ard_complex()` to `ard_mvsummary()`
+  - `ard_categorical()` to `ard_tabulate()`
+  - `ard_dichotomous()` to `ard_tabulate_value()`
+  
+* `shuffle` and `.shuffle` arguments (for `ard_stack_hierarchical()` and `ard_stack()`) are deprecated and users encouraged to call `shuffle_ard()` directly. (#475, @dragosmg)
 
 # cards 0.6.1
 

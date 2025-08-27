@@ -17,10 +17,12 @@
 NULL
 
 # "soft" deprecation for 6 months: (Sys.Date() - lubridate::dmonths(6)) |> as.Date()
+#  v0.6.1 2025-07-03
+#  v0.6.0 2025-04-11
 #  v0.5.1 2025-03-01
-#  v0.5.0 2025-02-17
 
 # "warn" deprecation for 12 months: (Sys.Date() - lubridate::dmonths(12)) |> as.Date()
+#  v0.5.0 2025-02-17
 
 # "stop" deprecation for 18 months: (Sys.Date() - lubridate::dmonths(18)) |> as.Date()
 
