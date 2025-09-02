@@ -209,6 +209,35 @@ test_that("ard_stack_hierarchical(denominator) messaging", {
       id = USUBJID
     )
   )
+
+
+  # check denominator only keeps "by" and "id" variables
+  adsl_updated <-
+    cards::ADSL |>
+    dplyr::mutate(
+      REGION = "Asia",
+      COUNTRY = sample(c("CHN", "JPN", "PAK"), size = dplyr::n(), replace = TRUE)
+    )
+
+  expect_equal(
+    cards::ard_stack_hierarchical(
+      adsl_updated,
+      by = "ARM",
+      variable = c("REGION", "COUNTRY"),
+      id = "USUBJID",
+      denominator = adsl_updated
+    ),
+    cards::ard_stack_hierarchical(
+      adsl_updated,
+      by = "ARM",
+      variable = c("REGION", "COUNTRY"),
+      id = "USUBJID",
+      denominator = adsl_updated[c("USUBJID", "ARM")]
+    ),
+    ignore_attr = TRUE,
+    ignore_function_env = TRUE
+  )
+
 })
 
 # test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the hierarchies
