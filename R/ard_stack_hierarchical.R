@@ -340,7 +340,7 @@ internal_stack_hierarchical <- function(
   # only id and by variables in denominator
   if (is.data.frame(denominator)) {
     # keep any id columns that are actually in the denominator, and any by columns that exist in denominator
-    keep_cols <- unique(c(intersect(id, names(denominator)), intersect(by, names(denominator))))
+    keep_cols <- intersect(c(id, by), names(denominator))
 
     # only trim if there is at least one column to keep; otherwise leave denominator as-is
     if (!is_empty(keep_cols)) {
