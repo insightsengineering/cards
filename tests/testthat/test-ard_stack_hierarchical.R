@@ -237,7 +237,6 @@ test_that("ard_stack_hierarchical(denominator) messaging", {
     ignore_attr = TRUE,
     ignore_function_env = TRUE
   )
-
 })
 
 # test the rates are correct for items like AESEV, where we want to tabulate the most severe AE within the hierarchies
