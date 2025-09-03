@@ -345,7 +345,7 @@ internal_stack_hierarchical <- function(
     # only trim if there is at least one column to keep; otherwise leave denominator as-is
     if (!is_empty(keep_cols)) {
       # drop any columns that are also in `variables` (or any other cols)
-      denominator <- denominator[ , keep_cols, drop = FALSE]
+      denominator <- denominator[, keep_cols, drop = FALSE]
     }
   }
 
