@@ -21,12 +21,12 @@ test_that("filter_ard_hierarchical() works", {
   expect_equal(nrow(ard_f), 45)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p > 0.05))
-  expect_equal(nrow(ard_f), 234)
+  expect_equal(nrow(ard_f), 117)
 })
 
 test_that("filter_ard_hierarchical() works with non-standard filters", {
-  expect_silent(ard_f <- filter_ard_hierarchical(ard, n == 2 & p < 0.05))
-  expect_equal(nrow(ard_f), 63)
+  expect_silent(ard_f <- filter_ard_hierarchical(ard, n == 2 & p < 0.02))
+  expect_equal(nrow(ard_f), 18)
 
   expect_silent(ard_f <- filter_ard_hierarchical(ard, sum(n) > 4))
   expect_equal(nrow(ard_f), 144)
@@ -102,7 +102,7 @@ test_that("filter_ard_hierarchical() works with column-specific filters", {
 
   # check for number of rows
   expect_silent(ard_f <- filter_ard_hierarchical(ard, p_overall <= 0.1))
-  expect_equal(nrow(ard_f), 108)
+  expect_equal(nrow(ard_f), 234)
 
   # column-wise n statistic equal to previous derivation with column name specified (both still work)
   expect_message(ard_f <- filter_ard_hierarchical(ard, n_2 > 5))

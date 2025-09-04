@@ -337,6 +337,11 @@ internal_stack_hierarchical <- function(
     }
   }
 
+  # keep only `id` and `by` variables in `denominator`
+  if (is.data.frame(denominator)) {
+    denominator <- denominator[, intersect(c(id, by), names(denominator)), drop = FALSE]
+  }
+
   # sort data if using `ard_hierarchical(id)` ----------------------------------
   if (!is_empty(id)) {
     data <- dplyr::arrange(data, dplyr::pick(all_of(c(id, by, variables))))
