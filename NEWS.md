@@ -1,5 +1,9 @@
 # cards 0.7.0.9001
 
+## New Features and Functions
+
+* Updated `ard_stack_hierarchical()` so that the `denominator` dataset only contains the `id` and `by` variables. (#482)
+
 # cards 0.7.0
 
 ## New Features and Functions
