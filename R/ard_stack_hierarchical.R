@@ -337,16 +337,9 @@ internal_stack_hierarchical <- function(
     }
   }
 
-  # only id and by variables in denominator
+  # keep only `id` and `by` variables in `denominator`
   if (is.data.frame(denominator)) {
-    # keep any id columns that are actually in the denominator, and any by columns that exist in denominator
-    keep_cols <- intersect(c(id, by), names(denominator))
-
-    # only trim if there is at least one column to keep; otherwise leave denominator as-is
-    if (!is_empty(keep_cols)) {
-      # drop any columns that are also in `variables` (or any other cols)
-      denominator <- denominator[, keep_cols, drop = FALSE]
-    }
+    denominator <- denominator[, intersect(c(id, by), names(denominator)), drop = FALSE]
   }
 
   # sort data if using `ard_hierarchical(id)` ----------------------------------
