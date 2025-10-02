@@ -11,6 +11,7 @@ navbar:
   left:
   - icon: fa-home
     href: index.html
+    aria-label: home
   - text: Reference
     href: reference/index.html
   - text: Articles
