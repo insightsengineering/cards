@@ -155,6 +155,17 @@ test_that("ard_stack_hierarchical(by)", {
       sort_ard_hierarchical("alphanumeric"),
     ignore_attr = TRUE
   )
+
+  # ARD with >2 `by` variables works
+  expect_silent(expect_message(
+    ard_stack_hierarchical(
+      cards::ADAE,
+      variables = c(AESOC, AEDECOD),
+      by = c(TRTA, TRTEMFL, AESEV),
+      id = USUBJID,
+      denominator = ADSL
+    )
+  ))
 })
 
 test_that("ard_stack_hierarchical(by) messaging", {

@@ -80,9 +80,9 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 
   # for calculations by highest severity, innermost variable is extracted from `by`
   if (length(ard_args$by) > 1) {
-    ard_args$variables <- c(ard_args$variables, ard_args$by[-1])
-    ard_args$include <- c(ard_args$include, ard_args$by[-1])
-    ard_args$by <- ard_args$by[-1]
+    ard_args$variables <- c(ard_args$variables, dplyr::last(ard_args$by))
+    ard_args$include <- c(ard_args$include, dplyr::last(ard_args$by))
+    ard_args$by <- ard_args$by[-length(ard_args$by)]
   }
 
   # get and check sorting method(s)
