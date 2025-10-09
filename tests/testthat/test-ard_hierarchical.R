@@ -348,7 +348,7 @@ test_that("ard_hierarchical_count() errors with incomplete factor columns", {
 })
 
 test_that("ard_hierarchical_count() provides correct results with 10+ groups", {
-  skip_if_not(is_pkg_installed("withr"))
+  skip_if_pkg_not_installed("withr")
   withr::local_seed(1)
 
   expect_silent(

@@ -1,5 +1,5 @@
 test_that("tidy_ard_column_order() works", {
-  skip_if_not(is_pkg_installed("withr"))
+  skip_if_pkg_not_installed("withr")
   withr::local_seed(1)
 
   # ensure 10+ groups are ordered correctly
