@@ -4,6 +4,10 @@
 
 * Updated `ard_stack_hierarchical()` so that the `denominator` dataset only contains the `id` and `by` variables. (#482)
 
+## Bug Fixes
+
+* Fixed bug in `sort_ard_hierarchical()` causing an error when sorting hierarchical ARDs with more than 2 `by` variables. (#516)
+
 # cards 0.7.0
 
 ## New Features and Functions
