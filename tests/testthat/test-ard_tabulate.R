@@ -1108,7 +1108,7 @@ test_that("ard_tabulate() follows ard structure", {
 
 test_that("ard_tabulate() with hms times", {
   # originally reported in https://github.com/ddsjoberg/gtsummary/issues/1893
-  skip_if_not_installed("hms")
+  skip_if_pkg_not_installed("hms")
   withr::local_package("hms")
 
   ADSL2 <-
