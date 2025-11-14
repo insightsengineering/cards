@@ -381,23 +381,16 @@ test_that("ard_stack_hierarchical(statistic)", {
 test_that("ard_stack_hierarchical with shuffle", {
   # we expect it to work but with a warning messaged related to the deprecation
   # of the `shuffle` argument
-  expect_no_error(
-    expect_warning(
+  expect_error(
       ard_shuffled <- ard_stack_hierarchical(
         ADAE_small,
         variables = c(AESOC, AEDECOD),
         id = USUBJID,
         denominator = ADSL,
         shuffle = TRUE
-      ),
-      "The `shuffle` argument of `ard_stack_hierarchical()` is deprecated as of cards 0.7.0.",
-      fixed = TRUE
-    )
+      )
   )
 
-  expect_true(
-    "AESOC" %in% names(ard_shuffled)
-  )
 })
 
 # ard_stack_hierarchical_count() -----------------------------------------------
