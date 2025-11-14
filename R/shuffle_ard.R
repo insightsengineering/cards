@@ -23,7 +23,6 @@
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
-
   lifecycle::deprecate_warn(
     when = "0.8.0",
     what = "cards::shuffle_ard()",

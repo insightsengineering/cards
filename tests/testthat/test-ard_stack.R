@@ -117,7 +117,6 @@ test_that("ard_stack() adding overalls", {
 })
 
 
-
 test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
@@ -180,13 +179,13 @@ test_that("ard_stack() adding missing/attributes", {
 
 test_that("ard_stack() .shuffle argument errors", {
   expect_error(
-      ard_test <- ard_stack(
-        data = mtcars,
-        .by = "cyl",
-        ard_summary(variables = "mpg"),
-        ard_tabulate_value(variables = "vs", value = vs ~ 1),
-        .shuffle = TRUE
-      )
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
+      .shuffle = TRUE
+    )
   )
 })
 
