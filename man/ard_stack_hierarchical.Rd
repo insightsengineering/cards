@@ -17,7 +17,7 @@ ard_stack_hierarchical(
   over_variables = FALSE,
   attributes = FALSE,
   total_n = FALSE,
-  shuffle = deprecated(),
+  shuffle = FALSE,
   by_stats = TRUE
 )
 

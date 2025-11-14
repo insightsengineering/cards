@@ -12,7 +12,7 @@ ard_stack(
   .missing = FALSE,
   .attributes = FALSE,
   .total_n = FALSE,
-  .shuffle = deprecated(),
+  .shuffle = FALSE,
   .by_stats = TRUE
 )
 }
