@@ -26,9 +26,8 @@ shuffle_ard <- function(x, trim = TRUE) {
   lifecycle::deprecate_warn(
     when = "0.8.0",
     what = "cards::shuffle_ard()",
-    details = "Use tfrmt::shuffle_card() instead.",
-    always = TRUE,
-    env = rlang::caller_env()
+    with = "tfrmt::shuffle_card()",
+    always = TRUE
   )
 
   set_cli_abort_call()

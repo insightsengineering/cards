@@ -44,7 +44,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       "warning" column contains messages that will be removed.
     Output
@@ -68,7 +68,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 4 x 6
         ARM                  variable context stat_name stat_label  stat
@@ -86,7 +86,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 2 x 6
         ARM         variable context stat_name stat_label  stat
@@ -102,7 +102,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
                 ARM         SEX variable variable_level  context stat_name stat_label stat
       1     Placebo        <NA>   AGEGR1          65-80 tabulate         n          n   42
@@ -118,7 +118,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 3 x 8
         ARM         SEX         variable variable_level context  stat_name stat_label  stat
@@ -135,7 +135,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       i "Overall ARM" already exists in the `ARM` column. Using "Overall ARM.1".
     Output
@@ -154,7 +154,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
                 ARM         SEX variable          context stat_name          stat_label       stat
       1 Overall ARM        <NA>   AGEGR1 stats_chisq_test statistic X-squared Statistic 5.07944167
@@ -248,7 +248,7 @@
     Condition
       Warning:
       `shuffle_ard()` was deprecated in cards 0.8.0.
-      i Use tfrmt::shuffle_card() instead.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       i "Overall TRTA" already exists in the `TRTA` column. Using "Overall TRTA.1".
       i "Any AESOC" already exists in the `AESOC` column. Using"Any AESOC.1".
