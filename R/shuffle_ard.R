@@ -15,6 +15,7 @@
 #'
 #' @return a tibble
 #' @rdname deprecated
+#' @export
 #'
 #' @examples
 #' bind_ard(
