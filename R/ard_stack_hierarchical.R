@@ -125,19 +125,20 @@ NULL
 #' @rdname ard_stack_hierarchical
 #' @export
 ard_stack_hierarchical <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    id,
-    denominator,
-    include = everything(),
-    statistic = everything() ~ c("n", "N", "p"),
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  id,
+  denominator,
+  include = everything(),
+  statistic = everything() ~ c("n", "N", "p"),
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -183,17 +184,18 @@ ard_stack_hierarchical <- function(
 #' @rdname ard_stack_hierarchical
 #' @export
 ard_stack_hierarchical_count <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    denominator = NULL,
-    include = everything(),
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  denominator = NULL,
+  include = everything(),
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -229,19 +231,20 @@ ard_stack_hierarchical_count <- function(
 }
 
 internal_stack_hierarchical <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    id = NULL,
-    denominator = NULL,
-    include = everything(),
-    statistic = NULL,
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  id = NULL,
+  denominator = NULL,
+  include = everything(),
+  statistic = NULL,
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -519,12 +522,13 @@ internal_stack_hierarchical <- function(
 
 # this function calculates either the counts or the rates of the events
 .run_hierarchical_fun <- function(
-    data,
-    variables,
-    by,
-    denominator,
-    id,
-    statistic) {
+  data,
+  variables,
+  by,
+  denominator,
+  id,
+  statistic
+) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
