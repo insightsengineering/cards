@@ -32,7 +32,7 @@ Imports:
     tidyr (>= 1.3.1),
     tidyselect (>= 1.2.1)
 Suggests: 
-    testthat (>= 3.2.0),
+    testthat (>= 3.2.3),
     withr (>= 3.0.0)
 Config/Needs/coverage: hms
 Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt, cardx,
