@@ -24,15 +24,15 @@ BugReports: https://github.com/insightsengineering/cards/issues
 Depends: 
     R (>= 4.1)
 Imports: 
-    cli (>= 3.6.1),
-    dplyr (>= 1.1.2),
-    glue (>= 1.6.2),
-    lifecycle (>= 1.0.3),
-    rlang (>= 1.1.1),
-    tidyr (>= 1.3.0),
-    tidyselect (>= 1.2.0)
+    cli (>= 3.6.5),
+    dplyr (>= 1.1.4),
+    glue (>= 1.8.0),
+    lifecycle (>= 1.0.4),
+    rlang (>= 1.1.6),
+    tidyr (>= 1.3.1),
+    tidyselect (>= 1.2.1)
 Suggests: 
-    testthat (>= 3.2.0),
+    testthat (>= 3.2.3),
     withr (>= 3.0.0)
 Config/Needs/coverage: hms
 Config/Needs/website: rmarkdown, jsonlite, yaml, gtsummary, tfrmt, cardx,
