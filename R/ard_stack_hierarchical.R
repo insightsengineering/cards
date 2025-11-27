@@ -98,9 +98,7 @@
 #' @param total_n (scalar `logical`)\cr
 #'   logical indicating whether to include of `ard_total_n(denominator)` in the returned ARD.
 #' @param shuffle `r lifecycle::badge("deprecated")` support for `.shuffle = TRUE`
-#'   will be removed in the next release. `ard_stack_hierarchical()` and
-#'   `ard_stack_hierarchical_count()` will no longer shuffle. `shuffle_ard()`
-#'   should be called separately.
+#'   has been removed.
 #' @param by_stats (`logical`)\cr
 #'   logical indicating whether to include overall stats of the `by` variables in the returned ARD.
 #'
@@ -127,19 +125,20 @@ NULL
 #' @rdname ard_stack_hierarchical
 #' @export
 ard_stack_hierarchical <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    id,
-    denominator,
-    include = everything(),
-    statistic = everything() ~ c("n", "N", "p"),
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  id,
+  denominator,
+  include = everything(),
+  statistic = everything() ~ c("n", "N", "p"),
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -185,17 +184,18 @@ ard_stack_hierarchical <- function(
 #' @rdname ard_stack_hierarchical
 #' @export
 ard_stack_hierarchical_count <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    denominator = NULL,
-    include = everything(),
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  denominator = NULL,
+  include = everything(),
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -231,19 +231,20 @@ ard_stack_hierarchical_count <- function(
 }
 
 internal_stack_hierarchical <- function(
-    data,
-    variables,
-    by = dplyr::group_vars(data),
-    id = NULL,
-    denominator = NULL,
-    include = everything(),
-    statistic = NULL,
-    overall = FALSE,
-    over_variables = FALSE,
-    attributes = FALSE,
-    total_n = FALSE,
-    shuffle = FALSE,
-    by_stats = TRUE) {
+  data,
+  variables,
+  by = dplyr::group_vars(data),
+  id = NULL,
+  denominator = NULL,
+  include = everything(),
+  statistic = NULL,
+  overall = FALSE,
+  over_variables = FALSE,
+  attributes = FALSE,
+  total_n = FALSE,
+  shuffle = FALSE,
+  by_stats = TRUE
+) {
   # process inputs -------------------------------------------------------------
   check_not_missing(data)
   check_not_missing(variables)
@@ -509,12 +510,10 @@ internal_stack_hierarchical <- function(
 
   # shuffle if requested -------------------------------------------------------
   if (isTRUE(shuffle)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.7.0",
-      what = "cards::ard_stack_hierarchical(shuffle)",
-      details = "Call `shuffle_ard()` after `ard_stack_hierarchical()`."
+      what = "cards::ard_stack_hierarchical(shuffle)"
     )
-    result <- shuffle_ard(result)
   }
 
   # return final result --------------------------------------------------------
@@ -523,12 +522,13 @@ internal_stack_hierarchical <- function(
 
 # this function calculates either the counts or the rates of the events
 .run_hierarchical_fun <- function(
-    data,
-    variables,
-    by,
-    denominator,
-    id,
-    statistic) {
+  data,
+  variables,
+  by,
+  denominator,
+  id,
+  statistic
+) {
   if (is_empty(id)) {
     ard_hierarchical_count(
       data = data,
