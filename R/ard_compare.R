@@ -134,138 +134,8 @@ ard_compare <- function(x, y, key_columns = NULL) {
     )
   }
 
-  format_key_value <- function(value) {
-    value <- value[[1]]
-
-    if (is.factor(value)) {
-      value <- as.character(value)
-    }
-
-    if (is.character(value)) {
-      if (is.na(value)) {
-        return("NA")
-      }
-      return(encodeString(value, quote = "\""))
-    }
-
-    if (is.logical(value)) {
-      if (is.na(value)) {
-        return("NA")
-      }
-      return(if (value) "TRUE" else "FALSE")
-    }
-
-    if (is.numeric(value)) {
-      if (is.na(value)) {
-        return("NA")
-      }
-      return(format(value, trim = TRUE))
-    }
-
-    if (inherits(value, "Date") || inherits(value, "POSIXt")) {
-      if (is.na(value)) {
-        return("NA")
-      }
-      return(encodeString(as.character(value), quote = "\""))
-    }
-
-    value_chr <- as.character(value)
-    if (length(value_chr) == 0 || is.na(value_chr)) {
-      return("NA")
-    }
-
-    encodeString(value_chr, quote = "\"")
-  }
-
-  format_duplicate_keys <- function(data) {
-    key_data <- dplyr::select(data, dplyr::all_of(key_columns))
-    duplicated_rows <- duplicated(key_data) | duplicated(key_data, fromLast = TRUE)
-
-    if (!any(duplicated_rows)) {
-      return(character())
-    }
-
-    unique_duplicates <- unique(key_data[duplicated_rows, , drop = FALSE])
-
-    vapply(
-      seq_len(nrow(unique_duplicates)),
-      function(row_index) {
-        row <- unique_duplicates[row_index, , drop = FALSE]
-        formatted <- vapply(
-          names(row),
-          function(column) {
-            value <- row[[column]]
-            paste0(column, " = ", format_key_value(value))
-          },
-          character(1)
-        )
-        paste(formatted, collapse = ", ")
-      },
-      character(1)
-    )
-  }
-
-  duplicate_message <- function(arg_name, data) {
-    key_details <- format_duplicate_keys(data)
-    # duplicate_message <- function(arg_name) {
-    duplicate_header <- switch(key_origin,
-      intersection = cli::format_inline(
-        "The shared primary key columns do not uniquely identify rows in {.arg {arg_name}}.",
-        arg_name = arg_name
-      ),
-      cli::format_inline(
-        "Duplicate key combinations detected in {.arg {arg_name}}.",
-        arg_name = arg_name
-      )
-    )
-
-    column_detail <- switch(key_origin,
-      intersection = cli::format_inline(
-        "Columns used: {.val {key_columns}}.",
-        key_columns = key_columns
-      ),
-      user = cli::format_inline(
-        "Columns supplied via {.arg key_columns}: {.val {key_columns}}.",
-        key_columns = key_columns
-      ),
-      cli::format_inline(
-        "Columns used: {.val {key_columns}}.",
-        key_columns = key_columns
-      )
-    )
-
-    detail_lines <- if (length(key_details) > 0) {
-      paste0("  - ", key_details)
-    } else {
-      character()
-    }
-
-    cli::cli_abort(
-      paste(c(
-        duplicate_header,
-        column_detail,
-        detail_lines
-      ), collapse = "\n"),
-      # c(
-      #   "!" = duplicate_header,
-      #   "i" = column_detail
-      # ),
-      call = get_cli_abort_call()
-    )
-  }
-
-  if (anyDuplicated(dplyr::select(x, dplyr::all_of(key_columns))) > 0) {
-    duplicate_message(
-      "x",
-      x
-    )
-  }
-  if (anyDuplicated(dplyr::select(y, dplyr::all_of(key_columns))) > 0) {
-    duplicate_message(
-      "y",
-      y
-    )
-  }
+  .check_key_identify_rows(x, "x", key_columns, key_origin)
+  .check_key_identify_rows(y, "y", key_columns, key_origin)
 
   fmt_column <- if ("fmt_fun" %in% names(x) || "fmt_fun" %in% names(y)) {
     "fmt_fun"
@@ -297,17 +167,12 @@ ard_compare <- function(x, y, key_columns = NULL) {
       dplyr::any_of(comparison_columns)
     )
 
-  ensure_column <- function(data, column) {
-    if (!column %in% names(data)) {
-      data[[column]] <- vector("list", nrow(data))
-    }
-    data
+  for (column in comparison_columns) {
+    x_selected <- .ensure_column(x_selected, column)
+    y_selected <- .ensure_column(y_selected, column)
   }
 
-  for (column in comparison_columns) {
-    x_selected <- ensure_column(x_selected, column)
-    y_selected <- ensure_column(y_selected, column)
-  }
+  .check_rows_not_in_x_y(x_selected, y_selected, key_columns)
 
   comparison <-
     dplyr::full_join(
@@ -316,42 +181,11 @@ ard_compare <- function(x, y, key_columns = NULL) {
       by = key_columns,
       suffix = c(".x", ".y")
     )
-
-  build_mismatches <- function(column) {
-    column_x <- paste0(column, ".x")
-    column_y <- paste0(column, ".y")
-
-    if (!all(c(column_x, column_y) %in% names(comparison))) {
-      empty <- comparison[0, , drop = FALSE]
-      missing_cols <- setdiff(c(column_x, column_y), names(empty))
-      for (missing_col in missing_cols) {
-        empty[[missing_col]] <- vector("list", 0)
-      }
-      return(
-        dplyr::select(
-          empty,
-          dplyr::all_of(c(key_columns, column_x, column_y))
-        )
-      )
-    }
-
-    matches <- mapply(
-      identical,
-      comparison[[column_x]],
-      comparison[[column_y]],
-      SIMPLIFY = TRUE,
-      USE.NAMES = FALSE
-    )
-
-    mismatches <- comparison[!matches, , drop = FALSE]
-
-    dplyr::select(
-      mismatches,
-      dplyr::all_of(c(key_columns, column_x, column_y))
-    )
-  }
-
-  mismatch_list <- lapply(comparison_targets, build_mismatches)
+  mismatch_list <- lapply(comparison_targets,
+    .build_mismatches,
+    comparison = comparison,
+    key_columns = key_columns
+  )
 
   names(mismatch_list) <- names(comparison_targets)
 
