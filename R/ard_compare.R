@@ -172,7 +172,7 @@ ard_compare <- function(x, y, key_columns = NULL) {
     y_selected <- .ensure_column(y_selected, column)
   }
 
-  .check_rows_not_in_x_y(x_selected, y_selected, key_columns)
+  # .check_rows_not_in_x_y(x_selected, y_selected, key_columns)
 
   comparison <-
     dplyr::full_join(
