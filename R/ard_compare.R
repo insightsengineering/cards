@@ -44,19 +44,6 @@ ard_compare <- function(x, y, key_columns = NULL) {
   check_class(x, cls = "card")
   check_class(y, cls = "card")
 
-  if (!"stat" %in% names(x) || !"stat" %in% names(y)) {
-    cli::cli_abort(
-      "Both inputs must include a {.code stat} column.",
-      call = get_cli_abort_call()
-    )
-  }
-  if (!is.list(x$stat) || !is.list(y$stat)) {
-    cli::cli_abort(
-      "The {.code stat} column must be a list column in both inputs.",
-      call = get_cli_abort_call()
-    )
-  }
-
   is_nonempty_string <- function(x) {
     is.character(x) && length(x) == 1L && !is.na(x) && nzchar(x)
   }
@@ -336,7 +323,7 @@ ard_compare <- function(x, y, key_columns = NULL) {
 
   duplicate_message <- function(arg_name, data) {
     key_details <- format_duplicate_keys(data)
-
+    # duplicate_message <- function(arg_name) {
     duplicate_header <- switch(key_origin,
       intersection = cli::format_inline(
         "The shared primary key columns do not uniquely identify rows in {.arg {arg_name}}.",
@@ -370,16 +357,30 @@ ard_compare <- function(x, y, key_columns = NULL) {
     }
 
     cli::cli_abort(
-      paste(c(duplicate_header, column_detail, detail_lines), collapse = "\n"),
+      paste(c(
+        duplicate_header,
+        column_detail,
+        detail_lines
+      ), collapse = "\n"),
+      # c(
+      #   "!" = duplicate_header,
+      #   "i" = column_detail
+      # ),
       call = get_cli_abort_call()
     )
   }
 
   if (anyDuplicated(dplyr::select(x, dplyr::all_of(key_columns))) > 0) {
-    duplicate_message("x", x)
+    duplicate_message(
+      "x",
+      x
+    )
   }
   if (anyDuplicated(dplyr::select(y, dplyr::all_of(key_columns))) > 0) {
-    duplicate_message("y", y)
+    duplicate_message(
+      "y",
+      y
+    )
   }
 
   fmt_column <- if ("fmt_fun" %in% names(x) || "fmt_fun" %in% names(y)) {
