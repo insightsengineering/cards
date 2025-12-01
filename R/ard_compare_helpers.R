@@ -133,7 +133,7 @@
     return(character())
   }
 
-  limited <- head(dplyr::select(data, dplyr::all_of(key_columns)), limit)
+  limited <- utils::head(dplyr::select(data, dplyr::all_of(key_columns)), limit)
   apply(
     limited,
     1,
