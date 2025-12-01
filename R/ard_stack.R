@@ -173,7 +173,6 @@ ard_stack <- function(data,
 }
 
 
-
 #' Evaluate the `ard_*()` function calls
 #'
 #' @param data (`data.frame`)\cr

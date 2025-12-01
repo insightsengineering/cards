@@ -136,7 +136,6 @@ ard_summary.data.frame <- function(data,
   check_factor_has_levels(data[c(by, strata)])
 
 
-
   # calculate statistics -------------------------------------------------------
   df_nested <-
     data |>
@@ -190,7 +189,6 @@ ard_summary.data.frame <- function(data,
     tidy_ard_row_order() |>
     as_card()
 }
-
 
 
 #' Check Protected Column Names

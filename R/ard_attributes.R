@@ -69,7 +69,6 @@ ard_attributes.data.frame <- function(data,
   }
 
 
-
   variables |>
     lapply(
       FUN = function(y) {
