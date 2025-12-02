@@ -21,13 +21,13 @@ Source:
 [`DESCRIPTION`](https://github.com/insightsengineering/cards/blob/main/DESCRIPTION)
 
 Sjoberg D, Krouse B, de la Rua E, Bosman M (2025). *cards: Analysis
-Results Data*. R package version 0.7.0.9009,
+Results Data*. R package version 0.7.0.9010,
 <https://github.com/insightsengineering/cards>.
 
     @Manual{,
       title = {cards: Analysis Results Data},
       author = {Daniel D. Sjoberg and Becca Krouse and Emily {de la Rua} and Malan Bosman},
       year = {2025},
-      note = {R package version 0.7.0.9009},
+      note = {R package version 0.7.0.9010},
       url = {https://github.com/insightsengineering/cards},
     }

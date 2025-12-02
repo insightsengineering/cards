@@ -1,8 +1,6 @@
 # Changelog
 
-## cards 0.7.0.9009
-
-### New Features and Functions
+## cards 0.7.0.9010
 
 - Updated
   [`ard_stack_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_stack_hierarchical.md)
@@ -10,15 +8,11 @@
   variables.
   ([\#482](https://github.com/insightsengineering/cards/issues/482))
 
-### Bug Fixes
-
 - Fixed bug in
   [`sort_ard_hierarchical()`](https://insightsengineering.github.io/cards/reference/sort_ard_hierarchical.md)
   causing an error when sorting hierarchical ARDs with more than 2 `by`
   variables.
   ([\#516](https://github.com/insightsengineering/cards/issues/516))
-
-### Lifecycle Changes
 
 - [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   has been deprecated and will be maintained in {tfrmt} going forward.
