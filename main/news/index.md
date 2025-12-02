@@ -1,6 +1,8 @@
 # Changelog
 
-## cards 0.7.0.9010
+## cards 0.7.1
+
+CRAN release: 2025-12-02
 
 - Updated
   [`ard_stack_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_stack_hierarchical.md)
