@@ -132,11 +132,7 @@ ard_stack_hierarchical_count(
 
 - shuffle:
 
-  **\[deprecated\]** support for `.shuffle = TRUE` will be removed in
-  the next release. `ard_stack_hierarchical()` and
-  `ard_stack_hierarchical_count()` will no longer shuffle.
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
-  should be called separately.
+  **\[deprecated\]** support for `.shuffle = TRUE` has been removed.
 
 - by_stats:
 

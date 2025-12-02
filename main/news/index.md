@@ -1,6 +1,6 @@
 # Changelog
 
-## cards 0.7.0.9008
+## cards 0.7.0.9009
 
 ### New Features and Functions
 
@@ -17,6 +17,12 @@
   causing an error when sorting hierarchical ARDs with more than 2 `by`
   variables.
   ([\#516](https://github.com/insightsengineering/cards/issues/516))
+
+### Lifecycle Changes
+
+- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  has been deprecated and will be maintained in {tfrmt} going forward.
+  ([\#509](https://github.com/insightsengineering/cards/issues/509))
 
 ## cards 0.7.0
 
@@ -68,19 +74,19 @@ CRAN release: 2025-08-27
   tabulation of the `by` variable in the returned ARD.
   ([\#335](https://github.com/insightsengineering/cards/issues/335))
 
-- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   passes down the `args` attribute of the input `card` object when
   present.
   ([\#484](https://github.com/insightsengineering/cards/issues/484),
   [@dragosmg](https://github.com/dragosmg))
 
-- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   fills overall or group statistics with `"Overall <column_name>"` or
   `"Any <column_name>"`.
   ([\#337](https://github.com/insightsengineering/cards/issues/337),
   [@dragosmg](https://github.com/dragosmg))
 
-- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   messages if `"Overall <column_names>"` is accidentally present in the
   data and creates a unique label.
   ([\#465](https://github.com/insightsengineering/cards/issues/465),
@@ -111,7 +117,7 @@ CRAN release: 2025-08-27
   and
   [`ard_stack()`](https://insightsengineering.github.io/cards/reference/ard_stack.md))
   are deprecated and users encouraged to call
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   directly.
   ([\#475](https://github.com/insightsengineering/cards/issues/475),
   [@dragosmg](https://github.com/dragosmg))
@@ -163,7 +169,7 @@ CRAN release: 2025-07-03
   ([\#442](https://github.com/insightsengineering/cards/issues/442))
 
 - Fix bug in
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   where error is thrown if input contains hierarchical results.
   ([\#447](https://github.com/insightsengineering/cards/issues/447))
 
@@ -226,7 +232,7 @@ CRAN release: 2025-04-11
 ### Lifecycle Changes
 
 - The
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   function no longer outputs a `'label'` column, and instead retains the
   original `'variable'` level from the cards object. It also no longer
   trims rows with non-numeric stats values.
@@ -432,7 +438,7 @@ CRAN release: 2024-09-02
   ([\#299](https://github.com/insightsengineering/cards/issues/299))
 
 - Improved ability of
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   to populate missing group values where possible.
   ([\#306](https://github.com/insightsengineering/cards/issues/306))
 
@@ -555,7 +561,7 @@ CRAN release: 2024-07-20
   ([\#240](https://github.com/insightsengineering/cards/issues/240))
 
 - Bug fix in
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   where factors were coerced to integers instead of their labels.
   ([\#232](https://github.com/insightsengineering/cards/issues/232))
 

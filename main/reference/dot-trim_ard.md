@@ -30,6 +30,8 @@ ard <- bind_ard(
   ard_tabulate(ADSL, variables = "ARM")
 ) |>
   shuffle_ard(trim = FALSE)
+#> Warning: `shuffle_ard()` was deprecated in cards 0.8.0.
+#> ℹ Please use `tfrmt::shuffle_card()` instead.
 
 ard |> cards:::.trim_ard()
 #> # A tibble: 36 × 7

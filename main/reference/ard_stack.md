@@ -4,7 +4,7 @@ Stack multiple ARD calls sharing common input `data` and `by` variables.
 Optionally incorporate additional information on represented variables,
 e.g. overall calculations, rates of missingness, attributes, or
 transform results with
-[`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md).
+[`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md).
 
 If the `ard_stack(by)` argument is specified, a univariate tabulation of
 the by variable will also be returned.
@@ -72,10 +72,7 @@ ard_stack(
 
 - .shuffle:
 
-  **\[deprecated\]** support for `.shuffle = TRUE` will be removed in
-  the next release. `ard_stack()` will no longer shuffle.
-  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
-  should be called separately.
+  **\[deprecated\]** support for `.shuffle = TRUE` has been removed.
 
 - .by_stats:
 
@@ -118,23 +115,21 @@ ard_stack(
   data = ADSL,
   ard_tabulate(variables = "AGEGR1"),
   ard_summary(variables = "AGE"),
-  .by = "ARM",
-  .shuffle = TRUE
+  .by = "ARM"
 )
-#> Warning: The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.
-#> ℹ Call `shuffle_ard()` after `ard_stack()`.
-#> # A tibble: 60 × 7
-#>    ARM     variable variable_level context  stat_name stat_label   stat
-#>    <chr>   <chr>    <chr>          <chr>    <chr>     <chr>       <dbl>
-#>  1 Placebo AGEGR1   65-80          tabulate n         n          42    
-#>  2 Placebo AGEGR1   65-80          tabulate N         N          86    
-#>  3 Placebo AGEGR1   65-80          tabulate p         %           0.488
-#>  4 Placebo AGEGR1   <65            tabulate n         n          14    
-#>  5 Placebo AGEGR1   <65            tabulate N         N          86    
-#>  6 Placebo AGEGR1   <65            tabulate p         %           0.163
-#>  7 Placebo AGEGR1   >80            tabulate n         n          30    
-#>  8 Placebo AGEGR1   >80            tabulate N         N          86    
-#>  9 Placebo AGEGR1   >80            tabulate p         %           0.349
-#> 10 Placebo AGE      NA             summary  N         N          86    
-#> # ℹ 50 more rows
+#> {cards} data frame: 60 x 11
+#>    group1 group1_level variable variable_level stat_name stat_label  stat
+#> 1     ARM      Placebo   AGEGR1          65-80         n          n    42
+#> 2     ARM      Placebo   AGEGR1          65-80         N          N    86
+#> 3     ARM      Placebo   AGEGR1          65-80         p          % 0.488
+#> 4     ARM      Placebo   AGEGR1            <65         n          n    14
+#> 5     ARM      Placebo   AGEGR1            <65         N          N    86
+#> 6     ARM      Placebo   AGEGR1            <65         p          % 0.163
+#> 7     ARM      Placebo   AGEGR1            >80         n          n    30
+#> 8     ARM      Placebo   AGEGR1            >80         N          N    86
+#> 9     ARM      Placebo   AGEGR1            >80         p          % 0.349
+#> 10    ARM      Placebo      AGE                        N          N    86
+#> ℹ 50 more rows
+#> ℹ Use `print(n = ...)` to see more rows
+#> ℹ 4 more variables: context, fmt_fun, warning, error
 ```

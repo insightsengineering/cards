@@ -88,8 +88,15 @@
   **\[experimental\]** : Filter Stacked Hierarchical ARDs
 - [`sort_ard_hierarchical()`](https://insightsengineering.github.io/cards/reference/sort_ard_hierarchical.md)
   **\[experimental\]** : Sort Stacked Hierarchical ARDs
-- [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/shuffle_ard.md)
-  **\[experimental\]** : Shuffle ARD
+- [`ard_continuous()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`ard_categorical()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`ard_complex()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`ard_dichotomous()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`apply_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`alias_as_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`update_ard_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  **\[deprecated\]** : Deprecated functions
 - [`as_nested_list()`](https://insightsengineering.github.io/cards/reference/as_nested_list.md)
   **\[experimental\]** : ARD as Nested List
 - [`get_ard_statistics()`](https://insightsengineering.github.io/cards/reference/get_ard_statistics.md)
@@ -152,4 +159,5 @@
   [`apply_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   [`alias_as_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   [`update_ard_fmt_fn()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
+  [`shuffle_ard()`](https://insightsengineering.github.io/cards/reference/deprecated.md)
   **\[deprecated\]** : Deprecated functions
