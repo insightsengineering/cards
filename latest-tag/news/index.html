@@ -17,6 +17,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changelog">
+<meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -28,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +38,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html" aria-label="home"><span class="fa fa-home"></span></a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -54,6 +55,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.1">v0.7.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.0">v0.6.0</a>
@@ -81,11 +83,20 @@
 </nav><div class="container template-news">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
+      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.1" id="cards-071">cards 0.7.1<a class="anchor" aria-label="anchor" href="#cards-071"></a>
+</h2>
+<p class="text-muted">CRAN release: 2025-12-02</p>
+<ul>
+<li><p>Updated <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> so that the <code>denominator</code> dataset only contains the <code>id</code> and <code>by</code> variables. (<a href="https://github.com/insightsengineering/cards/issues/482" class="external-link">#482</a>)</p></li>
+<li><p>Fixed bug in <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> causing an error when sorting hierarchical ARDs with more than 2 <code>by</code> variables. (<a href="https://github.com/insightsengineering/cards/issues/516" class="external-link">#516</a>)</p></li>
+<li><p><code><a href="../reference/deprecated.html">shuffle_ard()</a></code> has been deprecated and will be maintained in {tfrmt} going forward. (<a href="https://github.com/insightsengineering/cards/issues/509" class="external-link">#509</a>)</p></li>
+</ul>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="cards-070">cards 0.7.0<a class="anchor" aria-label="anchor" href="#cards-070"></a>
 </h2>
@@ -102,9 +113,9 @@
 <li><p>Similar to <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code>, <code><a href="../reference/ard_stack.html">ard_stack()</a></code> contains an <code>args</code> attribute to retain information about input arguments.</p></li>
 <li><p>Added an article illustrating how to summarize long data structures. (<a href="https://github.com/insightsengineering/cards/issues/356" class="external-link">#356</a>)</p></li>
 <li><p>Added <code>ard_stack(.by_stat)</code> and <code>ard_stack_hierarchical(by_stat)</code> arguments that, when <code>TRUE</code> (the default), includes a univariate ARD tabulation of the <code>by</code> variable in the returned ARD. (<a href="https://github.com/insightsengineering/cards/issues/335" class="external-link">#335</a>)</p></li>
-<li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> passes down the <code>args</code> attribute of the input <code>card</code> object when present. (<a href="https://github.com/insightsengineering/cards/issues/484" class="external-link">#484</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
-<li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> fills overall or group statistics with <code>"Overall &lt;column_name&gt;"</code> or <code>"Any &lt;column_name&gt;"</code>. (<a href="https://github.com/insightsengineering/cards/issues/337" class="external-link">#337</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
-<li><p><code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> messages if <code>"Overall &lt;column_names&gt;"</code> is accidentally present in the data and creates a unique label. (<a href="https://github.com/insightsengineering/cards/issues/465" class="external-link">#465</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
+<li><p><code><a href="../reference/deprecated.html">shuffle_ard()</a></code> passes down the <code>args</code> attribute of the input <code>card</code> object when present. (<a href="https://github.com/insightsengineering/cards/issues/484" class="external-link">#484</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
+<li><p><code><a href="../reference/deprecated.html">shuffle_ard()</a></code> fills overall or group statistics with <code>"Overall &lt;column_name&gt;"</code> or <code>"Any &lt;column_name&gt;"</code>. (<a href="https://github.com/insightsengineering/cards/issues/337" class="external-link">#337</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
+<li><p><code><a href="../reference/deprecated.html">shuffle_ard()</a></code> messages if <code>"Overall &lt;column_names&gt;"</code> is accidentally present in the data and creates a unique label. (<a href="https://github.com/insightsengineering/cards/issues/465" class="external-link">#465</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</p></li>
 <li><p>Add <code>ADLB</code> data set. (<a href="https://github.com/insightsengineering/cards/issues/450" class="external-link">#450</a>)</p></li>
 </ul>
 </div>
@@ -129,7 +140,7 @@
 </ul>
 </li>
 <li>
-<code>shuffle</code> and <code>.shuffle</code> arguments (for <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack.html">ard_stack()</a></code>) are deprecated and users encouraged to call <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> directly. (<a href="https://github.com/insightsengineering/cards/issues/475" class="external-link">#475</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</li>
+<code>shuffle</code> and <code>.shuffle</code> arguments (for <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack.html">ard_stack()</a></code>) are deprecated and users encouraged to call <code><a href="../reference/deprecated.html">shuffle_ard()</a></code> directly. (<a href="https://github.com/insightsengineering/cards/issues/475" class="external-link">#475</a>, <a href="https://github.com/dragosmg" class="external-link">@dragosmg</a>)</li>
 </ul>
 </div>
 </div>
@@ -164,7 +175,7 @@
 <ul>
 <li><p>Fix bug in <code><a href="../reference/sort_ard_hierarchical.html">sort_ard_hierarchical()</a></code> when hierarchical ARD has <code>overall=TRUE</code>. (<a href="https://github.com/insightsengineering/cards/issues/431" class="external-link">#431</a>)</p></li>
 <li><p>Fix bug in <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> when <code>id</code> values are present in multiple levels of the <code>by</code> variables. (<a href="https://github.com/insightsengineering/cards/issues/442" class="external-link">#442</a>)</p></li>
-<li><p>Fix bug in <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> where error is thrown if input contains hierarchical results. (<a href="https://github.com/insightsengineering/cards/issues/447" class="external-link">#447</a>)</p></li>
+<li><p>Fix bug in <code><a href="../reference/deprecated.html">shuffle_ard()</a></code> where error is thrown if input contains hierarchical results. (<a href="https://github.com/insightsengineering/cards/issues/447" class="external-link">#447</a>)</p></li>
 </ul>
 </div>
 </div>
@@ -202,7 +213,7 @@
 <h3 id="lifecycle-changes-0-6-0">Lifecycle Changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-0-6-0"></a>
 </h3>
 <ul>
-<li>The <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> function no longer outputs a <code>'label'</code> column, and instead retains the original <code>'variable'</code> level from the cards object. It also no longer trims rows with non-numeric stats values. (<a href="https://github.com/insightsengineering/cards/issues/416" class="external-link">#416</a>)</li>
+<li>The <code><a href="../reference/deprecated.html">shuffle_ard()</a></code> function no longer outputs a <code>'label'</code> column, and instead retains the original <code>'variable'</code> level from the cards object. It also no longer trims rows with non-numeric stats values. (<a href="https://github.com/insightsengineering/cards/issues/416" class="external-link">#416</a>)</li>
 </ul>
 </div>
 </div>
@@ -318,7 +329,7 @@
 <ul>
 <li><p>Converted <code><a href="../reference/ard_total_n.html">ard_total_n()</a></code> to an S3 generic and added method <code><a href="../reference/ard_total_n.html">ard_total_n.data.frame()</a></code>.</p></li>
 <li><p>Added the <code>bind_ard(.quiet)</code> argument to suppress messaging. (<a href="https://github.com/insightsengineering/cards/issues/299" class="external-link">#299</a>)</p></li>
-<li><p>Improved ability of <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> to populate missing group values where possible. (<a href="https://github.com/insightsengineering/cards/issues/306" class="external-link">#306</a>)</p></li>
+<li><p>Improved ability of <code><a href="../reference/deprecated.html">shuffle_ard()</a></code> to populate missing group values where possible. (<a href="https://github.com/insightsengineering/cards/issues/306" class="external-link">#306</a>)</p></li>
 <li><p>Added <code>apply_fmt_fn(replace)</code> argument. Use <code>replace=FALSE</code> to retain any previously formatted statistics in the <code>stat_fmt</code> column. (<a href="https://github.com/insightsengineering/cards/issues/285" class="external-link">#285</a>)</p></li>
 <li><p>Added <code>bind_ard(.distinct)</code> argument, which can remove non-distinct rows from the ARD across grouping variables, primary variables, context, statistic name and value. (<a href="https://github.com/insightsengineering/cards/issues/286" class="external-link">#286</a>)</p></li>
 </ul>
@@ -368,7 +379,7 @@
 <ul>
 <li><p>Bug fix in <code><a href="../reference/ard_stack.html">ard_stack()</a></code> when calls to functions were namespaced. (<a href="https://github.com/insightsengineering/cards/issues/242" class="external-link">#242</a>)</p></li>
 <li><p>The <code><a href="../reference/print_ard_conditions.html">print_ard_conditions()</a></code> function has been updated to no longer error out if the ARD object does not have <code>"error"</code> or <code>"warning"</code> columns. (<a href="https://github.com/insightsengineering/cards/issues/240" class="external-link">#240</a>)</p></li>
-<li><p>Bug fix in <code><a href="../reference/shuffle_ard.html">shuffle_ard()</a></code> where factors were coerced to integers instead of their labels. (<a href="https://github.com/insightsengineering/cards/issues/232" class="external-link">#232</a>)</p></li>
+<li><p>Bug fix in <code><a href="../reference/deprecated.html">shuffle_ard()</a></code> where factors were coerced to integers instead of their labels. (<a href="https://github.com/insightsengineering/cards/issues/232" class="external-link">#232</a>)</p></li>
 </ul>
 </div>
 <div class="section level3">
