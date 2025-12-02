@@ -1,6 +1,6 @@
 #' Shuffle ARD
 #'
-#' @description `r lifecycle::badge('experimental')`\cr
+#' @description `r lifecycle::badge('deprecated')`\cr
 #'
 #' This function ingests an ARD object and shuffles the information to prepare for analysis.
 #' Helpful for streamlining across multiple ARDs. Combines each group/group_level into 1
@@ -14,6 +14,7 @@
 #'   only on numeric statistic values.
 #'
 #' @return a tibble
+#' @rdname deprecated
 #' @export
 #'
 #' @examples
@@ -23,6 +24,13 @@
 #' ) |>
 #'   shuffle_ard()
 shuffle_ard <- function(x, trim = TRUE) {
+  lifecycle::deprecate_warn(
+    when = "0.8.0",
+    what = "cards::shuffle_ard()",
+    with = "tfrmt::shuffle_card()",
+    always = TRUE
+  )
+
   set_cli_abort_call()
 
   check_class(x = x, cls = "card")

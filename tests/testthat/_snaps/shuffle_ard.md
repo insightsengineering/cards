@@ -41,6 +41,10 @@
 
     Code
       shuffle_ard(ard_summary(ADSL, variables = AGEGR1))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       "warning" column contains messages that will be removed.
     Output
@@ -61,6 +65,10 @@
     Code
       shuffle_ard(dplyr::filter(bind_ard(ard_summary(ADSL, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p",
         stat_label = "p", stat = list(0.05))), dplyr::row_number() <= 5L))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 4 x 6
         ARM                  variable context stat_name stat_label  stat
@@ -75,6 +83,10 @@
     Code
       shuffle_ard(dplyr::filter(bind_ard(ard_summary(ADSL, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), dplyr::tibble(group1 = "ARM", variable = "AGE", stat_name = "p", stat_label = "p",
         stat = list(0.05))), dplyr::row_number() <= 5L))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 2 x 6
         ARM         variable context stat_name stat_label  stat
@@ -87,6 +99,10 @@
     Code
       as.data.frame(shuffle_ard(bind_ard(dplyr::slice(ard_tabulate(ADSL, by = ARM, variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL, variables = AGEGR1), 1), dplyr::slice(ard_summary(ADSL, by = SEX,
         variables = AGE), 1), dplyr::slice(ard_summary(ADSL, variables = AGE), 1))))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
                 ARM         SEX variable variable_level  context stat_name stat_label stat
       1     Placebo        <NA>   AGEGR1          65-80 tabulate         n          n   42
@@ -99,6 +115,10 @@
     Code
       shuffle_ard(bind_ard(dplyr::slice(ard_tabulate(ADSL, by = c(ARM, SEX), variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL, by = SEX, variables = AGEGR1), 1), dplyr::slice(ard_tabulate(ADSL,
         variables = AGEGR1), 1)))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
       # A tibble: 3 x 8
         ARM         SEX         variable variable_level context  stat_name stat_label  stat
@@ -112,6 +132,10 @@
     Code
       shuffle_ard(bind_ard(ard_summary(adsl_new, variables = "AGE", statistic = ~ continuous_summary_fns("mean")), ard_summary(adsl_new, by = "ARM", variables = "AGE", statistic = ~ continuous_summary_fns(
         "mean"))))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       i "Overall ARM" already exists in the `ARM` column. Using "Overall ARM.1".
     Output
@@ -127,6 +151,10 @@
 
     Code
       as.data.frame(shuffle_ard(ard_cardx))
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Output
                 ARM         SEX variable          context stat_name          stat_label       stat
       1 Overall ARM        <NA>   AGEGR1 stats_chisq_test statistic X-squared Statistic 5.07944167
@@ -217,6 +245,10 @@
 
     Code
       shuffled_ard <- shuffle_ard(ard)
+    Condition
+      Warning:
+      `shuffle_ard()` was deprecated in cards 0.8.0.
+      i Please use `tfrmt::shuffle_card()` instead.
     Message
       i "Overall TRTA" already exists in the `TRTA` column. Using "Overall TRTA.1".
       i "Any AESOC" already exists in the `AESOC` column. Using"Any AESOC.1".

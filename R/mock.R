@@ -234,11 +234,12 @@ mock_total_n <- function() {
 }
 
 check_named_list_and_vector_elements <- function(
-    x,
-    message = "The {.arg {arg_name}} argument must be a named list, and each element a vector of values.",
-    arg_name = rlang::caller_arg(x),
-    call = get_cli_abort_call(),
-    envir = rlang::current_env()) {
+  x,
+  message = "The {.arg {arg_name}} argument must be a named list, and each element a vector of values.",
+  arg_name = rlang::caller_arg(x),
+  call = get_cli_abort_call(),
+  envir = rlang::current_env()
+) {
   # check input is a named list
   if (!is_empty(x) && (!is_named(x) || !is.list(x))) {
     cli::cli_abort(message = message, call = call, .envir = envir)

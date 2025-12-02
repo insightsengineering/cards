@@ -8,6 +8,10 @@
 
 * Fixed bug in `sort_ard_hierarchical()` causing an error when sorting hierarchical ARDs with more than 2 `by` variables. (#516)
 
+## Lifecycle Changes
+ 
+* `shuffle_ard()` has been deprecated and will be maintained in {tfrmt} going forward. (#509)
+
 # cards 0.7.0
 
 ## New Features and Functions

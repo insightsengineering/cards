@@ -347,7 +347,6 @@ ard_tabulate.data.frame <- function(data,
 }
 
 
-
 .add_cum_count_stats <- function(x, variable, by, strata, denominator, tab_stats) {
   # if no cumulative stats were requested, return the object
   if (!any(c("p_cum", "n_cum") %in% tab_stats[["tabulation"]])) {
@@ -645,7 +644,6 @@ arrange_using_order <- function(data, columns) {
 
   lst_denominator
 }
-
 
 
 #' Check for Missing Levels in `denominator`

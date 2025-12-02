@@ -13,6 +13,9 @@
 #'  - `alias_as_fmt_fn()` to `alias_as_fmt_fun()`
 #'  - `update_ard_fmt_fn()` to `update_ard_fmt_fun()`
 #'
+#' **Deprecated functions**
+#'  - `shuffle_ard()`
+#'
 #' @name deprecated
 NULL
 
