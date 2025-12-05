@@ -17,3 +17,4 @@
 ^revdep$
 ^\.covrignore$
 ^\.gitlab-ci\.yml$
+^CODE_OF_CONDUCT\.md$
