@@ -45,6 +45,7 @@ reference:
       - ard_summary
       - ard_tabulate
       - ard_tabulate_value
+      - ard_tabulate_rows
       - ard_hierarchical
       - ard_missing
       - ard_total_n
