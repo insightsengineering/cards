@@ -35,6 +35,6 @@ ard_tabulate_rows <- function(data,
     denominator = denominator,
     fmt_fun = fmt_fun,
     stat_label = stat_label,
-    value = list(TRUE) |> setNames(colname)
+    value = list(TRUE) |> stats::setNames(colname)
   )
 }
