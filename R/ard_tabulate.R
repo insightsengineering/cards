@@ -167,9 +167,10 @@ ard_tabulate.data.frame <- function(data,
     for (v in c(by, strata)) {
       if (v %in% denom_names && !identical(class(data[[v]]), class(denominator[[v]]))) {
         cli::cli_inform(
-        "The classes for column {.val {v}} in {.arg data} ({.cls {class(data[[v]])}})
+          "The classes for column {.val {v}} in {.arg data} ({.cls {class(data[[v]])}})
           and {.arg denominator} ({.cls {class(denominator[[v]])}}) do not match,
-          which {.emph may} cause downstream issues.")
+          which {.emph may} cause downstream issues."
+        )
       }
     }
   }
