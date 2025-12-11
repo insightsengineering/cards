@@ -9,10 +9,7 @@ ard_tabulate_rows(
   colname = "..row_count..",
   by = dplyr::group_vars(data),
   strata = NULL,
-  statistic = everything() ~ "n",
-  denominator = "column",
-  fmt_fun = NULL,
-  stat_label = everything() ~ default_stat_labels()
+  fmt_fun = NULL
 )
 }
 \arguments{
@@ -34,26 +31,11 @@ columns specified.
 
 Arguments may be used in conjunction with one another.}
 
-\item{statistic}{(\code{\link[=syntax]{formula-list-selector}})\cr
-a named list, a list of formulas,
-or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
-(on the RHS of a formula).}
-
-\item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
-Specify this argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
-
 \item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
 (or the RHS of a formula),
 e.g. \verb{list(mpg = list(mean = \\(x) round(x, digits = 2) |> as.character()))}.}
-
-\item{stat_label}{(\code{\link[=syntax]{formula-list-selector}})\cr
-a named list, a list of formulas, or a single formula where
-the list element is either a named list or a list of formulas defining the
-statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
-\code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 }
 \value{
 an ARD data frame of class 'card'

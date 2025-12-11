@@ -15,10 +15,7 @@ ard_tabulate_rows <- function(data,
                               colname = "..row_count..",
                               by = dplyr::group_vars(data),
                               strata = NULL,
-                              statistic = everything() ~ "n",
-                              denominator = "column",
-                              fmt_fun = NULL,
-                              stat_label = everything() ~ default_stat_labels()) {
+                              fmt_fun = NULL) {
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------
@@ -31,10 +28,8 @@ ard_tabulate_rows <- function(data,
     variables = all_of(colname),
     by = {{ by }},
     strata = {{ strata }},
-    statistic = statistic,
-    denominator = denominator,
+    statistic = list("n") |> stats::setNames(colname),
     fmt_fun = fmt_fun,
-    stat_label = stat_label,
     value = list(TRUE) |> stats::setNames(colname)
   )
 }
