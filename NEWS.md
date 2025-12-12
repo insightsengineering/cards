@@ -1,12 +1,14 @@
-# cards 0.7.0.9006
+# cards 0.7.1.9002
 
-## New Features and Functions
+* Adding `ard_tabulate_rows()` function to tabulate the number of rows in a data frame. (#531)
+
+# cards 0.7.1
 
 * Updated `ard_stack_hierarchical()` so that the `denominator` dataset only contains the `id` and `by` variables. (#482)
 
-## Bug Fixes
-
 * Fixed bug in `sort_ard_hierarchical()` causing an error when sorting hierarchical ARDs with more than 2 `by` variables. (#516)
+
+* `shuffle_ard()` has been deprecated and will be maintained in {tfrmt} going forward. (#509)
 
 # cards 0.7.0
 

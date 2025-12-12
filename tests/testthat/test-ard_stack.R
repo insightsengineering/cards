@@ -117,7 +117,6 @@ test_that("ard_stack() adding overalls", {
 })
 
 
-
 test_that("ard_stack() adding missing/attributes", {
   expect_error(
     ard_test <- ard_stack(
@@ -178,65 +177,15 @@ test_that("ard_stack() adding missing/attributes", {
 })
 
 
-test_that("ard_stack() .shuffle argument", {
-  # we expect it to work but with a warning messaged related to the deprecation
-  # of the `shuffle` argument
-  expect_no_error(
-    expect_warning(
-      ard_test <- ard_stack(
-        data = mtcars,
-        .by = "cyl",
-        ard_summary(variables = "mpg"),
-        ard_tabulate_value(variables = "vs", value = vs ~ 1),
-        .shuffle = TRUE
-      ),
-      "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
-      fixed = TRUE
+test_that("ard_stack() .shuffle argument errors", {
+  expect_error(
+    ard_test <- ard_stack(
+      data = mtcars,
+      .by = "cyl",
+      ard_summary(variables = "mpg"),
+      ard_tabulate_value(variables = "vs", value = vs ~ 1),
+      .shuffle = TRUE
     )
-  )
-
-  expect_equal(
-    ard_test,
-    bind_ard(
-      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
-      ard_tabulate(data = mtcars, variables = "cyl"),
-      .order = TRUE
-    ) |>
-      shuffle_ard(),
-    ignore_attr = TRUE
-  )
-
-
-  # with overalls
-  # we expect it to work but with a warning messaged related to the deprecation
-  # of the `shuffle` argument
-  expect_no_error(
-    expect_warning(
-      ard_test <- ard_stack(
-        data = mtcars,
-        .by = "cyl",
-        ard_summary(variables = "mpg"),
-        ard_tabulate_value(variables = "vs", value = vs ~ 1),
-        .shuffle = TRUE,
-        .overall = TRUE
-      ),
-      "The `.shuffle` argument of `ard_stack()` is deprecated as of cards 0.7.0.",
-      fixed = TRUE
-    )
-  )
-
-  expect_equal(
-    ard_test,
-    bind_ard(
-      ard_summary(data = mtcars, by = "cyl", variables = "mpg"),
-      ard_tabulate_value(data = mtcars, by = "cyl", variables = "vs", value = vs ~ 1),
-      ard_summary(data = mtcars, variables = "mpg"),
-      ard_tabulate_value(data = mtcars, variables = "vs", value = vs ~ 1),
-      ard_tabulate(data = mtcars, variables = "cyl")
-    ) |>
-      shuffle_ard(),
-    ignore_attr = TRUE
   )
 })
 
