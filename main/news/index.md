@@ -1,5 +1,12 @@
 # Changelog
 
+## cards 0.7.1.9002
+
+- Adding
+  [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
+  function to tabulate the number of rows in a data frame.
+  ([\#531](https://github.com/insightsengineering/cards/issues/531))
+
 ## cards 0.7.1
 
 CRAN release: 2025-12-02

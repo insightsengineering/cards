@@ -10,6 +10,8 @@
   : Tabulate ARD
 - [`ard_tabulate_value()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_value.md)
   : Tabulate Value ARD
+- [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
+  : Row Tabulate ARD
 - [`ard_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md)
   [`ard_hierarchical_count()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md)
   : Hierarchical ARD Statistics

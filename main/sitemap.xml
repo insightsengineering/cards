@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://insightsengineering.github.io/cards/404.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/CONTRIBUTING.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/PULL_REQUEST_TEMPLATE.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/articles/creating-ards.html</loc></url>
@@ -26,6 +27,7 @@
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_strata.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_summary.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_tabulate.html</loc></url>
+<url><loc>https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_tabulate_value.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/ard_total_n.html</loc></url>
 <url><loc>https://insightsengineering.github.io/cards/reference/as_card.html</loc></url>
