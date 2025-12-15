@@ -2,6 +2,8 @@
 
 * Adding `ard_tabulate_rows()` function to tabulate the number of rows in a data frame. (#531)
 
+* Users are now messaged if the `by` or `strata` arguments pass columns with different classes in the `ard_tabulate(data,denominator)` arguments as this _may_ cause issues downstream. (#515)
+
 # cards 0.7.1
 
 * Updated `ard_stack_hierarchical()` so that the `denominator` dataset only contains the `id` and `by` variables. (#482)
