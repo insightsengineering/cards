@@ -18,7 +18,8 @@
 #' ard_summary(ADSL, variables = "AGE") |>
 #'   dplyr::select(-warning, -error) |>
 #'   check_ard_structure()
-check_ard_structure <- function(x, column_order = TRUE, method = TRUE, error_on_fail = FALSE) {
+check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
+                                error_on_fail = FALSE) {
   set_cli_abort_call()
   check_scalar_logical(method)
   check_scalar_logical(column_order)
@@ -32,8 +33,10 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE, error_on_
 
   # exit if not a data frame ---------------------------------------------------
   if (!inherits(x, "data.frame")) {
-    .message_or_error("Object is not of class {.cls data.frame}.", error_on_fail,
-                      envir = environment())
+    .message_or_error(
+      "Object is not of class {.cls data.frame}.",
+      error = error_on_fail,
+      envir = environment())
     return(invisible())
   }
 
@@ -45,27 +48,32 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE, error_on_
     ) |>
     setdiff(names(x))
   if (!is_empty(missing_variables)) {
-    .message_or_error("The following columns are not present: {.val {missing_variables}}.",
-                      error_on_fail,
-                      envir = environment())
+    .message_or_error(
+      "The following columns are not present: {.val {missing_variables}}.",
+      error = error_on_fail,
+      envir = environment())
   }
 
   # check whether AR contains a method stat ------------------------------------
   if (isTRUE(method)) {
     if (!"method" %in% x$stat_name) {
-      .message_or_error("Expecting a row with {.code stat_name = 'method'}, but it is not present.",
-                        error_on_fail,
-                        envir = environment())
+      .message_or_error(
+        "Expecting a row with {.code stat_name = 'method'}, but it is not present.",
+        error = error_on_fail,
+        envir = environment())
     }
   }
 
   # check order of columns -----------------------------------------------------
   if (isTRUE(column_order)) {
     if (!identical(names(x), names(tidy_ard_column_order(x)))) {
-      .message_or_error(c("The column order is not in the standard order.",
-                          i = "Use {.fun cards::tidy_ard_column_order} for standard ordering."
-      ), error_on_fail, ,
-      envir = environment())
+      .message_or_error(
+        c(
+          "The column order is not in the standard order.",
+          i = "Use {.fun cards::tidy_ard_column_order} for standard ordering."
+          ),
+        error = error_on_fail,
+        envir = environment())
     }
   }
 
@@ -87,9 +95,11 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE, error_on_
     dplyr::select(-where(is.list)) |>
     names()
   if (!is_empty(not_a_lst_columns)) {
-    .message_or_error("The following columns are expected to be list columns: {.val {not_a_lst_columns}}.",
-                      error_on_fail, ,
-                      envir = environment())
+    .message_or_error(
+      "The following columns are expected to be list columns: {.val {not_a_lst_columns}}.",
+      error = error_on_fail,
+      envir = environment()
+      )
   }
 
   invisible(x)
