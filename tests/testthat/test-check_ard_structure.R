@@ -7,3 +7,12 @@ test_that("check_ard_structure() works", {
       check_ard_structure()
   )
 })
+
+
+test_that("check_ard_structure() does not error if the tested dataset has none of the expected variables", {
+  expect_snapshot(
+  expect_no_error(
+      check_ard_structure(data.frame(badname = 3))
+  )
+  )
+})

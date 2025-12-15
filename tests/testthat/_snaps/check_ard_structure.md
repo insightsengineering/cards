@@ -9,3 +9,12 @@
       Expecting a row with `stat_name = 'method'`, but it is not present.
       The following columns are expected to be list columns: "stat".
 
+# check_ard_structure() does not error if the tested dataset has none of the expected variables
+
+    Code
+      expect_no_error(check_ard_structure(data.frame(badname = 3)))
+    Message
+      Object is not of class <card>.
+      The following columns are not present: "variable", "stat_name", "stat_label", "stat", "fmt_fun", "warning", and "error".
+      Expecting a row with `stat_name = 'method'`, but it is not present.
+

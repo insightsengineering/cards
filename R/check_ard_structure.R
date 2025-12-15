@@ -60,6 +60,10 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE) {
     }
   }
 
+  # Check whether expected columns are present ---------------------------------
+
+
+
   # check columns are list columns as expected ---------------------------------
   expected_lst_columns <-
     dplyr::select(
@@ -67,7 +71,7 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE) {
       any_of(c("stat", "fmt_fun", "warning", "error"))
     ) |>
     # remove group## and variable columns
-    dplyr::select(-matches("^group[0-9]$"), -"variable") |>
+    dplyr::select(-matches("^group[0-9]$"), -any_of("variable")) |>
     names()
   not_a_lst_columns <-
     x[expected_lst_columns] |>
