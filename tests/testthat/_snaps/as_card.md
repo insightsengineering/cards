@@ -1,8 +1,8 @@
-# as_card() works
+# as_card() allows non card objects with check = FALSE
 
     Code
       as_card(data.frame(stat_name = c("N", "mean"), stat_label = c("N", "Mean"),
-      stat = c(10, 0.5)))
+      stat = c(10, 0.5)), check = FALSE)
     Message
       {cards} data frame: 2 x 3
     Output
@@ -17,4 +17,12 @@
     Condition
       Error in `as_card()`:
       ! The `x` argument must be class <data.frame>, not a string.
+
+---
+
+    Code
+      as_card(nonliststat)
+    Condition
+      Error in `as_card()`:
+      ! The following columns are expected to be list columns: "stat".
 

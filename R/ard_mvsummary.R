@@ -91,7 +91,7 @@ ard_mvsummary.data.frame <- function(data,
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble() |> as_card())
+    return(dplyr::tibble() |> as_card(check = FALSE))
   }
 
   missing_statistics_vars <- setdiff(variables, names(statistic))

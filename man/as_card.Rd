@@ -4,11 +4,14 @@
 \alias{as_card}
 \title{Data Frame as ARD}
 \usage{
-as_card(x)
+as_card(x, check = TRUE)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
 a data frame}
+
+\item{check}{(scalar \code{logical})\cr
+Whether the input data frame should be checked for standard ARD features}
 }
 \value{
 an ARD data frame of class 'card'
@@ -22,5 +25,15 @@ data.frame(
   stat_label = c("N", "Mean"),
   stat = c(10, 0.5)
 ) |>
-  as_card()
+  as_card( check = FALSE)
+ dplyr::tibble(
+  variable = "AGE",
+  stat_name = c("N", "mean"),
+  stat_label = c("N", "Mean"),
+  stat = list(10, 0.5),
+  fmt_fun = replicate(2, list()),
+  warning = replicate(2, list()),
+  error = replicate(2, list())
+) |>
+  as_card( )
 }

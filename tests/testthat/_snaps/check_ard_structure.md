@@ -18,3 +18,36 @@
       The following columns are not present: "variable", "stat_name", "stat_label", "stat", "fmt_fun", "warning", and "error".
       Expecting a row with `stat_name = 'method'`, but it is not present.
 
+# check_ard_structure() errors when flagged appropriately
+
+    Code
+      check_ard_structure(data.frame(badname = 3), error_on_fail = TRUE)
+    Condition
+      Error in `check_ard_structure()`:
+      ! Object is not of class <card>.
+
+---
+
+    Code
+      check_ard_structure(nolist, error_on_fail = TRUE)
+    Condition
+      Error in `check_ard_structure()`:
+      ! The following columns are expected to be list columns: "stat".
+
+---
+
+    Code
+      check_ard_structure(novariable, error_on_fail = TRUE)
+    Condition
+      Error in `check_ard_structure()`:
+      ! The following columns are not present: "variable".
+
+---
+
+    Code
+      check_ard_structure(wrongorder, error_on_fail = TRUE)
+    Condition
+      Error in `check_ard_structure()`:
+      ! The column order is not in the standard order.
+      i Use `cards::tidy_ard_column_order()` for standard ordering.
+

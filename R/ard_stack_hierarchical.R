@@ -517,7 +517,7 @@ internal_stack_hierarchical <- function(
   }
 
   # return final result --------------------------------------------------------
-  result |> as_card()
+  result |> as_card(check = FALSE)
 }
 
 # this function calculates either the counts or the rates of the events

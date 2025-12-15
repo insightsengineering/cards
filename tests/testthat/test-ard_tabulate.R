@@ -31,7 +31,7 @@ test_that("ard_tabulate() univariate", {
       mtcars,
       variables = starts_with("xxxxx")
     ),
-    dplyr::tibble() |> as_card()
+    dplyr::tibble() |> as_card(check = FALSE)
   )
 
   # works for ordered factors

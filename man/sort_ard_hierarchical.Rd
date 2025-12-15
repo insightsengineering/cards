@@ -45,7 +45,7 @@ overall data will be sorted last within each variable group (i.e. after any othe
 variable levels).
 }
 \examples{
-\dontshow{if ((identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))) withAutoprint(\{ # examplesIf}
+\dontshow{if ((identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ard_stack_hierarchical(
   ADAE,
   variables = c(AESOC, AEDECOD),

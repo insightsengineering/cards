@@ -90,3 +90,39 @@
 
   ret
 }
+
+
+#' Message or error
+#'
+#' Either error or message depending on input
+#'
+#' @param msg (scalar `character`)\cr
+#'   Error message
+#' @param error (scalar `logical`)\cr
+#'     If this should produce an error or a warning. FALSE by default
+#' @param envir (`environment`)\cr
+#'   Environment to evaluate the glue expressions in passed in `cli::cli_abort(message)`.
+#'   Default is `rlang::current_env()`
+#' @inheritParams cli::cli_abort
+#' @return Invisible NULL
+#' @keywords internal
+#'
+#' @examples
+#' \dontrun{
+#' cards:::..warn_or_error("This will be a message", FALSE)
+#' cards:::..warn_or_error("This will be an error", TRUE)
+#' }
+.message_or_error <- function(msg, error = FALSE, call = get_cli_abort_call(),
+                              envir = rlang::current_env()) {
+  if(error){
+    cli::cli_abort(
+      msg, call = call, .envir = envir
+    )
+  }else{
+    cli::cli_inform(msg, call = call, .envir = envir)
+  }
+  return(invisible())
+
+}
+
+
