@@ -1,11 +1,16 @@
 # Changelog
 
-## cards 0.7.1.9002
+## cards 0.7.1.9003
 
 - Adding
   [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
   function to tabulate the number of rows in a data frame.
   ([\#531](https://github.com/insightsengineering/cards/issues/531))
+
+- Users are now messaged if the `by` or `strata` arguments pass columns
+  with different classes in the `ard_tabulate(data,denominator)`
+  arguments as this *may* cause issues downstream.
+  ([\#515](https://github.com/insightsengineering/cards/issues/515))
 
 ## cards 0.7.1
 
