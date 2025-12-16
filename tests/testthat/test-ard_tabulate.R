@@ -1409,3 +1409,16 @@ test_that("ard_tabulate() ordering for multiple strata", {
     ignore_attr = TRUE
   )
 })
+
+
+test_that("ard_tabulate(data, denominator) class mis-match", {
+  expect_snapshot(
+    ard <-
+      ard_tabulate(
+        data = ADSL,
+        variables = AGEGR1,
+        by = TRTA,
+        denominator = ADSL |> dplyr::mutate(TRTA = as.factor(TRTA))
+      )
+  )
+})

@@ -161,6 +161,20 @@ ard_tabulate.data.frame <- function(data,
   check_no_na_factor_levels(data[c(variables, by, strata)])
   check_factor_has_levels(data[c(variables, by, strata)])
 
+  # check for column class mis-matches -----------------------------------------
+  if (is.data.frame(denominator)) {
+    denom_names <- names(denominator)
+    for (v in c(by, strata)) {
+      if (v %in% denom_names && !identical(class(data[[v]]), class(denominator[[v]]))) {
+        cli::cli_inform(
+          "The classes for column {.val {v}} in {.arg data} ({.cls {class(data[[v]])}})
+          and {.arg denominator} ({.cls {class(denominator[[v]])}}) do not match,
+          which {.emph may} cause downstream issues."
+        )
+      }
+    }
+  }
+
   # calculating summary stats --------------------------------------------------
   # calculate tabulation statistics
   df_result_tabulation <-

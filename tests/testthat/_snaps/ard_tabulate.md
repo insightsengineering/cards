@@ -191,3 +191,11 @@
       Error in `ard_tabulate()`:
       ! The `denominator` argument must be one of "column" and "row" when cumulative statistics "n_cum" or "p_cum" are specified, which were requested for variable `AGEGR1`.
 
+# ard_tabulate(data, denominator) class mis-match
+
+    Code
+      ard <- ard_tabulate(data = ADSL, variables = AGEGR1, by = TRTA, denominator = dplyr::mutate(
+        ADSL, TRTA = as.factor(TRTA)))
+    Message
+      The classes for column "TRTA" in `data` (<character>) and `denominator` (<factor>) do not match, which may cause downstream issues.
+
