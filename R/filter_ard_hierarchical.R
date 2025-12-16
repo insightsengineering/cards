@@ -304,7 +304,7 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
             # add overall stats - derive values if overall=FALSE
             if (!no_overall) {
               .df_overall <- .g |>
-                as_card() |>
+                as_card(check = FALSE) |>
                 cards::rename_ard_groups_shift()
               .df_overall <- dplyr::left_join(.df_overall, x_overall, by = names(.df_overall))
             }
@@ -423,5 +423,5 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   # if present, keep attributes at bottom of ARD
   if (has_attr) x <- dplyr::bind_rows(x, x_attr)
 
-  as_card(x)
+  as_card(x, check = FALSE)
 }

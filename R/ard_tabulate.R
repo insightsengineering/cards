@@ -145,7 +145,7 @@ ard_tabulate.data.frame <- function(data,
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble() |> as_card())
+    return(dplyr::tibble() |> as_card(check = FALSE))
   }
 
   # return note about column names that result in errors -----------------------
@@ -218,7 +218,7 @@ ard_tabulate.data.frame <- function(data,
     dplyr::mutate(context = "tabulate") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
-    as_card()
+    as_card(check = FALSE)
 }
 
 

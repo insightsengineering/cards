@@ -111,6 +111,6 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
   # unnest ard data frame and return final table -------------------------------
   df_nested_data |>
     tidyr::unnest(cols = all_of("ard")) |>
-    as_card() |>
+    as_card(check = FALSE) |>
     tidy_ard_column_order(group_order = "descending")
 }

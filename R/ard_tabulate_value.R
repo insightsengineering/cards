@@ -70,7 +70,7 @@ ard_tabulate_value.data.frame <- function(data,
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble() |> as_card())
+    return(dplyr::tibble() |> as_card(check = FALSE))
   }
 
   # calculate summary statistics -----------------------------------------------
