@@ -1,0 +1,110 @@
+---
+title: "Updating ARD Objects"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE, error = FALSE}
+library(cards)
+library(dplyr)
+```
+
+## Introduction
+
+ARD (Analysis Results Data) objects are data frames that contain statistical summaries. After creating an ARD, you may need to customize how statistics are formatted or labeled. The `update_ard_fmt_fun()` and `update_ard_stat_label()` functions streamline this process.
+
+## Basic Usage
+
+### Updating Formatting Functions
+
+By default, statistics may use simple formatting. You can update the formatting function for specific statistics:
+
+```{r}
+# Create a basic ARD
+ard <- ard_summary(ADSL, variables = AGE)
+
+# Update formatting for mean and sd to show more decimal places
+ard_updated <- ard |>
+  update_ard_fmt_fun(
+    stat_names = c("mean", "sd"),
+    fmt_fun = 2L # 2 decimal places
+  ) |>
+  apply_fmt_fun()
+
+# View results
+ard_updated |>
+  select(stat_name, stat, stat_fmt)
+```
+
+### Updating Statistic Labels
+
+Combine formatting updates with custom labels:
+
+```{r}
+ard_summary(ADSL, variables = AGE) |>
+  update_ard_fmt_fun(stat_names = c("mean", "sd"), fmt_fun = 1L) |>
+  update_ard_stat_label(
+    stat_names = c("mean", "sd"),
+    stat_label = "Mean (SD)"
+  ) |>
+  apply_fmt_fun()
+```
+
+## Selective Updates
+
+### Filtering by Variable
+
+Update formatting for specific variables only:
+
+```{r}
+ard_summary(ADSL, variables = c(AGE, BMIBL)) |>
+  update_ard_fmt_fun(
+    variables = AGE, # Only update AGE
+    stat_names = "mean",
+    fmt_fun = 3L
+  ) |>
+  apply_fmt_fun()
+```
+
+### Filtering by Group
+
+When working with stratified analyses, use the `filter` argument to target specific groups:
+
+```{r}
+# Update formatting only for the Placebo arm
+ard_summary(
+  ADSL,
+  by = ARM,
+  variables = AGE,
+  statistic = ~ continuous_summary_fns(c("N", "mean"))
+) |>
+  update_ard_fmt_fun(
+    stat_names = "mean",
+    fmt_fun = 3L,
+    filter = group1_level == "Placebo"
+  ) |>
+  apply_fmt_fun()
+```
+
+## Custom Formatting Functions
+
+Beyond integer aliases, you can pass custom functions:
+
+```{r}
+# Custom formatter that adds parentheses
+format_with_parens <- function(x) {
+  paste0("(", format(round(x, 1), nsmall = 1), ")")
+}
+
+ard_summary(ADSL, variables = AGE) |>
+  update_ard_fmt_fun(
+    stat_names = "sd",
+    fmt_fun = format_with_parens
+  ) |>
+  apply_fmt_fun()
+```
