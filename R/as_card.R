@@ -32,6 +32,7 @@ as_card <- function(x, check = TRUE) {
 
   # check in inputs ------------------------------------------------------------
   check_class(x, cls = "data.frame")
+  check_scalar_logical(check)
 
   # convert to class "card" ----------------------------------------------------
   if (inherits(x, "card")) {
