@@ -121,7 +121,5 @@
   }else{
     cli::cli_inform(msg, call = call, .envir = envir)
   }
-  return(invisible())
-
 }
 
