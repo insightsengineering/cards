@@ -94,7 +94,7 @@
 
 #' Message or error
 #'
-#' Either error or message depending on input
+#' Either error or message depending on input.
 #'
 #' @param msg (scalar `character`)\cr
 #'   Error message
