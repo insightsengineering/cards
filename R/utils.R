@@ -99,7 +99,7 @@
 #' @param msg (scalar `character`)\cr
 #'   Error message
 #' @param error (scalar `logical`)\cr
-#'     If this should produce an error or a warning. FALSE by default
+#'   If this should produce an error or a warning. FALSE by default
 #' @param envir (`environment`)\cr
 #'   Environment to evaluate the glue expressions in passed in `cli::cli_abort(message)`.
 #'   Default is `rlang::current_env()`
