@@ -109,8 +109,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' cards:::..warn_or_error("This will be a message", FALSE)
-#' cards:::..warn_or_error("This will be an error", TRUE)
+#' cards:::.message_or_error("This will be a message", FALSE)
+#' cards:::.message_or_error("This will be an error", TRUE)
 #' }
 .message_or_error <- function(msg, error = FALSE, call = get_cli_abort_call(),
                               envir = rlang::current_env()) {
