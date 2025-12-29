@@ -77,10 +77,6 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
     }
   }
 
-  # Check whether expected columns are present ---------------------------------
-
-
-
   # check columns are list columns as expected ---------------------------------
   expected_lst_columns <-
     dplyr::select(
