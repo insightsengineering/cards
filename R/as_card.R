@@ -44,6 +44,5 @@ as_card <- function(x, check = TRUE) {
                         error_on_fail = TRUE)
   }
 
-  return(out)
-
+  out
 }
