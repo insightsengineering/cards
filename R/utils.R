@@ -113,7 +113,7 @@
 #' cards:::.message_or_error("This will be an error", TRUE)
 #' }
 .message_or_error <- function(msg, error = FALSE, call = get_cli_abort_call(),
-                              envir = rlang::current_env()) {
+                              envir = rlang::caller_env()) {
   if(error){
     cli::cli_abort(
       msg, call = call, .envir = envir

@@ -27,16 +27,14 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
 
   # check class ----------------------------------------------------------------
   if (!inherits(x, "card")) {
-    .message_or_error("Object is not of class {.cls card}.", error_on_fail,
-                      envir = environment())
+    .message_or_error("Object is not of class {.cls card}.", error_on_fail)
   }
 
   # exit if not a data frame ---------------------------------------------------
   if (!inherits(x, "data.frame")) {
     .message_or_error(
       "Object is not of class {.cls data.frame}.",
-      error = error_on_fail,
-      envir = environment())
+      error = error_on_fail)
     return(invisible())
   }
 
@@ -50,8 +48,7 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
   if (!is_empty(missing_variables)) {
     .message_or_error(
       "The following columns are not present: {.val {missing_variables}}.",
-      error = error_on_fail,
-      envir = environment())
+      error = error_on_fail)
   }
 
   # check whether AR contains a method stat ------------------------------------
@@ -59,8 +56,7 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
     if (!"method" %in% x$stat_name) {
       .message_or_error(
         "Expecting a row with {.code stat_name = 'method'}, but it is not present.",
-        error = error_on_fail,
-        envir = environment())
+        error = error_on_fail)
     }
   }
 
@@ -72,10 +68,13 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
           "The column order is not in the standard order.",
           i = "Use {.fun cards::tidy_ard_column_order} for standard ordering."
           ),
-        error = error_on_fail,
-        envir = environment())
+        error = error_on_fail)
     }
   }
+
+  # Check whether expected columns are present ---------------------------------
+
+
 
   # check columns are list columns as expected ---------------------------------
   expected_lst_columns <-
@@ -93,8 +92,7 @@ check_ard_structure <- function(x, column_order = TRUE, method = TRUE,
   if (!is_empty(not_a_lst_columns)) {
     .message_or_error(
       "The following columns are expected to be list columns: {.val {not_a_lst_columns}}.",
-      error = error_on_fail,
-      envir = environment()
+      error = error_on_fail
       )
   }
 
