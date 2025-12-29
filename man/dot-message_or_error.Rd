@@ -40,12 +40,12 @@ Default is \code{rlang::current_env()}}
 Invisible NULL
 }
 \description{
-Either error or message depending on input
+Either error or message depending on input.
 }
 \examples{
 \dontrun{
-cards:::..warn_or_error("This will be a message", FALSE)
-cards:::..warn_or_error("This will be an error", TRUE)
+cards:::.message_or_error("This will be a message", FALSE)
+cards:::.message_or_error("This will be an error", TRUE)
 }
 }
 \keyword{internal}
