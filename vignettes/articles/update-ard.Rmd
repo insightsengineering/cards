@@ -9,14 +9,44 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, echo = FALSE, error = FALSE}
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
 library(cards)
 library(dplyr)
 ```
 
 ## Introduction
 
-ARD (Analysis Results Data) objects are data frames that contain statistical summaries. After creating an ARD, you may need to customize how statistics are formatted or labeled. The `update_ard_fmt_fun()` and `update_ard_stat_label()` functions streamline this process.
+ARD (Analysis Results Data) objects are data frames that contain statistical summaries. Because they are data frames, any value in the ARD can be updated using standard dplyr or base R functions.
+
+### Working with List Columns
+
+ARD objects contain **list columns** such as `stat`, `fmt_fun`, `stat_label`, and others. List columns are columns where each cell can hold any R object—a number, a function, a vector, or even another data frame. If you're unfamiliar with list columns, they may look unusual when printed:
+
+```{r}
+ard <- ard_summary(ADSL, variables = AGE) |>
+  select(variable, stat_name, stat, fmt_fun) |>
+  head(3)
+print(ard)
+```
+
+While list columns can be updated just like any other column in a data frame, the syntax can be less intuitive. For example, to update the `fmt_fun` column for specific statistics, you might write:
+```{r}
+ard |>
+  mutate(
+    fmt_fun = ifelse(stat_name %in% c("mean", "sd"), list(2L), fmt_fun)
+  )
+```
+
+This requires wrapping values in `list()` and can become cumbersome for more complex updates.
+
+### Helper Functions
+
+To simplify working with these list columns, {cards} provides helper functions:
+
+-   **`update_ard_fmt_fun()`**: Update formatting functions for specific statistics
+-   **`update_ard_stat_label()`**: Update statistic labels
+
+These functions handle the list column mechanics for you, making it easier to customize your ARD objects.
 
 ## Basic Usage
 
