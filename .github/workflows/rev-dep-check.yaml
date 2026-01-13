@@ -30,7 +30,6 @@ jobs:
             versions = c("dev", "release")
           )
           df <- df[startsWith(df$alias, "cardx"), ]
-
           design <-
             checked::check_design$new(
               df = df,
@@ -38,9 +37,7 @@ jobs:
               output = tempdir(),
               restore = FALSE
             )
-
           checked::run(design)
-
           if (!is.null(checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues |> rlang::is_empty())) {
             cli::cli_abort(
               c("This PR newly breaks {.pkg gtsummary}",
