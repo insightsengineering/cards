@@ -23,6 +23,7 @@ jobs:
           Rscript -e 'install.packages(c("checked", "rlang", "cli"))'
 
       - name: Run R script
+        shell: Rscript {0}
         run: |
           df <- checked::rev_dep_check_tasks_df(
             path = ".",
