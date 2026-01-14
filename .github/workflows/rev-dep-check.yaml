@@ -27,7 +27,7 @@ jobs:
         run: |
           install.packages(c("checked", "rlang", "cli"))
 
-          df <- checked::rev_dep_check_tasks_df(path = ".", repos = "https://cran.r-project.org", versions = c("dev", "release")
+          df <- checked::rev_dep_check_tasks_df(path = ".", repos = "https://cran.r-project.org", versions = c("dev", "release"))
           df <- df[startsWith(df$alias, "gtsummary"), ]
 
           design <-
