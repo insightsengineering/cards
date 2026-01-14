@@ -91,7 +91,7 @@ ard_tabulate <- function(data, ...) {
 #' @rdname ard_tabulate
 #' @export
 ard_tabulate.data.frame <- function(data,
-                                    variables,
+                                    # variables,
                                     by = dplyr::group_vars(data),
                                     strata = NULL,
                                     statistic = everything() ~ c("n", "p", "N"),

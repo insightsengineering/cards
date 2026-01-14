@@ -9,7 +9,6 @@ ard_tabulate(data, ...)
 
 \method{ard_tabulate}{data.frame}(
   data,
-  variables,
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic = everything() ~ c("n", "p", "N"),
@@ -25,9 +24,6 @@ ard_tabulate(data, ...)
 a data frame}
 
 \item{...}{Arguments passed to methods.}
-
-\item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
-columns to include in summaries. Default is \code{everything()}.}
 
 \item{by, strata}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to use for grouping or stratifying the table output.
@@ -63,6 +59,9 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 
 \item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{variables}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+columns to include in summaries. Default is \code{everything()}.}
 }
 \value{
 an ARD data frame of class 'card'
