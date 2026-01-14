@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  Rev-Dep-Check:
+  run-r-logic:
     runs-on: ubuntu-latest
 
     steps:
