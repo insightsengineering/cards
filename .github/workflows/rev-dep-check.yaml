@@ -21,20 +21,19 @@ jobs:
         shell: Rscript {0}
         run: |
           install.packages(c("checked", "rlang", "cli"))
-          df <- checked::rev_dep_check_tasks_df(
-            path = ".",
-            repos = "https://cran.r-project.org",
-            versions = c("dev", "release")
-          )
-          df <- df[startsWith(df$alias, "cardx"), ]
+
+          df <- checked::rev_dep_check_tasks_df(path = ".", repos = "https://cran.r-project.org", versions = c("dev", "release")
+          df <- df[startsWith(df$alias, "gtsummary"), ]
+
           design <-
             checked::check_design$new(
               df = df,
-              repos = "https://cran.r-project.org",
+              repos = "https://packagemanager.posit.co/cran/latest",
               output = tempdir(),
               restore = FALSE
             )
           checked::run(design)
+          checked::results(design)
 
           # Logic to check for errors and abort if found
           issues <- checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues
