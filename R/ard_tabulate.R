@@ -92,7 +92,7 @@ ard_tabulate <- function(data, ...) {
 #' @export
 ard_tabulate.data.frame <- function(data,
                                     # variables,
-                                    by = dplyr::group_vars(data),
+                                    # by = dplyr::group_vars(data),
                                     strata = NULL,
                                     statistic = everything() ~ c("n", "p", "N"),
                                     denominator = "column",
