@@ -17,7 +17,7 @@ jobs:
         with:
           r-version: 'release'
 
-     - name: Run R script
+      - name: Run R script
         shell: Rscript {0}
         run: |
           install.packages(c("checked", "rlang", "cli"))
@@ -35,11 +35,14 @@ jobs:
               restore = FALSE
             )
           checked::run(design)
-          if (!is.null(checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues |> rlang::is_empty())) {
+
+          # Logic to check for errors and abort if found
+          issues <- checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues
+          if (!rlang::is_empty(issues)) {
             cli::cli_abort(
               c("This PR newly breaks {.pkg gtsummary}",
                 "!" = "The PR must be updated as to not break {.pkg gtsummary}.",
-                i = "In rare cases where the break is acceptable, the change {.emph MUST} first be approved by Daniel Sjoberg (danieldsjoberg@gmail.com) {.emph before} this PR could potentially be merged."
+                "i" = "In rare cases where the break is acceptable, the change {.emph MUST} first be approved by Daniel Sjoberg (danieldsjoberg@gmail.com) {.emph before} this PR could potentially be merged."
               )
             )
           }
