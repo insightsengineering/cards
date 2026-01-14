@@ -17,14 +17,10 @@ jobs:
         with:
           r-version: 'release'
 
-      - name: Install dependencies
-        run: |
-          # If your script requires specific packages, install them here
-          Rscript -e 'install.packages(c("checked", "rlang", "cli"))'
-
-      - name: Run R script
+     - name: Run R script
         shell: Rscript {0}
         run: |
+          install.packages(c("checked", "rlang", "cli"))
           df <- checked::rev_dep_check_tasks_df(
             path = ".",
             repos = "https://cran.r-project.org",
