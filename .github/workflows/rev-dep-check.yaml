@@ -22,10 +22,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 
-      - name: Install R Packages
-        shell: Rscript {0}
-        run: |
-          install.packages(c("checked", "rlang", "cli"))
+      - name: Install and Cache Dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # List the packages your script needs here
+          extra-packages: |
+            any::checked
+            any::rlang
+            any::cli
+          # This key ensures that if you change the list above,
+          # it creates a new cache rather than using an old one.
+          cache-version: 1
+
+      # - name: Install R Packages
+      #   shell: Rscript {0}
+      #   run: |
+      #     install.packages(c("checked", "rlang", "cli"))
 
       - name: Run R script
         shell: Rscript {0}
