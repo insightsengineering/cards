@@ -4,6 +4,9 @@
 
 * Users are now messaged if the `by` or `strata` arguments pass columns with different classes in the `ard_tabulate(data,denominator)` arguments as this _may_ cause issues downstream. (#515)
 
+* `as_card` now has the argument `check = TRUE` which when `TRUE` will confirm if the data frame being converted matches the cards spec using `check_ard_structure`. To support this, `check_ard_structure` has a new argument `error_on_fail` which is FALSE by default. When TRUE any failures will generate an error. (#514)
+
+
 # cards 0.7.1
 
 * Updated `ard_stack_hierarchical()` so that the `denominator` dataset only contains the `id` and `by` variables. (#482)
