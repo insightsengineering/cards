@@ -34,7 +34,7 @@ jobs:
           # it creates a new cache rather than using an old one.
           cache-version: 1
 
-      - name: Run R script
+      - name: Check Reverse Dependencies
         shell: Rscript {0}
         run: |
           df <-

@@ -102,7 +102,6 @@ ard_tabulate.data.frame <- function(data,
                                     ...) {
   set_cli_abort_call()
   check_dots_used()
-  lifecycle::deprecate_warn("TESTING A BREAKING CHANGE")
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
