@@ -30,6 +30,7 @@ jobs:
             any::checked
             any::rlang
             any::cli
+            any::gtsummary
           # This key ensures that if you change the list above,
           # it creates a new cache rather than using an old one.
           cache-version: 1
