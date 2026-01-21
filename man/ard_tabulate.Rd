@@ -13,6 +13,7 @@ ard_tabulate(data, ...)
   by = dplyr::group_vars(data),
   strata = NULL,
   statistic = everything() ~ c("n", "p", "N"),
+  denominator = "column",
   fmt_fun = NULL,
   stat_label = everything() ~ default_stat_labels(),
   fmt_fn = deprecated(),
@@ -45,6 +46,10 @@ a named list, a list of formulas,
 or a single formula where the list element one or more of  \code{c("n", "N", "p", "n_cum", "p_cum")}
 (on the RHS of a formula).}
 
+\item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
+Specify this argument to change the denominator,
+e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
+
 \item{fmt_fun}{(\code{\link[=syntax]{formula-list-selector}})\cr
 a named list, a list of formulas,
 or a single formula where the list element is a named list of functions
@@ -58,10 +63,6 @@ statistic labels, e.g. \code{everything() ~ list(n = "n", p = "pct")} or
 \code{everything() ~ list(n ~ "n", p ~ "pct")}.}
 
 \item{fmt_fn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
-
-\item{denominator}{(\code{string}, \code{data.frame}, \code{integer})\cr
-Specify this argument to change the denominator,
-e.g. the \code{"N"} statistic. Default is \code{'column'}. See below for details.}
 }
 \value{
 an ARD data frame of class 'card'
