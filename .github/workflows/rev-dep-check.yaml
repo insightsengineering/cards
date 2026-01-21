@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  run-r-script:
+  run-rev-dep-check:
     runs-on: ubuntu-latest
 
     steps:
