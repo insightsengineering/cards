@@ -95,13 +95,14 @@ ard_tabulate.data.frame <- function(data,
                                     by = dplyr::group_vars(data),
                                     strata = NULL,
                                     statistic = everything() ~ c("n", "p", "N"),
-                                    # denominator = "column",
+                                    denominator = "column",
                                     fmt_fun = NULL,
                                     stat_label = everything() ~ default_stat_labels(),
                                     fmt_fn = deprecated(),
                                     ...) {
   set_cli_abort_call()
   check_dots_used()
+  lifecycle::deprecate_warn("TESTING A BREAKING CHANGE")
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
