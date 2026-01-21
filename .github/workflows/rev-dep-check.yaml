@@ -34,11 +34,6 @@ jobs:
           # it creates a new cache rather than using an old one.
           cache-version: 1
 
-      # - name: Install R Packages
-      #   shell: Rscript {0}
-      #   run: |
-      #     install.packages(c("checked", "rlang", "cli"))
-
       - name: Run R script
         shell: Rscript {0}
         run: |
