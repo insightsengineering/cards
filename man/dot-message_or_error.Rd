@@ -8,7 +8,7 @@
   msg,
   error = FALSE,
   call = get_cli_abort_call(),
-  envir = rlang::current_env()
+  envir = rlang::caller_env()
 )
 }
 \arguments{
