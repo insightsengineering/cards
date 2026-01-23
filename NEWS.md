@@ -1,4 +1,4 @@
-# cards 0.7.1.9003
+# cards 0.7.1.9004
 
 * Adding `ard_tabulate_rows()` function to tabulate the number of rows in a data frame. (#531)
 
