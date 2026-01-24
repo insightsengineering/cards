@@ -14,6 +14,7 @@ DIARRHOEA
 GlaxoSmithKline
 Hoffmann
 IEC
+JSON
 Lifecycle
 ORCID
 Pre
@@ -22,10 +23,12 @@ SAS's
 SDTM
 Unlist
 Xanomeline
+YAML
 ata
 cardx
 cli
 de
+dplyr
 env
 esult
 ets
@@ -38,6 +41,7 @@ nalysis
 namespaced
 pre
 quosures
+reproducibility
 reusability
 sd
 tfrmt
