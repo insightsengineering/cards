@@ -53,3 +53,24 @@ test_that("rename_ard_columns(unlist) lifecycle", {
       rename_ard_columns(unlist = "stat")
   )
 })
+
+
+test_that("rename_ard_columns() preserves factor levels as characters", {
+  adsl_ <- ADSL |>
+    dplyr::mutate(
+      RACE = factor(RACE, levels = c("WHITE", "BLACK OR AFRICAN AMERICAN", "AMERICAN INDIAN OR ALASKA NATIVE"))
+    )
+
+  res <- ard_tabulate(
+    data = adsl_,
+    by = TRT01A,
+    variables = RACE
+  ) |>
+  rename_ard_columns()
+
+  # Check that 'race' is a character vector
+  expect_type(res$RACE, "character")
+
+  # Check that it contains the actual level string, not an integer "1", "2", etc.
+  expect_true("WHITE" %in% res$RACE)
+})

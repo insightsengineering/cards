@@ -125,6 +125,12 @@ rename_ard_columns <- function(x,
     dplyr::select(-"...ard_row_order...") |>
     dplyr::mutate(
       # replace NULL values with NA, then unlist
-      across(all_of(all_new_names), ~ map(., \(value) value %||% NA) |> unlist())
+      across(
+        all_of(all_new_names),
+        ~ map(., \(value){
+           if (inherits(value, "factor")) value <- as.character(value)
+       value %||% NA
+    })|>
+      unlist())
     )
 }
