@@ -66,7 +66,7 @@ test_that("rename_ard_columns() preserves factor levels as characters", {
     by = TRT01A,
     variables = RACE
   ) |>
-  rename_ard_columns()
+    rename_ard_columns()
 
   # Check that 'race' is a character vector
   expect_type(res$RACE, "character")

@@ -128,9 +128,10 @@ rename_ard_columns <- function(x,
       across(
         all_of(all_new_names),
         ~ map(., \(value){
-           if (inherits(value, "factor")) value <- as.character(value)
-       value %||% NA
-    })|>
-      unlist())
+          if (inherits(value, "factor")) value <- as.character(value)
+          value %||% NA
+        }) |>
+          unlist()
+      )
     )
 }
