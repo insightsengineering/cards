@@ -60,7 +60,6 @@ test_that("rename_ard_columns() preserves factor levels as characters", {
     dplyr::mutate(
       RACE = factor(RACE))
 
-
   res <- ard_tabulate(
     data = adsl_,
     by = TRT01A,
