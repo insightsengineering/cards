@@ -58,13 +58,13 @@ test_that("rename_ard_columns(unlist) lifecycle", {
 test_that("rename_ard_columns() preserves factor levels as characters", {
   adsl_ <- ADSL |>
     dplyr::mutate(
-      RACE = factor(RACE, levels = c("WHITE", "BLACK OR AFRICAN AMERICAN", "AMERICAN INDIAN OR ALASKA NATIVE"))
-    )
+      RACE = factor(RACE))
+
 
   res <- ard_tabulate(
     data = adsl_,
     by = TRT01A,
-    variables = RACE
+    variables = c(RACE, ETHNIC)
   ) |>
     rename_ard_columns()
 
