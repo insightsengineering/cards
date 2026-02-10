@@ -6,4 +6,3 @@ test_that(".warn_or_error errors/warns depending on input", {
     .message_or_error("something", TRUE)
   )
 })
-

@@ -16,8 +16,8 @@
 #'   stat_label = c("N", "Mean"),
 #'   stat = c(10, 0.5)
 #' ) |>
-#'   as_card( check = FALSE)
-#'  dplyr::tibble(
+#'   as_card(check = FALSE)
+#' dplyr::tibble(
 #'   variable = "AGE",
 #'   stat_name = c("N", "mean"),
 #'   stat_label = c("N", "Mean"),
@@ -26,7 +26,7 @@
 #'   warning = replicate(2, list()),
 #'   error = replicate(2, list())
 #' ) |>
-#'   as_card( )
+#'   as_card()
 as_card <- function(x, check = TRUE) {
   set_cli_abort_call()
 
@@ -40,9 +40,11 @@ as_card <- function(x, check = TRUE) {
   } else {
     out <- structure(x, class = c("card", class(x)))
   }
-  if(check){
-    check_ard_structure(out, column_order = FALSE, method = FALSE,
-                        error_on_fail = TRUE)
+  if (check) {
+    check_ard_structure(out,
+      column_order = FALSE, method = FALSE,
+      error_on_fail = TRUE
+    )
   }
 
   out

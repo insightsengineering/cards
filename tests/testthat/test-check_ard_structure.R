@@ -12,13 +12,12 @@ test_that("check_ard_structure() works", {
 test_that("check_ard_structure() does not error if the tested dataset has none of the expected variables", {
   expect_snapshot(
     expect_no_error(
-        check_ard_structure(data.frame(badname = 3))
+      check_ard_structure(data.frame(badname = 3))
     )
   )
 })
 
 test_that("check_ard_structure() errors when flagged appropriately", {
-
   expect_snapshot(
     check_ard_structure(data.frame(badname = 3), error_on_fail = TRUE),
     error = TRUE
@@ -47,10 +46,10 @@ test_that("check_ard_structure() errors when flagged appropriately", {
     warning = replicate(2, list()),
     error = replicate(2, list())
   )
-  novariable <- structure(novariable, class = c("card", class( novariable)))
+  novariable <- structure(novariable, class = c("card", class(novariable)))
 
   expect_snapshot(
-    check_ard_structure(  novariable , error_on_fail = TRUE),
+    check_ard_structure(novariable, error_on_fail = TRUE),
     error = TRUE
   )
 
@@ -69,5 +68,4 @@ test_that("check_ard_structure() errors when flagged appropriately", {
     check_ard_structure(wrongorder, error_on_fail = TRUE),
     error = TRUE
   )
-
 })

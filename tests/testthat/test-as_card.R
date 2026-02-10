@@ -42,7 +42,6 @@ test_that("as_card() error catching works correctly", {
 })
 
 test_that("as_card() does not care about column order", {
-
   badlyordered <- dplyr::tibble(
     stat_label = c("N", "Mean"),
     variable = "AGE",

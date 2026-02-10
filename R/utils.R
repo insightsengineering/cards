@@ -114,12 +114,12 @@
 #' }
 .message_or_error <- function(msg, error = FALSE, call = get_cli_abort_call(),
                               envir = rlang::caller_env()) {
-  if(error){
+  if (error) {
     cli::cli_abort(
-      msg, call = call, .envir = envir
+      msg,
+      call = call, .envir = envir
     )
-  }else{
+  } else {
     cli::cli_inform(msg, call = call, .envir = envir)
   }
 }
-
