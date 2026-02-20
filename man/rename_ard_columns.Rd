@@ -8,6 +8,7 @@ rename_ard_columns(
   x,
   columns = c(all_ard_groups("names"), all_ard_variables("names")),
   fill = "{colname}",
+  fct_as_chr = TRUE,
   unlist = NULL
 )
 }
@@ -28,6 +29,12 @@ If a character is passed, then it is processed with \code{glue::glue()}
 where the \code{colname} element is available to inject into the string,
 e.g. \code{'Overall {colname}'} may resolve to \code{'Overall AGE'} for an AGE column.
 Default is \code{'{colname}'}.}
+
+\item{fct_as_chr}{(scalar \code{logical})\cr
+When \code{TRUE}, factor elements will be converted to character before unlisting.
+When the column being unlisted contains mixed types of classes, the
+factor elements are often converted to the underlying integer value instead
+of retaining the label. Default is \code{TRUE}.}
 
 \item{unlist}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
