@@ -58,7 +58,8 @@ test_that("rename_ard_columns(unlist) lifecycle", {
 test_that("rename_ard_columns(fct_as_chr)", {
   adsl_ <- ADSL |>
     dplyr::mutate(
-      RACE = factor(RACE))
+      RACE = factor(RACE)
+    )
 
   # check fct_to_chr = TRUE
   res <- ard_tabulate(
@@ -84,5 +85,4 @@ test_that("rename_ard_columns(fct_as_chr)", {
 
   # Check that 'race' is an interger vector
   expect_type(res$RACE, "integer")
-
 })
