@@ -26,6 +26,7 @@ ata
 cardx
 cli
 de
+dplyr
 env
 esult
 ets

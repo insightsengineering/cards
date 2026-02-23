@@ -1,0 +1,140 @@
+---
+title: "Updating ARD Objects"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
+library(cards)
+library(dplyr)
+```
+
+## Introduction
+
+ARD (Analysis Results Data) objects are data frames that contain statistical summaries. Because they are data frames, any value in the ARD can be updated using standard dplyr or base R functions.
+
+### Working with List Columns
+
+ARD objects contain **list columns** such as `stat`, `fmt_fun`, `stat_label`, and others. List columns are columns where each cell can hold any R object—a number, a function, a vector, or even another data frame. If you're unfamiliar with list columns, they may look unusual when printed:
+
+```{r}
+ard <- ard_summary(ADSL, variables = AGE) |>
+  select(variable, stat_name, stat, fmt_fun) |>
+  head(3)
+print(ard)
+```
+
+While list columns can be updated just like any other column in a data frame, the syntax can be less intuitive. For example, to update the `fmt_fun` column for specific statistics, you might write:
+```{r}
+ard |>
+  mutate(
+    fmt_fun = ifelse(stat_name %in% c("mean", "sd"), list(2L), fmt_fun)
+  )
+```
+
+This requires wrapping values in `list()` and can become cumbersome for more complex updates.
+
+### Helper Functions
+
+To simplify working with these list columns, {cards} provides helper functions:
+
+-   **`update_ard_fmt_fun()`**: Update formatting functions for specific statistics
+-   **`update_ard_stat_label()`**: Update statistic labels
+
+These functions handle the list column mechanics for you, making it easier to customize your ARD objects.
+
+## Basic Usage
+
+### Updating Formatting Functions
+
+By default, statistics may use simple formatting. You can update the formatting function for specific statistics:
+
+```{r}
+# Create a basic ARD
+ard <- ard_summary(ADSL, variables = AGE)
+
+# Update formatting for mean and sd to show more decimal places
+ard_updated <- ard |>
+  update_ard_fmt_fun(
+    stat_names = c("mean", "sd"),
+    fmt_fun = 2L # 2 decimal places
+  ) |>
+  apply_fmt_fun()
+
+# View results
+ard_updated |>
+  select(stat_name, stat, stat_fmt)
+```
+
+### Updating Statistic Labels
+
+Combine formatting updates with custom labels:
+
+```{r}
+ard_summary(ADSL, variables = AGE) |>
+  update_ard_fmt_fun(stat_names = c("mean", "sd"), fmt_fun = 1L) |>
+  update_ard_stat_label(
+    stat_names = c("mean", "sd"),
+    stat_label = "Mean (SD)"
+  ) |>
+  apply_fmt_fun()
+```
+
+## Selective Updates
+
+### Filtering by Variable
+
+Update formatting for specific variables only:
+
+```{r}
+ard_summary(ADSL, variables = c(AGE, BMIBL)) |>
+  update_ard_fmt_fun(
+    variables = AGE, # Only update AGE
+    stat_names = "mean",
+    fmt_fun = 3L
+  ) |>
+  apply_fmt_fun()
+```
+
+### Filtering by Group
+
+When working with stratified analyses, use the `filter` argument to target specific groups:
+
+```{r}
+# Update formatting only for the Placebo arm
+ard_summary(
+  ADSL,
+  by = ARM,
+  variables = AGE,
+  statistic = ~ continuous_summary_fns(c("N", "mean"))
+) |>
+  update_ard_fmt_fun(
+    stat_names = "mean",
+    fmt_fun = 3L,
+    filter = group1_level == "Placebo"
+  ) |>
+  apply_fmt_fun()
+```
+
+## Custom Formatting Functions
+
+Beyond integer aliases, you can pass custom functions:
+
+```{r}
+# Custom formatter that adds parentheses
+format_with_parens <- function(x) {
+  paste0("(", format(round(x, 1), nsmall = 1), ")")
+}
+
+ard_summary(ADSL, variables = AGE) |>
+  update_ard_fmt_fun(
+    stat_names = "sd",
+    fmt_fun = format_with_parens
+  ) |>
+  apply_fmt_fun()
+```
