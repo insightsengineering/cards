@@ -1,6 +1,7 @@
 # Long Data Summaries
 
 ``` r
+
 library(cards)
 library(dplyr)
 ```
@@ -39,6 +40,7 @@ To create the ARD for this table, use the
 function.
 
 ``` r
+
 ard_ae <-
   ADAE |>
   ard_stack_hierarchical(
@@ -62,6 +64,7 @@ are calculated using the `ADSL` data frame passed in the `denominator`
 argument.
 
 ``` r
+
 ard_ae |>
   filter(variable == "AEDECOD")
 #> {cards} data frame: 2178 x 13
@@ -86,6 +89,7 @@ ard_ae |>
 The AE rate process is repeated for SOC.
 
 ``` r
+
 ard_ae |>
   filter(variable == "AESOC") |>
   select(-all_missing_columns())
@@ -111,6 +115,7 @@ ard_ae |>
 The process is then repeated to calculate rates of any adverse event.
 
 ``` r
+
 ard_ae |>
   filter(variable == "..ard_hierarchical_overall..") |>
   select(-all_missing_columns())
@@ -134,6 +139,7 @@ Finally, a univariate tabulation of the `TRTA` column from `ADSL` is
 included.
 
 ``` r
+
 ard_ae |>
   filter(variable == "TRTA") |>
   select(-all_missing_columns())
@@ -181,6 +187,7 @@ To build the ARD for this table, we use the
   that will be summarized within `'TRTA'`, `'PARAM'`, and `'AVISIT'`.
 
 ``` r
+
 ADLB |>
   # subset on two labs and two study visits
   filter(
@@ -220,6 +227,7 @@ and the possible values are different depending on `PARAM`, the code may
 look something like this:
 
 ``` r
+
 ard_strata(
   data = ADLB,
   .strata = "PARAM",

@@ -6,7 +6,12 @@ conform to expected structure.
 ## Usage
 
 ``` r
-check_ard_structure(x, column_order = TRUE, method = TRUE)
+check_ard_structure(
+  x,
+  column_order = TRUE,
+  method = TRUE,
+  error_on_fail = FALSE
+)
 ```
 
 ## Arguments
@@ -26,6 +31,11 @@ check_ard_structure(x, column_order = TRUE, method = TRUE)
 
   (scalar `logical`)  
   check whether a `"stat_name"` equal to `"method"` appears in results.
+
+- error_on_fail:
+
+  (scalar `logical`)  
+  Error if a check is failed? FALSE by default.
 
 ## Value
 

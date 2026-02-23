@@ -7,6 +7,7 @@ examples for creating a basic demographics table.
 To get started, load the **{cards}** package.
 
 ``` r
+
 library(cards)
 ```
 
@@ -25,6 +26,7 @@ To get a continuous variable summary, we will use the
 function from the **{cards}** package.
 
 ``` r
+
 df_continuous_ard <-
   ard_summary(
     ADSL,
@@ -58,6 +60,7 @@ To get the categorical variable summary, we will use the
 function.
 
 ``` r
+
 df_categorical_ard <-
   ard_tabulate(
     ADSL,
@@ -83,6 +86,7 @@ In this case, we want to show the Female (`"F"`) level of the `SEX`
 variable and specify this with the `values` argument.
 
 ``` r
+
 df_dichotomous_ard <-
   ard_tabulate_value(
     ADSL,
@@ -111,6 +115,7 @@ which is similar to
 and includes additional structural checks for our results.
 
 ``` r
+
 bind_ard(
   df_continuous_ard,
   df_categorical_ard,
@@ -146,6 +151,7 @@ univariate tabulation of the `.by` variable, which would be used to add
 counts to the header row of the table.
 
 ``` r
+
 ard_stack(
   data = ADSL,
   .by = ARM,
@@ -202,6 +208,7 @@ To match the treatment arm variables, we need to do a small data
 manipulation on the naming of the treatment variable.
 
 ``` r
+
 # rename trt variable
 adsl <- ADSL
 
@@ -234,6 +241,7 @@ With `over_variables = TRUE`, the function also returns rates of any
 adverse event across all system organ classes and preferred terms.
 
 ``` r
+
 ard_stack_hierarchical(
   data = adae,
   by = TRTA,
@@ -293,6 +301,7 @@ function also returns counts of any adverse event across all system
 organ classes and preferred terms.
 
 ``` r
+
 ard_stack_hierarchical_count(
   data = adae,
   by = TRTA,

@@ -1,6 +1,6 @@
 # Changelog
 
-## cards 0.7.1.9003
+## cards 0.7.1.9007
 
 - Adding
   [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
@@ -11,6 +11,13 @@
   with different classes in the `ard_tabulate(data,denominator)`
   arguments as this *may* cause issues downstream.
   ([\#515](https://github.com/insightsengineering/cards/issues/515))
+
+- `as_card` now has the argument `check = TRUE` which when `TRUE` will
+  confirm if the data frame being converted matches the cards spec using
+  `check_ard_structure`. To support this, `check_ard_structure` has a
+  new argument `error_on_fail` which is FALSE by default. When TRUE any
+  failures will generate an error.
+  ([\#514](https://github.com/insightsengineering/cards/issues/514))
 
 ## cards 0.7.1
 
