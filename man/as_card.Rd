@@ -25,8 +25,8 @@ data.frame(
   stat_label = c("N", "Mean"),
   stat = c(10, 0.5)
 ) |>
-  as_card( check = FALSE)
- dplyr::tibble(
+  as_card(check = FALSE)
+dplyr::tibble(
   variable = "AGE",
   stat_name = c("N", "mean"),
   stat_label = c("N", "Mean"),
@@ -35,5 +35,5 @@ data.frame(
   warning = replicate(2, list()),
   error = replicate(2, list())
 ) |>
-  as_card( )
+  as_card()
 }
