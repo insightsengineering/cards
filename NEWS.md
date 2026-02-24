@@ -1,6 +1,6 @@
 # cards (development version)
 
-* Fixed bug in `rename_ard_columns()` whereby factor variables were getting converted to integers and added param `fct_as_chr` as is used in `unlist_ard_columns()` (#542)
+* Fixed bug in `rename_ard_columns()` whereby factor variables were getting converted to integers and added parameter `fct_as_chr` as is used in `unlist_ard_columns()` (#542)
 
 # cards 0.7.1.9007
 
