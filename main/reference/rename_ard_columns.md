@@ -9,6 +9,7 @@ rename_ard_columns(
   x,
   columns = c(all_ard_groups("names"), all_ard_variables("names")),
   fill = "{colname}",
+  fct_as_chr = TRUE,
   unlist = NULL
 )
 ```
@@ -39,6 +40,14 @@ rename_ard_columns(
   the `colname` element is available to inject into the string, e.g.
   `'Overall {colname}'` may resolve to `'Overall AGE'` for an AGE
   column. Default is `'{colname}'`.
+
+- fct_as_chr:
+
+  (scalar `logical`)  
+  When `TRUE`, factor elements will be converted to character before
+  unlisting. When the column being unlisted contains mixed types of
+  classes, the factor elements are often converted to the underlying
+  integer value instead of retaining the label. Default is `TRUE`.
 
 - unlist:
 
