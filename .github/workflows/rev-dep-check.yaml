@@ -39,7 +39,7 @@ jobs:
         run: |
           g <- checked::plan_rev_dep_checks(
             path = ".",
-            repos = "https://packagemanager.posit.co/cran/latest"
+            repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org')
           )
           vs <- igraph::V(g)
           mt <- vs[checked:::is_meta(vs$task)]
