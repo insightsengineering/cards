@@ -37,26 +37,35 @@ jobs:
       - name: Check Reverse Dependencies
         shell: Rscript {0}
         run: |
-          df <-
-            checked::rev_dep_check_tasks_df(
-              path = ".",
-              repos = "https://packagemanager.posit.co/cran/latest",
-              versions = c("dev", "release")
-            )
-          df <- df[startsWith(df$alias, "gtsummary"), ]
+          g <- checked::plan_rev_dep_checks(
+            path = ".",
+            repos = "https://packagemanager.posit.co/cran/latest"
+          )
+          vs <- igraph::V(g)
+          mt <- vs[checked:::is_meta(vs$task)]
+          nodes_to_skip <- mt[!xor(
+            endsWith(mt$name, "meta-revdep-gtsummary-of-cards"),
+            endsWith(mt$name, "meta-revdeps-of-cards")
+          )]
+          g <- igraph::delete_vertices(
+            g,
+            unlist(igraph::neighborhood(g, order = 1, nodes_to_skip, mode = "out"))
+          )
+          g <- checked:::task_graph_class(g)
 
-          design <-
-            checked::check_design$new(
-              df = df,
-              repos = "https://packagemanager.posit.co/cran/latest",
-              output = tempdir(),
-              restore = FALSE
-            )
-          checked::run(design)
-          checked::results(design)
+          design <- checked::checker$new(
+            g,
+            n = 20,
+            output = tempdir(),
+            lib.loc = .libPaths(),
+            restore = FALSE
+          )
+
+          checked::run(design, reporter = NULL)
+          (r <- checked::results(design))
 
           # Logic to check for errors and abort if found
-          issues <- checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues
+          issues <- r[[1]][[1]]$errors$issues
           if (!rlang::is_empty(issues)) {
             cli::cli_abort(
               c("This PR newly breaks {.pkg gtsummary}",
@@ -65,3 +74,4 @@ jobs:
               )
             )
           }
+
