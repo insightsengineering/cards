@@ -20,19 +20,22 @@ test_that("ard_strata() works", {
       tidy_ard_column_order() |>
       tidy_ard_row_order(),
     ard_summary(ADSL, by = c(SEX, AGEGR1, ARM), variables = AGE) |>
-      tidy_ard_row_order()
+      tidy_ard_row_order(),
+    ignore_attr = TRUE
   )
 })
 
 test_that("ard_strata(by,strata) when both empty", {
   expect_equal(
     ard_strata(ADSL, .f = ~ ard_summary(.x, variables = AGE)),
-    ard_summary(ADSL, variables = AGE)
+    ard_summary(ADSL, variables = AGE),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_strata(ADSL, .f = ~ ard_summary(.x, by = ARM, variables = AGE)),
-    ard_summary(ADSL, by = ARM, variables = AGE)
+    ard_summary(ADSL, by = ARM, variables = AGE),
+    ignore_attr = TRUE
   )
 })
 
@@ -73,4 +76,24 @@ test_that("ard_strata computes stats for parameter specific strata", {
   skip_if_not(package_version(paste(R.version$major, R.version$minor, sep = ".")) <= package_version("4.5.0"))
 
   expect_snapshot(as.data.frame(tbl))
+})
+
+
+test_that("ard_strata() attaches 'args' attribute", {
+  # Test with both .by and .strata
+  res <- ard_strata(
+    ADSL,
+    .by = ARM,
+    .strata = SEX,
+    .f = ~ ard_summary(.x, variables = AGE)
+  )
+
+  expect_equal(attr(res, "args")$by, "ARM")
+  expect_equal(attr(res, "args")$strata, "SEX")
+
+  # Test with only .by
+  res_by <- ard_strata(ADSL, .by = ARM, .f = ~ ard_summary(.x, variables = AGE))
+  expect_equal(attr(res_by, "args")$by, "ARM")
+  expect_equal(attr(res_by, "args")$strata, character(0))
+
 })
