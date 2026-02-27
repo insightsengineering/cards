@@ -53,3 +53,36 @@ test_that("rename_ard_columns(unlist) lifecycle", {
       rename_ard_columns(unlist = "stat")
   )
 })
+
+
+test_that("rename_ard_columns(fct_as_chr)", {
+  adsl_ <- ADSL |>
+    dplyr::mutate(
+      RACE = factor(RACE)
+    )
+
+  # check fct_to_chr = TRUE
+  res <- ard_tabulate(
+    data = adsl_,
+    by = TRT01A,
+    variables = c(RACE, ETHNIC)
+  ) |>
+    rename_ard_columns()
+
+  # Check that 'race' is a character vector
+  expect_type(res$RACE, "character")
+
+  # Check that it contains the actual level string, not an integer "1", "2", etc.
+  expect_true("WHITE" %in% res$RACE)
+
+  # check fct_to_chr = FALSE
+  res <- ard_tabulate(
+    data = adsl_,
+    by = TRT01A,
+    variables = c(RACE, ETHNIC)
+  ) |>
+    rename_ard_columns(fct_as_chr = FALSE)
+
+  # Check that 'race' is an interger vector
+  expect_type(res$RACE, "integer")
+})

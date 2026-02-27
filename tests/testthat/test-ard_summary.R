@@ -26,7 +26,7 @@ test_that("ard_summary() works", {
       mtcars,
       variables = starts_with("xxxxx")
     ),
-    dplyr::tibble() |> as_card()
+    dplyr::tibble() |> as_card(check = FALSE)
   )
 })
 
