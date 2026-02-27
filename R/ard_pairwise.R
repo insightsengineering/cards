@@ -90,6 +90,12 @@ ard_pairwise <- function(data, variable, .f, include = NULL) {
       }
     )
 
+  # Assign attributes to the list of ARDs
+  attr(lst_ard, "args") <- list(
+    variable = variable,
+    include = include
+  )
+
   # return result --------------------------------------------------------------
   lst_ard
 }
