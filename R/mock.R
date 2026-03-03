@@ -96,7 +96,7 @@ mock_categorical <- function(variables,
 
   # merge the by ARD and the primary variable ARD ------------------------------
   merge(ard_by, ard_variables, by = NULL) |>
-    as_card() |>
+    as_card(check = FALSE) |>
     tidy_ard_row_order() |>
     tidy_ard_column_order()
 }
@@ -154,7 +154,7 @@ mock_continuous <- function(variables,
 
   # merge the by ARD and the primary variable ARD ------------------------------
   merge(ard_by, ard_variables, by = NULL) |>
-    as_card() |>
+    as_card(check = FALSE) |>
     tidy_ard_row_order() |>
     tidy_ard_column_order()
 }
