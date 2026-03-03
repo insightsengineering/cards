@@ -116,3 +116,15 @@ test_that("ard_pairwise(include) messaging", {
     )
   )
 })
+
+test_that("ard_pairwise() attaches 'args' attribute", {
+  res <- ard_pairwise(
+    data = mtcars,
+    variable = "am",
+    .f = \(x) ard_summary(x, variables = "mpg")
+  )
+
+  args <- attr(res, "args")
+  expect_equal(args$variable, "am")
+  expect_equal(args$include, c(0, 1))
+})
