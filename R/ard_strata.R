@@ -116,7 +116,7 @@ ard_strata <- function(.data, .by = NULL, .strata = NULL, .f, ...) {
 
   # append attributes ----------------------------------------------------------
   attr(ard_full, "args") <- list(
-    by =.by,
+    by = .by,
     strata = .strata
   )
 

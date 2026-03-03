@@ -95,5 +95,4 @@ test_that("ard_strata() attaches 'args' attribute", {
   res_by <- ard_strata(ADSL, .by = ARM, .f = ~ ard_summary(.x, variables = AGE))
   expect_equal(attr(res_by, "args")$by, "ARM")
   expect_equal(attr(res_by, "args")$strata, character(0))
-
 })
