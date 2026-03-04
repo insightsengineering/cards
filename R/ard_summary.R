@@ -188,7 +188,7 @@ ard_summary.data.frame <- function(data,
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card(check = FALSE)
-  
+
   # append attributes ----------------------------------------------------------
   attr(ard_final, "args") <- list(
     variables = variables,
@@ -198,6 +198,8 @@ ard_summary.data.frame <- function(data,
   )
 
   ard_final
+
+}
 
 #' Check Protected Column Names
 #'

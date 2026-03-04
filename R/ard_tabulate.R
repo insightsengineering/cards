@@ -214,11 +214,22 @@ ard_tabulate.data.frame <- function(data,
     )
 
   # merge in stat labels and format ARD for return -----------------------------
-  df_result_final |>
+  ard_final <- df_result_final |>
     dplyr::mutate(context = "tabulate") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card(check = FALSE)
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by,
+    strata = strata,
+    statistic = statistic
+  )
+
+  ard_final
+
 }
 
 
