@@ -127,7 +127,7 @@ ard_summary.data.frame <- function(data,
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
-    return(dplyr::tibble() |> as_card())
+    return(dplyr::tibble() |> as_card(check = FALSE))
   }
 
 
@@ -187,8 +187,8 @@ ard_summary.data.frame <- function(data,
     dplyr::mutate(context = "summary") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
-    as_card()
-
+    as_card(check = FALSE)
+  
   # append attributes ----------------------------------------------------------
   attr(ard_final, "args") <- list(
     variables = variables,
@@ -198,8 +198,6 @@ ard_summary.data.frame <- function(data,
   )
 
   ard_final
-}
-
 
 #' Check Protected Column Names
 #'

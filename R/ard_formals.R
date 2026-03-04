@@ -46,5 +46,5 @@ ard_formals <- function(fun, arg_names, passed_args = list(),
   # put formals list in ARD structure ------------------------------------------
   enframe(lst_args[arg_names], "stat_name", "stat") |>
     dplyr::mutate(stat_label = .data$stat_name, .after = "stat_name") |>
-    as_card()
+    as_card(check = FALSE)
 }
