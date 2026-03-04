@@ -1447,14 +1447,12 @@ test_that("ard_tabulate() attaches 'args' attribute", {
   res <- ard_tabulate(
     data = ADSL,
     by = "ARM",
-    variables = "AGEGR1",
-    statistic = ~ c("n", "p")
+    variables = "AGEGR1"
   )
 
   args <- attr(res, "args")
 
   expect_equal(args$variables, "AGEGR1")
   expect_equal(args$by, "ARM")
-  expect_type(args$statistic, "list")
 })
 

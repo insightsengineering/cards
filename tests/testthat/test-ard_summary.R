@@ -505,5 +505,4 @@ test_that("ard_summary() attaches 'args' attribute", {
 
   expect_equal(args$variables, "AGE")
   expect_equal(args$by, "ARM")
-  expect_type(args$statistic, "list")
 })

@@ -193,8 +193,7 @@ ard_summary.data.frame <- function(data,
   attr(ard_final, "args") <- list(
     variables = variables,
     by = by,
-    strata = strata,
-    statistic = statistic
+    strata = strata
   )
 
   ard_final
