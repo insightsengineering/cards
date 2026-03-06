@@ -1455,4 +1455,3 @@ test_that("ard_tabulate() attaches 'args' attribute", {
   expect_equal(args$variables, "AGEGR1")
   expect_equal(args$by, "ARM")
 })
-

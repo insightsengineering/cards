@@ -228,7 +228,6 @@ ard_tabulate.data.frame <- function(data,
   )
 
   ard_final
-
 }
 
 

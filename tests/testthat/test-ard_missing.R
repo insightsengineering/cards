@@ -93,7 +93,7 @@ test_that("ard_missing() follows ard structure", {
 })
 
 test_that("ard_missing() attaches 'args' attribute", {
-  res <-  ard_missing(
+  res <- ard_missing(
     data = ADSL,
     by = "ARM",
     variables = "BMIBL"

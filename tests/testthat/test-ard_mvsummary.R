@@ -185,7 +185,7 @@ test_that("ard_mvsummary() with `as_cards_fn()` inputs", {
 
 
 test_that("ard_mvsummary() attaches 'args' attribute", {
-  res <-   ard_mvsummary(
+  res <- ard_mvsummary(
     ADSL,
     by = "ARM",
     variables = "AGE",

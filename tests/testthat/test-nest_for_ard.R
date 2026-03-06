@@ -29,9 +29,10 @@ test_that("nest_for_ard() works", {
 })
 
 test_that("nest_for_ard() attaches 'args' attribute", {
-  res <-  nest_for_ard(mtcars,
-                       by = "am",
-                       strata = "cyl")
+  res <- nest_for_ard(mtcars,
+    by = "am",
+    strata = "cyl"
+  )
 
   args <- attr(res, "args")
 

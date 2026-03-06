@@ -197,7 +197,6 @@ ard_summary.data.frame <- function(data,
   )
 
   ard_final
-
 }
 
 #' Check Protected Column Names

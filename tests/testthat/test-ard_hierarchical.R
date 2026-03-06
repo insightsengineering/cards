@@ -411,7 +411,7 @@ test_that("ard_hierarchical() and ard_hierarchical_count() attaches 'args' attri
   expect_equal(args$variables, "AESOC")
   expect_equal(args$by, "TRTA")
 
-  resc <-ard_hierarchical_count(
+  resc <- ard_hierarchical_count(
     data = ADAE,
     by = TRTA,
     variables = AESOC,
