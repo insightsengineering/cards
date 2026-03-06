@@ -26,7 +26,6 @@ test_that("nest_for_ard() works", {
       unlist(),
     c(FALSE, TRUE)
   )
-
 })
 
 test_that("nest_for_ard() attaches 'args' attribute", {
