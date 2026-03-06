@@ -82,7 +82,7 @@ ard_missing.data.frame <- function(data,
   )
 
   # get the summary statistics -------------------------------------------------
-  ard_summary(
+  result <- ard_summary(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
@@ -93,6 +93,14 @@ ard_missing.data.frame <- function(data,
     dplyr::mutate(
       context = "missing"
     )
+
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(
+    by = by,
+    variables = variables
+  )
+
+  result
 }
 
 missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {
