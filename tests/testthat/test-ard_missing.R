@@ -91,3 +91,16 @@ test_that("ard_missing() follows ard structure", {
       check_ard_structure(method = FALSE)
   )
 })
+
+test_that("ard_missing() attaches 'args' attribute", {
+  res <- ard_missing(
+    data = ADSL,
+    by = "ARM",
+    variables = "BMIBL"
+  )
+
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "BMIBL")
+  expect_equal(args$by, "ARM")
+})

@@ -15,7 +15,8 @@ test_that("ard_mvsummary() works", {
       variables = "AGE",
       statistic = ~ continuous_summary_fns("mean")
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat)
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat),
+    ignore_attr = TRUE
   )
 
   # using the `data` and `variable` args in the mean function
@@ -33,7 +34,8 @@ test_that("ard_mvsummary() works", {
       variables = "AGE",
       statistic = ~ continuous_summary_fns("mean")
     ) |>
-      dplyr::select(all_ard_groups(), all_ard_variables(), stat)
+      dplyr::select(all_ard_groups(), all_ard_variables(), stat),
+    ignore_attr = TRUE
   )
 
   # test a function using `data` and `full_data` arguments
@@ -179,4 +181,19 @@ test_that("ard_mvsummary() with `as_cards_fn()` inputs", {
     ard_mvsummary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x, data, ...) t.test(x ~ data$am)[c("statistic", "p.value")])) |>
       dplyr::pull("stat_name")
   )
+})
+
+
+test_that("ard_mvsummary() attaches 'args' attribute", {
+  res <- ard_mvsummary(
+    ADSL,
+    by = "ARM",
+    variables = "AGE",
+    statistic = list(AGE = list(mean = \(x, ...) mean(x)))
+  )
+
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "AGE")
+  expect_equal(args$by, "ARM")
 })

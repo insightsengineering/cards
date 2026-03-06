@@ -260,7 +260,8 @@ test_that("ard_summary() works with non-syntactic names", {
         variables = BMIBL,
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
-      dplyr::select(stat, error)
+      dplyr::select(stat, error),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -276,7 +277,8 @@ test_that("ard_summary() works with non-syntactic names", {
         variables = BMIBL,
         statistic = ~ continuous_summary_fns(c("min", "max", "sd"))
       ) |>
-      dplyr::select(stat, error)
+      dplyr::select(stat, error),
+    ignore_attr = TRUE
   )
 
 
@@ -302,22 +304,26 @@ test_that("ard_summary() works when using generic names ", {
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(variable_level, variable), by = median) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(variable_level, variable), by = median) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(disp, gear), by = mpg) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(median, p25), by = variable_level) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(median, p25), by = variable_level) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(disp, gear), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(median, p25), by = variable) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(median, p25), by = variable) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(disp, mpg), by = gear) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(median, variable_level), by = p25) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(median, variable_level), by = p25) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -327,27 +333,32 @@ test_that("ard_summary() works when using generic names ", {
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(by, statistic), by = weights) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(by, statistic), by = weights) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(statistic, weights), by = by) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(statistic, weights), by = by) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(by, statistic), by = p75) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(by, statistic), by = p75) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(by, p75), by = statistic) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -356,27 +367,32 @@ test_that("ard_summary() works when using generic names ", {
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(mean, sd), by = var) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(mean, sd), by = var) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(sd, var), by = mean) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(sd, var), by = mean) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(mean, var), by = sd) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(mean, var), by = sd) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(mean, sd), by = sum) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(mean, sd), by = sum) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(mean, sum), by = sd) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -385,27 +401,32 @@ test_that("ard_summary() works when using generic names ", {
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = disp) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(deff, min), by = max) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(deff, min), by = max) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(cyl, disp), by = mpg) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(min, max), by = deff) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(min, max), by = deff) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, disp), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(deff, max), by = min) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(deff, max), by = min) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, cyl), by = gear) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(deff, min), by = mean.std.error) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(deff, min), by = mean.std.error) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
     ard_summary(mtcars, variables = c(mpg, gear), by = cyl) |> dplyr::select(stat),
-    ard_summary(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat)
+    ard_summary(mtcars2, variables = c(deff, mean.std.error), by = min) |> dplyr::select(stat),
+    ignore_attr = TRUE
   )
 })
 
@@ -459,7 +480,8 @@ test_that("ard_summary() with `as_cards_fn()` inputs", {
   # the result is the same when there is no error
   expect_equal(
     ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = ttest_works)),
-    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")]))
+    ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")])),
+    ignore_attr = TRUE
   )
 
   # when there is an error, we get the same structure back
@@ -469,4 +491,18 @@ test_that("ard_summary() with `as_cards_fn()` inputs", {
     ard_summary(mtcars, variables = mpg, statistic = ~ list(ttest = \(x) t.test(x)[c("statistic", "p.value")])) |>
       dplyr::pull("stat_name")
   )
+})
+
+test_that("ard_summary() attaches 'args' attribute", {
+  res <- ard_summary(
+    ADSL,
+    by = "ARM",
+    variables = "AGE",
+    statistic = ~ continuous_summary_fns("mean")
+  )
+
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "AGE")
+  expect_equal(args$by, "ARM")
 })

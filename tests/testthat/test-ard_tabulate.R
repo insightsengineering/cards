@@ -713,7 +713,8 @@ test_that("ard_tabulate() can handle non-syntactic column names", {
       dplyr::select(stat),
     ADSL |>
       ard_tabulate(variables = AGEGR1) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -723,7 +724,8 @@ test_that("ard_tabulate() can handle non-syntactic column names", {
       dplyr::select(stat, error),
     ADSL |>
       ard_tabulate(variables = AGEGR1) |>
-      dplyr::select(stat, error)
+      dplyr::select(stat, error),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -733,7 +735,8 @@ test_that("ard_tabulate() can handle non-syntactic column names", {
       dplyr::select(stat, error),
     ADSL |>
       ard_tabulate(by = ARM, variables = AGEGR1) |>
-      dplyr::select(stat, error)
+      dplyr::select(stat, error),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -743,7 +746,8 @@ test_that("ard_tabulate() can handle non-syntactic column names", {
       dplyr::select(stat, error),
     ADSL |>
       ard_tabulate(strata = ARM, variables = AGEGR1) |>
-      dplyr::select(stat, error)
+      dplyr::select(stat, error),
+    ignore_attr = TRUE
   )
 })
 
@@ -814,7 +818,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = by,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -831,7 +836,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = group1_level,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -848,7 +854,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = by,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -869,7 +876,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = name,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -886,7 +894,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = N,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -903,7 +912,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = group1_level,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -920,7 +930,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = p,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -946,7 +957,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = p.std.error,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -963,7 +975,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = n,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -980,7 +993,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = mean,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -997,7 +1011,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = n_unweighted,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   # rename vars
@@ -1023,7 +1038,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = column,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -1040,7 +1056,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = N_unweighted,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -1057,7 +1074,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = p_unweighted,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -1074,7 +1092,8 @@ test_that("ard_tabulate() works when using generic names ", {
       by = row,
       denominator = "row"
     ) |>
-      dplyr::select(stat)
+      dplyr::select(stat),
+    ignore_attr = TRUE
   )
 })
 
@@ -1284,7 +1303,8 @@ test_that("ard_tabulate(denominator='column') with cumulative counts", {
       variables = "AGEGR1",
       statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
     ) |>
-      dplyr::filter(stat_name == "n_cum")
+      dplyr::filter(stat_name == "n_cum"),
+    ignore_attr = TRUE
   )
   # function works when only `p_cum` requested
   expect_equal(
@@ -1298,7 +1318,8 @@ test_that("ard_tabulate(denominator='column') with cumulative counts", {
       variables = "AGEGR1",
       statistic = everything() ~ c("n", "p", "n_cum", "p_cum")
     ) |>
-      dplyr::filter(stat_name == "p_cum")
+      dplyr::filter(stat_name == "p_cum"),
+    ignore_attr = TRUE
   )
 })
 
@@ -1410,7 +1431,6 @@ test_that("ard_tabulate() ordering for multiple strata", {
   )
 })
 
-
 test_that("ard_tabulate(data, denominator) class mis-match", {
   expect_snapshot(
     ard <-
@@ -1421,4 +1441,17 @@ test_that("ard_tabulate(data, denominator) class mis-match", {
         denominator = ADSL |> dplyr::mutate(TRTA = as.factor(TRTA))
       )
   )
+})
+
+test_that("ard_tabulate() attaches 'args' attribute", {
+  res <- ard_tabulate(
+    data = ADSL,
+    by = "ARM",
+    variables = "AGEGR1"
+  )
+
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "AGEGR1")
+  expect_equal(args$by, "ARM")
 })
