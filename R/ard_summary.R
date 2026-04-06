@@ -184,6 +184,7 @@ ard_summary.data.frame <- function(data,
 
   # add meta data and class ----------------------------------------------------
   df_results |>
+    add_registered_data_column(data = data) |>
     dplyr::mutate(context = "summary") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>

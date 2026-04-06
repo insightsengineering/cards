@@ -52,6 +52,7 @@ tidy_ard_column_order <- function(x, group_order = c("ascending", "descending"))
   # selecting the columns in the tidy order
   dplyr::select(
     x,
+    any_of("data"),
     all_of(group_cols),
     all_ard_variables(),
     any_of(c(

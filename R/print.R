@@ -40,7 +40,9 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
   if (arg_match(columns) %in% "auto") {
     x_print <-
       dplyr::select(
-        x_print, all_ard_groups(), all_ard_variables(),
+        x_print,
+        any_of("data"),
+        all_ard_groups(), all_ard_variables(),
         any_of(c(
           "context", "stat_name", "stat_label", "stat", "stat_fmt",
           "fmt_fun", "warning", "error"
