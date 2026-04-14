@@ -24,6 +24,9 @@
 #'     sums, otherwise `p` is used. If neither `n` nor `p` are present in `x` for the variable, an error will occur.
 #'
 #'   Defaults to `everything() ~ "descending"`.
+#' @param sort_col \cr
+#'     specify the name of the treatment column you want to sort by eg 'Placebo' or leave it blank
+#'  to sort by the sum across all treatment columns.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
@@ -51,11 +54,20 @@
 #'   denominator = ADSL
 #' ) |>
 #'   sort_ard_hierarchical(sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"))
+#'   
+#' ard_stack_hierarchical_count(
+#'   ADAE,
+#'   variables = c(AESOC, AEDECOD),
+#'   by = TRTA,
+#'   denominator = ADSL
+#' ) |>
+#'   sort_ard_hierarchical(sort_col = "Placebo")
+ 
 NULL
 
 #' @rdname sort_ard_hierarchical
 #' @export
-sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
+sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_col = NULL) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
@@ -156,7 +168,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       # descending sort
       x_sort <- x_sort |>
         # calculate sums for each group at the current level, then get group indices
-        .append_hierarchy_sums(ard_args, cols, i)
+        .append_hierarchy_sums(ard_args, cols, i, sort_col)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
@@ -248,7 +260,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
 }
 
 # this function calculates and appends group sums/ordering for the current hierarchy level (across `by` variables)
-.append_hierarchy_sums <- function(x, ard_args, cols, i) {
+.append_hierarchy_sums <- function(x, ard_args, cols, i, sort_col = sort_col) {
   cur_var <- names(cols)[i] # get current grouping variable
   next_var <- names(cols)[i + 1] # get next grouping variable
 
@@ -275,6 +287,18 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
   sort_stat <- if (n_stat) "n" else "p" # statistic used to calculate group sums
 
   # calculate group sums
+  
+  # 4th April 2026 - introduced the ability to sort the ARD based on a particular treatment column
+  
+  if(!is.null(sort_col)){
+    x = x |> 
+      dplyr::mutate(stat = dplyr::case_when(stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level == sort_col ~ stat,
+                                            stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level != sort_col ~ list(0),
+                                            TRUE ~ stat))
+  }else {
+    x = x
+  }
+  
   sum_i <- paste0("sum_group_", i) # sum column label
   x_sums <- x |>
     dplyr::filter(
