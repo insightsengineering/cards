@@ -41,12 +41,14 @@ jobs:
           options(checked.check_envvars = c(NOT_CRAN = TRUE))
           
           tryCatch({
+            # New API from the PR template
             checked::check_rev_deps(
               path = '.', 
               n = parallel::detectCores() - 2L, 
               repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org')
             )
           }, error = function(e) {
+            # Retain the required custom abort message for the maintainers
             cli::cli_abort(
               c('This PR newly breaks reverse dependencies (like {.pkg gtsummary})',
                 '!' = 'The PR must be updated as to not break reverse dependencies.',
