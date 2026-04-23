@@ -37,24 +37,31 @@ jobs:
       - name: Check Reverse Dependencies
         shell: Rscript {0}
         run: |
-          Rscript -e "
-          options(checked.check_envvars = c(NOT_CRAN = TRUE))
-          
-          tryCatch({
-            # New API from the PR template
-            checked::check_rev_deps(
-              path = '.', 
-              n = parallel::detectCores() - 2L, 
-              repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org')
+          df <-
+            checked::rev_dep_check_tasks_df(
+              path = ".",
+              repos = "https://packagemanager.posit.co/cran/latest",
+              versions = c("dev", "release")
             )
-          }, error = function(e) {
-            # Retain the required custom abort message for the maintainers
+          df <- df[startsWith(df$alias, "gtsummary"), ]
+
+          design <-
+            checked::check_design$new(
+              df = df,
+              repos = "https://packagemanager.posit.co/cran/latest",
+              output = tempdir(),
+              restore = FALSE
+            )
+          checked::run(design)
+          checked::results(design)
+
+          # Logic to check for errors and abort if found
+          issues <- checked::results(design)$revdep_check_task_spec$gtsummary$errors$issues
+          if (!rlang::is_empty(issues)) {
             cli::cli_abort(
-              c('This PR newly breaks reverse dependencies (like {.pkg gtsummary})',
-                '!' = 'The PR must be updated as to not break reverse dependencies.',
-                'i' = 'In rare cases where the break is acceptable, the change {.emph MUST} first be approved by Daniel Sjoberg (danieldsjoberg@gmail.com) {.emph before} this PR could potentially be merged.',
-                'x' = e\$message
+              c("This PR newly breaks {.pkg gtsummary}",
+                "!" = "The PR must be updated as to not break {.pkg gtsummary}.",
+                "i" = "In rare cases where the break is acceptable, the change {.emph MUST} first be approved by Daniel Sjoberg (danieldsjoberg@gmail.com) {.emph before} this PR could potentially be merged."
               )
             )
-          })
-          "
+          }
