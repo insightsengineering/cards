@@ -37,6 +37,7 @@ jobs:
       - name: Check Reverse Dependencies
         shell: Rscript {0}
         run: |
+          Rscript -e "
           options(checked.check_envvars = c(NOT_CRAN = TRUE))
           
           tryCatch({
@@ -50,7 +51,8 @@ jobs:
               c('This PR newly breaks reverse dependencies (like {.pkg gtsummary})',
                 '!' = 'The PR must be updated as to not break reverse dependencies.',
                 'i' = 'In rare cases where the break is acceptable, the change {.emph MUST} first be approved by Daniel Sjoberg (danieldsjoberg@gmail.com) {.emph before} this PR could potentially be merged.',
-                'x' = e$message
+                'x' = e\$message
               )
             )
           })
+          "
