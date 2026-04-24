@@ -58,6 +58,7 @@ jobs:
             n = 20,
             output = tempdir(),
             lib.loc = .libPaths(),
+            repos = c('https://ddsjoberg.r-universe.dev', 'https://cloud.r-project.org'),
             restore = FALSE
           )
 
