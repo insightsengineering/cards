@@ -28,6 +28,8 @@
 #' ) |>
 #'   as_card()
 as_card <- function(x, check = TRUE) {
+  stop("INTENTIONAL BREAK: Testing gtsummary revdepcheck!")
+
   set_cli_abort_call()
 
   # check in inputs ------------------------------------------------------------
