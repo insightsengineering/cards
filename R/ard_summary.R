@@ -342,7 +342,7 @@ ard_summary.data.frame <- function(data,
 
   df_ard |>
     dplyr::mutate(variable = .env$variable) |>
-    dplyr::rename(stat = "result")
+    dplyr::rename(statistic_value = "result")
 }
 
 
