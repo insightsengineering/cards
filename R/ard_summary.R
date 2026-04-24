@@ -79,6 +79,8 @@ ard_summary.data.frame <- function(data,
                                    stat_label = everything() ~ default_stat_labels(),
                                    fmt_fn = deprecated(),
                                    ...) {
+  
+  stop("INTENTIONAL BREAK: Testing gtsummary revdepcheck!")
   set_cli_abort_call()
   check_dots_used()
 
@@ -342,7 +344,7 @@ ard_summary.data.frame <- function(data,
 
   df_ard |>
     dplyr::mutate(variable = .env$variable) |>
-    dplyr::rename(statistic_value = "result")
+    dplyr::rename(stat = "result")
 }
 
 
