@@ -13,12 +13,12 @@ is, they do not begin with `"...ard_"` and end with `"..."`.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - exceptions:
 
-  (`string`)  
+  (`string`)\
   character string of column names to exclude from checks
 
 ## Value

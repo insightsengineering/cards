@@ -12,12 +12,12 @@ as_card(x, check = TRUE)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - check:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   Whether the input data frame should be checked for standard ARD
   features
 

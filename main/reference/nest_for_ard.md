@@ -28,12 +28,12 @@ nest_for_ard(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - by, strata:
 
-  (`character`)  
+  (`character`)\
   columns to nest by/stratify by. Arguments are similar, but with an
   important distinction:
 
@@ -48,31 +48,31 @@ nest_for_ard(
 
 - key:
 
-  (`string`)  
+  (`string`)\
   the name of the new column with the nested data frame. Default is
   `"data"`.
 
 - rename_columns:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to rename the `by` and `strata` variables.
   Default is `TRUE`.
 
 - list_columns:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to put levels of `by` and `strata` columns
   in a list. Default is `TRUE`.
 
 - include_data:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether to include the data subsets as a
   list-column. Default is `TRUE`.
 
 - include_by_and_strata:
 
-  (`logical`)  
+  (`logical`)\
   When `TRUE`, the `by` and `strata` variables are included in the
   nested data frames.
 

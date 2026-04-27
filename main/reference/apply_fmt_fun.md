@@ -14,12 +14,12 @@ apply_fmt_fun(x, replace = FALSE)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - replace:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether to replace values in the `'stat_fmt'`
   column (if present). Default is `FALSE`.
 

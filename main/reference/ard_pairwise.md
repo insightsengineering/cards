@@ -12,24 +12,24 @@ ard_pairwise(data, variable, .f, include = NULL)
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - variable:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   Column to perform pairwise analyses for.
 
 - .f:
 
-  (`function`)  
+  (`function`)\
   a function that creates ARDs. The function accepts a single argument
   and a subset of `data` will be passed including the two levels of
   `variable` for the pairwise analysis.
 
 - include:
 
-  (`vector`)  
+  (`vector`)\
   a vector of levels of the `variable` column to include in comparisons.
   Pairwise comparisons will only be performed for pairs that have a
   level specified here. Default is `NULL` and all pairwise computations

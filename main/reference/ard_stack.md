@@ -29,43 +29,43 @@ ard_stack(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   Series of ARD function calls to be run and stacked
 
 - .by:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to tabulate by in the series of ARD function calls. Any rows
   with `NA` or `NaN` values are removed from all calculations.
 
 - .overall:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether overall statistics should be calculated
   (i.e. re-run all `ard_*()` calls with `by=NULL`). Default is `FALSE`.
 
 - .missing:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to include the results of
   [`ard_missing()`](https://insightsengineering.github.io/cards/reference/ard_missing.md)
   for all variables represented in the ARD. Default is `FALSE`.
 
 - .attributes:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to include the results of
   [`ard_attributes()`](https://insightsengineering.github.io/cards/reference/ard_attributes.md)
   for all variables represented in the ARD. Default is `FALSE`.
 
 - .total_n:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to include of
   [`ard_total_n()`](https://insightsengineering.github.io/cards/reference/ard_total_n.md)
   in the returned ARD.
@@ -76,7 +76,7 @@ ard_stack(
 
 - .by_stats:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to include overall stats of the `by`
   variables in the returned ARD.
 

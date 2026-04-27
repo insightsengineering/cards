@@ -21,18 +21,18 @@ argument, and returns the tabulations in an ARD structure.
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to include in summaries. Default is
   [`everything()`](https://tidyselect.r-lib.org/reference/everything.html).
 
 - by, strata:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to use for grouping or stratifying the table output. Arguments
   are similar, but with an important distinction:
 
@@ -47,13 +47,13 @@ argument, and returns the tabulations in an ARD structure.
 
 - denominator:
 
-  (`string`, `data.frame`, `integer`)  
+  (`string`, `data.frame`, `integer`)\
   Specify this argument to change the denominator, e.g. the `"N"`
   statistic. Default is `'column'`. See below for details.
 
 - statistic:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element one or more of `c("n", "N", "p", "n_cum", "p_cum")` (on the
   RHS of a formula).

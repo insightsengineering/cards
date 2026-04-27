@@ -16,17 +16,17 @@ If string is consistent, `TRUE` is returned. Otherwise an error.
 
 - x:
 
-  (`string`)  
+  (`string`)\
   string to check
 
 - variable:
 
-  (`character`)  
+  (`character`)\
   the variable whose statistic is to be formatted
 
 - stat_name:
 
-  (`character`)  
+  (`character`)\
   the name of the statistic that is to be formatted
 
 ## Value

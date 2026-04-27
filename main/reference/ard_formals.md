@@ -13,25 +13,25 @@ ard_formals(fun, arg_names, passed_args = list(), envir = parent.frame())
 
 - fun:
 
-  (`function`)  
+  (`function`)\
   a [function](https://rdrr.io/r/base/function.html) passed to
   `formals(fun)`
 
 - arg_names:
 
-  (`character`)  
+  (`character`)\
   character vector of argument names to return
 
 - passed_args:
 
-  (named `list`)  
+  (named `list`)\
   a named list of user-passed arguments. Default is
   [`list()`](https://rdrr.io/r/base/list.html), which returns all
   default values from a function
 
 - envir:
 
-  (`environment`)  
+  (`environment`)\
   an environment passed to `formals(envir)`
 
 ## Value

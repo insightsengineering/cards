@@ -16,12 +16,12 @@ round5(x, digits = 0)
 
 - x:
 
-  (`numeric`)  
+  (`numeric`)\
   a numeric vector
 
 - digits:
 
-  (`integer`)  
+  (`integer`)\
   integer indicating the number of decimal places
 
 ## Value

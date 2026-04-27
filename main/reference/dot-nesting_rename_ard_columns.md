@@ -15,22 +15,22 @@ If `by`/`strata` are provided, adds the standard `group##` column(s) to
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - variable:
 
-  (`character`)  
+  (`character`)\
   name of `variable` column in `x`. Default is `NULL`.
 
 - by:
 
-  (`character`)  
+  (`character`)\
   character vector of names of `by` columns in `x`. Default is `NULL`.
 
 - strata:
 
-  (`character`)  
+  (`character`)\
   character vector of names of `strata` columns in `x`. Default is
   `NULL`.
 

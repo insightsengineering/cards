@@ -20,7 +20,7 @@ to be a hierarchical calculation.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 ## Value

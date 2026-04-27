@@ -12,12 +12,12 @@ Print Condition Messages Saved in an ARD
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - msg_type:
 
-  (`string`)  
+  (`string`)\
   message type. Options are `"warning"` and `"error"`.
 
 ## Value

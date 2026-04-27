@@ -15,7 +15,7 @@ maximum_variable_value(data)
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 ## Value

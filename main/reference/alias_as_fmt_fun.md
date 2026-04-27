@@ -22,17 +22,17 @@ alias_as_fmt_fun(x, variable, stat_name)
 
 - x:
 
-  (`integer`, `string`, or `function`)  
+  (`integer`, `string`, or `function`)\
   a non-negative integer, string alias, or function
 
 - variable:
 
-  (`character`)  
+  (`character`)\
   the variable whose statistic is to be formatted
 
 - stat_name:
 
-  (`character`)  
+  (`character`)\
   the name of the statistic that is to be formatted
 
 ## Value
@@ -66,7 +66,7 @@ alias_as_fmt_fun(1)
 #>     # return final formatted vector
 #>     res
 #>   }
-#> <environment: 0x5624741ad8f0>
+#> <environment: 0x55da521b6700>
 alias_as_fmt_fun("xx.x")
 #> function(x) {
 #>     # round and scale vector
@@ -91,5 +91,5 @@ alias_as_fmt_fun("xx.x")
 #>     # return final formatted vector
 #>     res
 #>   }
-#> <environment: 0x5624730d0e60>
+#> <environment: 0x55da56d0b228>
 ```

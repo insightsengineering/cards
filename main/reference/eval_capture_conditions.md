@@ -76,12 +76,12 @@ captured_condition_as_error(
 
 - x:
 
-  (`captured_condition`)  
+  (`captured_condition`)\
   a captured condition created by `eval_capture_conditions()`.
 
 - message:
 
-  (`character`)  
+  (`character`)\
   message passed to
   [`cli::cli_inform()`](https://cli.r-lib.org/reference/cli_abort.html)
   or
@@ -91,7 +91,7 @@ captured_condition_as_error(
 
 - type:
 
-  (`string`)  
+  (`string`)\
   the type of condition to return. Must be one of `'error'` or
   `'warning'`.
 
@@ -101,7 +101,7 @@ captured_condition_as_error(
 
 - call:
 
-  (`environment`)  
+  (`environment`)\
   Execution environment of currently running function. Default is
   `get_cli_abort_call()`.
 

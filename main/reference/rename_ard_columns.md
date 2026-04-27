@@ -18,12 +18,12 @@ rename_ard_columns(
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - columns:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to rename, e.g. selecting columns
   `c('group1', 'group2', 'variable')` will rename `'group1_level'` to
   the name of the variable found in `'group1'`. When, for example, the
@@ -33,7 +33,7 @@ rename_ard_columns(
 
 - fill:
 
-  (scalar/glue)  
+  (scalar/glue)\
   a scalar to fill column values when the variable does not have levels.
   If a character is passed, then it is processed with
   [`glue::glue()`](https://glue.tidyverse.org/reference/glue.html) where
@@ -43,7 +43,7 @@ rename_ard_columns(
 
 - fct_as_chr:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   When `TRUE`, factor elements will be converted to character before
   unlisting. When the column being unlisted contains mixed types of
   classes, the factor elements are often converted to the underlying

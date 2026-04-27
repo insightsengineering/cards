@@ -17,12 +17,12 @@ Either error or message depending on input.
 
 - msg:
 
-  (scalar `character`)  
+  (scalar `character`)\
   Error message
 
 - error:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   If this should produce an error or a warning. FALSE by default
 
 - call:
@@ -44,7 +44,7 @@ Either error or message depending on input.
 
 - envir:
 
-  (`environment`)  
+  (`environment`)\
   Environment to evaluate the glue expressions in passed in
   `cli::cli_abort(message)`. Default is
   [`rlang::current_env()`](https://rlang.r-lib.org/reference/stack.html)

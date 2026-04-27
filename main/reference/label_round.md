@@ -12,19 +12,19 @@ label_round(digits = 1, scale = 1, width = NULL)
 
 - digits:
 
-  (`integer`)  
+  (`integer`)\
   a non-negative integer specifying the number of decimal places round
   statistics to
 
 - scale:
 
-  (`numeric`)  
+  (`numeric`)\
   a scalar real number. Before rounding, the input will be scaled by
   this quantity
 
 - width:
 
-  (`integer`)  
+  (`integer`)\
   a non-negative integer specifying the minimum width of the returned
   formatted values
 

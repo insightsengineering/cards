@@ -13,12 +13,12 @@ modifies them if needed
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - vars_protected:
 
-  (`character`)  
+  (`character`)\
   a character vector of protected names
 
 ## Value

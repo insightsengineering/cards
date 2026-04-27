@@ -76,12 +76,12 @@ cards_select(expr, data, ..., arg_name = NULL)
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   named arguments where the value of the argument is processed with
   tidyselect.
 
@@ -99,59 +99,59 @@ cards_select(expr, data, ..., arg_name = NULL)
 
 - env:
 
-  (`environment`)  
+  (`environment`)\
   env to save the results to. Default is the calling environment.
 
 - include_env:
 
-  (`logical`)  
+  (`logical`)\
   whether to include the environment from the formula object in the
   returned named list. Default is `FALSE`
 
 - allow_empty:
 
-  (`logical`)  
+  (`logical`)\
   Logical indicating whether empty result is acceptable while process
   formula-list selectors. Default is `TRUE`.
 
 - x:
 
   - `compute_formula_selector()`:
-    ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+    ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
     a named list, list of formulas, or a single formula that will be
     converted to a named list.
 
-  - `check_list_elements()`: (named `list`)  
+  - `check_list_elements()`: (named `list`)\
     a named list
 
 - arg_name:
 
-  (`string`)  
+  (`string`)\
   the name of the argument being processed. Used in error messaging.
   Default is `caller_arg(x)`.
 
 - strict:
 
-  (`logical`)  
+  (`logical`)\
   whether to throw an error if a variable doesn't exist in the reference
   data (passed to
   [`tidyselect::eval_select()`](https://tidyselect.r-lib.org/reference/eval_select.html))
 
 - predicate:
 
-  (`function`)  
+  (`function`)\
   a predicate function that returns `TRUE` or `FALSE`
 
 - error_msg:
 
-  (`character`)  
+  (`character`)\
   a character vector that will be used in error messaging when
   mis-specified arguments are passed. Elements `"{arg_name}"` and
   `"{variable}"` are available using glue syntax for messaging.
 
 - expr:
 
-  (`expression`)  
+  (`expression`)\
   Defused R code describing a selection according to the tidyselect
   syntax.
 
@@ -182,43 +182,43 @@ get(x = "statistic", envir = example_env)
 #> $TRT01P
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01PN
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01A
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01AN
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTEDT
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTDUR
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTA
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x562471860780>
+#> <bytecode: 0x55da52270e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTSDT

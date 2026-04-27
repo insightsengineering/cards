@@ -1,6 +1,6 @@
 # Deprecated functions
 
-**\[deprecated\]**  
+**\[deprecated\]**\
 Some functions have been deprecated and are no longer being actively
 supported.
 
@@ -28,7 +28,7 @@ supported.
 
 - `shuffle_ard()`
 
-**\[deprecated\]**  
+**\[deprecated\]**\
 
 This function ingests an ARD object and shuffles the information to
 prepare for analysis. Helpful for streamlining across multiple ARDs.
@@ -76,12 +76,12 @@ shuffle_ard(x, trim = TRUE)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - trim:
 
-  (`logical`)  
+  (`logical`)\
   logical representing whether or not to trim away statistic-level
   metadata and filter only on numeric statistic values.
 

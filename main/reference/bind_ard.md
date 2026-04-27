@@ -20,14 +20,14 @@ bind_ard(
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   ARDs to combine. Each argument can either be an ARD, or a list of
   ARDs. Columns are matched by name, and any missing columns will be
   filled with `NA`.
 
 - .distinct:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to remove non-distinct values from the ARD.
   Duplicates are checked across grouping variables, primary variables,
   context (if present), the **statistic name and the statistic value**.
@@ -37,7 +37,7 @@ bind_ard(
 
 - .update:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to update ARD and remove duplicated named
   statistics. Duplicates are checked across grouping variables, primary
   variables, and the **statistic name**. Default is `FALSE`. If a
@@ -46,7 +46,7 @@ bind_ard(
 
 - .order:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to order the rows of the stacked ARDs,
   allowing statistics that share common group and variable values to
   appear in consecutive rows. Default is `FALSE`. Ordering will be based
@@ -54,7 +54,7 @@ bind_ard(
 
 - .quiet:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to suppress any messaging. Default is
   `FALSE`
 

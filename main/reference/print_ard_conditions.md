@@ -14,12 +14,12 @@ print_ard_conditions(x, condition_type = c("inform", "identity"))
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - condition_type:
 
-  (`string`)  
+  (`string`)\
   indicates how warnings and errors are returned. Default is `"inform"`
   where all are returned as messages. When `"identity"`, errors are
   returned as errors and warnings as warnings.

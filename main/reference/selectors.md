@@ -29,14 +29,14 @@ all_missing_columns()
 
 - types:
 
-  (`character`)  
+  (`character`)\
   type(s) of columns to select. `"names"` selects the columns variable
   name columns, and `"levels"` selects the level columns. Default is
   `c("names", "levels")`.
 
 - n:
 
-  (`integer`)  
+  (`integer`)\
   integer(s) indicating which grouping columns to select.
 
 ## Value

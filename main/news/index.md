@@ -1,6 +1,6 @@
 # Changelog
 
-## cards (development version)
+## cards 0.7.1.9011
 
 - Fixed bug in
   [`rename_ard_columns()`](https://insightsengineering.github.io/cards/reference/rename_ard_columns.md)
@@ -8,8 +8,6 @@
   parameter `fct_as_chr` as is used in
   [`unlist_ard_columns()`](https://insightsengineering.github.io/cards/reference/unlist_ard_columns.md)
   ([\#542](https://github.com/insightsengineering/cards/issues/542))
-
-## cards 0.7.1.9007
 
 - Adding
   [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)

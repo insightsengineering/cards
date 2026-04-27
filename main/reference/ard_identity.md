@@ -13,20 +13,20 @@ ard_identity(x, variable, context = "identity")
 
 - x:
 
-  (named `list`/`data.frame`)  
+  (named `list`/`data.frame`)\
   named list of results or a data frame. Names are the statistic names,
   and the values are the statistic values. These comprise the
   `"stat_name"` and `"stat"` columns in the returned ARD.
 
 - variable:
 
-  (`string`)  
+  (`string`)\
   string of a variable name that is assigned to the `"variable"` column
   in the ARD.
 
 - context:
 
-  (`string`)  
+  (`string`)\
   string to be added to the `"context"` column. Default is `"identity"`.
 
 ## Value

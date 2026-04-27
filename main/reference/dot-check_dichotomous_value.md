@@ -12,12 +12,12 @@ Check the validity of the values passed in `ard_tabulate_value(value)`.
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - value:
 
-  (named `list`)  
+  (named `list`)\
   a named list
 
 ## Value

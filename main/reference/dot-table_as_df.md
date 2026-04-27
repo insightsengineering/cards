@@ -24,27 +24,27 @@ function also restores the column types to their original classes. For
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - variable:
 
-  (`string`)  
+  (`string`)\
   a string indicating a column in data
 
 - by:
 
-  (`character`)  
+  (`character`)\
   a character vector indicating columns in data
 
 - strata:
 
-  (`character`)  
+  (`character`)\
   a character vector indicating columns in data
 
 - useNA:
 
-  (`string`)  
+  (`string`)\
   one of `"no"` and `"always"`. Will be passed to `table(useNA)`.
 
 ## Value

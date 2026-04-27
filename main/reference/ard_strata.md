@@ -16,12 +16,12 @@ ard_strata(.data, .by = NULL, .strata = NULL, .f, ...)
 
 - .data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - .by, .strata:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to tabulate by/stratify by for calculation. Arguments are
   similar, but with an important distinction:
 
@@ -37,7 +37,7 @@ ard_strata(.data, .by = NULL, .strata = NULL, .f, ...)
 
 - .f:
 
-  (`function`, `formula`)  
+  (`function`, `formula`)\
   a function or a formula that can be coerced to a function with
   [`rlang::as_function()`](https://rlang.r-lib.org/reference/as_function.html)
   (similar to `purrr::map(.f)`)

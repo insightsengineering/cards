@@ -14,22 +14,22 @@ frame.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   result data frame
 
 - arg:
 
-  (`list`)  
+  (`list`)\
   the nested list
 
 - new_column:
 
-  (`string`)  
+  (`string`)\
   new column name
 
 - unlist:
 
-  (`logical`)  
+  (`logical`)\
   whether to fully unlist final results
 
 ## Value

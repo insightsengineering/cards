@@ -13,7 +13,7 @@ Function operates similarly to
 
 - x:
 
-  (named `list`)  
+  (named `list`)\
   a named list
 
 ## Value

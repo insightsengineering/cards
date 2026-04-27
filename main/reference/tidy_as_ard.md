@@ -1,6 +1,6 @@
 # Build ARD from Tidier
 
-**\[questioning\]**  
+**\[questioning\]**\
 *Function is questioning because we think a better solution may be
 [`ard_summary()`](https://insightsengineering.github.io/cards/reference/ard_summary.md) +
 [`ard_formals()`](https://insightsengineering.github.io/cards/reference/ard_formals.md).*
@@ -29,7 +29,7 @@ tidy_as_ard(
 
 - lst_tidy:
 
-  (named `list`)  
+  (named `list`)\
   list of tidied results constructed with
   [`eval_capture_conditions()`](https://insightsengineering.github.io/cards/reference/eval_capture_conditions.md),
   e.g.
@@ -37,30 +37,30 @@ tidy_as_ard(
 
 - tidy_result_names:
 
-  (`character`)  
+  (`character`)\
   character vector of column names expected by the tidier method. This
   is used to construct blank results in the event of an error.
 
 - fun_args_to_record:
 
-  (`character`)  
+  (`character`)\
   character vector of function argument names that are added to the ARD.
 
 - formals:
 
-  (`pairlist`)  
+  (`pairlist`)\
   the results from [`formals()`](https://rdrr.io/r/base/formals.html),
   e.g. `formals(fisher.test)`. This is used to get the default argument
   values from unspecified arguments.
 
 - passed_args:
 
-  (named `list`)  
+  (named `list`)\
   named list of additional arguments passed to the modeling function.
 
 - lst_ard_columns:
 
-  (named `list`)  
+  (named `list`)\
   named list of values that will be added to the ARD data frame.
 
 ## Value

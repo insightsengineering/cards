@@ -18,18 +18,18 @@ ard_tabulate_rows(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - colname:
 
-  (`string`)  
+  (`string`)\
   name of the column that will be returned along with the row
   tabulation.
 
 - by, strata:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to use for grouping or stratifying the table output. Arguments
   are similar, but with an important distinction:
 
@@ -44,7 +44,7 @@ ard_tabulate_rows(
 
 - fmt_fun:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element is a named list of functions (or the RHS of a formula), e.g.
   `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character()))`.
