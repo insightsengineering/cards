@@ -16,6 +16,11 @@
 #'   where the `colname` element is available to inject into the string,
 #'   e.g. `'Overall {colname}'` may resolve to `'Overall AGE'` for an AGE column.
 #'   Default is `'{colname}'`.
+#' @param fct_as_chr (scalar `logical`)\cr
+#'   When `TRUE`, factor elements will be converted to character before unlisting.
+#'   When the column being unlisted contains mixed types of classes, the
+#'   factor elements are often converted to the underlying integer value instead
+#'   of retaining the label. Default is `TRUE`.
 #' @param unlist `r lifecycle::badge("deprecated")`
 #'
 #' @return data frame
@@ -37,7 +42,9 @@
 #'   unlist_ard_columns()
 rename_ard_columns <- function(x,
                                columns = c(all_ard_groups("names"), all_ard_variables("names")),
-                               fill = "{colname}", unlist = NULL) {
+                               fill = "{colname}",
+                               fct_as_chr = TRUE,
+                               unlist = NULL) {
   # check inputs ---------------------------------------------------------------
   if (!missing(unlist)) {
     lifecycle::deprecate_warn(
@@ -52,6 +59,8 @@ rename_ard_columns <- function(x,
   check_class(x, "card")
   process_selectors(x, columns = {{ columns }})
   check_scalar(fill)
+  check_scalar_logical(fct_as_chr)
+
   if (!is_empty(setdiff(columns, dplyr::select(x, all_ard_groups("names"), all_ard_variables("names")) |> names()))) {
     bad_columns <-
       setdiff(columns, dplyr::select(x, all_ard_groups("names"), all_ard_variables("names")) |> names())
@@ -125,6 +134,13 @@ rename_ard_columns <- function(x,
     dplyr::select(-"...ard_row_order...") |>
     dplyr::mutate(
       # replace NULL values with NA, then unlist
-      across(all_of(all_new_names), ~ map(., \(value) value %||% NA) |> unlist())
+      across(
+        all_of(all_new_names),
+        ~ map(., \(value){
+          if (isTRUE(fct_as_chr) && inherits(value, "factor")) value <- as.character(value)
+          value %||% NA
+        }) |>
+          unlist()
+      )
     )
 }

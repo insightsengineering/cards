@@ -1,6 +1,10 @@
 Package: cards
 Title: Analysis Results Data
+<<<<<<< HEAD
 Version: 0.7.1.9012
+=======
+Version: 0.7.1.9011
+>>>>>>> a7c447f9e8d0f44375ec4d5f8af03ba31d7147a1
 Authors@R: c(
     person("Daniel D.", "Sjoberg", , "danield.sjoberg@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0862-2018")),
