@@ -69,8 +69,9 @@ reported difference. \code{check_ard_equal()} returns as error if not equal.
 \examples{
 base <- ard_summary(ADSL, by = ARM, variables = AGE)
 compare <- ard_summary(dplyr::mutate(ADSL, AGE = AGE + 1),
-                       by = ARM,
-                       variables = AGE)
+  by = ARM,
+  variables = AGE
+)
 
 compare_ard(base, compare)$compare$stat
 }
