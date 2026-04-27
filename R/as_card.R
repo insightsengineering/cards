@@ -28,7 +28,6 @@
 #' ) |>
 #'   as_card()
 as_card <- function(x, check = TRUE) {
-
   set_cli_abort_call()
 
   # check in inputs ------------------------------------------------------------

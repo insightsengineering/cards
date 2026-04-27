@@ -35,7 +35,6 @@
 #'
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .quiet = FALSE) {
-
   set_cli_abort_call()
 
   # check inputs ---------------------------------------------------------------

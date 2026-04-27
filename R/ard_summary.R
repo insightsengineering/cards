@@ -79,7 +79,6 @@ ard_summary.data.frame <- function(data,
                                    stat_label = everything() ~ default_stat_labels(),
                                    fmt_fn = deprecated(),
                                    ...) {
-  
   set_cli_abort_call()
   check_dots_used()
 

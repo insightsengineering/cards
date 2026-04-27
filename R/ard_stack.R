@@ -61,8 +61,6 @@ ard_stack <- function(data,
                       .total_n = FALSE,
                       .shuffle = FALSE,
                       .by_stats = TRUE) {
-  
-  stop("INTENTIONAL BREAK: Testing gtsummary revdepcheck! New error!")
   set_cli_abort_call()
 
   # process arguments ----------------------------------------------------------
