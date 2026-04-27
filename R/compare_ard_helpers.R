@@ -113,8 +113,8 @@
       paste(formatted, collapse = ", ")
     },
     character(1)
-  ) |>
-    paste0("- ", x = _)
+  ) %>%
+    paste0("- ", x = .)
 }
 
 #' Format a Single Key Value
