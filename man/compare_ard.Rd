@@ -2,6 +2,8 @@
 % Please edit documentation in R/compare_ard.R
 \name{compare_ard}
 \alias{compare_ard}
+\alias{is_ard_equal}
+\alias{check_ard_equal}
 \title{Compare ARDs}
 \usage{
 compare_ard(
@@ -9,10 +11,14 @@ compare_ard(
   y,
   keys = c(all_ard_groups(), all_ard_variables(), any_of(c("variable", "variable_level",
     "stat_name"))),
-  compare = any_of(c("stat_label", "stat", "stat_fmt")),
+  columns = any_of(c("stat_label", "stat", "stat_fmt")),
   tolerance = sqrt(.Machine$double.eps),
   check.attributes = TRUE
 )
+
+is_ard_equal(x)
+
+check_ard_equal(x)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -26,7 +32,7 @@ columns identifying unique records. The intersection of the selected
 columns in both ARDs is used. Default is
 \code{c(all_ard_groups(), all_ard_variables(), any_of(c("variable", "variable_level", "stat_name")))}.}
 
-\item{compare}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
+\item{columns}{(\code{\link[dplyr:dplyr_tidy_select]{tidy-select}})\cr
 columns to compare between the two ARDs. Default is
 \code{any_of(c("stat_label", "stat", "stat_fmt"))}.}
 
@@ -52,13 +58,19 @@ values differ
 }
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}\cr
 \code{compare_ard()} compares columns of two ARDs row-by-row using a shared set
 of key columns. Rows where the column values differ are returned.
+
+The \code{is_ard_equal()} function accepts a \code{compare_ard()}
+object, and returns \code{TRUE} or \code{FALSE} depending on whether the comparison
+reported difference. \code{check_ard_equal()} returns as error if not equal.
 }
 \examples{
 base <- ard_summary(ADSL, by = ARM, variables = AGE)
-compare <- ard_summary(dplyr::mutate(ADSL, AGE = AGE + 1), by = ARM, variables = AGE)
+compare <- ard_summary(dplyr::mutate(ADSL, AGE = AGE + 1),
+                       by = ARM,
+                       variables = AGE)
 
 compare_ard(base, compare)$compare$stat
-
 }

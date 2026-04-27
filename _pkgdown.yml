@@ -88,6 +88,7 @@ reference:
       - get_ard_statistics
       - replace_null_statistic
       - rename_ard_groups
+      - compare_ard
   - subtitle: "Table Shells"
     contents:
       - mock

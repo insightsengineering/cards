@@ -13,7 +13,7 @@
     cards_select({{ keys }}, data = y)
   )
   .check_not_empty(keys)
-  cli::cli_inform("The comparison {.arg keys} are {.val {keys}}.")
+
   keys
 }
 
@@ -26,14 +26,14 @@
 #' @return character vector of column names to compare
 #' @keywords internal
 #' @noRd
-.process_compare_arg <- function(x, y, compare) {
-  compare <- union(
-    cards_select({{ compare }}, data = x),
-    cards_select({{ compare }}, data = y)
+.process_compare_arg <- function(x, y, columns) {
+  columns <- intersect(
+    cards_select({{ columns }}, data = x),
+    cards_select({{ columns }}, data = y)
   )
-  .check_not_empty(compare)
-  cli::cli_inform("The comparison {.arg compare} columns are {.val {compare}}.")
-  compare
+  .check_not_empty(columns)
+
+  columns
 }
 
 #' Check Argument is Not Empty
@@ -64,7 +64,7 @@
 #' @keywords internal
 #' @noRd
 .check_keys_unique <- function(data, keys, arg_name) {
-  if (anyDuplicated(dplyr::select(data, dplyr::all_of(keys))) > 0) {
+  if (anyDuplicated(data[keys]) > 0) {
     duplicated_keys <- .format_duplicate_keys(data, keys)
 
     cli::cli_abort(
@@ -201,32 +201,28 @@
 #' @noRd
 .compare_columns <- function(x, y, keys, compare, tolerance, check.attributes) {
   # select relevant columns
-  x_selected <- dplyr::select(x, dplyr::all_of(keys), dplyr::any_of(compare))
-  y_selected <- dplyr::select(y, dplyr::all_of(keys), dplyr::any_of(compare))
+  x <- x[c(keys, compare)]
+  y <- y[c(keys, compare)]
 
   # ensure all compare columns exist in both data frames
   for (column in compare) {
-    if (!column %in% names(x_selected)) {
-      x_selected[[column]] <- vector("list", nrow(x_selected))
+    if (!column %in% names(x)) {
+      x[[column]] <- vector("list", nrow(x))
     }
-    if (!column %in% names(y_selected)) {
-      y_selected[[column]] <- vector("list", nrow(y_selected))
+    if (!column %in% names(y)) {
+      y[[column]] <- vector("list", nrow(y))
     }
   }
 
   # perform inner join to compare only matching rows
   # perform inner join to compare only matching rows
   comparison <- dplyr::inner_join(
-    x_selected,
-    y_selected,
+    x,
+    y,
     by = keys,
     suffix = c(".x", ".y")
-  ) |> 
-    unlist_ard_columns()
-  
-  # Remove "cards" class from the object
-  class(comparison) <- setdiff(class(comparison), "card")
-  
+  )
+
   # build mismatch data frame for each compare column
   lapply(
     stats::setNames(compare, compare),

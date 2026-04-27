@@ -20,12 +20,16 @@
 #'   not used
 #'
 #' @return an ARD data frame of class 'card' (invisibly)
-#' @export
+#' @name print.card
 #' @keywords internal
 #'
 #' @examples
 #' ard_tabulate(ADSL, variables = AGEGR1) |>
 #'   print()
+NULL
+
+#' @export
+#' @rdname print.card
 print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...) {
   set_cli_abort_call()
 
@@ -135,5 +139,45 @@ print.card <- function(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
       "{length(missing_cols)} more variable{?s}: {paste(missing_cols, collapse = ', ')}"
     ))
   }
+  invisible(x)
+}
+
+
+#' @export
+#' @rdname print.card
+print.compare_ard <- function(x, ...) {
+  # print comparison details ---------------------------------------------------
+  cli::cli_inform("The comparison {.arg keys} are {.val {x$keys}}.")
+  cli::cli_inform("The comparison columns are {.val {x$columns}}.")
+
+  # print the mismatches rows --------------------------------------------------
+  cli::cli_h1("Mis-matched Rows")
+  if (nrow(x$rows_in_x_not_y) == 0L) {
+    cli::cli_alert_success("No rows in {.arg x} that do not appear in {.arg y}.")
+  }
+  else {
+    cli::cli_h3("Rows in {.arg x} that do not appear in {.arg y}.")
+    as.data.frame(x$rows_in_x_not_y)
+  }
+  if (nrow(x$rows_in_y_not_x) == 0L) {
+    cli::cli_alert_success("No rows in {.arg y} that do not appear in {.arg x}.")
+  }
+  else {
+    cli::cli_h3("Rows in {.arg y} that do not appear in {.arg x}.")
+    as.data.frame(x$rows_in_y_not_x) |> print()
+  }
+
+  # print comparison results ---------------------------------------------------
+  cli::cli_h1("Comparison Results")
+  for (i in seq_along(x$comparison)) {
+    if (nrow(x$comparison[[i]]) == 0L) {
+      cli::cli_alert_success("No differences found in column {.val {names(x$comparison[i])}}.")
+      next
+    }
+    cli::cli_alert_warning("Differences found in column {.val {names(x$comparison[i])}} for {.val {nrow(x$comparison[[i]])}} rows.")
+    as.data.frame(x$comparison[[i]]) |> utils::head(n = 10) |> print()
+  }
+
+  # return input invisibly -----------------------------------------------------
   invisible(x)
 }
