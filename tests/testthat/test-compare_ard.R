@@ -170,8 +170,7 @@ test_that("check_ard_equal() returns error with unequal ARDs", {
       ard_summary(ADSL[1:10, ], variables = AGE),
       ard_summary(ADSL[1:20, ], variables = AGE)
     ) |>
-    check_ard_equal(),
+      check_ard_equal(),
     "ARDs are not equal"
   )
 })
-

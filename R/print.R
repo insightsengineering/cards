@@ -154,15 +154,13 @@ print.compare_ard <- function(x, ...) {
   cli::cli_h1("Mis-matched Rows")
   if (nrow(x$rows_in_x_not_y) == 0L) {
     cli::cli_alert_success("No rows in {.arg x} that do not appear in {.arg y}.")
-  }
-  else {
+  } else {
     cli::cli_h3("Rows in {.arg x} that do not appear in {.arg y}.")
     as.data.frame(x$rows_in_x_not_y)
   }
   if (nrow(x$rows_in_y_not_x) == 0L) {
     cli::cli_alert_success("No rows in {.arg y} that do not appear in {.arg x}.")
-  }
-  else {
+  } else {
     cli::cli_h3("Rows in {.arg y} that do not appear in {.arg x}.")
     as.data.frame(x$rows_in_y_not_x) |> print()
   }
@@ -175,7 +173,9 @@ print.compare_ard <- function(x, ...) {
       next
     }
     cli::cli_alert_warning("Differences found in column {.val {names(x$comparison[i])}} for {.val {nrow(x$comparison[[i]])}} rows.")
-    as.data.frame(x$comparison[[i]]) |> utils::head(n = 10) |> print()
+    as.data.frame(x$comparison[[i]]) |>
+      utils::head(n = 10) |>
+      print()
   }
 
   # return input invisibly -----------------------------------------------------
