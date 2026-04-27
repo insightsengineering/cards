@@ -35,7 +35,6 @@
 #'
 #' bind_ard(ard, ard, .update = TRUE)
 bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .quiet = FALSE) {
-  stop("INTENTIONAL BREAK: Testing gtsummary revdepcheck!")
 
   set_cli_abort_call()
 

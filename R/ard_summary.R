@@ -80,7 +80,6 @@ ard_summary.data.frame <- function(data,
                                    fmt_fn = deprecated(),
                                    ...) {
   
-  stop("INTENTIONAL BREAK: Testing gtsummary revdepcheck!")
   set_cli_abort_call()
   check_dots_used()
 
