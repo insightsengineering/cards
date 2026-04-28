@@ -24,9 +24,8 @@
 #'     sums, otherwise `p` is used. If neither `n` nor `p` are present in `x` for the variable, an error will occur.
 #'
 #'   Defaults to `everything() ~ "descending"`.
-#' @param sort_col \cr
-#'     specify the name of the treatment column you want to sort by, or leave it blank to sort by the sum
-#'     across all treatment columns.
+#' @param sort_col (`character`)\cr
+#'     name of the treatment column you want to sort by e.g "Placebo"; leave it blank if you to sort by the sum across all treatment columns.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
