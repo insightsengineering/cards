@@ -25,8 +25,8 @@
 #'
 #'   Defaults to `everything() ~ "descending"`.
 #' @param sort_col \cr
-#'     specify the name of the treatment column you want to sort by eg 'Placebo' or leave it blank
-#'  to sort by the sum across all treatment columns.
+#'     specify the name of the treatment column you want to sort by, or leave it blank to sort by the sum
+#'     across all treatment columns.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
@@ -54,7 +54,7 @@
 #'   denominator = ADSL
 #' ) |>
 #'   sort_ard_hierarchical(sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"))
-#'   
+#'
 #' ard_stack_hierarchical_count(
 #'   ADAE,
 #'   variables = c(AESOC, AEDECOD),
@@ -62,7 +62,6 @@
 #'   denominator = ADSL
 #' ) |>
 #'   sort_ard_hierarchical(sort_col = "Placebo")
- 
 NULL
 
 #' @rdname sort_ard_hierarchical
@@ -287,18 +286,20 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
   sort_stat <- if (n_stat) "n" else "p" # statistic used to calculate group sums
 
   # calculate group sums
-  
-  # 4th April 2026 - introduced the ability to sort the ARD based on a particular treatment column
-  
-  if(!is.null(sort_col)){
-    x = x |> 
-      dplyr::mutate(stat = dplyr::case_when(stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level == sort_col ~ stat,
-                                            stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level != sort_col ~ list(0),
-                                            TRUE ~ stat))
-  }else {
-    x = x
+
+  # Introduced the ability to sort the ARD based on a particular treatment column
+
+  if (!is.null(sort_col)) {
+    x <- x |>
+      dplyr::mutate(stat = dplyr::case_when(
+        stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level == sort_col ~ stat,
+        stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level != sort_col ~ list(0),
+        TRUE ~ stat
+      ))
+  } else {
+    x <- x
   }
-  
+
   sum_i <- paste0("sum_group_", i) # sum column label
   x_sums <- x |>
     dplyr::filter(

@@ -29,8 +29,8 @@ sums, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present i
 Defaults to \code{everything() ~ "descending"}.}
 
 \item{sort_col}{\cr
-specify the name of the treatment column you want to sort by eg 'Placebo' or leave it blank
-to sort by the sum across all treatment columns.}
+specify the name of the treatment column you want to sort by, or leave it blank to sort by the sum
+across all treatment columns.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -66,7 +66,7 @@ ard_stack_hierarchical_count(
   denominator = ADSL
 ) |>
   sort_ard_hierarchical(sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"))
-  
+
 ard_stack_hierarchical_count(
   ADAE,
   variables = c(AESOC, AEDECOD),
