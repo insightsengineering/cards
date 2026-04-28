@@ -1,7 +1,9 @@
 .Rproj.user
 .Rhistory
-docs
+.RData
+.Ruserdata
 .DS_Store
+docs
 tests/testthat/_snaps/**/*.new.md
 tests/testthat/_snaps/**/*.new.svg
 revdep
