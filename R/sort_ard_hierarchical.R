@@ -281,7 +281,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
       .data$stat_name == sort_stat, # select statistic to sum
       if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
       if (length(c(ard_args$by, ard_args$variables)) > 1) {
-        if (ard_args$variable[i] %in% ard_args$include & !cur_var %in% "variable") {
+        if (ard_args$variables[i] %in% ard_args$include & !cur_var %in% "variable") {
           # if current variable is in include, sum *only* summary rows for the current variable
           .data$variable %in% "..overall.." &
             if (!next_var %in% "variable") .data[[next_var]] %in% "..empty.." else TRUE
