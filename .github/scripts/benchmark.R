@@ -1,4 +1,4 @@
-# ── 1. Load PR version and capture functions ──
+# <U+2500><U+2500> 1. Load PR version and capture functions <U+2500><U+2500>
 message("--- Loading PR version ---")
 pkgload::load_all(".")
 pr_version <- as.character(packageVersion("cards"))
@@ -13,7 +13,7 @@ pr_process_selectors(pr_data, variables = AGE, by = ARM)
 pr_compute_formula_selector(pr_data, x = list(AGE ~ mean, ARM ~ unique), arg_name = "stat")
 pkgload::unload("cards")
 
-# ── 2. Install and load main version, capture functions ──
+# <U+2500><U+2500> 2. Install and load main version, capture functions <U+2500><U+2500>
 message("--- Installing main version ---")
 remotes::install_github("insightsengineering/cards", quiet = TRUE)
 library(cards)
@@ -24,7 +24,7 @@ main_process_selectors <- cards::process_selectors.data.frame
 main_compute_formula_selector <- cards::compute_formula_selector
 main_data <- cards::ADSL
 
-# ── 3. Multi-round benchmarks ──
+# <U+2500><U+2500> 3. Multi-round benchmarks <U+2500><U+2500>
 set.seed(42)
 n_rounds <- 5L
 
@@ -74,7 +74,7 @@ formula_rounds <- lapply(seq_len(n_rounds), function(r) {
 }) |>
   do.call(what = rbind)
 
-# ── 4. Build comparison table with confidence intervals ──
+# <U+2500><U+2500> 4. Build comparison table with confidence intervals <U+2500><U+2500>
 build_comparison <- function(rounds_df) {
   rounds_df$group <- sub(" \\((main|pr)\\)$", "", rounds_df$expression)
   rounds_df$version <- ifelse(
@@ -84,17 +84,17 @@ build_comparison <- function(rounds_df) {
   groups <- unique(rounds_df$group)
   rows <- lapply(groups, function(g) {
     main_medians <- rounds_df$median_s[rounds_df$group == g & rounds_df$version == "main"]
-    pr_medians   <- rounds_df$median_s[rounds_df$group == g & rounds_df$version == "pr"]
+    pr_medians <- rounds_df$median_s[rounds_df$group == g & rounds_df$version == "pr"]
 
-    ratios     <- pr_medians / main_medians
+    ratios <- pr_medians / main_medians
     mean_ratio <- mean(ratios)
-    diff_pct   <- (mean_ratio - 1) * 100
+    diff_pct <- (mean_ratio - 1) * 100
 
-    n      <- length(ratios)
-    se     <- sd(ratios) / sqrt(n)
+    n <- length(ratios)
+    se <- sd(ratios) / sqrt(n)
     t_crit <- qt(0.975, df = n - 1)
-    ci_lo  <- (mean_ratio - t_crit * se - 1) * 100
-    ci_hi  <- (mean_ratio + t_crit * se - 1) * 100
+    ci_lo <- (mean_ratio - t_crit * se - 1) * 100
+    ci_hi <- (mean_ratio + t_crit * se - 1) * 100
 
     if (ci_hi < 0) {
       verdict <- paste0("\U2705 ", round(diff_pct, 1), "%")
@@ -102,22 +102,22 @@ build_comparison <- function(rounds_df) {
       verdict <- paste0("\U274C +", round(diff_pct, 1), "%")
     } else {
       sign_chr <- ifelse(diff_pct >= 0, "+", "")
-      verdict  <- paste0("\U2796 ", sign_chr, round(diff_pct, 1), "%")
+      verdict <- paste0("\U2796 ", sign_chr, round(diff_pct, 1), "%")
     }
 
     data.frame(
       expression = g,
       main = paste0(round(mean(main_medians) * 1000, 2), "ms"),
-      pr   = paste0(round(mean(pr_medians)   * 1000, 2), "ms"),
+      pr = paste0(round(mean(pr_medians) * 1000, 2), "ms"),
       change = verdict,
-      ci     = paste0("[", round(ci_lo, 1), "%, ", round(ci_hi, 1), "%]")
+      ci = paste0("[", round(ci_lo, 1), "%, ", round(ci_hi, 1), "%]")
     )
   })
   do.call(rbind, rows)
 }
 
 selector_tab <- build_comparison(selector_rounds)
-formula_tab  <- build_comparison(formula_rounds)
+formula_tab <- build_comparison(formula_rounds)
 
 header <- paste0(
   "## Performance Benchmark\n\n",
