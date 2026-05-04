@@ -4,7 +4,7 @@ pkgload::load_all(".")
 pr_version <- as.character(packageVersion("cards"))
 message("PR version: ", pr_version)
 
-pr_process_selectors <- cards::process_selectors.data.frame
+pr_process_selectors <- getFromNamespace("process_selectors.data.frame", "cards")
 pr_compute_formula_selector <- cards::compute_formula_selector
 pr_data <- cards::ADSL
 
@@ -20,7 +20,7 @@ library(cards)
 main_version <- as.character(packageVersion("cards"))
 message("Main version: ", main_version)
 
-main_process_selectors <- cards::process_selectors.data.frame
+main_process_selectors <- getFromNamespace("process_selectors.data.frame", "cards")
 main_compute_formula_selector <- cards::compute_formula_selector
 main_data <- cards::ADSL
 
