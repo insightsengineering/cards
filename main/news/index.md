@@ -1,6 +1,13 @@
 # Changelog
 
-## cards 0.7.1.9012
+## cards 0.7.1.9013
+
+- Added new functions
+  [`compare_ard()`](https://insightsengineering.github.io/cards/reference/compare_ard.md),
+  [`is_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md),
+  and
+  [`check_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md).
+  ([\#437](https://github.com/insightsengineering/cards/issues/437))
 
 - Update in
   [`ard_tabulate()`](https://insightsengineering.github.io/cards/reference/ard_tabulate.md)

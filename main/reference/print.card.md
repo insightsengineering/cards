@@ -8,6 +8,9 @@ Print method for objects of class 'card'
 ``` r
 # S3 method for class 'card'
 print(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
+
+# S3 method for class 'compare_ard'
+print(x, ...)
 ```
 
 ## Arguments
