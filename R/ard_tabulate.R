@@ -434,11 +434,22 @@ ard_tabulate.data.frame <- function(data,
   useNA <- match.arg(useNA)
   # tabulate results and save in data frame
   ...ard_tab_vars... <- c(by, strata, variable)
-  df_table <-
+  ...ard_tab... <-
     data[...ard_tab_vars...] |>
     dplyr::mutate(across(where(is.logical), ~ factor(., levels = c("FALSE", "TRUE")))) |>
-    with(inject(table(!!!syms(...ard_tab_vars...), useNA = !!useNA))) |>
-    dplyr::as_tibble(n = count_column)
+    with(inject(table(!!!syms(...ard_tab_vars...), useNA = !!useNA)))
+
+  # replace NA dimnames with placeholder to avoid R-devel error in as.data.frame()
+  ...ard_na_placeholder... <- "___cards_table_NA_PLACEHOLDER___"
+  dimnames(...ard_tab...) <- lapply(dimnames(...ard_tab...), function(x) {
+    x[is.na(x)] <- ...ard_na_placeholder...
+    x
+  })
+
+  df_table <-
+    ...ard_tab... |>
+    dplyr::as_tibble(n = count_column) |>
+    dplyr::mutate(across(all_of(...ard_tab_vars...), ~ dplyr::na_if(., ...ard_na_placeholder...)))
 
   # construct a matching data frame with the variables in their original type/class
   df_original_types <-
