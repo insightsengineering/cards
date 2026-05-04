@@ -126,24 +126,29 @@ process_selectors.data.frame <- function(data, ..., env = caller_env()) {
   # saved dots as named list of quos
   dots <- enquos(...)
 
-  # save named list of character column names selected
-  ret <-
-    imap(
-      dots,
-      function(x, arg_name) {
-        processed_value <-
-          cards_select(
-            expr = x,
-            data = data,
-            allow_rename = FALSE,
-            arg_name = arg_name
-          )
+  # process each selector and assign directly to the calling env
+  nms <- names(dots)
+  col_names <- names(data)
+  for (i in seq_along(dots)) {
+    # fast path: bare symbol quosure that matches a column name
+    raw_expr <- quo_get_expr(dots[[i]])
+    if (is.symbol(raw_expr)) {
+      nm <- as.character(raw_expr)
+      if (nm %in% col_names) {
+        assign(x = nms[i], value = nm, envir = env)
+        next
       }
+    }
+    assign(
+      x = nms[i],
+      value = cards_select(
+        expr = dots[[i]],
+        data = data,
+        allow_rename = FALSE,
+        arg_name = nms[i]
+      ),
+      envir = env
     )
-
-  # save processed args to the calling env (well, that is the default env)
-  for (i in seq_along(ret)) {
-    assign(x = names(ret)[i], value = ret[[i]], envir = env)
   }
 }
 
@@ -217,7 +222,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
     # remove duplicates (keeping the last one)
-    x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
+    x <- x[!duplicated(names(x), fromLast = TRUE)]
 
     return(x[intersect(names(x), names(data))])
   }
@@ -231,14 +236,28 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       lhs_quo <- f_lhs_as_quo(x[[i]])
 
       if (!is.null(data)) {
-        lhs_quo <- cards_select(
-          # if nothing found on LHS of formula, using `everything()`
-          expr = lhs_quo %||% dplyr::everything(),
-          data = data,
-          strict = strict,
-          allow_rename = FALSE,
-          arg_name = arg_name
-        )
+        # fast path: bare symbol LHS that matches a column name
+        lhs_resolved <- FALSE
+        if (!is.null(lhs_quo)) {
+          lhs_expr <- quo_get_expr(lhs_quo)
+          if (is.symbol(lhs_expr)) {
+            nm <- as.character(lhs_expr)
+            if (nm %in% names(data)) {
+              lhs_quo <- nm
+              lhs_resolved <- TRUE
+            }
+          }
+        }
+        if (!lhs_resolved) {
+          lhs_quo <- cards_select(
+            # if nothing found on LHS of formula, using `everything()`
+            expr = lhs_quo %||% dplyr::everything(),
+            data = data,
+            strict = strict,
+            allow_rename = FALSE,
+            arg_name = arg_name
+          )
+        }
       }
 
       colnames <- eval_tidy(lhs_quo)
@@ -262,7 +281,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   x <- .purrr_list_flatten(x)
 
   # remove duplicates (keeping the last one)
-  x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
+  x <- x[!duplicated(names(x), fromLast = TRUE)]
 
   # only keeping names in the data frame
   x[intersect(names(x), names(data))]
