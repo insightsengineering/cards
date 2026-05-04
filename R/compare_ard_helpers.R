@@ -13,11 +13,12 @@
 
   .check_not_empty(keys_x)
 
-    if (!setequal(keys_x, keys_y)) {
+  if (!setequal(keys_x, keys_y)) {
     cli::cli_abort(
       c("The {.arg keys} columns from {.arg x} and {.arg y} do not match.",
         "i" = "Key columns in {.arg x}: {.val {keys_x}}",
-        "i" = "Key columns in {.arg y}: {.val {keys_y}}"),
+        "i" = "Key columns in {.arg y}: {.val {keys_y}}"
+      ),
       call = get_cli_abort_call()
     )
   }
@@ -43,7 +44,8 @@
     cli::cli_abort(
       c("The comparison {.arg columns} from {.arg x} and {.arg y} do not match.",
         "i" = "Comparison {.arg columns} in {.arg x}: {.val {columns_x}}",
-        "i" = "Comparison {.arg columns} in {.arg y}: {.val {columns_y}}"),
+        "i" = "Comparison {.arg columns} in {.arg y}: {.val {columns_y}}"
+      ),
       call = get_cli_abort_call()
     )
   }
