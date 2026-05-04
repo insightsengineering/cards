@@ -8,13 +8,21 @@
 #' @keywords internal
 #' @noRd
 .process_keys_arg <- function(x, y, keys) {
-  keys <- intersect(
-    cards_select({{ keys }}, data = x),
-    cards_select({{ keys }}, data = y)
-  )
-  .check_not_empty(keys)
+  keys_x <- cards_select({{ keys }}, data = x)
+  keys_y <- cards_select({{ keys }}, data = y)
 
-  keys
+  .check_not_empty(keys_x)
+
+    if (!setequal(keys_x, keys_y)) {
+    cli::cli_abort(
+      c("The {.arg keys} columns from {.arg x} and {.arg y} do not match.",
+        "i" = "Key columns in {.arg x}: {.val {keys_x}}",
+        "i" = "Key columns in {.arg y}: {.val {keys_y}}"),
+      call = get_cli_abort_call()
+    )
+  }
+
+  keys_x
 }
 
 #' Process compare Argument
@@ -27,13 +35,20 @@
 #' @keywords internal
 #' @noRd
 .process_compare_arg <- function(x, y, columns) {
-  columns <- intersect(
-    cards_select({{ columns }}, data = x),
-    cards_select({{ columns }}, data = y)
-  )
-  .check_not_empty(columns)
+  columns_x <- cards_select({{ columns }}, data = x)
+  columns_y <- cards_select({{ columns }}, data = y)
 
-  columns
+  .check_not_empty(columns_x)
+  if (!setequal(columns_x, columns_y)) {
+    cli::cli_abort(
+      c("The comparison {.arg columns} from {.arg x} and {.arg y} do not match.",
+        "i" = "Comparison {.arg columns} in {.arg x}: {.val {columns_x}}",
+        "i" = "Comparison {.arg columns} in {.arg y}: {.val {columns_y}}"),
+      call = get_cli_abort_call()
+    )
+  }
+
+  columns_x
 }
 
 #' Check Argument is Not Empty

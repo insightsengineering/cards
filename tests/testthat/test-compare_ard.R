@@ -75,7 +75,7 @@ test_that("compare_ard handles ARDs with different grouping structures", {
   # Should use intersection of keys
   expect_error(
     compare_ard(ard_with_group, ard_without_group),
-    "argument cannot be empty"
+    "do not match"
   )
 })
 
