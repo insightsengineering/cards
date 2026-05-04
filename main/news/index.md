@@ -1,6 +1,13 @@
 # Changelog
 
-## cards 0.7.1.9011
+## cards 0.7.1.9012
+
+- Update in
+  [`ard_tabulate()`](https://insightsengineering.github.io/cards/reference/ard_tabulate.md)
+  to account for change in
+  [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html) being
+  released in R-Devel.
+  ([\#554](https://github.com/insightsengineering/cards/issues/554))
 
 - Fixed bug in
   [`rename_ard_columns()`](https://insightsengineering.github.io/cards/reference/rename_ard_columns.md)

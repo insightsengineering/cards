@@ -182,43 +182,43 @@ get(x = "statistic", envir = example_env)
 #> $TRT01P
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01PN
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01A
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRT01AN
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTEDT
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTDUR
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTA
 #> function (x, ...) 
 #> UseMethod("mean")
-#> <bytecode: 0x55da52270e58>
+#> <bytecode: 0x558fa58e0e58>
 #> <environment: namespace:base>
 #> 
 #> $TRTSDT
