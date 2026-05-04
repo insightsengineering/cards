@@ -1,4 +1,4 @@
-# cards 0.7.1.9011
+# cards 0.7.1.9012
 
 * Update in `ard_tabulate()` to account for change in `as.data.frame()` being released in R-Devel. (#554)
 
