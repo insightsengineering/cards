@@ -130,14 +130,11 @@ process_selectors.data.frame <- function(data, ..., env = caller_env()) {
   nms <- names(dots)
   col_names <- names(data)
   for (i in seq_along(dots)) {
-    # fast path: bare symbol quosure that matches a column name
-    raw_expr <- quo_get_expr(dots[[i]])
-    if (is.symbol(raw_expr)) {
-      nm <- as.character(raw_expr)
-      if (nm %in% col_names) {
-        assign(x = nms[i], value = nm, envir = env)
-        next
-      }
+    # fast path: character vector of column names (string literal or c() of strings)
+    char_vals <- .extract_char_vector(quo_get_expr(dots[[i]]))
+    if (!is.null(char_vals) && all(char_vals %in% col_names)) {
+      assign(x = nms[i], value = char_vals, envir = env)
+      next
     }
     assign(
       x = nms[i],
@@ -236,16 +233,13 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       lhs_quo <- f_lhs_as_quo(x[[i]])
 
       if (!is.null(data)) {
-        # fast path: bare symbol LHS that matches a column name
+        # fast path: character vector LHS that matches column names
         lhs_resolved <- FALSE
         if (!is.null(lhs_quo)) {
-          lhs_expr <- quo_get_expr(lhs_quo)
-          if (is.symbol(lhs_expr)) {
-            nm <- as.character(lhs_expr)
-            if (nm %in% names(data)) {
-              lhs_quo <- nm
-              lhs_resolved <- TRUE
-            }
+          char_vals <- .extract_char_vector(quo_get_expr(lhs_quo))
+          if (!is.null(char_vals) && all(char_vals %in% names(data))) {
+            lhs_quo <- char_vals
+            lhs_resolved <- TRUE
           }
         }
         if (!lhs_resolved) {
@@ -355,4 +349,19 @@ f_lhs_as_quo <- function(f) {
 f_rhs_as_quo <- function(f) {
   if (is.null(f_rhs(f))) return(NULL) # styler: off
   quo(!!f_rhs(f)) |> structure(.Environment = attr(f, ".Environment"))
+}
+
+# Extract a character vector from an expression if it is a string literal
+# or a call to c() with all string literal arguments. Returns NULL otherwise.
+.extract_char_vector <- function(expr) {
+  if (is.character(expr)) {
+    return(expr)
+  }
+  if (is.call(expr) && identical(expr[[1]], quote(c))) {
+    args <- as.list(expr)[-1]
+    if (length(args) > 0L && all(vapply(args, is.character, logical(1)))) {
+      return(vapply(args, identity, character(1)))
+    }
+  }
+  NULL
 }
