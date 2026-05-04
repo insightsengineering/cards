@@ -1,5 +1,7 @@
 # cards 0.7.1.9011
 
+* Update in `ard_tabulate()` to account for change in `as.data.frame()` being released in R-Devel. (#554)
+
 * Fixed bug in `rename_ard_columns()` whereby factor variables were getting converted to integers and added parameter `fct_as_chr` as is used in `unlist_ard_columns()` (#542)
 
 * Adding `ard_tabulate_rows()` function to tabulate the number of rows in a data frame. (#531)
