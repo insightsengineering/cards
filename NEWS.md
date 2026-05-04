@@ -1,4 +1,4 @@
-# cards 0.7.1.9012
+# cards 0.7.1.9013
 
 * Added new functions `compare_ard()`, `is_ard_equal()`, and `check_ard_equal()`. (#437)
 
