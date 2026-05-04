@@ -3,7 +3,7 @@
 test_that(".process_keys_arg() returns key column names", {
   ard <- ard_summary(ADSL, variables = AGE)
 
-  result <- cards:::.process_keys_arg(ard, ard, keys = c("variable", "stat_name"))
+  result <- .process_keys_arg(ard, ard, keys = c("variable", "stat_name"))
   expect_equal(result, c("variable", "stat_name"))
 })
 
@@ -12,7 +12,7 @@ test_that(".process_keys_arg() errors when keys mismatch between x and y", {
   ard2 <- ard1 |> dplyr::select(-context)
 
   expect_error(
-    cards:::.process_keys_arg(ard1, ard2, keys = c("variable", "context"))
+    .process_keys_arg(ard1, ard2, keys = c("variable", "context"))
   )
 })
 
@@ -21,7 +21,7 @@ test_that(".process_keys_arg() errors when keys mismatch between x and y", {
 test_that(".process_compare_arg() returns column names", {
   ard <- ard_summary(ADSL, variables = AGE)
 
-  result <- cards:::.process_compare_arg(ard, ard, columns = "stat")
+  result <- .process_compare_arg(ard, ard, columns = "stat")
   expect_equal(result, "stat")
 })
 
@@ -30,19 +30,19 @@ test_that(".process_compare_arg() errors when columns mismatch", {
   ard2 <- ard1 |> dplyr::select(-stat_label)
 
   expect_error(
-    cards:::.process_compare_arg(ard1, ard2, columns = c("stat", "stat_label"))
+    .process_compare_arg(ard1, ard2, columns = c("stat", "stat_label"))
   )
 })
 
 # --- .check_not_empty() -------------------------------------------------------
 
 test_that(".check_not_empty() passes for non-empty input", {
-  expect_invisible(cards:::.check_not_empty(c("a", "b")))
+  expect_invisible(.check_not_empty(c("a", "b")))
 })
 
 test_that(".check_not_empty() errors for empty input", {
   expect_error(
-    cards:::.check_not_empty(character()),
+    .check_not_empty(character()),
     "cannot be empty"
   )
 })
@@ -52,7 +52,7 @@ test_that(".check_not_empty() errors for empty input", {
 test_that(".check_keys_unique() passes for unique keys", {
   ard <- ard_summary(ADSL, variables = AGE)
   expect_invisible(
-    cards:::.check_keys_unique(ard, c("variable", "stat_name"), arg_name = "x")
+    .check_keys_unique(ard, c("variable", "stat_name"), arg_name = "x")
   )
 })
 
@@ -61,7 +61,7 @@ test_that(".check_keys_unique() errors for duplicate keys", {
   ard_dup <- dplyr::bind_rows(ard, ard)
 
   expect_error(
-    cards:::.check_keys_unique(ard_dup, c("variable", "stat_name"), arg_name = "x"),
+    .check_keys_unique(ard_dup, c("variable", "stat_name"), arg_name = "x"),
     "Duplicate key combinations"
   )
 })
@@ -72,7 +72,7 @@ test_that(".format_duplicate_keys() formats duplicates", {
   ard <- ard_summary(ADSL, variables = AGE)
   ard_dup <- dplyr::bind_rows(ard, ard)
 
-  result <- cards:::.format_duplicate_keys(ard_dup, c("variable", "stat_name"))
+  result <- .format_duplicate_keys(ard_dup, c("variable", "stat_name"))
 
   expect_type(result, "character")
   expect_gt(length(result), 0L)
@@ -83,63 +83,63 @@ test_that(".format_duplicate_keys() formats duplicates", {
 test_that(".format_duplicate_keys() returns empty for no duplicates", {
   ard <- ard_summary(ADSL, variables = AGE)
 
-  result <- cards:::.format_duplicate_keys(ard, c("variable", "stat_name"))
+  result <- .format_duplicate_keys(ard, c("variable", "stat_name"))
   expect_equal(result, character())
 })
 
 # --- .format_key_value() ------------------------------------------------------
 
 test_that(".format_key_value() formats character values", {
-  expect_equal(cards:::.format_key_value("hello"), "\"hello\"")
+  expect_equal(.format_key_value("hello"), "\"hello\"")
 })
 
 test_that(".format_key_value() formats NA character", {
-  expect_equal(cards:::.format_key_value(NA_character_), "NA")
+  expect_equal(.format_key_value(NA_character_), "NA")
 })
 
 test_that(".format_key_value() formats logical values", {
-  expect_equal(cards:::.format_key_value(TRUE), "TRUE")
-  expect_equal(cards:::.format_key_value(FALSE), "FALSE")
+  expect_equal(.format_key_value(TRUE), "TRUE")
+  expect_equal(.format_key_value(FALSE), "FALSE")
 })
 
 test_that(".format_key_value() formats NA logical", {
-  expect_equal(cards:::.format_key_value(NA), "NA")
+  expect_equal(.format_key_value(NA), "NA")
 })
 
 test_that(".format_key_value() formats numeric values", {
-  expect_equal(cards:::.format_key_value(42), "42")
-  expect_equal(cards:::.format_key_value(3.14), "3.14")
+  expect_equal(.format_key_value(42), "42")
+  expect_equal(.format_key_value(3.14), "3.14")
 })
 
 test_that(".format_key_value() formats NA numeric", {
-  expect_equal(cards:::.format_key_value(NA_real_), "NA")
+  expect_equal(.format_key_value(NA_real_), "NA")
 })
 
 test_that(".format_key_value() formats factor values", {
-  expect_equal(cards:::.format_key_value(factor("level_a")), "\"level_a\"")
+  expect_equal(.format_key_value(factor("level_a")), "\"level_a\"")
 })
 
 test_that(".format_key_value() formats Date values", {
-  expect_equal(cards:::.format_key_value(as.Date("2024-01-15")), "\"2024-01-15\"")
+  expect_equal(.format_key_value(as.Date("2024-01-15")), "\"2024-01-15\"")
 })
 
 test_that(".format_key_value() formats NA Date", {
-  expect_equal(cards:::.format_key_value(as.Date(NA)), "NA")
+  expect_equal(.format_key_value(as.Date(NA)), "NA")
 })
 
 test_that(".format_key_value() formats POSIXt values", {
   dt <- as.POSIXct("2024-01-15 10:30:00", tz = "UTC")
-  result <- cards:::.format_key_value(dt)
+  result <- .format_key_value(dt)
   expect_true(grepl("2024-01-15", result))
 })
 
 test_that(".format_key_value() formats NA POSIXt", {
-  expect_equal(cards:::.format_key_value(as.POSIXct(NA)), "NA")
+  expect_equal(.format_key_value(as.POSIXct(NA)), "NA")
 })
 
 test_that(".format_key_value() handles unknown types via as.character fallback", {
   # raw type falls through all type checks to the as.character fallback
-  expect_type(cards:::.format_key_value(as.raw(0x1)), "character")
+  expect_type(.format_key_value(as.raw(0x1)), "character")
 })
 
 # --- .compare_rows() ---------------------------------------------------------
@@ -149,7 +149,7 @@ test_that(".compare_rows() returns rows in x not in y", {
   ard_subset <- ard_base |> dplyr::filter(stat_name != "mean")
   keys <- c("variable", "context", "stat_name")
 
-  result <- cards:::.compare_rows(ard_base, ard_subset, keys)
+  result <- .compare_rows(ard_base, ard_subset, keys)
   expect_equal(nrow(result), 1L)
   expect_equal(result$stat_name, "mean")
 })
@@ -158,7 +158,7 @@ test_that(".compare_rows() returns empty when all rows match", {
   ard <- ard_summary(ADSL, variables = AGE)
   keys <- c("variable", "context", "stat_name")
 
-  result <- cards:::.compare_rows(ard, ard, keys)
+  result <- .compare_rows(ard, ard, keys)
   expect_equal(nrow(result), 0L)
 })
 
@@ -170,7 +170,7 @@ test_that(".compare_columns() detects value differences", {
   ard_modified$stat[1] <- list(999L)
   keys <- c("variable", "context", "stat_name")
 
-  result <- cards:::.compare_columns(
+  result <- .compare_columns(
     ard_base, ard_modified, keys, compare = "stat",
     tolerance = sqrt(.Machine$double.eps), check.attributes = TRUE
   )
@@ -184,7 +184,7 @@ test_that(".compare_columns() returns empty for identical data", {
   ard <- ard_summary(ADSL, variables = AGE)
   keys <- c("variable", "context", "stat_name")
 
-  result <- cards:::.compare_columns(
+  result <- .compare_columns(
     ard, ard, keys, compare = "stat",
     tolerance = sqrt(.Machine$double.eps), check.attributes = TRUE
   )
@@ -200,14 +200,14 @@ test_that(".compare_columns() respects tolerance for numeric comparison", {
   keys <- c("variable", "context", "stat_name")
 
   # default tolerance ignores tiny diff
-  result_default <- cards:::.compare_columns(
+  result_default <- .compare_columns(
     ard_base, ard_modified, keys, compare = "stat",
     tolerance = sqrt(.Machine$double.eps), check.attributes = TRUE
   )
   expect_equal(nrow(result_default$stat), 0L)
 
   # strict tolerance catches it
-  result_strict <- cards:::.compare_columns(
+  result_strict <- .compare_columns(
     ard_base, ard_modified, keys, compare = "stat",
     tolerance = 0, check.attributes = TRUE
   )
@@ -221,7 +221,7 @@ test_that(".compare_columns() compares multiple columns", {
   ard_modified$stat_label[1] <- "Changed"
   keys <- c("variable", "context", "stat_name")
 
-  result <- cards:::.compare_columns(
+  result <- .compare_columns(
     ard_base, ard_modified, keys, compare = c("stat", "stat_label"),
     tolerance = sqrt(.Machine$double.eps), check.attributes = TRUE
   )
@@ -239,7 +239,7 @@ test_that(".duplicate_message() errors with formatted duplicate info", {
   ard_dup <- dplyr::bind_rows(ard, ard)
 
   expect_error(
-    cards:::.duplicate_message("x", ard_dup, c("variable", "stat_name"), "user"),
+    .duplicate_message("x", ard_dup, c("variable", "stat_name"), "user"),
     "Duplicate key combinations"
   )
 })
@@ -249,7 +249,7 @@ test_that(".duplicate_message() uses intersection wording", {
   ard_dup <- dplyr::bind_rows(ard, ard)
 
   expect_error(
-    cards:::.duplicate_message("x", ard_dup, c("variable", "stat_name"), "intersection"),
+    .duplicate_message("x", ard_dup, c("variable", "stat_name"), "intersection"),
     "do not uniquely identify"
   )
 })
@@ -260,7 +260,7 @@ test_that(".check_key_identify_rows() passes for unique keys", {
   ard <- ard_summary(ADSL, variables = AGE)
 
   expect_invisible(
-    cards:::.check_key_identify_rows(ard, "x", c("variable", "stat_name"), "user")
+    .check_key_identify_rows(ard, "x", c("variable", "stat_name"), "user")
   )
 })
 
@@ -269,7 +269,7 @@ test_that(".check_key_identify_rows() errors for duplicate keys", {
   ard_dup <- dplyr::bind_rows(ard, ard)
 
   expect_error(
-    cards:::.check_key_identify_rows(ard_dup, "x", c("variable", "stat_name"), "user")
+    .check_key_identify_rows(ard_dup, "x", c("variable", "stat_name"), "user")
   )
 })
 
@@ -278,7 +278,7 @@ test_that(".check_key_identify_rows() errors for duplicate keys", {
 test_that(".format_keys() formats key rows", {
   ard <- ard_summary(ADSL, variables = AGE)
 
-  result <- cards:::.format_keys(ard, c("variable", "stat_name"), limit = 3L)
+  result <- .format_keys(ard, c("variable", "stat_name"), limit = 3L)
 
   expect_type(result, "character")
   expect_lte(length(result), 3L)
@@ -290,7 +290,7 @@ test_that(".format_keys() returns empty for zero-row data", {
   ard <- ard_summary(ADSL, variables = AGE)
   empty <- ard[0, ]
 
-  result <- cards:::.format_keys(empty, c("variable", "stat_name"))
+  result <- .format_keys(empty, c("variable", "stat_name"))
   expect_equal(result, character())
 })
 
@@ -301,7 +301,7 @@ test_that(".check_rows_not_in_x_y() passes when all rows match", {
   keys <- c("variable", "context", "stat_name")
 
   expect_invisible(
-    cards:::.check_rows_not_in_x_y(ard, ard, keys)
+    .check_rows_not_in_x_y(ard, ard, keys)
   )
 })
 
@@ -311,7 +311,7 @@ test_that(".check_rows_not_in_x_y() errors when rows differ", {
   keys <- c("variable", "context", "stat_name")
 
   expect_error(
-    cards:::.check_rows_not_in_x_y(ard_base, ard_subset, keys),
+    .check_rows_not_in_x_y(ard_base, ard_subset, keys),
     "do not share the same records"
   )
 })
@@ -321,7 +321,7 @@ test_that(".check_rows_not_in_x_y() errors when rows differ", {
 test_that(".ensure_column() adds missing column", {
   df <- data.frame(a = 1:3)
 
-  result <- cards:::.ensure_column(df, "b")
+  result <- .ensure_column(df, "b")
   expect_true("b" %in% names(result))
   expect_type(result$b, "list")
   expect_equal(length(result$b), 3L)
@@ -330,7 +330,7 @@ test_that(".ensure_column() adds missing column", {
 test_that(".ensure_column() preserves existing column", {
   df <- data.frame(a = 1:3, b = 4:6)
 
-  result <- cards:::.ensure_column(df, "b")
+  result <- .ensure_column(df, "b")
   expect_equal(result$b, 4:6)
 })
 
@@ -349,7 +349,7 @@ test_that(".build_mismatches() finds mismatched rows", {
     suffix = c(".x", ".y")
   )
 
-  result <- cards:::.build_mismatches(comparison, "stat", keys)
+  result <- .build_mismatches(comparison, "stat", keys)
   expect_gt(nrow(result), 0L)
   expect_true(all(c("stat.x", "stat.y") %in% names(result)))
 })
@@ -365,7 +365,7 @@ test_that(".build_mismatches() returns empty for identical data", {
     suffix = c(".x", ".y")
   )
 
-  result <- cards:::.build_mismatches(comparison, "stat", keys)
+  result <- .build_mismatches(comparison, "stat", keys)
   expect_equal(nrow(result), 0L)
 })
 
@@ -380,7 +380,7 @@ test_that(".build_mismatches() handles missing comparison columns", {
     suffix = c(".x", ".y")
   )
 
-  result <- cards:::.build_mismatches(comparison, "nonexistent", keys)
+  result <- .build_mismatches(comparison, "nonexistent", keys)
   expect_equal(nrow(result), 0L)
   expect_true("nonexistent.x" %in% names(result))
   expect_true("nonexistent.y" %in% names(result))
