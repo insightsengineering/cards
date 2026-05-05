@@ -7,7 +7,7 @@ message("PR version: ", pr_version)
 pr_ard_summary <- cards::ard_summary
 pr_data <- cards::ADSL
 
-pr_ard_summary(data = pr_data)
+pr_ard_summary(data = pr_data, variables = AGE)
 pkgload::unload("cards")
 
 # -- 2. Install and load main version --
@@ -28,8 +28,8 @@ message("--- Running ard_summary benchmarks (", n_rounds, " rounds) ---")
 bench_rounds <- lapply(seq_len(n_rounds), function(r) {
   message("  Round ", r)
   res <- bench::mark(
-    `ard_summary (main)` = main_ard_summary(data = main_data),
-    `ard_summary (pr)` = pr_ard_summary(data = pr_data),
+    `ard_summary (main)` = main_ard_summary(data = main_data, variables = AGE),
+    `ard_summary (pr)` = pr_ard_summary(data = pr_data, variables = AGE),
     iterations = 100,
     check = FALSE
   )
