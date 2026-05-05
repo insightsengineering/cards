@@ -126,26 +126,24 @@ process_selectors.data.frame <- function(data, ..., env = caller_env()) {
   # saved dots as named list of quos
   dots <- enquos(...)
 
-  # process each selector and assign directly to the calling env
-  nms <- names(dots)
-  col_names <- names(data)
-  for (i in seq_along(dots)) {
-    # fast path: evaluate the quosure and check for a character vector of column names
-    char_vals <- .try_eval_char_vector(dots[[i]], col_names)
-    if (!is.null(char_vals)) {
-      assign(x = nms[i], value = char_vals, envir = env)
-      next
-    }
-    assign(
-      x = nms[i],
-      value = cards_select(
-        expr = dots[[i]],
-        data = data,
-        allow_rename = FALSE,
-        arg_name = nms[i]
-      ),
-      envir = env
+  # save named list of character column names selected
+  ret <-
+    imap(
+      dots,
+      function(x, arg_name) {
+        processed_value <-
+          cards_select(
+            expr = x,
+            data = data,
+            allow_rename = FALSE,
+            arg_name = arg_name
+          )
+      }
     )
+
+  # save processed args to the calling env (well, that is the default env)
+  for (i in seq_along(ret)) {
+    assign(x = names(ret)[i], value = ret[[i]], envir = env)
   }
 }
 
@@ -219,7 +217,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   # user passed a named list, return unaltered
   if (.is_named_list(x)) {
     # remove duplicates (keeping the last one)
-    x <- x[!duplicated(names(x), fromLast = TRUE)]
+    x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
 
     return(x[intersect(names(x), names(data))])
   }
@@ -233,25 +231,14 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       lhs_quo <- f_lhs_as_quo(x[[i]])
 
       if (!is.null(data)) {
-        # fast path: evaluate LHS and check for character vector of column names
-        lhs_resolved <- FALSE
-        if (!is.null(lhs_quo)) {
-          char_vals <- .try_eval_char_vector(lhs_quo, names(data))
-          if (!is.null(char_vals)) {
-            lhs_quo <- char_vals
-            lhs_resolved <- TRUE
-          }
-        }
-        if (!lhs_resolved) {
-          lhs_quo <- cards_select(
-            # if nothing found on LHS of formula, using `everything()`
-            expr = lhs_quo %||% dplyr::everything(),
-            data = data,
-            strict = strict,
-            allow_rename = FALSE,
-            arg_name = arg_name
-          )
-        }
+        lhs_quo <- cards_select(
+          # if nothing found on LHS of formula, using `everything()`
+          expr = lhs_quo %||% dplyr::everything(),
+          data = data,
+          strict = strict,
+          allow_rename = FALSE,
+          arg_name = arg_name
+        )
       }
 
       colnames <- eval_tidy(lhs_quo)
@@ -275,7 +262,7 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
   x <- .purrr_list_flatten(x)
 
   # remove duplicates (keeping the last one)
-  x <- x[!duplicated(names(x), fromLast = TRUE)]
+  x <- x[names(x) |> rev() |> Negate(duplicated)() |> rev()] # styler: off
 
   # only keeping names in the data frame
   x[intersect(names(x), names(data))]
@@ -349,29 +336,4 @@ f_lhs_as_quo <- function(f) {
 f_rhs_as_quo <- function(f) {
   if (is.null(f_rhs(f))) return(NULL) # styler: off
   quo(!!f_rhs(f)) |> structure(.Environment = attr(f, ".Environment"))
-}
-
-# Try to resolve a quosure to a character vector of column names.
-# Only attempts evaluation for expressions that are likely to yield a
-# character vector (string literals, c() calls, or plain symbols).
-# Returns the character vector if all values are found in col_names,
-# NULL otherwise (caller should fall through to tidyselect).
-.try_eval_char_vector <- function(quo, col_names) {
-  expr <- quo_get_expr(quo)
-  # string literal: "AGE" or c("AGE", "ARM")
-  if (is.character(expr)) {
-    if (all(expr %in% col_names)) {
-      return(expr)
-    }
-    return(NULL)
-  }
-  # c() call or plain symbol <U+2014> safe to evaluate
-  if (is.symbol(expr) ||
-    (is.call(expr) && identical(expr[[1]], quote(c)))) {
-    val <- tryCatch(eval_tidy(quo), error = function(e) NULL)
-    if (is.character(val) && length(val) > 0L && all(val %in% col_names)) {
-      return(val)
-    }
-  }
-  NULL
 }

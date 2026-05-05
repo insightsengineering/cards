@@ -9,8 +9,8 @@ pr_compute_formula_selector <- cards::compute_formula_selector
 pr_data <- cards::ADSL
 
 # Force-run to verify they work before unloading
-pr_process_selectors(pr_data, variables = "AGE", by = "ARM")
-pr_compute_formula_selector(pr_data, x = list("AGE" ~ mean, "ARM" ~ unique), arg_name = "stat")
+pr_process_selectors(pr_data, variables = AGE, by = ARM)
+pr_compute_formula_selector(pr_data, x = list(AGE ~ mean, ARM ~ unique), arg_name = "stat")
 pkgload::unload("cards")
 
 # <U+2500><U+2500> 2. Install and load main version, capture functions <U+2500><U+2500>
@@ -32,10 +32,10 @@ message("--- Running process_selectors benchmarks (", n_rounds, " rounds) ---")
 selector_rounds <- lapply(seq_len(n_rounds), function(r) {
   message("  Round ", r)
   res <- bench::mark(
-    `process_selectors char vector (main)` =
-      main_process_selectors(main_data, variables = c("AGE", "BMIBL"), by = "ARM"),
-    `process_selectors char vector (pr)` =
-      pr_process_selectors(pr_data, variables = c("AGE", "BMIBL"), by = "ARM"),
+    `process_selectors bare symbols (main)` =
+      main_process_selectors(main_data, variables = AGE, by = ARM),
+    `process_selectors bare symbols (pr)` =
+      pr_process_selectors(pr_data, variables = AGE, by = ARM),
     `process_selectors tidyselect (main)` =
       main_process_selectors(main_data, variables = starts_with("A"), by = dplyr::all_of("ARM")),
     `process_selectors tidyselect (pr)` =
@@ -55,10 +55,10 @@ message("--- Running compute_formula_selector benchmarks (", n_rounds, " rounds)
 formula_rounds <- lapply(seq_len(n_rounds), function(r) {
   message("  Round ", r)
   res <- bench::mark(
-    `formula_selector char LHS (main)` =
-      main_compute_formula_selector(main_data, x = list("AGE" ~ mean, "ARM" ~ unique, "SEX" ~ unique), arg_name = "stat"),
-    `formula_selector char LHS (pr)` =
-      pr_compute_formula_selector(pr_data, x = list("AGE" ~ mean, "ARM" ~ unique, "SEX" ~ unique), arg_name = "stat"),
+    `formula_selector formulas (main)` =
+      main_compute_formula_selector(main_data, x = list(AGE ~ mean, ARM ~ unique, SEX ~ unique), arg_name = "stat"),
+    `formula_selector formulas (pr)` =
+      pr_compute_formula_selector(pr_data, x = list(AGE ~ mean, ARM ~ unique, SEX ~ unique), arg_name = "stat"),
     `formula_selector named list (main)` =
       main_compute_formula_selector(main_data, x = list(AGE = mean, ARM = unique), arg_name = "stat"),
     `formula_selector named list (pr)` =
