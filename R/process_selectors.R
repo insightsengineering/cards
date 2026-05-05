@@ -352,12 +352,26 @@ f_rhs_as_quo <- function(f) {
 }
 
 # Try to resolve a quosure to a character vector of column names.
+# Only attempts evaluation for expressions that are likely to yield a
+# character vector (string literals, c() calls, or plain symbols).
 # Returns the character vector if all values are found in col_names,
 # NULL otherwise (caller should fall through to tidyselect).
 .try_eval_char_vector <- function(quo, col_names) {
-  val <- tryCatch(eval_tidy(quo), error = function(e) NULL)
-  if (is.character(val) && length(val) > 0L && all(val %in% col_names)) {
-    return(val)
+  expr <- quo_get_expr(quo)
+  # string literal: "AGE" or c("AGE", "ARM")
+  if (is.character(expr)) {
+    if (all(expr %in% col_names)) {
+      return(expr)
+    }
+    return(NULL)
+  }
+  # c() call or plain symbol <U+2014> safe to evaluate
+  if (is.symbol(expr) ||
+    (is.call(expr) && identical(expr[[1]], quote(c)))) {
+    val <- tryCatch(eval_tidy(quo), error = function(e) NULL)
+    if (is.character(val) && length(val) > 0L && all(val %in% col_names)) {
+      return(val)
+    }
   }
   NULL
 }
