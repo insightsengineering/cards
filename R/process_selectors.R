@@ -130,14 +130,11 @@ process_selectors.data.frame <- function(data, ..., env = caller_env()) {
   nms <- names(dots)
   col_names <- names(data)
   for (i in seq_along(dots)) {
-    # fast path: bare symbol quosure that matches a column name
-    raw_expr <- quo_get_expr(dots[[i]])
-    if (is.symbol(raw_expr)) {
-      nm <- as.character(raw_expr)
-      if (nm %in% col_names) {
-        assign(x = nms[i], value = nm, envir = env)
-        next
-      }
+    # fast path: evaluate the quosure and check for a character vector of column names
+    char_vals <- .try_eval_char_vector(dots[[i]], col_names)
+    if (!is.null(char_vals)) {
+      assign(x = nms[i], value = char_vals, envir = env)
+      next
     }
     assign(
       x = nms[i],
@@ -236,16 +233,13 @@ compute_formula_selector <- function(data, x, arg_name = caller_arg(x), env = ca
       lhs_quo <- f_lhs_as_quo(x[[i]])
 
       if (!is.null(data)) {
-        # fast path: bare symbol LHS that matches a column name
+        # fast path: evaluate LHS and check for character vector of column names
         lhs_resolved <- FALSE
         if (!is.null(lhs_quo)) {
-          lhs_expr <- quo_get_expr(lhs_quo)
-          if (is.symbol(lhs_expr)) {
-            nm <- as.character(lhs_expr)
-            if (nm %in% names(data)) {
-              lhs_quo <- nm
-              lhs_resolved <- TRUE
-            }
+          char_vals <- .try_eval_char_vector(lhs_quo, names(data))
+          if (!is.null(char_vals)) {
+            lhs_quo <- char_vals
+            lhs_resolved <- TRUE
           }
         }
         if (!lhs_resolved) {
@@ -355,4 +349,15 @@ f_lhs_as_quo <- function(f) {
 f_rhs_as_quo <- function(f) {
   if (is.null(f_rhs(f))) return(NULL) # styler: off
   quo(!!f_rhs(f)) |> structure(.Environment = attr(f, ".Environment"))
+}
+
+# Try to resolve a quosure to a character vector of column names.
+# Returns the character vector if all values are found in col_names,
+# NULL otherwise (caller should fall through to tidyselect).
+.try_eval_char_vector <- function(quo, col_names) {
+  val <- tryCatch(eval_tidy(quo), error = function(e) NULL)
+  if (is.character(val) && length(val) > 0L && all(val %in% col_names)) {
+    return(val)
+  }
+  NULL
 }
