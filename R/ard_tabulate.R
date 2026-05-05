@@ -434,11 +434,13 @@ ard_tabulate.data.frame <- function(data,
   useNA <- match.arg(useNA)
   # tabulate results and save in data frame
   ...ard_tab_vars... <- c(by, strata, variable)
-  df_table <-
+  table <-
     data[...ard_tab_vars...] |>
     dplyr::mutate(across(where(is.logical), ~ factor(., levels = c("FALSE", "TRUE")))) |>
-    with(inject(table(!!!syms(...ard_tab_vars...), useNA = !!useNA))) |>
-    dplyr::as_tibble(n = count_column)
+    with(inject(table(!!!syms(...ard_tab_vars...), useNA = !!useNA)))
+
+  dimnames(table)[[1]][is.na(dimnames(table)[[1]])] <- "NA"
+  df_table <- dplyr::as_tibble(table, n = count_column)
 
   # construct a matching data frame with the variables in their original type/class
   df_original_types <-

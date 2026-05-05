@@ -1422,3 +1422,15 @@ test_that("ard_tabulate(data, denominator) class mis-match", {
       )
   )
 })
+
+
+test_that("data.frame row.names have no NA when converted from a table", {
+  expect_no_error(ard_hierarchical(
+    data = ADAE |>
+      dplyr::slice_tail(n = 1L, by = c(USUBJID, TRTA, AESOC, AEDECOD)),
+    variables = c(AESOC, AEDECOD),
+    by = TRTA,
+    id = USUBJID,
+    denominator = ADSL
+  ))
+})
