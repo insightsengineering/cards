@@ -1,80 +1,47 @@
-# <U+2500><U+2500> 1. Load PR version and capture functions <U+2500><U+2500>
+# -- 1. Load PR version --
 message("--- Loading PR version ---")
 pkgload::load_all(".")
 pr_version <- as.character(packageVersion("cards"))
 message("PR version: ", pr_version)
 
-pr_process_selectors <- getFromNamespace("process_selectors.data.frame", "cards")
-pr_compute_formula_selector <- cards::compute_formula_selector
+pr_ard_summary <- cards::ard_summary
 pr_data <- cards::ADSL
 
-# Force-run to verify they work before unloading
-pr_process_selectors(pr_data, variables = AGE, by = ARM)
-pr_compute_formula_selector(pr_data, x = list(AGE ~ mean, ARM ~ unique), arg_name = "stat")
+pr_ard_summary(data = pr_data)
 pkgload::unload("cards")
 
-# <U+2500><U+2500> 2. Install and load main version, capture functions <U+2500><U+2500>
+# -- 2. Install and load main version --
 message("--- Installing main version ---")
 remotes::install_github("insightsengineering/cards", quiet = TRUE)
 library(cards)
 main_version <- as.character(packageVersion("cards"))
 message("Main version: ", main_version)
 
-main_process_selectors <- getFromNamespace("process_selectors.data.frame", "cards")
-main_compute_formula_selector <- cards::compute_formula_selector
+main_ard_summary <- cards::ard_summary
 main_data <- cards::ADSL
 
-# <U+2500><U+2500> 3. Multi-round benchmarks <U+2500><U+2500>
+# -- 3. Multi-round benchmarks --
 set.seed(42)
 n_rounds <- 5L
 
-message("--- Running process_selectors benchmarks (", n_rounds, " rounds) ---")
-selector_rounds <- lapply(seq_len(n_rounds), function(r) {
+message("--- Running ard_summary benchmarks (", n_rounds, " rounds) ---")
+bench_rounds <- lapply(seq_len(n_rounds), function(r) {
   message("  Round ", r)
   res <- bench::mark(
-    `process_selectors bare symbols (main)` =
-      main_process_selectors(main_data, variables = AGE, by = ARM),
-    `process_selectors bare symbols (pr)` =
-      pr_process_selectors(pr_data, variables = AGE, by = ARM),
-    `process_selectors tidyselect (main)` =
-      main_process_selectors(main_data, variables = starts_with("A"), by = dplyr::all_of("ARM")),
-    `process_selectors tidyselect (pr)` =
-      pr_process_selectors(pr_data, variables = starts_with("A"), by = dplyr::all_of("ARM")),
+    `ard_summary (main)` = main_ard_summary(data = main_data),
+    `ard_summary (pr)` = pr_ard_summary(data = pr_data),
     iterations = 100,
     check = FALSE
   )
   data.frame(
     expression = as.character(res$expression),
-    median_s   = as.numeric(res$median),
-    round      = r
+    median_s = as.numeric(res$median),
+    round = r
   )
 }) |>
   do.call(what = rbind)
 
-message("--- Running compute_formula_selector benchmarks (", n_rounds, " rounds) ---")
-formula_rounds <- lapply(seq_len(n_rounds), function(r) {
-  message("  Round ", r)
-  res <- bench::mark(
-    `formula_selector formulas (main)` =
-      main_compute_formula_selector(main_data, x = list(AGE ~ mean, ARM ~ unique, SEX ~ unique), arg_name = "stat"),
-    `formula_selector formulas (pr)` =
-      pr_compute_formula_selector(pr_data, x = list(AGE ~ mean, ARM ~ unique, SEX ~ unique), arg_name = "stat"),
-    `formula_selector named list (main)` =
-      main_compute_formula_selector(main_data, x = list(AGE = mean, ARM = unique), arg_name = "stat"),
-    `formula_selector named list (pr)` =
-      pr_compute_formula_selector(pr_data, x = list(AGE = mean, ARM = unique), arg_name = "stat"),
-    iterations = 100,
-    check = FALSE
-  )
-  data.frame(
-    expression = as.character(res$expression),
-    median_s   = as.numeric(res$median),
-    round      = r
-  )
-}) |>
-  do.call(what = rbind)
-
-# <U+2500><U+2500> 4. Build comparison table with confidence intervals <U+2500><U+2500>
+# -- 4. Build comparison table with confidence intervals --
 build_comparison <- function(rounds_df) {
   rounds_df$group <- sub(" \\((main|pr)\\)$", "", rounds_df$expression)
   rounds_df$version <- ifelse(
@@ -116,8 +83,7 @@ build_comparison <- function(rounds_df) {
   do.call(rbind, rows)
 }
 
-selector_tab <- build_comparison(selector_rounds)
-formula_tab <- build_comparison(formula_rounds)
+bench_tab <- build_comparison(bench_rounds)
 
 header <- paste0(
   "## Performance Benchmark\n\n",
@@ -128,18 +94,12 @@ header <- paste0(
   "If the CI excludes 0%, the result is flagged as a real improvement (\U2705) or regression (\U274C).\n\n"
 )
 
-selector_section <- paste0(
-  "### process_selectors.data.frame()\n\n",
-  paste(knitr::kable(selector_tab, format = "markdown"), collapse = "\n"),
-  "\n\n"
-)
-
-formula_section <- paste0(
-  "### compute_formula_selector()\n\n",
-  paste(knitr::kable(formula_tab, format = "markdown"), collapse = "\n"),
+bench_section <- paste0(
+  "### ard_summary()\n\n",
+  paste(knitr::kable(bench_tab, format = "markdown"), collapse = "\n"),
   "\n"
 )
 
-report <- paste0(header, selector_section, formula_section)
+report <- paste0(header, bench_section)
 writeLines(report, "bench_report.md")
 cat(report)
