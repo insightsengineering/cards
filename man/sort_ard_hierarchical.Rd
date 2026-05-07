@@ -29,7 +29,7 @@ sums, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present i
 Defaults to \code{everything() ~ "descending"}.}
 
 \item{sort_col}{(\code{character})\cr
-name of the treatment column you want to sort by e.g "Placebo"; leave it blank if you to sort by the sum across all treatment columns.}
+name of the treatment column value you want to sort by e.g "Placebo"; leave it blank if you want to sort by the sum across all treatment columns.}
 }
 \value{
 an ARD data frame of class 'card'

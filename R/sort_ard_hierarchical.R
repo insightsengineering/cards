@@ -25,7 +25,7 @@
 #'
 #'   Defaults to `everything() ~ "descending"`.
 #' @param sort_col (`character`)\cr
-#'     name of the treatment column you want to sort by e.g "Placebo"; leave it blank if you to sort by the sum across all treatment columns.
+#'     name of the treatment column value you want to sort by e.g "Placebo"; leave it blank if you want to sort by the sum across all treatment columns.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
@@ -69,6 +69,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
+  check_string(sort_col, allow_empty = TRUE)
   check_not_missing(x)
   check_not_missing(sort)
   check_class(x, "card")
@@ -166,7 +167,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
       # descending sort
       x_sort <- x_sort |>
         # calculate sums for each group at the current level, then get group indices
-        .append_hierarchy_sums(ard_args, cols, i, sort_col)
+        .append_hierarchy_sums(ard_args, cols, i)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
@@ -258,7 +259,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
 }
 
 # this function calculates and appends group sums/ordering for the current hierarchy level (across `by` variables)
-.append_hierarchy_sums <- function(x, ard_args, cols, i, sort_col = sort_col) {
+.append_hierarchy_sums <- function(x, ard_args, cols, i, sort_col = NULL) {
   cur_var <- names(cols)[i] # get current grouping variable
   next_var <- names(cols)[i + 1] # get next grouping variable
 
@@ -285,24 +286,11 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
   sort_stat <- if (n_stat) "n" else "p" # statistic used to calculate group sums
 
   # calculate group sums
-
-  # Introduced the ability to sort the ARD based on a particular treatment column
-
-  if (!is.null(sort_col)) {
-    x <- x |>
-      dplyr::mutate(stat = dplyr::case_when(
-        stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level == sort_col ~ stat,
-        stat_name == sort_stat & variable == dplyr::last(ard_args$variables) & group1_level != sort_col ~ list(0),
-        TRUE ~ stat
-      ))
-  } else {
-    x <- x
-  }
-
   sum_i <- paste0("sum_group_", i) # sum column label
   x_sums <- x |>
     dplyr::filter(
       .data$stat_name == sort_stat, # select statistic to sum
+      if (!is.null(sort_col)) .data$group1_level == sort_col else TRUE,
       if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
       if (length(c(ard_args$by, ard_args$variables)) > 1) {
         if (ard_args$variables[i] %in% ard_args$include & !cur_var %in% "variable") {
