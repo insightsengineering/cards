@@ -4,7 +4,11 @@
 \alias{sort_ard_hierarchical}
 \title{Sort Stacked Hierarchical ARDs}
 \usage{
-sort_ard_hierarchical(x, sort = everything() ~ "descending", sort_col = NULL)
+sort_ard_hierarchical(
+  x,
+  sort = everything() ~ "descending",
+  sort_by_level = NULL
+)
 }
 \arguments{
 \item{x}{(\code{card})\cr
@@ -28,8 +32,10 @@ sums, otherwise \code{p} is used. If neither \code{n} nor \code{p} are present i
 
 Defaults to \code{everything() ~ "descending"}.}
 
-\item{sort_col}{(\code{character})\cr
-name of the treatment column value you want to sort by e.g "Placebo"; leave it blank if you want to sort by the sum across all treatment columns.}
+\item{sort_by_level}{(\code{character})\cr
+name of the treatment column value level by which you want to sort, e.g.,"Placebo". Leave it blank if you want to sort by
+the sum across all treatment column value levels. It is useful when at least one elements of the sort
+list has been specified as \code{"descending"}; however, it has no effect when sorting is specified as \code{sort = everything() ~ "alphanumeric"}.}
 }
 \value{
 an ARD data frame of class 'card'
@@ -72,7 +78,7 @@ ard_stack_hierarchical_count(
   by = TRTA,
   denominator = ADSL
 ) |>
-  sort_ard_hierarchical(sort_col = "Placebo")
+  sort_ard_hierarchical(sort_by_level = "Placebo")
 \dontshow{\}) # examplesIf}
 }
 \seealso{

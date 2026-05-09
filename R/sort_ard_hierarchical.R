@@ -24,8 +24,10 @@
 #'     sums, otherwise `p` is used. If neither `n` nor `p` are present in `x` for the variable, an error will occur.
 #'
 #'   Defaults to `everything() ~ "descending"`.
-#' @param sort_col (`character`)\cr
-#'     name of the treatment column value you want to sort by e.g "Placebo"; leave it blank if you want to sort by the sum across all treatment columns.
+#' @param sort_by_level (`character`)\cr
+#'     name of the treatment column value level by which you want to sort, e.g.,"Placebo". Leave it blank if you want to sort by
+#'     the sum across all treatment column value levels. It is useful when at least one elements of the sort
+#'     list has been specified as `"descending"`; however, it has no effect when sorting is specified as `sort = everything() ~ "alphanumeric"`.
 #'
 #' @return an ARD data frame of class 'card'
 #' @seealso [filter_ard_hierarchical()]
@@ -60,16 +62,16 @@
 #'   by = TRTA,
 #'   denominator = ADSL
 #' ) |>
-#'   sort_ard_hierarchical(sort_col = "Placebo")
+#'   sort_ard_hierarchical(sort_by_level = "Placebo")
 NULL
 
 #' @rdname sort_ard_hierarchical
 #' @export
-sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_col = NULL) {
+sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_by_level = NULL) {
   set_cli_abort_call()
 
   # check and process inputs ---------------------------------------------------------------------
-  check_string(sort_col, allow_empty = TRUE)
+  check_string(sort_by_level, allow_empty = TRUE)
   check_not_missing(x)
   check_not_missing(sort)
   check_class(x, "card")
@@ -88,6 +90,14 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
   }
 
   ard_args <- attributes(x)$args
+
+  # check that the values for sort_by_level actually exists
+
+  if(!is.null(sort_by_level)) {
+    valid_choices <- unlist(unique(x$group1_level))
+    sort_by_level <- rlang::arg_match(sort_by_level, values = valid_choices)
+  }
+
 
   # for calculations by highest severity, innermost variable is extracted from `by`
   if (length(ard_args$by) > 1) {
@@ -167,7 +177,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
       # descending sort
       x_sort <- x_sort |>
         # calculate sums for each group at the current level, then get group indices
-        .append_hierarchy_sums(ard_args, cols, i)
+        .append_hierarchy_sums(ard_args, cols, i, sort_by_level = sort_by_level)
     } else {
       # alphanumeric sort
       x_sort <- x_sort |>
@@ -259,7 +269,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
 }
 
 # this function calculates and appends group sums/ordering for the current hierarchy level (across `by` variables)
-.append_hierarchy_sums <- function(x, ard_args, cols, i, sort_col = NULL) {
+.append_hierarchy_sums <- function(x, ard_args, cols, i, sort_by_level = NULL) {
   cur_var <- names(cols)[i] # get current grouping variable
   next_var <- names(cols)[i + 1] # get next grouping variable
 
@@ -285,12 +295,13 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_co
   }
   sort_stat <- if (n_stat) "n" else "p" # statistic used to calculate group sums
 
+
   # calculate group sums
   sum_i <- paste0("sum_group_", i) # sum column label
   x_sums <- x |>
     dplyr::filter(
       .data$stat_name == sort_stat, # select statistic to sum
-      if (!is.null(sort_col)) .data$group1_level == sort_col else TRUE,
+      if (!is.null(sort_by_level)) .data$group1_level == sort_by_level else TRUE,
       if (!is_empty(ard_args$by)) .data$group1 %in% ard_args$by else TRUE,
       if (length(c(ard_args$by, ard_args$variables)) > 1) {
         if (ard_args$variables[i] %in% ard_args$include & !cur_var %in% "variable") {
