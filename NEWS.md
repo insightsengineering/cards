@@ -1,4 +1,8 @@
-# cards 0.7.1.9011
+# cards 0.7.1.9013
+
+* Added new functions `compare_ard()`, `is_ard_equal()`, and `check_ard_equal()`. (#437)
+
+* Update in `ard_tabulate()` to account for change in `as.data.frame()` being released in R-Devel. (#554)
 
 * Fixed bug in `rename_ard_columns()` whereby factor variables were getting converted to integers and added parameter `fct_as_chr` as is used in `unlist_ard_columns()` (#542)
 
