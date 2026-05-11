@@ -149,7 +149,16 @@ nest_for_ard <- function(data, by = NULL, strata = NULL, key = "data",
   }
 
   # returning final nested tibble ----------------------------------------------
-  df_return |> dplyr::as_tibble()
+  ard_final <- df_return |>
+    dplyr::as_tibble()
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    by = by,
+    strata = strata
+  )
+
+  ard_final
 }
 
 #' Rename ARD Columns
