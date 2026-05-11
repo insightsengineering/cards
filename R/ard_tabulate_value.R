@@ -74,7 +74,7 @@ ard_tabulate_value.data.frame <- function(data,
   }
 
   # calculate summary statistics -----------------------------------------------
-  ard_tabulate(
+  ard_final <- ard_tabulate(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
@@ -94,6 +94,15 @@ ard_tabulate_value.data.frame <- function(data,
         unlist()
     ) |>
     dplyr::mutate(context = "tabulate_value")
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by,
+    strata = strata
+  )
+
+  ard_final
 }
 
 #' Perform Value Checks

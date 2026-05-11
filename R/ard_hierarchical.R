@@ -158,8 +158,16 @@ ard_hierarchical.data.frame <- function(data,
   )
 
   # return ard -----------------------------------------------------------------
-  df_result |>
+  ard_final <- df_result |>
     dplyr::mutate(context = "hierarchical")
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by
+  )
+
+  ard_final
 }
 
 #' @rdname ard_hierarchical
@@ -199,7 +207,7 @@ ard_hierarchical_count.data.frame <- function(data,
   data[["...ard_dummy_for_counting..."]] <- 1L
 
   # perform tabulations --------------------------------------------------------
-  ard_tabulate(
+  ard_final <- ard_tabulate(
     data = data,
     variables = "...ard_dummy_for_counting...",
     by = all_of(by),
@@ -211,6 +219,14 @@ ard_hierarchical_count.data.frame <- function(data,
     .rename_last_group_as_variable(by = by, variables = variables) |>
     dplyr::mutate(context = "hierarchical_count") |>
     as_card(check = FALSE)
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by
+  )
+
+  ard_final
 }
 
 #' Rename Last Group to Variable
