@@ -12,6 +12,8 @@
 
 * `as_card` now has the argument `check = TRUE` which when `TRUE` will confirm if the data frame being converted matches the cards spec using `check_ard_structure`. To support this, `check_ard_structure` has a new argument `error_on_fail` which is FALSE by default. When TRUE any failures will generate an error. (#514)
 
+* Similar to `ard_stack_hierarchical()` and `ard_stack()`, other `ard_*()` functions and `nest_for_ard()` now contain an `args` attribute to retain information about input arguments. (#483)
+
 
 # cards 0.7.1
 
