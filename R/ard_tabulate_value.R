@@ -60,7 +60,7 @@ ard_tabulate_value.data.frame <- function(data,
   check_not_missing(variables)
 
   # process inputs -------------------------------------------------------------
-  process_selectors(data, variables = {{ variables }})
+  process_selectors(data, variables = {{ variables }}, by = {{ by }}, strata = {{ strata }})
   process_formula_selectors(data[variables], value = value)
   fill_formula_selectors(
     data[variables],
@@ -77,8 +77,8 @@ ard_tabulate_value.data.frame <- function(data,
   ard_final <- ard_tabulate(
     data = data,
     variables = all_of(variables),
-    by = {{ by }},
-    strata = {{ strata }},
+    by = any_of(by),
+    strata = any_of(strata),
     statistic = statistic,
     denominator = denominator,
     fmt_fun = fmt_fun,
