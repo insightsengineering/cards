@@ -1,5 +1,9 @@
 # cards 0.7.1.9014
 
+* The following functions now return an object with an `'args'` attribute that contains more contextual information about the objects' creation. `ard_strata()`, `ard_pairwise()`, `ard_summary()`,  `ard_tabulate()`,  `ard_tabulate_value()`,  `ard_hierarchical()`,  `ard_hierarchical_count()`, `ard_missing()`, `ard_mvsummary()` and  `nest_for_ard()` contain an args attribute to retain information about input arguments. (#483, @alanahjonas95)
+
+* The `ard_stack_hierarchical*()` functions now return a subclass with the calling function name.
+
 * Added new functions `compare_ard()`, `is_ard_equal()`, and `check_ard_equal()`. (#437)
 
 * Update in `ard_tabulate()` to account for change in `as.data.frame()` being released in R-Devel. (#554)
