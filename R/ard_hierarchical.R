@@ -85,7 +85,7 @@ ard_hierarchical.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_hierarchical(fmt_fn)",
       with = "ard_hierarchical(fmt_fun)"
@@ -184,7 +184,7 @@ ard_hierarchical_count.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_hierarchical_count(fmt_fn)",
       with = "ard_hierarchical_count(fmt_fun)"
