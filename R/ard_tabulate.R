@@ -105,7 +105,7 @@ ard_tabulate.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_tabulate(fmt_fn)",
       with = "ard_tabulate(fmt_fun)"

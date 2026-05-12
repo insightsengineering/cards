@@ -48,7 +48,7 @@ add_calculated_row <- function(x,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "add_calculated_row(fmt_fn)",
       with = "add_calculated_row(fmt_fun)"
