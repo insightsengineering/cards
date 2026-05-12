@@ -162,7 +162,7 @@ ard_stack <- function(data,
 
   # shuffle --------------------------------------------------------------------
   if (isTRUE(.shuffle)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_stop(
       when = "0.7.0",
       what = "cards::ard_stack(.shuffle)"
     )
