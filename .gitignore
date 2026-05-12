@@ -5,3 +5,4 @@ tests/testthat/_snaps/**/*.new.md
 tests/testthat/_snaps/**/*.new.svg
 revdep
 .Rhistory
+.positai

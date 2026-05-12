@@ -20,6 +20,8 @@
 NULL
 
 # "soft" deprecation for 6 months: (Sys.Date() - lubridate::dmonths(6)) |> as.Date()
+#  v0.7.1 2025-12-02
+#  v0.7.0 2025-08-27
 #  v0.6.1 2025-07-03
 #  v0.6.0 2025-04-11
 #  v0.5.1 2025-03-01
