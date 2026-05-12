@@ -1,4 +1,4 @@
-# cards 0.7.1.9014
+# cards 0.7.1.9015
 
 * The following functions now return an object with an `'args'` attribute that contains more contextual information about the objects' creation. `ard_strata()`, `ard_pairwise()`, `ard_summary()`,  `ard_tabulate()`,  `ard_tabulate_value()`,  `ard_hierarchical()`,  `ard_hierarchical_count()`, `ard_missing()`, `ard_mvsummary()` and  `nest_for_ard()` contain an args attribute to retain information about input arguments. (#483, @alanahjonas95)
 
