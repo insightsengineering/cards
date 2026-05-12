@@ -67,7 +67,8 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending") {
     cli::cli_warn(
       c("The {.fun sort_ard_hierarchical} function was created for stacked hierarchical ARDs created using
          {.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}.",
-        "i" = "Unexpected results may occur.")
+        "i" = "Unexpected results may occur."
+      )
     )
   }
 

@@ -160,7 +160,8 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
     cli::cli_warn(
       c("The {.fun filter_ard_hierarchical} function was created for stacked hierarchical ARDs created using
          {.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}.",
-        "i" = "Unexpected results may occur.")
+        "i" = "Unexpected results may occur."
+      )
     )
   }
 
