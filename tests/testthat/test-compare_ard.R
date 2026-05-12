@@ -25,7 +25,7 @@ test_that("compare_ard returns empty data frames when ARDs are identical", {
   expect_s3_class(result, "compare_ard")
   expect_equal(nrow(result$rows_in_x_not_y), 0L)
   expect_equal(nrow(result$rows_in_y_not_x), 0L)
-  expect_true(all(vapply(result$compare, nrow, integer(1)) == 0L))
+  expect_true(all(vapply(result$comparison, nrow, integer(1)) == 0L))
 })
 
 test_that("compare_ard validates duplicates in keys", {
@@ -118,7 +118,7 @@ test_that("compare_ard errors when compare columns are empty", {
 
   # Error comes from cards_select, not our check
   expect_error(
-    compare_ard(ard, ard, compare = "nonexistent_col")
+    compare_ard(ard, ard, columns = "nonexistent_col")
   )
 })
 
@@ -131,7 +131,7 @@ test_that("compare_ard handles missing columns gracefully", {
     result <- compare_ard(ard_no_stat_fmt, ard_no_stat_fmt, columns = any_of(c("stat", "stat_label")))
   )
 
-  expect_true(all(vapply(result$compare, nrow, integer(1)) == 0L))
+  expect_true(all(vapply(result$comparison, nrow, integer(1)) == 0L))
 })
 
 test_that("compare_ard works with by variables", {
@@ -311,6 +311,40 @@ test_that("print.compare_ard() works for ARDs with mismatched rows", {
   expect_message(print(result), "do not appear")
 })
 
+# --- result metadata ----------------------------------------------------------
+
+test_that("compare_ard() stores actual keys in result when custom keys supplied", {
+  ard <- ard_summary(ADSL, variables = AGE)
+  result <- compare_ard(ard, ard, keys = c("variable", "stat_name"))
+  expect_equal(result$keys, c("variable", "stat_name"))
+  expect_true(is_ard_equal(result))
+})
+
+test_that("compare_ard() default keys contain expected column names", {
+  ard <- ard_summary(ADSL, variables = AGE)
+  result <- compare_ard(ard, ard)
+  expect_true("stat_name" %in% result$keys)
+  expect_true("variable" %in% result$keys)
+})
+
+test_that("compare_ard() stores actual columns in result when custom columns supplied", {
+  ard_base <- ard_summary(ADSL, variables = AGE)
+  ard_modified <- ard_base
+  ard_modified$stat_label[1] <- "Changed"
+  result <- compare_ard(ard_base, ard_modified, columns = "stat_label")
+  expect_equal(result$columns, "stat_label")
+  expect_gt(nrow(result$comparison$stat_label), 0L)
+})
+
+test_that("compare_ard() duplicate key error message contains formatted key values", {
+  ard <- ard_tabulate(ADSL, variables = AGEGR1)
+  ard_dup <- dplyr::bind_rows(ard, ard)
+  expect_error(
+    suppressMessages(compare_ard(ard, ard_dup)),
+    "variable"
+  )
+})
+
 # --- result structure ---------------------------------------------------------
 
 test_that("compare_ard result contains keys and columns metadata", {
@@ -366,4 +400,66 @@ test_that("compare_ard detects rows missing from both sides", {
   # all rows differ since variables are different
   expect_gt(nrow(result$rows_in_x_not_y), 0L)
   expect_gt(nrow(result$rows_in_y_not_x), 0L)
+})
+
+# --- ARD edge cases -----------------------------------------------------------
+
+test_that("compare_ard works with two by variables (4 group columns)", {
+  ard1 <- ard_summary(ADSL, by = c(ARM, SEX), variables = AGE)
+  ard2 <- ard_summary(dplyr::mutate(ADSL, AGE = AGE + 1), by = c(ARM, SEX), variables = AGE)
+
+  result <- compare_ard(ard1, ard2)
+
+  expect_true(all(c("group1", "group1_level", "group2", "group2_level") %in% result$keys))
+  expect_gt(nrow(result$comparison$stat), 0L)
+  expect_true(is_ard_equal(compare_ard(ard1, ard1)))
+})
+
+test_that("compare_ard handles NULL stat values", {
+  ard_base <- ard_tabulate(ADSL, by = ARM, variables = SEX)
+  ard_modified <- ard_base
+  ard_modified$stat[1L] <- list(NULL)
+
+  result_diff <- compare_ard(ard_base, ard_modified)
+  expect_gt(nrow(result_diff$comparison$stat), 0L)
+
+  result_same <- compare_ard(ard_base, ard_base)
+  expect_true(is_ard_equal(result_same))
+})
+
+test_that("compare_ard ignores warning/error columns by default", {
+  ard_base <- ard_summary(ADSL, variables = AGE)
+  ard_warn <- ard_base
+  ard_warn$warning[[1L]] <- "a warning message"
+
+  result <- compare_ard(ard_base, ard_warn)
+  expect_true(is_ard_equal(result))
+})
+
+test_that("compare_ard can compare warning column explicitly", {
+  ard_base <- ard_summary(ADSL, variables = AGE)
+  ard_warn <- ard_base
+  ard_warn$warning[[1L]] <- "a warning message"
+
+  result <- compare_ard(ard_base, ard_warn, columns = "warning")
+  expect_false(is_ard_equal(result))
+  expect_gt(nrow(result$comparison$warning), 0L)
+})
+
+test_that("compare_ard handles complex stat values from ard_identity()", {
+  ard <- t.test(ADSL$AGE)[c("statistic", "p.value")] |>
+    ard_identity(variable = "AGE")
+
+  result <- compare_ard(ard, ard)
+  expect_true(is_ard_equal(result))
+})
+
+test_that("compare_ard detects differences in complex stat values from ard_identity()", {
+  ard_base <- t.test(ADSL$AGE)[c("statistic", "p.value")] |>
+    ard_identity(variable = "AGE")
+  ard_modified <- t.test(ADSL$AGE + 1)[c("statistic", "p.value")] |>
+    ard_identity(variable = "AGE")
+
+  result <- compare_ard(ard_base, ard_modified)
+  expect_false(is_ard_equal(result))
 })
