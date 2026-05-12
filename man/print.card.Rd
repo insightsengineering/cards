@@ -2,9 +2,12 @@
 % Please edit documentation in R/print.R
 \name{print.card}
 \alias{print.card}
+\alias{print.compare_ard}
 \title{Print}
 \usage{
 \method{print}{card}(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
+
+\method{print}{compare_ard}(x, ...)
 }
 \arguments{
 \item{x}{(\code{data.frame})\cr
