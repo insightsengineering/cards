@@ -118,26 +118,27 @@ test_that("ard_pairwise(include) messaging", {
 })
 
 test_that("ard_pairwise() attaches 'args' attribute", {
+
   res <- ard_pairwise(
-    data = mtcars,
-    variable = "am",
-    .f = \(x) ard_summary(x, variables = "mpg")
+    ADSL,
+    variable = ARM,
+    .f = \(df) ard_mvsummary(df, variables = AGE, statistic = ~ list(ttest = ttest_fn))
   )
 
   args <- attr(res, "args")
-  expect_equal(args$variable, "am")
-  expect_equal(args$include, c(0, 1))
+  expect_equal(args$variable, "ARM")
+  expect_equal(args$include, c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
 
-  #include just 0 category
+  #include just placebo category
   res2 <- ard_pairwise(
-    data = mtcars,
-    variable = "am",
-    .f = \(x) ard_summary(x, variables = "mpg"),
-    include = 0
+    ADSL,
+    variable = ARM,
+    .f = \(df) ard_mvsummary(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
+    include = "Placebo" # only include comparisons to the "Placebo" group
   )
 
   args2 <- attr(res2, "args")
-  expect_equal(args2$variable, "am")
-  expect_equal(args2$include, 0)
+  expect_equal(args2$variable, "ARM")
+  expect_equal(args2$include, "Placebo")
 
 })
