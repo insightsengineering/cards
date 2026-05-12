@@ -496,7 +496,8 @@ internal_stack_hierarchical <- function(
   result <- lst_results |>
     dplyr::bind_rows() |>
     cards::tidy_ard_column_order() |>
-    cards::tidy_ard_row_order()
+    cards::tidy_ard_row_order() %>%
+    structure(., class = c(ifelse(is_empty(id), "ard_stack_hierarchical_count", "ard_stack_hierarchical"), class(.)))
 
   # append attributes used for sorting/filtering -------------------------------
   attr(result, "args") <- list(
@@ -517,7 +518,8 @@ internal_stack_hierarchical <- function(
   }
 
   # return final result --------------------------------------------------------
-  result |> as_card(check = FALSE)
+  result |>
+    as_card(check = FALSE)
 }
 
 # this function calculates either the counts or the rates of the events

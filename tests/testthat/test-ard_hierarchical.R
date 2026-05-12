@@ -396,3 +396,29 @@ test_that("ard_hierarchical_count() provides correct results with 10+ groups", {
 
   expect_equal(ard[["variable"]][[1]], "x10")
 })
+
+
+test_that("ard_hierarchical() and ard_hierarchical_count() attaches 'args' attribute", {
+  res <- ard_hierarchical(
+    data = ADAE,
+    variables = AESOC,
+    by = TRTA,
+    denominator = ADSL
+  )
+
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "AESOC")
+  expect_equal(args$by, "TRTA")
+
+  resc <- ard_hierarchical_count(
+    data = ADAE,
+    by = TRTA,
+    variables = AESOC,
+  )
+
+  argsc <- attr(resc, "args")
+
+  expect_equal(argsc$variables, "AESOC")
+  expect_equal(argsc$by, "TRTA")
+})

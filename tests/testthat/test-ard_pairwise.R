@@ -116,3 +116,27 @@ test_that("ard_pairwise(include) messaging", {
     )
   )
 })
+
+test_that("ard_pairwise() attaches 'args' attribute", {
+  res <- ard_pairwise(
+    ADSL,
+    variable = ARM,
+    .f = \(df) ard_mvsummary(df, variables = AGE, statistic = ~ list(ttest = ttest_fn))
+  )
+
+  args <- attr(res, "args")
+  expect_equal(args$variable, "ARM")
+  expect_equal(args$include, c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
+
+  # include just 0 category
+  res2 <- ard_pairwise(
+    ADSL,
+    variable = ARM,
+    .f = \(df) ard_mvsummary(df, variables = AGE, statistic = ~ list(ttest = ttest_fn)),
+    include = "Xanomeline High Dose"
+  )
+
+  args2 <- attr(res2, "args")
+  expect_equal(args2$variable, "ARM")
+  expect_equal(args2$include, "Xanomeline High Dose")
+})

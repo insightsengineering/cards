@@ -420,15 +420,14 @@ test_that("sort_ard_hierarchical() works with overall data", {
   )
 })
 
-test_that("sort_ard_hierarchical() error messaging works", {
+test_that("sort_ard_hierarchical() warning messaging works", {
   # invalid x input
   expect_snapshot(
-    sort_ard_hierarchical(ard_tabulate(
+    r <- sort_ard_hierarchical(ard_tabulate(
       ADSL,
       by = "ARM",
       variables = "AGEGR1"
-    )),
-    error = TRUE
+    ))
   )
 
   # invalid sort input

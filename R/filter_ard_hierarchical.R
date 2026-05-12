@@ -156,15 +156,15 @@ filter_ard_hierarchical <- function(x, filter, var = NULL, keep_empty = FALSE, q
   check_scalar_logical(keep_empty)
   check_scalar_logical(quiet)
   check_class(x, "card")
-  if (!"args" %in% names(attributes(x))) {
-    cli::cli_abort(
-      paste(
-        "Filtering is only available for stacked hierarchical ARDs created using",
-        "{.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}."
-      ),
-      call = get_cli_abort_call()
+  if (!any(c("ard_stack_hierarchical", "ard_stack_hierarchical_count") %in% class(x))) {
+    cli::cli_warn(
+      c("The {.fun filter_ard_hierarchical} function was created for stacked hierarchical ARDs created using
+         {.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}.",
+        "i" = "Unexpected results may occur."
+      )
     )
   }
+
   ard_args <- attributes(x)$args
   by <- ard_args$by
 

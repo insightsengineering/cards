@@ -54,7 +54,7 @@ ard_missing.data.frame <- function(data,
   check_not_missing(variables)
 
   # process variable inputs ----------------------------------------------------
-  process_selectors(data, variables = {{ variables }})
+  process_selectors(data, variables = {{ variables }}, by = {{ by }})
 
   # return empty ARD if no variables selected ----------------------------------
   if (is_empty(variables)) {
@@ -82,10 +82,10 @@ ard_missing.data.frame <- function(data,
   )
 
   # get the summary statistics -------------------------------------------------
-  ard_summary(
+  result <- ard_summary(
     data = data,
     variables = all_of(variables),
-    by = {{ by }},
+    by = any_of(by),
     statistic = lapply(statistic, \(x) missing_summary_fns(x)),
     fmt_fun = fmt_fun,
     stat_label = stat_label
@@ -93,6 +93,14 @@ ard_missing.data.frame <- function(data,
     dplyr::mutate(
       context = "missing"
     )
+
+  # append attributes used for sorting/filtering -------------------------------
+  attr(result, "args") <- list(
+    by = by,
+    variables = variables
+  )
+
+  result
 }
 
 missing_summary_fns <- function(summaries = c("N_obs", "N_miss", "N_nonmiss", "p_miss", "p_nonmiss")) {

@@ -27,8 +27,11 @@
       filter_ard_hierarchical(ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
       n > 10)
     Condition
+      Warning:
+      The `filter_ard_hierarchical()` function was created for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
+      i Unexpected results may occur.
       Error in `filter_ard_hierarchical()`:
-      ! Filtering is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
+      ! No statistics available in the ARD for variable "AGEGR1". In order to filter on "AGEGR1" it must be specified in the `include` argument when the ARD is created.
 
 ---
 
