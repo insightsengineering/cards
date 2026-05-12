@@ -30,7 +30,7 @@
 #'
 #' @param x (`card`)\cr first ARD
 #' @param y (`card`)\cr second ARD
-#' @param compare tidyselect expression for columns to compare
+#' @param columns tidyselect expression for columns to compare
 #'
 #' @return character vector of column names to compare
 #' @keywords internal
@@ -232,7 +232,6 @@
   }
 
   # perform inner join to compare only matching rows
-  # perform inner join to compare only matching rows
   comparison <- dplyr::inner_join(
     x,
     y,
@@ -267,76 +266,5 @@
         "difference"
       )
     }
-  )
-}
-
-.format_key_value <- function(value) {
-  value <- value[[1]]
-
-  if (is.factor(value)) {
-    value <- as.character(value)
-  }
-
-  if (is.character(value)) {
-    if (is.na(value)) {
-      return("NA")
-    }
-    return(encodeString(value, quote = "\""))
-  }
-
-  if (is.logical(value)) {
-    if (is.na(value)) {
-      return("NA")
-    }
-    return(if (value) "TRUE" else "FALSE")
-  }
-
-  if (is.numeric(value)) {
-    if (is.na(value)) {
-      return("NA")
-    }
-    return(format(value, trim = TRUE))
-  }
-
-  if (inherits(value, "Date") || inherits(value, "POSIXt")) {
-    if (is.na(value)) {
-      return("NA")
-    }
-    return(encodeString(as.character(value), quote = "\""))
-  }
-
-  value_chr <- as.character(value)
-  if (length(value_chr) == 0 || is.na(value_chr)) {
-    return("NA")
-  }
-
-  encodeString(value_chr, quote = "\"")
-}
-
-.format_duplicate_keys <- function(data, key_columns) {
-  key_data <- dplyr::select(data, dplyr::all_of(key_columns))
-  duplicated_rows <- duplicated(key_data) | duplicated(key_data, fromLast = TRUE)
-
-  if (!any(duplicated_rows)) {
-    return(character())
-  }
-
-  unique_duplicates <- unique(key_data[duplicated_rows, , drop = FALSE])
-
-  vapply(
-    seq_len(nrow(unique_duplicates)),
-    function(row_index) {
-      row <- unique_duplicates[row_index, , drop = FALSE]
-      formatted <- vapply(
-        names(row),
-        function(column) {
-          value <- row[[column]]
-          paste0(column, " = ", .format_key_value(value))
-        },
-        character(1)
-      )
-      paste(formatted, collapse = ", ")
-    },
-    character(1)
   )
 }
