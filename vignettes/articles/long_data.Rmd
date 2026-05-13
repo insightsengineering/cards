@@ -14,6 +14,7 @@ gtsummary::theme_gtsummary_compact()
 ```{r,output=FALSE, message=FALSE}
 library(cards)
 library(dplyr)
+library(gtsummary)
 ```
 
 The goal of this article is to illustrate which {cards} functions are used to create long data summaries: think summaries from ADAE, ADLB, ADCM, and other similarly structured data sets.
