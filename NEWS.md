@@ -1,4 +1,4 @@
-# cards 0.7.1.9016
+# cards 0.8.0
 
 ## New Features and Functions
 
