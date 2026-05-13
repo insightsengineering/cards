@@ -86,7 +86,13 @@ ard_mvsummary.data.frame <- function(data,
   check_not_missing(statistic)
 
   # process inputs -------------------------------------------------------------
-  process_selectors(data, variables = {{ variables }})
+  # Process All selectors into character vectors at first
+  process_selectors(
+    data,
+    variables = {{ variables }},
+    by = {{ by }},
+    strata = {{ strata }}
+  )
   process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
   # return empty ARD if no variables selected ----------------------------------
@@ -118,11 +124,15 @@ ard_mvsummary.data.frame <- function(data,
         parse_expr()
   )
 
-  ard_final <- ard_summary(
+  # Pass them to ard_summary using rlang::exec()
+  # so downstream functions only see raw character strings,
+  # preventing all tidyselect warnings.
+  ard_final <- rlang::exec(
+    ard_summary,
     data = data,
-    variables = all_of(variables),
-    by = {{ by }},
-    strata = {{ strata }},
+    variables = variables,
+    by = by,
+    strata = strata,
     statistic = statistic,
     fmt_fun = fmt_fun,
     stat_label = stat_label
