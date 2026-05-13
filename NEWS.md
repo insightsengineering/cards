@@ -20,7 +20,7 @@
 
 * Update in `ard_tabulate()` to account for change in `as.data.frame()` being released in R-Devel. (#554)
 
-* `ard_mvsummary()` now correctly evaluates `by` argument (#563). 
+* `ard_mvsummary()` now correctly evaluates `by` and `strata` arguments (#563). 
 
 ## Bug Fixes
 
