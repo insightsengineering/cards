@@ -127,12 +127,11 @@ ard_mvsummary.data.frame <- function(data,
   # Pass them to ard_summary using rlang::exec()
   # so downstream functions only see raw character strings,
   # preventing all tidyselect warnings.
-  ard_final <- rlang::exec(
-    ard_summary,
+  ard_final <- ard_summary(
     data = data,
-    variables = variables,
-    by = by,
-    strata = strata,
+    variables = all_of(variables),
+    by = any_of(by),
+    strata = any_of(strata),
     statistic = statistic,
     fmt_fun = fmt_fun,
     stat_label = stat_label
