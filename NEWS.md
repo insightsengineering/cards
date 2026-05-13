@@ -1,4 +1,8 @@
-# cards 0.7.1.9013
+# cards 0.7.1.9016
+
+* The following functions now return an object with an `'args'` attribute that contains more contextual information about the objects' creation. `ard_strata()`, `ard_pairwise()`, `ard_summary()`,  `ard_tabulate()`,  `ard_tabulate_value()`,  `ard_hierarchical()`,  `ard_hierarchical_count()`, `ard_missing()`, `ard_mvsummary()` and  `nest_for_ard()` contain an args attribute to retain information about input arguments. (#483, @alanahjonas95)
+
+* The `ard_stack_hierarchical*()` functions now return a subclass with the calling function name.
 
 * Added new functions `compare_ard()`, `is_ard_equal()`, and `check_ard_equal()`. (#437)
 
@@ -11,6 +15,8 @@
 * Users are now messaged if the `by` or `strata` arguments pass columns with different classes in the `ard_tabulate(data,denominator)` arguments as this _may_ cause issues downstream. (#515)
 
 * `as_card` now has the argument `check = TRUE` which when `TRUE` will confirm if the data frame being converted matches the cards spec using `check_ard_structure`. To support this, `check_ard_structure` has a new argument `error_on_fail` which is FALSE by default. When TRUE any failures will generate an error. (#514)
+
+* Similar to `ard_stack_hierarchical()` and `ard_stack()`, other `ard_*()` functions and `nest_for_ard()` now contain an `args` attribute to retain information about input arguments. (#483)
 
 
 # cards 0.7.1

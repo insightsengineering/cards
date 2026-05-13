@@ -60,13 +60,14 @@
       i 184 more rows
       i Use `print(n = ...)` to see more rows
 
-# sort_ard_hierarchical() error messaging works
+# sort_ard_hierarchical() warning messaging works
 
     Code
-      sort_ard_hierarchical(ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"))
+      r <- sort_ard_hierarchical(ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"))
     Condition
-      Error in `sort_ard_hierarchical()`:
-      ! Sorting is only available for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
+      Warning:
+      The `sort_ard_hierarchical()` function was created for stacked hierarchical ARDs created using `ard_stack_hierarchical()` or `ard_stack_hierarchical_count()`.
+      i Unexpected results may occur.
 
 ---
 

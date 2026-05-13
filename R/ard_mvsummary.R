@@ -73,7 +73,7 @@ ard_mvsummary.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_summary(fmt_fn)",
       with = "ard_summary(fmt_fun)"
@@ -118,7 +118,7 @@ ard_mvsummary.data.frame <- function(data,
         parse_expr()
   )
 
-  ard_summary(
+  ard_final <- ard_summary(
     data = data,
     variables = all_of(variables),
     by = {{ by }},
@@ -128,4 +128,13 @@ ard_mvsummary.data.frame <- function(data,
     stat_label = stat_label
   ) |>
     dplyr::mutate(context = "mvsummary")
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by,
+    strata = strata
+  )
+
+  ard_final
 }

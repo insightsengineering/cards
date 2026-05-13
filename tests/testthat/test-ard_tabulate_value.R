@@ -19,7 +19,8 @@ test_that("ard_tabulate_value() works", {
       dplyr::select(-context),
     ard_dich |>
       dplyr::filter(variable %in% "cyl", variable_level %in% 4) |>
-      dplyr::select(-context)
+      dplyr::select(-context),
+    ignore_attr = TRUE
   )
 
   expect_equal(
@@ -31,7 +32,8 @@ test_that("ard_tabulate_value() works", {
       dplyr::select(-context),
     ard_dich |>
       dplyr::filter(variable %in% "am", variable_level %in% TRUE) |>
-      dplyr::select(-context)
+      dplyr::select(-context),
+    ignore_attr = TRUE
   )
 
   ## line added to fix failing snapshot test on ubuntu-latest (devel)
@@ -83,10 +85,11 @@ test_that("ard_tabulate_value() with grouped data works", {
       ard_tabulate_value(variables = c(cyl, am), value = list(cyl = 4)),
     ard_tabulate_value(
       data = mtcars,
-      by = vs,
+      by = "vs",
       variables = c(cyl, am),
       value = list(cyl = 4)
-    )
+    ),
+    ignore_attr = TRUE
   )
 })
 
@@ -122,4 +125,17 @@ test_that("ard_tabulate_value() errors with incomplete factor columns", {
         value = list(cyl = 4)
       )
   )
+})
+
+test_that("ard_tabulate_value() attaches 'args' attribute", {
+  res <- ard_tabulate_value(
+    data = mtcars,
+    by = "vs",
+    variables = cyl,
+    value = list(cyl = 4)
+  )
+  args <- attr(res, "args")
+
+  expect_equal(args$variables, "cyl")
+  expect_equal(args$by, "vs")
 })
