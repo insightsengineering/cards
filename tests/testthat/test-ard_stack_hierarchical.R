@@ -127,8 +127,10 @@ test_that("ard_stack_hierarchical(by)", {
 
   expect_equal(
     ard |> dplyr::filter(!is.na(group2)),
-    ard_match |>
-      sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |>
+        sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 
@@ -151,8 +153,10 @@ test_that("ard_stack_hierarchical(by)", {
     ard |>
       dplyr::filter(variable %in% "AESOC") |>
       dplyr::select(-all_ard_group_n(2L)),
-    ard_match |>
-      sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |>
+        sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 
@@ -295,8 +299,10 @@ test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
   expect_equal(
     ard |>
       dplyr::filter(variable == "AEDECOD"),
-    ard_match |>
-      sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |>
+        sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE,
     ignore_function_env = TRUE
   )
@@ -324,9 +330,11 @@ test_that("ard_stack_hierarchical(by) with columns not in `denominator`", {
     ard |>
       dplyr::filter(variable == "AESOC") |>
       rename_ard_columns(),
-    ard_match |>
-      sort_ard_hierarchical("alphanumeric") |>
-      rename_ard_columns(),
+    suppressWarnings(
+      ard_match |>
+        sort_ard_hierarchical("alphanumeric") |>
+        rename_ard_columns()
+    ),
     ignore_attr = TRUE,
     ignore_function_env = TRUE
   )
@@ -419,7 +427,9 @@ test_that("ard_stack_hierarchical_count(variables)", {
 
   expect_equal(
     ard |> dplyr::filter(!is.na(group1)),
-    ard_match |> sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |> sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 
@@ -433,7 +443,9 @@ test_that("ard_stack_hierarchical_count(variables)", {
 
   expect_equal(
     ard |> dplyr::filter(is.na(group1)) |> dplyr::select(-all_ard_group_n(1L)),
-    ard_match |> sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |> sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 })
@@ -470,7 +482,9 @@ test_that("ard_stack_hierarchical_count(by)", {
 
   expect_equal(
     ard |> dplyr::filter(!is.na(group2)),
-    ard_match |> sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |> sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 
@@ -489,7 +503,9 @@ test_that("ard_stack_hierarchical_count(by)", {
 
   expect_equal(
     ard |> dplyr::filter(is.na(group2)) |> dplyr::select(-all_ard_group_n(2L)),
-    ard_match |> sort_ard_hierarchical("alphanumeric"),
+    suppressWarnings(
+      ard_match |> sort_ard_hierarchical("alphanumeric")
+    ),
     ignore_attr = TRUE
   )
 })
