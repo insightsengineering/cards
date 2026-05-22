@@ -5,6 +5,6 @@ test_that("as_nested_list() works", {
   expect_named(out, "variable")
 
   expect_snapshot(
-      as_nested_list(tbl)
+    as_nested_list(tbl)
   )
 })

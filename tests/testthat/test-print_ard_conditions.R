@@ -22,10 +22,14 @@ test_that("print_ard_conditions() works", {
   expect_no_error(ard)
   expect_message(
     expect_message(
-      expect_message(print_ard_conditions(ard),
-                     "were returned during"),
-      "tis an error"),
-    "were returned during")
+      expect_message(
+        print_ard_conditions(ard),
+        "were returned during"
+      ),
+      "tis an error"
+    ),
+    "were returned during"
+  )
   expect_snapshot(print_ard_conditions(ard))
 
   # expected messaging with by variable
@@ -45,10 +49,12 @@ test_that("print_ard_conditions() works", {
   )
   expect_no_error(ard)
   expect_message(
-      expect_message(
-        print_ard_conditions(ard),
-        "were returned during"),
-      "were returned during")
+    expect_message(
+      print_ard_conditions(ard),
+      "were returned during"
+    ),
+    "were returned during"
+  )
   expect_snapshot(print_ard_conditions(ard))
 
   # expected messaging when the same error appears for all stats (consolidated correctly)
@@ -60,7 +66,6 @@ test_that("print_ard_conditions() works", {
 
   # calling function name prints correctly
   tbl_summary <- function() {
-
     set_cli_abort_call()
 
     ard <- ard_summary(
@@ -88,11 +93,14 @@ test_that("print_ard_conditions(condition_type)", {
   )
   expect_warning(
     expect_warning(
-    expect_message(
-      print_ard_conditions(ard, condition_type = "identity"),
-      "print_ard_conditions()"),
-      "warn1"),
-    "warn2")
+      expect_message(
+        print_ard_conditions(ard, condition_type = "identity"),
+        "print_ard_conditions()"
+      ),
+      "warn1"
+    ),
+    "warn2"
+  )
   expect_snapshot(print_ard_conditions(ard, condition_type = "identity"))
 
   # expected warnings as warnings
@@ -107,11 +115,13 @@ test_that("print_ard_conditions(condition_type)", {
   expect_error(
     expect_message(
       print_ard_conditions(ard, condition_type = "identity"),
-    "print_ard_conditions()"),
-    "tis an error")
+      "print_ard_conditions()"
+    ),
+    "tis an error"
+  )
   expect_snapshot(
     error = TRUE,
-      print_ard_conditions(ard, condition_type = "identity")
+    print_ard_conditions(ard, condition_type = "identity")
   )
 })
 

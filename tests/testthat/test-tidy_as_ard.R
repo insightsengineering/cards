@@ -21,8 +21,10 @@ describe("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     )
     expect_s3_class(ard, "card")
-    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
-                        "warning", "error"))
+    expect_named(ard, c(
+      "group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+      "warning", "error"
+    ))
     expect_snapshot(ard)
   })
 
@@ -44,10 +46,12 @@ describe("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     )
     expect_s3_class(ard, "card")
-    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
-                        "warning", "error"))
+    expect_named(ard, c(
+      "group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+      "warning", "error"
+    ))
     expect_snapshot(ard)
-})
+  })
   it("when `fun_args_to_record` argument is not passed", {
     ard <- tidy_as_ard(
       lst_tidy =
@@ -62,8 +66,10 @@ describe("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     )
     expect_s3_class(ard, "card")
-    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
-                        "warning", "error"))
+    expect_named(ard, c(
+      "group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+      "warning", "error"
+    ))
     expect_snapshot(ard)
   })
 
@@ -80,8 +86,10 @@ describe("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     )
     expect_s3_class(ard, "card")
-    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
-                        "warning", "error"))
+    expect_named(ard, c(
+      "group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+      "warning", "error"
+    ))
     expect_snapshot(ard)
   })
 })
