@@ -1,51 +1,47 @@
 # add_calculated_row(x)
 
     Code
-      apply_fmt_fun(add_calculated_row(ard_summary(mtcars, variables = mpg), expr = max -
-        min, stat_name = "range"))
+      out
     Message
-      {cards} data frame: 9 x 9
+      {cards} data frame: 9 x 8
     Output
-        variable context stat_name stat_label   stat stat_fmt
-      1      mpg summary         N          N     32       32
-      2      mpg summary      mean       Mean 20.091     20.1
-      3      mpg summary        sd         SD  6.027      6.0
-      4      mpg summary    median     Median   19.2     19.2
-      5      mpg summary       p25         Q1  15.35     15.4
-      6      mpg summary       p75         Q3   22.8     22.8
-      7      mpg summary       min        Min   10.4     10.4
-      8      mpg summary       max        Max   33.9     33.9
-      9      mpg summary     range      range   23.5     23.5
+        variable context stat_name stat_label   stat fmt_fun
+      1      mpg summary         N          N     32       0
+      2      mpg summary      mean       Mean 20.091       1
+      3      mpg summary        sd         SD  6.027       1
+      4      mpg summary    median     Median   19.2       1
+      5      mpg summary       p25         Q1  15.35       1
+      6      mpg summary       p75         Q3   22.8       1
+      7      mpg summary       min        Min   10.4       1
+      8      mpg summary       max        Max   33.9       1
+      9      mpg summary     range      range   23.5       1
     Message
-      i 3 more variables: fmt_fun, warning, error
+      i 2 more variables: warning, error
 
 ---
 
     Code
-      apply_fmt_fun(add_calculated_row(ard_summary(mtcars, variables = mpg), expr = dplyr::case_when(
-        mean > median ~ "Right Skew", mean < median ~ "Left Skew", .default = "Symmetric"),
-      stat_name = "skew"))
+      out2
     Message
-      {cards} data frame: 9 x 9
+      {cards} data frame: 9 x 8
     Output
-        variable context stat_name stat_label      stat   stat_fmt
-      1      mpg summary         N          N        32         32
-      2      mpg summary      mean       Mean    20.091       20.1
-      3      mpg summary        sd         SD     6.027        6.0
-      4      mpg summary    median     Median      19.2       19.2
-      5      mpg summary       p25         Q1     15.35       15.4
-      6      mpg summary       p75         Q3      22.8       22.8
-      7      mpg summary       min        Min      10.4       10.4
-      8      mpg summary       max        Max      33.9       33.9
-      9      mpg summary      skew       skew Right Sk… Right Skew
+        variable context stat_name stat_label      stat fmt_fun
+      1      mpg summary         N          N        32       0
+      2      mpg summary      mean       Mean    20.091       1
+      3      mpg summary        sd         SD     6.027       1
+      4      mpg summary    median     Median      19.2       1
+      5      mpg summary       p25         Q1     15.35       1
+      6      mpg summary       p75         Q3      22.8       1
+      7      mpg summary       min        Min      10.4       1
+      8      mpg summary       max        Max      33.9       1
+      9      mpg summary      skew       skew Right Sk…    <fn>
     Message
-      i 3 more variables: fmt_fun, warning, error
+      i 2 more variables: warning, error
 
-# add_calculated_row(expr) messaging
+# add_calculated_row(expr) errors when a variable is not present
 
     Code
-      add_calculated_row(ard_summary(mtcars, variables = mpg), expr = not_a_stat * 2,
-      stat_name = "this_doesnt_work")
+      add_calculated_row(tbl, expr = not_a_stat * 2, stat_name = "this_doesnt_work")
     Condition
       Error in `add_calculated_row()`:
       ! There was an error calculating the new statistic. See below:
@@ -54,8 +50,7 @@
 # add_calculated_row(by) messaging
 
     Code
-      add_calculated_row(ard_summary(mtcars, variables = mpg, by = cyl), expr = max -
-        min, stat_name = "range", by = "context")
+      add_calculated_row(tbl, expr = max - min, stat_name = "range", by = "context")
     Condition
       Error in `add_calculated_row()`:
       ! Duplicate statistics present within `by` groups: "N", "mean", "sd", "median", "p25", "p75", "min", "max", "N", "mean", "sd", "median", "p25", "p75", "min", and "max"
