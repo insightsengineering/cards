@@ -5,10 +5,13 @@ test_that("mock_categorical()", {
     by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
   )
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-  ))
+  expect_named(
+    out,
+    c(
+      "group1", "group1_level", "variable", "variable_level", "context",
+      "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
 
@@ -36,10 +39,13 @@ test_that("mock_continuous()", {
     variables = c("AGE", "BMIBL")
   )
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-               ))
+  expect_named(
+    out,
+    c(
+      "variable", "context", "stat_name", "stat_label", "stat",
+      "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
 
@@ -56,15 +62,18 @@ test_that("mock_continuous() messaging", {
 
 test_that("mock_dichotomous()", {
   withr::local_options(list(width = 130))
-  out <-     mock_dichotomous(
+  out <- mock_dichotomous(
     variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))),
     by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
   )
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-               ))
+  expect_named(
+    out,
+    c(
+      "group1", "group1_level", "variable", "variable_level", "context",
+      "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
 
@@ -85,10 +94,13 @@ test_that("mock_missing()", {
     variables = c("AGE", "BMIBL")
   )
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-               ))
+  expect_named(
+    out,
+    c(
+      "variable", "context",
+      "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
 
@@ -110,10 +122,13 @@ test_that("mock_attributes()", {
     label = list(AGE = "Age", BMIBL = "Baseline BMI")
   )
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-               ))
+  expect_named(
+    out,
+    c(
+      "variable", "context",
+      "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
 
@@ -130,9 +145,12 @@ test_that("mock_total_n()", {
 
   out <- mock_total_n()
   expect_s3_class(out, "card")
-  expect_named(out,
-               c("group1", "group1_level", "variable", "variable_level", "context",
-                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
-               ))
+  expect_named(
+    out,
+    c(
+      "variable", "context",
+      "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+    )
+  )
   expect_snapshot(out)
 })
