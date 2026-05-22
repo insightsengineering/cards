@@ -1,22 +1,21 @@
 # mock_categorical()
 
     Code
-      apply_fmt_fun(mock_categorical(variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
-      by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))))
+      out
     Message
-      {cards} data frame: 27 x 12
+      {cards} data frame: 27 x 11
     Output
-         group1 group1_level variable variable_level stat_name stat_label stat stat_fmt
-      1    TRTA      Placebo   AGEGR1            <65         n          n            xx
-      2    TRTA      Placebo   AGEGR1            <65         p          %          xx.x
-      3    TRTA      Placebo   AGEGR1            <65         N          N            xx
-      4    TRTA      Placebo   AGEGR1          65-80         n          n            xx
-      5    TRTA      Placebo   AGEGR1          65-80         p          %          xx.x
-      6    TRTA      Placebo   AGEGR1          65-80         N          N            xx
-      7    TRTA      Placebo   AGEGR1            >80         n          n            xx
-      8    TRTA      Placebo   AGEGR1            >80         p          %          xx.x
-      9    TRTA      Placebo   AGEGR1            >80         N          N            xx
-      10   TRTA    Xanomeli…   AGEGR1            <65         n          n            xx
+         group1 group1_level variable variable_level stat_name stat_label stat
+      1    TRTA      Placebo   AGEGR1            <65         n          n     
+      2    TRTA      Placebo   AGEGR1            <65         p          %     
+      3    TRTA      Placebo   AGEGR1            <65         N          N     
+      4    TRTA      Placebo   AGEGR1          65-80         n          n     
+      5    TRTA      Placebo   AGEGR1          65-80         p          %     
+      6    TRTA      Placebo   AGEGR1          65-80         N          N     
+      7    TRTA      Placebo   AGEGR1            >80         n          n     
+      8    TRTA      Placebo   AGEGR1            >80         p          %     
+      9    TRTA      Placebo   AGEGR1            >80         N          N     
+      10   TRTA    Xanomeli…   AGEGR1            <65         n          n     
     Message
       i 17 more rows
       i Use `print(n = ...)` to see more rows
@@ -34,29 +33,29 @@
 # mock_continuous()
 
     Code
-      apply_fmt_fun(mock_continuous(variables = c("AGE", "BMIBL")))
+      out
     Message
-      {cards} data frame: 16 x 9
+      {cards} data frame: 16 x 8
     Output
-         variable   context stat_name stat_label stat stat_fmt
-      1       AGE continuo…         N          N            xx
-      2       AGE continuo…      mean       Mean          xx.x
-      3       AGE continuo…        sd         SD          xx.x
-      4       AGE continuo…    median     Median          xx.x
-      5       AGE continuo…       p25         Q1          xx.x
-      6       AGE continuo…       p75         Q3          xx.x
-      7       AGE continuo…       min        Min          xx.x
-      8       AGE continuo…       max        Max          xx.x
-      9     BMIBL continuo…         N          N            xx
-      10    BMIBL continuo…      mean       Mean          xx.x
-      11    BMIBL continuo…        sd         SD          xx.x
-      12    BMIBL continuo…    median     Median          xx.x
-      13    BMIBL continuo…       p25         Q1          xx.x
-      14    BMIBL continuo…       p75         Q3          xx.x
-      15    BMIBL continuo…       min        Min          xx.x
-      16    BMIBL continuo…       max        Max          xx.x
+         variable   context stat_name stat_label stat fmt_fun
+      1       AGE continuo…         N          N         <fn>
+      2       AGE continuo…      mean       Mean         <fn>
+      3       AGE continuo…        sd         SD         <fn>
+      4       AGE continuo…    median     Median         <fn>
+      5       AGE continuo…       p25         Q1         <fn>
+      6       AGE continuo…       p75         Q3         <fn>
+      7       AGE continuo…       min        Min         <fn>
+      8       AGE continuo…       max        Max         <fn>
+      9     BMIBL continuo…         N          N         <fn>
+      10    BMIBL continuo…      mean       Mean         <fn>
+      11    BMIBL continuo…        sd         SD         <fn>
+      12    BMIBL continuo…    median     Median         <fn>
+      13    BMIBL continuo…       p25         Q1         <fn>
+      14    BMIBL continuo…       p75         Q3         <fn>
+      15    BMIBL continuo…       min        Min         <fn>
+      16    BMIBL continuo…       max        Max         <fn>
     Message
-      i 3 more variables: fmt_fun, warning, error
+      i 2 more variables: warning, error
 
 # mock_continuous() messaging
 
@@ -69,21 +68,20 @@
 # mock_dichotomous()
 
     Code
-      apply_fmt_fun(mock_dichotomous(variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))), by = list(TRTA = c(
-        "Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))))
+      out
     Message
-      {cards} data frame: 9 x 12
+      {cards} data frame: 9 x 11
     Output
-        group1 group1_level variable variable_level stat_name stat_label stat stat_fmt
-      1   TRTA      Placebo   AGEGR1          65-80         n          n            xx
-      2   TRTA      Placebo   AGEGR1          65-80         p          %          xx.x
-      3   TRTA      Placebo   AGEGR1          65-80         N          N            xx
-      4   TRTA    Xanomeli…   AGEGR1          65-80         n          n            xx
-      5   TRTA    Xanomeli…   AGEGR1          65-80         p          %          xx.x
-      6   TRTA    Xanomeli…   AGEGR1          65-80         N          N            xx
-      7   TRTA    Xanomeli…   AGEGR1          65-80         n          n            xx
-      8   TRTA    Xanomeli…   AGEGR1          65-80         p          %          xx.x
-      9   TRTA    Xanomeli…   AGEGR1          65-80         N          N            xx
+        group1 group1_level variable variable_level stat_name stat_label stat
+      1   TRTA      Placebo   AGEGR1          65-80         n          n     
+      2   TRTA      Placebo   AGEGR1          65-80         p          %     
+      3   TRTA      Placebo   AGEGR1          65-80         N          N     
+      4   TRTA    Xanomeli…   AGEGR1          65-80         n          n     
+      5   TRTA    Xanomeli…   AGEGR1          65-80         p          %     
+      6   TRTA    Xanomeli…   AGEGR1          65-80         N          N     
+      7   TRTA    Xanomeli…   AGEGR1          65-80         n          n     
+      8   TRTA    Xanomeli…   AGEGR1          65-80         p          %     
+      9   TRTA    Xanomeli…   AGEGR1          65-80         N          N     
     Message
       i 4 more variables: context, fmt_fun, warning, error
 
@@ -100,23 +98,23 @@
 # mock_missing()
 
     Code
-      apply_fmt_fun(mock_missing(variables = c("AGE", "BMIBL")))
+      out
     Message
-      {cards} data frame: 10 x 9
+      {cards} data frame: 10 x 8
     Output
-         variable context stat_name stat_label stat stat_fmt
-      1       AGE missing     N_obs  Vector L…            xx
-      2       AGE missing    N_miss  N Missing            xx
-      3       AGE missing N_nonmiss  N Non-mi…            xx
-      4       AGE missing    p_miss  % Missing          xx.x
-      5       AGE missing p_nonmiss  % Non-mi…          xx.x
-      6     BMIBL missing     N_obs  Vector L…            xx
-      7     BMIBL missing    N_miss  N Missing            xx
-      8     BMIBL missing N_nonmiss  N Non-mi…            xx
-      9     BMIBL missing    p_miss  % Missing          xx.x
-      10    BMIBL missing p_nonmiss  % Non-mi…          xx.x
+         variable context stat_name stat_label stat fmt_fun
+      1       AGE missing     N_obs  Vector L…         <fn>
+      2       AGE missing    N_miss  N Missing         <fn>
+      3       AGE missing N_nonmiss  N Non-mi…         <fn>
+      4       AGE missing    p_miss  % Missing         <fn>
+      5       AGE missing p_nonmiss  % Non-mi…         <fn>
+      6     BMIBL missing     N_obs  Vector L…         <fn>
+      7     BMIBL missing    N_miss  N Missing         <fn>
+      8     BMIBL missing N_nonmiss  N Non-mi…         <fn>
+      9     BMIBL missing    p_miss  % Missing         <fn>
+      10    BMIBL missing p_nonmiss  % Non-mi…         <fn>
     Message
-      i 3 more variables: fmt_fun, warning, error
+      i 2 more variables: warning, error
 
 # mock_missing() messaging
 
@@ -129,7 +127,7 @@
 # mock_attributes()
 
     Code
-      mock_attributes(label = list(AGE = "Age", BMIBL = "Baseline BMI"))
+      out
     Message
       {cards} data frame: 4 x 8
     Output
@@ -152,12 +150,12 @@
 # mock_total_n()
 
     Code
-      apply_fmt_fun(mock_total_n())
+      out
     Message
-      {cards} data frame: 1 x 9
+      {cards} data frame: 1 x 8
     Output
-               variable context stat_name stat_label stat stat_fmt
-      1 ..ard_total_n.. total_n         N          N            xx
+               variable context stat_name stat_label stat fmt_fun
+      1 ..ard_total_n.. total_n         N          N         <fn>
     Message
-      i 3 more variables: fmt_fun, warning, error
+      i 2 more variables: warning, error
 

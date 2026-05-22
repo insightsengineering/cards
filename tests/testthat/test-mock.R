@@ -1,16 +1,24 @@
 test_that("mock_categorical()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_categorical(
-      variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
-      by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
-    ) |>
-      apply_fmt_fun()
+  out <- mock_categorical(
+    variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
+    by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
   )
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+  ))
+  expect_snapshot(out)
 })
 
 test_that("mock_categorical() messaging", {
   # incorrect specification of the statistic argument
+
+  expect_error(mock_categorical(
+    variables = list(AGEGR1 = factor(c("<65", "65-80", ">80"), levels = c("<65", "65-80", ">80"))),
+    statistic = ~ c("NOTASTATISTIC")
+  ), "must be vector with one or more of")
   expect_snapshot(
     error = TRUE,
     mock_categorical(
@@ -23,12 +31,16 @@ test_that("mock_categorical() messaging", {
 
 test_that("mock_continuous()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_continuous(
-      variables = c("AGE", "BMIBL")
-    ) |>
-      apply_fmt_fun()
+
+  out <- mock_continuous(
+    variables = c("AGE", "BMIBL")
   )
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+               ))
+  expect_snapshot(out)
 })
 
 test_that("mock_continuous() messaging", {
@@ -44,13 +56,16 @@ test_that("mock_continuous() messaging", {
 
 test_that("mock_dichotomous()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_dichotomous(
-      variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))),
-      by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
-    ) |>
-      apply_fmt_fun()
+  out <-     mock_dichotomous(
+    variables = list(AGEGR1 = factor("65-80", levels = c("<65", "65-80", ">80"))),
+    by = list(TRTA = c("Placebo", "Xanomeline High Dose", "Xanomeline Low Dose"))
   )
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+               ))
+  expect_snapshot(out)
 })
 
 test_that("mock_dichotomous() messaging", {
@@ -66,12 +81,15 @@ test_that("mock_dichotomous() messaging", {
 
 test_that("mock_missing()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_missing(
-      variables = c("AGE", "BMIBL")
-    ) |>
-      apply_fmt_fun()
+  out <- mock_missing(
+    variables = c("AGE", "BMIBL")
   )
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+               ))
+  expect_snapshot(out)
 })
 
 test_that("mock_missing() messaging", {
@@ -87,11 +105,16 @@ test_that("mock_missing() messaging", {
 
 test_that("mock_attributes()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_attributes(
-      label = list(AGE = "Age", BMIBL = "Baseline BMI")
-    )
+
+  out <- mock_attributes(
+    label = list(AGE = "Age", BMIBL = "Baseline BMI")
   )
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+               ))
+  expect_snapshot(out)
 })
 
 test_that("mock_attributes() messaging", {
@@ -104,8 +127,12 @@ test_that("mock_attributes() messaging", {
 
 test_that("mock_total_n()", {
   withr::local_options(list(width = 130))
-  expect_snapshot(
-    mock_total_n() |>
-      apply_fmt_fun()
-  )
+
+  out <- mock_total_n()
+  expect_s3_class(out, "card")
+  expect_named(out,
+               c("group1", "group1_level", "variable", "variable_level", "context",
+                 "stat_name", "stat_label", "stat", "fmt_fun", "warning", "error"
+               ))
+  expect_snapshot(out)
 })
