@@ -51,7 +51,7 @@ logical representing whether or not to trim away statistic-level metadata and fi
 only on numeric statistic values.}
 }
 \value{
-a tibble
+A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}\cr

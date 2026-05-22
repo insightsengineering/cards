@@ -26,7 +26,16 @@ ADTTE
 
 ADLB
 }
+\value{
+Datasets in tibble format.
+}
 \description{
 Data frame imported from the \href{https://github.com/cdisc-org/sdtm-adam-pilot-project}{CDISC SDTM/ADaM Pilot Project}
+}
+\examples{
+head(ADSL)
+head(ADAE)
+head(ADTTE)
+head(ADLB)
 }
 \keyword{datasets}

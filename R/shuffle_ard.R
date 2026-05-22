@@ -13,10 +13,9 @@
 #'   logical representing whether or not to trim away statistic-level metadata and filter
 #'   only on numeric statistic values.
 #'
-#' @return a tibble
+#' @returns A tibble.
 #' @rdname deprecated
 #' @export
-#'
 #' @examples
 #' bind_ard(
 #'   ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1"),
@@ -145,7 +144,7 @@ shuffle_ard <- function(x, trim = TRUE) {
 #' @param ... ([`dynamic-dots`][rlang::dyn-dots])\cr
 #'   columns to search within
 #' @keywords internal
-#'
+#' @returns A list with the warnings and errors.
 #' @examples
 #' ard <- ard_summary(
 #'   ADSL,

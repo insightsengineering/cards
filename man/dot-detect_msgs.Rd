@@ -13,6 +13,9 @@ a data frame}
 \item{...}{(\code{\link[rlang:dyn-dots]{dynamic-dots}})\cr
 columns to search within}
 }
+\value{
+A list with the warnings and errors.
+}
 \description{
 Function looks for non-null contents in requested columns and notifies user
 before removal. Specifically used for detecting messages.
