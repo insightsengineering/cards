@@ -1,128 +1,77 @@
-# tidy_as_ard() works
+# tidy_as_ard() works / with standard use
 
     Code
-      as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(dplyr::as_tibble(
-        stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate",
-          "p.value", "method")])), tidy_result_names = c("estimate", "p.value",
-        "method"), fun_args_to_record = c("workspace", "hybrid", "hybridPars",
-        "control", "or", "conf.int", "conf.level", "simulate.p.value", "B"), formals = formals(
-        stats::fisher.test), passed_args = list(), lst_ard_columns = list(context = "fishertest",
-        group1 = "am", variable = "vs")))
+      ard
+    Message
+      {cards} data frame: 12 x 8
     Output
-         group1 variable    context        stat_name
-      1      am       vs fishertest         estimate
-      2      am       vs fishertest          p.value
-      3      am       vs fishertest           method
-      4      am       vs fishertest        workspace
-      5      am       vs fishertest           hybrid
-      6      am       vs fishertest       hybridPars
-      7      am       vs fishertest          control
-      8      am       vs fishertest               or
-      9      am       vs fishertest         conf.int
-      10     am       vs fishertest       conf.level
-      11     am       vs fishertest simulate.p.value
-      12     am       vs fishertest                B
-                                          stat fmt_fun warning error
-      1                               1.956055       1    NULL  NULL
-      2                              0.4726974       1    NULL  NULL
-      3     Fisher's Exact Test for Count Data    NULL    NULL  NULL
-      4                                  2e+05       1    NULL  NULL
-      5                                  FALSE    NULL    NULL  NULL
-      6  c(expect = 5, percent = 80, Emin = 1)    NULL    NULL  NULL
-      7                                 list()    NULL    NULL  NULL
-      8                                      1       1    NULL  NULL
-      9                                   TRUE    NULL    NULL  NULL
-      10                                  0.95       1    NULL  NULL
-      11                                 FALSE    NULL    NULL  NULL
-      12                                  2000       1    NULL  NULL
+         group1 variable   context        stat_name        stat fmt_fun
+      1      am       vs fisherte…         estimate       1.956       1
+      2      am       vs fisherte…          p.value       0.473       1
+      3      am       vs fisherte…           method   Fisher's…    NULL
+      4      am       vs fisherte…        workspace       2e+05       1
+      5      am       vs fisherte…           hybrid       FALSE    NULL
+      6      am       vs fisherte…       hybridPars c, 5, 80, 1    NULL
+      7      am       vs fisherte…          control        list    NULL
+      8      am       vs fisherte…               or           1       1
+      9      am       vs fisherte…         conf.int        TRUE    NULL
+      10     am       vs fisherte…       conf.level        0.95       1
+      11     am       vs fisherte… simulate.p.value       FALSE    NULL
+      12     am       vs fisherte…                B        2000       1
+    Message
+      i 2 more variables: warning, error
 
----
+# tidy_as_ard() works / when primary stats function errors
 
     Code
-      as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(stop(
-        "Planned unit testing error!")), tidy_result_names = c("estimate", "p.value",
-        "conf.low", "conf.high", "method", "alternative"), fun_args_to_record = c(
-        "workspace", "hybrid", "hybridPars", "control", "or", "conf.int",
-        "conf.level", "simulate.p.value", "B"), formals = formals(stats::fisher.test),
-      passed_args = list(), lst_ard_columns = list(context = "fishertest", group1 = "am",
-        variable = "vs")))
+      ard
+    Message
+      {cards} data frame: 15 x 8
     Output
-         group1 variable    context        stat_name
-      1      am       vs fishertest         estimate
-      2      am       vs fishertest          p.value
-      3      am       vs fishertest         conf.low
-      4      am       vs fishertest        conf.high
-      5      am       vs fishertest           method
-      6      am       vs fishertest      alternative
-      7      am       vs fishertest        workspace
-      8      am       vs fishertest           hybrid
-      9      am       vs fishertest       hybridPars
-      10     am       vs fishertest          control
-      11     am       vs fishertest               or
-      12     am       vs fishertest         conf.int
-      13     am       vs fishertest       conf.level
-      14     am       vs fishertest simulate.p.value
-      15     am       vs fishertest                B
-                                          stat fmt_fun warning
-      1                                   NULL    NULL    NULL
-      2                                   NULL    NULL    NULL
-      3                                   NULL    NULL    NULL
-      4                                   NULL    NULL    NULL
-      5                                   NULL    NULL    NULL
-      6                                   NULL    NULL    NULL
-      7                                  2e+05       1    NULL
-      8                                  FALSE    NULL    NULL
-      9  c(expect = 5, percent = 80, Emin = 1)    NULL    NULL
-      10                                list()    NULL    NULL
-      11                                     1       1    NULL
-      12                                  TRUE    NULL    NULL
-      13                                  0.95       1    NULL
-      14                                 FALSE    NULL    NULL
-      15                                  2000       1    NULL
-                               error
-      1  Planned unit testing error!
-      2  Planned unit testing error!
-      3  Planned unit testing error!
-      4  Planned unit testing error!
-      5  Planned unit testing error!
-      6  Planned unit testing error!
-      7  Planned unit testing error!
-      8  Planned unit testing error!
-      9  Planned unit testing error!
-      10 Planned unit testing error!
-      11 Planned unit testing error!
-      12 Planned unit testing error!
-      13 Planned unit testing error!
-      14 Planned unit testing error!
-      15 Planned unit testing error!
+         group1 variable   context        stat_name        stat     error
+      1      am       vs fisherte…         estimate             Planned …
+      2      am       vs fisherte…          p.value             Planned …
+      3      am       vs fisherte…         conf.low             Planned …
+      4      am       vs fisherte…        conf.high             Planned …
+      5      am       vs fisherte…           method             Planned …
+      6      am       vs fisherte…      alternative             Planned …
+      7      am       vs fisherte…        workspace       2e+05 Planned …
+      8      am       vs fisherte…           hybrid       FALSE Planned …
+      9      am       vs fisherte…       hybridPars c, 5, 80, 1 Planned …
+      10     am       vs fisherte…          control        list Planned …
+      11     am       vs fisherte…               or           1 Planned …
+      12     am       vs fisherte…         conf.int        TRUE Planned …
+      13     am       vs fisherte…       conf.level        0.95 Planned …
+      14     am       vs fisherte… simulate.p.value       FALSE Planned …
+      15     am       vs fisherte…                B        2000 Planned …
+    Message
+      i 2 more variables: fmt_fun, warning
 
----
+# tidy_as_ard() works / when `fun_args_to_record` argument is not passed
 
     Code
-      dplyr::select(as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(
-        dplyr::as_tibble(stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c(
-          "estimate", "p.value", "method")])), tidy_result_names = c("estimate",
-        "p.value", "conf.low", "conf.high", "method", "alternative"), formals = formals(
-        stats::fisher.test), passed_args = list(), lst_ard_columns = list(context = "fishertest",
-        group1 = "am", variable = "vs"))), c(group1, variable, stat))
+      ard
+    Message
+      {cards} data frame: 3 x 8
     Output
-        group1 variable                               stat
-      1     am       vs                           1.956055
-      2     am       vs                          0.4726974
-      3     am       vs Fisher's Exact Test for Count Data
+        group1 variable   context stat_name      stat fmt_fun
+      1     am       vs fisherte…  estimate     1.956       1
+      2     am       vs fisherte…   p.value     0.473       1
+      3     am       vs fisherte…    method Fisher's…    NULL
+    Message
+      i 2 more variables: warning, error
 
----
+# tidy_as_ard() works / when `formals` argument is not passed.
 
     Code
-      dplyr::select(as.data.frame(tidy_as_ard(lst_tidy = eval_capture_conditions(
-        dplyr::as_tibble(stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c(
-          "estimate", "p.value", "method")])), tidy_result_names = c("estimate",
-        "p.value", "conf.low", "conf.high", "method", "alternative"), passed_args = list(),
-      lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs"))),
-      c(group1, variable, stat))
+      ard
+    Message
+      {cards} data frame: 3 x 8
     Output
-        group1 variable                               stat
-      1     am       vs                           1.956055
-      2     am       vs                          0.4726974
-      3     am       vs Fisher's Exact Test for Count Data
+        group1 variable   context stat_name      stat fmt_fun
+      1     am       vs fisherte…  estimate     1.956       1
+      2     am       vs fisherte…   p.value     0.473       1
+      3     am       vs fisherte…    method Fisher's…    NULL
+    Message
+      i 2 more variables: warning, error
 

@@ -1,7 +1,8 @@
-test_that("tidy_as_ard() works", {
-  # function works with standard use
-  expect_snapshot(
-    tidy_as_ard(
+describe("tidy_as_ard() works", {
+  it("with standard use", {
+    # function works
+
+    ard <- tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
           # this mimics a tidier
@@ -18,13 +19,15 @@ test_that("tidy_as_ard() works", {
       formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
-  )
+    )
+    expect_s3_class(ard, "card")
+    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+                        "warning", "error"))
+    expect_snapshot(ard)
+  })
 
-  # function works when primary stats function errors
-  expect_snapshot(
-    tidy_as_ard(
+  it("when primary stats function errors", {
+    ard <- tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
           stop("Planned unit testing error!")
@@ -39,13 +42,14 @@ test_that("tidy_as_ard() works", {
       formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
-  )
-
-  # function works when `fun_args_to_record` argument is not passed.
-  expect_snapshot(
-    tidy_as_ard(
+    )
+    expect_s3_class(ard, "card")
+    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+                        "warning", "error"))
+    expect_snapshot(ard)
+})
+  it("when `fun_args_to_record` argument is not passed", {
+    ard <- tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
           stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")] |>
@@ -56,14 +60,15 @@ test_that("tidy_as_ard() works", {
       formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame() |>
-      dplyr::select(c(group1, variable, stat))
-  )
+    )
+    expect_s3_class(ard, "card")
+    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+                        "warning", "error"))
+    expect_snapshot(ard)
+  })
 
-  # function works when `formals` argument is not passed.
-  expect_snapshot(
-    tidy_as_ard(
+  it("when `formals` argument is not passed.", {
+    ard <- tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
           stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")] |>
@@ -73,8 +78,10 @@ test_that("tidy_as_ard() works", {
         c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame() |>
-      dplyr::select(c(group1, variable, stat))
-  )
+    )
+    expect_s3_class(ard, "card")
+    expect_named(ard, c("group1", "variable", "context", "stat_name", "stat", "fmt_fun",
+                        "warning", "error"))
+    expect_snapshot(ard)
+  })
 })
