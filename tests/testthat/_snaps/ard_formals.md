@@ -1,7 +1,7 @@
 # ard_formals() works
 
     Code
-      ard_formals(fun = mcnemar.test, arg_names = "correct")
+      out
     Message
       {cards} data frame: 1 x 3
     Output
@@ -11,8 +11,7 @@
 ---
 
     Code
-      ard_formals(fun = asNamespace("stats")[["t.test.default"]], arg_names = c("mu",
-        "paired", "var.equal", "conf.level"), passed_args = list(conf.level = 0.9))
+      out
     Message
       {cards} data frame: 4 x 3
     Output
