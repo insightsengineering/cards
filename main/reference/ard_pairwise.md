@@ -68,4 +68,11 @@ ard_pairwise(
 #> 2      AGE mvsummary   p.value    p.value  0.724       1
 #> ℹ 2 more variables: warning, error
 #> 
+#> attr(,"args")
+#> attr(,"args")$variable
+#> [1] "ARM"
+#> 
+#> attr(,"args")$include
+#> [1] "Placebo"
+#> 
 ```

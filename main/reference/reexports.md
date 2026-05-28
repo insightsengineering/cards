@@ -5,16 +5,16 @@ to see their documentation.
 
 - dplyr:
 
-  [`%>%`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`all_of`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`any_of`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`contains`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`ends_with`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`everything`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`last_col`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`matches`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`num_range`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`one_of`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`starts_with`](https://dplyr.tidyverse.org/reference/reexports.html),
-  [`vars`](https://dplyr.tidyverse.org/reference/vars.html),
-  [`where`](https://dplyr.tidyverse.org/reference/reexports.html)
+  [`%>%`](https://magrittr.tidyverse.org/reference/pipe.html),
+  [`all_of`](https://tidyselect.r-lib.org/reference/all_of.html),
+  [`any_of`](https://tidyselect.r-lib.org/reference/all_of.html),
+  [`contains`](https://tidyselect.r-lib.org/reference/starts_with.html),
+  [`ends_with`](https://tidyselect.r-lib.org/reference/starts_with.html),
+  [`everything`](https://tidyselect.r-lib.org/reference/everything.html),
+  [`last_col`](https://tidyselect.r-lib.org/reference/everything.html),
+  [`matches`](https://tidyselect.r-lib.org/reference/starts_with.html),
+  [`num_range`](https://tidyselect.r-lib.org/reference/starts_with.html),
+  [`one_of`](https://tidyselect.r-lib.org/reference/one_of.html),
+  [`starts_with`](https://tidyselect.r-lib.org/reference/starts_with.html),
+  [`vars()`](https://dplyr.tidyverse.org/reference/vars.html),
+  [`where`](https://tidyselect.r-lib.org/reference/where.html)

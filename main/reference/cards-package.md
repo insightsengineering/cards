@@ -23,6 +23,9 @@ Useful links:
 
 Authors:
 
+- Daniel D. Sjoberg <danield.sjoberg@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-0862-2018))
+
 - Becca Krouse <becca.z.krouse@gsk.com>
 
 - Emily de la Rua <emily.de_la_rua@contractors.roche.com>
