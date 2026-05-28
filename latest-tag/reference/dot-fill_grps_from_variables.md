@@ -15,7 +15,7 @@ grouping variable's value is `NA`.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 ## Value

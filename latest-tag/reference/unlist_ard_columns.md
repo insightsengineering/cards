@@ -17,24 +17,24 @@ unlist_ard_columns(
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card' or any data frame
 
 - columns:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to unlist. Default is
   `c(where(is.list), -any_of(c("warning", "error", "fmt_fun")))`.
 
 - fill:
 
-  (scalar)  
+  (scalar)\
   scalar to fill NULL values with before unlisting (if they are
   present). Default is `NA`.
 
 - fct_as_chr:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   When `TRUE`, factor elements will be converted to character before
   unlisting. When the column being unlisted contains mixed types of
   classes, the factor elements are often converted to the underlying

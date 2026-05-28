@@ -15,7 +15,7 @@ unnested list columns.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 ## Value

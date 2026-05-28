@@ -1,6 +1,6 @@
 # Sort Stacked Hierarchical ARDs
 
-**\[experimental\]**  
+**\[experimental\]**\
 
 This function is used to sort stacked hierarchical ARDs.
 
@@ -18,7 +18,7 @@ sort_ard_hierarchical(x, sort = everything() ~ "descending")
 
 - x:
 
-  (`card`)  
+  (`card`)\
   a stacked hierarchical ARD of class `'card'` created using
   [`ard_stack_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_stack_hierarchical.md)
   or
@@ -27,7 +27,7 @@ sort_ard_hierarchical(x, sort = everything() ~ "descending")
 - sort:
 
   ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md),
-  `string`)  
+  `string`)\
   a named list, a list of formulas, a single formula where the list
   element is a named list of functions (or the RHS of a formula), or a
   single string specifying the types of sorting to perform at each

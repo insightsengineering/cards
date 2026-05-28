@@ -1,6 +1,6 @@
 # Filter Stacked Hierarchical ARDs
 
-**\[experimental\]**  
+**\[experimental\]**\
 
 This function is used to filter stacked hierarchical ARDs.
 
@@ -24,7 +24,7 @@ filter_ard_hierarchical(
 
 - x:
 
-  (`card`)  
+  (`card`)\
   a stacked hierarchical ARD of class `'card'` created using
   [`ard_stack_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_stack_hierarchical.md)
   or
@@ -32,27 +32,27 @@ filter_ard_hierarchical(
 
 - filter:
 
-  (`expression`)  
+  (`expression`)\
   an expression that is used to filter variable groups of the
   hierarchical ARD. See the Details section below.
 
 - var:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   hierarchy variable from `x` to perform filtering on. If `NULL`, the
   last hierarchy variable from `x`
   (`dplyr::last(attributes(x)$args$variables)`) will be used.
 
 - keep_empty:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   Logical argument indicating whether to retain summary rows
   corresponding to hierarchy sections that have had all rows filtered
   out. Default is `FALSE`.
 
 - quiet:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to suppress any messaging. Default is
   `FALSE`.
 

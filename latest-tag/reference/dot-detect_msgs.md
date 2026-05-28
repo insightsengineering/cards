@@ -13,12 +13,12 @@ user before removal. Specifically used for detecting messages.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   columns to search within
 
 ## Examples

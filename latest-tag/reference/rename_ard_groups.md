@@ -14,12 +14,12 @@ rename_ard_groups_reverse(x)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'.
 
 - shift:
 
-  (`integer`)  
+  (`integer`)\
   an integer specifying how many values to shift the group IDs, e.g.
   `shift=-1` renames `group2` to `group1`.
 

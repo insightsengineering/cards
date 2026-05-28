@@ -28,7 +28,7 @@ ard_tabulate_value(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
@@ -37,13 +37,13 @@ ard_tabulate_value(
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to include in summaries. Default is
   [`everything()`](https://tidyselect.r-lib.org/reference/everything.html).
 
 - by, strata:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to use for grouping or stratifying the table output. Arguments
   are similar, but with an important distinction:
 
@@ -58,34 +58,34 @@ ard_tabulate_value(
 
 - value:
 
-  (named `list`)  
+  (named `list`)\
   named list of values to tabulate. Default is
   `maximum_variable_value(data)`, which returns the largest/last value
   after a sort.
 
 - statistic:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element one or more of `c("n", "N", "p", "n_cum", "p_cum")` (on the
   RHS of a formula).
 
 - denominator:
 
-  (`string`, `data.frame`, `integer`)  
+  (`string`, `data.frame`, `integer`)\
   Specify this argument to change the denominator, e.g. the `"N"`
   statistic. Default is `'column'`. See below for details.
 
 - fmt_fun:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element is a named list of functions (or the RHS of a formula), e.g.
   `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character()))`.
 
 - stat_label:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element is either a named list or a list of formulas defining the
   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or

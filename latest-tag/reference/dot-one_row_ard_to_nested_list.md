@@ -12,7 +12,7 @@ Convert One Row to Nested List
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card' with one row
 
 ## Value

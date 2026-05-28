@@ -48,32 +48,32 @@ ard_stack_hierarchical_count(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   Specifies the nested/hierarchical structure of the data. The variables
   that are specified here and in the `include` argument will have
   summary statistics calculated.
 
 - by:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   variables to perform tabulations by. All combinations of the variables
   specified here appear in results. Default is
   `dplyr::group_vars(data)`.
 
 - id:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   argument used to subset `data` to identify rows in `data` to calculate
   event rates in `ard_stack_hierarchical()`. See details below.
 
 - denominator:
 
-  (`data.frame`, `integer`)  
+  (`data.frame`, `integer`)\
   used to define the denominator and enhance the output. The argument is
   required for `ard_stack_hierarchical()` and optional for
   `ard_stack_hierarchical_count()`.
@@ -91,42 +91,42 @@ ard_stack_hierarchical_count(
 
 - include:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   Specify the subset a columns indicated in the `variables` argument for
   which summary statistics will be returned. Default is
   [`everything()`](https://tidyselect.r-lib.org/reference/everything.html).
 
 - statistic:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element one or more of `c("n", "N", "p", "n_cum", "p_cum")` (on the
   RHS of a formula).
 
 - overall:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether overall statistics should be calculated
   (i.e. repeat the operations with `by=NULL` in *most cases*, see below
   for details). Default is `FALSE`.
 
 - over_variables:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether summary statistics should be calculated
   over or across the columns listed in the `variables` argument. Default
   is `FALSE`.
 
 - attributes:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether to include the results of
   [`ard_attributes()`](https://insightsengineering.github.io/cards/reference/ard_attributes.md)
   for all variables represented in the ARD. Default is `FALSE`.
 
 - total_n:
 
-  (scalar `logical`)  
+  (scalar `logical`)\
   logical indicating whether to include of `ard_total_n(denominator)` in
   the returned ARD.
 
@@ -136,7 +136,7 @@ ard_stack_hierarchical_count(
 
 - by_stats:
 
-  (`logical`)  
+  (`logical`)\
   logical indicating whether to include overall stats of the `by`
   variables in the returned ARD.
 

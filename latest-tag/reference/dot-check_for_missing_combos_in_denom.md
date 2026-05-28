@@ -14,22 +14,22 @@ function checks that the data frame contains all the same levels of the
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - denominator:
 
-  (`data.frame`)  
+  (`data.frame`)\
   denominator data frame
 
 - by:
 
-  (`character`)  
+  (`character`)\
   character vector of by column names
 
 - strata:
 
-  (`character`)  
+  (`character`)\
   character vector of strata column names
 
 ## Value

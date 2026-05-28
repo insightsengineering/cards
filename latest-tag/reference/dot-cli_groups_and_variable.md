@@ -14,7 +14,7 @@ glue syntax.
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 ## Value

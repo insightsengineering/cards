@@ -12,17 +12,17 @@ Evaluate the `ard_*()` function calls
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - .by:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   columns to tabulate by in the series of ARD function calls
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   Series of ARD function calls to be run and stacked
 
 ## Value

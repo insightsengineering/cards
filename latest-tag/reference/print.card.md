@@ -1,6 +1,6 @@
 # Print
 
-**\[experimental\]**  
+**\[experimental\]**\
 Print method for objects of class 'card'
 
 ## Usage
@@ -8,29 +8,32 @@ Print method for objects of class 'card'
 ``` r
 # S3 method for class 'card'
 print(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
+
+# S3 method for class 'compare_ard'
+print(x, ...)
 ```
 
 ## Arguments
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   object of class 'card'
 
 - n:
 
-  (`integer`)  
+  (`integer`)\
   integer specifying the number of rows to print
 
 - columns:
 
-  (`string`)  
+  (`string`)\
   string indicating whether to print a selected number of columns or
   all.
 
 - n_col:
 
-  (`integer`)  
+  (`integer`)\
   some columns are removed when there are more than a threshold of
   columns present. This argument sets that threshold. This is only used
   when `columns='auto'` and default is `6L`. Columns `'error'`,
@@ -40,7 +43,7 @@ print(x, n = NULL, columns = c("auto", "all"), n_col = 6L, ...)
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   not used
 
 ## Value

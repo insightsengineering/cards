@@ -14,17 +14,17 @@ replace_null_statistic(x, value = NA, rows = TRUE)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - value:
 
-  (usually a `scalar`)  
+  (usually a `scalar`)\
   The value to replace `NULL` values with. Default is `NA`.
 
 - rows:
 
-  ([`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html))  
+  ([`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html))\
   Expression that return a logical value, and are defined in terms of
   the variables in `.data`. Only rows for which the condition evaluates
   to `TRUE` are replaced. Default is `TRUE`, which applies to all rows.

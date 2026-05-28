@@ -15,7 +15,7 @@ even if both levels are not observed.
 
 - x:
 
-  (`any`)  
+  (`any`)\
   a vector
 
 ## Value

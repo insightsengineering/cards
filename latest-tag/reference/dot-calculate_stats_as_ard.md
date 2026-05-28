@@ -20,17 +20,17 @@ Calculate statistics and return in an ARD format
 
 - df_nested:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a nested data frame
 
 - variables:
 
-  (`character`)  
+  (`character`)\
   character vector of variables
 
 - statistic:
 
-  (named `list`)  
+  (named `list`)\
   named list of statistical functions
 
 ## Value

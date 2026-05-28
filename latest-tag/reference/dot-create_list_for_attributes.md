@@ -12,17 +12,17 @@ Create List for Attributes
 
 - ard_subset:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - attributes:
 
-  (`character`)  
+  (`character`)\
   a character vector of attribute names
 
 - i:
 
-  (`integer`)  
+  (`integer`)\
   a row index number
 
 ## Value

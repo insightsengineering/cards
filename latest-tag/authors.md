@@ -18,16 +18,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/insightsengineering/cards/blob/v0.7.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/insightsengineering/cards/blob/v0.8.0/DESCRIPTION)
 
-Sjoberg D, Krouse B, de la Rua E, Bosman M (2025). *cards: Analysis
-Results Data*. R package version 0.7.1,
+Sjoberg D, Krouse B, de la Rua E, Bosman M (2026). *cards: Analysis
+Results Data*. R package version 0.8.0,
 <https://github.com/insightsengineering/cards>.
 
     @Manual{,
       title = {cards: Analysis Results Data},
       author = {Daniel D. Sjoberg and Becca Krouse and Emily {de la Rua} and Malan Bosman},
-      year = {2025},
-      note = {R package version 0.7.1},
+      year = {2026},
+      note = {R package version 0.8.0},
       url = {https://github.com/insightsengineering/cards},
     }

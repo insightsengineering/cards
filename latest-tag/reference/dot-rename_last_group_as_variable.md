@@ -13,7 +13,7 @@ renamed to `variable` and `variable_level` before being returned.
 
 - df_result:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 ## Value

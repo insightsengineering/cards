@@ -58,7 +58,7 @@ ard_hierarchical_count(
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
@@ -67,26 +67,26 @@ ard_hierarchical_count(
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   variables to perform the nested/hierarchical tabulations within.
 
 - by:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   variables to perform tabulations by. All combinations of the variables
   specified here appear in results. Default is
   `dplyr::group_vars(data)`.
 
 - statistic:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element one or more of `c("n", "N", "p", "n_cum", "p_cum")` (on the
   RHS of a formula).
 
 - denominator:
 
-  (`data.frame`, `integer`)  
+  (`data.frame`, `integer`)\
   used to define the denominator and enhance the output. The argument is
   required for `ard_hierarchical()` and optional for
   `ard_hierarchical_count()`.
@@ -101,14 +101,14 @@ ard_hierarchical_count(
 
 - fmt_fun:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element is a named list of functions (or the RHS of a formula), e.g.
   `list(mpg = list(mean = \(x) round(x, digits = 2) |> as.character()))`.
 
 - stat_label:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   element is either a named list or a list of formulas defining the
   statistic labels, e.g. `everything() ~ list(n = "n", p = "pct")` or
@@ -116,7 +116,7 @@ ard_hierarchical_count(
 
 - id:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   an optional argument used to assert there are no duplicates within the
   `c(id, variables)` columns.
 

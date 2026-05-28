@@ -8,6 +8,7 @@ The {cards} objects can easily be expressed in YAML and JSON formats.
 Let’s begin by creating an Analysis Results Data (ARD) object.
 
 ``` r
+
 library(cards)
 
 ard <-
@@ -41,6 +42,7 @@ The
 function prepares the ARD data frame to be converted to a YAML object.
 
 ``` r
+
 ard |>
   as_nested_list() |>
   yaml::as.yaml() |>
@@ -70,6 +72,7 @@ The
 function prepares the ARD data frame to be converted to a JSON object.
 
 ``` r
+
 ard |>
   as_nested_list() |>
   jsonlite::toJSON(pretty = TRUE)
@@ -101,6 +104,7 @@ With the JSON format, ARDs can be made accessible via REST APIs. Using
 the {plumber} package, an API can be created in a `plumber.R` file.
 
 ``` r
+
 library(cards)
 library(plumber)
 library(jsonlite)
@@ -124,6 +128,7 @@ Note: “plumber.R” represents the path to the `plumber.R` file created
 above.
 
 ``` r
+
 library(plumber)
 
 pr("plumber.R") |>
@@ -137,6 +142,7 @@ Data is requested from a hosted API via the {httr} package and converted
 back to a nested list using {jsonlite}.
 
 ``` r
+
 library(httr)
 library(jsonlite)
 

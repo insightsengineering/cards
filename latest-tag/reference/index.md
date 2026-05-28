@@ -10,6 +10,8 @@
   : Tabulate ARD
 - [`ard_tabulate_value()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_value.md)
   : Tabulate Value ARD
+- [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
+  : Row Tabulate ARD
 - [`ard_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md)
   [`ard_hierarchical_count()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md)
   : Hierarchical ARD Statistics
@@ -106,6 +108,10 @@
 - [`rename_ard_groups_shift()`](https://insightsengineering.github.io/cards/reference/rename_ard_groups.md)
   [`rename_ard_groups_reverse()`](https://insightsengineering.github.io/cards/reference/rename_ard_groups.md)
   : Rename ARD Group Columns
+- [`compare_ard()`](https://insightsengineering.github.io/cards/reference/compare_ard.md)
+  [`is_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md)
+  [`check_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md)
+  **\[experimental\]** : Compare ARDs
 
 ### Table Shells
 

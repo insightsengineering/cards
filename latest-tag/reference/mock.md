@@ -1,6 +1,6 @@
 # Mock ARDs
 
-**\[experimental\]**  
+**\[experimental\]**\
 Create empty ARDs used to create mock tables or table shells. Where
 applicable, the formatting functions are set to return `'xx'` or
 `'xx.x'`.
@@ -41,7 +41,7 @@ mock_total_n()
 
 - variables:
 
-  (`character` or named `list`)  
+  (`character` or named `list`)\
   a character vector of variable names for functions
   `mock_continuous()`, `mock_missing()`, and `mock_attributes()`.
 
@@ -52,19 +52,19 @@ mock_total_n()
 
 - statistic:
 
-  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))  
+  ([`formula-list-selector`](https://insightsengineering.github.io/cards/reference/syntax.md))\
   a named list, a list of formulas, or a single formula where the list
   elements are character vectors of statistic names to appear in the
   ARD.
 
 - by:
 
-  (named `list`)  
+  (named `list`)\
   a named list where the list element is a vector of variable values.
 
 - label:
 
-  (named `list`)  
+  (named `list`)\
   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
 
 ## Value

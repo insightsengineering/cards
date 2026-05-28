@@ -23,6 +23,7 @@ Use cases:
 Install cards from CRAN with:
 
 ``` r
+
 install.packages("cards")
 ```
 
@@ -30,6 +31,7 @@ You can install the development version of cards from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("insightsengineering/cards")
 ```
@@ -61,6 +63,7 @@ page for examples using ARDs to calculate statistics to later include in
 tables.
 
 ``` r
+
 library(cards)
 
 ard_summary(ADSL, by = "ARM", variables = "AGE")

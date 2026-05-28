@@ -31,30 +31,30 @@ update_ard_stat_label(
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   variables in `x$variable` to apply update. Default is
   [`everything()`](https://tidyselect.r-lib.org/reference/everything.html).
 
 - stat_names:
 
-  (`character`)  
+  (`character`)\
   character vector of the statistic names (i.e. values from
   `x$stat_name`) to apply the update.
 
 - fmt_fun:
 
-  (`function`)  
+  (`function`)\
   a function or alias recognized by
   [`alias_as_fmt_fun()`](https://insightsengineering.github.io/cards/reference/alias_as_fmt_fun.md).
 
 - filter:
 
-  (`expression`)  
+  (`expression`)\
   an expression that evaluates to a logical vector identifying rows in
   `x` to apply the update to. Default is `TRUE`, and update is applied
   to all rows.
@@ -65,7 +65,7 @@ update_ard_stat_label(
 
 - stat_label:
 
-  (`function`)  
+  (`function`)\
   a string of the updated statistic label.
 
 ## Value

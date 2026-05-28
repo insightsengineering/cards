@@ -22,12 +22,12 @@ get_cards_fn_stat_names(f)
 
 - f:
 
-  (`function`)  
+  (`function`)\
   a function
 
 - stat_names:
 
-  (`character`)  
+  (`character`)\
   a character vector of the expected statistic names returned by
   function `f`
 

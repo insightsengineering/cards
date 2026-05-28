@@ -1,6 +1,6 @@
 # ARD as Nested List
 
-**\[experimental\]**  
+**\[experimental\]**\
 Convert ARDs to nested lists.
 
 ## Usage
@@ -13,7 +13,7 @@ as_nested_list(x)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 ## Value

@@ -16,7 +16,7 @@ ard_total_n(data, ...)
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:

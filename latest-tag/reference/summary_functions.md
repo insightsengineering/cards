@@ -23,13 +23,13 @@ continuous_summary_fns(
 
 - summaries:
 
-  (`character`)  
+  (`character`)\
   a character vector of results to include in output. Select one or more
   from 'N', 'mean', 'sd', 'median', 'p25', 'p75', 'min', 'max'.
 
 - other_stats:
 
-  (named `list`)  
+  (named `list`)\
   named list of other statistic functions to supplement the
   pre-programmed functions.
 

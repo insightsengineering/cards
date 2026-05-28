@@ -28,7 +28,7 @@ ard_attributes(data, ...)
 
 - data:
 
-  (`data.frame`)  
+  (`data.frame`)\
   a data frame
 
 - ...:
@@ -37,12 +37,12 @@ ard_attributes(data, ...)
 
 - variables:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   variables to include
 
 - label:
 
-  (named `list`)  
+  (named `list`)\
   named list of variable labels, e.g. `list(cyl = "No. Cylinders")`.
   Default is `NULL`
 

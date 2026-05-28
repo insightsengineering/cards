@@ -13,7 +13,7 @@ data frame.
 
 - x:
 
-  (`any`)  
+  (`any`)\
   object to check
 
 ## Value

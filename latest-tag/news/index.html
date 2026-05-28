@@ -13,8 +13,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Changelog">
 <meta property="og:image" content="https://insightsengineering.github.io/cards/logo.png">
@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cards</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@
     <div class="dropdown-menu" aria-labelledby="dropdown-versions">
     <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/main">main</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/latest-tag">latest-tag</a>
+<a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.8.0">v0.8.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.1">v0.7.1</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.7.0">v0.7.0</a>
 <a class="dropdown-item" data-toggle="tooltip" title="" href="https://insightsengineering.github.io/cards/v0.6.1">v0.6.1</a>
@@ -84,9 +85,41 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.7.1/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/insightsengineering/cards/blob/v0.8.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.0" id="cards-080">cards 0.8.0<a class="anchor" aria-label="anchor" href="#cards-080"></a>
+</h2>
+<p class="text-muted">CRAN release: 2026-05-28</p>
+<div class="section level3">
+<h3 id="new-features-and-functions-0-8-0">New Features and Functions<a class="anchor" aria-label="anchor" href="#new-features-and-functions-0-8-0"></a>
+</h3>
+<ul>
+<li><p>Added new functions <code><a href="../reference/compare_ard.html">compare_ard()</a></code>, <code><a href="../reference/compare_ard.html">is_ard_equal()</a></code>, and <code><a href="../reference/compare_ard.html">check_ard_equal()</a></code>. (<a href="https://github.com/insightsengineering/cards/issues/437" class="external-link">#437</a>; <a href="https://github.com/malanbos" class="external-link">@malanbos</a>)</p></li>
+<li><p>Adding <code><a href="../reference/ard_tabulate_rows.html">ard_tabulate_rows()</a></code> function to tabulate the number of rows in a data frame. (<a href="https://github.com/insightsengineering/cards/issues/531" class="external-link">#531</a>)</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="other-updates-0-8-0">Other Updates<a class="anchor" aria-label="anchor" href="#other-updates-0-8-0"></a>
+</h3>
+<ul>
+<li><p><code>as_card</code> now has the argument <code>check = TRUE</code> which when <code>TRUE</code> will confirm if the data frame being converted matches the cards spec using <code>check_ard_structure</code>. To support this, <code>check_ard_structure</code> has a new argument <code>error_on_fail</code> which is FALSE by default. When TRUE any failures will generate an error. (<a href="https://github.com/insightsengineering/cards/issues/514" class="external-link">#514</a>)</p></li>
+<li><p>Users are now messaged if the <code>by</code> or <code>strata</code> arguments pass columns with different classes in the <code>ard_tabulate(data,denominator)</code> arguments as this <em>may</em> cause issues downstream. (<a href="https://github.com/insightsengineering/cards/issues/515" class="external-link">#515</a>)</p></li>
+<li><p>Similar to <code><a href="../reference/ard_stack_hierarchical.html">ard_stack_hierarchical()</a></code> and <code><a href="../reference/ard_stack.html">ard_stack()</a></code>, other <code>ard_*()</code> functions and <code><a href="../reference/nest_for_ard.html">nest_for_ard()</a></code> now contain an <code>args</code> attribute to retain information about input arguments. (<a href="https://github.com/insightsengineering/cards/issues/483" class="external-link">#483</a>)</p></li>
+<li><p>The <code>ard_stack_hierarchical*()</code> functions now return a subclass with the calling function name.</p></li>
+<li><p>The following functions now return an object with an <code>'args'</code> attribute that contains more contextual information about the objects’ creation. <code><a href="../reference/ard_strata.html">ard_strata()</a></code>, <code><a href="../reference/ard_pairwise.html">ard_pairwise()</a></code>, <code><a href="../reference/ard_summary.html">ard_summary()</a></code>, <code><a href="../reference/ard_tabulate.html">ard_tabulate()</a></code>, <code><a href="../reference/ard_tabulate_value.html">ard_tabulate_value()</a></code>, <code><a href="../reference/ard_hierarchical.html">ard_hierarchical()</a></code>, <code><a href="../reference/ard_hierarchical.html">ard_hierarchical_count()</a></code>, <code><a href="../reference/ard_missing.html">ard_missing()</a></code>, <code><a href="../reference/ard_mvsummary.html">ard_mvsummary()</a></code> and <code><a href="../reference/nest_for_ard.html">nest_for_ard()</a></code> contain an args attribute to retain information about input arguments. (<a href="https://github.com/insightsengineering/cards/issues/483" class="external-link">#483</a>, <a href="https://github.com/alanahjonas95" class="external-link">@alanahjonas95</a>)</p></li>
+<li><p>Update in <code><a href="../reference/ard_tabulate.html">ard_tabulate()</a></code> to account for change in <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> being released in R-Devel. (<a href="https://github.com/insightsengineering/cards/issues/554" class="external-link">#554</a>)</p></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="bug-fixes-0-8-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a>
+</h3>
+<ul>
+<li>Fixed bug in <code><a href="../reference/rename_ard_columns.html">rename_ard_columns()</a></code> whereby factor variables were getting converted to integers and added parameter <code>fct_as_chr</code> as is used in <code><a href="../reference/unlist_ard_columns.html">unlist_ard_columns()</a></code> (<a href="https://github.com/insightsengineering/cards/issues/542" class="external-link">#542</a>)</li>
+</ul>
+</div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.1" id="cards-071">cards 0.7.1<a class="anchor" aria-label="anchor" href="#cards-071"></a>
 </h2>

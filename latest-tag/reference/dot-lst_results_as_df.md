@@ -15,18 +15,18 @@ converts it to a data frame.
 
 - x:
 
-  (named `list`)  
+  (named `list`)\
   the result from
   [`eval_capture_conditions()`](https://insightsengineering.github.io/cards/reference/eval_capture_conditions.md)
 
 - variable:
 
-  (`string`)  
+  (`string`)\
   variable name of the results
 
 - fun_name:
 
-  (`string`)  
+  (`string`)\
   name of function called to get results in `x`
 
 ## Value

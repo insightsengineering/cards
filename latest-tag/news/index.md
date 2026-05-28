@@ -1,5 +1,85 @@
 # Changelog
 
+## cards 0.8.0
+
+CRAN release: 2026-05-28
+
+### New Features and Functions
+
+- Added new functions
+  [`compare_ard()`](https://insightsengineering.github.io/cards/reference/compare_ard.md),
+  [`is_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md),
+  and
+  [`check_ard_equal()`](https://insightsengineering.github.io/cards/reference/compare_ard.md).
+  ([\#437](https://github.com/insightsengineering/cards/issues/437);
+  [@malanbos](https://github.com/malanbos))
+
+- Adding
+  [`ard_tabulate_rows()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_rows.md)
+  function to tabulate the number of rows in a data frame.
+  ([\#531](https://github.com/insightsengineering/cards/issues/531))
+
+### Other Updates
+
+- `as_card` now has the argument `check = TRUE` which when `TRUE` will
+  confirm if the data frame being converted matches the cards spec using
+  `check_ard_structure`. To support this, `check_ard_structure` has a
+  new argument `error_on_fail` which is FALSE by default. When TRUE any
+  failures will generate an error.
+  ([\#514](https://github.com/insightsengineering/cards/issues/514))
+
+- Users are now messaged if the `by` or `strata` arguments pass columns
+  with different classes in the `ard_tabulate(data,denominator)`
+  arguments as this *may* cause issues downstream.
+  ([\#515](https://github.com/insightsengineering/cards/issues/515))
+
+- Similar to
+  [`ard_stack_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_stack_hierarchical.md)
+  and
+  [`ard_stack()`](https://insightsengineering.github.io/cards/reference/ard_stack.md),
+  other `ard_*()` functions and
+  [`nest_for_ard()`](https://insightsengineering.github.io/cards/reference/nest_for_ard.md)
+  now contain an `args` attribute to retain information about input
+  arguments.
+  ([\#483](https://github.com/insightsengineering/cards/issues/483))
+
+- The `ard_stack_hierarchical*()` functions now return a subclass with
+  the calling function name.
+
+- The following functions now return an object with an `'args'`
+  attribute that contains more contextual information about the objects’
+  creation.
+  [`ard_strata()`](https://insightsengineering.github.io/cards/reference/ard_strata.md),
+  [`ard_pairwise()`](https://insightsengineering.github.io/cards/reference/ard_pairwise.md),
+  [`ard_summary()`](https://insightsengineering.github.io/cards/reference/ard_summary.md),
+  [`ard_tabulate()`](https://insightsengineering.github.io/cards/reference/ard_tabulate.md),
+  [`ard_tabulate_value()`](https://insightsengineering.github.io/cards/reference/ard_tabulate_value.md),
+  [`ard_hierarchical()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md),
+  [`ard_hierarchical_count()`](https://insightsengineering.github.io/cards/reference/ard_hierarchical.md),
+  [`ard_missing()`](https://insightsengineering.github.io/cards/reference/ard_missing.md),
+  [`ard_mvsummary()`](https://insightsengineering.github.io/cards/reference/ard_mvsummary.md)
+  and
+  [`nest_for_ard()`](https://insightsengineering.github.io/cards/reference/nest_for_ard.md)
+  contain an args attribute to retain information about input arguments.
+  ([\#483](https://github.com/insightsengineering/cards/issues/483),
+  [@alanahjonas95](https://github.com/alanahjonas95))
+
+- Update in
+  [`ard_tabulate()`](https://insightsengineering.github.io/cards/reference/ard_tabulate.md)
+  to account for change in
+  [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html) being
+  released in R-Devel.
+  ([\#554](https://github.com/insightsengineering/cards/issues/554))
+
+### Bug Fixes
+
+- Fixed bug in
+  [`rename_ard_columns()`](https://insightsengineering.github.io/cards/reference/rename_ard_columns.md)
+  whereby factor variables were getting converted to integers and added
+  parameter `fct_as_chr` as is used in
+  [`unlist_ard_columns()`](https://insightsengineering.github.io/cards/reference/unlist_ard_columns.md)
+  ([\#542](https://github.com/insightsengineering/cards/issues/542))
+
 ## cards 0.7.1
 
 CRAN release: 2025-12-02

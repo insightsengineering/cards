@@ -12,25 +12,25 @@ get_ard_statistics(x, ..., .column = "stat", .attributes = NULL)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - ...:
 
-  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))  
+  ([`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html))\
   optional arguments indicating rows to subset of the ARD. For example,
   to return only rows where the column `"AGEGR1"` is `"65-80"`, pass
   `AGEGR1 %in% "65-80"`.
 
 - .column:
 
-  (`string`)  
+  (`string`)\
   string indicating the column that will be returned in the list.
   Default is `"statistic"`
 
 - .attributes:
 
-  (`character`)  
+  (`character`)\
   character vector of column names that will be returned in the list as
   attributes. Default is `NULL`
 

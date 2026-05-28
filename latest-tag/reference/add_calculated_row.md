@@ -21,32 +21,32 @@ add_calculated_row(
 
 - x:
 
-  (`card`)  
+  (`card`)\
   data frame of class `'card'`
 
 - expr:
 
-  (`expression`)  
+  (`expression`)\
   an expression
 
 - stat_name:
 
-  (`string`)  
+  (`string`)\
   string naming the new statistic
 
 - by:
 
-  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))  
+  ([`tidy-select`](https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html))\
   Grouping variables to calculate statistics within
 
 - stat_label:
 
-  (`string`)  
+  (`string`)\
   string of the statistic label. Default is the `stat_name`.
 
 - fmt_fun:
 
-  (`integer`, `function`, `string`)  
+  (`integer`, `function`, `string`)\
   a function of an integer or string that can be converted to a function
   with
   [`alias_as_fmt_fun()`](https://insightsengineering.github.io/cards/reference/alias_as_fmt_fun.md).

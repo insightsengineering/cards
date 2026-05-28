@@ -21,12 +21,12 @@ tidy_ard_row_order(x)
 
 - x:
 
-  (`data.frame`)  
+  (`data.frame`)\
   an ARD data frame of class 'card'
 
 - group_order:
 
-  (`string`)  
+  (`string`)\
   specifies the ordering of the grouping variables. Must be one of
   `c("ascending", "descending")`. Default is `"ascending"`, where
   grouping variables begin with `"group1"` variables, followed by

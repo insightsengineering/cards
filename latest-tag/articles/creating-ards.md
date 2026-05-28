@@ -31,6 +31,7 @@ treatments arms (`ARM`). In {cardx} we have the function
 [`cardx::ard_stats_t_test()`](https://insightsengineering.github.io/cardx/latest-tag/reference/ard_stats_t_test.html)
 
 ``` r
+
 cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cardx::ard_stats_t_test(by = ARM, variables = AGE)
@@ -107,6 +108,7 @@ one-sample t-test and pass the output through
 `statistic` argument like so:
 
 ``` r
+
 cards::ADSL |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cards::ard_summary(
@@ -162,6 +164,7 @@ signed rank test over one variable using the function `wilcox.test`. As
 an output we just want to record the method and the p-value.
 
 ``` r
+
 wilcox_one_var <- \(x) wilcox.test(x)[c("method", "p.value")]
 ```
 
@@ -173,6 +176,7 @@ corresponds to the data we are testing, in this case `AGE` for the
 individual treatment arms.
 
 ``` r
+
 cards::ADSL |>
   cards::ard_summary(
     variables = AGE,
@@ -222,6 +226,7 @@ arguments.
 An implementation of a two-sample t-test may look like this:
 
 ``` r
+
 ttest_two_sample <- \(x, data, ...) t.test(x ~ data[["ARM"]]) |> broom::tidy()
 
 cards::ADSL |>
@@ -252,6 +257,7 @@ Let’s consider what happens when we encounter an error in our
 statistical method.
 
 ``` r
+
 wilcox_one_var_error <- function(x) {
   stop("AN ERROR!")
   wilcox.test(x)[c("method", "p.value")]
@@ -287,6 +293,7 @@ Here’s an example of how to specify the expected output using
 [`cards::as_cards_fn()`](https://insightsengineering.github.io/cards/reference/as_cards_fn.md):
 
 ``` r
+
 wilcox_one_var_error <- cards::as_cards_fn(
   wilcox_one_var_error,
   stat_names = c("method", "p.value")
@@ -335,6 +342,7 @@ In the example below, we expand out one-sample t-test example with the
 argument values passed to `t.test(...)`
 
 ``` r
+
 my_ard_one_sample_t_test <- function(data, variable, ...) {
   # define function to calculate results
   t_test_fun <- function(x) t.test(x, ...) |> broom::tidy()
