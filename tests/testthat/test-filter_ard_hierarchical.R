@@ -1,5 +1,3 @@
-skip_on_cran()
-
 ADAE_subset <- cards::ADAE |>
   dplyr::filter(AETERM %in% unique(cards::ADAE$AETERM)[1:5])
 

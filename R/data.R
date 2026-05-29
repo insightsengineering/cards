@@ -3,6 +3,12 @@
 #' Data frame imported from the [CDISC SDTM/ADaM Pilot Project](https://github.com/cdisc-org/sdtm-adam-pilot-project)
 #' @name adam
 #' @keywords datasets
+#' @returns Datasets in tibble format.
+#' @examples
+#' head(ADSL)
+#' head(ADAE)
+#' head(ADTTE)
+#' head(ADLB)
 "ADSL"
 
 #' @rdname adam

@@ -1,46 +1,61 @@
 test_that("print_ard_conditions() works", {
   # nothing prints with no errors/warnings
-  expect_snapshot(
-    ard_summary(ADSL, variables = AGE) |>
-      print_ard_conditions()
-  )
+
+  ard <- ard_summary(ADSL, variables = AGE)
+  expect_null(print_ard_conditions(ard))
+  expect_snapshot(print_ard_conditions(ard))
 
   # expected messaging without by variable
-  expect_snapshot(
-    ard_summary(
-      ADSL,
-      variables = AGE,
-      statistic = ~ list(
-        mean = \(x) mean(x),
-        mean_warning = \(x) {
-          warning("warn1")
-          warning("warn2")
-          mean(x)
-        },
-        err_fn = \(x) stop("'tis an error")
-      )
-    ) |>
-      print_ard_conditions()
+  ard <- ard_summary(
+    ADSL,
+    variables = AGE,
+    statistic = ~ list(
+      mean = \(x) mean(x),
+      mean_warning = \(x) {
+        warning("warn1")
+        warning("warn2")
+        mean(x)
+      },
+      err_fn = \(x) stop("'tis an error")
+    )
   )
+  expect_no_error(ard)
+  expect_message(
+    expect_message(
+      expect_message(
+        print_ard_conditions(ard),
+        "were returned during"
+      ),
+      "tis an error"
+    ),
+    "were returned during"
+  )
+  expect_snapshot(print_ard_conditions(ard))
 
   # expected messaging with by variable
-  expect_snapshot(
-    ard_summary(
-      ADSL,
-      variables = AGE,
-      by = ARM,
-      statistic = ~ list(
-        mean = \(x) mean(x),
-        mean_warning = \(x) {
-          warning("warn1")
-          warning("warn2")
-          mean(x)
-        },
-        err_fn = \(x) stop("'tis an error")
-      )
-    ) |>
-      print_ard_conditions()
+  ard <- ard_summary(
+    ADSL,
+    variables = AGE,
+    by = ARM,
+    statistic = ~ list(
+      mean = \(x) mean(x),
+      mean_warning = \(x) {
+        warning("warn1")
+        warning("warn2")
+        mean(x)
+      },
+      err_fn = \(x) stop("'tis an error")
+    )
   )
+  expect_no_error(ard)
+  expect_message(
+    expect_message(
+      print_ard_conditions(ard),
+      "were returned during"
+    ),
+    "were returned during"
+  )
+  expect_snapshot(print_ard_conditions(ard))
 
   # expected messaging when the same error appears for all stats (consolidated correctly)
   expect_snapshot(
@@ -50,61 +65,78 @@ test_that("print_ard_conditions() works", {
   )
 
   # calling function name prints correctly
-  expect_snapshot({
-    tbl_summary <- function() {
-      set_cli_abort_call()
+  tbl_summary <- function() {
+    set_cli_abort_call()
 
-      ard <- ard_summary(
-        ADSL,
-        variables = AGE,
-        statistic = ~ list(err_fn = \(x) stop("'tis an error"))
-      )
+    ard <- ard_summary(
+      ADSL,
+      variables = AGE,
+      statistic = ~ list(err_fn = \(x) stop("'tis an error"))
+    )
 
-      print_ard_conditions(ard)
-    }
-    tbl_summary()
-  })
+    print_ard_conditions(ard)
+  }
+  expect_message(tbl_summary(), "tbl_summary")
+  expect_snapshot(tbl_summary())
 })
 
 test_that("print_ard_conditions(condition_type)", {
   # expected warnings as warnings
-  expect_snapshot(
-    ard_summary(
-      ADSL,
-      variables = AGE,
-      statistic = ~ list(mean_warning = \(x) {
-        warning("warn1")
-        warning("warn2")
-        mean(x)
-      })
-    ) |>
-      print_ard_conditions(condition_type = "identity")
+  ard <- ard_summary(
+    ADSL,
+    variables = AGE,
+    statistic = ~ list(mean_warning = \(x) {
+      warning("warn1")
+      warning("warn2")
+      mean(x)
+    })
   )
+  expect_warning(
+    expect_warning(
+      expect_message(
+        print_ard_conditions(ard, condition_type = "identity"),
+        "print_ard_conditions()"
+      ),
+      "warn1"
+    ),
+    "warn2"
+  )
+  expect_snapshot(print_ard_conditions(ard, condition_type = "identity"))
 
   # expected warnings as warnings
+  ard <- ard_summary(
+    ADSL,
+    variables = AGE,
+    statistic = ~ list(
+      mean = \(x) mean(x),
+      err_fn = \(x) stop("'tis an error")
+    )
+  )
+  expect_error(
+    expect_message(
+      print_ard_conditions(ard, condition_type = "identity"),
+      "print_ard_conditions()"
+    ),
+    "tis an error"
+  )
   expect_snapshot(
     error = TRUE,
-    ard_summary(
-      ADSL,
-      variables = AGE,
-      statistic = ~ list(
-        mean = \(x) mean(x),
-        err_fn = \(x) stop("'tis an error")
-      )
-    ) |>
-      print_ard_conditions(condition_type = "identity")
+    print_ard_conditions(ard, condition_type = "identity")
   )
 })
 
 test_that("print_ard_conditions() no error when 'error'/'warning' columns not present", {
-  expect_snapshot(
-    ard_summary(
-      ADSL,
-      variables = AGE
-    ) |>
-      dplyr::select(-warning, -error) |>
-      print_ard_conditions()
-  )
+  ard <- ard_summary(
+    ADSL,
+    variables = AGE,
+    statistic = ~ list(
+      mean = \(x) mean(x),
+      err_fn = \(x) stop("'tis an error")
+    )
+  ) |>
+    dplyr::select(-warning, -error)
+  expect_no_error(print_ard_conditions(ard))
+  expect_snapshot(print_ard_conditions(ard))
 })
 
 test_that("print_ard_conditions() no error when factors are present", {
@@ -128,6 +160,7 @@ test_that("print_ard_conditions() no error when factors are present", {
       "card",
       "tbl_df", "tbl", "data.frame"
     ))
+
   expect_snapshot(
     print_ard_conditions(ard)
   )
