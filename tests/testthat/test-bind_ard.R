@@ -1,10 +1,15 @@
 test_that("bind_ard() works", {
   ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
+  res <- bind_ard(ard, ard, .update = TRUE)
 
   expect_error(
-    bind_ard(ard, ard, .update = TRUE),
+    res,
     NA
   )
+
+  # Verify the new class is assigned and ordered correctly
+  expect_s3_class(res, "bind_ard")
+  expect_identical(class(res)[1], "bind_ard")
 })
 
 
