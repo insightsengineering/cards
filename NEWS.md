@@ -1,5 +1,9 @@
 # cards 0.8.0.9000
 
+## Bug Fixes
+
+* `bind_ard()` now outputs a dedicated bind_ard class. This ensures downstream functions like `tfrmt::shuffle_card()` can properly handle combined ARD objects with differing structures (by, variable, or strata) instead of incorrectly inheriting attributes from only the first ARD in the sequence (#572; @alanahjonas95).
+
 # cards 0.8.0
 
 ## New Features and Functions
