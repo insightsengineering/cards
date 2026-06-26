@@ -1,9 +1,8 @@
 test_that("bind_ard() works", {
   ard <- ard_tabulate(ADSL, by = "ARM", variables = "AGEGR1")
-  res <- bind_ard(ard, ard, .update = TRUE)
 
   expect_error(
-    res,
+    res <- bind_ard(ard, ard, .update = TRUE),
     NA
   )
 
