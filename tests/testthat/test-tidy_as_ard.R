@@ -1,13 +1,16 @@
 test_that("tidy_as_ard() works", {
-  # `stats::fisher.test()` changed its `conf.int` default from `TRUE` to
-  # `!pval.only` in R-devel (a new `pval.only` formal was added upstream).
-  # `tidy_as_ard()` records formal default values, so pin `conf.int` to its
-  # historical value to keep the snapshots stable across R versions.
-  fisher_formals <- formals(stats::fisher.test)
-  fisher_formals[["conf.int"]] <- TRUE
+  # `tidy_as_ard()` records the default values of the recorded formals. The
+  # `conf.int` default of `stats::fisher.test()` is R-version dependent (`TRUE`
+  # on release R, `!pval.only` on R-devel), so the expected values below are
+  # derived directly from `formals(stats::fisher.test)` to match any R version.
+  fun_args_to_record <-
+    c(
+      "workspace", "hybrid", "hybridPars", "control", "or",
+      "conf.int", "conf.level", "simulate.p.value", "B"
+    )
 
   # function works with standard use
-  expect_snapshot(
+  ard <-
     tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
@@ -17,20 +20,28 @@ test_that("tidy_as_ard() works", {
         ),
       tidy_result_names =
         c("estimate", "p.value", "method"),
-      fun_args_to_record =
-        c(
-          "workspace", "hybrid", "hybridPars", "control", "or",
-          "conf.int", "conf.level", "simulate.p.value", "B"
-        ),
-      formals = fisher_formals,
+      fun_args_to_record = fun_args_to_record,
+      formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
+    )
+  fisher_result <-
+    stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")]
+  expect_equal(
+    get_ard_statistics(ard, .column = "stat"),
+    c(
+      list(
+        estimate = fisher_result[["estimate"]],
+        p.value = fisher_result[["p.value"]],
+        method = fisher_result[["method"]]
+      ),
+      as.list(formals(stats::fisher.test)[fun_args_to_record])
+    ),
+    ignore_attr = TRUE
   )
 
   # function works when primary stats function errors
-  expect_snapshot(
+  ard <-
     tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
@@ -38,16 +49,24 @@ test_that("tidy_as_ard() works", {
         ),
       tidy_result_names =
         c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
-      fun_args_to_record =
-        c(
-          "workspace", "hybrid", "hybridPars", "control", "or",
-          "conf.int", "conf.level", "simulate.p.value", "B"
-        ),
-      formals = fisher_formals,
+      fun_args_to_record = fun_args_to_record,
+      formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
+    )
+  expect_equal(
+    # `get_ard_statistics()` emits `structure(NULL, *)` deprecation warnings when
+    # extracting `NULL` statistics (the error-case results below); suppress to
+    # keep the test output clean.
+    suppressWarnings(get_ard_statistics(ard, .column = "stat")),
+    c(
+      stats::setNames(
+        rep_len(list(NULL), 6L),
+        c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative")
+      ),
+      as.list(formals(stats::fisher.test)[fun_args_to_record])
+    ),
+    ignore_attr = TRUE
   )
 
   # function works when `fun_args_to_record` argument is not passed.
