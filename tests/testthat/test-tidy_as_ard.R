@@ -1,4 +1,11 @@
 test_that("tidy_as_ard() works", {
+  # `stats::fisher.test()` changed its `conf.int` default from `TRUE` to
+  # `!pval.only` in R-devel (a new `pval.only` formal was added upstream).
+  # `tidy_as_ard()` records formal default values, so pin `conf.int` to its
+  # historical value to keep the snapshots stable across R versions.
+  fisher_formals <- formals(stats::fisher.test)
+  fisher_formals[["conf.int"]] <- TRUE
+
   # function works with standard use
   expect_snapshot(
     tidy_as_ard(
@@ -15,7 +22,7 @@ test_that("tidy_as_ard() works", {
           "workspace", "hybrid", "hybridPars", "control", "or",
           "conf.int", "conf.level", "simulate.p.value", "B"
         ),
-      formals = formals(stats::fisher.test),
+      formals = fisher_formals,
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     ) |>
@@ -36,7 +43,7 @@ test_that("tidy_as_ard() works", {
           "workspace", "hybrid", "hybridPars", "control", "or",
           "conf.int", "conf.level", "simulate.p.value", "B"
         ),
-      formals = formals(stats::fisher.test),
+      formals = fisher_formals,
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     ) |>

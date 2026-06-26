@@ -5,9 +5,9 @@
         stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate",
           "p.value", "method")])), tidy_result_names = c("estimate", "p.value",
         "method"), fun_args_to_record = c("workspace", "hybrid", "hybridPars",
-        "control", "or", "conf.int", "conf.level", "simulate.p.value", "B"), formals = formals(
-        stats::fisher.test), passed_args = list(), lst_ard_columns = list(context = "fishertest",
-        group1 = "am", variable = "vs")))
+        "control", "or", "conf.int", "conf.level", "simulate.p.value", "B"), formals = fisher_formals,
+      passed_args = list(), lst_ard_columns = list(context = "fishertest", group1 = "am",
+        variable = "vs")))
     Output
          group1 variable    context        stat_name
       1      am       vs fishertest         estimate
@@ -43,7 +43,7 @@
         "Planned unit testing error!")), tidy_result_names = c("estimate", "p.value",
         "conf.low", "conf.high", "method", "alternative"), fun_args_to_record = c(
         "workspace", "hybrid", "hybridPars", "control", "or", "conf.int",
-        "conf.level", "simulate.p.value", "B"), formals = formals(stats::fisher.test),
+        "conf.level", "simulate.p.value", "B"), formals = fisher_formals,
       passed_args = list(), lst_ard_columns = list(context = "fishertest", group1 = "am",
         variable = "vs")))
     Output
