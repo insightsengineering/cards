@@ -1,5 +1,12 @@
 # Changelog
 
+## cards 0.8.0.9001
+
+- Fixed
+  [`get_ard_statistics()`](https://insightsengineering.github.io/cards/reference/get_ard_statistics.md)
+  to return `NULL` statistics unchanged instead of attempting to attach
+  attributes to `NULL`, which errors as of R 4.5.0.
+
 ## cards 0.8.0
 
 CRAN release: 2026-05-28
