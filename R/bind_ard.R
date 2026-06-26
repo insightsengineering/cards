@@ -101,7 +101,7 @@ bind_ard <- function(..., .distinct = TRUE, .update = FALSE, .order = FALSE, .qu
   # return stacked ARDs --------------------------------------------------------
   res <- tidy_ard_column_order(data) |> as_card(check = FALSE)
 
-  # Assign the new class alongside existing classes
+  # Assign "bind_ard" class alongside existing classes
   class(res) <- c("bind_ard", class(res))
 
   res
