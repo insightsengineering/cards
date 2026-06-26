@@ -48,10 +48,7 @@ test_that("tidy_as_ard() works", {
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
     )
   expect_equal(
-    # `get_ard_statistics()` emits `structure(NULL, *)` deprecation warnings when
-    # extracting `NULL` statistics (the error-case results below); suppress to
-    # keep the test output clean.
-    suppressWarnings(get_ard_statistics(ard, .column = "stat")),
+    get_ard_statistics(ard, .column = "stat"),
     c(
       stats::setNames(
         rep_len(list(NULL), 6L),
