@@ -1,11 +1,4 @@
 test_that("tidy_as_ard() works", {
-  # `tidy_as_ard()` records the default values of the recorded formals. The
-  # arguments and their defaults vary across R versions (e.g. R-devel added a
-  # `pval.only` argument to `stats::fisher.test()` and changed the `conf.int`
-  # default from `TRUE` to `!pval.only`). Derive both the recorded arguments and
-  # the expected values from `formals(stats::fisher.test)` so the tests adapt to
-  # whatever version of R is running. `x`/`y` are the data inputs and
-  # `alternative` is returned as a tidy result, so they are excluded here.
   fun_args_to_record <-
     setdiff(names(formals(stats::fisher.test)), c("x", "y", "alternative"))
 
