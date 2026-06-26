@@ -4,6 +4,9 @@
 
 * `bind_ard()` now outputs a adds `"bind_ard"` class. (#572; @alanahjonas95).
 
+* Fixed `get_ard_statistics()` to return `NULL` statistics unchanged instead of attempting to attach attributes to `NULL`, which errors as of R 4.5.0.
+
+
 # cards 0.8.0
 
 ## New Features and Functions
