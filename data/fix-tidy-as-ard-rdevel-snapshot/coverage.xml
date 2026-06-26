@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE coverage SYSTEM "https://raw.githubusercontent.com/cobertura/cobertura/master/cobertura/src/site/htdocs/xml/coverage-04.dtd">
-<coverage line-rate="0.955981941309255" branch-rate="0" lines-covered="3388" lines-valid="3544" branches-covered="0" branches-valid="0" complexity="0" version="3.6.5" timestamp="2026-06-26 16:41:30.703707">
+<coverage line-rate="0.956031567080045" branch-rate="0" lines-covered="3392" lines-valid="3548" branches-covered="0" branches-valid="0" complexity="0" version="3.6.5" timestamp="2026-06-26 16:52:48.319825">
   <sources>
     <source>/__w/cards/cards/cards</source>
   </sources>
   <packages>
-    <package name="cards" line-rate="0.955981941309255" branch-rate="0" complexity="0">
+    <package name="cards" line-rate="0.956031567080045" branch-rate="0" complexity="0">
       <classes>
         <class name="add_calculated_row.R" filename="R/add_calculated_row.R" line-rate="0.886792452830189" branch-rate="0" complexity="0">
           <methods>
@@ -5072,21 +5072,25 @@
                 <line number="42" hits="19" branch="false"/>
                 <line number="43" hits="19" branch="false"/>
                 <line number="44" hits="19" branch="false"/>
-                <line number="46" hits="19" branch="false"/>
-                <line number="47" hits="19" branch="false"/>
+                <line number="45" hits="19" branch="false"/>
                 <line number="48" hits="19" branch="false"/>
-                <line number="49" hits="19" branch="false"/>
+                <line number="49" hits="6" branch="false"/>
                 <line number="50" hits="19" branch="false"/>
                 <line number="52" hits="19" branch="false"/>
                 <line number="53" hits="19" branch="false"/>
+                <line number="54" hits="19" branch="false"/>
+                <line number="55" hits="19" branch="false"/>
+                <line number="57" hits="19" branch="false"/>
+                <line number="58" hits="19" branch="false"/>
+                <line number="59" hits="19" branch="false"/>
               </lines>
             </method>
             <method name=".create_list_for_attributes" signature="" line-rate="1" branch-rate="0" complexity="0">
               <lines>
-                <line number="73" hits="84" branch="false"/>
-                <line number="74" hits="84" branch="false"/>
-                <line number="75" hits="6" branch="false"/>
-                <line number="77" hits="84" branch="false"/>
+                <line number="79" hits="78" branch="false"/>
+                <line number="80" hits="78" branch="false"/>
+                <line number="81" hits="6" branch="false"/>
+                <line number="83" hits="78" branch="false"/>
               </lines>
             </method>
           </methods>
@@ -5096,17 +5100,21 @@
             <line number="42" hits="19" branch="false"/>
             <line number="43" hits="19" branch="false"/>
             <line number="44" hits="19" branch="false"/>
-            <line number="46" hits="19" branch="false"/>
-            <line number="47" hits="19" branch="false"/>
+            <line number="45" hits="19" branch="false"/>
             <line number="48" hits="19" branch="false"/>
-            <line number="49" hits="19" branch="false"/>
+            <line number="49" hits="6" branch="false"/>
             <line number="50" hits="19" branch="false"/>
             <line number="52" hits="19" branch="false"/>
             <line number="53" hits="19" branch="false"/>
-            <line number="73" hits="84" branch="false"/>
-            <line number="74" hits="84" branch="false"/>
-            <line number="75" hits="6" branch="false"/>
-            <line number="77" hits="84" branch="false"/>
+            <line number="54" hits="19" branch="false"/>
+            <line number="55" hits="19" branch="false"/>
+            <line number="57" hits="19" branch="false"/>
+            <line number="58" hits="19" branch="false"/>
+            <line number="59" hits="19" branch="false"/>
+            <line number="79" hits="78" branch="false"/>
+            <line number="80" hits="78" branch="false"/>
+            <line number="81" hits="6" branch="false"/>
+            <line number="83" hits="78" branch="false"/>
           </lines>
         </class>
         <class name="maximum_variable_value.R" filename="R/maximum_variable_value.R" line-rate="1" branch-rate="0" complexity="0">
