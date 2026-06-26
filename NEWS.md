@@ -2,7 +2,7 @@
 
 ## Bug Fixes
 
-* `bind_ard()` now outputs a adds `"bind_ard"` class. (#572; @alanahjonas95).
+* The output of `bind_ard()` now has a `"bind_ard"` class. (#572; @alanahjonas95).
 
 * Fixed `get_ard_statistics()` to return `NULL` statistics unchanged instead of attempting to attach attributes to `NULL`, which errors as of R 4.5.0.
 
