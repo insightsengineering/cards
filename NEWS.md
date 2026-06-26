@@ -1,7 +1,5 @@
 # cards 0.8.0.9000
 
-* Fixed `tidy_as_ard()` test failures on R-devel, where `stats::fisher.test()` changed its `conf.int` default from `TRUE` to `!pval.only`. The affected snapshot tests were replaced with `expect_equal()` checks that compare statistics extracted via `get_ard_statistics()` against expected values derived from `formals(stats::fisher.test)`, so they pass across R versions.
-
 # cards 0.8.0
 
 ## New Features and Functions
