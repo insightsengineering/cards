@@ -42,13 +42,19 @@ get_ard_statistics <- function(x,
   seq_len(nrow(ard_subset)) |>
     lapply(
       FUN = function(i) {
+        stat <- ard_subset[[.column]][[i]]
+        # attributes cannot be attached to NULL (an error as of R 4.5.0),
+        # so return the NULL statistic unchanged
+        if (is.null(stat)) {
+          return(NULL)
+        }
         # styler: off
-        ard_subset[[.column]][[i]] %>%
+        stat %>%
           {inject(structure(
             ., !!!.create_list_for_attributes(ard_subset, .attributes, i)
           ))}
+        # styler: on
       }
-      # styler: on
     ) |>
     stats::setNames(ard_subset[["stat_name"]])
 }
