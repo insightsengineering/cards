@@ -1,6 +1,9 @@
 test_that("tidy_as_ard() works", {
+  fun_args_to_record <-
+    setdiff(names(formals(stats::fisher.test)), c("x", "y", "alternative"))
+
   # function works with standard use
-  expect_snapshot(
+  ard <-
     tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
@@ -10,20 +13,28 @@ test_that("tidy_as_ard() works", {
         ),
       tidy_result_names =
         c("estimate", "p.value", "method"),
-      fun_args_to_record =
-        c(
-          "workspace", "hybrid", "hybridPars", "control", "or",
-          "conf.int", "conf.level", "simulate.p.value", "B"
-        ),
+      fun_args_to_record = fun_args_to_record,
       formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
+    )
+  fisher_result <-
+    stats::fisher.test(x = mtcars[["am"]], y = mtcars[["vs"]])[c("estimate", "p.value", "method")]
+  expect_equal(
+    get_ard_statistics(ard, .column = "stat"),
+    c(
+      list(
+        estimate = fisher_result[["estimate"]],
+        p.value = fisher_result[["p.value"]],
+        method = fisher_result[["method"]]
+      ),
+      as.list(formals(stats::fisher.test)[fun_args_to_record])
+    ),
+    ignore_attr = TRUE
   )
 
   # function works when primary stats function errors
-  expect_snapshot(
+  ard <-
     tidy_as_ard(
       lst_tidy =
         eval_capture_conditions(
@@ -31,16 +42,21 @@ test_that("tidy_as_ard() works", {
         ),
       tidy_result_names =
         c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative"),
-      fun_args_to_record =
-        c(
-          "workspace", "hybrid", "hybridPars", "control", "or",
-          "conf.int", "conf.level", "simulate.p.value", "B"
-        ),
+      fun_args_to_record = fun_args_to_record,
       formals = formals(stats::fisher.test),
       passed_args = list(),
       lst_ard_columns = list(context = "fishertest", group1 = "am", variable = "vs")
-    ) |>
-      as.data.frame()
+    )
+  expect_equal(
+    get_ard_statistics(ard, .column = "stat"),
+    c(
+      stats::setNames(
+        rep_len(list(NULL), 6L),
+        c("estimate", "p.value", "conf.low", "conf.high", "method", "alternative")
+      ),
+      as.list(formals(stats::fisher.test)[fun_args_to_record])
+    ),
+    ignore_attr = TRUE
   )
 
   # function works when `fun_args_to_record` argument is not passed.
