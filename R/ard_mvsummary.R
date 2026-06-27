@@ -73,7 +73,7 @@ ard_mvsummary.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_summary(fmt_fn)",
       with = "ard_summary(fmt_fun)"
@@ -86,7 +86,13 @@ ard_mvsummary.data.frame <- function(data,
   check_not_missing(statistic)
 
   # process inputs -------------------------------------------------------------
-  process_selectors(data, variables = {{ variables }})
+  # Process All selectors into character vectors at first
+  process_selectors(
+    data,
+    variables = {{ variables }},
+    by = {{ by }},
+    strata = {{ strata }}
+  )
   process_formula_selectors(data[variables], statistic = statistic, allow_empty = FALSE)
 
   # return empty ARD if no variables selected ----------------------------------
@@ -118,14 +124,26 @@ ard_mvsummary.data.frame <- function(data,
         parse_expr()
   )
 
-  ard_summary(
+  # Pass them to ard_summary using rlang::exec()
+  # so downstream functions only see raw character strings,
+  # preventing all tidyselect warnings.
+  ard_final <- ard_summary(
     data = data,
     variables = all_of(variables),
-    by = {{ by }},
-    strata = {{ strata }},
+    by = any_of(by),
+    strata = any_of(strata),
     statistic = statistic,
     fmt_fun = fmt_fun,
     stat_label = stat_label
   ) |>
     dplyr::mutate(context = "mvsummary")
+
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by,
+    strata = strata
+  )
+
+  ard_final
 }

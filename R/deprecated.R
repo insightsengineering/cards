@@ -20,14 +20,16 @@
 NULL
 
 # "soft" deprecation for 6 months: (Sys.Date() - lubridate::dmonths(6)) |> as.Date()
+#  v0.7.1 2025-12-02
+
+# "warn" deprecation for 12 months: (Sys.Date() - lubridate::dmonths(12)) |> as.Date()
+#  v0.7.0 2025-08-27
 #  v0.6.1 2025-07-03
 #  v0.6.0 2025-04-11
 #  v0.5.1 2025-03-01
 
-# "warn" deprecation for 12 months: (Sys.Date() - lubridate::dmonths(12)) |> as.Date()
-#  v0.5.0 2025-02-17
-
 # "stop" deprecation for 18 months: (Sys.Date() - lubridate::dmonths(18)) |> as.Date()
+#  v0.5.0 2025-02-17
 
 # v0.7.0 -----------------------------------------------------------------------
 # These were dropped from the documentation in v0.7.0. But were not officially deprecated
@@ -99,7 +101,7 @@ ard_dichotomous.data.frame <- function(data, ...) {
 #' @rdname deprecated
 #' @export
 apply_fmt_fn <- function(...) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     when = "0.6.1",
     what = "cards::apply_fmt_fn()",
     with = "apply_fmt_fun()"
@@ -111,7 +113,7 @@ apply_fmt_fn <- function(...) {
 #' @rdname deprecated
 #' @export
 alias_as_fmt_fn <- function(...) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     when = "0.6.1",
     what = "cards::alias_as_fmt_fn()",
     with = "alias_as_fmt_fun()"
@@ -123,7 +125,7 @@ alias_as_fmt_fn <- function(...) {
 #' @rdname deprecated
 #' @export
 update_ard_fmt_fn <- function(...) {
-  lifecycle::deprecate_soft(
+  lifecycle::deprecate_warn(
     when = "0.6.1",
     what = "cards::update_ard_fmt_fn()",
     with = "update_ard_fmt_fun()"

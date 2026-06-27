@@ -84,7 +84,7 @@ ard_summary.data.frame <- function(data,
 
   # deprecated args ------------------------------------------------------------
   if (lifecycle::is_present(fmt_fn)) {
-    lifecycle::deprecate_soft(
+    lifecycle::deprecate_warn(
       when = "0.6.1",
       what = "ard_summary(fmt_fn)",
       with = "ard_summary(fmt_fun)"
@@ -183,13 +183,21 @@ ard_summary.data.frame <- function(data,
     dplyr::mutate(stat_label = dplyr::coalesce(.data$stat_label, .data$stat_name))
 
   # add meta data and class ----------------------------------------------------
-  df_results |>
+  ard_final <- df_results |>
     dplyr::mutate(context = "summary") |>
     tidy_ard_column_order() |>
     tidy_ard_row_order() |>
     as_card(check = FALSE)
-}
 
+  # append attributes ----------------------------------------------------------
+  attr(ard_final, "args") <- list(
+    variables = variables,
+    by = by,
+    strata = strata
+  )
+
+  ard_final
+}
 
 #' Check Protected Column Names
 #'

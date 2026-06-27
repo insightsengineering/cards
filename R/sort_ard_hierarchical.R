@@ -75,13 +75,13 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_le
   check_not_missing(x)
   check_not_missing(sort)
   check_class(x, "card")
-  if (!"args" %in% names(attributes(x))) {
-    cli::cli_abort(
-      paste(
-        "Sorting is only available for stacked hierarchical ARDs created using",
-        "{.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}."
-      ),
-      call = get_cli_abort_call()
+
+  if (!any(c("ard_stack_hierarchical", "ard_stack_hierarchical_count") %in% class(x))) {
+    cli::cli_warn(
+      c("The {.fun sort_ard_hierarchical} function was created for stacked hierarchical ARDs created using
+         {.fun ard_stack_hierarchical} or {.fun ard_stack_hierarchical_count}.",
+        "i" = "Unexpected results may occur."
+      )
     )
   }
 
