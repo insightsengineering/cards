@@ -104,11 +104,11 @@ test_that("sort_ard_hierarchical(sort = 'descending') works", {
 })
 
 
-test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ 'descending'), sort_by_level = 'Placebo') works", {
+test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ 'descending'), sort_level = 'Placebo') works", {
 
 
   expect_silent(ard_2 <- sort_ard_hierarchical(ard_2, sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ 'descending'),
-                                             sort_by_level = "Placebo"))
+                                             sort_level = "Placebo"))
 
   expect_equal(
     ard_2 |>
@@ -170,7 +170,7 @@ test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ '
 
 
 
-test_that("sort_ard_hierarchical(sort = AEDECOD ~ 'descending', sort_by_level = 'Placebo') works", {
+test_that("sort_ard_hierarchical(sort = AEDECOD ~ 'descending', sort_level = 'Placebo') works", {
 
   ard_3 <- ard_stack_hierarchical(
     data = cards::ADAE |> dplyr::filter(AEDECOD %in% unique(cards::ADAE$AEDECOD)[1:5]),
@@ -180,7 +180,7 @@ test_that("sort_ard_hierarchical(sort = AEDECOD ~ 'descending', sort_by_level = 
     id = USUBJID
   )
 
-  expect_silent(ard_3 <- sort_ard_hierarchical(ard_3, sort = AEDECOD ~ 'descending', sort_by_level = "Placebo"))
+  expect_silent(ard_3 <- sort_ard_hierarchical(ard_3, sort = AEDECOD ~ 'descending', sort_level = "Placebo"))
 
   expect_equal(
     ard_3 |>
@@ -561,16 +561,16 @@ test_that("sort_ard_hierarchical() error messaging works", {
     error = TRUE
   )
 
-  #invalid sort_by_level input
+  #invalid sort_level input
 
   expect_snapshot(
-    sort_ard_hierarchical(ard2, sort_by_level = "Placebo1"),
+    sort_ard_hierarchical(ard_2, sort_level = "Placebo1"),
     error = TRUE
   )
 
-  #sort_by_level should be a single character not a vector
+  #sort_level should be a single character not a vector
   expect_snapshot(
-    sort_ard_hierarchical(ard2, sort_by_level = c("Placebo","Xanomeline Low Dose")),
+    sort_ard_hierarchical(ard_2, sort_level = c("Placebo","Xanomeline Low Dose")),
     error = TRUE
   )
 
