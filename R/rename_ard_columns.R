@@ -3,7 +3,7 @@
 #' Rename the grouping and variable columns to their original column names.
 #'
 #' @param x (`data.frame`)\cr
-#'   an ARD data frame of class 'card'
+#'   an ARD data frame of class `'card'` or `'card_unlisted'`
 #' @param columns ([`tidy-select`][dplyr::dplyr_tidy_select])\cr
 #'   columns to rename, e.g. selecting columns `c('group1', 'group2', 'variable')`
 #'   will rename `'group1_level'` to the name of the variable found in `'group1'`.
@@ -23,7 +23,7 @@
 #'   of retaining the label. Default is `TRUE`.
 #' @param unlist `r lifecycle::badge("deprecated")`
 #'
-#' @return data frame
+#' @return a data frame of class `'card_renamed'`
 #' @export
 #'
 #' @examples
@@ -56,7 +56,7 @@ rename_ard_columns <- function(x,
   }
   set_cli_abort_call()
   check_not_missing(x)
-  check_class(x, "card")
+  check_class(x, c("card", "card_unlisted"))
   process_selectors(x, columns = {{ columns }})
   check_scalar(fill)
   check_scalar_logical(fct_as_chr)
@@ -96,7 +96,8 @@ rename_ard_columns <- function(x,
     )
   }
 
-  x |>
+  result <-
+    x |>
     dplyr::mutate(...ard_row_order... = dplyr::row_number()) |>
     dplyr::group_by(dplyr::pick(all_of(column_names))) |>
     dplyr::group_map(
@@ -143,4 +144,9 @@ rename_ard_columns <- function(x,
           unlist()
       )
     )
+
+  # remove 'card' class: renamed data no longer satisfies the ARD contract -----
+  class(result) <- c("card_renamed", setdiff(class(result), c("card", "card_unlisted", "card_renamed")))
+
+  result
 }
