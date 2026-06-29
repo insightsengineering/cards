@@ -1,6 +1,14 @@
 # Changelog
 
-## cards 0.8.0.9001
+## cards 0.8.0.9002
+
+### Bug Fixes
+
+- The output of
+  [`bind_ard()`](https://insightsengineering.github.io/cards/reference/bind_ard.md)
+  now has a `"bind_ard"` class.
+  ([\#572](https://github.com/insightsengineering/cards/issues/572);
+  [@alanahjonas95](https://github.com/alanahjonas95)).
 
 - Fixed
   [`get_ard_statistics()`](https://insightsengineering.github.io/cards/reference/get_ard_statistics.md)
