@@ -13,6 +13,8 @@
 
 - **F. Hoffmann-La Roche AG**. Copyright holder, funder.
 
+- **Alanah Jonas**. Author.
+
 - **GlaxoSmithKline Research & Development Limited**. Copyright holder.
 
 ## Citation
@@ -20,14 +22,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/insightsengineering/cards/blob/main/DESCRIPTION)
 
-Sjoberg D, Krouse B, de la Rua E, Bosman M (2026). *cards: Analysis
-Results Data*. R package version 0.8.0.9003,
+Sjoberg D, Krouse B, de la Rua E, Bosman M, Jonas A (2026). *cards:
+Analysis Results Data*. R package version 0.8.0.9004,
 <https://github.com/insightsengineering/cards>.
 
     @Manual{,
       title = {cards: Analysis Results Data},
-      author = {Daniel D. Sjoberg and Becca Krouse and Emily {de la Rua} and Malan Bosman},
+      author = {Daniel D. Sjoberg and Becca Krouse and Emily {de la Rua} and Malan Bosman and Alanah Jonas},
       year = {2026},
-      note = {R package version 0.8.0.9003},
+      note = {R package version 0.8.0.9004},
       url = {https://github.com/insightsengineering/cards},
     }

@@ -34,6 +34,8 @@ Authors:
 - Malan Bosman <malanbos@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-3020-195X))
 
+- Alanah Jonas <alanah.x.jonas@gsk.com>
+
 Other contributors:
 
 - F. Hoffmann-La Roche AG \[copyright holder, funder\]
