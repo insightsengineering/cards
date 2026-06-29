@@ -15,7 +15,7 @@
 #'   of retaining the label. Default is `TRUE`.
 #'
 #'
-#' @returns a data frame
+#' @returns a data frame of class `'card_unlisted'`
 #' @export
 #'
 #' @examples
@@ -69,6 +69,8 @@ unlist_ard_columns <- function(x,
     x[[var]] <- var_unlisted
   }
 
-  # return unlisted object -----------------------------------------------------
+  # remove 'card' class: unlisted data no longer satisfies the ARD contract ---
+  class(x) <- c("card_unlisted", setdiff(class(x), c("card", "card_unlisted", "card_renamed")))
+
   x
 }
