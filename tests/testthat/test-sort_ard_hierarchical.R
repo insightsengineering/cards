@@ -530,6 +530,8 @@ test_that("sort_ard_hierarchical() works with overall data", {
 })
 
 test_that("sort_ard_hierarchical() warning messaging works", {
+  withr::local_options(width = 200)
+
   # invalid x input
   expect_snapshot(
     r <- sort_ard_hierarchical(ard_tabulate(
