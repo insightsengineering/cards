@@ -105,15 +105,17 @@ test_that("sort_ard_hierarchical(sort = 'descending') works", {
 
 
 test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ 'descending'), sort_level = 'Placebo') works", {
-
-
-  expect_silent(ard_2 <- sort_ard_hierarchical(ard_2, sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ 'descending'),
-                                             sort_level = "Placebo"))
+  expect_silent(ard_2 <- sort_ard_hierarchical(ard_2,
+    sort = list(AESOC ~ "alphanumeric", AEDECOD ~ "descending"),
+    sort_level = "Placebo"
+  ))
 
   expect_equal(
     ard_2 |>
-      dplyr::filter(group1 == "TRTA", group1_level == "Placebo",
-                    group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n") |>
+      dplyr::filter(
+        group1 == "TRTA", group1_level == "Placebo",
+        group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n"
+      ) |>
       dplyr::select(variable_level, stat) |>
       dplyr::distinct(variable_level, .keep_all = TRUE) |>
       dplyr::arrange(desc(as.numeric(stat))) |>
@@ -131,8 +133,10 @@ test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ '
 
   expect_equal(
     ard_2 |>
-      dplyr::filter(group1 == "TRTA", group1_level == "Xanomeline Low Dose",
-                    group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n") |>
+      dplyr::filter(
+        group1 == "TRTA", group1_level == "Xanomeline Low Dose",
+        group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n"
+      ) |>
       dplyr::select(variable_level, stat) |>
       dplyr::distinct(variable_level, .keep_all = TRUE) |>
       dplyr::arrange(desc(as.numeric(stat))) |>
@@ -150,8 +154,10 @@ test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ '
 
   expect_equal(
     ard_2 |>
-      dplyr::filter(group1 == "TRTA", group1_level == "Xanomeline High Dose",
-                    group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n") |>
+      dplyr::filter(
+        group1 == "TRTA", group1_level == "Xanomeline High Dose",
+        group2_level == "GENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS", stat_name == "n"
+      ) |>
       dplyr::select(variable_level, stat) |>
       dplyr::distinct(variable_level, .keep_all = TRUE) |>
       dplyr::arrange(desc(as.numeric(stat))) |>
@@ -169,9 +175,7 @@ test_that("sort_ard_hierarchical(sort = list(AESOC ~ 'alphanumeric', AEDECOD ~ '
 })
 
 
-
 test_that("sort_ard_hierarchical(sort = AEDECOD ~ 'descending', sort_level = 'Placebo') works", {
-
   ard_3 <- ard_stack_hierarchical(
     data = cards::ADAE |> dplyr::filter(AEDECOD %in% unique(cards::ADAE$AEDECOD)[1:5]),
     variables = AEDECOD,
@@ -180,7 +184,7 @@ test_that("sort_ard_hierarchical(sort = AEDECOD ~ 'descending', sort_level = 'Pl
     id = USUBJID
   )
 
-  expect_silent(ard_3 <- sort_ard_hierarchical(ard_3, sort = AEDECOD ~ 'descending', sort_level = "Placebo"))
+  expect_silent(ard_3 <- sort_ard_hierarchical(ard_3, sort = AEDECOD ~ "descending", sort_level = "Placebo"))
 
   expect_equal(
     ard_3 |>
@@ -562,19 +566,16 @@ test_that("sort_ard_hierarchical() warning messaging works", {
     error = TRUE
   )
 
-  #invalid sort_level input
+  # invalid sort_level input
 
   expect_snapshot(
     sort_ard_hierarchical(ard_2, sort_level = "Placebo1"),
     error = TRUE
   )
 
-  #sort_level should be a single character not a vector
+  # sort_level should be a single character not a vector
   expect_snapshot(
-    sort_ard_hierarchical(ard_2, sort_level = c("Placebo","Xanomeline Low Dose")),
+    sort_ard_hierarchical(ard_2, sort_level = c("Placebo", "Xanomeline Low Dose")),
     error = TRUE
   )
-
-
 })
-

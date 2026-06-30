@@ -93,7 +93,7 @@ sort_ard_hierarchical <- function(x, sort = everything() ~ "descending", sort_le
 
   # check that the values for sort_level actually exists
 
-  if(!is.null(sort_level)) {
+  if (!is.null(sort_level)) {
     valid_choices <- unlist(unique(x$group1_level))
     sort_level <- rlang::arg_match(sort_level, values = valid_choices)
   }
