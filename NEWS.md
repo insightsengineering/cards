@@ -1,6 +1,13 @@
-# cards 0.8.0.9001
+# cards 0.8.0.9004
+
+## Bug Fixes
+
+* The output of `bind_ard()` now has a `"bind_ard"` class. (#572; @alanahjonas95).
+
+* `unlist_ard_columns()` and `rename_ard_columns()` now return objects subclassed `"card_unlisted"` and `"card_renamed"` respectively, rather than retaining the `"card"` class. The result no longer satisfies the ARD contract, so functions requiring a proper ARD now reject these objects with a clear error. `rename_ard_columns()` accepts both `"card"` and `"card_unlisted"` inputs. (#513, @Melkiades)
 
 * Fixed `get_ard_statistics()` to return `NULL` statistics unchanged instead of attempting to attach attributes to `NULL`, which errors as of R 4.5.0.
+
 
 # cards 0.8.0
 

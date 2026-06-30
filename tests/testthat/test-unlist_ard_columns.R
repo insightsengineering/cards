@@ -1,3 +1,12 @@
+test_that("unlist_ard_columns() returns 'card_unlisted' class", {
+  result <-
+    ard_tabulate(ADSL, variables = AGEGR1) |>
+    unlist_ard_columns()
+
+  expect_s3_class(result, "card_unlisted")
+  expect_false(inherits(result, "card"))
+})
+
 test_that("unlist_ard_columns()", {
   expect_equal(
     ard_tabulate(ADSL, variables = AGEGR1) |>

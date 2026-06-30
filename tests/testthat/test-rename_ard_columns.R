@@ -1,3 +1,22 @@
+test_that("rename_ard_columns() returns 'card_renamed' class", {
+  result <-
+    ADSL |>
+    ard_tabulate(by = ARM, variables = AGEGR1) |>
+    rename_ard_columns()
+
+  expect_s3_class(result, "card_renamed")
+  expect_false(inherits(result, "card"))
+})
+
+test_that("rename_ard_columns() accepts 'card_unlisted' input", {
+  expect_silent(
+    ADSL |>
+      ard_tabulate(by = ARM, variables = AGEGR1) |>
+      unlist_ard_columns() |>
+      rename_ard_columns()
+  )
+})
+
 test_that("rename_ard_columns(columns)", {
   expect_equal(
     ADSL |>
