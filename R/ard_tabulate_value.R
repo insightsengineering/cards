@@ -88,9 +88,9 @@ ard_tabulate_value.data.frame <- function(data,
       keep <- logical(dplyr::n())
       val <- .env$value
       for (v in names(val)) {
-        idx <- which(variable == v)
+        idx <- which(.data$variable == v)
         if (length(idx) > 0) {
-          v_levels <- variable_level[idx]
+          v_levels <- .data$variable_level[idx]
           if (all(lengths(v_levels) == 1L)) {
             keep[idx] <- unlist(v_levels, recursive = FALSE, use.names = FALSE) %in% val[[v]]
           } else {
