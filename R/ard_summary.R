@@ -340,7 +340,7 @@ ard_summary.data.frame <- function(data,
   }
 
   len <- length(stat_name)
-  
+
   out <- data.frame(
     stat_name = stat_name,
     stringsAsFactors = FALSE
