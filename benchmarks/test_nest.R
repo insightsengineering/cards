@@ -10,10 +10,9 @@ res1 <- cards::nest_for_ard(
 
 # Implementation of the optimized version
 nest_for_ard2 <- function(data, by = NULL, strata = NULL, key = "data",
-                         rename_columns = TRUE, list_columns = TRUE,
-                         include_data = TRUE,
-                         include_by_and_strata = FALSE) {
-  
+                          rename_columns = TRUE, list_columns = TRUE,
+                          include_data = TRUE,
+                          include_by_and_strata = FALSE) {
   if (is_empty(by) && is_empty(strata)) {
     return((dplyr::tibble("{key}" := list(data))))
   }
@@ -68,18 +67,18 @@ nest_for_ard2 <- function(data, by = NULL, strata = NULL, key = "data",
     # Left join to find group index for each row
     df_return_idx <- df_return
     df_return_idx[["..group_idx.."]] <- seq_len(nrow(df_return))
-    
+
     data_mapped <- dplyr::inner_join(
       data |> dplyr::mutate("..row_idx.." = seq_len(nrow(data))),
       df_return_idx[c(by, strata, "..group_idx..")],
       by = c(by, strata)
     )
-    
+
     row_indices <- split(
       data_mapped[["..row_idx.."]],
       factor(data_mapped[["..group_idx.."]], levels = seq_len(nrow(df_return)))
     )
-    
+
     df_return[[key]] <- lapply(
       row_indices,
       function(idx) {
