@@ -41,7 +41,7 @@ tidy_ard_column_order <- function(x, group_order = c("ascending", "descending"))
   group_cols <- grep("^group[0-9]+$", nms, value = TRUE)
   group_level_cols <- grep("^group[0-9]+_level$", nms, value = TRUE)
   all_group_cols <- c(group_cols, group_level_cols)
-  
+
   if (length(all_group_cols) > 0) {
     nums <- as.integer(gsub("[^0-9]", "", all_group_cols))
     if (group_order == "ascending") {
@@ -57,17 +57,17 @@ tidy_ard_column_order <- function(x, group_order = c("ascending", "descending"))
   var_cols <- grep("^variable[0-9]*$", nms, value = TRUE)
   var_lvl_cols <- grep("^variable[0-9]*_level$", nms, value = TRUE)
   all_var_cols <- c(var_cols, var_lvl_cols)
-  
+
   std_cols <- intersect(c(
-      "context",
-      "stat_name", "stat_label", "stat", "stat_fmt", "fmt_fun",
-      "warning", "error"
-    ), nms)
-    
+    "context",
+    "stat_name", "stat_label", "stat", "stat_fmt", "fmt_fun",
+    "warning", "error"
+  ), nms)
+
   other_cols <- setdiff(nms, c(ordered_groups, all_var_cols, std_cols))
-  
+
   new_cols <- c(ordered_groups, all_var_cols, std_cols, other_cols)
-  
+
   x[, new_cols, drop = FALSE]
 }
 
@@ -85,13 +85,13 @@ tidy_ard_row_order <- function(x) {
   if (length(cols) > 0) {
     nums <- as.integer(gsub("[^0-9]", "", cols))
     max_group_n <- max(nums)
-    
+
     target_cols <- character(0)
     for (i in seq_len(max_group_n)) {
       target_cols <- c(target_cols, paste0("group", i), paste0("group", i, "_level"))
     }
     cols <- intersect(target_cols, cols)
-    
+
     if (length(cols) > 0) {
       order_list <- lapply(cols, function(col) match(x[[col]], unique(x[[col]])))
       o <- do.call(order, order_list)
