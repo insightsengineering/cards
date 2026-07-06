@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3;url=https://github.com/pharmaverse/cards">
+    <title>Redirecting to cards</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #212529;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #6c757d;
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2.5px solid #e9ecef;
+            border-top: 2.5px solid #0d6efd; /* Clean blue */
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #ffffff;
+            color: #495057;
+            border: 1px solid #ced4da;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #f8f9fa;
+            border-color: #b1bbc4;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Connecting to pharmaverse/cards</h1>
+        <p>Please wait while we redirect you...</p>
+        
+        <a href="https://github.com/pharmaverse/cards" class="btn">Click here if not redirected</a>
+    </div>
+
+</body>
+</html>
