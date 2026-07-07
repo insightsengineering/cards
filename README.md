@@ -1,3 +1,3 @@
-# cards
+![](repo_redirect.png)
 
-Redirect to https://github.com/pharmaverse/cards
+Repository has beenn moved to [https://github.com/pharmaverse/cards](https://github.com/pharmaverse/cards)
